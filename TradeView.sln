@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Wpf.Host", "src\DevelopmentInProgress.Wpf.Host\DevelopmentInProgress.Wpf.Host.csproj", "{7BCE5D35-0443-4031-843A-3563356290E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Wpf.Controls", "src\DevelopmentInProgress.Wpf.Controls\DevelopmentInProgress.Wpf.Controls.csproj", "{5ACDC574-0F6F-48BC-AD2A-2F29BD7009FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Wpf.MarketView", "src\DevelopmentInProgress.Wpf.MarketView\DevelopmentInProgress.Wpf.MarketView.csproj", "{2183C26D-6932-41D9-BB1E-16FA55ADF983}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.MarketView.Interface", "src\DevelopmentInProgress.MarketView.Interface\DevelopmentInProgress.MarketView.Interface.csproj", "{86695062-90CC-419D-B455-D6D8C364A215}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.MarketView.Service", "src\DevelopmentInProgress.MarketView.Service\DevelopmentInProgress.MarketView.Service.csproj", "{28FB133E-13B2-46B5-BE18-5F655B318563}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Binance", "..\Binance\src\Binance\Binance.csproj", "{8C64597F-30FE-49A9-948A-953533BA74B2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7BCE5D35-0443-4031-843A-3563356290E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BCE5D35-0443-4031-843A-3563356290E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BCE5D35-0443-4031-843A-3563356290E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BCE5D35-0443-4031-843A-3563356290E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ACDC574-0F6F-48BC-AD2A-2F29BD7009FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ACDC574-0F6F-48BC-AD2A-2F29BD7009FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ACDC574-0F6F-48BC-AD2A-2F29BD7009FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ACDC574-0F6F-48BC-AD2A-2F29BD7009FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2183C26D-6932-41D9-BB1E-16FA55ADF983}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2183C26D-6932-41D9-BB1E-16FA55ADF983}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2183C26D-6932-41D9-BB1E-16FA55ADF983}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2183C26D-6932-41D9-BB1E-16FA55ADF983}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86695062-90CC-419D-B455-D6D8C364A215}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86695062-90CC-419D-B455-D6D8C364A215}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86695062-90CC-419D-B455-D6D8C364A215}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86695062-90CC-419D-B455-D6D8C364A215}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28FB133E-13B2-46B5-BE18-5F655B318563}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28FB133E-13B2-46B5-BE18-5F655B318563}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28FB133E-13B2-46B5-BE18-5F655B318563}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28FB133E-13B2-46B5-BE18-5F655B318563}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C64597F-30FE-49A9-948A-953533BA74B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C64597F-30FE-49A9-948A-953533BA74B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C64597F-30FE-49A9-948A-953533BA74B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C64597F-30FE-49A9-948A-953533BA74B2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1F3B75F9-BA14-4B1C-9571-174E50EB5C7D}
+	EndGlobalSection
+EndGlobal

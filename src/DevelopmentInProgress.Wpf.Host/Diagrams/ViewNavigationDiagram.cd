@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DevelopmentInProgress.Wpf.Host.Navigation.ModalNavigator">
+    <Position X="9.75" Y="4.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAEEAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Navigation\ModalNavigator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DevelopmentInProgress.Wpf.Host.Navigation.ModalSettings">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAIAEQAEAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Navigation\ModalSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DevelopmentInProgress.Wpf.Host.Navigation.NavigationManager">
+    <Position X="7.5" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>QAgAAgAgEAAAAAQCAAIBAAAIAAAAAEAAAAAAAgAAAAA=</HashCode>
+      <FileName>Navigation\NavigationManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DevelopmentInProgress.Wpf.Host.Navigation.NavigationSettings">
+    <Position X="3.75" Y="2.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAQAAAAAAAAAAAABBAAAgAQAAAAABA=</HashCode>
+      <FileName>Navigation\NavigationSettings.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DevelopmentInProgress.Wpf.Host.Navigation.NavigationTarget">
+    <Position X="12" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABIAAEAQAAAAACBAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Navigation\NavigationTarget.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DevelopmentInProgress.Wpf.Host.Navigation.ViewSettings">
+    <Position X="2" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Navigation\ViewSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DevelopmentInProgress.Wpf.Host.Navigation.ModuleNavigator">
+    <Position X="7" Y="4.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAACAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Navigation\ModuleNavigator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

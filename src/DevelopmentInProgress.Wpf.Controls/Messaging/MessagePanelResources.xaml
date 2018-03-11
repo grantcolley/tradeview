@@ -1,0 +1,78 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Controls.Converters"
+                    xmlns:messaging="clr-namespace:DevelopmentInProgress.Wpf.Controls.Messaging"
+                    xmlns:filterBox="clr-namespace:DevelopmentInProgress.Wpf.Controls.FilterBox"
+                    x:Class="DevelopmentInProgress.Wpf.Controls.Messaging.MessagePanelResources">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../themes/MetroDark.MSControls.Core.Implicit.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
+    <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
+    <converters:MessageTextToImageConverter x:Key="imageConverter"/>
+    <converters:TextToForegroundConverter x:Key="foregroundConverter"/>
+
+    <Style TargetType="{x:Type messaging:MessagePanel}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Expander IsExpanded="{Binding Path=IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
+                              DataContext="{Binding ., RelativeSource={RelativeSource TemplatedParent}}"
+                              MaxHeight="{Binding Path=MaxHeight, RelativeSource={RelativeSource TemplatedParent}}"
+                              Style="{StaticResource ExpanderStyle}">
+                        <Expander.HeaderTemplate>
+                            <DataTemplate>
+                                <DockPanel HorizontalAlignment="{Binding Path=HorizontalAlignment, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContentPresenter}}, Mode=OneWayToSource}">
+                                    <TextBlock DockPanel.Dock="Left"
+                                               TextAlignment="Left"
+                                               VerticalAlignment="Center"
+                                               Text="{Binding DataContext.HeaderText, RelativeSource={RelativeSource FindAncestor, AncestorType=Expander}}"
+                                               Style="{StaticResource TextBlockStyle}"/>
+                                    <Button Command="{Binding DataContext.ClearMessages, RelativeSource={RelativeSource FindAncestor, AncestorType=Expander}}" 
+                                            BorderThickness="0" 
+                                            ToolTip="Clear Messages" DockPanel.Dock="Right" Margin="10,2,2,2"
+                                            Style="{StaticResource ButtonImageStyle}">
+                                        <Image Height="10" Width="10" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                            Source="..\Images\Close.png"/>
+                                    </Button>
+                                    <filterBox:XamlFilterBox DockPanel.Dock="Top"
+                                                     ItemsSource="{Binding DataContext.Messages, RelativeSource={RelativeSource FindAncestor, AncestorType=Expander}}"
+                                                     FilterFieldName="Text"
+                                                     VisibilityFieldName="IsVisible"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </Expander.HeaderTemplate>
+                        <DockPanel LastChildFill="True" Background="{StaticResource TextBoxBackgroundBrush}">
+                            <ListBox x:Name="MessageListBox"
+                                 ItemsSource="{Binding Path=Messages, RelativeSource={RelativeSource TemplatedParent}}"
+                                 Background="{Binding Path=PanelBackground, RelativeSource={RelativeSource TemplatedParent}}"
+                                 Tag="{Binding ., RelativeSource={RelativeSource TemplatedParent}}"
+                                 BorderBrush="Transparent" BorderThickness="0"
+                                 HorizontalContentAlignment="Stretch">
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListBoxItem}">
+                                        <Setter Property="Visibility" Value="{Binding Path=IsVisible, Converter={StaticResource boolToVisibilityConverter}}"/>
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate DataType="messaging:Message">
+                                        <ContentControl MouseDoubleClick="MessageMouseDoubleClick"
+                                                        Tag="{Binding Path=Tag, ElementName=MessageListBox}">
+                                            <DockPanel>
+                                                <Image Margin="2" Height="10" Width="10" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Left"
+                                                       Source="{Binding Path=Type, Converter={StaticResource imageConverter}}"/>
+                                                <TextBlock Text="{Binding Path=Text}" Foreground="{Binding Type, Converter={StaticResource foregroundConverter}}"/>
+                                            </DockPanel>
+                                        </ContentControl>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </DockPanel>
+                    </Expander>
+                </ControlTemplate>
+            </Setter.Value>            
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,80 @@
+﻿<Window x:Class="DevelopmentInProgress.Wpf.Host.Shell"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:prism="http://www.codeplex.com/CompositeWPF"
+        xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+        xmlns:progress="clr-namespace:DevelopmentInProgress.Wpf.Host.Controls.Progress"
+        xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Host.Converters"
+        xmlns:progress1="clr-namespace:DevelopmentInProgress.Wpf.Host.Controls.Progress"
+        Title="Origin" Height="600" Width="1000" 
+        Icon="Images/Origin.png"
+        ResizeMode="CanResizeWithGrip"
+        Background="{StaticResource ButtonBackgroundBrush}">
+    <Window.Resources>
+        <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
+    </Window.Resources>
+    <Grid Background="{StaticResource ButtonBackgroundBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>                           
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" Grid.ColumnSpan="3" Background="{StaticResource TextBoxBackgroundBrush}">
+            <MenuItem Header="_File" Foreground="{StaticResource ForegroundBrush}">
+                <MenuItem Header="Close" Click="CloseApplication" 
+                          Background="{StaticResource TextBoxBackgroundBrush}"
+                          Foreground="{StaticResource ForegroundBrush}">
+                    <MenuItem.Icon>
+                        <Image Source="Images/Close.png" Height="10" Width="10"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        <DockPanel Name="ShellToolBar" Grid.Row="1" Grid.ColumnSpan="3" Background="{StaticResource TextBoxBackgroundBrush}">
+            <Button Click="SaveClick" ToolTip="Save" Style="{StaticResource ButtonImageStyle}">
+                <Image Source="Images/Save.png" Height="16" Width="16"/>
+            </Button>
+            <Button Click="SaveAllClick" ToolTip="Save All" Style="{StaticResource ButtonImageStyle}" BorderThickness="0">
+                <Image Source="Images/SaveAll.png" Height="16" Width="16"/>
+            </Button>
+            <Button Click="RefreshAllClick" ToolTip="Refresh All" Style="{StaticResource ButtonImageStyle}" BorderThickness="0">
+                <Image Source="Images/Refresh.png" Height="16" Width="16"/>
+            </Button>
+            <ContentControl/>
+        </DockPanel>
+        <ContentControl Grid.Row="2" Grid.Column="0" prism:RegionManager.RegionName="NavigationRegion"/>
+        <GridSplitter Grid.Row="2" Grid.Column="1" Width="2" VerticalAlignment="Stretch" HorizontalAlignment="Center" Style="{StaticResource GridSplitterStyle}"/>
+        <xcad:DockingManager x:Name="dockingManager" Grid.Row="2" Grid.Column="2" prism:RegionManager.RegionName="DocumentRegion" Background="{StaticResource TextBoxBackgroundBrush}" BorderBrush="{StaticResource TextBoxBackgroundBrush}">
+            <xcad:DockingManager.Theme>
+                <xcad:Vs2013DarkTheme/>
+            </xcad:DockingManager.Theme>
+            <xcad:DockingManager.DocumentHeaderTemplate>
+                <DataTemplate>
+                    <DockPanel Background="{StaticResource TextBoxBackgroundBrush}">
+                        <Viewbox Height="20" Width="20" 
+                                 Visibility="{Binding Content.DataContext.IsBusy, Converter={StaticResource boolToVisibilityConverter}}">
+                            <progress1:CircularProgress/>
+                        </Viewbox>
+                        <TextBlock Text="*" TextAlignment="Right" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="16" Foreground="Firebrick"
+                                   Visibility="{Binding Content.DataContext.IsDirty, Converter={StaticResource boolToVisibilityConverter}}"/>
+                        <TextBlock Text="{Binding Content.DataContext.Title}" Margin="5,2,2,2" Style="{StaticResource TextBlockStyle}"/>
+                    </DockPanel>
+                </DataTemplate>
+            </xcad:DockingManager.DocumentHeaderTemplate>
+            <xcad:LayoutRoot>
+                <xcad:LayoutPanel Orientation="Horizontal">
+                    <xcad:LayoutDocumentPane/>
+                </xcad:LayoutPanel>
+            </xcad:LayoutRoot>
+        </xcad:DockingManager>
+        <StatusBar Grid.Row="3" HorizontalAlignment="Stretch" Name="statusBar" Background="{StaticResource ButtonBackgroundBrush}">
+            <!--<Label Name="statusBarLabel"></Label>-->
+        </StatusBar>
+    </Grid>
+</Window>
