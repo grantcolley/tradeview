@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.Marke
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.MarketView.Service", "src\DevelopmentInProgress.MarketView.Service\DevelopmentInProgress.MarketView.Service.csproj", "{28FB133E-13B2-46B5-BE18-5F655B318563}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Binance", "..\Binance\src\Binance\Binance.csproj", "{8C64597F-30FE-49A9-948A-953533BA74B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Binance", "..\Binance\src\Binance\Binance.csproj", "{09100F71-9D9C-46BD-B7F3-B8829581B70C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{28FB133E-13B2-46B5-BE18-5F655B318563}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28FB133E-13B2-46B5-BE18-5F655B318563}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28FB133E-13B2-46B5-BE18-5F655B318563}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C64597F-30FE-49A9-948A-953533BA74B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C64597F-30FE-49A9-948A-953533BA74B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C64597F-30FE-49A9-948A-953533BA74B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C64597F-30FE-49A9-948A-953533BA74B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09100F71-9D9C-46BD-B7F3-B8829581B70C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09100F71-9D9C-46BD-B7F3-B8829581B70C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09100F71-9D9C-46BD-B7F3-B8829581B70C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09100F71-9D9C-46BD-B7F3-B8829581B70C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

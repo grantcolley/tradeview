@@ -7,7 +7,7 @@
                        xmlns:view="clr-namespace:DevelopmentInProgress.Wpf.Host.View;assembly=DevelopmentInProgress.Wpf.Host"
                        xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Host.Converters;assembly=DevelopmentInProgress.Wpf.Host"
                        xmlns:filterbox="clr-namespace:DevelopmentInProgress.Wpf.Controls.FilterBox;assembly=DevelopmentInProgress.Wpf.Controls"
-                       xmlns:progress="clr-namespace:DevelopmentInProgress.Wpf.Controls.Progress;assembly=DevelopmentInProgress.Wpf.Controls"
+                       xmlns:progress="clr-namespace:DevelopmentInProgress.Wpf.Host.Controls.Progress;assembly=DevelopmentInProgress.Wpf.Host"
                        xmlns:localConverters="clr-namespace:DevelopmentInProgress.Wpf.MarketView.Converters"
                        xmlns:localViewModel="clr-namespace:DevelopmentInProgress.Wpf.MarketView.ViewModel"
                        xmlns:localView="clr-namespace:DevelopmentInProgress.Wpf.MarketView.View"
