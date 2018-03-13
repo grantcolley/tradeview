@@ -11,7 +11,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
     public class SymbolsViewModel : BaseViewModel
     {
-        private IExchangeService exchangeService;
         private CancellationTokenSource symbolsCancellationTokenSource;
         Action<Exception> exception;
         private List<Symbol> symbols;
@@ -23,9 +22,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private bool disposed;
 
         public SymbolsViewModel(User user, IExchangeService exchangeService, ISelectedSymbol selectedSymbolNotification, Action<Exception> exception)
+            : base(exchangeService)
         {
             this.user = user;
-            this.exchangeService = exchangeService;
             this.selectedSymbolNotification = selectedSymbolNotification;
             this.exception = exception;
 
@@ -100,11 +99,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             try
             {
-                var results = await exchangeService.GetSymbols24HourStatisticsAsync(symbolsCancellationTokenSource.Token);
+                var results = await ExchangeService.GetSymbols24HourStatisticsAsync(symbolsCancellationTokenSource.Token);
 
                 Symbols = new List<Symbol>(results);
 
-                exchangeService.SubscribeStatistics(symbols, exception, symbolsCancellationTokenSource.Token);
+                ExchangeService.SubscribeStatistics(symbols, exception, symbolsCancellationTokenSource.Token);
 
                 if (user != null
                     && user.Preferences != null)

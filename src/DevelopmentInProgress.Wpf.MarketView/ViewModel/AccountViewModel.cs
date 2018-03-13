@@ -8,7 +8,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
     public class AccountViewModel : BaseViewModel
     {
-        private IExchangeService exchangeService;
         private Account account;
         private AccountBalance selectedAsset;
         private Action<Exception> exception;
@@ -16,10 +15,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private bool disposed;
 
         public AccountViewModel(Account account, IExchangeService exchangeService, Action<Exception> exception)
+            : base(exchangeService)
         {
             Account = account;
 
-            this.exchangeService = exchangeService;
             this.exception = exception;
 
             LoginCommand = new ViewModelCommand(Login);
@@ -79,7 +78,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             try
             {
-                Account = await exchangeService.GetAccountInfoAsync(Account.AccountInfo.User.ApiKey, Account.AccountInfo.User.ApiSecret);
+                Account = await ExchangeService.GetAccountInfoAsync(Account.AccountInfo.User.ApiKey, Account.AccountInfo.User.ApiSecret);
             }
             catch(Exception e)
             {

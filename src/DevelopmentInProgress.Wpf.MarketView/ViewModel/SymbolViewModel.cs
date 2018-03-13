@@ -13,7 +13,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
     public class SymbolViewModel : BaseViewModel
     {
-        private IExchangeService exchangeService;
         private CancellationTokenSource symbolCancellationTokenSource;
         private Action<Exception> exception;
         private Symbol symbol;
@@ -28,10 +27,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private int limit = 20;
 
         public SymbolViewModel(Symbol symbol, IExchangeService exchangeService, Action<Exception> exception)
+            : base(exchangeService)
         {
             Symbol = symbol;
 
-            this.exchangeService = exchangeService;
             this.exception = exception;
 
             var mapper = Mappers.Xy<AggregateTrade>()
@@ -139,11 +138,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         {
             try
             {
-                var orderBook = await exchangeService.GetOrderBookAsync(Symbol.Name, limit, symbolCancellationTokenSource.Token);
+                var orderBook = await ExchangeService.GetOrderBookAsync(Symbol.Name, limit, symbolCancellationTokenSource.Token);
 
                 UpdateOrderBook(orderBook);
 
-                exchangeService.SubscribeOrderBook(Symbol.Name, limit, e => UpdateOrderBook(e.OrderBook), exception, symbolCancellationTokenSource.Token);
+                ExchangeService.SubscribeOrderBook(Symbol.Name, limit, e => UpdateOrderBook(e.OrderBook), exception, symbolCancellationTokenSource.Token);
             }
             catch (Exception ex)
             {
@@ -157,11 +156,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         {
             try
             {
-                var trades = await exchangeService.GetAggregateTradesAsync(Symbol.Name, limit, symbolCancellationTokenSource.Token);
+                var trades = await ExchangeService.GetAggregateTradesAsync(Symbol.Name, limit, symbolCancellationTokenSource.Token);
 
                 UpdateAggregateTrades(trades);
 
-                exchangeService.SubscribeAggregateTrades(Symbol.Name, limit, e => UpdateAggregateTrades(e.AggregateTrades), exception, symbolCancellationTokenSource.Token);
+                ExchangeService.SubscribeAggregateTrades(Symbol.Name, limit, e => UpdateAggregateTrades(e.AggregateTrades), exception, symbolCancellationTokenSource.Token);
             }
             catch (Exception ex)
             {

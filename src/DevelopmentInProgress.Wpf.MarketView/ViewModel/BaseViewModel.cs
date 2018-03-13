@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevelopmentInProgress.Wpf.MarketView.Services;
+using System;
 using System.ComponentModel;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
@@ -7,6 +8,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public BaseViewModel(IExchangeService exchangeService)
+        {
+            ExchangeService = exchangeService;
+        }
+
         public abstract void Dispose(bool disposing);
 
         public void Dispose()
@@ -14,6 +20,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+        protected IExchangeService ExchangeService { get; private set; }
 
         protected void OnPropertyChanged(string propertyName, bool isDirty = false)
         {
