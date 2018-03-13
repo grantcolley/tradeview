@@ -6,7 +6,7 @@
                     xmlns:navigationPanel="clr-namespace:DevelopmentInProgress.Wpf.Controls.NavigationPanel">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="../themes/MetroDark.MSControls.Core.Implicit.xaml" />
+        <ResourceDictionary Source="../themes/MetroDark/MetroDark.MSControls.Core.Implicit.xaml" />
     </ResourceDictionary.MergedDictionaries>
     
     <converters:UriStringToImageConverter x:Key="imageConverter"/>

@@ -4,7 +4,7 @@
                     x:Class="DevelopmentInProgress.Wpf.Controls.FilterBox.FilterBox">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="../themes/MetroDark.MSControls.Core.Implicit.xaml" />
+        <ResourceDictionary Source="../themes/MetroDark/MetroDark.MSControls.Core.Implicit.xaml" />
     </ResourceDictionary.MergedDictionaries>
     
     <Style TargetType="{x:Type filterBox:XamlFilterBox}">

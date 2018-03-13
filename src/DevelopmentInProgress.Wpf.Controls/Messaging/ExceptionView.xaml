@@ -9,7 +9,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../themes/MetroDark.MSControls.Core.Implicit.xaml" />
+                <ResourceDictionary Source="../themes/MetroDark/MetroDark.MSControls.Core.Implicit.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <converters:MessageTextToImageConverter x:Key="imageConverter"/>
