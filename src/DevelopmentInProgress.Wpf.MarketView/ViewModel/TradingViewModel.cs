@@ -20,6 +20,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private Symbol selectedSymbol;
         private SymbolViewModel symbolViewModel;
         private AccountViewModel accountViewModel;
+        private TradeViewModel tradeViewModel;
         private SymbolsViewModel symbolsViewModel;
         private User user;
         private Account account;
@@ -79,7 +80,20 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 }
             }
         }
-        
+
+        public TradeViewModel TradeViewModel
+        {
+            get { return tradeViewModel; }
+            set
+            {
+                if (tradeViewModel != value)
+                {
+                    tradeViewModel = value;
+                    OnPropertyChanged("TradeViewModel");
+                }
+            }
+        }
+
         public Symbol SelectedSymbol
         {
             get { return selectedSymbol; }
@@ -129,7 +143,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             IsBusy = true;
 
             Account = new Account(new Interface.AccountInfo { User = new Interface.User() });
-
+            
             user = await personaliseService.GetPreferencesAsync();
 
             if (user != null
@@ -142,6 +156,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
             
             SymbolsViewModel = new SymbolsViewModel(user, exchangeService, this, TradeViewModelException);
+
+            TradeViewModel = new TradeViewModel(Account, exchangeService, TradeViewModelException);
 
             IsBusy = false;
         }

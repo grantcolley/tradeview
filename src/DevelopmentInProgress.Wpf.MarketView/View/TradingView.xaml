@@ -3,12 +3,8 @@
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-                       xmlns:model="clr-namespace:DevelopmentInProgress.Wpf.MarketView.Model"
                        xmlns:view="clr-namespace:DevelopmentInProgress.Wpf.Host.View;assembly=DevelopmentInProgress.Wpf.Host"
                        xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Host.Converters;assembly=DevelopmentInProgress.Wpf.Host"
-                       xmlns:filterbox="clr-namespace:DevelopmentInProgress.Wpf.Controls.FilterBox;assembly=DevelopmentInProgress.Wpf.Controls"
-                       xmlns:progress="clr-namespace:DevelopmentInProgress.Wpf.Host.Controls.Progress;assembly=DevelopmentInProgress.Wpf.Host"
-                       xmlns:localConverters="clr-namespace:DevelopmentInProgress.Wpf.MarketView.Converters"
                        xmlns:localViewModel="clr-namespace:DevelopmentInProgress.Wpf.MarketView.ViewModel"
                        xmlns:localView="clr-namespace:DevelopmentInProgress.Wpf.MarketView.View"
                        mc:Ignorable="d">
@@ -26,6 +22,10 @@
             <localView:AccountView></localView:AccountView>
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type localViewModel:TradeViewModel}">
+            <localView:TradeView></localView:TradeView>
+        </DataTemplate>
+        
         <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
         
     </view:DocumentViewBase.Resources>
@@ -34,27 +34,33 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="23*"/>
             <ColumnDefinition Width="2"/>
-            <ColumnDefinition Width="77*"/>
+            <ColumnDefinition Width="23*"/>
+            <ColumnDefinition Width="54*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="70*"/>
+            <RowDefinition Height="60*"/>
             <RowDefinition Height="2"/>
-            <RowDefinition Height="30*"/>
+            <RowDefinition Height="40*"/>
         </Grid.RowDefinitions>
 
         <DockPanel Grid.Row="0" Grid.Column="0" LastChildFill="True">
             <ContentControl Content="{Binding SymbolsViewModel}"/>
         </DockPanel>
 
-        <GridSplitter Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
+        <GridSplitter Grid.Row="0" Grid.Column="1" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
         <GridSplitter Grid.Row="1" Grid.Column="0" Height="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext"/>
 
+        <DockPanel Margin="5" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2" LastChildFill="True">
+            <ContentControl Content="{Binding SymbolViewModel}" Visibility="{Binding HasSelectedSymbol, Converter={StaticResource boolToVisibilityConverter}}"/>
+        </DockPanel>
+        
         <DockPanel Grid.Row="2" Grid.Column="0" LastChildFill="True">
             <ContentControl Content="{Binding AccountViewModel}"/>
         </DockPanel>
-        
-        <DockPanel Margin="5" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" LastChildFill="True">
-            <ContentControl Content="{Binding SymbolViewModel}" Visibility="{Binding HasSelectedSymbol, Converter={StaticResource boolToVisibilityConverter}}"/>
+
+        <DockPanel Grid.Row="2" Grid.Column="2" LastChildFill="True">
+            <ContentControl Content="{Binding TradeViewModel}"/>
         </DockPanel>
+        
     </Grid>
 </view:DocumentViewBase>

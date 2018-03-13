@@ -92,6 +92,7 @@
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\SymbolsViewModel.cs" />
     <Compile Include="ViewModel\SymbolViewModel.cs" />
+    <Compile Include="ViewModel\TradeViewModel.cs" />
     <Compile Include="ViewModel\TradingViewModel.cs" />
     <Compile Include="View\AccountView.xaml.cs">
       <DependentUpon>AccountView.xaml</DependentUpon>
@@ -101,6 +102,9 @@
     </Compile>
     <Compile Include="View\SymbolView.xaml.cs">
       <DependentUpon>SymbolView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TradeView.xaml.cs">
+      <DependentUpon>TradeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TradingView.xaml.cs">
       <DependentUpon>TradingView.xaml</DependentUpon>
@@ -142,6 +146,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\SymbolView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TradeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
