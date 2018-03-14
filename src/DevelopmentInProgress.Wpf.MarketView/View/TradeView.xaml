@@ -18,8 +18,23 @@
     <DockPanel Margin="2" LastChildFill="True">
         <GroupBox Margin="5" Style="{StaticResource GroupBoxNoHeaderStyle}">
             <DockPanel LastChildFill="True">
-                <ComboBox DockPanel.Dock="Top" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                <ComboBox DockPanel.Dock="Top" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                <ComboBox DockPanel.Dock="Top" Margin="2" 
+                          ItemsSource="{Binding Symbols}"
+                          SelectedItem="{Binding SelectedSymbol}"
+                          Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type model:Symbol}">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{Binding BaseAsset.Symbol}" FontWeight="Bold"/>
+                                <Label Content="/"/>
+                                <Label Content="{Binding QuoteAsset.Symbol}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <ComboBox DockPanel.Dock="Top" Margin="2" 
+                          ItemsSource="{Binding OrderTypes}"
+                          Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                 <TextBox DockPanel.Dock="Top" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                 <TextBox DockPanel.Dock="Top" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                 <Button DockPanel.Dock="Bottom" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>

@@ -42,9 +42,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             TimeFormatter = value => new DateTime((long)value).ToString("H:mm:ss");
             PriceFormatter = value => value.ToString("0.00000000");
 
-            IsLoadingTrades = true;
-            IsLoadingOrderBook = true;
-
             symbolCancellationTokenSource = new CancellationTokenSource();
 
             GetSymbol();
@@ -134,6 +131,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         private async Task GetOrderBook()
         {
+            IsLoadingOrderBook = true;
+
             try
             {
                 var orderBook = await ExchangeService.GetOrderBookAsync(Symbol.Name, limit, symbolCancellationTokenSource.Token);
@@ -152,6 +151,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         private async Task GetTrades()
         {
+            IsLoadingTrades = true;
+
             try
             {
                 var trades = await ExchangeService.GetAggregateTradesAsync(Symbol.Name, limit, symbolCancellationTokenSource.Token);

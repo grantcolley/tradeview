@@ -12,7 +12,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
     public class SymbolsViewModel : BaseViewModel
     {
         private CancellationTokenSource symbolsCancellationTokenSource;
-        Action<Exception> exception;
+        private Action<Exception> exception;
         private List<Symbol> symbols;
         private Symbol selectedSymbol;
         private ISelectedSymbol selectedSymbolNotification;
