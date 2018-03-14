@@ -69,7 +69,7 @@
                                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
                                         <Label Content="{Binding BaseAsset.Symbol}" FontWeight="Bold"/>
                                         <Label Content="/"/>
-                                        <Label Content="{Binding QuoteAsset.Symbol}"/>
+                                        <Label Content="{Binding QuoteAsset.Symbol}" VerticalAlignment="Center"/>
                                     </StackPanel>
                                     <StackPanel Grid.Row="1" Grid.Column="1" Background="Transparent" Orientation="Horizontal">
                                         <Label Content="Vol"/>

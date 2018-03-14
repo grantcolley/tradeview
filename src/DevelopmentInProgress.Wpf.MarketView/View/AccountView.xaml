@@ -66,14 +66,14 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0" Margin="1" Content="Account Api Key"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" Margin="1" Text="{Binding Account.ApiKey}"/>
-                    <Label Grid.Row="1" Grid.Column="0" Margin="1" Content="Secret Key"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Margin="1" Text="{Binding Account.ApiSecret}"/>
+                    <Label Grid.Row="0" Grid.Column="0" Margin="2" Content="Account Api Key"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Margin="2" Text="{Binding Account.ApiKey}"/>
+                    <Label Grid.Row="1" Grid.Column="0" Margin="2" Content="Secret Key"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Margin="2" Text="{Binding Account.ApiSecret}"/>
                     <Button Grid.Row="1" Grid.Column="2"
                                 Style="{StaticResource ImageButtonStyle}"
                                 Height="18" Width="18"                                                    
-                                Margin="1"
+                                Margin="2"
                                 ToolTip="Login"
                                 Command="{Binding LoginCommand}" 
                                 Visibility="{Binding IsLoggingIn, Converter={StaticResource invertBoolToVisibilityConverter}}">
@@ -81,7 +81,7 @@
                     </Button>
                     <Viewbox Grid.Row="1" Grid.Column="2"
                                  Height="18" Width="18"
-                                 Margin="1"
+                                 Margin="2"
                                  Visibility="{Binding IsLoggingIn, Converter={StaticResource boolToVisibilityConverter}}">
                         <progress:CircularProgress/>
                     </Viewbox>

@@ -18,6 +18,15 @@
     <DockPanel Margin="2" LastChildFill="True">
         <GroupBox Margin="5" Style="{StaticResource GroupBoxNoHeaderStyle}">
             <DockPanel LastChildFill="True">
+                <ComboBox DockPanel.Dock="Top" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                <ComboBox DockPanel.Dock="Top" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                <TextBox DockPanel.Dock="Top" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                <TextBox DockPanel.Dock="Top" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                <Button DockPanel.Dock="Bottom" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                <Label/>
+                <Viewbox Height="50" Width="50" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource boolToVisibilityConverter}}">
+                    <progress:CircularProgress />
+                </Viewbox>
             </DockPanel>
         </GroupBox>
     </DockPanel>

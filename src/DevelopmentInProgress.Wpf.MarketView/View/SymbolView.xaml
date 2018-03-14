@@ -30,7 +30,7 @@
                     <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
                         <Label Content="{Binding Symbol.BaseAsset.Symbol}" FontWeight="Bold" FontSize="14"/>
                         <Label Content="/"/>
-                        <Label Content="{Binding Symbol.QuoteAsset.Symbol}" FontSize="12"/>
+                        <Label Content="{Binding Symbol.QuoteAsset.Symbol}" FontSize="12" VerticalAlignment="Center"/>
                     </StackPanel>
                     <Label DockPanel.Dock="Left" Content="Price" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                     <Label DockPanel.Dock="Left" Content="{Binding OrderBook.QuoteSymbol}" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
