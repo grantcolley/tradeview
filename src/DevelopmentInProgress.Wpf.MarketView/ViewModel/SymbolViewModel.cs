@@ -123,9 +123,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         {
             try
             {
-                var tasks = new List<Task>();
-                tasks.Add(Task.Run(() => GetOrderBook()));
-                tasks.Add(Task.Run(() => GetTrades()));
+                var tasks = new List<Task>(new [] { GetOrderBook(), GetTrades() }).ToArray();
                 await Task.WhenAll(tasks);
             }
             catch (Exception ex)
