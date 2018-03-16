@@ -10,17 +10,12 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
     {
         private Account account;
         private AccountBalance selectedAsset;
-        private Action<Exception> exception;
         private bool isLoggingIn;
         private bool disposed;
 
-        public AccountViewModel(Account account, IExchangeService exchangeService, Action<Exception> exception)
+        public AccountViewModel(IExchangeService exchangeService)
             : base(exchangeService)
         {
-            Account = account;
-
-            this.exception = exception;
-
             LoginCommand = new ViewModelCommand(Login);
         }
 
@@ -29,7 +24,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         public Account Account
         {
             get { return account; }
-            private set
+            set
             {
                 if (account != value)
                 {
@@ -70,7 +65,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             if (string.IsNullOrWhiteSpace(Account.AccountInfo.User.ApiKey)
                 || string.IsNullOrWhiteSpace(Account.AccountInfo.User.ApiSecret))
             {
-                exception.Invoke(new Exception("Both api key and secret key are required to login to an account."));
+                //exception.Invoke(new Exception("Both api key and secret key are required to login to an account."));
                 return;
             }
 
@@ -78,11 +73,12 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             try
             {
+                // TODO: CancellationToken??????????????????????????????????????????????
                 Account = await ExchangeService.GetAccountInfoAsync(Account.AccountInfo.User.ApiKey, Account.AccountInfo.User.ApiSecret);
             }
             catch(Exception e)
             {
-                exception.Invoke(e);
+                //exception.Invoke(e);
             }
 
             IsLoggingIn = false;

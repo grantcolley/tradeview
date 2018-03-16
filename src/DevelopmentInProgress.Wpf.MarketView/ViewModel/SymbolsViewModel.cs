@@ -1,5 +1,4 @@
-﻿using DevelopmentInProgress.Wpf.MarketView.Interfaces;
-using DevelopmentInProgress.Wpf.MarketView.Model;
+﻿using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.MarketView.Personalise;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using System;
@@ -15,18 +14,18 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private Action<Exception> exception;
         private List<Symbol> symbols;
         private Symbol selectedSymbol;
-        private ISelectedSymbol selectedSymbolNotification;
+        //private ISelectedSymbol selectedSymbolNotification;
         private User user;
         private bool showFavourites;
         private bool isLoadingSymbols;
         private bool disposed;
 
-        public SymbolsViewModel(User user, IExchangeService exchangeService, ISelectedSymbol selectedSymbolNotification, Action<Exception> exception)
+        public SymbolsViewModel(IExchangeService exchangeService)
             : base(exchangeService)
         {
-            this.user = user;
-            this.selectedSymbolNotification = selectedSymbolNotification;
-            this.exception = exception;
+            //this.user = user;
+            //this.selectedSymbolNotification = selectedSymbolNotification;
+            //this.exception = exception;
 
             symbolsCancellationTokenSource = new CancellationTokenSource();
 
@@ -54,7 +53,20 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 if (selectedSymbol != value)
                 {
                     selectedSymbol = value;
-                    selectedSymbolNotification.Notify(selectedSymbol);
+                    //selectedSymbolNotification.Notify(selectedSymbol);
+                }
+            }
+        }
+
+        public User User
+        {
+            get { return user; }
+            set
+            {
+                if (user != value)
+                {
+                    user = value;
+                    SetPreferences();
                 }
             }
         }
@@ -105,23 +117,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                 ExchangeService.SubscribeStatistics(symbols, exception, symbolsCancellationTokenSource.Token);
 
-                if (user != null
-                    && user.Preferences != null)
-                {
-                    if (user.Preferences.FavouriteSymbols != null
-                        && user.Preferences.FavouriteSymbols.Any())
-                    {
-                        Func<Symbol, string, Symbol> f = ((s, p) =>
-                        {
-                            s.IsFavourite = true;
-                            return s;
-                        });
-
-                        (from s in Symbols join fs in user.Preferences.FavouriteSymbols on s.Name equals fs.ToString() select f(s, fs)).ToList();
-
-                        ShowFavourites = user.Preferences.ShowFavourites;
-                    }
-                }
+                SetPreferences();
             }
             catch(Exception e)
             {
@@ -129,6 +125,29 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
 
             IsLoadingSymbols = false;
+        }
+
+        private void SetPreferences()
+        {
+            if (user != null 
+                && user.Preferences != null 
+                && Symbols != null 
+                && Symbols.Any())
+            {
+                if (user.Preferences.FavouriteSymbols != null
+                    && user.Preferences.FavouriteSymbols.Any())
+                {
+                    Func<Symbol, string, Symbol> f = ((s, p) =>
+                    {
+                        s.IsFavourite = true;
+                        return s;
+                    });
+
+                    (from s in Symbols join fs in user.Preferences.FavouriteSymbols on s.Name equals fs.ToString() select f(s, fs)).ToList();
+
+                    ShowFavourites = user.Preferences.ShowFavourites;
+                }
+            }
         }
 
         public override void Dispose(bool disposing)

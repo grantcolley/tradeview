@@ -25,9 +25,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private User user;
         private Account account;
         
-        public TradingViewModel(ViewModelContext viewModelContext, IExchangeService exchangeService, IPersonaliseService personaliseService)
+        public TradingViewModel(ViewModelContext viewModelContext, 
+            AccountViewModel accountViewModel, SymbolsViewModel symbolsViewModel,
+            IExchangeService exchangeService, IPersonaliseService personaliseService)
             : base(viewModelContext)
         {
+            AccountViewModel = accountViewModel;
+            SymbolsViewModel = symbolsViewModel;
+
             this.exchangeService = exchangeService;
             this.personaliseService = personaliseService;
         }
@@ -53,16 +58,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 if (account != value)
                 {
                     account = value;
-
-                    if (account != null)
-                    {
-                        AccountViewModel = new AccountViewModel(account, exchangeService, TradeViewModelException);
-                    }
-                    else
-                    {
-                        AccountViewModel = null;
-                    }
-
+                    AccountViewModel.Account = account;
                     OnPropertyChanged("Account");
                 }
             }
@@ -142,6 +138,12 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         {
             IsBusy = true;
 
+            if(Messages != null
+                && Messages.Any())
+            {
+                ClearMessages();
+            }
+
             Account = new Account(new Interface.AccountInfo { User = new Interface.User() });
             
             user = await personaliseService.GetPreferencesAsync();
@@ -154,8 +156,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     Account.ApiKey = user.ApiKey;
                 }
             }
-            
-            SymbolsViewModel = new SymbolsViewModel(user, exchangeService, this, TradeViewModelException);
+
+            SymbolsViewModel.User = user;
 
             TradeViewModel = new TradeViewModel(Account, exchangeService, TradeViewModelException);
 
@@ -194,6 +196,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             if (SymbolsViewModel != null)
             {
                 SymbolsViewModel.Dispose();
+            }
+
+            if(tradeViewModel != null)
+            {
+                tradeViewModel.Dispose();
             }
         }
 
