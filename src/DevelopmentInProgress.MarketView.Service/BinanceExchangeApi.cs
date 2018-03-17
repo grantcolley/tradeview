@@ -20,10 +20,10 @@ namespace DevelopmentInProgress.MarketView.Service
             binanceApi = new BinanceApi();
         }
 
-        public async Task<Interface.Model.AccountInfo> GetAccountInfoAsync(Interface.Model.User user)
+        public async Task<Interface.Model.AccountInfo> GetAccountInfoAsync(Interface.Model.User user, CancellationToken cancellationToken)
         {
                 var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret);
-                var result = await binanceApi.GetAccountInfoAsync(apiUser);
+                var result = await binanceApi.GetAccountInfoAsync(apiUser, 0, cancellationToken);
                 var accountInfo = new Interface.Model.AccountInfo
                 {
                     Commissions = new Interface.Model.AccountCommissions { Buyer = result.Commissions.Buyer, Maker = result.Commissions.Maker, Seller = result.Commissions.Seller, Taker = result.Commissions.Taker },

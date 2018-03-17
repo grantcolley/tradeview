@@ -9,7 +9,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Interfaces
 {
     public interface IExchangeApi
     {
-        Task<AccountInfo> GetAccountInfoAsync(User user);
+        Task<AccountInfo> GetAccountInfoAsync(User user, CancellationToken cancellationToken);
         Task<IEnumerable<Symbol>> GetSymbolsAsync(CancellationToken cancellationToken);
         Task<IEnumerable<SymbolStats>> Get24HourStatisticsAsync(CancellationToken cancellationToken);
         Task<OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken);
