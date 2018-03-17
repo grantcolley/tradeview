@@ -10,7 +10,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
 {
     public interface IExchangeService
     {
-        Task<Account> GetAccountInfoAsync(string apiKey, string apiSecret);
+        Task<Account> GetAccountInfoAsync(string apiKey, string apiSecret, CancellationToken cancellationToken);
         Task<IEnumerable<Symbol>> GetSymbolsAsync(CancellationToken cancellationToken);
         Task<IEnumerable<SymbolStatistics>> Get24HourStatisticsAsync(CancellationToken cancellationToken);
         Task<IEnumerable<Symbol>> GetSymbols24HourStatisticsAsync(CancellationToken cancellationToken);

@@ -123,9 +123,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
             exchangeApi.SubscribeOrderBook(symbol, limit, callback, exception, cancellationToken);
         }
 
-        public async Task<Account> GetAccountInfoAsync(string apiKey, string apiSecret)
+        public async Task<Account> GetAccountInfoAsync(string apiKey, string apiSecret, CancellationToken cancellationToken)
         {
-            var accountInfo = await exchangeApi.GetAccountInfoAsync(new Interface.User { ApiKey = apiKey, ApiSecret = apiSecret});
+            var accountInfo = await exchangeApi.GetAccountInfoAsync(new Interface.User { ApiKey = apiKey, ApiSecret = apiSecret}, cancellationToken);
             return new Account(accountInfo);
         }
 
