@@ -382,7 +382,7 @@
   <!-- *********************************  ComboBoxEditableTextBox Style  ********************************* -->
   <Style x:Key="ComboBoxEditableTextBoxStyle" TargetType="{x:Type TextBox}">
     <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
-    <Setter Property="FontSize" Value="14.667" />
+    <Setter Property="FontSize" Value="10" />
     <Setter Property="FontFamily" Value="Segoe UI" />
     <Setter Property="OverridesDefaultStyle" Value="true" />
     <Setter Property="AllowDrop" Value="true" />

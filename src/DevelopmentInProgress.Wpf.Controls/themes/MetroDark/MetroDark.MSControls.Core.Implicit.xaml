@@ -529,7 +529,7 @@
   <Style x:Key="{x:Type ToolTip}" TargetType="ToolTip">
     <Setter Property="OverridesDefaultStyle" Value="true" />
     <Setter Property="FontFamily" Value="Segoe UI" />
-    <Setter Property="FontSize" Value="14.667" />
+    <Setter Property="FontSize" Value="10" />
     <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
     <Setter Property="Background" Value="{StaticResource TooltipBackgroundBrush}" />
     <Setter Property="BorderBrush" Value="{StaticResource TooltipBorderBrush}" />

@@ -188,7 +188,7 @@
 
   <!-- *********************************  ComboBoxToggleButton Style   ********************************* -->
   <Style x:Key="ComboBoxToggleButtonStyle" TargetType="ToggleButton">
-    <Setter Property="FontSize" Value="14.667" />
+    <Setter Property="FontSize" Value="10" />
     <Setter Property="FontFamily" Value="Segoe UI" />
     <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
     <Setter Property="BorderBrush" Value="{StaticResource ComboBoxToggleButtonBorderBrush}" />
@@ -271,7 +271,7 @@
 
   <!-- *********************************  ComboBoxItem Style  ********************************* -->
   <Style x:Key="ComboBoxItemStyle" TargetType="ComboBoxItem">
-    <Setter Property="FontSize" Value="14.667" />
+    <Setter Property="FontSize" Value="10" />
     <Setter Property="FontFamily" Value="Segoe UI" />
     <Setter Property="MinHeight" Value="30" />
     <Setter Property="Padding" Value="6,0" />
@@ -604,7 +604,7 @@
   <!-- ********************************** RadioButton Style **********************************-->
   <Style x:Key="RadioButtonStyle" TargetType="RadioButton">
     <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
-    <Setter Property="FontSize" Value="14.667" />
+    <Setter Property="FontSize" Value="10" />
     <Setter Property="FontFamily" Value="Segoe UI" />
     <Setter Property="HorizontalContentAlignment" Value="Left" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -770,7 +770,7 @@
     <!-- *********************************  ButtonImageStyle  ********************************* -->
     <Style x:Key="ButtonImageStyle" TargetType="Button">
         <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
-        <Setter Property="FontSize" Value="14.667" />
+        <Setter Property="FontSize" Value="10" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Padding" Value="10,0,10,2" />
         <Setter Property="MinHeight" Value="30" />
