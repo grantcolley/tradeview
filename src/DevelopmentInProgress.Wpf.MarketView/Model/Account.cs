@@ -38,8 +38,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
             get { return AccountInfo?.User?.ApiKey; }
             set
             {
-                if (AccountInfo != null
-                    && AccountInfo.User != null)
+                if (AccountInfo.User.ApiKey != value)
                 {
                     AccountInfo.User.ApiKey = value;
                     OnPropertyChanged("ApiKey");
@@ -52,8 +51,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
             get { return apiSecret; }
             set
             {
-                if (AccountInfo != null
-                    && AccountInfo.User != null)
+                if (AccountInfo.User.ApiSecret != value)
                 {
                     AccountInfo.User.ApiSecret = value;
                     apiSecret = string.IsNullOrWhiteSpace(value) ? string.Empty : secretText; 

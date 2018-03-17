@@ -12,44 +12,6 @@
         
         <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
         <converters:InvertBoolToVisibilityConverter x:Key="invertBoolToVisibilityConverter"/>
-
-        <Style x:Key="ImageButtonStyle" TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="1">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Border Background="{TemplateBinding Background}" BorderThickness="1">
-                                    <Border.Style>
-                                        <Style TargetType="{x:Type Border}">
-                                            <Setter Property="BorderBrush">
-                                                <Setter.Value>
-                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                        <GradientStop Color="#898C95" Offset="0" />
-                                                        <GradientStop Color="#898C95" Offset="1" />
-                                                    </LinearGradientBrush>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </Border.Style>
-                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
         
     </UserControl.Resources>
 
@@ -71,7 +33,7 @@
                     <Label Grid.Row="1" Grid.Column="0" Margin="2" Content="Secret Key"/>
                     <TextBox Grid.Row="1" Grid.Column="1" Margin="2" Text="{Binding Account.ApiSecret}"/>
                     <Button Grid.Row="1" Grid.Column="2"
-                                Style="{StaticResource ImageButtonStyle}"
+                                Style="{StaticResource ButtonImageStyle}"
                                 Height="18" Width="18"                                                    
                                 Margin="2"
                                 ToolTip="Login"

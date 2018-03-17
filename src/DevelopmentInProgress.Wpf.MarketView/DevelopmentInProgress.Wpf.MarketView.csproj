@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -69,8 +70,8 @@
   <ItemGroup>
     <Compile Include="Converters\PriceChangePercentConverter.cs" />
     <Compile Include="Converters\LastPriceChangeDirectionColourConverter.cs" />
-    <Compile Include="Interfaces\INotify.cs" />
-    <Compile Include="Interfaces\ISelectedSymbol.cs" />
+    <Compile Include="Events\AccountEventArgs.cs" />
+    <Compile Include="Events\SymbolsEventArgs.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\AccountBalance.cs" />
     <Compile Include="Model\AggregateTrade.cs" />
@@ -160,6 +161,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\login.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Reactive">
+      <Version>3.1.1</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
