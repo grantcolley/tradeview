@@ -120,8 +120,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 if(selectedSymbol != value)
                 {
                     selectedSymbol = value;
-                    SymbolViewModel.SetSymbol(selectedSymbol);
-
                     OnPropertyChanged("SelectedSymbol");
                 }
             }
@@ -209,7 +207,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 eventHandler => SymbolsViewModel.OnSymbolsNotification -= eventHandler)
                 .Select(eventPattern => eventPattern.EventArgs);
 
-            symbolsObservable.Subscribe(args =>
+            symbolsObservable.Subscribe(async (args) =>
             {
                 if (args.HasException)
                 {
@@ -218,6 +216,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 else
                 {
                     SelectedSymbol = args.Value;
+                    await SymbolViewModel.SetSymbol(selectedSymbol);
                 }
             });
         }

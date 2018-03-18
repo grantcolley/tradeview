@@ -132,7 +132,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             disposed = true;
         }
 
-        public async void SetSymbol(Symbol symbol)
+        public async Task SetSymbol(Symbol symbol)
         {
             try
             {
@@ -145,6 +145,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 symbolCancellationTokenSource = new CancellationTokenSource();
 
                 Symbol = symbol;
+                AggregateTrades = null;
+                OrderBook = null;
 
                 var tasks = new List<Task>(new [] { GetOrderBook(), GetTrades() }).ToArray();
                 await Task.WhenAll(tasks);
