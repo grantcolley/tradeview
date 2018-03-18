@@ -51,7 +51,7 @@
         <GridSplitter Grid.Row="1" Grid.Column="0" Height="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext"/>
 
         <DockPanel Margin="5" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2" LastChildFill="True">
-            <ContentControl Content="{Binding SymbolViewModel}" Visibility="{Binding HasSelectedSymbol, Converter={StaticResource boolToVisibilityConverter}}"/>
+            <ContentControl Content="{Binding SymbolViewModel}"/>
         </DockPanel>
         
         <DockPanel Grid.Row="2" Grid.Column="0" LastChildFill="True">

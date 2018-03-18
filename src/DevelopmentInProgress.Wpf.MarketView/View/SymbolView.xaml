@@ -14,7 +14,7 @@
 
     <DockPanel Margin="2" LastChildFill="True">
         <GroupBox Style="{StaticResource GroupBoxNoHeaderStyle}">
-            <Grid Margin="2">
+            <Grid Margin="2" Visibility="{Binding HasSymbol, Converter={StaticResource boolToVisibilityConverter}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20*"/>
                     <ColumnDefinition Width="10"/>
