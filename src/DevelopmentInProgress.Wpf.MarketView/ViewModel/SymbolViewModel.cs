@@ -248,6 +248,16 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 {
                     var maxId = AggregateTrades.Max(at => at.Id);
                     var orderedAggregateTrades = (from t in trades where t.Id > maxId orderby t.Time select new AggregateTrade { Id = t.Id, Time = t.Time, Price = t.Price, Quantity = t.Quantity, IsBuyerMaker = t.IsBuyerMaker }).ToList();
+
+                    if (AggregateTrades.Count >= 100)
+                    {
+                        var oldTrades = AggregateTrades.Take(orderedAggregateTrades.Count);
+                        foreach(var oldTrade in oldTrades)
+                        {
+                            AggregateTrades.Remove(oldTrade);
+                        }
+                    }
+
                     AggregateTrades.AddRange(orderedAggregateTrades);
                 }
             }
