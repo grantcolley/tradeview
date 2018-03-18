@@ -71,7 +71,10 @@
     <Compile Include="Converters\PriceChangePercentConverter.cs" />
     <Compile Include="Converters\LastPriceChangeDirectionColourConverter.cs" />
     <Compile Include="Events\AccountEventArgs.cs" />
+    <Compile Include="Events\EventArgsBase.cs" />
+    <Compile Include="Events\SymbolEventArgs.cs" />
     <Compile Include="Events\SymbolsEventArgs.cs" />
+    <Compile Include="Events\TradeEventArgs.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\AccountBalance.cs" />
     <Compile Include="Model\AggregateTrade.cs" />

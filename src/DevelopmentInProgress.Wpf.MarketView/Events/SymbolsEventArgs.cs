@@ -2,8 +2,7 @@
 
 namespace DevelopmentInProgress.Wpf.MarketView.Events
 {
-    public class AccountEventArgs : EventArgsBase<Account>
+    public class SymbolsEventArgs : EventArgsBase<Symbol>
     {
-        public AccountBalance SelectedAsset { get; set; }
     }
 }
