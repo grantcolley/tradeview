@@ -175,6 +175,15 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     (from s in Symbols join fs in user.Preferences.FavouriteSymbols on s.Name equals fs.ToString() select f(s, fs)).ToList();
 
                     ShowFavourites = user.Preferences.ShowFavourites;
+
+                    if (!string.IsNullOrWhiteSpace(user.Preferences.SelectedSymbol))
+                    {
+                        var symbol = Symbols.FirstOrDefault(s => s.Name.Equals(user.Preferences.SelectedSymbol));
+                        if (symbol != null)
+                        {
+                            SelectedSymbol = symbol;
+                        }
+                    }
                 }
             }
         }
