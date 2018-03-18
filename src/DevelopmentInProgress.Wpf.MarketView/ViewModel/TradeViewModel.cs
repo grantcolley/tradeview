@@ -1,4 +1,5 @@
 ﻿using DevelopmentInProgress.MarketView.Interface.Helpers;
+using DevelopmentInProgress.Wpf.MarketView.Events;
 using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using System;
@@ -10,20 +11,32 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
     public class TradeViewModel : BaseViewModel
     {
         private CancellationTokenSource symbolsCancellationTokenSource;
-        private Action<Exception> exception;
         private List<Symbol> symbols;
         private Symbol selectedSymbol;
+        private Account account;
         private bool disposed;
         private bool isLoading;
 
-        public TradeViewModel(Account account, IExchangeService exchangeService, Action<Exception> exception)
+        public TradeViewModel(IExchangeService exchangeService)
             : base(exchangeService)
         {
-            this.exception = exception;
-
             symbolsCancellationTokenSource = new CancellationTokenSource();
 
             GetSymbols();
+        }
+
+        public event EventHandler<TradeEventArgs> OnTradeNotification;
+
+        public Account Account
+        {
+            get { return account; }
+            set
+            {
+                if (account != value)
+                {
+                    account = value;
+                }
+            }
         }
 
         public bool IsLoading
@@ -60,7 +73,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 if (selectedSymbol != value)
                 {
                     selectedSymbol = value;
-                    //selectedSymbolNotification.Notify(selectedSymbol);
                 }
             }
         }
@@ -68,24 +80,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         public string[] OrderTypes
         {
             get { return OrderTypeHelper.OrderTypes(); }
-        }
-
-        private async void GetSymbols()
-        {
-            IsLoading = true;
-
-            try
-            {
-                var results = await ExchangeService.GetSymbolsAsync(symbolsCancellationTokenSource.Token);
-
-                Symbols = new List<Symbol>(results);
-            }
-            catch (Exception e)
-            {
-                exception.Invoke(e);
-            }
-
-            IsLoading = false;
         }
 
         public override void Dispose(bool disposing)
@@ -105,6 +99,30 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
 
             disposed = true;
+        }
+
+        private async void GetSymbols()
+        {
+            IsLoading = true;
+
+            try
+            {
+                var results = await ExchangeService.GetSymbolsAsync(symbolsCancellationTokenSource.Token);
+
+                Symbols = new List<Symbol>(results);
+            }
+            catch (Exception e)
+            {
+                OnException(e);
+            }
+
+            IsLoading = false;
+        }
+
+        private void OnException(Exception exception)
+        {
+            var onTradeNotification = OnTradeNotification;
+            onTradeNotification?.Invoke(this, new TradeEventArgs { Exception = exception });
         }
     }
 }

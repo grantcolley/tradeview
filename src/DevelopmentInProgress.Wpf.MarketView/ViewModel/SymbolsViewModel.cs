@@ -1,4 +1,5 @@
-﻿using DevelopmentInProgress.Wpf.MarketView.Model;
+﻿using DevelopmentInProgress.Wpf.MarketView.Events;
+using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.MarketView.Personalise;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using System;
@@ -11,10 +12,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
     public class SymbolsViewModel : BaseViewModel
     {
         private CancellationTokenSource symbolsCancellationTokenSource;
-        private Action<Exception> exception;
         private List<Symbol> symbols;
         private Symbol selectedSymbol;
-        //private ISelectedSymbol selectedSymbolNotification;
         private User user;
         private bool showFavourites;
         private bool isLoadingSymbols;
@@ -23,14 +22,12 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         public SymbolsViewModel(IExchangeService exchangeService)
             : base(exchangeService)
         {
-            //this.user = user;
-            //this.selectedSymbolNotification = selectedSymbolNotification;
-            //this.exception = exception;
-
             symbolsCancellationTokenSource = new CancellationTokenSource();
 
             GetSymbols();
         }
+
+        public event EventHandler<SymbolsEventArgs> OnSymbolsNotification;
 
         public List<Symbol> Symbols
         {
@@ -53,7 +50,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 if (selectedSymbol != value)
                 {
                     selectedSymbol = value;
-                    //selectedSymbolNotification.Notify(selectedSymbol);
+                    OnSelectedSymbol(selectedSymbol);
                 }
             }
         }
@@ -92,6 +89,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 }
             }
         }
+
         public bool IsLoadingSymbols
         {
             get { return isLoadingSymbols; }
@@ -104,7 +102,26 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 }
             }
         }
-        
+
+        public override void Dispose(bool disposing)
+        {
+            if (disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                if (symbolsCancellationTokenSource != null
+                    && !symbolsCancellationTokenSource.IsCancellationRequested)
+                {
+                    symbolsCancellationTokenSource.Cancel();
+                }
+            }
+
+            disposed = true;
+        }
+
         private async void GetSymbols()
         {
             IsLoadingSymbols = true;
@@ -115,16 +132,28 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                 Symbols = new List<Symbol>(results);
 
-                ExchangeService.SubscribeStatistics(symbols, exception, symbolsCancellationTokenSource.Token);
+                ExchangeService.SubscribeStatistics(symbols, OnException, symbolsCancellationTokenSource.Token);
 
                 SetPreferences();
             }
-            catch(Exception e)
+            catch(Exception ex)
             {
-                exception.Invoke(e);
+                OnException(ex);
             }
 
             IsLoadingSymbols = false;
+        }
+
+        private void OnException(Exception exception)
+        {
+            var onSymbolsNotification = OnSymbolsNotification;
+            onSymbolsNotification?.Invoke(this, new SymbolsEventArgs { Exception = exception });
+        }
+
+        private void OnSelectedSymbol(Symbol symbol)
+        {
+            var onSymbolsNotification = OnSymbolsNotification;
+            onSymbolsNotification?.Invoke(this, new SymbolsEventArgs { Value = symbol });
         }
 
         private void SetPreferences()
@@ -148,25 +177,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     ShowFavourites = user.Preferences.ShowFavourites;
                 }
             }
-        }
-
-        public override void Dispose(bool disposing)
-        {
-            if (disposed)
-            {
-                return;
-            }
-
-            if (disposing)
-            {
-                if (symbolsCancellationTokenSource != null
-                    && !symbolsCancellationTokenSource.IsCancellationRequested)
-                {
-                    symbolsCancellationTokenSource.Cancel();
-                }
-            }
-
-            disposed = true;
         }
     }
 }

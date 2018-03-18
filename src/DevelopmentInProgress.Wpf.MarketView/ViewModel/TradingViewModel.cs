@@ -1,7 +1,6 @@
 ﻿using DevelopmentInProgress.Wpf.Controls.Messaging;
 using DevelopmentInProgress.Wpf.Host.Context;
 using DevelopmentInProgress.Wpf.Host.ViewModel;
-using DevelopmentInProgress.Wpf.MarketView.Interfaces;
 using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.MarketView.Personalise;
 using DevelopmentInProgress.Wpf.MarketView.Services;
@@ -10,10 +9,12 @@ using System.Collections.Generic;
 using Microsoft.Practices.Prism.Logging;
 using System.Linq;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
+using System.Reactive.Linq;
+using DevelopmentInProgress.Wpf.MarketView.Events;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
-    public class TradingViewModel : DocumentViewModel, ISelectedSymbol
+    public class TradingViewModel : DocumentViewModel
     {
         private IExchangeService exchangeService;
         private IPersonaliseService personaliseService;
@@ -27,25 +28,72 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         
         public TradingViewModel(ViewModelContext viewModelContext, 
             AccountViewModel accountViewModel, SymbolsViewModel symbolsViewModel,
+            TradeViewModel tradeViewModel, SymbolViewModel symbolViewModel,
             IExchangeService exchangeService, IPersonaliseService personaliseService)
             : base(viewModelContext)
         {
             AccountViewModel = accountViewModel;
             SymbolsViewModel = symbolsViewModel;
+            TradeViewModel = tradeViewModel;
+            SymbolViewModel = symbolViewModel;
 
             this.exchangeService = exchangeService;
             this.personaliseService = personaliseService;
+
+            ObserveSymbols();
+            ObserveAccount();
+            ObserveSymbol();
+            ObserverTrade();
+        }
+        
+        public AccountViewModel AccountViewModel
+        {
+            get { return accountViewModel; }
+            private set
+            {
+                if (accountViewModel != value)
+                {
+                    accountViewModel = value;
+                    OnPropertyChanged("AccountViewModel");
+                }
+            }
         }
 
         public SymbolsViewModel SymbolsViewModel
         {
             get { return symbolsViewModel; }
-            set
+            private set
             {
                 if (symbolsViewModel != value)
                 {
                     symbolsViewModel = value;
                     OnPropertyChanged("SymbolsViewModel");
+                }
+            }
+        }
+
+        public TradeViewModel TradeViewModel
+        {
+            get { return tradeViewModel; }
+            private set
+            {
+                if (tradeViewModel != value)
+                {
+                    tradeViewModel = value;
+                    OnPropertyChanged("TradeViewModel");
+                }
+            }
+        }
+
+        public SymbolViewModel SymbolViewModel
+        {
+            get { return symbolViewModel; }
+            private set
+            {
+                if (symbolViewModel != value)
+                {
+                    symbolViewModel = value;
+                    OnPropertyChanged("SymbolViewModel");
                 }
             }
         }
@@ -64,72 +112,17 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        public AccountViewModel AccountViewModel
-        {
-            get { return accountViewModel; }
-            set
-            {
-                if (accountViewModel != value)
-                {
-                    accountViewModel = value;
-                    OnPropertyChanged("AccountViewModel");
-                }
-            }
-        }
-
-        public TradeViewModel TradeViewModel
-        {
-            get { return tradeViewModel; }
-            set
-            {
-                if (tradeViewModel != value)
-                {
-                    tradeViewModel = value;
-                    OnPropertyChanged("TradeViewModel");
-                }
-            }
-        }
-
         public Symbol SelectedSymbol
         {
             get { return selectedSymbol; }
-            set
+            private set
             {
                 if(selectedSymbol != value)
                 {
                     selectedSymbol = value;
-
-                    if(selectedSymbol != null)
-                    {
-                        SymbolViewModel = new SymbolViewModel(selectedSymbol, exchangeService, TradeViewModelException);
-                    }
-                    else
-                    {
-                        SymbolViewModel = null;
-                    }
+                    SymbolViewModel.SetSymbol(selectedSymbol);
 
                     OnPropertyChanged("SelectedSymbol");
-                    OnPropertyChanged("HasSelectedSymbol");
-                }
-            }
-        }
-
-        public bool HasSelectedSymbol => SelectedSymbol != null ? true : false;
-
-        public SymbolViewModel SymbolViewModel
-        {
-            get { return symbolViewModel; }
-            set
-            {
-                if (symbolViewModel != value)
-                {
-                    if(symbolViewModel != null)
-                    {
-                        symbolViewModel.Dispose();
-                    }
-
-                    symbolViewModel = value;
-                    OnPropertyChanged("SymbolViewModel");
                 }
             }
         }
@@ -159,7 +152,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             SymbolsViewModel.User = user;
 
-            TradeViewModel = new TradeViewModel(Account, exchangeService, TradeViewModelException);
+            TradeViewModel.Account = Account;
 
             IsBusy = false;
         }
@@ -176,6 +169,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 user.Preferences.FavouriteSymbols = (from s in SymbolsViewModel.Symbols where s.IsFavourite select s.Name).ToList();
             }
             
+            if(SelectedSymbol != null)
+            {
+                user.Preferences.SelectedSymbol = SelectedSymbol.Name;
+            }
+
             personaliseService.SavePreferences(user);
         }
 
@@ -204,29 +202,98 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        private void TradeViewModelException(Exception e)
+        private void ObserveSymbols()
+        {
+            var symbolsObservable = Observable.FromEventPattern<SymbolsEventArgs>(
+                eventHandler => SymbolsViewModel.OnSymbolsNotification += eventHandler,
+                eventHandler => SymbolsViewModel.OnSymbolsNotification -= eventHandler)
+                .Select(eventPattern => eventPattern.EventArgs);
+
+            symbolsObservable.Subscribe(args =>
+            {
+                if (args.HasException)
+                {
+                    TradeViewModelException(args.Exception);
+                }
+                else
+                {
+                    SelectedSymbol = args.Value;
+                }
+            });
+        }
+
+        private void ObserveAccount()
+        {
+            var accountObservable = Observable.FromEventPattern<AccountEventArgs>(
+                eventHandler => AccountViewModel.OnAccountNotification += eventHandler,
+                eventHandler => AccountViewModel.OnAccountNotification -= eventHandler)
+                .Select(eventPattern => eventPattern.EventArgs);
+
+            accountObservable.Subscribe(args =>
+            {
+                if (args.HasException)
+                {
+                    TradeViewModelException(args.Exception);
+                }
+                else
+                {
+                    // TODO
+                    // account = args.Value
+                    // selectedAsset = args.SelectedAsset
+                }
+            });
+        }
+
+        private void ObserveSymbol()
+        {
+            var symbolObservable = Observable.FromEventPattern<SymbolEventArgs>(
+                eventHandler => SymbolViewModel.OnSymbolNotification += eventHandler,
+                eventHandler => SymbolViewModel.OnSymbolNotification -= eventHandler)
+                .Select(eventPattern => eventPattern.EventArgs);
+
+            symbolObservable.Subscribe(args =>
+            {
+                if(args.HasException)
+                {
+                    TradeViewModelException(args.Exception);
+                }
+            });
+        }
+
+        private void ObserverTrade()
+        {
+            var tradeObservable = Observable.FromEventPattern<TradeEventArgs>(
+                eventHandler => TradeViewModel.OnTradeNotification += eventHandler,
+                eventHandler => TradeViewModel.OnTradeNotification -= eventHandler)
+                .Select(eventPattern => eventPattern.EventArgs);
+
+            tradeObservable.Subscribe(args =>
+           {
+               if(args.HasException)
+               {
+                   TradeViewModelException(args.Exception);
+               }
+           });
+        }
+
+        private void TradeViewModelException(Exception ex)
         {
             var exceptions = new List<Message>();
-            if (e is AggregateException)
+            if (ex is AggregateException)
             {
-                foreach(Exception ex in ((AggregateException)e).InnerExceptions)
+                foreach(Exception e in ((AggregateException)ex).InnerExceptions)
                 {
-                    Logger.Log(ex.ToString(), Category.Exception, Priority.High);
-                    exceptions.Add(new Message { MessageType = MessageType.Error, Text = ex.Message, TextVerbose = ex.StackTrace });
+                    Logger.Log(e.ToString(), Category.Exception, Priority.High);
+                    exceptions.Add(new Message { MessageType = MessageType.Error, Text = e.Message, TextVerbose = e.StackTrace });
                 }
             }
             else
             {
-                Logger.Log(e.ToString(), Category.Exception, Priority.High);
-                exceptions.Add(new Message { MessageType = MessageType.Error, Text = e.Message, TextVerbose = e.StackTrace });
+                Logger.Log(ex.ToString(), Category.Exception, Priority.High);
+                exceptions.Add(new Message { MessageType = MessageType.Error, Text = ex.Message, TextVerbose = ex.StackTrace });
             }
 
             ShowMessages(exceptions);
-        }
-
-        public void Notify(Symbol symbol)
-        {
-            SelectedSymbol = symbol;
         }
     }
 }

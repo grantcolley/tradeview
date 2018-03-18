@@ -1,4 +1,5 @@
-﻿using DevelopmentInProgress.Wpf.MarketView.Model;
+﻿using DevelopmentInProgress.Wpf.MarketView.Events;
+using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using LiveCharts;
 using LiveCharts.Configurations;
@@ -14,7 +15,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
     public class SymbolViewModel : BaseViewModel
     {
         private CancellationTokenSource symbolCancellationTokenSource;
-        private Action<Exception> exception;
         private Symbol symbol;
         private OrderBook orderBook;
         private ChartValues<AggregateTrade> aggregateTrades;
@@ -26,13 +26,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         private int limit = 20;
 
-        public SymbolViewModel(Symbol symbol, IExchangeService exchangeService, Action<Exception> exception)
+        public SymbolViewModel(IExchangeService exchangeService)
             : base(exchangeService)
         {
-            Symbol = symbol;
-
-            this.exception = exception;
-
             var mapper = Mappers.Xy<AggregateTrade>()
                 .X(model => model.Time.Ticks)
                 .Y(model => Convert.ToDouble(model.Price));
@@ -41,12 +37,12 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             TimeFormatter = value => new DateTime((long)value).ToString("H:mm:ss");
             PriceFormatter = value => value.ToString("0.00000000");
-
-            symbolCancellationTokenSource = new CancellationTokenSource();
-
-            GetSymbol();
         }
-        
+
+        public event EventHandler<SymbolEventArgs> OnSymbolNotification;
+
+        public bool HasSymbol => Symbol != null ? true : false;
+
         public Func<double, string> TimeFormatter { get; set; }
 
         public Func<double, string> PriceFormatter { get; set; }
@@ -80,16 +76,17 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         public Symbol Symbol
         {
             get { return symbol; }
-            private set
+            set
             {
                 if (symbol != value)
                 {
                     symbol = value;
                     OnPropertyChanged("Symbol");
+                    OnPropertyChanged("HasSymbol");
                 }
             }
         }
-
+        
         public ChartValues<AggregateTrade> AggregateTrades
         {
             get { return aggregateTrades; }
@@ -116,16 +113,45 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        public async void GetSymbol()
+        public override void Dispose(bool disposing)
+        {
+            if (disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                if (symbolCancellationTokenSource != null
+                    && !symbolCancellationTokenSource.IsCancellationRequested)
+                {
+                    symbolCancellationTokenSource.Cancel();
+                }
+            }
+
+            disposed = true;
+        }
+
+        public async void SetSymbol(Symbol symbol)
         {
             try
             {
+                if(symbolCancellationTokenSource != null
+                    && !symbolCancellationTokenSource.IsCancellationRequested)
+                {
+                    symbolCancellationTokenSource.Cancel();
+                }
+
+                symbolCancellationTokenSource = new CancellationTokenSource();
+
+                Symbol = symbol;
+
                 var tasks = new List<Task>(new [] { GetOrderBook(), GetTrades() }).ToArray();
                 await Task.WhenAll(tasks);
             }
             catch (Exception ex)
             {
-                exception.Invoke(ex);
+                OnException(ex);
             }
         }
 
@@ -139,11 +165,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                 UpdateOrderBook(orderBook);
 
-                ExchangeService.SubscribeOrderBook(Symbol.Name, limit, e => UpdateOrderBook(e.OrderBook), exception, symbolCancellationTokenSource.Token);
+                ExchangeService.SubscribeOrderBook(Symbol.Name, limit, e => UpdateOrderBook(e.OrderBook), OnException, symbolCancellationTokenSource.Token);
             }
             catch (Exception ex)
             {
-                exception.Invoke(ex);
+                OnException(ex);
             }
 
             IsLoadingOrderBook = false;
@@ -159,11 +185,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                 UpdateAggregateTrades(trades);
 
-                ExchangeService.SubscribeAggregateTrades(Symbol.Name, limit, e => UpdateAggregateTrades(e.AggregateTrades), exception, symbolCancellationTokenSource.Token);
+                ExchangeService.SubscribeAggregateTrades(Symbol.Name, limit, e => UpdateAggregateTrades(e.AggregateTrades), OnException, symbolCancellationTokenSource.Token);
             }
             catch (Exception ex)
             {
-                exception.Invoke(ex);
+                OnException(ex);
             }
 
             IsLoadingTrades = false;
@@ -225,23 +251,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        public override void Dispose(bool disposing)
+        private void OnException(Exception exception)
         {
-            if (disposed)
-            {
-                return;
-            }
-
-            if (disposing)
-            {
-                if (symbolCancellationTokenSource != null
-                    || !symbolCancellationTokenSource.IsCancellationRequested)
-                {
-                    symbolCancellationTokenSource.Cancel();
-                }
-            }
-
-            disposed = true;
+            var onSymbolNotification = OnSymbolNotification;
+            onSymbolNotification?.Invoke(this, new SymbolEventArgs { Exception = exception });
         }
     }
 }

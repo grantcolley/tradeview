@@ -1,13 +1,16 @@
 ﻿using DevelopmentInProgress.Wpf.Host.ViewModel;
+using DevelopmentInProgress.Wpf.MarketView.Events;
 using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using System;
+using System.Threading;
 using System.Windows.Input;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
     public class AccountViewModel : BaseViewModel
     {
+        private CancellationTokenSource accountCancellationTokenSource;
         private Account account;
         private AccountBalance selectedAsset;
         private bool isLoggingIn;
@@ -16,8 +19,12 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         public AccountViewModel(IExchangeService exchangeService)
             : base(exchangeService)
         {
+            accountCancellationTokenSource = new CancellationTokenSource();
+
             LoginCommand = new ViewModelCommand(Login);
         }
+
+        public event EventHandler<AccountEventArgs> OnAccountNotification;
 
         public ICommand LoginCommand { get; set; }
 
@@ -42,6 +49,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 if (selectedAsset != value)
                 {
                     selectedAsset = value;
+                    OnSelectedAsset(selectedAsset);
                     OnPropertyChanged("SelectedAsset");
                 }
             }
@@ -60,30 +68,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        private async void Login(object param)
-        {
-            if (string.IsNullOrWhiteSpace(Account.AccountInfo.User.ApiKey)
-                || string.IsNullOrWhiteSpace(Account.AccountInfo.User.ApiSecret))
-            {
-                //exception.Invoke(new Exception("Both api key and secret key are required to login to an account."));
-                return;
-            }
-
-            IsLoggingIn = true;
-
-            try
-            {
-                // TODO: CancellationToken??????????????????????????????????????????????
-                Account = await ExchangeService.GetAccountInfoAsync(Account.AccountInfo.User.ApiKey, Account.AccountInfo.User.ApiSecret);
-            }
-            catch(Exception e)
-            {
-                //exception.Invoke(e);
-            }
-
-            IsLoggingIn = false;
-        }
-
         public override void Dispose(bool disposing)
         {
             if (disposed)
@@ -93,10 +77,49 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             if (disposing)
             {
-                // do tuff here...
+                if (accountCancellationTokenSource != null
+                    && !accountCancellationTokenSource.IsCancellationRequested)
+                {
+                    accountCancellationTokenSource.Cancel();
+                }
             }
 
             disposed = true;
+        }
+
+        private async void Login(object param)
+        {
+            if (string.IsNullOrWhiteSpace(Account.AccountInfo.User.ApiKey)
+                || string.IsNullOrWhiteSpace(Account.AccountInfo.User.ApiSecret))
+            {
+                OnException(new Exception("Both api key and secret key are required to login to an account."));
+                return;
+            }
+
+            IsLoggingIn = true;
+
+            try
+            {
+                Account = await ExchangeService.GetAccountInfoAsync(Account.AccountInfo.User.ApiKey, Account.AccountInfo.User.ApiSecret, accountCancellationTokenSource.Token);
+            }
+            catch(Exception ex)
+            {
+                OnException(ex);
+            }
+
+            IsLoggingIn = false;
+        }
+
+        private void OnException(Exception exception)
+        {
+            var onAccountNotification = OnAccountNotification;
+            onAccountNotification?.Invoke(this, new AccountEventArgs { Exception = exception });
+        }
+
+        private void OnSelectedAsset(AccountBalance selectedAsset)
+        {
+            var onAccountNotification = OnAccountNotification;
+            onAccountNotification?.Invoke(this, new AccountEventArgs { Value = Account, SelectedAsset = selectedAsset });
         }
     }
 }
