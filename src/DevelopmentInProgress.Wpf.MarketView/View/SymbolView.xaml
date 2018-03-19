@@ -78,6 +78,11 @@
                 </ItemsControl>
 
                 <DockPanel Grid.Row="0" Grid.Column="2" LastChildFill="True">
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Label Content=" " FontWeight="Bold" FontSize="14"/>
+                        <Label Content=" "/>
+                        <Label Content=" " FontSize="12" VerticalAlignment="Center"/>
+                    </StackPanel>
                     <Label DockPanel.Dock="Left" Content="Price" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                     <Label DockPanel.Dock="Left" Content="{Binding OrderBook.QuoteSymbol}" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                     <Label DockPanel.Dock="Right" Content="{Binding OrderBook.BaseSymbol}" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
