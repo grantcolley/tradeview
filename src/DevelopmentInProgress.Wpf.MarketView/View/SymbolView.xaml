@@ -16,9 +16,11 @@
         <GroupBox Style="{StaticResource GroupBoxNoHeaderStyle}">
             <Grid Margin="2" Visibility="{Binding HasSymbol, Converter={StaticResource boolToVisibilityConverter}}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="20*"/>
+                    <ColumnDefinition Width="15*"/>
                     <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="80*"/>
+                    <ColumnDefinition Width="15*"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="70*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="54"/>
@@ -64,7 +66,7 @@
                             <DockPanel LastChildFill="True">
                                 <Label DockPanel.Dock="Left" Foreground="#FF008000" Content="{Binding Price}"/>
                                 <Label DockPanel.Dock="Right" Foreground="#FF008000" HorizontalAlignment="Right" Content="{Binding Quantity}"/>
-                                <ContentControl/>
+                                <ContentControl DockPanel.Dock="Top"/>
                             </DockPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -75,15 +77,54 @@
                     </ItemsControl.ItemContainerStyle>
                 </ItemsControl>
 
-                <Viewbox Grid.Row="1" Grid.Column="2"
+                <DockPanel Grid.Row="0" Grid.Column="2" LastChildFill="True">
+                    <Label DockPanel.Dock="Left" Content="Price" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                    <Label DockPanel.Dock="Left" Content="{Binding OrderBook.QuoteSymbol}" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                    <Label DockPanel.Dock="Right" Content="{Binding OrderBook.BaseSymbol}" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                    <Label DockPanel.Dock="Right" Content="Qty" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                    <ContentControl/>
+                </DockPanel>
+                <Viewbox Grid.Row="1" Grid.RowSpan="3" Grid.Column="2"
+                         Height="50" Width="50"
+                         Margin="1"
+                         Visibility="{Binding IsLoadingTrades, Converter={StaticResource boolToVisibilityConverter}}">
+                    <progress:CircularProgress/>
+                </Viewbox>
+                <ItemsControl Grid.Row="1" Grid.RowSpan="3" Grid.Column="2" 
+                              ItemsSource="{Binding AggregateTrades}"
+                              Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel LastChildFill="True">
+                                <Label DockPanel.Dock="Left" Content="{Binding Price}"/>
+                                <Label DockPanel.Dock="Right" HorizontalAlignment="Right" Content="{Binding Quantity}"/>
+                                <ContentControl/>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Setter Property="HorizontalAlignment" Value="Stretch" />
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                    <ItemsControl.Template>
+                        <ControlTemplate>
+                            <ScrollViewer x:Name="ScrollViewer" Padding="{TemplateBinding Padding}">
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </ControlTemplate>
+                    </ItemsControl.Template>
+                </ItemsControl>
+                
+                <Viewbox Grid.Row="1" Grid.Column="4"
                                  Height="50" Width="50"
                                  Margin="1"
                                  Visibility="{Binding IsLoadingTrades, Converter={StaticResource boolToVisibilityConverter}}">
                     <progress:CircularProgress/>
                 </Viewbox>
-                <lc:CartesianChart Grid.Row="1" Grid.Column="2" DisableAnimations="True" Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}">
+                <lc:CartesianChart Grid.Row="1" Grid.Column="4" DisableAnimations="True" Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}">
                     <lc:CartesianChart.Series>
-                        <lc:StepLineSeries Values="{Binding AggregateTrades}" 
+                        <lc:StepLineSeries Values="{Binding AggregateTradesChart}" 
                                             DataLabels="False"
                                             Stroke="Blue" 
                                             AlternativeStroke="Blue" 
@@ -99,13 +140,13 @@
                     </lc:CartesianChart.AxisY>
                 </lc:CartesianChart>
 
-                <Viewbox Grid.Row="3" Grid.Column="2"
+                <Viewbox Grid.Row="3" Grid.Column="4"
                                  Height="50" Width="50"
                                  Margin="1"
                                  Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource boolToVisibilityConverter}}">
                     <progress:CircularProgress/>
                 </Viewbox>
-                <lc:CartesianChart Grid.Row="3" Grid.Column="2" DisableAnimations="True" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}">
+                <lc:CartesianChart Grid.Row="3" Grid.Column="4" DisableAnimations="True" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}">
                     <lc:CartesianChart.Series>
                         <lc:StepLineSeries Values="{Binding OrderBook.ChartAsks}" 
                                             DataLabels="False"

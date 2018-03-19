@@ -5,9 +5,12 @@ using LiveCharts;
 using LiveCharts.Configurations;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Threading;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
@@ -17,7 +20,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private CancellationTokenSource symbolCancellationTokenSource;
         private Symbol symbol;
         private OrderBook orderBook;
-        private ChartValues<AggregateTrade> aggregateTrades;
+        private ChartValues<AggregateTrade> aggregateTradesChart;
+        private ObservableCollection<AggregateTrade> aggregateTrades;
         private object orderBookLock = new object();
         private object aggregateTradesLock = new object();
         private bool isLoadingTrades;
@@ -25,6 +29,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private bool disposed;
 
         private int limit = 20;
+        private int chartDisplayLimit = 100;
+        private int tradesDisplayLimit = 22;
 
         public SymbolViewModel(IExchangeService exchangeService)
             : base(exchangeService)
@@ -86,8 +92,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 }
             }
         }
-        
-        public ChartValues<AggregateTrade> AggregateTrades
+
+        public ObservableCollection<AggregateTrade> AggregateTrades
         {
             get { return aggregateTrades; }
             set
@@ -96,6 +102,19 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 {
                     aggregateTrades = value;
                     OnPropertyChanged("AggregateTrades");
+                }
+            }
+        }
+
+        public ChartValues<AggregateTrade> AggregateTradesChart
+        {
+            get { return aggregateTradesChart; }
+            set
+            {
+                if (aggregateTradesChart != value)
+                {
+                    aggregateTradesChart = value;
+                    OnPropertyChanged("AggregateTradesChart");
                 }
             }
         }
@@ -145,6 +164,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 symbolCancellationTokenSource = new CancellationTokenSource();
 
                 Symbol = symbol;
+                AggregateTradesChart = null;
                 AggregateTrades = null;
                 OrderBook = null;
 
@@ -185,9 +205,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             {
                 var trades = await ExchangeService.GetAggregateTradesAsync(Symbol.Name, limit, symbolCancellationTokenSource.Token);
 
-                UpdateAggregateTrades(trades);
+                UpdateAggregateTrades(trades, Application.Current.Dispatcher);
 
-                ExchangeService.SubscribeAggregateTrades(Symbol.Name, limit, e => UpdateAggregateTrades(e.AggregateTrades), OnException, symbolCancellationTokenSource.Token);
+                ExchangeService.SubscribeAggregateTrades(Symbol.Name, limit, e => UpdateAggregateTrades(e.AggregateTrades, Application.Current.Dispatcher), OnException, symbolCancellationTokenSource.Token);
             }
             catch (Exception ex)
             {
@@ -235,30 +255,46 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        private void UpdateAggregateTrades(IEnumerable<Interface.AggregateTrade> trades)
+        private void UpdateAggregateTrades(IEnumerable<Interface.AggregateTrade> trades, Dispatcher dispatcher)
         {
             lock (aggregateTradesLock)
             {
-                if (AggregateTrades == null)
+                if (AggregateTrades == null
+                    || AggregateTradesChart == null)
                 {
                     var orderedTrades = (from t in trades orderby t.Time select new AggregateTrade { Id = t.Id, Time = t.Time, Price = t.Price, Quantity = t.Quantity, IsBuyerMaker = t.IsBuyerMaker });
-                    AggregateTrades = new ChartValues<AggregateTrade>(orderedTrades);
+                    AggregateTradesChart = new ChartValues<AggregateTrade>(orderedTrades);
+                    dispatcher.Invoke(() => { AggregateTrades = new ObservableCollection<AggregateTrade>(orderedTrades); });                    
                 }
                 else
                 {
                     var maxId = AggregateTrades.Max(at => at.Id);
                     var orderedAggregateTrades = (from t in trades where t.Id > maxId orderby t.Time select new AggregateTrade { Id = t.Id, Time = t.Time, Price = t.Price, Quantity = t.Quantity, IsBuyerMaker = t.IsBuyerMaker }).ToList();
 
-                    if (AggregateTrades.Count >= 100)
+                    var newCount = orderedAggregateTrades.Count;
+
+                    if (AggregateTradesChart.Count >= chartDisplayLimit)
                     {
-                        var oldTrades = AggregateTrades.Take(orderedAggregateTrades.Count);
+                        var oldTrades = AggregateTradesChart.Take(newCount);
                         foreach(var oldTrade in oldTrades)
                         {
-                            AggregateTrades.Remove(oldTrade);
+                            AggregateTradesChart.Remove(oldTrade);
                         }
                     }
 
-                    AggregateTrades.AddRange(orderedAggregateTrades);
+                    AggregateTradesChart.AddRange(orderedAggregateTrades);
+
+                    if(AggregateTrades.Count >= tradesDisplayLimit)
+                    {
+                        dispatcher.Invoke(() =>
+                        {
+                            for (int i = 0; i < newCount; i++)
+                            {
+                                AggregateTrades.RemoveAt(AggregateTrades.Count - 1);
+                                AggregateTrades.Insert(0, orderedAggregateTrades[i]);
+                            }
+                        });
+                    }
                 }
             }
         }
