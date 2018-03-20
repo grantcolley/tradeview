@@ -6,19 +6,21 @@
              xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Host.Converters;assembly=DevelopmentInProgress.Wpf.Host"
              xmlns:lc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:progress="clr-namespace:DevelopmentInProgress.Wpf.Host.Controls.Progress;assembly=DevelopmentInProgress.Wpf.Host"
+             xmlns:localConverters="clr-namespace:DevelopmentInProgress.Wpf.MarketView.Converters"
              mc:Ignorable="d">
     <UserControl.Resources>
         <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
         <converters:InvertBoolToVisibilityConverter x:Key="invertBoolToVisibilityConverter"/>
+        <localConverters:LastPriceChangeDirectionColourConverter x:Key="LastPriceChangeDirectionColourConverter"/>
     </UserControl.Resources>
 
     <DockPanel Margin="2" LastChildFill="True">
         <GroupBox Style="{StaticResource GroupBoxNoHeaderStyle}">
             <Grid Margin="2" Visibility="{Binding HasSymbol, Converter={StaticResource boolToVisibilityConverter}}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="15*"/>
+                    <ColumnDefinition Width="12*"/>
                     <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="15*"/>
+                    <ColumnDefinition Width="18*"/>
                     <ColumnDefinition Width="10"/>
                     <ColumnDefinition Width="70*"/>
                 </Grid.ColumnDefinitions>
@@ -58,7 +60,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
                 <DockPanel Grid.Row="2" Grid.Column="0" LastChildFill="True" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}">
-                    <Label VerticalAlignment="Center" HorizontalAlignment="Center" Width="{Binding ElementName=askPanel, Path=Width}"  Content="{Binding OrderBook.Top.Ask.Price}"/>
+                    <Label VerticalAlignment="Center" Width="{Binding ElementName=askPanel, Path=Width}" Content="{Binding Symbol.SymbolStatistics.LastPrice}" Foreground="{Binding Symbol.LastPriceChangeDirection, Converter={StaticResource LastPriceChangeDirectionColourConverter}}" HorizontalAlignment="Center"/>
                 </DockPanel>
                 <ItemsControl Grid.Row="3" Grid.Column="0" ItemsSource="{Binding OrderBook.TopBids}" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}">
                     <ItemsControl.ItemTemplate>
@@ -80,14 +82,10 @@
                 <DockPanel Grid.Row="0" Grid.Column="2" LastChildFill="True">
                     <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
                         <Label Content=" " FontWeight="Bold" FontSize="14"/>
-                        <Label Content=" "/>
-                        <Label Content=" " FontSize="12" VerticalAlignment="Center"/>
                     </StackPanel>
-                    <Label DockPanel.Dock="Left" Content="Price" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                    <Label DockPanel.Dock="Left" Content="{Binding OrderBook.QuoteSymbol}" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                    <Label DockPanel.Dock="Right" Content="{Binding OrderBook.BaseSymbol}" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                    <Label DockPanel.Dock="Left" Content="Time" Width="60" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                     <Label DockPanel.Dock="Right" Content="Qty" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                    <ContentControl/>
+                    <Label Content="Price" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                 </DockPanel>
                 <Viewbox Grid.Row="1" Grid.RowSpan="3" Grid.Column="2"
                          Height="50" Width="50"
@@ -101,8 +99,11 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <DockPanel LastChildFill="True">
-                                <Label DockPanel.Dock="Left" Content="{Binding Price}"/>
+                                <Label DockPanel.Dock="Left" HorizontalAlignment="Center" Width="60">
+                                    <TextBlock Text="{Binding Path=Time, StringFormat='{}{0:hh\\:mm\\:ss}'}"/>
+                                </Label>
                                 <Label DockPanel.Dock="Right" HorizontalAlignment="Right" Content="{Binding Quantity}"/>
+                                <Label Content="{Binding Price}" HorizontalAlignment="Center"/>
                                 <ContentControl/>
                             </DockPanel>
                         </DataTemplate>
