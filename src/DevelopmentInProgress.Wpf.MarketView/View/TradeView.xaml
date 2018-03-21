@@ -17,8 +17,22 @@
     </UserControl.Resources>
     <DockPanel Margin="2" LastChildFill="True">
         <GroupBox Margin="5" Style="{StaticResource GroupBoxNoHeaderStyle}">
-            <DockPanel LastChildFill="True">
-                <ComboBox DockPanel.Dock="Top" Margin="2" 
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="Symbol" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                <ComboBox Grid.Row="0" Grid.Column="1" 
+                          Margin="2" 
                           ItemsSource="{Binding Symbols}"
                           SelectedItem="{Binding SelectedSymbol}"
                           Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}">
@@ -32,17 +46,24 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <ComboBox DockPanel.Dock="Top" Margin="2" 
+                <Label Grid.Row="1" Grid.Column="0" Content="Order Type" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                <ComboBox Grid.Row="1" Grid.Column="1" 
+                          Margin="2" 
                           ItemsSource="{Binding OrderTypes}"
                           Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                <TextBox DockPanel.Dock="Top" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                <TextBox DockPanel.Dock="Top" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                <Button DockPanel.Dock="Bottom" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                <Label/>
-                <Viewbox Height="50" Width="50" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource boolToVisibilityConverter}}">
+                <Label Grid.Row="2" Grid.Column="0" Content="Quantity" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                <Label Grid.Row="3" Grid.Column="0" Content="Price" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                <DockPanel Grid.Row="5" Grid.Column="1" LastChildFill="True" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}">
+                    <Button DockPanel.Dock="Left" Margin="2" Width="100" Style="{StaticResource BuyButtonStyle}" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                    <Button DockPanel.Dock="Right" Margin="2" Width="100" Style="{StaticResource SellButtonStyle}" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                    <ContentControl/>
+                </DockPanel>
+                <Viewbox Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" Grid.ColumnSpan="2" Height="50" Width="50" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource boolToVisibilityConverter}}">
                     <progress:CircularProgress />
                 </Viewbox>
-            </DockPanel>
+            </Grid>
         </GroupBox>
     </DockPanel>
 </UserControl>
