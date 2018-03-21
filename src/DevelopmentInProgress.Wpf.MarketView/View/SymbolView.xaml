@@ -18,11 +18,11 @@
         <GroupBox Style="{StaticResource GroupBoxNoHeaderStyle}">
             <Grid Margin="2" Visibility="{Binding HasSymbol, Converter={StaticResource boolToVisibilityConverter}}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="12*"/>
+                    <ColumnDefinition Width="15*"/>
                     <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="18*"/>
+                    <ColumnDefinition Width="20*"/>
                     <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="70*"/>
+                    <ColumnDefinition Width="65*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="54"/>
