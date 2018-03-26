@@ -5,9 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DevelopmentInProgress.Wpf.MarketView.View"
              xmlns:model="clr-namespace:DevelopmentInProgress.Wpf.MarketView.Model"
+             xmlns:decimalBox="clr-namespace:DevelopmentInProgress.Wpf.Controls.DecimalBox;assembly=DevelopmentInProgress.Wpf.Controls" 
+             xmlns:filterbox="clr-namespace:DevelopmentInProgress.Wpf.Controls.FilterBox;assembly=DevelopmentInProgress.Wpf.Controls"
              xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Host.Converters;assembly=DevelopmentInProgress.Wpf.Host"
-             xmlns:progress="clr-namespace:DevelopmentInProgress.Wpf.Host.Controls.Progress;assembly=DevelopmentInProgress.Wpf.Host"
-             xmlns:filterbox="clr-namespace:DevelopmentInProgress.Wpf.Controls.FilterBox;assembly=DevelopmentInProgress.Wpf.Controls"             
+             xmlns:progress="clr-namespace:DevelopmentInProgress.Wpf.Host.Controls.Progress;assembly=DevelopmentInProgress.Wpf.Host" 
              mc:Ignorable="d">
     <UserControl.Resources>
 
@@ -52,9 +53,9 @@
                           ItemsSource="{Binding OrderTypes}"
                           Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                 <Label Grid.Row="2" Grid.Column="0" Content="Quantity" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                <TextBox Grid.Row="2" Grid.Column="1" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                <decimalBox:XamlDecimalBox Grid.Row="2" Grid.Column="1" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                 <Label Grid.Row="3" Grid.Column="0" Content="Price" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                <TextBox Grid.Row="3" Grid.Column="1" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                <decimalBox:XamlDecimalBox Grid.Row="3" Grid.Column="1" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                 <DockPanel Grid.Row="5" Grid.Column="1" LastChildFill="True" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}">
                     <Button DockPanel.Dock="Left" Margin="2" Width="100" Style="{StaticResource BuyButtonStyle}" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                     <Button DockPanel.Dock="Right" Margin="2" Width="100" Style="{StaticResource SellButtonStyle}" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>

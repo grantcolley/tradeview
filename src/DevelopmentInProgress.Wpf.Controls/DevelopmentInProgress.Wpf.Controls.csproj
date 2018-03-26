@@ -57,6 +57,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="DecimalBox\DecimalBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FilterTree\FilterTree.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -95,6 +99,8 @@
     <Compile Include="Converters\MessageTextToImageConverter.cs" />
     <Compile Include="Converters\TextToForegroundConverter.cs" />
     <Compile Include="Converters\UriStringToImageConverter.cs" />
+    <Compile Include="DecimalBox\DecimalBox.cs" />
+    <Compile Include="DecimalBox\XamlDecimalBox.cs" />
     <Compile Include="FilterTree\FilterTree.cs" />
     <Compile Include="FilterTree\FilterTreeDragDropArgs.cs" />
     <Compile Include="FilterTree\XamlFilterTree.cs" />
