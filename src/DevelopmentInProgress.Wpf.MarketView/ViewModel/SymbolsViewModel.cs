@@ -37,6 +37,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 if (symbols != value)
                 {
                     symbols = value;
+                    if(symbols != null)
+                    {
+                        OnLoadedSymbols(symbols);
+                    }
+
                     OnPropertyChanged("Symbols");
                 }
             }
@@ -154,6 +159,12 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         {
             var onSymbolsNotification = OnSymbolsNotification;
             onSymbolsNotification?.Invoke(this, new SymbolsEventArgs { Value = symbol });
+        }
+
+        private void OnLoadedSymbols(List<Symbol> symbols)
+        {
+            var onSymbolsNotification = OnSymbolsNotification;
+            onSymbolsNotification?.Invoke(this, new SymbolsEventArgs { Symbols = symbols });
         }
 
         private void SetPreferences()

@@ -4,25 +4,23 @@ using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.Linq;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
     public class TradeViewModel : BaseViewModel
     {
-        private CancellationTokenSource symbolsCancellationTokenSource;
         private List<Symbol> symbols;
         private Symbol selectedSymbol;
         private Account account;
+        private decimal quantity;
+        private decimal price;
         private bool disposed;
         private bool isLoading;
 
         public TradeViewModel(IExchangeService exchangeService)
             : base(exchangeService)
         {
-            symbolsCancellationTokenSource = new CancellationTokenSource();
-
-            GetSymbols();
         }
 
         public event EventHandler<TradeEventArgs> OnTradeNotification;
@@ -73,6 +71,33 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 if (selectedSymbol != value)
                 {
                     selectedSymbol = value;
+                    OnPropertyChanged("SelectedSymbol");
+                }
+            }
+        }
+
+        public decimal Quantity
+        {
+            get { return quantity; }
+            set
+            {
+                if (quantity != value)
+                {
+                    quantity = value;
+                    OnPropertyChanged("Quantity");
+                }
+            }
+        }
+
+        public decimal Price
+        {
+            get { return price; }
+            set
+            {
+                if (price != value)
+                {
+                    price = value;
+                    OnPropertyChanged("Price");
                 }
             }
         }
@@ -80,6 +105,20 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         public string[] OrderTypes
         {
             get { return OrderTypeHelper.OrderTypes(); }
+        }
+
+        public void SetSymbols(List<Symbol> symbols)
+        {
+            Symbols = symbols;
+        }
+
+        public void SetSymbol(Symbol symbol)
+        {
+            SelectedSymbol = Symbols.FirstOrDefault(s => s.Name.Equals(symbol.Name));
+            if (SelectedSymbol != null)
+            {
+                Price = SelectedSymbol.SymbolStatistics.LastPrice;
+            }
         }
 
         public override void Dispose(bool disposing)
@@ -91,32 +130,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             if (disposing)
             {
-                if (symbolsCancellationTokenSource != null
-                    && !symbolsCancellationTokenSource.IsCancellationRequested)
-                {
-                    symbolsCancellationTokenSource.Cancel();
-                }
             }
 
             disposed = true;
-        }
-
-        private async void GetSymbols()
-        {
-            IsLoading = true;
-
-            try
-            {
-                var results = await ExchangeService.GetSymbolsAsync(symbolsCancellationTokenSource.Token);
-
-                Symbols = new List<Symbol>(results);
-            }
-            catch (Exception e)
-            {
-                OnException(e);
-            }
-
-            IsLoading = false;
         }
 
         private void OnException(Exception exception)
