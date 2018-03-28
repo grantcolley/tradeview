@@ -8,13 +8,15 @@
              xmlns:decimalBox="clr-namespace:DevelopmentInProgress.Wpf.Controls.DecimalBox;assembly=DevelopmentInProgress.Wpf.Controls" 
              xmlns:filterbox="clr-namespace:DevelopmentInProgress.Wpf.Controls.FilterBox;assembly=DevelopmentInProgress.Wpf.Controls"
              xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Host.Converters;assembly=DevelopmentInProgress.Wpf.Host"
-             xmlns:progress="clr-namespace:DevelopmentInProgress.Wpf.Host.Controls.Progress;assembly=DevelopmentInProgress.Wpf.Host" 
+             xmlns:progress="clr-namespace:DevelopmentInProgress.Wpf.Host.Controls.Progress;assembly=DevelopmentInProgress.Wpf.Host"
+             xmlns:localConverters="clr-namespace:DevelopmentInProgress.Wpf.MarketView.Converters"
              mc:Ignorable="d">
     <UserControl.Resources>
 
         <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
         <converters:InvertBoolToVisibilityConverter x:Key="invertBoolToVisibilityConverter"/>
-
+        <localConverters:LastPriceChangeDirectionColourConverter x:Key="LastPriceChangeDirectionColourConverter"/>
+        
     </UserControl.Resources>
     <DockPanel Margin="2" LastChildFill="True">
         <GroupBox Margin="5" Style="{StaticResource GroupBoxNoHeaderStyle}">
@@ -51,7 +53,7 @@
                 <ComboBox Grid.Row="1" Grid.Column="1" 
                           Margin="2" 
                           ItemsSource="{Binding OrderTypes}"
-                          SelectedIndex="0"
+                          SelectedItem="{Binding SelectedOrderType}"
                           Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                 <Label Grid.Row="2" Grid.Column="0" Content="Quantity" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                 <decimalBox:XamlDecimalUpDown Grid.Row="2" Grid.Column="1" Margin="2" 
@@ -60,7 +62,18 @@
                 <Label Grid.Row="3" Grid.Column="0" Content="Price" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                 <decimalBox:XamlDecimalUpDown Grid.Row="3" Grid.Column="1" Margin="2" 
                                               DecimalValue="{Binding Price}"
-                                              Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                                              Visibility="{Binding IsPriceEditable, Converter={StaticResource boolToVisibilityConverter}}"/>
+                <DockPanel Grid.Row="3" Grid.Column="1" Margin="6"
+                           LastChildFill="True"
+                           Background="{StaticResource TextBoxBackgroundBrush}"
+                           Visibility="{Binding IsMarketPrice, Converter={StaticResource boolToVisibilityConverter}}">
+                    <Button DockPanel.Dock="Left" Width="30" Visibility="Hidden"/>
+                    <Button DockPanel.Dock="Right" Width="35" Visibility="Hidden"/>
+                    <TextBlock TextAlignment="Right" 
+                               Text="{Binding SelectedSymbol.SymbolStatistics.LastPrice}"
+                               Foreground="{Binding SelectedSymbol.LastPriceChangeDirection, Converter={StaticResource LastPriceChangeDirectionColourConverter}}"
+                               Style="{StaticResource TextBlockStyle}"/>
+                </DockPanel>
                 <DockPanel Grid.Row="5" Grid.Column="1" LastChildFill="True" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}">
                     <Button DockPanel.Dock="Left" Margin="2" Width="100" Style="{StaticResource BuyButtonStyle}" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                     <Button DockPanel.Dock="Right" Margin="2" Width="100" Style="{StaticResource SellButtonStyle}" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>

@@ -5,6 +5,7 @@ using DevelopmentInProgress.Wpf.MarketView.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
@@ -13,6 +14,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private List<Symbol> symbols;
         private Symbol selectedSymbol;
         private Account account;
+        private string selectedOrderType;
         private decimal quantity;
         private decimal price;
         private bool disposed;
@@ -102,11 +104,53 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
+        public string SelectedOrderType
+        {
+            get { return selectedOrderType; }
+            set
+            {
+                if (selectedOrderType != value)
+                {
+                    selectedOrderType = value;
+                    Price = SelectedSymbol.SymbolStatistics.LastPrice;
+                    OnPropertyChanged("IsPriceEditable");
+                    OnPropertyChanged("IsMarketPrice");
+                    OnPropertyChanged("SelectedOrderType");
+                }
+            }
+        }
+
+        public bool IsPriceEditable
+        {
+            get
+            {
+                if (IsLoading)
+                {
+                    return !IsLoading;
+                }
+
+                return !OrderTypeHelper.AreEqual(Interface.OrderType.Market, SelectedOrderType);
+            }
+        }
+
+        public bool IsMarketPrice
+        {
+            get
+            {
+                if (IsLoading)
+                {
+                    return !IsLoading;
+                }
+
+                return OrderTypeHelper.AreEqual(Interface.OrderType.Market, SelectedOrderType);
+            }
+        }
+
         public string[] OrderTypes
         {
             get { return OrderTypeHelper.OrderTypes(); }
         }
-
+        
         public void SetSymbols(List<Symbol> symbols)
         {
             Symbols = symbols;
@@ -115,10 +159,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         public void SetSymbol(Symbol symbol)
         {
             SelectedSymbol = Symbols.FirstOrDefault(s => s.Name.Equals(symbol.Name));
-            if (SelectedSymbol != null)
-            {
-                Price = SelectedSymbol.SymbolStatistics.LastPrice;
-            }
+            SelectedOrderType = OrderTypeHelper.GetOrderTypeName(Interface.OrderType.Limit);
         }
 
         public override void Dispose(bool disposing)
