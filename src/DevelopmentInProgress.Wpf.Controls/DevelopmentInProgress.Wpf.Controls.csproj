@@ -107,6 +107,7 @@
     <Compile Include="Converters\MessageTextToImageConverter.cs" />
     <Compile Include="Converters\TextToForegroundConverter.cs" />
     <Compile Include="Converters\UriStringToImageConverter.cs" />
+    <Compile Include="DecimalBox\DecimalExtension.cs" />
     <Compile Include="DecimalBox\XamlDecimalUpDown.xaml.cs">
       <DependentUpon>XamlDecimalUpDown.xaml</DependentUpon>
     </Compile>

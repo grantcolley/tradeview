@@ -73,12 +73,12 @@ namespace DevelopmentInProgress.Wpf.Controls.DecimalBox
             {
                 if (val > 0)
                 {
-                    txt.Text = (--val).ToString();
+                    txt.Text = val.Decrement().ToString();
                 }
             }
             else
             {
-                txt.Text = (++val).ToString();
+                txt.Text = val.Increment().ToString();
             }
         }
     }
