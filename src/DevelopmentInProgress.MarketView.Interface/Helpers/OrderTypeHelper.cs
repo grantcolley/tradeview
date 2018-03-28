@@ -17,5 +17,27 @@ namespace DevelopmentInProgress.MarketView.Interface.Helpers
 
             return list;
         }
+
+        public static bool AreEqual(OrderType orderType, string compare)
+        {
+            if(string.IsNullOrWhiteSpace(compare))
+            {
+                return false;
+            }
+
+            OrderType result;
+            if(Enum.TryParse<OrderType>(compare.Replace(" ", ""), out result))
+            {
+                return orderType.Equals(result);
+            }
+
+            return false;
+        }
+
+        public static string GetOrderTypeName(OrderType orderType)
+        {
+            var result = Enum.GetName(typeof(OrderType), orderType);
+            return Regex.Replace(result, "[A-Z]", " $0").Trim();
+        }
     }
 }
