@@ -4,23 +4,39 @@ using System.Windows.Controls;
 
 namespace DevelopmentInProgress.Wpf.Controls.DecimalBox
 {
-    partial class DecimalBox
+    /// <summary>
+    /// Interaction logic for XamlDecimalUpDown.xaml
+    /// </summary>
+    public partial class XamlDecimalUpDown : UserControl
     {
+        public static readonly DependencyProperty DecimalValueProperty = DependencyProperty.Register("DecimalValue", typeof(decimal), typeof(XamlDecimalUpDown), new PropertyMetadata(0m));
+
+        public XamlDecimalUpDown()
+        {
+            InitializeComponent();
+        }
+
+        public decimal DecimalValue
+        {
+            get { return (decimal)GetValue(DecimalValueProperty); }
+            set { SetValue(DecimalValueProperty, value); }
+        }
+
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
             var txt = sender as TextBox;
-            if(txt == null)
+            if (txt == null)
             {
                 return;
             }
 
-            if(string.IsNullOrWhiteSpace(txt.Text))
+            if (string.IsNullOrWhiteSpace(txt.Text))
             {
                 return;
             }
 
             decimal val;
-            if(Decimal.TryParse(txt.Text, out val))
+            if (Decimal.TryParse(txt.Text, out val))
             {
                 if (val < 0)
                 {
@@ -32,13 +48,13 @@ namespace DevelopmentInProgress.Wpf.Controls.DecimalBox
         private void OnClick(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
-            if(btn == null)
+            if (btn == null)
             {
                 return;
             }
 
             var txt = btn.Tag as TextBox;
-            if(txt == null)
+            if (txt == null)
             {
                 return;
             }
@@ -53,7 +69,7 @@ namespace DevelopmentInProgress.Wpf.Controls.DecimalBox
                 Decimal.TryParse(txt.Text, out val);
             }
 
-            if(btn.Name.Equals("btnDown"))
+            if (btn.Name.Equals("btnDown"))
             {
                 if (val > 0)
                 {

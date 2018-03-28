@@ -51,11 +51,16 @@
                 <ComboBox Grid.Row="1" Grid.Column="1" 
                           Margin="2" 
                           ItemsSource="{Binding OrderTypes}"
+                          SelectedIndex="0"
                           Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                 <Label Grid.Row="2" Grid.Column="0" Content="Quantity" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                <decimalBox:XamlDecimalBox Grid.Row="2" Grid.Column="1" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                <decimalBox:XamlDecimalUpDown Grid.Row="2" Grid.Column="1" Margin="2" 
+                                              DecimalValue="{Binding Quantity}" 
+                                              Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                 <Label Grid.Row="3" Grid.Column="0" Content="Price" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                <decimalBox:XamlDecimalBox Grid.Row="3" Grid.Column="1" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                <decimalBox:XamlDecimalUpDown Grid.Row="3" Grid.Column="1" Margin="2" 
+                                              DecimalValue="{Binding Price}"
+                                              Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                 <DockPanel Grid.Row="5" Grid.Column="1" LastChildFill="True" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}">
                     <Button DockPanel.Dock="Left" Margin="2" Width="100" Style="{StaticResource BuyButtonStyle}" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                     <Button DockPanel.Dock="Right" Margin="2" Width="100" Style="{StaticResource SellButtonStyle}" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>

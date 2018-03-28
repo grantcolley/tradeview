@@ -57,9 +57,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="DecimalBox\DecimalBox.xaml">
+    <Page Include="DecimalBox\XamlDecimalUpDown.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FilterComboBoxRx\FilterComboBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FilterComboBoxRx\FilterComboBoxRx.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="FilterTree\FilterTree.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -99,8 +107,14 @@
     <Compile Include="Converters\MessageTextToImageConverter.cs" />
     <Compile Include="Converters\TextToForegroundConverter.cs" />
     <Compile Include="Converters\UriStringToImageConverter.cs" />
-    <Compile Include="DecimalBox\DecimalBox.cs" />
-    <Compile Include="DecimalBox\XamlDecimalBox.cs" />
+    <Compile Include="DecimalBox\XamlDecimalUpDown.xaml.cs">
+      <DependentUpon>XamlDecimalUpDown.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FilterComboBoxRx\FilterComboBox.xaml.cs">
+      <DependentUpon>FilterComboBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FilterComboBoxRx\FilterComboBoxRx.cs" />
+    <Compile Include="FilterComboBoxRx\XamlFilterComboBoxRx.cs" />
     <Compile Include="FilterTree\FilterTree.cs" />
     <Compile Include="FilterTree\FilterTreeDragDropArgs.cs" />
     <Compile Include="FilterTree\XamlFilterTree.cs" />
@@ -206,6 +220,7 @@
   <ItemGroup>
     <Resource Include="themes\MetroDark\HowToApplyTheme.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
