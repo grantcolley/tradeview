@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:DevelopmentInProgress.Wpf.MarketView.View"
              xmlns:model="clr-namespace:DevelopmentInProgress.Wpf.MarketView.Model"
              xmlns:decimalBox="clr-namespace:DevelopmentInProgress.Wpf.Controls.DecimalBox;assembly=DevelopmentInProgress.Wpf.Controls" 
-             xmlns:filterbox="clr-namespace:DevelopmentInProgress.Wpf.Controls.FilterBox;assembly=DevelopmentInProgress.Wpf.Controls"
+             xmlns:filterComboBox="clr-namespace:DevelopmentInProgress.Wpf.Controls.FilterComboBox;assembly=DevelopmentInProgress.Wpf.Controls"
              xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Host.Converters;assembly=DevelopmentInProgress.Wpf.Host"
              xmlns:progress="clr-namespace:DevelopmentInProgress.Wpf.Host.Controls.Progress;assembly=DevelopmentInProgress.Wpf.Host"
              xmlns:localConverters="clr-namespace:DevelopmentInProgress.Wpf.MarketView.Converters"
@@ -16,6 +16,14 @@
         <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
         <converters:InvertBoolToVisibilityConverter x:Key="invertBoolToVisibilityConverter"/>
         <localConverters:LastPriceChangeDirectionColourConverter x:Key="LastPriceChangeDirectionColourConverter"/>
+
+        <DataTemplate DataType="{x:Type model:Symbol}">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="{Binding BaseAsset.Symbol}" FontWeight="Bold"/>
+                <Label Content="/"/>
+                <Label Content="{Binding QuoteAsset.Symbol}" VerticalAlignment="Center"/>
+            </StackPanel>
+        </DataTemplate>
         
     </UserControl.Resources>
     <DockPanel Margin="2" LastChildFill="True">
@@ -34,21 +42,12 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Grid.Column="0" Content="Symbol" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                <ComboBox Grid.Row="0" Grid.Column="1" 
-                          Margin="2" 
+                <filterComboBox:XamlFilterComboBox Grid.Row="0" Grid.Column="1" 
+                          Margin="2"                           
                           ItemsSource="{Binding Symbols}"
-                          SelectedItem="{Binding SelectedSymbol}"
+                          SelectedItem="{Binding SelectedSymbol, Mode=TwoWay}"
                           Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate DataType="{x:Type model:Symbol}">
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="{Binding BaseAsset.Symbol}" FontWeight="Bold"/>
-                                <Label Content="/"/>
-                                <Label Content="{Binding QuoteAsset.Symbol}" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
+                </filterComboBox:XamlFilterComboBox>
                 <Label Grid.Row="1" Grid.Column="0" Content="Order Type" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                 <ComboBox Grid.Row="1" Grid.Column="1" 
                           Margin="2" 

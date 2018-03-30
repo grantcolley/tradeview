@@ -46,5 +46,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
                 }
             }
         }
+
+        public override string ToString()
+        {
+            return $"{BaseAsset.Symbol} / {QuoteAsset.Symbol}"; ;
+        }
     }
 }
