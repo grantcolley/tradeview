@@ -112,7 +112,12 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 if (selectedOrderType != value)
                 {
                     selectedOrderType = value;
-                    Price = SelectedSymbol.SymbolStatistics.LastPrice;
+
+                    if (SelectedSymbol != null)
+                    {
+                        Price = SelectedSymbol.SymbolStatistics.LastPrice;
+                    }
+
                     OnPropertyChanged("IsPriceEditable");
                     OnPropertyChanged("IsMarketPrice");
                     OnPropertyChanged("SelectedOrderType");
