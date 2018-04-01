@@ -42,12 +42,13 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Grid.Column="0" Content="Symbol" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                <filterComboBox:XamlFilterComboBox Grid.Row="0" Grid.Column="1" 
-                          Margin="2"                           
+                <ComboBox Grid.Row="0" Grid.Column="1" 
+                          Margin="2"              
+                          IsTextSearchEnabled="True"
                           ItemsSource="{Binding Symbols}"
                           SelectedItem="{Binding SelectedSymbol, Mode=TwoWay}"
                           Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}">
-                </filterComboBox:XamlFilterComboBox>
+                </ComboBox>
                 <Label Grid.Row="1" Grid.Column="0" Content="Order Type" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                 <ComboBox Grid.Row="1" Grid.Column="1" 
                           Margin="2" 

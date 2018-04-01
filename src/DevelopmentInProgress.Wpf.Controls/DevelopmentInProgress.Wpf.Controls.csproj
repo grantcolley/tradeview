@@ -61,10 +61,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FilterComboBox\XamlFilterComboBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="FilterTree\FilterTree.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -106,9 +102,6 @@
     <Compile Include="DecimalBox\DecimalExtension.cs" />
     <Compile Include="DecimalBox\XamlDecimalUpDown.xaml.cs">
       <DependentUpon>XamlDecimalUpDown.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="FilterComboBox\XamlFilterComboBox.xaml.cs">
-      <DependentUpon>XamlFilterComboBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="FilterTree\FilterTree.cs" />
     <Compile Include="FilterTree\FilterTreeDragDropArgs.cs" />
