@@ -149,9 +149,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
 
             SymbolsViewModel.User = user;
-
-            TradeViewModel.Account = Account;
-
+            
             IsBusy = false;
         }
 
@@ -217,7 +215,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 {
                     SelectedSymbol = args.Value;
                     await SymbolViewModel.SetSymbol(selectedSymbol);
-                    TradeViewModel.SetSymbol(selectedSymbol);
                 }
                 else if (args.Symbols != null)
                 {
@@ -241,9 +238,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 }
                 else
                 {
-                    // TODO
-                    // account = args.Value
-                    // selectedAsset = args.SelectedAsset
+                    TradeViewModel.SetAccount(args.Value, args.SelectedAsset);
                 }
             });
         }

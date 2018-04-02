@@ -5,6 +5,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
 {
     public class Symbol : EntityBase
     {
+        private AccountBalance accountBalance;
         private int lastPriceChangeDirection;
         private int priceChangePercentDirection;
 
@@ -20,6 +21,20 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
         public bool IsFavourite { get; set; }
 
         public string Name { get { return $"{BaseAsset.Symbol}{QuoteAsset.Symbol}"; } }
+
+        public AccountBalance AccountBalance
+        {
+            get { return accountBalance; }
+            set
+            {
+                if (accountBalance != value)
+                {
+                    accountBalance = value;
+                    OnPropertyChanged("HasBalance");
+                    OnPropertyChanged("AccountBalance");
+                }
+            }
+        }
 
         public int LastPriceChangeDirection
         {
@@ -44,6 +59,20 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
                     priceChangePercentDirection = value;
                     OnPropertyChanged("PriceChangePercentDirection");
                 }
+            }
+        }
+
+        public bool HasBalance
+        {
+            get
+            {
+                if (AccountBalance != null
+                && AccountBalance.Free > 0)
+                {
+                    return true;
+                }
+
+                return false;
             }
         }
 
