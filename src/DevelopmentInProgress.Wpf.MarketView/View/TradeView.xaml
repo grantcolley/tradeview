@@ -21,10 +21,6 @@
                 <Label DockPanel.Dock="Left" Content="{Binding BaseAsset.Symbol}" FontWeight="Bold"/>
                 <Label DockPanel.Dock="Left" Content="/"/>
                 <Label DockPanel.Dock="Left" Content="{Binding QuoteAsset.Symbol}" VerticalAlignment="Center"/>
-                <StackPanel DockPanel.Dock="Right" Visibility="{Binding HasBalance, Converter={StaticResource boolToVisibilityConverter}}" Orientation="Horizontal">
-                    <Label Content="Available"/>
-                    <Label Content="{Binding AccountBalance.Free}"/>
-                </StackPanel>
                 <ContentControl/>
             </DockPanel>
         </DataTemplate>
@@ -43,6 +39,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Grid.Column="0" Content="Symbol" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
@@ -82,7 +79,17 @@
                            Foreground="{Binding SelectedSymbol.LastPriceChangeDirection, Converter={StaticResource LastPriceChangeDirectionColourConverter}}"
                            Style="{StaticResource LabelStyle}"/>
                 </DockPanel>
-                <DockPanel Grid.Row="5" Grid.Column="1" LastChildFill="True" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}">
+                <Label Grid.Row="5" Grid.Column="0" Content="Available" Visibility="{Binding HasBalance, Converter={StaticResource boolToVisibilityConverter}}"/>
+                <DockPanel Grid.Row="5" Grid.Column="1"
+                           LastChildFill="True"
+                           Background="{StaticResource TextBoxBackgroundBrush}"
+                           Visibility="{Binding HasBalance, Converter={StaticResource boolToVisibilityConverter}}">
+                    <ContentControl DockPanel.Dock="Right" Width="36" Height="26"/>
+                    <Label HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
+                           Content="{Binding AccountBalance.Free}"
+                           Style="{StaticResource LabelStyle}"/>
+                </DockPanel>
+                <DockPanel Grid.Row="6" Grid.Column="1" LastChildFill="True" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}">
                     <Button DockPanel.Dock="Left" Margin="2" Width="100" Style="{StaticResource BuyButtonStyle}" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                     <Button DockPanel.Dock="Right" Margin="2" Width="100" Style="{StaticResource SellButtonStyle}" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                     <ContentControl/>

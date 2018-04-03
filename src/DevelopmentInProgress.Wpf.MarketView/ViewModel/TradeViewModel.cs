@@ -14,6 +14,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private List<Symbol> symbols;
         private Symbol selectedSymbol;
         private Account account;
+        private AccountBalance accountBalance;
         private string selectedOrderType;
         private decimal quantity;
         private decimal price;
@@ -35,6 +36,20 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 if (account != value)
                 {
                     account = value;
+                }
+            }
+        }
+
+        public AccountBalance AccountBalance
+        {
+            get { return accountBalance; }
+            set
+            {
+                if (accountBalance != value)
+                {
+                    accountBalance = value;
+                    OnPropertyChanged("HasBalance");
+                    OnPropertyChanged("AccountBalance");
                 }
             }
         }
@@ -73,6 +88,13 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 if (selectedSymbol != value)
                 {
                     selectedSymbol = value;
+                    
+                    if(selectedSymbol != null)
+                    {
+                        var balance = Account?.Balances.SingleOrDefault(ab => ab.Asset.Equals(selectedSymbol.BaseAsset.Symbol));
+                        AccountBalance = balance;
+                    }
+
                     OnPropertyChanged("SelectedSymbol");
                 }
             }
@@ -151,6 +173,20 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
+        public bool HasBalance
+        {
+            get
+            {
+                if (AccountBalance != null
+                && AccountBalance.Free > 0)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
         public string[] OrderTypes
         {
             get { return OrderTypeHelper.OrderTypes(); }
@@ -164,8 +200,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         public void SetAccount(Account account, AccountBalance selectedAsset)
         {
             Account = account;
-            UpdateSymbolBalance();
-            SelectedSymbol = Symbols.FirstOrDefault(s => s.BaseAsset.Symbol.Equals(selectedAsset.Asset));
+            if (selectedAsset != null)
+            {
+                SelectedSymbol = Symbols.FirstOrDefault(s => s.BaseAsset.Symbol.Equals(selectedAsset.Asset));
+            }
+
             SelectedOrderType = OrderTypeHelper.GetOrderTypeName(Interface.OrderType.Limit);
         }
 
@@ -181,20 +220,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
 
             disposed = true;
-        }
-
-        private void UpdateSymbolBalance()
-        {
-            Func<Symbol, AccountBalance, Symbol> f = ((s, ab) =>
-            {
-                s.AccountBalance = ab;
-                return s;
-            });
-
-            (from s in Symbols
-             join ab in account.Balances
-             on s.BaseAsset.Symbol equals ab.Asset
-             select f(s, ab)).ToList();
         }
 
         private void OnException(Exception exception)

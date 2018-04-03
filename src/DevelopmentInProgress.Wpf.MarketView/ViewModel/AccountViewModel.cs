@@ -101,6 +101,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             try
             {
                 Account = await ExchangeService.GetAccountInfoAsync(Account.AccountInfo.User.ApiKey, Account.AccountInfo.User.ApiSecret, accountCancellationTokenSource.Token);
+                OnAccountLoggedIn(Account);
             }
             catch(Exception ex)
             {
@@ -116,10 +117,20 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             onAccountNotification?.Invoke(this, new AccountEventArgs { Exception = exception });
         }
 
+        private void OnAccountLoggedIn(Account account)
+        {
+            AccountNotification(new AccountEventArgs { Value = Account });
+        }
+
         private void OnSelectedAsset(AccountBalance selectedAsset)
         {
+            AccountNotification(new AccountEventArgs { Value = Account, SelectedAsset = selectedAsset });
+        }
+
+        private void AccountNotification(AccountEventArgs args)
+        {
             var onAccountNotification = OnAccountNotification;
-            onAccountNotification?.Invoke(this, new AccountEventArgs { Value = Account, SelectedAsset = selectedAsset });
+            onAccountNotification?.Invoke(this, args);
         }
     }
 }
