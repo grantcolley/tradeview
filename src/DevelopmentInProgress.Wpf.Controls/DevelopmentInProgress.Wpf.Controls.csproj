@@ -57,6 +57,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\InvertBoolToVisibilityConverter.cs" />
+    <Compile Include="TradeControl\XamlTradeControl.xaml.cs">
+      <DependentUpon>XamlTradeControl.xaml</DependentUpon>
+    </Compile>
     <Page Include="DecimalBox\XamlDecimalUpDown.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -125,6 +129,10 @@
     <Page Include="themes\MetroDark\Theme.Colors.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TradeControl\XamlTradeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

@@ -14,7 +14,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private List<Symbol> symbols;
         private Symbol selectedSymbol;
         private Account account;
-        private AccountBalance accountBalance;
+        private AccountBalance baseAccountBalance;
+        private AccountBalance quoteAccountBalance;
         private string selectedOrderType;
         private decimal quantity;
         private decimal price;
@@ -40,16 +41,30 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        public AccountBalance AccountBalance
+        public AccountBalance BaseAccountBalance
         {
-            get { return accountBalance; }
+            get { return baseAccountBalance; }
             set
             {
-                if (accountBalance != value)
+                if (baseAccountBalance != value)
                 {
-                    accountBalance = value;
-                    OnPropertyChanged("HasBalance");
-                    OnPropertyChanged("AccountBalance");
+                    baseAccountBalance = value;
+                    OnPropertyChanged("HasBaseBalance");
+                    OnPropertyChanged("BaseAccountBalance");
+                }
+            }
+        }
+
+        public AccountBalance QuoteAccountBalance
+        {
+            get { return quoteAccountBalance; }
+            set
+            {
+                if (quoteAccountBalance != value)
+                {
+                    quoteAccountBalance = value;
+                    OnPropertyChanged("HasQuoteBalance");
+                    OnPropertyChanged("QuoteAccountBalance");
                 }
             }
         }
@@ -91,8 +106,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     
                     if(selectedSymbol != null)
                     {
-                        var balance = Account?.Balances.SingleOrDefault(ab => ab.Asset.Equals(selectedSymbol.BaseAsset.Symbol));
-                        AccountBalance = balance;
+                        BaseAccountBalance = Account?.Balances.SingleOrDefault(ab => ab.Asset.Equals(selectedSymbol.BaseAsset.Symbol));
+                        QuoteAccountBalance = Account?.Balances.SingleOrDefault(ab => ab.Asset.Equals(selectedSymbol.QuoteAsset.Symbol));
                     }
 
                     OnPropertyChanged("SelectedSymbol");
@@ -173,12 +188,26 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        public bool HasBalance
+        public bool HasBaseBalance
         {
             get
             {
-                if (AccountBalance != null
-                && AccountBalance.Free > 0)
+                if (BaseAccountBalance != null
+                    && BaseAccountBalance.Free > 0)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        public bool HasQuoteBalance
+        {
+            get
+            {
+                if (QuoteAccountBalance != null
+                    && QuoteAccountBalance.Free > 0)
                 {
                     return true;
                 }

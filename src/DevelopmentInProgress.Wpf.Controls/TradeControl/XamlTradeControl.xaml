@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="DevelopmentInProgress.Wpf.Controls.TradeControl.XamlTradeControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DevelopmentInProgress.Wpf.Controls.TradeControl"
+             xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Controls.Converters"
+             mc:Ignorable="d" Width="155">
+    <UserControl.Resources>
+        <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
+        <converters:InvertBoolToVisibilityConverter x:Key="invertBoolToVisibilityConverter"/>
+    </UserControl.Resources>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Visibility="{Binding HasAvailable, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={StaticResource boolToVisibilityConverter}}">
+            <Button Content="25%" 
+                    Command="{Binding PercentageCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                    CommandParameter="25"/>
+            <Button Content="50%"
+                    Command="{Binding PercentageCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                    CommandParameter="50"/>
+            <Button Content="75%"
+                    Command="{Binding PercentageCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                    CommandParameter="75"/>
+            <Button Content="100%"
+                    Command="{Binding PercentageCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                    CommandParameter="100"/>
+        </StackPanel>
+        <DockPanel DockPanel.Dock="Top" LastChildFill="True" Height="30" Visibility="{Binding HasAvailable, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={StaticResource boolToVisibilityConverter}}">
+            <Label Content="Available" VerticalAlignment="Center"/>
+            <Label DockPanel.Dock="Top" 
+                   HorizontalContentAlignment="Right" 
+                   VerticalContentAlignment="Center"
+                   Content="{Binding Available, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                   Style="{StaticResource LabelStyle}"/>
+        </DockPanel>
+        <Button DockPanel.Dock="Bottom" Margin="2" Style="{StaticResource BuyButtonStyle}" 
+                Visibility="{Binding IsBuy, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={StaticResource boolToVisibilityConverter}}"/>
+        <Button DockPanel.Dock="Bottom" Margin="2" Style="{StaticResource SellButtonStyle}" 
+                Visibility="{Binding IsBuy, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+    </DockPanel>
+</UserControl>
