@@ -1,10 +1,12 @@
 ﻿using DevelopmentInProgress.MarketView.Interface.Helpers;
+using DevelopmentInProgress.Wpf.Host.ViewModel;
 using DevelopmentInProgress.Wpf.MarketView.Events;
 using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
@@ -25,9 +27,18 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         public TradeViewModel(IExchangeService exchangeService)
             : base(exchangeService)
         {
+            BuyCommand = new ViewModelCommand(Buy);
+            SellCommand = new ViewModelCommand(Sell);
+            BuyQuantityCommand = new ViewModelCommand(BuyQuantity);
+            SellQuantityCommand = new ViewModelCommand(SellQuantity);
         }
 
         public event EventHandler<TradeEventArgs> OnTradeNotification;
+        
+        public ICommand BuyCommand { get; set; }
+        public ICommand SellCommand { get; set; }
+        public ICommand BuyQuantityCommand { get; set; }
+        public ICommand SellQuantityCommand { get; set; }
 
         public Account Account
         {
@@ -249,6 +260,24 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
 
             disposed = true;
+        }
+
+        private void Buy(object param)
+        {
+        }
+
+        private void Sell(object param)
+        {
+        }
+
+        private void BuyQuantity(object param)
+        {
+            Quantity = 0;
+        }
+
+        private void SellQuantity(object param)
+        {
+            Quantity = 0;
         }
 
         private void OnException(Exception exception)

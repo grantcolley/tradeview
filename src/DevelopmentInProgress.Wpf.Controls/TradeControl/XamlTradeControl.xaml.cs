@@ -27,8 +27,6 @@ namespace DevelopmentInProgress.Wpf.Controls.TradeControl
         public XamlTradeControl()
         {
             InitializeComponent();
-
-            DataContext = this;
         }
 
         public decimal Available

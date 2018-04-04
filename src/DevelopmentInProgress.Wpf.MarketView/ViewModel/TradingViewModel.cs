@@ -45,7 +45,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             ObserveSymbol();
             ObserveTrade();
         }
-        
+
         public AccountViewModel AccountViewModel
         {
             get { return accountViewModel; }
