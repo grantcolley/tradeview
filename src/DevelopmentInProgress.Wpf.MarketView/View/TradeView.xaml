@@ -64,11 +64,11 @@
                           Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                 <Label Grid.Row="2" Grid.Column="0" Content="Quantity" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                 <decimalBox:XamlDecimalUpDown Grid.Row="2" Grid.Column="1" Margin="2" 
-                                              DecimalValue="{Binding Quantity}" 
+                                              DecimalValue="{Binding Quantity, Mode=TwoWay}" 
                                               Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                 <Label Grid.Row="3" Grid.Column="0" Content="Price" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                 <decimalBox:XamlDecimalUpDown Grid.Row="3" Grid.Column="1" Margin="2" 
-                                              DecimalValue="{Binding Price}"
+                                              DecimalValue="{Binding Price, Mode=TwoWay}"
                                               Visibility="{Binding IsPriceEditable, Converter={StaticResource boolToVisibilityConverter}}"/>
                 <DockPanel Grid.Row="3" Grid.Column="1"
                            LastChildFill="True"

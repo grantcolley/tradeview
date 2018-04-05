@@ -117,8 +117,15 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     
                     if(selectedSymbol != null)
                     {
+                        Quantity = 0;
+                        Price = SelectedSymbol.SymbolStatistics.LastPrice;
                         BaseAccountBalance = Account?.Balances.SingleOrDefault(ab => ab.Asset.Equals(selectedSymbol.BaseAsset.Symbol));
                         QuoteAccountBalance = Account?.Balances.SingleOrDefault(ab => ab.Asset.Equals(selectedSymbol.QuoteAsset.Symbol));
+                    }
+                    else
+                    {
+                        Price = 0;
+                        Quantity = 0;
                     }
 
                     OnPropertyChanged("SelectedSymbol");
@@ -272,12 +279,21 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         private void BuyQuantity(object param)
         {
-            Quantity = 0;
+            SetQuantity(param.ToString(), QuoteAccountBalance.Free);
         }
 
         private void SellQuantity(object param)
         {
-            Quantity = 0;
+            SetQuantity(param.ToString(), BaseAccountBalance.Free);
+        }
+
+        private void SetQuantity(string percentage, decimal total)
+        {
+            decimal percent;
+            if (Decimal.TryParse(percentage, out percent))
+            {
+                Quantity = (percent / 100) * total;
+            }
         }
 
         private void OnException(Exception exception)
