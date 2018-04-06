@@ -1,6 +1,6 @@
-﻿using DevelopmentInProgress.MarketView.Interface.Helpers;
-using DevelopmentInProgress.Wpf.Host.ViewModel;
+﻿using DevelopmentInProgress.Wpf.Host.ViewModel;
 using DevelopmentInProgress.Wpf.MarketView.Events;
+using DevelopmentInProgress.Wpf.MarketView.Helpers;
 using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using System;

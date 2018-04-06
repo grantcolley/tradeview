@@ -72,12 +72,15 @@
     <Compile Include="Converters\LastPriceChangeDirectionColourConverter.cs" />
     <Compile Include="Events\AccountEventArgs.cs" />
     <Compile Include="Events\EventArgsBase.cs" />
+    <Compile Include="Events\OrdersEventArgs.cs" />
     <Compile Include="Events\SymbolEventArgs.cs" />
     <Compile Include="Events\SymbolsEventArgs.cs" />
     <Compile Include="Events\TradeEventArgs.cs" />
+    <Compile Include="Helpers\OrderTypeHelper.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\AccountBalance.cs" />
     <Compile Include="Model\AggregateTrade.cs" />
+    <Compile Include="Model\Order.cs" />
     <Compile Include="Model\OrderBook.cs" />
     <Compile Include="Model\OrderBookPriceLevel.cs" />
     <Compile Include="Model\OrderBookTop.cs" />
@@ -94,12 +97,16 @@
     <Compile Include="Services\PersonaliseService.cs" />
     <Compile Include="ViewModel\AccountViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\OrdersViewModel.cs" />
     <Compile Include="ViewModel\SymbolsViewModel.cs" />
     <Compile Include="ViewModel\SymbolViewModel.cs" />
     <Compile Include="ViewModel\TradeViewModel.cs" />
     <Compile Include="ViewModel\TradingViewModel.cs" />
     <Compile Include="View\AccountView.xaml.cs">
       <DependentUpon>AccountView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\OrdersViewModel.xaml.cs">
+      <DependentUpon>OrdersViewModel.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SymbolsView.xaml.cs">
       <DependentUpon>SymbolsView.xaml</DependentUpon>
@@ -142,6 +149,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\AccountView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\OrdersViewModel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

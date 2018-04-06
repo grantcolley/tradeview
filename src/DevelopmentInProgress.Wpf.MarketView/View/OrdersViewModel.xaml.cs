@@ -3,11 +3,11 @@
 namespace DevelopmentInProgress.Wpf.MarketView.View
 {
     /// <summary>
-    /// Interaction logic for AccountView.xaml
+    /// Interaction logic for OrdersViewModel.xaml
     /// </summary>
-    public partial class AccountView : UserControl
+    public partial class OrdersViewModel : UserControl
     {
-        public AccountView()
+        public OrdersViewModel()
         {
             InitializeComponent();
         }

@@ -2,7 +2,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace DevelopmentInProgress.MarketView.Interface.Helpers
+namespace DevelopmentInProgress.Wpf.MarketView.Helpers
 {
     public static class OrderTypeHelper
     {
