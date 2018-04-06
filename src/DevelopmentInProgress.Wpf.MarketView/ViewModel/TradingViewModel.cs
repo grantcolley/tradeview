@@ -23,12 +23,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private AccountViewModel accountViewModel;
         private TradeViewModel tradeViewModel;
         private SymbolsViewModel symbolsViewModel;
+        private OrdersViewModel ordersViewModel;
         private User user;
         private Account account;
         
         public TradingViewModel(ViewModelContext viewModelContext, 
             AccountViewModel accountViewModel, SymbolsViewModel symbolsViewModel,
             TradeViewModel tradeViewModel, SymbolViewModel symbolViewModel,
+            OrdersViewModel ordersViewModel,
             IExchangeService exchangeService, IPersonaliseService personaliseService)
             : base(viewModelContext)
         {
@@ -36,6 +38,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             SymbolsViewModel = symbolsViewModel;
             TradeViewModel = tradeViewModel;
             SymbolViewModel = symbolViewModel;
+            OrdersViewModel = ordersViewModel;
 
             this.exchangeService = exchangeService;
             this.personaliseService = personaliseService;
@@ -94,6 +97,19 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 {
                     symbolViewModel = value;
                     OnPropertyChanged("SymbolViewModel");
+                }
+            }
+        }
+
+        public OrdersViewModel OrdersViewModel
+        {
+            get { return ordersViewModel; }
+            private set
+            {
+                if (ordersViewModel != value)
+                {
+                    ordersViewModel = value;
+                    OnPropertyChanged("OrdersViewModel");
                 }
             }
         }

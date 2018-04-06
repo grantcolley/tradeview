@@ -25,6 +25,10 @@
         <DataTemplate DataType="{x:Type localViewModel:TradeViewModel}">
             <localView:TradeView></localView:TradeView>
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type localViewModel:OrdersViewModel}">
+            <localView:OrdersView></localView:OrdersView>
+        </DataTemplate>
         
         <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
         
@@ -35,7 +39,8 @@
             <ColumnDefinition Width="23*"/>
             <ColumnDefinition Width="2"/>
             <ColumnDefinition Width="23*"/>
-            <ColumnDefinition Width="54*"/>
+            <ColumnDefinition Width="23*"/>
+            <ColumnDefinition Width="31*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="65*"/>
@@ -50,7 +55,7 @@
         <GridSplitter Grid.Row="0" Grid.Column="1" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
         <GridSplitter Grid.Row="1" Grid.Column="0" Height="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext"/>
 
-        <DockPanel Margin="5" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2" LastChildFill="True">
+        <DockPanel Margin="5" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Grid.RowSpan="2" LastChildFill="True">
             <ContentControl Content="{Binding SymbolViewModel}"/>
         </DockPanel>
         
@@ -60,6 +65,10 @@
 
         <DockPanel Grid.Row="2" Grid.Column="2" LastChildFill="True">
             <ContentControl Content="{Binding TradeViewModel}"/>
+        </DockPanel>
+
+        <DockPanel Grid.Row="2" Grid.Column="3" LastChildFill="True">
+            <ContentControl Content="{Binding OrdersViewModel}"/>
         </DockPanel>
         
     </Grid>

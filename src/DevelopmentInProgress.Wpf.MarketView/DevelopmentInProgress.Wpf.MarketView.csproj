@@ -76,6 +76,7 @@
     <Compile Include="Events\SymbolEventArgs.cs" />
     <Compile Include="Events\SymbolsEventArgs.cs" />
     <Compile Include="Events\TradeEventArgs.cs" />
+    <Compile Include="Helpers\OrderHelper.cs" />
     <Compile Include="Helpers\OrderTypeHelper.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\AccountBalance.cs" />
@@ -105,8 +106,8 @@
     <Compile Include="View\AccountView.xaml.cs">
       <DependentUpon>AccountView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\OrdersViewModel.xaml.cs">
-      <DependentUpon>OrdersViewModel.xaml</DependentUpon>
+    <Compile Include="View\OrdersView.xaml.cs">
+      <DependentUpon>OrdersView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SymbolsView.xaml.cs">
       <DependentUpon>SymbolsView.xaml</DependentUpon>
@@ -152,7 +153,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\OrdersViewModel.xaml">
+    <Page Include="View\OrdersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
