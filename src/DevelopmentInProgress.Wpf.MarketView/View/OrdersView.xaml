@@ -17,7 +17,7 @@
     
     <DockPanel Margin="2" LastChildFill="True">
         <GroupBox Margin="5" Style="{StaticResource GroupBoxNoHeaderStyle}">
-            <DockPanel LastChildFill="True">
+            <DockPanel Grid.Row="0" Grid.Column="0" LastChildFill="True">
                 <filterbox:XamlFilterBox DockPanel.Dock="Top" ItemsSource="{Binding Orders}" FilterFieldName="Symbol" VisibilityFieldName="IsVisible" SupportsDeepTraversal="False"  Margin="2"/>
                 <Grid DockPanel.Dock="Top">
                     <Grid.ColumnDefinitions>
@@ -29,41 +29,58 @@
                     <Label Grid.Column="1" VerticalAlignment="Center" Content="Quantity / Status" FontWeight="Bold"/>
                     <Label Grid.Column="3" VerticalAlignment="Center" Content="% Filled" FontWeight="Bold"/>
                 </Grid>
-                <ListView x:Name="AssetList" ItemsSource="{Binding Orders}" SelectedItem="{Binding SelectedOrder, Mode=TwoWay}" Background="Transparent" BorderThickness="0">
-                    <ListView.Template>
-                        <ControlTemplate>
-                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                                <ItemsPresenter></ItemsPresenter>
-                            </ScrollViewer>
-                        </ControlTemplate>
-                    </ListView.Template>
-                    <ListView.ItemTemplate>
-                        <DataTemplate DataType="{x:Type model:Order}">
-                            <Grid DockPanel.Dock="Top">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="120"/>
-                                    <ColumnDefinition Width="120"/>
-                                    <ColumnDefinition Width="120"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="{Binding Symbol}"/>
-                                <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Content="{Binding Time}"/>
-                                <Label Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Content="{Binding Quantity}"/>
-                                <Label Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Content="{Binding Status}"/>
-                                <Label Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Content="{Binding FilledPercent}"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                            <Setter Property="Visibility" Value="{Binding Path=IsVisible, Converter={StaticResource boolToVisibilityConverter}}"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                </ListView>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <ListView x:Name="AssetList" Grid.Row="0" Grid.Column="0"
+                              Background="Transparent" BorderThickness="0"
+                              ItemsSource="{Binding Orders}" 
+                              SelectedItem="{Binding SelectedOrder, Mode=TwoWay}" 
+                              Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}">
+                        <ListView.Template>
+                            <ControlTemplate>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                    <ItemsPresenter></ItemsPresenter>
+                                </ScrollViewer>
+                            </ControlTemplate>
+                        </ListView.Template>
+                        <ListView.ItemTemplate>
+                            <DataTemplate DataType="{x:Type model:Order}">
+                                <Grid DockPanel.Dock="Top">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="120"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="{Binding Symbol}"/>
+                                    <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Content="{Binding Time}"/>
+                                    <Label Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Content="{Binding Quantity}"/>
+                                    <Label Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Content="{Binding Status}"/>
+                                    <Label Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Content="{Binding FilledPercent}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="Visibility" Value="{Binding Path=IsVisible, Converter={StaticResource boolToVisibilityConverter}}"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                    <Viewbox Grid.Row="0" Grid.Column="0"
+                             Height="18" Width="18" Margin="2"
+                             Visibility="{Binding IsLoading, Converter={StaticResource boolToVisibilityConverter}}">
+                        <progress:CircularProgress/>
+                    </Viewbox>
+                </Grid>
             </DockPanel>
         </GroupBox>
     </DockPanel>

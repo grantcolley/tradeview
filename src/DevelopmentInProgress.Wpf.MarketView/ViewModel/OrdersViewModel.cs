@@ -12,7 +12,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private CancellationTokenSource ordersCancellationTokenSource;
         private Account account;
         private List<Order> orders;
-        private bool isLoggingIn;
+        private bool isLoading;
         private bool disposed;
 
         public OrdersViewModel(IExchangeService exchangeService)
@@ -49,17 +49,22 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        public bool IsLoggingIn
+        public bool IsLoading
         {
-            get { return isLoggingIn; }
+            get { return isLoading; }
             set
             {
-                if (isLoggingIn != value)
+                if (isLoading != value)
                 {
-                    isLoggingIn = value;
-                    OnPropertyChanged("IsLoggingIn");
+                    isLoading = value;
+                    OnPropertyChanged("IsLoading");
                 }
             }
+        }
+
+        public void SetAccount(Account account)
+        {
+            Account = account;
         }
 
         public override void Dispose(bool disposing)

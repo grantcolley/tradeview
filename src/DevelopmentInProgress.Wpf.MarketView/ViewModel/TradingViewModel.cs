@@ -255,6 +255,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 else
                 {
                     TradeViewModel.SetAccount(args.Value, args.SelectedAsset);
+                    OrdersViewModel.SetAccount(args.Value);
                 }
             });
         }
