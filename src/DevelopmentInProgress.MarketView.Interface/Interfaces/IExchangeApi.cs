@@ -17,5 +17,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Interfaces
         void SubscribeStatistics(Action<StatiscticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken);
         void SubscribeOrderBook(string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken);
         void SubscribeAggregateTrades(string symbol, int limit, Action<AggregateTradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken);
+        void SubscribeAccountInfo(Interface.Model.User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken);
+        void SubscribeAccountOrders(User user, Action<StatiscticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken);
     }
 }

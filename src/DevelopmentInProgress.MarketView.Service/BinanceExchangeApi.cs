@@ -24,20 +24,7 @@ namespace DevelopmentInProgress.MarketView.Service
         {
                 var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret);
                 var result = await binanceApi.GetAccountInfoAsync(apiUser, 0, cancellationToken);
-                var accountInfo = new Interface.Model.AccountInfo
-                {
-                    Commissions = new Interface.Model.AccountCommissions { Buyer = result.Commissions.Buyer, Maker = result.Commissions.Maker, Seller = result.Commissions.Seller, Taker = result.Commissions.Taker },
-                    Status = new Interface.Model.AccountStatus { CanDeposit = result.Status.CanDeposit, CanTrade = result.Status.CanTrade, CanWithdraw = result.Status.CanWithdraw },
-                    Time = result.Time,
-                    Balances = new List<Interface.Model.AccountBalance>()
-                };
-
-                var balances = result.Balances.Where(b => b.Free > 0 || b.Locked > 0);
-                foreach (var balance in balances)
-                {
-                    accountInfo.Balances.Add(new Interface.Model.AccountBalance { Asset = balance.Asset, Free = balance.Free, Locked = balance.Locked });
-                }
-
+                var accountInfo = GetAccountInfo(result);
                 user.RateLimiter = new Interface.Model.RateLimiter { IsEnabled = result.User.RateLimiter.IsEnabled };
                 accountInfo.User = user;
                 return accountInfo;
@@ -174,6 +161,93 @@ namespace DevelopmentInProgress.MarketView.Service
             }
         }
         
+        public async void SubscribeAccountInfo(Interface.Model.User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret);
+                var streamControl = new UserDataWebSocketStreamControl(binanceApi);
+                var listenKey = await streamControl.OpenStreamAsync(apiUser);
+
+                var accountInfoCache = new AccountInfoCache(binanceApi, new UserDataWebSocketClient());
+                accountInfoCache.Subscribe(listenKey, apiUser, e =>
+                {
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        accountInfoCache.Unsubscribe();
+                        return;
+                    }
+
+                    try
+                    {
+                        var accountInfo = GetAccountInfo(e.AccountInfo);
+                        user.RateLimiter = new Interface.Model.RateLimiter { IsEnabled = accountInfo.User.RateLimiter.IsEnabled };
+                        accountInfo.User = user;
+                        callback.Invoke(new AccountInfoEventArgs { AccountInfo = accountInfo });
+                    }
+                    catch (Exception ex)
+                    {
+                        accountInfoCache.Unsubscribe();
+                        exception.Invoke(ex);
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                exception.Invoke(ex);
+            }
+        }
+
+        public void SubscribeAccountOrders(Interface.Model.User user, Action<StatiscticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        {
+            try
+            {
+                //var symbolStatisticsCache = new SymbolStatisticsCache(binanceApi, new SymbolStatisticsWebSocketClient());
+                //symbolStatisticsCache.Subscribe(e =>
+                //{
+                //    if (cancellationToken.IsCancellationRequested)
+                //    {
+                //        symbolStatisticsCache.Unsubscribe();
+                //        return;
+                //    }
+
+                //    try
+                //    {
+                //        var symbolsStats = e.Statistics.Select(s => NewSymbolStats(s)).ToList();
+                //        callback.Invoke(new StatiscticsEventArgs { Statistics = symbolsStats });
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        symbolStatisticsCache.Unsubscribe();
+                //        exception.Invoke(ex);
+                //    }
+                //});
+            }
+            catch (Exception ex)
+            {
+                exception.Invoke(ex);
+            }
+        }
+
+        private Interface.Model.AccountInfo GetAccountInfo(AccountInfo a)
+        {
+            var accountInfo = new Interface.Model.AccountInfo
+            {
+                Commissions = new Interface.Model.AccountCommissions { Buyer = a.Commissions.Buyer, Maker = a.Commissions.Maker, Seller = a.Commissions.Seller, Taker = a.Commissions.Taker },
+                Status = new Interface.Model.AccountStatus { CanDeposit = a.Status.CanDeposit, CanTrade = a.Status.CanTrade, CanWithdraw = a.Status.CanWithdraw },
+                Time = a.Time,
+                Balances = new List<Interface.Model.AccountBalance>()
+            };
+
+            var balances = a.Balances.Where(b => b.Free > 0 || b.Locked > 0);
+            foreach (var balance in balances)
+            {
+                accountInfo.Balances.Add(new Interface.Model.AccountBalance { Asset = balance.Asset, Free = balance.Free, Locked = balance.Locked });
+            }
+
+            return accountInfo;
+        }
+
         private Interface.Model.SymbolStats NewSymbolStats(SymbolStatistics s)
         {
             return new Interface.Model.SymbolStats

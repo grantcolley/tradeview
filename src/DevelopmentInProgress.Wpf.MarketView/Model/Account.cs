@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DevelopmentInProgress.MarketView.Interface.Events;
+using System.Collections.Generic;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Model
@@ -61,5 +62,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
         }
 
         public List<AccountBalance> Balances { get; private set; }
+
+        public void Update(AccountInfoEventArgs accountInfo)
+        {
+
+        }
     }
 }

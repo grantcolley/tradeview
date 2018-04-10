@@ -101,7 +101,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             try
             {
                 Account = await ExchangeService.GetAccountInfoAsync(Account.AccountInfo.User.ApiKey, Account.AccountInfo.User.ApiSecret, accountCancellationTokenSource.Token);
+
                 OnAccountLoggedIn(Account);
+
+                ExchangeService.SubscribeAccountInfo(Account.AccountInfo.User, Account.Update, OnException, accountCancellationTokenSource.Token);
             }
             catch(Exception ex)
             {

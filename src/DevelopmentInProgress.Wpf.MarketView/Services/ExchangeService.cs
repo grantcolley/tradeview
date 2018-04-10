@@ -133,5 +133,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
         {
             exchangeApi.SubscribeAggregateTrades(symbol, limit, callback, exception, cancellationToken);
         }
+
+        public void SubscribeAccountInfo(Interface.User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        {
+            exchangeApi.SubscribeAccountInfo(user, callback, exception, cancellationToken);
+        }
     }
 }
