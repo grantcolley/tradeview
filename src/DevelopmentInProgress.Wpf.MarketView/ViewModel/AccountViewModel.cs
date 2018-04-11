@@ -1,4 +1,5 @@
-﻿using DevelopmentInProgress.Wpf.Host.ViewModel;
+﻿using DevelopmentInProgress.MarketView.Interface.Events;
+using DevelopmentInProgress.Wpf.Host.ViewModel;
 using DevelopmentInProgress.Wpf.MarketView.Events;
 using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.MarketView.Services;
@@ -104,7 +105,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                 OnAccountLoggedIn(Account);
 
-                ExchangeService.SubscribeAccountInfo(Account.AccountInfo.User, Account.Update, OnException, accountCancellationTokenSource.Token);
+                ExchangeService.SubscribeAccountInfo(Account.AccountInfo.User, AccountInfoUpdate, OnException, accountCancellationTokenSource.Token);
             }
             catch(Exception ex)
             {
@@ -134,6 +135,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         {
             var onAccountNotification = OnAccountNotification;
             onAccountNotification?.Invoke(this, args);
+        }
+
+        private void AccountInfoUpdate(AccountInfoEventArgs args)
+        {
+            // TODO: update the account info balanaces.
         }
     }
 }

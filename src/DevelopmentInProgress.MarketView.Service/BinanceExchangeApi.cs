@@ -191,6 +191,8 @@ namespace DevelopmentInProgress.MarketView.Service
                         exception.Invoke(ex);
                     }
                 });
+
+                // TODO: Implement a keep alive every 30mins or after 60mins the 
             }
             catch (Exception ex)
             {
