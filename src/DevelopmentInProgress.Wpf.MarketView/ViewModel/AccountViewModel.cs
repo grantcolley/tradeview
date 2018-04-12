@@ -1,11 +1,14 @@
-﻿using DevelopmentInProgress.MarketView.Interface.Events;
-using DevelopmentInProgress.Wpf.Host.ViewModel;
+﻿using DevelopmentInProgress.Wpf.Host.ViewModel;
 using DevelopmentInProgress.Wpf.MarketView.Events;
 using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using System;
+using System.Linq;
 using System.Threading;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
+using Interface = DevelopmentInProgress.MarketView.Interface;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
@@ -105,7 +108,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                 OnAccountLoggedIn(Account);
 
-                ExchangeService.SubscribeAccountInfo(Account.AccountInfo.User, AccountInfoUpdate, OnException, accountCancellationTokenSource.Token);
+                ExchangeService.SubscribeAccountInfo(Account.AccountInfo.User, e => AccountInfoUpdate(e.AccountInfo, Application.Current.Dispatcher), OnException, accountCancellationTokenSource.Token);
             }
             catch(Exception ex)
             {
@@ -137,9 +140,41 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             onAccountNotification?.Invoke(this, args);
         }
 
-        private void AccountInfoUpdate(AccountInfoEventArgs args)
+        private void AccountInfoUpdate(Interface.Model.AccountInfo e, Dispatcher dispatcher)
         {
-            // TODO: update the account info balanaces.
+            dispatcher.Invoke(() =>
+            {
+                if (e.Balances == null
+                || !e.Balances.Any())
+                {
+
+                    Account.Balances.Clear();
+                    return;
+                }
+
+                Func<AccountBalance, Interface.Model.AccountBalance, AccountBalance> f = ((ab, nb) =>
+                    {
+                        ab.Free = nb.Free;
+                        ab.Locked = nb.Locked;
+                        return ab;
+                    });
+
+                var balances = from ab in Account.Balances
+                               join nb in e.Balances on ab.Asset equals nb.Asset
+                               select f(ab, nb);
+
+                var remove = Account.Balances.Where(ab => !e.Balances.Any(nb => nb.Asset.Equals(ab.Asset)));
+                foreach (var ob in remove)
+                {
+                    Account.Balances.Remove(ob);
+                }
+
+                var add = e.Balances.Where(nb => Account.Balances.Any(ab => !ab.Asset.Equals(nb.Asset)));
+                foreach(var nb in add)
+                {
+                    Account.Balances.Add(new AccountBalance { Asset = nb.Asset, Free = nb.Free, Locked = nb.Locked });
+                }
+            });
         }
     }
 }

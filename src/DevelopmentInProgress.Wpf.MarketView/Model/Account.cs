@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Model
@@ -17,7 +18,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
                 apiSecret = secretText;
             }
 
-            Balances = new List<AccountBalance>();
+            Balances = new ObservableCollection<AccountBalance>();
 
             if (accountInfo.Balances != null)
             {
@@ -60,7 +61,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
             }
         }
 
-        public List<AccountBalance> Balances { get; private set; }
+        public ObservableCollection<AccountBalance> Balances { get; private set; }
 
         public void Update(Interface.AccountInfo accountInfo)
         {
