@@ -204,26 +204,26 @@ namespace DevelopmentInProgress.MarketView.Service
         {
             try
             {
-                //var symbolStatisticsCache = new SymbolStatisticsCache(binanceApi, new SymbolStatisticsWebSocketClient());
-                //symbolStatisticsCache.Subscribe(e =>
-                //{
-                //    if (cancellationToken.IsCancellationRequested)
-                //    {
-                //        symbolStatisticsCache.Unsubscribe();
-                //        return;
-                //    }
+                var symbolStatisticsCache = new SymbolStatisticsCache(binanceApi, new SymbolStatisticsWebSocketClient());
+                symbolStatisticsCache.Subscribe(e =>
+                {
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        symbolStatisticsCache.Unsubscribe();
+                        return;
+                    }
 
-                //    try
-                //    {
-                //        var symbolsStats = e.Statistics.Select(s => NewSymbolStats(s)).ToList();
-                //        callback.Invoke(new StatiscticsEventArgs { Statistics = symbolsStats });
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        symbolStatisticsCache.Unsubscribe();
-                //        exception.Invoke(ex);
-                //    }
-                //});
+                    try
+                    {
+                        var symbolsStats = e.Statistics.Select(s => NewSymbolStats(s)).ToList();
+                        callback.Invoke(new StatiscticsEventArgs { Statistics = symbolsStats });
+                    }
+                    catch (Exception ex)
+                    {
+                        symbolStatisticsCache.Unsubscribe();
+                        exception.Invoke(ex);
+                    }
+                });
             }
             catch (Exception ex)
             {

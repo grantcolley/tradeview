@@ -147,7 +147,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 if (e.Balances == null
                 || !e.Balances.Any())
                 {
-
                     Account.Balances.Clear();
                     return;
                 }

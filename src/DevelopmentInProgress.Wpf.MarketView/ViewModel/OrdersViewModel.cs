@@ -12,6 +12,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private CancellationTokenSource ordersCancellationTokenSource;
         private Account account;
         private List<Order> orders;
+        private Order selectedOrder;
         private bool isLoading;
         private bool disposed;
 
@@ -45,6 +46,19 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 {
                     orders = value;
                     OnPropertyChanged("Orders");
+                }
+            }
+        }
+
+        public Order SelectedOrder
+        {
+            get { return SelectedOrder; }
+            set
+            {
+                if(selectedOrder != value)
+                {
+                    selectedOrder = value;
+                    OnPropertyChanged("SelectedOrder");
                 }
             }
         }
