@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DevelopmentInProgress.MarketView.Interface.Events;
 using DevelopmentInProgress.MarketView.Interface.Interfaces;
+using DevelopmentInProgress.Wpf.MarketView.Helpers;
 using DevelopmentInProgress.Wpf.MarketView.Model;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 
@@ -116,6 +117,29 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
         {
             var orderBook = await exchangeApi.GetOrderBookAsync(symbol, limit, cancellationToken);
             return orderBook;
+        }
+
+        public async Task<IEnumerable<Order>> GetOpenOrdersAsync(Interface.User user, string symbol = null, long recWindow = 0, Action<Exception> exception = default(Action<Exception>), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var result = await exchangeApi.GetOpenOrdersAsync(user, symbol, recWindow, exception, cancellationToken);
+            var orders = result.Select(o => new Order
+            {
+                Symbol = o.Symbol,
+                Id = o.Id,
+                ClientOrderId = o.ClientOrderId,
+                Price = o.Price,
+                OriginalQuantity = o.OriginalQuantity,
+                ExecutedQuantity = o.ExecutedQuantity,
+                Status = OrderHelper.GetOrderStatusName(o.Status),
+                TimeInForce = OrderHelper.GetTimeInForceName(o.TimeInForce),
+                Type = OrderTypeHelper.GetOrderTypeName(o.Type),
+                Side = OrderHelper.GetOrderSideName(o.Side),
+                StopPrice = o.StopPrice,
+                IcebergQuantity = o.IcebergQuantity,
+                Time = o.Time,
+                IsWorking = o.IsWorking
+            }).ToList();
+            return orders;
         }
 
         public void SubscribeOrderBook(string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)

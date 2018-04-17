@@ -4,6 +4,7 @@ using DevelopmentInProgress.Wpf.MarketView.Services;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
@@ -52,7 +53,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         public Order SelectedOrder
         {
-            get { return SelectedOrder; }
+            get { return selectedOrder; }
             set
             {
                 if(selectedOrder != value)
@@ -76,9 +77,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        public void SetAccount(Account account)
+        public async void SetAccount(Account account)
         {
             Account = account;
+            var orders = await Task.Run(async () => await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User));
+            Orders = new List<Order>(orders);
         }
 
         public override void Dispose(bool disposing)

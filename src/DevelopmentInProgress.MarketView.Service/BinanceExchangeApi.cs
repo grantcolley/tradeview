@@ -92,6 +92,39 @@ namespace DevelopmentInProgress.MarketView.Service
             return aggregateTrades;
         }
 
+        public async Task<IEnumerable<Interface.Model.Order>> GetOpenOrdersAsync(Interface.Model.User user, string symbol = null, long recWindow = 0, Action<Exception> exception = default(Action<Exception>), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret);
+            var result = await binanceApi.GetOpenOrdersAsync(apiUser, symbol, recWindow, cancellationToken);
+            var orders = result.Select(o => new Interface.Model.Order
+            {
+                User = user,
+                Symbol = o.Symbol,
+                Id = o.Id,
+                ClientOrderId = o.ClientOrderId,
+                Price = o.Price,
+                OriginalQuantity = o.OriginalQuantity,
+                ExecutedQuantity = o.ExecutedQuantity,
+                Status = (Interface.Model.OrderStatus)o.Status,
+                TimeInForce = (Interface.Model.TimeInForce)o.TimeInForce,
+                Type = (Interface.Model.OrderType)o.Type,
+                Side = (Interface.Model.OrderSide)o.Side,
+                StopPrice = o.StopPrice,
+                IcebergQuantity = o.IcebergQuantity,
+                Time = o.Time,
+                IsWorking = o.IsWorking,
+                Fills = o.Fills.Select(f => new Interface.Model.Fill
+                {
+                    Price = f.Price,
+                    Quantity = f.Quantity,
+                    Commission = f.Commission,
+                    CommissionAsset = f.CommissionAsset,
+                    TradeId = f.TradeId
+                })
+            }).ToList();
+            return orders;
+        }
+
         public void SubscribeAggregateTrades(string symbol, int limit, Action<AggregateTradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             try
@@ -193,37 +226,6 @@ namespace DevelopmentInProgress.MarketView.Service
                 });
 
                 // TODO: Implement a keep alive every 30mins or after 60mins the 
-            }
-            catch (Exception ex)
-            {
-                exception.Invoke(ex);
-            }
-        }
-
-        public void SubscribeAccountOrders(Interface.Model.User user, Action<StatiscticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
-        {
-            try
-            {
-                var symbolStatisticsCache = new SymbolStatisticsCache(binanceApi, new SymbolStatisticsWebSocketClient());
-                symbolStatisticsCache.Subscribe(e =>
-                {
-                    if (cancellationToken.IsCancellationRequested)
-                    {
-                        symbolStatisticsCache.Unsubscribe();
-                        return;
-                    }
-
-                    try
-                    {
-                        var symbolsStats = e.Statistics.Select(s => NewSymbolStats(s)).ToList();
-                        callback.Invoke(new StatiscticsEventArgs { Statistics = symbolsStats });
-                    }
-                    catch (Exception ex)
-                    {
-                        symbolStatisticsCache.Unsubscribe();
-                        exception.Invoke(ex);
-                    }
-                });
             }
             catch (Exception ex)
             {
