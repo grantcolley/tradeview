@@ -158,9 +158,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                         return ab;
                     });
 
-                var balances = from ab in Account.Balances
+                var balances = (from ab in Account.Balances
                                join nb in e.Balances on ab.Asset equals nb.Asset
-                               select f(ab, nb);
+                               select f(ab, nb)).ToList();
 
                 var remove = Account.Balances.Where(ab => !e.Balances.Any(nb => nb.Asset.Equals(ab.Asset)));
                 foreach (var ob in remove)
@@ -168,7 +168,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     Account.Balances.Remove(ob);
                 }
 
-                var add = e.Balances.Where(nb => Account.Balances.Any(ab => !ab.Asset.Equals(nb.Asset)));
+                var add = e.Balances.Where(nb => !Account.Balances.Any(ab => ab.Asset.Equals(nb.Asset)));
                 foreach(var nb in add)
                 {
                     Account.Balances.Add(new AccountBalance { Asset = nb.Asset, Free = nb.Free, Locked = nb.Locked });
