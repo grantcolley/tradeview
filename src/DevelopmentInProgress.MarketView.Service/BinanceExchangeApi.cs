@@ -113,7 +113,7 @@ namespace DevelopmentInProgress.MarketView.Service
                 IcebergQuantity = o.IcebergQuantity,
                 Time = o.Time,
                 IsWorking = o.IsWorking,
-                Fills = o.Fills.Select(f => new Interface.Model.Fill
+                Fills = o.Fills?.Select(f => new Interface.Model.Fill
                 {
                     Price = f.Price,
                     Quantity = f.Quantity,
@@ -214,7 +214,6 @@ namespace DevelopmentInProgress.MarketView.Service
                     try
                     {
                         var accountInfo = GetAccountInfo(e.AccountInfo);
-                        user.RateLimiter = new Interface.Model.RateLimiter { IsEnabled = accountInfo.User.RateLimiter.IsEnabled };
                         accountInfo.User = user;
                         callback.Invoke(new AccountInfoEventArgs { AccountInfo = accountInfo });
                     }
