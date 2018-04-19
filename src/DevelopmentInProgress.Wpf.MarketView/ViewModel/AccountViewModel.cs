@@ -108,7 +108,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                 OnAccountLoggedIn(Account);
 
-                ExchangeService.SubscribeAccountInfo(Account.AccountInfo.User, e => AccountInfoUpdate(e.AccountInfo, Application.Current.Dispatcher), OnException, accountCancellationTokenSource.Token);
+                ExchangeService.SubscribeAccountInfo(Account.AccountInfo.User, e => AccountInfoUpdate(e.AccountInfo), OnException, accountCancellationTokenSource.Token);
             }
             catch(Exception ex)
             {
@@ -140,9 +140,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             onAccountNotification?.Invoke(this, args);
         }
 
-        private void AccountInfoUpdate(Interface.Model.AccountInfo e, Dispatcher dispatcher)
+        private void AccountInfoUpdate(Interface.Model.AccountInfo e)
         {
-            dispatcher.Invoke(() =>
+            Dispatcher.Invoke(() =>
             {
                 if (e.Balances == null
                 || !e.Balances.Any())

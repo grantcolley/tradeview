@@ -1,6 +1,7 @@
 ﻿using DevelopmentInProgress.Wpf.MarketView.Services;
 using System;
 using System.ComponentModel;
+using System.Windows.Threading;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
@@ -12,6 +13,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         {
             ExchangeService = exchangeService;
         }
+
+        public Dispatcher Dispatcher { get; set; }
 
         public abstract void Dispose(bool disposing);
 
