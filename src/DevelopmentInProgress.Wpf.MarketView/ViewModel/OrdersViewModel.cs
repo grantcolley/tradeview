@@ -3,8 +3,10 @@ using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
@@ -80,8 +82,38 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         public async void SetAccount(Account account)
         {
             Account = account;
-            var orders = await Task.Run(async () => await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User));
-            Orders = new List<Order>(orders);
+            var result = await Task.Run(async () => await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User));
+            Orders = new List<Order>(result);
+        }
+
+        public async void UpdateOrders(Account acccount)
+        {
+            var result = await Task.Run(async () => await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User));
+
+            Dispatcher.Invoke(() =>
+            {
+                if (!result.Any())
+                {
+                    Orders.Clear();
+                    return;
+                }
+
+                var updated = (from o in Orders
+                                join r in result on o.Symbol equals r.Symbol
+                                select o.Update(r)).ToList();
+
+                var remove = Orders.Where(o => !result.Any(r => r.Symbol.Equals(o.Symbol)));
+                foreach (var order in remove)
+                {
+                    Orders.Remove(order);
+                }
+
+                var add = result.Where(r => !Orders.Any(o => o.Symbol.Equals(r.Symbol)));
+                foreach (var order in add)
+                {
+                    Orders.Add(order);
+                }
+            });
         }
 
         public override void Dispose(bool disposing)
