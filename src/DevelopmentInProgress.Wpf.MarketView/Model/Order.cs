@@ -60,5 +60,24 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
                 return (int)((ExecutedQuantity / OriginalQuantity) * 100);
             }
         }
+
+        public Order Update(Order order)
+        {
+            Symbol = order.Symbol;
+            Id = order.Id;
+            ClientOrderId = order.ClientOrderId;
+            Price = order.Price;
+            OriginalQuantity = order.OriginalQuantity;
+            ExecutedQuantity = order.ExecutedQuantity;
+            Status = order.Status;
+            TimeInForce = order.TimeInForce;
+            Type = order.Type;
+            Side = order.Side;
+            StopPrice = order.StopPrice;
+            IcebergQuantity = order.IcebergQuantity;
+            Time = order.Time;
+            IsWorking = order.IsWorking;
+            return this;
+        }
     }
 }
