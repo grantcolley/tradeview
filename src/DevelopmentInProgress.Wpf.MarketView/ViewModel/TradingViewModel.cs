@@ -34,12 +34,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             IExchangeService exchangeService, IPersonaliseService personaliseService)
             : base(viewModelContext)
         {
-            accountViewModel.Dispatcher = ViewModelContext.UiDispatcher;
-            symbolsViewModel.Dispatcher = ViewModelContext.UiDispatcher;
-            tradeViewModel.Dispatcher = ViewModelContext.UiDispatcher;
-            symbolViewModel.Dispatcher = ViewModelContext.UiDispatcher;
-            ordersViewModel.Dispatcher = ViewModelContext.UiDispatcher;
-
             AccountViewModel = accountViewModel;
             SymbolsViewModel = symbolsViewModel;
             TradeViewModel = tradeViewModel;
@@ -156,6 +150,12 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             {
                 ClearMessages();
             }
+
+            accountViewModel.Dispatcher = ViewModelContext.UiDispatcher;
+            symbolsViewModel.Dispatcher = ViewModelContext.UiDispatcher;
+            tradeViewModel.Dispatcher = ViewModelContext.UiDispatcher;
+            symbolViewModel.Dispatcher = ViewModelContext.UiDispatcher;
+            ordersViewModel.Dispatcher = ViewModelContext.UiDispatcher;
 
             Account = new Account(new Interface.AccountInfo { User = new Interface.User() });
             

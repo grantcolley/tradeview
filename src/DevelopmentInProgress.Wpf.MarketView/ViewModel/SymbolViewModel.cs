@@ -205,9 +205,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             {
                 var trades = await ExchangeService.GetAggregateTradesAsync(Symbol.Name, limit, symbolCancellationTokenSource.Token);
 
-                UpdateAggregateTrades(trades, Application.Current.Dispatcher);
+                UpdateAggregateTrades(trades);
 
-                ExchangeService.SubscribeAggregateTrades(Symbol.Name, limit, e => UpdateAggregateTrades(e.AggregateTrades, Application.Current.Dispatcher), OnException, symbolCancellationTokenSource.Token);
+                ExchangeService.SubscribeAggregateTrades(Symbol.Name, limit, e => UpdateAggregateTrades(e.AggregateTrades), OnException, symbolCancellationTokenSource.Token);
             }
             catch (Exception ex)
             {
@@ -255,7 +255,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        private void UpdateAggregateTrades(IEnumerable<Interface.AggregateTrade> trades, Dispatcher dispatcher)
+        private void UpdateAggregateTrades(IEnumerable<Interface.AggregateTrade> trades)
         {
             lock (aggregateTradesLock)
             {
@@ -264,7 +264,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 {
                     var orderedTrades = (from t in trades orderby t.Time select new AggregateTrade { Id = t.Id, Time = t.Time, Price = t.Price, Quantity = t.Quantity, IsBuyerMaker = t.IsBuyerMaker });
                     AggregateTradesChart = new ChartValues<AggregateTrade>(orderedTrades);
-                    dispatcher.Invoke(() => { AggregateTrades = new ObservableCollection<AggregateTrade>(orderedTrades); });                    
+                    Dispatcher.Invoke(() => { AggregateTrades = new ObservableCollection<AggregateTrade>(orderedTrades); });                    
                 }
                 else
                 {
@@ -284,7 +284,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                     AggregateTradesChart.AddRange(orderedAggregateTrades);
 
-                    dispatcher.Invoke(() =>
+                    Dispatcher.Invoke(() =>
                     {
                         for (int i = 0; i < newCount; i++)
                         {
