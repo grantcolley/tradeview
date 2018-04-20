@@ -7,7 +7,6 @@
 
 using System;
 using DevelopmentInProgress.Wpf.Host.Context;
-using DevelopmentInProgress.Wpf.Host.Navigation;
 using DevelopmentInProgress.Wpf.Host.ViewModel;
 using Xceed.Wpf.AvalonDock.Layout;
 
