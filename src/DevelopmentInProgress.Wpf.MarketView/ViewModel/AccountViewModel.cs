@@ -174,6 +174,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     Account.Balances.Add(new AccountBalance { Asset = nb.Asset, Free = nb.Free, Locked = nb.Locked });
                 }
             });
+
+            AccountNotification(new AccountEventArgs { Value = Account });
         }
     }
 }
