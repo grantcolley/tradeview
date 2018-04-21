@@ -10,7 +10,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
 {
     public interface IExchangeService
     {
-        Task<IEnumerable<string>> CancelAllOrdersAsync(Interface.User user, string symbol = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken));
         Task<string> CancelOrderAsync(Interface.User user, string symbol, long orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken));
         Task<Account> GetAccountInfoAsync(string apiKey, string apiSecret, CancellationToken cancellationToken);
         Task<IEnumerable<Symbol>> GetSymbolsAsync(CancellationToken cancellationToken);
