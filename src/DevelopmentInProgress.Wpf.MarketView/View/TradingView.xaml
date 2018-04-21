@@ -33,43 +33,65 @@
         <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
         
     </view:DocumentViewBase.Resources>
-    
+
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="23*"/>
-            <ColumnDefinition Width="2"/>
-            <ColumnDefinition Width="23*"/>
-            <ColumnDefinition Width="23*"/>
-            <ColumnDefinition Width="31*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="65*"/>
             <RowDefinition Height="2"/>
             <RowDefinition Height="35*"/>
         </Grid.RowDefinitions>
 
-        <DockPanel Grid.Row="0" Grid.Column="0" LastChildFill="True">
-            <ContentControl Content="{Binding SymbolsViewModel}"/>
-        </DockPanel>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="23*"/>
+                <ColumnDefinition Width="2"/>
+                <ColumnDefinition Width="77*"/>
+            </Grid.ColumnDefinitions>
 
-        <GridSplitter Grid.Row="0" Grid.Column="1" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
-        <GridSplitter Grid.Row="1" Grid.Column="0" Height="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext"/>
+            <DockPanel Grid.Column="0" LastChildFill="True">
+                <ContentControl Content="{Binding SymbolsViewModel}"/>
+            </DockPanel>
 
-        <DockPanel Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Grid.RowSpan="2" LastChildFill="True">
-            <ContentControl Content="{Binding SymbolViewModel}"/>
-        </DockPanel>
-        
-        <DockPanel Grid.Row="2" Grid.Column="0" LastChildFill="True">
-            <ContentControl Content="{Binding AccountViewModel}"/>
-        </DockPanel>
+            <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
+            
+            <DockPanel Grid.Column="2" LastChildFill="True">
+                <ContentControl Content="{Binding SymbolViewModel}"/>
+            </DockPanel>
 
-        <DockPanel Grid.Row="2" Grid.Column="2" LastChildFill="True">
-            <ContentControl Content="{Binding TradeViewModel}"/>
-        </DockPanel>
+        </Grid>
 
-        <DockPanel Grid.Row="2" Grid.Column="3" LastChildFill="True">
-            <ContentControl Content="{Binding OrdersViewModel}"/>
-        </DockPanel>
-        
+        <GridSplitter Grid.Row="1" Height="2" HorizontalAlignment="Stretch" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext"/>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="23*"/>
+                <ColumnDefinition Width="2"/>
+                <ColumnDefinition Width="23*"/>
+                <ColumnDefinition Width="2"/>
+                <ColumnDefinition Width="23*"/>
+                <ColumnDefinition Width="2"/>
+                <ColumnDefinition Width="31*"/>
+            </Grid.ColumnDefinitions>
+
+            <DockPanel Grid.Column="0" LastChildFill="True">
+                <ContentControl Content="{Binding AccountViewModel}"/>
+            </DockPanel>
+
+            <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
+            
+            <DockPanel Grid.Column="2" LastChildFill="True">
+                <ContentControl Content="{Binding TradeViewModel}"/>
+            </DockPanel>
+
+            <GridSplitter Grid.Column="3" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
+            
+            <DockPanel Grid.Column="4" LastChildFill="True">
+                <ContentControl Content="{Binding OrdersViewModel}"/>
+            </DockPanel>
+
+            <GridSplitter Grid.Column="5" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
+            
+        </Grid>
+
     </Grid>
 </view:DocumentViewBase>
