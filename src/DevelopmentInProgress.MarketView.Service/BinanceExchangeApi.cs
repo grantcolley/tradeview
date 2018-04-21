@@ -27,6 +27,13 @@ namespace DevelopmentInProgress.MarketView.Service
             return result;
         }
 
+        public async Task<IEnumerable<string>> CancelAllOrdersAsync(Interface.Model.User user, string symbol = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret);
+            var result = await binanceApi.CancelAllOrdersAsync(apiUser, symbol, recWindow, cancellationToken);
+            return result;
+        }
+
         public async Task<Interface.Model.AccountInfo> GetAccountInfoAsync(Interface.Model.User user, CancellationToken cancellationToken)
         {
                 var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret);

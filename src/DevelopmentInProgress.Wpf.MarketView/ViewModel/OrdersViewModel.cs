@@ -26,6 +26,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             : base(exchangeService)
         {
             CancelOrderCommand = new ViewModelCommand(Cancel);
+            CancelAllOrdersCommand = new ViewModelCommand(CancelAll);
 
             ordersCancellationTokenSource = new CancellationTokenSource();
         }
@@ -33,6 +34,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         public event EventHandler<OrdersEventArgs> OnOrdersNotification;
 
         public ICommand CancelOrderCommand { get; set; }
+        public ICommand CancelAllOrdersCommand { get; set; }
 
         public Account Account
         {
@@ -152,6 +154,12 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             var order = orders.Single(o => o.Id == orderId);
             var result = await ExchangeService.CancelOrderAsync(Account.AccountInfo.User, order.Symbol, orderId, null, 0, ordersCancellationTokenSource.Token);
             Orders.Remove(order);
+        }
+
+        private async void CancelAll(object param)
+        {
+            var result = await ExchangeService.CancelAllOrdersAsync(Account.AccountInfo.User, null, 0, ordersCancellationTokenSource.Token);
+            Orders.Clear();
         }
 
         private void OnException(Exception exception)
