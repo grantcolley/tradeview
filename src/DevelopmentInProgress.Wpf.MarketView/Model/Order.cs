@@ -7,7 +7,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
         private string status;
         private int filledPercent;
         private decimal executedQuantity;
-
+        
         public string Symbol { get; set; }
         public new long Id { get; set; }
         public string ClientOrderId { get; set; }

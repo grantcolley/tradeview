@@ -20,6 +20,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private ObservableCollection<Order> orders;
         private Order selectedOrder;
         private bool isLoading;
+        private bool isCancellAllVisible;
         private bool disposed;
 
         public OrdersViewModel(IExchangeService exchangeService)
@@ -29,6 +30,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             CancelAllOrdersCommand = new ViewModelCommand(CancelAll);
 
             ordersCancellationTokenSource = new CancellationTokenSource();
+
+            IsCancellAllVisible = true;
         }
 
         public event EventHandler<OrdersEventArgs> OnOrdersNotification;
@@ -84,6 +87,19 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 {
                     isLoading = value;
                     OnPropertyChanged("IsLoading");
+                }
+            }
+        }
+
+        public bool IsCancellAllVisible
+        {
+            get { return isCancellAllVisible; }
+            set
+            {
+                if (isCancellAllVisible != value)
+                {
+                    isCancellAllVisible = value;
+                    OnPropertyChanged("IsCancellAllVisible");
                 }
             }
         }
@@ -152,14 +168,17 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         {
             var orderId = long.Parse(param.ToString());
             var order = orders.Single(o => o.Id == orderId);
-            var result = await ExchangeService.CancelOrderAsync(Account.AccountInfo.User, order.Symbol, orderId, null, 0, ordersCancellationTokenSource.Token);
+            order.IsVisible = false;
+            var result = await ExchangeService.CancelOrderAsync(Account.AccountInfo.User, order.Symbol, order.Id, null, 0, ordersCancellationTokenSource.Token);
             Orders.Remove(order);
         }
 
         private async void CancelAll(object param)
         {
-            var result = await ExchangeService.CancelAllOrdersAsync(Account.AccountInfo.User, null, 0, ordersCancellationTokenSource.Token);
+            IsCancellAllVisible = false;
+            Parallel.ForEach(Orders, async order => { var result = await ExchangeService.CancelOrderAsync(Account.AccountInfo.User, order.Symbol, order.Id, null, 0, ordersCancellationTokenSource.Token); });
             Orders.Clear();
+            IsCancellAllVisible = true;
         }
 
         private void OnException(Exception exception)
