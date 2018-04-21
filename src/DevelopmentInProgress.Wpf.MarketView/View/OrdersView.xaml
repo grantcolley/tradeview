@@ -15,8 +15,8 @@
 
     </UserControl.Resources>
     
-    <DockPanel Margin="2" LastChildFill="True">
-        <GroupBox Margin="5" Style="{StaticResource GroupBoxNoHeaderStyle}">
+    <DockPanel LastChildFill="True">
+        <GroupBox Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
             <DockPanel Grid.Row="0" Grid.Column="0" LastChildFill="True">
                 <filterbox:XamlFilterBox DockPanel.Dock="Top" ItemsSource="{Binding Orders}" FilterFieldName="Symbol" VisibilityFieldName="IsVisible" SupportsDeepTraversal="False"  Margin="2"/>
                 <Grid DockPanel.Dock="Top">

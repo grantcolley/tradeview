@@ -27,8 +27,8 @@
         </DataTemplate>
         
     </UserControl.Resources>
-    <DockPanel Margin="2" LastChildFill="True">
-        <GroupBox Margin="5" Style="{StaticResource GroupBoxNoHeaderStyle}">
+    <DockPanel LastChildFill="True">
+        <GroupBox Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>

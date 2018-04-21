@@ -14,9 +14,9 @@
         <localConverters:LastPriceChangeDirectionColourConverter x:Key="LastPriceChangeDirectionColourConverter"/>
     </UserControl.Resources>
 
-    <DockPanel Margin="2" LastChildFill="True">
-        <GroupBox Style="{StaticResource GroupBoxNoHeaderStyle}">
-            <Grid Margin="2" Visibility="{Binding HasSymbol, Converter={StaticResource boolToVisibilityConverter}}">
+    <DockPanel LastChildFill="True">
+        <GroupBox Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
+            <Grid Visibility="{Binding HasSymbol, Converter={StaticResource boolToVisibilityConverter}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="15*"/>
                     <ColumnDefinition Width="10"/>
