@@ -9,6 +9,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Interfaces
 {
     public interface IExchangeApi
     {
+        Task<string> CancelOrderAsync(User user, string symbol, long orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken));
         Task<AccountInfo> GetAccountInfoAsync(User user, CancellationToken cancellationToken);
         Task<IEnumerable<Symbol>> GetSymbolsAsync(CancellationToken cancellationToken);
         Task<IEnumerable<SymbolStats>> Get24HourStatisticsAsync(CancellationToken cancellationToken);

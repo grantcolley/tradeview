@@ -1,11 +1,14 @@
-﻿using DevelopmentInProgress.Wpf.MarketView.Events;
+﻿using DevelopmentInProgress.Wpf.Host.ViewModel;
+using DevelopmentInProgress.Wpf.MarketView.Events;
 using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
@@ -14,7 +17,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
     {
         private CancellationTokenSource ordersCancellationTokenSource;
         private Account account;
-        private List<Order> orders;
+        private ObservableCollection<Order> orders;
         private Order selectedOrder;
         private bool isLoading;
         private bool disposed;
@@ -22,10 +25,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         public OrdersViewModel(IExchangeService exchangeService)
             : base(exchangeService)
         {
+            CancelOrderCommand = new ViewModelCommand(Cancel);
+
             ordersCancellationTokenSource = new CancellationTokenSource();
         }
 
         public event EventHandler<OrdersEventArgs> OnOrdersNotification;
+
+        public ICommand CancelOrderCommand { get; set; }
 
         public Account Account
         {
@@ -40,7 +47,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        public List<Order> Orders
+        public ObservableCollection<Order> Orders
         {
             get { return orders; }
             set
@@ -81,9 +88,13 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         public async void SetAccount(Account account)
         {
-            Account = account;
-            var result = await Task.Run(async () => await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User));
-            Orders = new List<Order>(result);
+            if(Account == null
+                || !Account.ApiKey.Equals(account.ApiKey))
+            {
+                Account = account;
+                var result = await Task.Run(async () => await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User));
+                Orders = new ObservableCollection<Order>(result);
+            }
         }
 
         public async void UpdateOrders(Account acccount)
@@ -133,6 +144,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
 
             disposed = true;
+        }
+
+        private async void Cancel(object param)
+        {
+            var orderId = long.Parse(param.ToString());
+            var order = orders.Single(o => o.Id == orderId);
+            var result = await ExchangeService.CancelOrderAsync(Account.AccountInfo.User, order.Symbol, orderId, null, 0, ordersCancellationTokenSource.Token);
+            Orders.Remove(order);
         }
 
         private void OnException(Exception exception)

@@ -246,13 +246,17 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         public void SetAccount(Account account, AccountBalance selectedAsset)
         {
-            Account = account;
+            if (Account == null
+                || !Account.ApiKey.Equals(account.ApiKey))
+            {
+                Account = account;
+                SelectedOrderType = OrderTypeHelper.GetOrderTypeName(Interface.OrderType.Limit);
+            }
+
             if (selectedAsset != null)
             {
                 SelectedSymbol = Symbols.FirstOrDefault(s => s.BaseAsset.Symbol.Equals(selectedAsset.Asset));
             }
-
-            SelectedOrderType = OrderTypeHelper.GetOrderTypeName(Interface.OrderType.Limit);
         }
 
         public override void Dispose(bool disposing)

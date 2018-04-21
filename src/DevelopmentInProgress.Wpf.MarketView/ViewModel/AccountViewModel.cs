@@ -175,7 +175,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 }
             });
 
-            AccountNotification(new AccountEventArgs { Value = Account });
+            AccountNotification(new AccountEventArgs { Value = Account, UpdateOrders = true });
         }
     }
 }

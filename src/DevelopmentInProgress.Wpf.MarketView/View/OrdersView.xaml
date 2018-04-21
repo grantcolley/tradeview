@@ -65,7 +65,9 @@
                                     <Label Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Content="{Binding OriginalQuantity}"/>
                                     <Label Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Content="{Binding Price}"/>
                                     <Label Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Content="{Binding FilledPercent}"/>
-                                    <Button Grid.Row="1" Grid.Column="2" Width="50" HorizontalAlignment="Left">
+                                    <Button Grid.Row="1" Grid.Column="2" Width="50" HorizontalAlignment="Left"
+                                            Command="{Binding Path=DataContext.CancelOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                            CommandParameter="{Binding Id}">
                                         <TextBlock Text="Cancel" Foreground="Orange"/>
                                     </Button>
                                 </Grid>
