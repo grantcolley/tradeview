@@ -19,10 +19,17 @@
         <GroupBox Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
             <DockPanel Grid.Row="0" Grid.Column="0" LastChildFill="True">
                 <DockPanel DockPanel.Dock="Top" LastChildFill="True">
-                    <Button DockPanel.Dock="Right" Width="65" Height="26" VerticalAlignment="Center"
-                            Command="{Binding CancelAllOrdersCommand}">
-                        <TextBlock Text="Cancel All" Foreground="Orange"/>
-                    </Button>
+                    <StackPanel DockPanel.Dock="Right" Width="65" VerticalAlignment="Center">
+                        <Button VerticalAlignment="Center" Width="65" Height="26"
+                                Command="{Binding CancelAllOrdersCommand}" 
+                                Visibility="{Binding IsCancellAllVisible, Converter={StaticResource boolToVisibilityConverter}}">
+                            <TextBlock Text="Cancel All" Foreground="Orange"/>
+                        </Button>
+                        <Viewbox Height="18" Width="18" 
+                                 Visibility="{Binding IsCancellAllVisible, Converter={StaticResource invertBoolToVisibilityConverter}}">
+                            <progress:CircularProgress/>
+                        </Viewbox>
+                    </StackPanel>
                     <filterbox:XamlFilterBox ItemsSource="{Binding Orders}" FilterFieldName="Symbol" VisibilityFieldName="IsVisible" SupportsDeepTraversal="False"  Margin="2"/>
                 </DockPanel>
                 <Grid DockPanel.Dock="Top">
@@ -71,11 +78,18 @@
                                     <Label Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Content="{Binding OriginalQuantity}"/>
                                     <Label Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Content="{Binding Price}"/>
                                     <Label Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Content="{Binding FilledPercent}"/>
-                                    <Button Grid.Row="1" Grid.Column="2" Width="50" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                            Command="{Binding Path=DataContext.CancelOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                            CommandParameter="{Binding Id}">
-                                        <TextBlock Text="Cancel" Foreground="Orange"/>
-                                    </Button>
+                                    <StackPanel Grid.Row="1" Grid.Column="2">
+                                        <Button Width="50" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                Command="{Binding Path=DataContext.CancelOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                                CommandParameter="{Binding Id}"
+                                                Visibility="{Binding IsVisible, Converter={StaticResource boolToVisibilityConverter}}">
+                                            <TextBlock Text="Cancel" Foreground="Orange"/>
+                                        </Button>
+                                        <Viewbox Height="18" Width="18"
+                                                 Visibility="{Binding IsVisible, Converter={StaticResource invertBoolToVisibilityConverter}}">
+                                            <progress:CircularProgress/>
+                                        </Viewbox>
+                                    </StackPanel>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
