@@ -26,8 +26,8 @@
                         <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" VerticalAlignment="Center" Content="Asset / Time" FontWeight="Bold"/>
-                    <Label Grid.Column="1" VerticalAlignment="Center" Content="Quantity / Status" FontWeight="Bold"/>
-                    <Label Grid.Column="3" VerticalAlignment="Center" Content="% Filled" FontWeight="Bold"/>
+                    <Label Grid.Column="1" VerticalAlignment="Center" Content="Quantity / Price" FontWeight="Bold"/>
+                    <Label Grid.Column="2" VerticalAlignment="Center" Content="% Filled" FontWeight="Bold"/>
                 </Grid>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -54,7 +54,7 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="120"/>
                                         <ColumnDefinition Width="120"/>
-                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="55"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
@@ -62,9 +62,12 @@
                                     </Grid.RowDefinitions>
                                     <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="{Binding Symbol}"/>
                                     <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Content="{Binding Time}"/>
-                                    <Label Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Content="{Binding Quantity}"/>
-                                    <Label Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Content="{Binding Status}"/>
+                                    <Label Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Content="{Binding OriginalQuantity}"/>
+                                    <Label Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Content="{Binding Price}"/>
                                     <Label Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Content="{Binding FilledPercent}"/>
+                                    <Button Grid.Row="1" Grid.Column="2" Width="50" HorizontalAlignment="Left">
+                                        <TextBlock Text="Cancel" Foreground="Orange"/>
+                                    </Button>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
