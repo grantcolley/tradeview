@@ -29,6 +29,10 @@
         <DataTemplate DataType="{x:Type localViewModel:OrdersViewModel}">
             <localView:OrdersView></localView:OrdersView>
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type localViewModel:StrategyViewModel}">
+            <localView:StrategyView></localView:StrategyView>
+        </DataTemplate>
         
         <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
         
@@ -90,6 +94,10 @@
             </DockPanel>
 
             <GridSplitter Grid.Column="5" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
+
+            <DockPanel Grid.Column="6" LastChildFill="True">
+                <ContentControl Content="{Binding StrategyViewModel}"/>
+            </DockPanel>
             
         </Grid>
 

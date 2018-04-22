@@ -24,13 +24,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private TradeViewModel tradeViewModel;
         private SymbolsViewModel symbolsViewModel;
         private OrdersViewModel ordersViewModel;
+        private StrategyViewModel strategyViewModel;
         private User user;
         private Account account;
         
         public TradingViewModel(ViewModelContext viewModelContext, 
             AccountViewModel accountViewModel, SymbolsViewModel symbolsViewModel,
             TradeViewModel tradeViewModel, SymbolViewModel symbolViewModel,
-            OrdersViewModel ordersViewModel,
+            OrdersViewModel ordersViewModel, StrategyViewModel strategyViewModel,
             IExchangeService exchangeService, IPersonaliseService personaliseService)
             : base(viewModelContext)
         {
@@ -39,6 +40,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             TradeViewModel = tradeViewModel;
             SymbolViewModel = symbolViewModel;
             OrdersViewModel = ordersViewModel;
+            StrategyViewModel = strategyViewModel;
 
             this.exchangeService = exchangeService;
             this.personaliseService = personaliseService;
@@ -114,6 +116,19 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
+        public StrategyViewModel StrategyViewModel
+        {
+            get { return strategyViewModel; }
+            private set
+            {
+                if (strategyViewModel != value)
+                {
+                    strategyViewModel = value;
+                    OnPropertyChanged("StrategyViewModel");
+                }
+            }
+        }
+
         public Account Account
         {
             get { return account; }
@@ -156,6 +171,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             tradeViewModel.Dispatcher = ViewModelContext.UiDispatcher;
             symbolViewModel.Dispatcher = ViewModelContext.UiDispatcher;
             ordersViewModel.Dispatcher = ViewModelContext.UiDispatcher;
+            strategyViewModel.Dispatcher = ViewModelContext.UiDispatcher;
 
             Account = new Account(new Interface.AccountInfo { User = new Interface.User() });
             
