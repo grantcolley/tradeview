@@ -18,6 +18,7 @@
     <DockPanel LastChildFill="True">
         <GroupBox Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
             <DockPanel LastChildFill="True">
+                <Label DockPanel.Dock="Top" Content="Account" FontWeight="Bold" FontSize="12"/>
                 <Grid DockPanel.Dock="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>

@@ -18,6 +18,7 @@
     <DockPanel LastChildFill="True">
         <GroupBox Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
             <DockPanel Grid.Row="0" Grid.Column="0" LastChildFill="True">
+                <Label DockPanel.Dock="Top" Content="Orders" FontWeight="Bold" FontSize="12"/>
                 <DockPanel DockPanel.Dock="Top" LastChildFill="True">
                     <StackPanel DockPanel.Dock="Right" Width="65" VerticalAlignment="Center">
                         <Button VerticalAlignment="Center" Width="65" Height="26"
@@ -73,7 +74,7 @@
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
-                                    <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="{Binding Symbol}"/>
+                                    <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="{Binding Symbol}" FontWeight="Bold"/>
                                     <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Content="{Binding Time}"/>
                                     <Label Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Content="{Binding OriginalQuantity}"/>
                                     <Label Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Content="{Binding Price}"/>

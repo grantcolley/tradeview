@@ -29,77 +29,80 @@
     </UserControl.Resources>
     <DockPanel LastChildFill="True">
         <GroupBox Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Content="Symbol" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                <ComboBox Grid.Row="0" Grid.Column="1" 
+            <DockPanel>
+                <Label DockPanel.Dock="Top" Content="Trade" FontWeight="Bold" FontSize="12"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Symbol" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                    <ComboBox Grid.Row="0" Grid.Column="1" 
                           Margin="2"              
                           IsTextSearchEnabled="True"
                           ItemsSource="{Binding Symbols}"
                           SelectedItem="{Binding SelectedSymbol, Mode=TwoWay}"
                           Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}">
-                    <ComboBox.ItemContainerStyle>
-                        <Style TargetType="{x:Type ComboBoxItem}">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        </Style>
-                    </ComboBox.ItemContainerStyle>
-                </ComboBox>
-                <Label Grid.Row="1" Grid.Column="0" Content="Order Type" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                <ComboBox Grid.Row="1" Grid.Column="1" 
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ComboBoxItem}">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+                    </ComboBox>
+                    <Label Grid.Row="1" Grid.Column="0" Content="Order Type" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                    <ComboBox Grid.Row="1" Grid.Column="1" 
                           Margin="2" 
                           ItemsSource="{Binding OrderTypes}"
                           SelectedItem="{Binding SelectedOrderType}"
                           Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                <Label Grid.Row="2" Grid.Column="0" Content="Quantity" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                <decimalBox:XamlDecimalUpDown Grid.Row="2" Grid.Column="1" Margin="2" 
+                    <Label Grid.Row="2" Grid.Column="0" Content="Quantity" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                    <decimalBox:XamlDecimalUpDown Grid.Row="2" Grid.Column="1" Margin="2" 
                                               DecimalValue="{Binding Quantity, Mode=TwoWay}" 
                                               Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                <Label Grid.Row="3" Grid.Column="0" Content="Price" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                <decimalBox:XamlDecimalUpDown Grid.Row="3" Grid.Column="1" Margin="2" 
+                    <Label Grid.Row="3" Grid.Column="0" Content="Price" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                    <decimalBox:XamlDecimalUpDown Grid.Row="3" Grid.Column="1" Margin="2" 
                                               DecimalValue="{Binding Price, Mode=TwoWay}"
                                               Visibility="{Binding IsPriceEditable, Converter={StaticResource boolToVisibilityConverter}}"/>
-                <DockPanel Grid.Row="3" Grid.Column="1"
+                    <DockPanel Grid.Row="3" Grid.Column="1"
                            LastChildFill="True"
                            Background="{StaticResource TextBoxBackgroundBrush}"
                            Visibility="{Binding IsMarketPrice, Converter={StaticResource boolToVisibilityConverter}}">
-                    <ContentControl DockPanel.Dock="Right" Width="36" Height="26"/>
-                    <Label HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
+                        <ContentControl DockPanel.Dock="Right" Width="36" Height="26"/>
+                        <Label HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
                            Content="{Binding SelectedSymbol.SymbolStatistics.LastPrice}"
                            Foreground="{Binding SelectedSymbol.LastPriceChangeDirection, Converter={StaticResource LastPriceChangeDirectionColourConverter}}"/>
-                </DockPanel>
-                <DockPanel Grid.Row="6" Grid.Column="1" LastChildFill="True" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}">
-                    <tradecontrol:XamlTradeControl DockPanel.Dock="Left"
+                    </DockPanel>
+                    <DockPanel Grid.Row="6" Grid.Column="1" LastChildFill="True" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}">
+                        <tradecontrol:XamlTradeControl DockPanel.Dock="Left"
                                                    Margin="2"
                                                    IsBuy="True"
                                                    HasAvailable="{Binding HasQuoteBalance}"
                                                    Available="{Binding QuoteAccountBalance.Free}"
                                                    PercentageCommand="{Binding BuyQuantityCommand}"
                                                    PlaceTradeCommand="{Binding BuyCommand}"/>
-                    <tradecontrol:XamlTradeControl DockPanel.Dock="Right"
+                        <tradecontrol:XamlTradeControl DockPanel.Dock="Right"
                                                    Margin="2"
                                                    IsBuy="False"
                                                    HasAvailable="{Binding HasBaseBalance}"
                                                    Available="{Binding BaseAccountBalance.Free}"
                                                    PercentageCommand="{Binding SellQuantityCommand}"
                                                    PlaceTradeCommand="{Binding SellCommand}"/>
-                    <ContentControl/>
-                </DockPanel>
-                <Viewbox Grid.Row="0" Grid.Column="0" Grid.RowSpan="6" Grid.ColumnSpan="2" Height="50" Width="50" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource boolToVisibilityConverter}}">
-                    <progress:CircularProgress />
-                </Viewbox>
-            </Grid>
+                        <ContentControl/>
+                    </DockPanel>
+                    <Viewbox Grid.Row="0" Grid.Column="0" Grid.RowSpan="6" Grid.ColumnSpan="2" Height="50" Width="50" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource boolToVisibilityConverter}}">
+                        <progress:CircularProgress />
+                    </Viewbox>
+                </Grid>
+            </DockPanel>
         </GroupBox>
     </DockPanel>
 </UserControl>
