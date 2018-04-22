@@ -9,8 +9,8 @@
         <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
         <converters:InvertBoolToVisibilityConverter x:Key="invertBoolToVisibilityConverter"/>
     </UserControl.Resources>
-    <DockPanel>
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Visibility="{Binding HasAvailable, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={StaticResource boolToVisibilityConverter}}">
+    <DockPanel Visibility="{Binding HasAvailable, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={StaticResource boolToVisibilityConverter}}">
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
             <Button Content="25%" FontSize="8"
                     Command="{Binding PercentageCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
                     CommandParameter="25"/>
@@ -24,8 +24,9 @@
                     Command="{Binding PercentageCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
                     CommandParameter="100"/>
         </StackPanel>
-        <DockPanel DockPanel.Dock="Top" LastChildFill="True" Height="30" Visibility="{Binding HasAvailable, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={StaticResource boolToVisibilityConverter}}">
+        <DockPanel DockPanel.Dock="Top" LastChildFill="True" Height="30">
             <Label Content="Available" VerticalAlignment="Center" FontSize="8"/>
+            <Label VerticalAlignment="Center" FontSize="8" Content="{Binding Currency, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
             <Label DockPanel.Dock="Top" FontSize="8"
                    HorizontalContentAlignment="Right" 
                    VerticalContentAlignment="Center"

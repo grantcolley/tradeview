@@ -9,6 +9,7 @@ namespace DevelopmentInProgress.Wpf.Controls.TradeControl
     /// </summary>
     public partial class XamlTradeControl : UserControl
     {
+        private static readonly DependencyProperty CurrencyProperty;
         private static readonly DependencyProperty AvailableProperty;
         private static readonly DependencyProperty IsBuyProperty;
         private static readonly DependencyProperty HasAvailableProperty;
@@ -17,6 +18,7 @@ namespace DevelopmentInProgress.Wpf.Controls.TradeControl
 
         static XamlTradeControl()
         {
+            CurrencyProperty = DependencyProperty.Register("Currency", typeof(string), typeof(XamlTradeControl));
             AvailableProperty = DependencyProperty.Register("Available", typeof(decimal), typeof(XamlTradeControl));
             IsBuyProperty = DependencyProperty.Register("IsBuy", typeof(bool), typeof(XamlTradeControl));
             HasAvailableProperty = DependencyProperty.Register("HasAvailable", typeof(bool), typeof(XamlTradeControl));
@@ -27,6 +29,12 @@ namespace DevelopmentInProgress.Wpf.Controls.TradeControl
         public XamlTradeControl()
         {
             InitializeComponent();
+        }
+
+        public string Currency
+        {
+            get { return (string)GetValue(CurrencyProperty); }
+            set { SetValue(CurrencyProperty, value); }
         }
 
         public decimal Available
