@@ -134,9 +134,9 @@
                     <lc:CartesianChart.Series>
                         <lc:StepLineSeries Values="{Binding AggregateTradesChart}" 
                                             DataLabels="False"
-                                            Stroke="Blue" 
-                                            AlternativeStroke="Blue" 
-                                            PointForeground="Blue"
+                                            Stroke="Orange" 
+                                            AlternativeStroke="Orange" 
+                                            PointForeground="Orange"
                                             StrokeThickness="1" 
                                             PointGeometrySize="1"/>
                     </lc:CartesianChart.Series>
