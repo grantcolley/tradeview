@@ -20,6 +20,12 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
             this.exchangeApi = exchangeApi;
         }
 
+        public async Task<Interface.Order> PlaceOrder(Interface.User user, Interface.ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var result = await exchangeApi.PlaceOrder(user, clientOrder, recWindow, cancellationToken);
+            return result;
+        }
+
         public async Task<string> CancelOrderAsync(Interface.User user, string symbol, long orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
             var result = await exchangeApi.CancelOrderAsync(user, symbol, orderId, newClientOrderId, recWindow, cancellationToken);

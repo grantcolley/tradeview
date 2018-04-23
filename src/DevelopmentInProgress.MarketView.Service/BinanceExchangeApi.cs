@@ -20,6 +20,13 @@ namespace DevelopmentInProgress.MarketView.Service
             binanceApi = new BinanceApi();
         }
 
+        public async Task<Interface.Model.Order> PlaceOrder(Interface.Model.User user, Interface.Model.ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var order = OrderFactory.GetOrder(user, clientOrder);
+            var result = await binanceApi.PlaceAsync(order);
+            return NewOrder(user, result);
+        }
+
         public async Task<string> CancelOrderAsync(Interface.Model.User user, string symbol, long orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
             var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret);
@@ -103,32 +110,7 @@ namespace DevelopmentInProgress.MarketView.Service
         {
             var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret);
             var result = await binanceApi.GetOpenOrdersAsync(apiUser, symbol, recWindow, cancellationToken);
-            var orders = result.Select(o => new Interface.Model.Order
-            {
-                User = user,
-                Symbol = o.Symbol,
-                Id = o.Id,
-                ClientOrderId = o.ClientOrderId,
-                Price = o.Price,
-                OriginalQuantity = o.OriginalQuantity,
-                ExecutedQuantity = o.ExecutedQuantity,
-                Status = (Interface.Model.OrderStatus)o.Status,
-                TimeInForce = (Interface.Model.TimeInForce)o.TimeInForce,
-                Type = (Interface.Model.OrderType)o.Type,
-                Side = (Interface.Model.OrderSide)o.Side,
-                StopPrice = o.StopPrice,
-                IcebergQuantity = o.IcebergQuantity,
-                Time = o.Time,
-                IsWorking = o.IsWorking,
-                Fills = o.Fills?.Select(f => new Interface.Model.Fill
-                {
-                    Price = f.Price,
-                    Quantity = f.Quantity,
-                    Commission = f.Commission,
-                    CommissionAsset = f.CommissionAsset,
-                    TradeId = f.TradeId
-                })
-            }).ToList();
+            var orders = result.Select(o => NewOrder(user, o)).ToList();
             return orders;
         }
 
@@ -256,6 +238,36 @@ namespace DevelopmentInProgress.MarketView.Service
             }
 
             return accountInfo;
+        }
+
+        private Interface.Model.Order NewOrder(Interface.Model.User user, Order o)
+        {
+            return new Interface.Model.Order
+            {
+                User = user,
+                Symbol = o.Symbol,
+                Id = o.Id,
+                ClientOrderId = o.ClientOrderId,
+                Price = o.Price,
+                OriginalQuantity = o.OriginalQuantity,
+                ExecutedQuantity = o.ExecutedQuantity,
+                Status = (Interface.Model.OrderStatus)o.Status,
+                TimeInForce = (Interface.Model.TimeInForce)o.TimeInForce,
+                Type = (Interface.Model.OrderType)o.Type,
+                Side = (Interface.Model.OrderSide)o.Side,
+                StopPrice = o.StopPrice,
+                IcebergQuantity = o.IcebergQuantity,
+                Time = o.Time,
+                IsWorking = o.IsWorking,
+                Fills = o.Fills?.Select(f => new Interface.Model.Fill
+                {
+                    Price = f.Price,
+                    Quantity = f.Quantity,
+                    Commission = f.Commission,
+                    CommissionAsset = f.CommissionAsset,
+                    TradeId = f.TradeId
+                })
+            };
         }
 
         private Interface.Model.SymbolStats NewSymbolStats(SymbolStatistics s)
