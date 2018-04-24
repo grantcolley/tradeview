@@ -6,6 +6,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
     public interface IPersonaliseService
     {
         Task<User> GetPreferencesAsync();
-        void SavePreferences(User user);
+        Task SavePreferences(User user);
     }
 }

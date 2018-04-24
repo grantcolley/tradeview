@@ -30,7 +30,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
             return new User();
         }
 
-        public async void SavePreferences(User user)
+        public async Task SavePreferences(User user)
         {
             var json = SerializeToJson(user);
             using (StreamWriter writer = File.CreateText(preferencesFile))

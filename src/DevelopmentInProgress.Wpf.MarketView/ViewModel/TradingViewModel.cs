@@ -183,6 +183,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 if (!string.IsNullOrWhiteSpace(user.ApiKey))
                 {
                     Account.ApiKey = user.ApiKey;
+                    Account.ApiSecret = user.ApiSecret;
                 }
             }
 
@@ -191,11 +192,12 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             IsBusy = false;
         }
 
-        protected override void SaveDocument()
+        protected async override void SaveDocument()
         {
             base.SaveDocument();
 
             user.ApiKey = Account.ApiKey;
+            user.ApiSecret = Account.AccountInfo.User.ApiSecret;
             user.Preferences = new Preferences();
             if(SymbolsViewModel != null)
             {
@@ -208,7 +210,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 user.Preferences.SelectedSymbol = SelectedSymbol.Name;
             }
 
-            personaliseService.SavePreferences(user);
+            await personaliseService.SavePreferences(user);
         }
 
         protected override void OnDisposing()
