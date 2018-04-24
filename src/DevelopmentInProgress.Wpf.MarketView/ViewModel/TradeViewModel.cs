@@ -275,11 +275,35 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         private void Buy(object param)
         {
+            SendClientOrder(Interface.OrderSide.Buy);
         }
 
         private void Sell(object param)
         {
+            SendClientOrder(Interface.OrderSide.Sell);
         }
+
+        private async void SendClientOrder(Interface.OrderSide orderSide)
+        {
+            // Validate minimum fields... etc
+
+            var clientOrder = new Interface.ClientOrder
+            {
+                Symbol = SelectedSymbol.Name,
+                Type = OrderTypeHelper.GetOrderType(SelectedOrderType),
+                Side = orderSide,
+                Quantity = Quantity,
+                Price = Price
+            };
+
+            //public decimal IcebergQuantity { get; set; }
+
+            //public TimeInForce TimeInForce { get; set; }
+
+            //public decimal StopPrice { get; set; }
+
+            var order = await ExchangeService.PlaceOrder(Account.AccountInfo.User, clientOrder);
+    }
 
         private void BuyQuantity(object param)
         {

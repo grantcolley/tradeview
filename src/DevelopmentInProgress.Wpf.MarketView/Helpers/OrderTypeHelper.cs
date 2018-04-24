@@ -34,6 +34,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.Helpers
             return false;
         }
 
+        public static OrderType GetOrderType(string orderType)
+        {
+            return (OrderType)Enum.Parse(typeof(OrderType), orderType.Replace(" ", ""));
+        }
+
         public static string GetOrderTypeName(OrderType orderType)
         {
             var result = Enum.GetName(typeof(OrderType), orderType);

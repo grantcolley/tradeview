@@ -22,7 +22,7 @@ namespace DevelopmentInProgress.MarketView.Service
 
         public async Task<Interface.Model.Order> PlaceOrder(Interface.Model.User user, Interface.Model.ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var order = OrderFactory.GetOrder(user, clientOrder);
+            var order = OrderHelper.GetOrder(user, clientOrder);
             var result = await binanceApi.PlaceAsync(order);
             return NewOrder(user, result);
         }
