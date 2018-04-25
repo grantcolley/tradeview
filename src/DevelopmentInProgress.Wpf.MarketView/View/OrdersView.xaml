@@ -35,13 +35,15 @@
                 </DockPanel>
                 <Grid DockPanel.Dock="Top">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="120"/>
                         <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" VerticalAlignment="Center" Content="Asset / Time" FontWeight="Bold"/>
-                    <Label Grid.Column="1" VerticalAlignment="Center" Content="Quantity / Price" FontWeight="Bold"/>
-                    <Label Grid.Column="2" VerticalAlignment="Center" Content="% Filled" FontWeight="Bold"/>
+                    <Label Grid.Column="0" VerticalAlignment="Center" Content="Side / Type" FontWeight="Bold"/>
+                    <Label Grid.Column="1" VerticalAlignment="Center" Content="Asset / Time" FontWeight="Bold"/>
+                    <Label Grid.Column="2" VerticalAlignment="Center" Content="Quantity / Price" FontWeight="Bold"/>
+                    <Label Grid.Column="3" VerticalAlignment="Center" Content="% Filled" FontWeight="Bold"/>
                 </Grid>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -66,7 +68,8 @@
                             <DataTemplate DataType="{x:Type model:Order}">
                                 <Grid DockPanel.Dock="Top">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="100"/>
                                         <ColumnDefinition Width="120"/>
                                         <ColumnDefinition Width="55"/>
                                     </Grid.ColumnDefinitions>
@@ -74,12 +77,14 @@
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
-                                    <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="{Binding Symbol}" FontWeight="Bold"/>
-                                    <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Content="{Binding Time}"/>
-                                    <Label Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Content="{Binding OriginalQuantity}"/>
-                                    <Label Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Content="{Binding Price}"/>
-                                    <Label Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Content="{Binding FilledPercent}"/>
-                                    <StackPanel Grid.Row="1" Grid.Column="2">
+                                    <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="{Binding Side}" FontWeight="Bold"/>
+                                    <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Content="{Binding Type}" FontWeight="Bold"/>
+                                    <Label Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Content="{Binding Symbol}" FontWeight="Bold"/>
+                                    <Label Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Content="{Binding Time}"/>
+                                    <Label Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Content="{Binding OriginalQuantity}"/>
+                                    <Label Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Content="{Binding Price}"/>
+                                    <Label Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Content="{Binding FilledPercent}"/>
+                                    <StackPanel Grid.Row="1" Grid.Column="3">
                                         <Button Width="50" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center"
                                                 Command="{Binding Path=DataContext.CancelOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                                 CommandParameter="{Binding Id}"
