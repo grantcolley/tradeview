@@ -1,11 +1,27 @@
 ﻿using DevelopmentInProgress.MarketView.Interface.Model;
+using DevelopmentInProgress.MarketView.Interface.Validation;
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace DevelopmentInProgress.Wpf.MarketView.Helpers
+namespace DevelopmentInProgress.MarketView.Interface.Helpers
 {
-    public static class OrderTypeHelper
+    public static class OrderHelper
     {
+        private static Dictionary<OrderType, IValidateClientOrder> orderValidation;
+
+        static OrderHelper()
+        {
+            orderValidation = new Dictionary<OrderType, IValidateClientOrder>();
+            orderValidation.Add(OrderType.Limit, new ValidateLimit());
+            orderValidation.Add(OrderType.LimitMaker, new ValidateLimit());
+            orderValidation.Add(OrderType.StopLossLimit, new ValidateStopOrderLimit());
+            orderValidation.Add(OrderType.TakeProfitLimit, new ValidateStopOrderLimit());
+            orderValidation.Add(OrderType.Market, new ValidateMarket());
+            orderValidation.Add(OrderType.StopLoss, new ValidateStopOrder());
+            orderValidation.Add(OrderType.TakeProfit, new ValidateStopOrder());
+        }
+
         public static string[] OrderTypes()
         {
             var source = Enum.GetNames(typeof(OrderType));
@@ -20,13 +36,13 @@ namespace DevelopmentInProgress.Wpf.MarketView.Helpers
 
         public static bool AreEqual(OrderType orderType, string compare)
         {
-            if(string.IsNullOrWhiteSpace(compare))
+            if (string.IsNullOrWhiteSpace(compare))
             {
                 return false;
             }
 
             OrderType result;
-            if(Enum.TryParse<OrderType>(compare.Replace(" ", ""), out result))
+            if (Enum.TryParse<OrderType>(compare.Replace(" ", ""), out result))
             {
                 return orderType.Equals(result);
             }
@@ -34,9 +50,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.Helpers
             return false;
         }
 
-        public static bool IsMarketOrder(string  orderType)
+        public static bool IsMarketOrder(string orderType)
         {
-            if(string.IsNullOrEmpty(orderType))
+            if (string.IsNullOrEmpty(orderType))
             {
                 return false;
             }
@@ -92,6 +108,29 @@ namespace DevelopmentInProgress.Wpf.MarketView.Helpers
         {
             var result = Enum.GetName(typeof(OrderType), orderType);
             return Regex.Replace(result, "[A-Z]", " $0").Trim();
+        }
+
+        public static string GetOrderStatusName(OrderStatus orderStatus)
+        {
+            var result = Enum.GetName(typeof(OrderStatus), orderStatus);
+            return Regex.Replace(result, "[A-Z]", " $0").Trim();
+        }
+
+        public static string GetTimeInForceName(TimeInForce timeInForce)
+        {
+            var result = Enum.GetName(typeof(TimeInForce), timeInForce);
+            return Regex.Replace(result, "[A-Z]", " $0").Trim();
+        }
+
+        public static string GetOrderSideName(OrderSide orderSide)
+        {
+            var result = Enum.GetName(typeof(OrderSide), orderSide);
+            return Regex.Replace(result, "[A-Z]", " $0").Trim();
+        }
+
+        public static void ValidateClientOrder(ClientOrder clientOrder)
+        {
+            orderValidation[clientOrder.Type].Validate(clientOrder);
         }
     }
 }

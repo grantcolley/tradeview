@@ -173,7 +173,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             Orders.Remove(order);
         }
 
-        private async void CancelAll(object param)
+        private void CancelAll(object param)
         {
             IsCancellAllVisible = false;
             Parallel.ForEach(Orders, async order => { var result = await ExchangeService.CancelOrderAsync(Account.AccountInfo.User, order.Symbol, order.Id, null, 0, ordersCancellationTokenSource.Token); });
