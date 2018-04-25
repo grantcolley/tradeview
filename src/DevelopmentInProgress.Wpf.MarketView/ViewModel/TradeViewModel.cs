@@ -21,6 +21,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private string selectedOrderType;
         private decimal quantity;
         private decimal price;
+        private decimal stopPrice;
         private bool disposed;
         private bool isLoading;
 
@@ -31,6 +32,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             SellCommand = new ViewModelCommand(Sell);
             BuyQuantityCommand = new ViewModelCommand(BuyQuantity);
             SellQuantityCommand = new ViewModelCommand(SellQuantity);
+            OnPropertyChanged("");
         }
 
         public event EventHandler<TradeEventArgs> OnTradeNotification;
@@ -119,12 +121,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     {
                         Quantity = 0;
                         Price = SelectedSymbol.SymbolStatistics.LastPrice;
+                        StopPrice = SelectedSymbol.SymbolStatistics.LastPrice;
                         BaseAccountBalance = Account?.Balances.SingleOrDefault(ab => ab.Asset.Equals(selectedSymbol.BaseAsset.Symbol));
                         QuoteAccountBalance = Account?.Balances.SingleOrDefault(ab => ab.Asset.Equals(selectedSymbol.QuoteAsset.Symbol));
                     }
                     else
                     {
                         Price = 0;
+                        StopPrice = 0;
                         Quantity = 0;
                     }
 
@@ -159,6 +163,19 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
+        public decimal StopPrice
+        {
+            get { return stopPrice; }
+            set
+            {
+                if (stopPrice != value)
+                {
+                    stopPrice = value;
+                    OnPropertyChanged("StopPrice");
+                }
+            }
+        }
+
         public string SelectedOrderType
         {
             get { return selectedOrderType; }
@@ -171,10 +188,12 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     if (SelectedSymbol != null)
                     {
                         Price = SelectedSymbol.SymbolStatistics.LastPrice;
+                        StopPrice = SelectedSymbol.SymbolStatistics.LastPrice;
                     }
 
                     OnPropertyChanged("IsPriceEditable");
                     OnPropertyChanged("IsMarketPrice");
+                    OnPropertyChanged("IsStopLoss");
                     OnPropertyChanged("SelectedOrderType");
                 }
             }
@@ -189,7 +208,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     return !IsLoading;
                 }
 
-                return !OrderTypeHelper.AreEqual(Interface.OrderType.Market, SelectedOrderType);
+                return !OrderTypeHelper.IsMarketOrder(SelectedOrderType);
             }
         }
 
@@ -202,7 +221,20 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     return !IsLoading;
                 }
 
-                return OrderTypeHelper.AreEqual(Interface.OrderType.Market, SelectedOrderType);
+                return OrderTypeHelper.IsMarketOrder(SelectedOrderType);
+            }
+        }
+
+        public bool IsStopLoss
+        {
+            get
+            {
+                if (IsLoading)
+                {
+                    return !IsLoading;
+                }
+
+                return OrderTypeHelper.IsStopLoss(SelectedOrderType);
             }
         }
 
@@ -293,15 +325,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 Type = OrderTypeHelper.GetOrderType(SelectedOrderType),
                 Side = orderSide,
                 Quantity = Quantity,
-                Price = Price
+                Price = Price,
+                StopPrice = StopPrice
             };
-
-            //public decimal IcebergQuantity { get; set; }
-
-            //public TimeInForce TimeInForce { get; set; }
-
-            //public decimal StopPrice { get; set; }
-
+            
             var order = await ExchangeService.PlaceOrder(Account.AccountInfo.User, clientOrder);
     }
 

@@ -34,6 +34,55 @@ namespace DevelopmentInProgress.Wpf.MarketView.Helpers
             return false;
         }
 
+        public static bool IsMarketOrder(string  orderType)
+        {
+            if(string.IsNullOrEmpty(orderType))
+            {
+                return false;
+            }
+
+            OrderType result;
+            if (Enum.TryParse<OrderType>(orderType.Replace(" ", ""), out result))
+            {
+                switch (result)
+                {
+                    case OrderType.Market:
+                    case OrderType.StopLoss:
+                    case OrderType.TakeProfit:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool IsStopLoss(string orderType)
+        {
+            if (string.IsNullOrEmpty(orderType))
+            {
+                return false;
+            }
+
+            OrderType result;
+            if (Enum.TryParse<OrderType>(orderType.Replace(" ", ""), out result))
+            {
+                switch (result)
+                {
+                    case OrderType.StopLoss:
+                    case OrderType.StopLossLimit:
+                    case OrderType.TakeProfit:
+                    case OrderType.TakeProfitLimit:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+
+            return false;
+        }
+
         public static OrderType GetOrderType(string orderType)
         {
             return (OrderType)Enum.Parse(typeof(OrderType), orderType.Replace(" ", ""));

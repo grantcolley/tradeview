@@ -21,7 +21,7 @@
                                 Style="{StaticResource ButtonStyle}" 
                                 Tag="{Binding ElementName=txt}"
                                 Click="OnClick"/>
-        <TextBox x:Name="txt" TextAlignment="Right" 
+        <TextBox x:Name="txt" TextAlignment="Right" VerticalContentAlignment="Center"
                                  Text="{Binding DecimalValue, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:XamlDecimalUpDown}}, UpdateSourceTrigger=PropertyChanged}"
                                  Style="{StaticResource TextBoxStyle}"
                                  TextChanged="OnTextChanged"/>

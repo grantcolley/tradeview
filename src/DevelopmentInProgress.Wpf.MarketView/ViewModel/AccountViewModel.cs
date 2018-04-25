@@ -162,13 +162,13 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                                join nb in e.Balances on ab.Asset equals nb.Asset
                                select f(ab, nb)).ToList();
 
-                var remove = Account.Balances.Where(ab => !e.Balances.Any(nb => nb.Asset.Equals(ab.Asset)));
+                var remove = Account.Balances.Where(ab => !e.Balances.Any(nb => nb.Asset.Equals(ab.Asset))).ToList();
                 foreach (var ob in remove)
                 {
                     Account.Balances.Remove(ob);
                 }
 
-                var add = e.Balances.Where(nb => !Account.Balances.Any(ab => ab.Asset.Equals(nb.Asset)));
+                var add = e.Balances.Where(nb => !Account.Balances.Any(ab => ab.Asset.Equals(nb.Asset))).ToList();
                 foreach(var nb in add)
                 {
                     Account.Balances.Add(new AccountBalance { Asset = nb.Asset, Free = nb.Free, Locked = nb.Locked });
