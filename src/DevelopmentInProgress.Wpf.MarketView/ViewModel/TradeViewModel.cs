@@ -1,6 +1,6 @@
-﻿using DevelopmentInProgress.Wpf.Host.ViewModel;
+﻿using DevelopmentInProgress.MarketView.Interface.Helpers;
+using DevelopmentInProgress.Wpf.Host.ViewModel;
 using DevelopmentInProgress.Wpf.MarketView.Events;
-using DevelopmentInProgress.Wpf.MarketView.Helpers;
 using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using System;
@@ -208,7 +208,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     return !IsLoading;
                 }
 
-                return !OrderTypeHelper.IsMarketOrder(SelectedOrderType);
+                return !OrderHelper.IsMarketOrder(SelectedOrderType);
             }
         }
 
@@ -221,7 +221,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     return !IsLoading;
                 }
 
-                return OrderTypeHelper.IsMarketOrder(SelectedOrderType);
+                return OrderHelper.IsMarketOrder(SelectedOrderType);
             }
         }
 
@@ -234,7 +234,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     return !IsLoading;
                 }
 
-                return OrderTypeHelper.IsStopLoss(SelectedOrderType);
+                return OrderHelper.IsStopLoss(SelectedOrderType);
             }
         }
 
@@ -268,7 +268,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         public string[] OrderTypes
         {
-            get { return OrderTypeHelper.OrderTypes(); }
+            get { return OrderHelper.OrderTypes(); }
         }
         
         public void SetSymbols(List<Symbol> symbols)
@@ -282,7 +282,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 || !Account.ApiKey.Equals(account.ApiKey))
             {
                 Account = account;
-                SelectedOrderType = OrderTypeHelper.GetOrderTypeName(Interface.OrderType.Limit);
+                SelectedOrderType = OrderHelper.GetOrderTypeName(Interface.OrderType.Limit);
             }
 
             if (selectedAsset != null)
@@ -317,20 +317,32 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         private async void SendClientOrder(Interface.OrderSide orderSide)
         {
-            // Validate minimum fields... etc
-
-            var clientOrder = new Interface.ClientOrder
+            try
             {
-                Symbol = SelectedSymbol.Name,
-                Type = OrderTypeHelper.GetOrderType(SelectedOrderType),
-                Side = orderSide,
-                Quantity = Quantity,
-                Price = Price,
-                StopPrice = StopPrice
-            };
-            
-            var order = await ExchangeService.PlaceOrder(Account.AccountInfo.User, clientOrder);
-    }
+                if (string.IsNullOrWhiteSpace(selectedOrderType))
+                {
+                    throw new Exception("Order not valid: No order type.");
+                }
+
+                var clientOrder = new Interface.ClientOrder
+                {
+                    Symbol = SelectedSymbol?.Name,
+                    Type = OrderHelper.GetOrderType(SelectedOrderType),
+                    Side = orderSide,
+                    Quantity = Quantity,
+                    Price = Price,
+                    StopPrice = StopPrice
+                };
+
+                OrderHelper.ValidateClientOrder(clientOrder);
+
+                var order = await ExchangeService.PlaceOrder(Account.AccountInfo.User, clientOrder);
+            }
+            catch (Exception e)
+            {
+                OnException(e);
+            }
+        }
 
         private void BuyQuantity(object param)
         {
