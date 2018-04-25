@@ -346,7 +346,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         private void BuyQuantity(object param)
         {
-            SetQuantity(param.ToString(), QuoteAccountBalance.Free);
+            if (Price != 0)
+            {
+                var qty = QuoteAccountBalance.Free / Price;
+                SetQuantity(param.ToString(), qty);
+            }
         }
 
         private void SellQuantity(object param)
