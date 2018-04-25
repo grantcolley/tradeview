@@ -33,8 +33,7 @@
                                             BorderThickness="0" 
                                             ToolTip="Clear Messages" DockPanel.Dock="Right" Margin="10,2,2,2"
                                             Style="{StaticResource ButtonImageStyle}">
-                                        <Image Height="10" Width="10" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                            Source="..\Images\Close.png"/>
+                                        <TextBlock Text="X" FontWeight="Bold" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Button>
                                     <filterBox:XamlFilterBox DockPanel.Dock="Top"
                                                      ItemsSource="{Binding DataContext.Messages, RelativeSource={RelativeSource FindAncestor, AncestorType=Expander}}"
