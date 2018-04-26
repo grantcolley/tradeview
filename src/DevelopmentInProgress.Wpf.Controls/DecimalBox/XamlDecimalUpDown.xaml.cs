@@ -10,6 +10,7 @@ namespace DevelopmentInProgress.Wpf.Controls.DecimalBox
     public partial class XamlDecimalUpDown : UserControl
     {
         public static readonly DependencyProperty DecimalValueProperty = DependencyProperty.Register("DecimalValue", typeof(decimal), typeof(XamlDecimalUpDown), new PropertyMetadata(0m));
+        public static readonly DependencyProperty IncrementProperty = DependencyProperty.Register("Increment", typeof(decimal), typeof(XamlDecimalUpDown), new PropertyMetadata(0m));
 
         public XamlDecimalUpDown()
         {
@@ -20,6 +21,12 @@ namespace DevelopmentInProgress.Wpf.Controls.DecimalBox
         {
             get { return (decimal)GetValue(DecimalValueProperty); }
             set { SetValue(DecimalValueProperty, value); }
+        }
+
+        public decimal Increment
+        {
+            get { return (decimal)GetValue(IncrementProperty); }
+            set { SetValue(IncrementProperty, value); }
         }
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
@@ -73,12 +80,12 @@ namespace DevelopmentInProgress.Wpf.Controls.DecimalBox
             {
                 if (val > 0)
                 {
-                    txt.Text = val.Decrement().ToString();
+                    txt.Text = (val - Increment).ToString();
                 }
             }
             else
             {
-                txt.Text = val.Increment().ToString();
+                txt.Text = (val + Increment).ToString();
             }
         }
     }

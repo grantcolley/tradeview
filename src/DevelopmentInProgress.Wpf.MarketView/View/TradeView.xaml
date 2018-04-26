@@ -67,20 +67,22 @@
                           Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                     <Label Grid.Row="2" Grid.Column="0" Content="Quantity" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                     <decimalBox:XamlDecimalUpDown Grid.Row="2" Grid.Column="1" Margin="2" 
-                                              DecimalValue="{Binding Quantity, Mode=TwoWay}" 
-                                              Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                                                  DecimalValue="{Binding Quantity, Mode=TwoWay}" 
+                                                  Increment="{Binding SelectedSymbol.Quantity.Increment}"
+                                                  Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                     <Label Grid.Row="3" Grid.Column="0" Content="Price" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                     <decimalBox:XamlDecimalUpDown Grid.Row="3" Grid.Column="1" Margin="2" 
-                                              DecimalValue="{Binding Price, Mode=TwoWay}"
-                                              Visibility="{Binding IsPriceEditable, Converter={StaticResource boolToVisibilityConverter}}"/>
+                                                  DecimalValue="{Binding Price, Mode=TwoWay}"
+                                                  Increment="{Binding SelectedSymbol.Price.Increment}"
+                                                  Visibility="{Binding IsPriceEditable, Converter={StaticResource boolToVisibilityConverter}}"/>
                     <DockPanel Grid.Row="3" Grid.Column="1"
-                           LastChildFill="True" Height="30" Margin="2"
-                           Background="{StaticResource TextBoxBackgroundBrush}"
-                           Visibility="{Binding IsMarketPrice, Converter={StaticResource boolToVisibilityConverter}}">
+                               LastChildFill="True" Height="30" Margin="2"
+                               Background="{StaticResource TextBoxBackgroundBrush}"
+                               Visibility="{Binding IsMarketPrice, Converter={StaticResource boolToVisibilityConverter}}">
                         <ContentControl DockPanel.Dock="Right" Width="35" Height="30"/>
                         <Label HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                           Content="{Binding SelectedSymbol.SymbolStatistics.LastPrice}"
-                           Foreground="{Binding SelectedSymbol.LastPriceChangeDirection, Converter={StaticResource LastPriceChangeDirectionColourConverter}}"/>
+                               Content="{Binding SelectedSymbol.SymbolStatistics.LastPrice}"
+                               Foreground="{Binding SelectedSymbol.LastPriceChangeDirection, Converter={StaticResource LastPriceChangeDirectionColourConverter}}"/>
                     </DockPanel>
                     <Label Grid.Row="4" Grid.Column="0" Content="Stop Loss" Visibility="{Binding IsStopLoss, Converter={StaticResource boolToVisibilityConverter}}"/>
                     <decimalBox:XamlDecimalUpDown Grid.Row="4" Grid.Column="1" Margin="2" 
