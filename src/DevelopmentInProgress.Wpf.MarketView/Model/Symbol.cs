@@ -1,4 +1,5 @@
-﻿using Interface = DevelopmentInProgress.MarketView.Interface.Model;
+﻿using DevelopmentInProgress.Wpf.MarketView.Extensions;
+using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 using System.Collections.Generic;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Model
@@ -47,9 +48,25 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
             }
         }
 
+        public int QuantityPrecision
+        {
+            get
+            {
+                return Quantity.Increment.GetPrecision();
+            }
+        }
+
+        public int PricePrecision
+        {
+            get
+            {
+                return Price.Increment.GetPrecision();
+            }
+        }
+
         public override string ToString()
         {
-            return $"{BaseAsset.Symbol} / {QuoteAsset.Symbol}"; ;
+            return $"{BaseAsset.Symbol} / {QuoteAsset.Symbol}";
         }
     }
 }

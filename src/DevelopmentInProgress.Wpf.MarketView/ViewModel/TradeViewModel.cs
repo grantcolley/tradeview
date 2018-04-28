@@ -1,6 +1,7 @@
 ﻿using DevelopmentInProgress.MarketView.Interface.Helpers;
 using DevelopmentInProgress.Wpf.Host.ViewModel;
 using DevelopmentInProgress.Wpf.MarketView.Events;
+using DevelopmentInProgress.Wpf.MarketView.Extensions;
 using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using System;
@@ -144,7 +145,16 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             {
                 if (quantity != value)
                 {
-                    quantity = value;
+                    if (SelectedSymbol != null
+                        && value.HasPrecision())
+                    {
+                        quantity = value.Trim(SelectedSymbol.QuantityPrecision);
+                    }
+                    else
+                    {
+                        quantity = value;
+                    }
+
                     OnPropertyChanged("Quantity");
                 }
             }
@@ -157,7 +167,16 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             {
                 if (price != value)
                 {
-                    price = value;
+                    if (SelectedSymbol != null
+                        && value.HasPrecision())
+                    {
+                        price = value.Trim(SelectedSymbol.PricePrecision);
+                    }
+                    else
+                    {
+                        price = value;
+                    }
+
                     OnPropertyChanged("Price");
                 }
             }
