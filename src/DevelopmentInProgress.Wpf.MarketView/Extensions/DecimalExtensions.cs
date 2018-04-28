@@ -1,6 +1,6 @@
 ﻿namespace DevelopmentInProgress.Wpf.MarketView.Extensions
 {
-    public static class DecimalExtensions
+    public static class DecimalHelper
     {
         public static decimal Trim(this decimal v, int precision)
         {
@@ -22,7 +22,8 @@
 
         public static int GetPrecision(this decimal v)
         {
-            return v.ToString().IndexOf(".") == -1 ? 0 : p.Substring(p.IndexOf(".") + 1).Length;
+            var p = v.ToString();
+            return p.IndexOf(".") == -1 ? 0 : p.Substring(p.IndexOf(".") + 1).Length;
         }
     }
 }
