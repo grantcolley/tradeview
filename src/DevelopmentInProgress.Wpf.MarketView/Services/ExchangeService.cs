@@ -34,20 +34,20 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
 
         public async Task<IEnumerable<Symbol>> GetSymbolsAsync(CancellationToken cancellationToken)
         {
-                var results = await exchangeApi.GetSymbolsAsync(cancellationToken);
-                var symbols = results.Select(s => new Symbol
-                {
-                    NotionalMinimumValue = s.NotionalMinimumValue,
-                    BaseAsset = s.BaseAsset,
-                    Price = s.Price,
-                    Quantity = s.Quantity,
-                    QuoteAsset = s.QuoteAsset,
-                    Status = s.Status,
-                    IsIcebergAllowed = s.IsIcebergAllowed,
-                    OrderTypes = s.OrderTypes,
-                    SymbolStatistics = new SymbolStatistics { Symbol = $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}" }
-                }).ToList();
-                return symbols;
+            var results = await exchangeApi.GetSymbolsAsync(cancellationToken);
+            var symbols = results.Select(s => new Symbol
+            {
+                NotionalMinimumValue = s.NotionalMinimumValue,
+                BaseAsset = s.BaseAsset,
+                Price = s.Price,
+                Quantity = s.Quantity,
+                QuoteAsset = s.QuoteAsset,
+                Status = s.Status,
+                IsIcebergAllowed = s.IsIcebergAllowed,
+                OrderTypes = s.OrderTypes,
+                SymbolStatistics = new SymbolStatistics { Symbol = $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}" }
+            }).ToList();
+            return symbols;
         }
 
         public async Task<IEnumerable<SymbolStatistics>> Get24HourStatisticsAsync(CancellationToken cancellationToken)
