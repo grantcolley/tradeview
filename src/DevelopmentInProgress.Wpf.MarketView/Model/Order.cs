@@ -5,7 +5,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
     public class Order : EntityBase
     {
         private string status;
-        private int filledPercent;
         private decimal executedQuantity;
         
         public string Symbol { get; set; }
