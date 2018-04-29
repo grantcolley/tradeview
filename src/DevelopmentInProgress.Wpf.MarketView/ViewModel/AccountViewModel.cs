@@ -5,6 +5,7 @@ using DevelopmentInProgress.Wpf.MarketView.Services;
 using System;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -91,6 +92,28 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             disposed = true;
         }
 
+        public void SetAccount(Account account)
+        {
+            try
+            {
+                if (accountCancellationTokenSource != null
+                    && !accountCancellationTokenSource.IsCancellationRequested)
+                {
+                    accountCancellationTokenSource.Cancel();
+                }
+
+                accountCancellationTokenSource = new CancellationTokenSource();
+
+                Account = account;
+
+                OnAccountLoggedOut();
+            }
+            catch (Exception ex)
+            {
+                OnException(ex);
+            }
+        }
+
         private async void Login(object param)
         {
             if (string.IsNullOrWhiteSpace(Account.AccountInfo.User.ApiKey)
@@ -126,12 +149,17 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         private void OnAccountLoggedIn(Account account)
         {
-            AccountNotification(new AccountEventArgs { Value = Account });
+            AccountNotification(new AccountEventArgs { Value = Account, AccountEventType = AccountEventType.LoggedIn });
+        }
+        
+        private void OnAccountLoggedOut()
+        {
+            AccountNotification(new AccountEventArgs { Value = null, AccountEventType = AccountEventType.LoggedOut });
         }
 
         private void OnSelectedAsset(AccountBalance selectedAsset)
         {
-            AccountNotification(new AccountEventArgs { Value = Account, SelectedAsset = selectedAsset });
+            AccountNotification(new AccountEventArgs { Value = Account, SelectedAsset = selectedAsset, AccountEventType = AccountEventType.SelectedAsset });
         }
 
         private void AccountNotification(AccountEventArgs args)
@@ -175,7 +203,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 }
             });
 
-            AccountNotification(new AccountEventArgs { Value = Account, UpdateOrders = true });
+            AccountNotification(new AccountEventArgs { Value = Account, AccountEventType = AccountEventType.UpdateOrders });
         }
     }
 }
