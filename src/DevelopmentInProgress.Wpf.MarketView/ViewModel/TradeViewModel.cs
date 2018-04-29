@@ -131,6 +131,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                         Price = 0;
                         StopPrice = 0;
                         Quantity = 0;
+                        BaseAccountBalance = null;
+                        QuoteAccountBalance = null;
                     }
 
                     OnPropertyChanged("SelectedSymbol");
@@ -301,10 +303,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 || !Account.ApiKey.Equals(account.ApiKey))
             {
                 Account = account;
-                SelectedOrderType = OrderHelper.GetOrderTypeName(Interface.OrderType.Limit);
+                SelectedOrderType = string.Empty;
             }
 
-            if (selectedAsset != null)
+            if (selectedAsset == null)
+            {
+                SelectedSymbol = null;
+            }
+            else
             {
                 SelectedSymbol = Symbols.FirstOrDefault(s => s.BaseAsset.Symbol.Equals(selectedAsset.Asset));
             }

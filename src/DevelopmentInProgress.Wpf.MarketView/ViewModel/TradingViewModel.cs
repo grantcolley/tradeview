@@ -137,7 +137,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 if (account != value)
                 {
                     account = value;
-                    AccountViewModel.Account = account;
                     OnPropertyChanged("Account");
                 }
             }
@@ -187,8 +186,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 }
             }
 
-            SymbolsViewModel.User = user;
-            
+            SymbolsViewModel.SetUser(user);
+            AccountViewModel.SetAccount(account);
+
             IsBusy = false;
         }
 
@@ -281,14 +281,18 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 {
                     TradeViewModelException(args.Exception);
                 }
-                else if(args.UpdateOrders)
+                else if (args.AccountEventType.Equals(AccountEventType.LoggedIn)
+                        || args.AccountEventType.Equals(AccountEventType.LoggedOut))
+                {
+                    OrdersViewModel.SetAccount(args.Value);
+                }
+                else if (args.AccountEventType.Equals(AccountEventType.UpdateOrders))
                 {
                     OrdersViewModel.UpdateOrders(args.Value);
                 }
-                else
+                else if (args.AccountEventType.Equals(AccountEventType.SelectedAsset))
                 {
                     TradeViewModel.SetAccount(args.Value, args.SelectedAsset);
-                    OrdersViewModel.SetAccount(args.Value);
                 }
             });
         }

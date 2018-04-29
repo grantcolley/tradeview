@@ -31,6 +31,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             ordersCancellationTokenSource = new CancellationTokenSource();
 
+            Orders = new ObservableCollection<Order>();
+
             IsCancellAllVisible = true;
         }
 
@@ -110,8 +112,25 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 || !Account.ApiKey.Equals(account.ApiKey))
             {
                 Account = account;
-                var result = await Task.Run(async () => await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User));
-                Orders = new ObservableCollection<Order>(result);
+
+                if (Account != null)
+                {
+                    Orders.Clear();
+                    var result = await Task.Run(async () => await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User));
+                    foreach (var order in result)
+                    {
+                        Orders.Add(order);
+                    }
+                }
+                else
+                {
+                    Orders.Clear();
+                    if (ordersCancellationTokenSource != null
+                        && !ordersCancellationTokenSource.IsCancellationRequested)
+                    {
+                        ordersCancellationTokenSource.Cancel();
+                    }
+                }
             }
         }
 

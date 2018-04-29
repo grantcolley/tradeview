@@ -56,6 +56,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 {
                     selectedSymbol = value;
                     OnSelectedSymbol(selectedSymbol);
+                    OnPropertyChanged("SelectedSymbol");
                 }
             }
         }
@@ -125,6 +126,18 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
 
             disposed = true;
+        }
+
+        public void SetUser(User user)
+        {
+            try
+            {
+                User = user;
+            }
+            catch (Exception ex)
+            {
+                OnException(ex);
+            }
         }
 
         private async void GetSymbols()
