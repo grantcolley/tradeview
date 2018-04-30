@@ -294,25 +294,39 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         
         public void SetSymbols(List<Symbol> symbols)
         {
-            Symbols = symbols;
+            try
+            {
+                Symbols = symbols;
+            }
+            catch (Exception e)
+            {
+                OnException(e);
+            }
         }
 
         public void SetAccount(Account account, AccountBalance selectedAsset)
         {
-            if (Account == null
-                || !Account.ApiKey.Equals(account.ApiKey))
+            try
             {
-                Account = account;
-                SelectedOrderType = string.Empty;
-            }
+                if (Account == null
+                    || !Account.ApiKey.Equals(account.ApiKey))
+                {
+                    Account = account;
+                    SelectedOrderType = string.Empty;
+                }
 
-            if (selectedAsset == null)
-            {
-                SelectedSymbol = null;
+                if (selectedAsset == null)
+                {
+                    SelectedSymbol = null;
+                }
+                else
+                {
+                    SelectedSymbol = Symbols.FirstOrDefault(s => s.BaseAsset.Symbol.Equals(selectedAsset.Asset));
+                }
             }
-            else
+            catch (Exception e)
             {
-                SelectedSymbol = Symbols.FirstOrDefault(s => s.BaseAsset.Symbol.Equals(selectedAsset.Asset));
+                OnException(e);
             }
         }
 
