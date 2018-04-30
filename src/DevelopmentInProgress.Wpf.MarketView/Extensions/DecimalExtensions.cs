@@ -7,6 +7,11 @@
             var p = v.ToString();
             var pos = p.IndexOf(".");
 
+            if(pos == -1)
+            {
+                return v;
+            }
+
             if(precision > 0)
             {
                 pos++;
