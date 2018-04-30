@@ -33,6 +33,7 @@ namespace DevelopmentInProgress.Wpf.Host
         public Bootstrapper()
         {
           logger = new LoggerConfiguration()
+                .WriteTo.File("DevelopmentInProgress.Wpf.MarketView-.log", rollingInterval:RollingInterval.Day)
                 .CreateLogger();
         }
 
