@@ -107,7 +107,7 @@
                         </ListView.ItemContainerStyle>
                     </ListView>
                     <Viewbox Grid.Row="0" Grid.Column="0"
-                             Height="18" Width="18" Margin="2"
+                             Height="50" Width="50" Margin="2" HorizontalAlignment="Center"
                              Visibility="{Binding IsLoading, Converter={StaticResource boolToVisibilityConverter}}">
                         <progress:CircularProgress/>
                     </Viewbox>

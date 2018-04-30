@@ -49,6 +49,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             ObserveAccount();
             ObserveSymbol();
             ObserveTrade();
+            ObserveOrders();
         }
 
         public AccountViewModel AccountViewModel
@@ -256,7 +257,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 {
                     TradeViewModelException(args.Exception);
                 }
-                else if(args.Value != null)
+                else if (args.Value != null)
                 {
                     SelectedSymbol = args.Value;
                     await SymbolViewModel.SetSymbol(selectedSymbol);
@@ -321,6 +322,22 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 .Select(eventPattern => eventPattern.EventArgs);
 
             tradeObservable.Subscribe(args =>
+            {
+                if (args.HasException)
+                {
+                    TradeViewModelException(args.Exception);
+                }
+            });
+        }
+
+        private void ObserveOrders()
+        {
+            var ordersObservable = Observable.FromEventPattern<OrdersEventArgs>(
+                eventHandler => OrdersViewModel.OnOrdersNotification += eventHandler,
+                eventHandler => OrdersViewModel.OnOrdersNotification -= eventHandler)
+                .Select(eventPattern => eventPattern.EventArgs);
+
+            ordersObservable.Subscribe(args =>
             {
                 if (args.HasException)
                 {

@@ -108,60 +108,79 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         public async void SetAccount(Account account)
         {
-            if(Account == null
-                || !Account.ApiKey.Equals(account.ApiKey))
-            {
-                Account = account;
+            IsLoading = true;
 
-                if (Account != null)
+            try
+            {
+                if (Account == null
+                    || account == null
+                    || !Account.ApiKey.Equals(account.ApiKey))
                 {
-                    Orders.Clear();
-                    var result = await Task.Run(async () => await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User));
-                    foreach (var order in result)
+                    Account = account;
+
+                    if (Account != null)
                     {
-                        Orders.Add(order);
+                        Orders.Clear();
+                        var result = await Task.Run(async () => await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User));
+                        foreach (var order in result)
+                        {
+                            Orders.Add(order);
+                        }
                     }
-                }
-                else
-                {
-                    Orders.Clear();
-                    if (ordersCancellationTokenSource != null
-                        && !ordersCancellationTokenSource.IsCancellationRequested)
+                    else
                     {
-                        ordersCancellationTokenSource.Cancel();
+                        Orders.Clear();
+                        if (ordersCancellationTokenSource != null
+                            && !ordersCancellationTokenSource.IsCancellationRequested)
+                        {
+                            ordersCancellationTokenSource.Cancel();
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                OnException(ex);
+            }
+
+            IsLoading = false;
         }
 
         public async void UpdateOrders(Account acccount)
         {
-            var result = await Task.Run(async () => await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User));
-
-            Dispatcher.Invoke(() =>
+            try
             {
-                if (!result.Any())
-                {
-                    Orders.Clear();
-                    return;
-                }
+                var result = await Task.Run(async () => await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User));
 
-                var updated = (from o in Orders
-                                join r in result on o.Symbol equals r.Symbol
-                                select o.Update(r)).ToList();
-
-                var remove = Orders.Where(o => !result.Any(r => r.Symbol.Equals(o.Symbol)));
-                foreach (var order in remove)
+                Dispatcher.Invoke(() =>
                 {
-                    Orders.Remove(order);
-                }
+                    if (!result.Any())
+                    {
+                        Orders.Clear();
+                        return;
+                    }
 
-                var add = result.Where(r => !Orders.Any(o => o.Symbol.Equals(r.Symbol)));
-                foreach (var order in add)
-                {
-                    Orders.Add(order);
-                }
-            });
+                    var updated = (from o in Orders
+                                   join r in result on o.Symbol equals r.Symbol
+                                   select o.Update(r)).ToList();
+
+                    var remove = Orders.Where(o => !result.Any(r => r.Symbol.Equals(o.Symbol)));
+                    foreach (var order in remove)
+                    {
+                        Orders.Remove(order);
+                    }
+
+                    var add = result.Where(r => !Orders.Any(o => o.Symbol.Equals(r.Symbol)));
+                    foreach (var order in add)
+                    {
+                        Orders.Add(order);
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                OnException(ex);
+            }
         }
 
         public override void Dispose(bool disposing)
@@ -185,19 +204,33 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         private async void Cancel(object param)
         {
-            var orderId = long.Parse(param.ToString());
-            var order = orders.Single(o => o.Id == orderId);
-            order.IsVisible = false;
-            var result = await ExchangeService.CancelOrderAsync(Account.AccountInfo.User, order.Symbol, order.Id, null, 0, ordersCancellationTokenSource.Token);
-            Orders.Remove(order);
+            try
+            {
+                var orderId = long.Parse(param.ToString());
+                var order = orders.Single(o => o.Id == orderId);
+                order.IsVisible = false;
+                var result = await ExchangeService.CancelOrderAsync(Account.AccountInfo.User, order.Symbol, order.Id, null, 0, ordersCancellationTokenSource.Token);
+                Orders.Remove(order);
+            }
+            catch (Exception ex)
+            {
+                OnException(ex);
+            }
         }
 
         private void CancelAll(object param)
         {
-            IsCancellAllVisible = false;
-            Parallel.ForEach(Orders, async order => { var result = await ExchangeService.CancelOrderAsync(Account.AccountInfo.User, order.Symbol, order.Id, null, 0, ordersCancellationTokenSource.Token); });
-            Orders.Clear();
-            IsCancellAllVisible = true;
+            try
+            {
+                IsCancellAllVisible = false;
+                Parallel.ForEach(Orders, async order => { var result = await ExchangeService.CancelOrderAsync(Account.AccountInfo.User, order.Symbol, order.Id, null, 0, ordersCancellationTokenSource.Token); });
+                Orders.Clear();
+                IsCancellAllVisible = true;
+            }
+            catch (Exception ex)
+            {
+                OnException(ex);
+            }
         }
 
         private void OnException(Exception exception)
