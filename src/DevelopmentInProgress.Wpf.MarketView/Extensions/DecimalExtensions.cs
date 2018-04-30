@@ -20,9 +20,9 @@
             return decimal.Parse(p.Substring(0, pos + precision));
         }
 
-        public static bool HasPrecision(this decimal v)
+        public static bool HasRemainder(this decimal v)
         {
-            return (v % 1) == 0;
+            return (v % 1) != 0;
         }
 
         public static int GetPrecision(this decimal v)

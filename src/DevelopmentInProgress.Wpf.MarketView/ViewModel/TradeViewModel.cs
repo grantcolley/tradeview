@@ -148,7 +148,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 if (quantity != value)
                 {
                     if (SelectedSymbol != null
-                        && value.HasPrecision())
+                        && value.HasRemainder())
                     {
                         quantity = value.Trim(SelectedSymbol.QuantityPrecision);
                     }
@@ -170,7 +170,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 if (price != value)
                 {
                     if (SelectedSymbol != null
-                        && value.HasPrecision())
+                        && value.HasRemainder())
                     {
                         price = value.Trim(SelectedSymbol.PricePrecision);
                     }
