@@ -135,6 +135,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                         {
                             ordersCancellationTokenSource.Cancel();
                         }
+
+                        ordersCancellationTokenSource = new CancellationTokenSource();
                     }
                 }
             }
