@@ -136,7 +136,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
             catch (Exception ex)
             {
-                OnException(ex);
+                OnException("SymbolsViewModel.SetUser", ex);
             }
         }
 
@@ -150,22 +150,27 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                 Symbols = new List<Symbol>(results);
 
-                ExchangeService.SubscribeStatistics(symbols, OnException, symbolsCancellationTokenSource.Token);
+                ExchangeService.SubscribeStatistics(symbols, SubscribeStatisticsException, symbolsCancellationTokenSource.Token);
 
                 SetPreferences();
             }
             catch(Exception ex)
             {
-                OnException(ex);
+                OnException("SymbolsViewModel.GetSymbols", ex);
             }
 
             IsLoadingSymbols = false;
         }
 
-        private void OnException(Exception exception)
+        private void SubscribeStatisticsException(Exception exception)
+        {
+            OnException("SymbolsViewModel.GetSymbols - ExchangeService.SubscribeStatistics", exception);
+        }
+
+        private void OnException(string message, Exception exception)
         {
             var onSymbolsNotification = OnSymbolsNotification;
-            onSymbolsNotification?.Invoke(this, new SymbolsEventArgs { Exception = exception });
+            onSymbolsNotification?.Invoke(this, new SymbolsEventArgs { Message = message, Exception = exception });
         }
 
         private void OnSelectedSymbol(Symbol symbol)

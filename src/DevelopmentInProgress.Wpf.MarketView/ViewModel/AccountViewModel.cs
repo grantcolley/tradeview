@@ -5,8 +5,6 @@ using DevelopmentInProgress.Wpf.MarketView.Services;
 using System;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Interface = DevelopmentInProgress.MarketView.Interface;
@@ -110,7 +108,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
             catch (Exception ex)
             {
-                OnException(ex);
+                OnException("AccountViewModel.SetAccount", ex);
             }
         }
 
@@ -119,7 +117,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             if (string.IsNullOrWhiteSpace(Account.AccountInfo.User.ApiKey)
                 || string.IsNullOrWhiteSpace(Account.AccountInfo.User.ApiSecret))
             {
-                OnException(new Exception("Both api key and secret key are required to login to an account."));
+                OnException("AccountViewModel.Login", new Exception("Both api key and secret key are required to login to an account."));
                 return;
             }
 
@@ -131,20 +129,25 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                 OnAccountLoggedIn(Account);
 
-                ExchangeService.SubscribeAccountInfo(Account.AccountInfo.User, e => AccountInfoUpdate(e.AccountInfo), OnException, accountCancellationTokenSource.Token);
+                ExchangeService.SubscribeAccountInfo(Account.AccountInfo.User, e => AccountInfoUpdate(e.AccountInfo), SubscribeAccountInfoException, accountCancellationTokenSource.Token);
             }
             catch(Exception ex)
             {
-                OnException(ex);
+                OnException("AccountViewModel.Login", ex);
             }
 
             IsLoggingIn = false;
         }
 
-        private void OnException(Exception exception)
+        private void SubscribeAccountInfoException(Exception exception)
+        {
+            OnException("AccountViewModel.Login - ExchangeService.SubscribeAccountInfo", exception);
+        }
+
+        private void OnException(string message, Exception exception)
         {
             var onAccountNotification = OnAccountNotification;
-            onAccountNotification?.Invoke(this, new AccountEventArgs { Exception = exception });
+            onAccountNotification?.Invoke(this, new AccountEventArgs { Message = message, Exception = exception });
         }
 
         private void OnAccountLoggedIn(Account account)

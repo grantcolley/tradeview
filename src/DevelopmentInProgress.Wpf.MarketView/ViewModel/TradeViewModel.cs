@@ -300,7 +300,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
             catch (Exception e)
             {
-                OnException(e);
+                OnException("TradeViewModel.SetSymbols", e);
             }
         }
 
@@ -326,7 +326,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
             catch (Exception e)
             {
-                OnException(e);
+                OnException("TradeViewModel.SetAccount", e);
             }
         }
 
@@ -379,7 +379,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
             catch (Exception e)
             {
-                OnException(e);
+                OnException("TradeViewModel.SendClientOrder", e);
             }
         }
 
@@ -406,10 +406,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        private void OnException(Exception exception)
+        private void OnException(string message, Exception exception)
         {
             var onTradeNotification = OnTradeNotification;
-            onTradeNotification?.Invoke(this, new TradeEventArgs { Exception = exception });
+            onTradeNotification?.Invoke(this, new TradeEventArgs { Message = message, Exception = exception });
         }
     }
 }

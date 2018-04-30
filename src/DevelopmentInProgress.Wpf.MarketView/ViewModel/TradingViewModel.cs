@@ -255,7 +255,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             {
                 if (args.HasException)
                 {
-                    TradeViewModelException(args.Exception);
+                    TradeViewModelException(args);
                 }
                 else if (args.Value != null)
                 {
@@ -280,7 +280,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             {
                 if (args.HasException)
                 {
-                    TradeViewModelException(args.Exception);
+                    TradeViewModelException(args);
                 }
                 else if (args.AccountEventType.Equals(AccountEventType.LoggedIn)
                         || args.AccountEventType.Equals(AccountEventType.LoggedOut))
@@ -309,7 +309,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             {
                 if(args.HasException)
                 {
-                    TradeViewModelException(args.Exception);
+                    TradeViewModelException(args);
                 }
             });
         }
@@ -325,7 +325,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             {
                 if (args.HasException)
                 {
-                    TradeViewModelException(args.Exception);
+                    TradeViewModelException(args);
                 }
             });
         }
@@ -341,13 +341,27 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             {
                 if (args.HasException)
                 {
-                    TradeViewModelException(args.Exception);
+                    TradeViewModelException(args);
                 }
             });
         }
 
-        private void TradeViewModelException(Exception ex)
+        private void TradeViewModelException<T>(EventArgsBase<T> eventArgs)
         {
+            if (eventArgs.Exception != null)
+            {
+                TradeViewModelException(eventArgs.Message, eventArgs.Exception);
+            }
+            else
+            {
+                Logger.Log(eventArgs.Message, Category.Exception, Priority.High);
+            }
+        }
+
+        private void TradeViewModelException(string message, Exception ex)
+        {
+            Logger.Log(message, Category.Exception, Priority.High);
+
             var exceptions = new List<Message>();
             if (ex is AggregateException)
             {

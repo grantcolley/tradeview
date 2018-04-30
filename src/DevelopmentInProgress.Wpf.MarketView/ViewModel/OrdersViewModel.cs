@@ -142,7 +142,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
             catch (Exception ex)
             {
-                OnException(ex);
+                OnException("OrdersViewModel.SetAccount", ex);
             }
 
             IsLoading = false;
@@ -181,7 +181,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
             catch (Exception ex)
             {
-                OnException(ex);
+                OnException("OrdersViewModel.UpdateOrders", ex);
             }
         }
 
@@ -216,7 +216,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
             catch (Exception ex)
             {
-                OnException(ex);
+                OnException("OrdersViewModel.Cancel", ex);
             }
         }
 
@@ -231,14 +231,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
             catch (Exception ex)
             {
-                OnException(ex);
+                OnException("OrdersViewModel.CancelAll", ex);
             }
         }
 
-        private void OnException(Exception exception)
+        private void OnException(string message, Exception exception)
         {
             var onOrdersNotification = OnOrdersNotification;
-            onOrdersNotification?.Invoke(this, new OrdersEventArgs { Exception = exception });
+            onOrdersNotification?.Invoke(this, new OrdersEventArgs { Message = message, Exception = exception });
         }
 
         private void OrdersNotification(List<Order> orders)

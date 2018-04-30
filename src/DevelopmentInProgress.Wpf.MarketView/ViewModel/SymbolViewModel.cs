@@ -173,7 +173,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
             catch (Exception ex)
             {
-                OnException(ex);
+                OnException("SymbolViewModel.SetSymbol", ex);
             }
         }
 
@@ -187,11 +187,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                 UpdateOrderBook(orderBook);
 
-                ExchangeService.SubscribeOrderBook(Symbol.Name, limit, e => UpdateOrderBook(e.OrderBook), OnException, symbolCancellationTokenSource.Token);
+                ExchangeService.SubscribeOrderBook(Symbol.Name, limit, e => UpdateOrderBook(e.OrderBook), SubscribeOrderBookException, symbolCancellationTokenSource.Token);
             }
             catch (Exception ex)
             {
-                OnException(ex);
+                OnException("SymbolViewModel.GetOrderBook", ex);
             }
 
             IsLoadingOrderBook = false;
@@ -207,11 +207,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                 UpdateAggregateTrades(trades);
 
-                ExchangeService.SubscribeAggregateTrades(Symbol.Name, limit, e => UpdateAggregateTrades(e.AggregateTrades), OnException, symbolCancellationTokenSource.Token);
+                ExchangeService.SubscribeAggregateTrades(Symbol.Name, limit, e => UpdateAggregateTrades(e.AggregateTrades), SubscribeAggregateTradesException, symbolCancellationTokenSource.Token);
             }
             catch (Exception ex)
             {
-                OnException(ex);
+                OnException("SymbolViewModel.GetTrades", ex);
             }
 
             IsLoadingTrades = false;
@@ -307,10 +307,20 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        private void OnException(Exception exception)
+        private void SubscribeAggregateTradesException(Exception exception)
+        {
+            OnException("SymbolViewModel.GetTrades - ExchangeService.SubscribeAggregateTrades", exception);
+        }
+
+        private void SubscribeOrderBookException(Exception exception)
+        {
+            OnException("SymbolViewModel.GetOrderBook - ExchangeService.SubscribeOrderBook", exception);
+        }
+
+        private void OnException(string message, Exception exception)
         {
             var onSymbolNotification = OnSymbolNotification;
-            onSymbolNotification?.Invoke(this, new SymbolEventArgs { Exception = exception });
+            onSymbolNotification?.Invoke(this, new SymbolEventArgs { Message = message, Exception = exception });
         }
     }
 }
