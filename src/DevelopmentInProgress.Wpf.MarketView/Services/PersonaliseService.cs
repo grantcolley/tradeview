@@ -22,7 +22,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
             {
                 using (var reader = File.OpenText(preferencesFile))
                 {
-                    var json = await reader.ReadToEndAsync();
+                    var json = await reader.ReadToEndAsync().ConfigureAwait(false);
                     return DeserializeJson<User>(json);
                 }
             }
@@ -35,7 +35,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
             var json = SerializeToJson(user);
             using (StreamWriter writer = File.CreateText(preferencesFile))
             {
-                await writer.WriteAsync(json);
+                await writer.WriteAsync(json).ConfigureAwait(false);
             }
         }
 
