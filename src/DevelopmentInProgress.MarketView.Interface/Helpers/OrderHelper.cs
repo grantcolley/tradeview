@@ -128,9 +128,9 @@ namespace DevelopmentInProgress.MarketView.Interface.Helpers
             return Regex.Replace(result, "[A-Z]", " $0").Trim();
         }
 
-        public static void ValidateClientOrder(ClientOrder clientOrder)
+        public static void ValidateClientOrder(Symbol symbol, ClientOrder clientOrder)
         {
-            orderValidation[clientOrder.Type].Validate(clientOrder);
+            orderValidation[clientOrder.Type].Validate(symbol, clientOrder);
         }
     }
 }

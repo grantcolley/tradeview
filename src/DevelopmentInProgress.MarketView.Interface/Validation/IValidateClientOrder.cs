@@ -4,6 +4,6 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
 {
     public interface IValidateClientOrder
     {
-        void Validate(ClientOrder clientOrder);
+        void Validate(Symbol symbol, ClientOrder clientOrder);
     }
 }

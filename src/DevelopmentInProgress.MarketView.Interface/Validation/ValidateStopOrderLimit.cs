@@ -6,9 +6,9 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
 {
     public class ValidateStopOrderLimit : ValidateOrder, IValidateClientOrder
     {
-        public new void Validate(ClientOrder clientOrder)
+        public new void Validate(Symbol symbol, ClientOrder clientOrder)
         {
-            base.Validate(clientOrder);
+            base.Validate(symbol, clientOrder);
 
             string message = string.Empty;
 
