@@ -27,7 +27,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
                 }
 
                 var notional = o.Price * o.Quantity;
-                if (notional > s.NotionalMinimumValue)
+                if (notional < s.NotionalMinimumValue)
                 {
                     sb.Append($"Notional {notional} is greater then the minimum notional");
                 }
