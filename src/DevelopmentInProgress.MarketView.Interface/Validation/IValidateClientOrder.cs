@@ -1,9 +1,10 @@
 ﻿using DevelopmentInProgress.MarketView.Interface.Model;
+using System.Collections.Generic;
 
 namespace DevelopmentInProgress.MarketView.Interface.Validation
 {
     public interface IValidateClientOrder
     {
-        void Validate(Symbol symbol, ClientOrder clientOrder);
+        bool TryValidate(Symbol symbol, ClientOrder clientOrder, out string message);
     }
 }

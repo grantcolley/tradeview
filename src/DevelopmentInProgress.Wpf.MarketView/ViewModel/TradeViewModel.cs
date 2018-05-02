@@ -373,9 +373,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     StopPrice = StopPrice
                 };
 
-                OrderHelper.ValidateClientOrder(clientOrder);
+                OrderHelper.ValidateClientOrder(SelectedSymbol.GetInterfaceSymbol(), clientOrder);
 
-                var order = await ExchangeService.PlaceOrder(Account.AccountInfo.User, clientOrder);
+                var order = await ExchangeService.PlaceOrder(Account.AccountInfo.User, clientOrder).ConfigureAwait(false);
             }
             catch (Exception e)
             {

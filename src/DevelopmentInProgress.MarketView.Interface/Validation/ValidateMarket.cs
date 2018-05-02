@@ -2,11 +2,14 @@
 
 namespace DevelopmentInProgress.MarketView.Interface.Validation
 {
-    public class ValidateMarket : ValidateOrder, IValidateClientOrder
+    public class ValidateMarket : IValidateClientOrder
     {
-        public new void Validate(Symbol symbol, ClientOrder clientOrder)
+        public bool TryValidate(Symbol symbol, ClientOrder clientOrder, out string message)
         {
-            base.Validate(symbol, clientOrder);
+            var clientOrderValidation = new ClientOrderValidationBuilder()
+                .Build();
+
+            return clientOrderValidation.TryValidate(symbol, clientOrder, out message);
         }
     }
 }
