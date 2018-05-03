@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DevelopmentInProgress.MarketView.Interface.Events;
-using DevelopmentInProgress.MarketView.Interface.Helpers;
+using DevelopmentInProgress.MarketView.Interface.Extensions;
 using DevelopmentInProgress.MarketView.Interface.Interfaces;
 using DevelopmentInProgress.Wpf.MarketView.Extensions;
 using DevelopmentInProgress.Wpf.MarketView.Model;
@@ -94,10 +94,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
                 Price = o.Price,
                 OriginalQuantity = o.OriginalQuantity,
                 ExecutedQuantity = o.ExecutedQuantity,
-                Status = OrderHelper.GetOrderStatusName(o.Status),
-                TimeInForce = OrderHelper.GetTimeInForceName(o.TimeInForce),
-                Type = OrderHelper.GetOrderTypeName(o.Type),
-                Side = OrderHelper.GetOrderSideName(o.Side),
+                Status = o.Status.GetOrderStatusName(),
+                TimeInForce = o.TimeInForce.GetTimeInForceName(),
+                Type = o.Type.GetOrderTypeName(),
+                Side = o.Side.GetOrderSideName(),
                 StopPrice = o.StopPrice,
                 IcebergQuantity = o.IcebergQuantity,
                 Time = o.Time,

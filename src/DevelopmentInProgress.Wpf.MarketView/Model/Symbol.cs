@@ -68,19 +68,5 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
         {
             return $"{BaseAsset.Symbol} / {QuoteAsset.Symbol}";
         }
-
-        public Interface.Symbol GetInterfaceSymbol()
-        {
-            var symbol = new Interface.Symbol
-            {
-                NotionalMinimumValue = NotionalMinimumValue,
-                IsIcebergAllowed = IsIcebergAllowed,
-                Price = new Interface.InclusiveRange { Minimum = Price.Minimum, Maximum = Price.Maximum, Increment = Price.Increment },
-                Quantity = new Interface.InclusiveRange { Minimum = Quantity.Minimum, Maximum = Quantity.Maximum, Increment = Quantity.Increment },
-                OrderTypes = OrderTypes
-            };
-
-            return symbol;
-        }
     }
 }

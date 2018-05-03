@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.MarketView.Interface.Helpers;
+﻿using DevelopmentInProgress.MarketView.Interface.Extensions;
 using DevelopmentInProgress.Wpf.Host.ViewModel;
 using DevelopmentInProgress.Wpf.MarketView.Events;
 using DevelopmentInProgress.Wpf.MarketView.Extensions;
@@ -229,7 +229,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     return !IsLoading;
                 }
 
-                return !OrderHelper.IsMarketOrder(SelectedOrderType);
+                return !SelectedOrderType.IsMarketOrder();
             }
         }
 
@@ -242,7 +242,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     return !IsLoading;
                 }
 
-                return OrderHelper.IsMarketOrder(SelectedOrderType);
+                return SelectedOrderType.IsMarketOrder();
             }
         }
 
@@ -255,7 +255,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     return !IsLoading;
                 }
 
-                return OrderHelper.IsStopLoss(SelectedOrderType);
+                return SelectedOrderType.IsStopLoss();
             }
         }
 
@@ -289,7 +289,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         public string[] OrderTypes
         {
-            get { return OrderHelper.OrderTypes(); }
+            get { return Extensions.OrderExtensions.OrderTypes(); }
         }
         
         public void SetSymbols(List<Symbol> symbols)
@@ -366,14 +366,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 var clientOrder = new Interface.ClientOrder
                 {
                     Symbol = SelectedSymbol?.Name,
-                    Type = OrderHelper.GetOrderType(SelectedOrderType),
+                    Type = SelectedOrderType.GetOrderType(),
                     Side = orderSide,
                     Quantity = Quantity,
                     Price = Price,
                     StopPrice = StopPrice
                 };
 
-                OrderHelper.ValidateClientOrder(SelectedSymbol.GetInterfaceSymbol(), clientOrder);
+                SelectedSymbol.GetInterfaceSymbol().ValidateClientOrder(clientOrder);
 
                 var order = await ExchangeService.PlaceOrder(Account.AccountInfo.User, clientOrder).ConfigureAwait(false);
             }

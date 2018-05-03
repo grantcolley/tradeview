@@ -1,27 +1,11 @@
 ﻿using DevelopmentInProgress.MarketView.Interface.Model;
-using DevelopmentInProgress.MarketView.Interface.Validation;
 using System;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace DevelopmentInProgress.MarketView.Interface.Helpers
+namespace DevelopmentInProgress.Wpf.MarketView.Extensions
 {
-    public static class OrderHelper
+    public static class OrderExtensions
     {
-        private static Dictionary<OrderType, IValidateClientOrder> orderValidation;
-
-        static OrderHelper()
-        {
-            orderValidation = new Dictionary<OrderType, IValidateClientOrder>();
-            orderValidation.Add(OrderType.Limit, new ValidateLimit());
-            orderValidation.Add(OrderType.LimitMaker, new ValidateLimit());
-            orderValidation.Add(OrderType.StopLossLimit, new ValidateStopOrderLimit());
-            orderValidation.Add(OrderType.TakeProfitLimit, new ValidateStopOrderLimit());
-            orderValidation.Add(OrderType.Market, new ValidateMarket());
-            orderValidation.Add(OrderType.StopLoss, new ValidateStopOrder());
-            orderValidation.Add(OrderType.TakeProfit, new ValidateStopOrder());
-        }
-
         public static string[] OrderTypes()
         {
             var source = Enum.GetNames(typeof(OrderType));
@@ -34,7 +18,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Helpers
             return list;
         }
 
-        public static bool AreEqual(OrderType orderType, string compare)
+        public static bool AreEqual(this OrderType orderType, string compare)
         {
             if (string.IsNullOrWhiteSpace(compare))
             {
@@ -50,7 +34,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Helpers
             return false;
         }
 
-        public static bool IsMarketOrder(string orderType)
+        public static bool IsMarketOrder(this string orderType)
         {
             if (string.IsNullOrEmpty(orderType))
             {
@@ -74,7 +58,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Helpers
             return false;
         }
 
-        public static bool IsStopLoss(string orderType)
+        public static bool IsStopLoss(this string orderType)
         {
             if (string.IsNullOrEmpty(orderType))
             {
@@ -99,42 +83,33 @@ namespace DevelopmentInProgress.MarketView.Interface.Helpers
             return false;
         }
 
-        public static OrderType GetOrderType(string orderType)
+        public static OrderType GetOrderType(this string orderType)
         {
             return (OrderType)Enum.Parse(typeof(OrderType), orderType.Replace(" ", ""));
         }
 
-        public static string GetOrderTypeName(OrderType orderType)
+        public static string GetOrderTypeName(this OrderType orderType)
         {
             var result = Enum.GetName(typeof(OrderType), orderType);
             return Regex.Replace(result, "[A-Z]", " $0").Trim();
         }
 
-        public static string GetOrderStatusName(OrderStatus orderStatus)
+        public static string GetOrderStatusName(this OrderStatus orderStatus)
         {
             var result = Enum.GetName(typeof(OrderStatus), orderStatus);
             return Regex.Replace(result, "[A-Z]", " $0").Trim();
         }
 
-        public static string GetTimeInForceName(TimeInForce timeInForce)
+        public static string GetTimeInForceName(this TimeInForce timeInForce)
         {
             var result = Enum.GetName(typeof(TimeInForce), timeInForce);
             return Regex.Replace(result, "[A-Z]", " $0").Trim();
         }
 
-        public static string GetOrderSideName(OrderSide orderSide)
+        public static string GetOrderSideName(this OrderSide orderSide)
         {
             var result = Enum.GetName(typeof(OrderSide), orderSide);
             return Regex.Replace(result, "[A-Z]", " $0").Trim();
-        }
-
-        public static void  ValidateClientOrder(Symbol symbol, ClientOrder clientOrder)
-        {
-            string message;
-            if(!orderValidation[clientOrder.Type].TryValidate(symbol, clientOrder, out message))
-            {
-                throw new Exception(message);
-            }
         }
     }
 }
