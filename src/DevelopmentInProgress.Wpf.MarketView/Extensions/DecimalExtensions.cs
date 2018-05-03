@@ -1,6 +1,6 @@
 ﻿namespace DevelopmentInProgress.Wpf.MarketView.Extensions
 {
-    public static class DecimalHelper
+    public static class DecimalExtensions
     {
         public static decimal Trim(this decimal v, int precision)
         {

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Model
@@ -62,9 +61,5 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
         }
 
         public ObservableCollection<AccountBalance> Balances { get; private set; }
-
-        public void Update(Interface.AccountInfo accountInfo)
-        {
-        }
     }
 }
