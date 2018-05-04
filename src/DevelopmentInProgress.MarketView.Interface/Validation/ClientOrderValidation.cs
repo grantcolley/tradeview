@@ -28,7 +28,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
             if (messageBuilder.Length > 0)
             {
                 message = messageBuilder.ToString();
-                message = message.Insert(0, $"{clientOrder.Symbol} {GetOrderTypeName(clientOrder.Type)} not valid: ");
+                message = message.Insert(0, $"{clientOrder.Symbol} {GetOrderTypeName(clientOrder.Type)} order not valid: ");
                 message = message.Remove(message.Length - 1, 1);
                 return false;
             }

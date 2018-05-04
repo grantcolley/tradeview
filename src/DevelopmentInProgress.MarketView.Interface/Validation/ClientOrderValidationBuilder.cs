@@ -18,29 +18,33 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
             {
                 if (string.IsNullOrWhiteSpace(o.Symbol))
                 {
-                    sb.Append("No symbol;");
+                    sb.Append("Order has no symbol;");
+                }
+                else if (!o.Symbol.Equals($"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}"))
+                {
+                    sb.Append($"Order {o.Symbol} validation symbol {s.BaseAsset.Symbol}{s.QuoteAsset.Symbol} mismatch;");
                 }
 
-                if(!s.OrderTypes.Contains(o.Type))
+                if (!s.OrderTypes.Contains(o.Type))
                 {
-                    sb.Append($"Order type {o.Type} is not allowed for this symbol;");
+                    sb.Append($"{o.Type} order is not permitted;");
                 }
                 
                 // TODO: validate quantity precision
 
                 if (o.Quantity < s.Quantity.Minimum)
                 {
-                    sb.Append($"Quantity {o.Quantity} cannot be below minimum {s.Quantity.Minimum};");
+                    sb.Append($"Quantity {o.Quantity} is below the minimum {s.Quantity.Minimum};");
                 }
 
                 if (o.Quantity > s.Quantity.Maximum)
                 {
-                    sb.Append($"Quantity {o.Quantity} cannot be above maximum {s.Quantity.Maximum};");
+                    sb.Append($"Quantity {o.Quantity} is above the maximum {s.Quantity.Maximum};");
                 }
 
                 if ((o.Quantity - s.Quantity.Minimum) % s.Quantity.Increment != 0)
                 {
-                    sb.Append($"Quantity {o.Quantity} doesn't meet step size {s.Quantity.Increment};");
+                    sb.Append($"Quantity {o.Quantity} must be in multiples of the step size {s.Quantity.Increment};");
                 }
             });
         }
