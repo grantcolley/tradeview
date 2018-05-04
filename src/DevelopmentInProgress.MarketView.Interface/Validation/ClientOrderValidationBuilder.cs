@@ -23,19 +23,10 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
 
                 if(!s.OrderTypes.Contains(o.Type))
                 {
-                    sb.Append($"Order type {o.Type} is not permissted for this symbol");
+                    sb.Append($"Order type {o.Type} is not allowed for this symbol;");
                 }
-
-                var notional = o.Price * o.Quantity;
-                if (notional < s.NotionalMinimumValue)
-                {
-                    sb.Append($"Notional {notional} is greater then the minimum notional");
-                }
-
-                if (o.Quantity.Equals(0))
-                {
-                    sb.Append("Quantity cannot be 0;");
-                }
+                
+                // TODO: validate quantity precision
 
                 if (o.Quantity < s.Quantity.Minimum)
                 {
@@ -51,25 +42,6 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
                 {
                     sb.Append($"Quantity {o.Quantity} doesn't meet step size {s.Quantity.Increment};");
                 }
-
-                if (s.IsIcebergAllowed
-                    && o.IcebergQuantity != 0)
-                {
-                    if (o.IcebergQuantity < s.Quantity.Minimum)
-                    {
-                        sb.Append($"Iceberg Quantity {o.IcebergQuantity} cannot be below minimum {s.Quantity.Minimum};");
-                    }
-
-                    if (o.IcebergQuantity > s.Quantity.Maximum)
-                    {
-                        sb.Append($"Iceberg Quantity {o.IcebergQuantity} cannot be above maximum {s.Quantity.Maximum};");
-                    }
-
-                    if ((o.IcebergQuantity - s.Quantity.Minimum) % s.Quantity.Increment != 0)
-                    {
-                        sb.Append($"Iceberg Quantity {o.IcebergQuantity} doesn't meet step size {s.Quantity.Increment};");
-                    }
-                }
             });
         }
 
@@ -82,6 +54,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
         {
             validations.Add((s, o, sb) =>
             {
+                // TODO: validate price precision
+
                 if (o.Price < s.Price.Minimum)
                 {
                     sb.Append($"Price {o.Price} cannot be below minimum {s.Price.Minimum};");
@@ -118,6 +92,58 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
                 if ((o.StopPrice - s.Price.Minimum) % s.Price.Increment != 0)
                 {
                     sb.Append($"Price {o.StopPrice} doesn't meet tick size {s.Price.Increment};");
+                }
+            });
+
+            return this;
+        }
+
+        public ClientOrderValidationBuilder AddNotionalValidation()
+        {
+            validations.Add((s, o, sb) =>
+            {
+                var notional = o.Price * o.Quantity;
+                if (notional < s.NotionalMinimumValue)
+                {
+                    sb.Append($"Notional {notional} is greater then the minimum notional");
+                }
+            });
+
+            return this;
+        }
+
+        public ClientOrderValidationBuilder AddIcebergValidation()
+        {
+            validations.Add((s, o, sb) =>
+            {
+                if (s.IsIcebergAllowed
+                    && o.IcebergQuantity != 0)
+                {
+                    if(!(o.Type == OrderType.Limit
+                        || o.Type == OrderType.LimitMaker))
+                    {
+                        sb.Append($"Order type must be Limit or Limit Maker to be an iceberg");
+                    }
+
+                    if(o.TimeInForce != TimeInForce.GTC)
+                    {
+                        sb.Append($"Iceberg order time in force must be GTC");
+                    }
+
+                    if (o.IcebergQuantity < s.Quantity.Minimum)
+                    {
+                        sb.Append($"Iceberg Quantity {o.IcebergQuantity} cannot be below minimum {s.Quantity.Minimum};");
+                    }
+
+                    if (o.IcebergQuantity > s.Quantity.Maximum)
+                    {
+                        sb.Append($"Iceberg Quantity {o.IcebergQuantity} cannot be above maximum {s.Quantity.Maximum};");
+                    }
+
+                    if ((o.IcebergQuantity - s.Quantity.Minimum) % s.Quantity.Increment != 0)
+                    {
+                        sb.Append($"Iceberg Quantity {o.IcebergQuantity} doesn't meet step size {s.Quantity.Increment};");
+                    }
                 }
             });
 

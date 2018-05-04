@@ -19,6 +19,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
         {
             message = string.Empty;
             StringBuilder messageBuilder = new StringBuilder();
+
             foreach (var validationAction in validationActions)
             {
                 validationAction(symbol, clientOrder, messageBuilder);
@@ -35,7 +36,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
             return true;
         }
 
-        public string GetOrderTypeName(OrderType orderType)
+        private string GetOrderTypeName(OrderType orderType)
         {
             var result = Enum.GetName(typeof(OrderType), orderType);
             return Regex.Replace(result, "[A-Z]", " $0").Trim();
