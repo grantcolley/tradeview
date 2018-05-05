@@ -1,29 +1,25 @@
 ﻿using DevelopmentInProgress.MarketView.Interface.Model;
 using DevelopmentInProgress.MarketView.Interface.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DevelopmentInProgress.MarketView.Interface.Test
 {
     [TestClass]
     public class ClientOrderValidationBuilderTest
     {
-        private static string serializedSymbol;
+        private static List<Symbol> symbols;
+        private static Symbol trx;
 
         [ClassInitialize()]
         public static void ClientOrderValidationBuilderTest_Initializ(TestContext testContext)
         {
-            var symbol = new Symbol
-            {
-                OrderTypes = new List<OrderType>(),
-                Price = new InclusiveRange { Minimum = 0.00000100M, Maximum = 100000.00000000M, Increment = 0.00000100M },
-                Quantity = new InclusiveRange { Minimum = 0.00100000M, Maximum = 100000.00000000M, Increment = 0.00100000M },
-                QuoteAsset = new Asset { Symbol = "BTC" },
-                BaseAsset = new Asset { Symbol = "TRX" }
-            };
+            var marketHelper = new MarketHelper();
 
-            serializedSymbol = JsonConvert.SerializeObject(symbol);
+            symbols = marketHelper.Symbols;
+
+            trx = symbols.Single(s => s.BaseAsset.Symbol.Equals("TRX") && s.QuoteAsset.Symbol.Equals("BTC"));
         }
 
         [TestMethod]
@@ -31,12 +27,11 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
         {
             // Arrange
             string message;
-            var symbol = JsonConvert.DeserializeObject<Symbol>(serializedSymbol);
             var clientOrder = new ClientOrder() { Quantity = 0.00090000M };
 
             // Act
             var clientOrderValidation = new ClientOrderValidationBuilder().Build();
-            var result = clientOrderValidation.TryValidate(symbol, clientOrder, out message);
+            var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
 
             // Assert
             Assert.IsFalse(result);
@@ -48,12 +43,11 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
         {
             // Arrange
             string message;
-            var symbol = JsonConvert.DeserializeObject<Symbol>(serializedSymbol);
             var clientOrder = new ClientOrder() { Quantity = 100001.00000000M };
 
             // Act
             var clientOrderValidation = new ClientOrderValidationBuilder().Build();
-            var result = clientOrderValidation.TryValidate(symbol, clientOrder, out message);
+            var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
 
             // Assert
             Assert.IsFalse(result);
@@ -65,12 +59,11 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
         {
             // Arrange
             string message;
-            var symbol = JsonConvert.DeserializeObject<Symbol>(serializedSymbol);
             var clientOrder = new ClientOrder() { Symbol = "ETHBTC", Quantity = 100001.00000000M };
 
             // Act
             var clientOrderValidation = new ClientOrderValidationBuilder().Build();
-            var result = clientOrderValidation.TryValidate(symbol, clientOrder, out message);
+            var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
 
             // Assert
             Assert.IsFalse(result);
@@ -82,12 +75,11 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
         {
             // Arrange
             string message;
-            var symbol = JsonConvert.DeserializeObject<Symbol>(serializedSymbol);
             var clientOrder = new ClientOrder() { Quantity = 0.00000000M };
 
             // Act
             var clientOrderValidation = new ClientOrderValidationBuilder().Build();
-            var result = clientOrderValidation.TryValidate(symbol, clientOrder, out message);
+            var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
 
             // Assert
             Assert.IsFalse(result);
