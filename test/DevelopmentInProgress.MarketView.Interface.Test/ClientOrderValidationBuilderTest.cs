@@ -32,7 +32,6 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
             // Act
             var clientOrderValidation = new ClientOrderValidationBuilder().Build();
             var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
-
             // Assert
             Assert.IsFalse(result);
             Assert.AreEqual(message, " Limit order not valid: Order has no symbol;Limit order is not permitted;Quantity 0.00090000 is below the minimum 0.00100000;Quantity 0.00090000 must be in multiples of the step size 0.001");
