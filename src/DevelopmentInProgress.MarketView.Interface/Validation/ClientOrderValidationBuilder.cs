@@ -30,8 +30,6 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
                     sb.Append($"{o.Type} order is not permitted;");
                 }
                 
-                // TODO: validate quantity precision
-
                 if (o.Quantity < s.Quantity.Minimum)
                 {
                     sb.Append($"Quantity {o.Quantity} is below the minimum {s.Quantity.Minimum};");
@@ -46,6 +44,12 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
                 {
                     sb.Append($"Quantity {o.Quantity} must be in multiples of the step size {s.Quantity.Increment};");
                 }
+
+                var notional = o.Price * o.Quantity;
+                if (notional < s.NotionalMinimumValue)
+                {
+                    sb.Append($"Notional {notional} is less than the minimum notional {s.NotionalMinimumValue}");
+                }
             });
         }
 
@@ -58,16 +62,14 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
         {
             validations.Add((s, o, sb) =>
             {
-                // TODO: validate price precision
-
                 if (o.Price < s.Price.Minimum)
                 {
-                    sb.Append($"Price {o.Price} cannot be below minimum {s.Price.Minimum};");
+                    sb.Append($"Price {o.Price} cannot be below the minimum {s.Price.Minimum};");
                 }
 
                 if (o.Price > s.Price.Maximum)
                 {
-                    sb.Append($"Price {o.Price} cannot be above maximum {s.Price.Maximum};");
+                    sb.Append($"Price {o.Price} cannot be above the maximum {s.Price.Maximum};");
                 }
 
                 if ((o.Price - s.Price.Minimum) % s.Price.Increment != 0)
@@ -85,31 +87,17 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
             {
                 if (o.StopPrice < s.Price.Minimum)
                 {
-                    sb.Append($"Price {o.StopPrice} cannot be below minimum {s.Price.Minimum};");
+                    sb.Append($"Price {o.StopPrice} cannot be below the minimum {s.Price.Minimum};");
                 }
 
                 if (o.StopPrice > s.Price.Maximum)
                 {
-                    sb.Append($"Price {o.StopPrice} cannot be above maximum {s.Price.Maximum};");
+                    sb.Append($"Price {o.StopPrice} cannot be above the maximum {s.Price.Maximum};");
                 }
 
                 if ((o.StopPrice - s.Price.Minimum) % s.Price.Increment != 0)
                 {
                     sb.Append($"Price {o.StopPrice} doesn't meet tick size {s.Price.Increment};");
-                }
-            });
-
-            return this;
-        }
-
-        public ClientOrderValidationBuilder AddNotionalValidation()
-        {
-            validations.Add((s, o, sb) =>
-            {
-                var notional = o.Price * o.Quantity;
-                if (notional < s.NotionalMinimumValue)
-                {
-                    sb.Append($"Notional {notional} is greater then the minimum notional");
                 }
             });
 
