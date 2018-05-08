@@ -26,7 +26,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Extensions
             string message;
             if(!orderValidation[clientOrder.Type].TryValidate(symbol, clientOrder, out message))
             {
-                throw new Exception(message);
+                throw new OrderValidationException(message);
             }
         }
     }

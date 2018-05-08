@@ -1,4 +1,5 @@
-﻿using DevelopmentInProgress.MarketView.Interface.Model;
+﻿using DevelopmentInProgress.MarketView.Interface.Extensions;
+using DevelopmentInProgress.MarketView.Interface.Model;
 using DevelopmentInProgress.MarketView.Interface.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -214,6 +215,60 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
             // Assert
             Assert.IsTrue(result);
             Assert.AreEqual(message, string.Empty);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(OrderValidationException))]
+        public void Limit_Failed_NoPrice()
+        {
+            // Arrange
+            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Type = OrderType.Limit, Quantity = 500.00000000M };
+
+            // Act
+            trx.ValidateClientOrder(clientOrder);
+
+            // Assert
+            // Expected OrderValidationException
+        }
+
+        [TestMethod]
+        public void Limit_Pass()
+        {
+            // Arrange
+            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.BidPrice };
+
+            // Act
+            trx.ValidateClientOrder(clientOrder);
+
+            // Assert
+            // Expected no exception
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(OrderValidationException))]
+        public void LimitMaker_Failed_NoPrice()
+        {
+            // Arrange
+            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Type = OrderType.LimitMaker, Quantity = 500.00000000M };
+
+            // Act
+            trx.ValidateClientOrder(clientOrder);
+
+            // Assert
+            // Expected OrderValidationException
+        }
+
+        [TestMethod]
+        public void LimitMaker_Pass()
+        {
+            // Arrange
+            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Type = OrderType.LimitMaker, Quantity = 500.00000000M, Price = trxStats.BidPrice };
+
+            // Act
+            trx.ValidateClientOrder(clientOrder);
+
+            // Assert
+            // Expected no exception
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using DevelopmentInProgress.MarketView.Interface.Model;
-using System.Collections.Generic;
 
 namespace DevelopmentInProgress.MarketView.Interface.Validation
 {

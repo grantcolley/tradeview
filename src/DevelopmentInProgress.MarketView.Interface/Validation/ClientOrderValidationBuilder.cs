@@ -50,6 +50,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
                 {
                     sb.Append($"Notional {notional} is less than the minimum notional {s.NotionalMinimumValue};");
                 }
+
+                // NOTE: Timestamp is mandatory...
             });
         }
 
