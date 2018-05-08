@@ -29,7 +29,11 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
             {
                 message = messageBuilder.ToString();
                 message = message.Insert(0, $"{clientOrder.Symbol} {GetOrderTypeName(clientOrder.Type)} order not valid: ");
-                message = message.Remove(message.Length - 1, 1);
+                if (message.EndsWith(";"))
+                {
+                    message = message.Remove(message.Length - 1, 1);
+                }
+
                 return false;
             }
 

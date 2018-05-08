@@ -48,7 +48,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
 
             // Assert
             Assert.IsFalse(result);
-            Assert.AreEqual(message, $" {clientOrder.Type} order not valid: Order has no symbol;Limit order is not permitted;Quantity {clientOrder.Quantity} is below the minimum {dummyTrx.Quantity.Minimum};Quantity {clientOrder.Quantity} must be in multiples of the step size {dummyTrx.Quantity.Increment}");
+            Assert.AreEqual(message, $" {clientOrder.Type} order not valid: Order has no symbol;Limit order is not permitted;Quantity {clientOrder.Quantity} is below the minimum {dummyTrx.Quantity.Minimum};Quantity {clientOrder.Quantity} must be in multiples of the step size {dummyTrx.Quantity.Increment};Notional {clientOrder.Price * clientOrder.Quantity} is less than the minimum notional {dummyTrx.NotionalMinimumValue}");
         }
 
         [TestMethod]
@@ -84,6 +84,22 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
         }
 
         [TestMethod]
+        public void BaseValidation_Pass()
+        {
+            // Arrange
+            string message;
+            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice };
+
+            // Act
+            var clientOrderValidation = new ClientOrderValidationBuilder().Build();
+            var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
+
+            // Assert
+            Assert.IsTrue(result);
+            Assert.AreEqual(message, string.Empty);
+        }
+
+        [TestMethod]
         public void PriceValidation_Failed_MinPrice_TickSize()
         {
             // Arrange
@@ -99,7 +115,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
 
             // Assert
             Assert.IsFalse(result);
-            Assert.AreEqual(message, $"{clientOrder.Symbol} {clientOrder.Type} order not valid: Price {clientOrder.Price} cannot be below minimum {trx.Price.Minimum};Price {clientOrder.Price} doesn't meet tick size {trx.Price.Increment}");
+            Assert.AreEqual(message, $"{clientOrder.Symbol} {clientOrder.Type} order not valid: Notional {clientOrder.Price * clientOrder.Quantity} is less than the minimum notional {dummyTrx.NotionalMinimumValue};Price {clientOrder.Price} cannot be below the minimum {trx.Price.Minimum};Price {clientOrder.Price} doesn't meet the tick size {trx.Price.Increment}");
         }
 
         [TestMethod]
@@ -119,6 +135,85 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
             // Assert
             Assert.IsFalse(result);
             Assert.AreEqual(message, $"{clientOrder.Symbol} {clientOrder.Type} order not valid: Price {clientOrder.Price} cannot be above the maximum {trx.Price.Maximum}");
+        }
+
+        [TestMethod]
+        public void PriceValidation_Pass()
+        {
+            // Arrange
+            string message;
+            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice };
+
+            // Act
+            var clientOrderValidation = new ClientOrderValidationBuilder()
+                .AddPriceValidation()
+                .Build();
+
+            var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
+
+            // Assert
+            Assert.IsTrue(result);
+            Assert.AreEqual(message, string.Empty);
+        }
+
+        [TestMethod]
+        public void StopPriceValidation_Failed_MinPrice_TickSize()
+        {
+            // Arrange
+            string message;
+            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice, StopPrice = 0.000000001M };
+
+            // Act
+            var clientOrderValidation = new ClientOrderValidationBuilder()
+                .AddPriceValidation()
+                .AddStopPriceValidation()
+                .Build();
+
+            var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
+
+            // Assert
+            Assert.IsFalse(result);
+            Assert.AreEqual(message, $"{clientOrder.Symbol} {clientOrder.Type} order not valid: Stop Price {clientOrder.StopPrice} cannot be below the minimum {trx.Price.Minimum};Stop Price {clientOrder.StopPrice} doesn't meet the tick size {trx.Price.Increment}");
+        }
+
+        [TestMethod]
+        public void StopPriceValidation_Failed_MaxPrice()
+        {
+            // Arrange
+            string message;
+            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice, StopPrice = 15000000.00000000M };
+
+            // Act
+            var clientOrderValidation = new ClientOrderValidationBuilder()
+                .AddPriceValidation()
+                .AddStopPriceValidation()
+                .Build();
+
+            var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
+
+            // Assert
+            Assert.IsFalse(result);
+            Assert.AreEqual(message, $"{clientOrder.Symbol} {clientOrder.Type} order not valid: Stop Price {clientOrder.StopPrice} cannot be above the maximum {trx.Price.Maximum}");
+        }
+
+        [TestMethod]
+        public void StopPriceValidation_Pass()
+        {
+            // Arrange
+            string message;
+            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice, StopPrice = (trxStats.LastPrice + (100 * trx.Price.Increment)) };
+
+            // Act
+            var clientOrderValidation = new ClientOrderValidationBuilder()
+                .AddPriceValidation()
+                .AddStopPriceValidation()
+                .Build();
+
+            var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
+
+            // Assert
+            Assert.IsTrue(result);
+            Assert.AreEqual(message, string.Empty);
         }
     }
 }

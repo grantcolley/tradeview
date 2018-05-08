@@ -48,7 +48,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
                 var notional = o.Price * o.Quantity;
                 if (notional < s.NotionalMinimumValue)
                 {
-                    sb.Append($"Notional {notional} is less than the minimum notional {s.NotionalMinimumValue}");
+                    sb.Append($"Notional {notional} is less than the minimum notional {s.NotionalMinimumValue};");
                 }
             });
         }
@@ -74,7 +74,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
 
                 if ((o.Price - s.Price.Minimum) % s.Price.Increment != 0)
                 {
-                    sb.Append($"Price {o.Price} doesn't meet tick size {s.Price.Increment};");
+                    sb.Append($"Price {o.Price} doesn't meet the tick size {s.Price.Increment};");
                 }
             });
 
@@ -87,17 +87,17 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
             {
                 if (o.StopPrice < s.Price.Minimum)
                 {
-                    sb.Append($"Price {o.StopPrice} cannot be below the minimum {s.Price.Minimum};");
+                    sb.Append($"Stop Price {o.StopPrice} cannot be below the minimum {s.Price.Minimum};");
                 }
 
                 if (o.StopPrice > s.Price.Maximum)
                 {
-                    sb.Append($"Price {o.StopPrice} cannot be above the maximum {s.Price.Maximum};");
+                    sb.Append($"Stop Price {o.StopPrice} cannot be above the maximum {s.Price.Maximum};");
                 }
 
                 if ((o.StopPrice - s.Price.Minimum) % s.Price.Increment != 0)
                 {
-                    sb.Append($"Price {o.StopPrice} doesn't meet tick size {s.Price.Increment};");
+                    sb.Append($"Stop Price {o.StopPrice} doesn't meet the tick size {s.Price.Increment};");
                 }
             });
 
@@ -106,6 +106,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
 
         public ClientOrderValidationBuilder AddIcebergValidation()
         {
+            throw new NotImplementedException("Iceberg validation not implemented yet.");
+
             validations.Add((s, o, sb) =>
             {
                 if (s.IsIcebergAllowed
