@@ -2,7 +2,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace DevelopmentInProgress.Wpf.MarketView.Extensions
+namespace DevelopmentInProgress.MarketView.Interface.Extensions
 {
     public static class OrderExtensions
     {

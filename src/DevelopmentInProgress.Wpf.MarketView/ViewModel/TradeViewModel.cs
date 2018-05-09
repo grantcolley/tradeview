@@ -289,7 +289,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         public string[] OrderTypes
         {
-            get { return Extensions.OrderExtensions.OrderTypes(); }
+            get { return OrderExtensions.OrderTypes(); }
         }
         
         public void SetSymbols(List<Symbol> symbols)

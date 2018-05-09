@@ -78,7 +78,6 @@
     <Compile Include="Events\SymbolsEventArgs.cs" />
     <Compile Include="Events\TradeEventArgs.cs" />
     <Compile Include="Extensions\DecimalExtensions.cs" />
-    <Compile Include="Extensions\OrderExtensions.cs" />
     <Compile Include="Extensions\SymbolExtensions.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\AccountBalance.cs" />
