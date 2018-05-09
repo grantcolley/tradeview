@@ -55,6 +55,7 @@
     <Compile Include="ClientOrderValidationBuilderTest.cs" />
     <Compile Include="MarketHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SymbolsExtensionsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
