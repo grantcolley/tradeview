@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Interface = DevelopmentInProgress.MarketView.Interface;
-using Wpf = DevelopmentInProgress.Wpf.MarketView;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Test
 {
@@ -47,7 +46,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             account.ApiSecret = "0123456789";
 
             // Assert
-            Assert.IsTrue(account.ApiKey.Equals("**********"));
+            Assert.IsTrue(account.ApiSecret.Equals("**********"));
             Assert.IsTrue(account.AccountInfo.User.ApiSecret.Equals("0123456789"));;
         }
     }

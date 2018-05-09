@@ -49,7 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DecimalExtensions.cs" />
+    <Compile Include="DecimalExtensionsTest.cs" />
     <Compile Include="OrderBook.cs" />
     <Compile Include="OrdersViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -61,6 +61,7 @@
     <Compile Include="Symbol.cs" />
     <Compile Include="ExchangeService.cs" />
     <Compile Include="AccountViewModel.cs" />
+    <Compile Include="SymbolExtensionsTest.cs" />
     <Compile Include="SymbolViewModel.cs" />
     <Compile Include="TradeViewModel.cs" />
   </ItemGroup>

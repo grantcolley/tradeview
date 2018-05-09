@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace DevelopmentInProgress.Wpf.MarketView.Test
 {
     [TestClass]
-    public class DecimalExtensions
+    public class SymbolExtensionsTest
     {
         [TestMethod]
         public void TestMethod1()
