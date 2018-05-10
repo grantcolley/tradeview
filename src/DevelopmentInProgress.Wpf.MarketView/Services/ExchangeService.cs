@@ -130,18 +130,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
         private async Task<IEnumerable<Symbol>> GetSymbolsAsync(CancellationToken cancellationToken)
         {
             var results = await exchangeApi.GetSymbolsAsync(cancellationToken).ConfigureAwait(false);
-            var symbols = results.Select(s => new Symbol
-            {
-                NotionalMinimumValue = s.NotionalMinimumValue,
-                BaseAsset = s.BaseAsset,
-                Price = s.Price,
-                Quantity = s.Quantity,
-                QuoteAsset = s.QuoteAsset,
-                Status = s.Status,
-                IsIcebergAllowed = s.IsIcebergAllowed,
-                OrderTypes = s.OrderTypes,
-                SymbolStatistics = new SymbolStatistics { Symbol = $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}" }
-            }).ToList();
+            var symbols = results.Select(s => s.GetViewSymbol()).ToList();
             return symbols;
         }
 

@@ -1,5 +1,6 @@
 ﻿using DevelopmentInProgress.MarketView.Interface.Model;
 using DevelopmentInProgress.MarketView.Interface.Validation;
+using DevelopmentInProgress.MarketView.Test.Helper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 

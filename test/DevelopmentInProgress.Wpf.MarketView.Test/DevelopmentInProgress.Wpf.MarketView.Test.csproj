@@ -77,6 +77,10 @@
       <Project>{2183c26d-6932-41d9-bb1e-16fa55adf983}</Project>
       <Name>DevelopmentInProgress.Wpf.MarketView</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DevelopmentInProgress.MarketView.Test.Helper\DevelopmentInProgress.MarketView.Test.Helper.csproj">
+      <Project>{57648e9e-b953-40c7-85fc-503270b99640}</Project>
+      <Name>DevelopmentInProgress.MarketView.Test.Helper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

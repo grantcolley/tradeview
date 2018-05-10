@@ -10,13 +10,32 @@ namespace DevelopmentInProgress.Wpf.MarketView.Extensions
             var symbol = new Interface.Symbol
             {
                 NotionalMinimumValue = s.NotionalMinimumValue,
+                BaseAsset = s.BaseAsset,
+                Price = s.Price,
+                Quantity = s.Quantity,
+                QuoteAsset = s.QuoteAsset,
+                Status = s.Status,
                 IsIcebergAllowed = s.IsIcebergAllowed,
-                Price = new Interface.InclusiveRange { Minimum = s.Price.Minimum, Maximum = s.Price.Maximum, Increment = s.Price.Increment },
-                Quantity = new Interface.InclusiveRange { Minimum = s.Quantity.Minimum, Maximum = s.Quantity.Maximum, Increment = s.Quantity.Increment },
                 OrderTypes = s.OrderTypes
             };
 
             return symbol;
+        }
+
+        public static Symbol GetViewSymbol(this Interface.Symbol s)
+        {
+            return new Symbol
+            {
+                NotionalMinimumValue = s.NotionalMinimumValue,
+                BaseAsset = s.BaseAsset,
+                Price = s.Price,
+                Quantity = s.Quantity,
+                QuoteAsset = s.QuoteAsset,
+                Status = s.Status,
+                IsIcebergAllowed = s.IsIcebergAllowed,
+                OrderTypes = s.OrderTypes,
+                SymbolStatistics = new SymbolStatistics { Symbol = $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}" }
+            };
         }
     }
 }
