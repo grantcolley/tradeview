@@ -80,6 +80,7 @@
     <Compile Include="Extensions\DecimalExtensions.cs" />
     <Compile Include="Extensions\OrderExtensions.cs" />
     <Compile Include="Extensions\SymbolExtensions.cs" />
+    <Compile Include="Extensions\SymbolStatisticsExtensions.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\AccountBalance.cs" />
     <Compile Include="Model\AggregateTrade.cs" />

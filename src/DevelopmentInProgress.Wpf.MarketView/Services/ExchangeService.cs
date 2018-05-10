@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DevelopmentInProgress.MarketView.Interface.Events;
-using DevelopmentInProgress.MarketView.Interface.Extensions;
 using DevelopmentInProgress.MarketView.Interface.Interfaces;
 using DevelopmentInProgress.Wpf.MarketView.Extensions;
 using DevelopmentInProgress.Wpf.MarketView.Model;
@@ -121,31 +120,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
         private async Task<IEnumerable<SymbolStatistics>> Get24HourStatisticsAsync(CancellationToken cancellationToken)
         {
             var results = await exchangeApi.Get24HourStatisticsAsync(cancellationToken).ConfigureAwait(false);
-            var symbols = results.Select(s => new SymbolStatistics
-            {
-                FirstTradeId = s.FirstTradeId,
-                CloseTime = s.CloseTime,
-                OpenTime = s.OpenTime,
-                QuoteVolume = s.QuoteVolume,
-                Volume = Convert.ToInt64(s.Volume),
-                LowPrice = s.LowPrice,
-                HighPrice = s.HighPrice,
-                OpenPrice = s.OpenPrice,
-                AskQuantity = s.AskQuantity,
-                AskPrice = s.AskPrice,
-                BidQuantity = s.BidQuantity,
-                BidPrice = s.BidPrice,
-                LastQuantity = s.LastQuantity,
-                LastPrice = s.LastPrice,
-                PreviousClosePrice = s.PreviousClosePrice,
-                WeightedAveragePrice = s.WeightedAveragePrice,
-                PriceChangePercent = decimal.Round(s.PriceChangePercent, 2, MidpointRounding.AwayFromZero),
-                PriceChange = s.PriceChange,
-                Period = s.Period,
-                Symbol = s.Symbol,
-                LastTradeId = s.LastTradeId,
-                TradeCount = s.TradeCount
-            }).ToList();
+            var symbols = results.Select(s => s.GetViewSymbolStatistics()).ToList();
             return symbols;
         }
     }
