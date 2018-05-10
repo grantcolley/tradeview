@@ -53,19 +53,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DecimalExtensionsTest.cs" />
-    <Compile Include="OrderBook.cs" />
     <Compile Include="OrdersViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="OrderExtensions.cs" />
     <Compile Include="AccountTest.cs" />
     <Compile Include="OrderExtensionsTest.cs" />
     <Compile Include="OrderBookPriceLevel.cs" />
-    <Compile Include="Symbol.cs" />
-    <Compile Include="ExchangeService.cs" />
+    <Compile Include="ExchangeServiceTest.cs" />
     <Compile Include="AccountViewModel.cs" />
     <Compile Include="SymbolExtensionsTest.cs" />
     <Compile Include="SymbolViewModel.cs" />
     <Compile Include="TradeViewModel.cs" />
+    <Compile Include="SymbolStatisticsExtensionsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -78,6 +76,10 @@
     <ProjectReference Include="..\..\src\DevelopmentInProgress.Wpf.MarketView\DevelopmentInProgress.Wpf.MarketView.csproj">
       <Project>{2183c26d-6932-41d9-bb1e-16fa55adf983}</Project>
       <Name>DevelopmentInProgress.Wpf.MarketView</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DevelopmentInProgress.MarketView.Interface.Test\DevelopmentInProgress.MarketView.Interface.Test.csproj">
+      <Project>{CF7E490F-2CED-4287-A704-766DE5C90B1B}</Project>
+      <Name>DevelopmentInProgress.MarketView.Interface.Test</Name>
     </ProjectReference>
     <ProjectReference Include="..\DevelopmentInProgress.MarketView.Test.Helper\DevelopmentInProgress.MarketView.Test.Helper.csproj">
       <Project>{57648e9e-b953-40c7-85fc-503270b99640}</Project>
