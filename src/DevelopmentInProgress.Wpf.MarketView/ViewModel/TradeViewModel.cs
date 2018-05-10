@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
+using InterfaceExtensions = DevelopmentInProgress.MarketView.Interface.Extensions;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
@@ -289,7 +290,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         public string[] OrderTypes
         {
-            get { return OrderExtensions.OrderTypes(); }
+            get { return InterfaceExtensions.OrderExtensions.OrderTypes(); }
         }
         
         public void SetSymbols(List<Symbol> symbols)

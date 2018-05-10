@@ -12,9 +12,11 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
         {
             var symbols = File.ReadAllText("Symbols.txt");
             var symbolsStatistics = File.ReadAllText("SymbolsStatistics.txt");
+            var orders = File.ReadAllText("Orders.txt");
 
             Symbols = JsonConvert.DeserializeObject<List<Symbol>>(symbols);
             SymbolsStatistics = JsonConvert.DeserializeObject<List<SymbolStats>>(symbolsStatistics);
+            Orders = JsonConvert.DeserializeObject<List<Order>>(orders);
 
             Eth = Symbols.Single(s => s.BaseAsset.Symbol.Equals("ETH") && s.QuoteAsset.Symbol.Equals("BTC"));
             EthStats = SymbolsStatistics.Single(s => s.Symbol.Equals("ETHBTC"));
@@ -25,6 +27,8 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 
         public static List<Symbol> Symbols { get; private set; }
         public static List<SymbolStats> SymbolsStatistics { get; private set; }
+        public static List<Order> Orders { get; private set; }
+
         public static Symbol Trx { get; private set; }
         public static SymbolStats TrxStats { get; private set; }
         public static Symbol Eth { get; private set; }

@@ -86,23 +86,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
         public async Task<IEnumerable<Order>> GetOpenOrdersAsync(Interface.User user, string symbol = null, long recWindow = 0, Action<Exception> exception = default(Action<Exception>), CancellationToken cancellationToken = default(CancellationToken))
         {
             var result = await exchangeApi.GetOpenOrdersAsync(user, symbol, recWindow, exception, cancellationToken).ConfigureAwait(false);
-            var orders = result.Select(o => new Order
-            {
-                Symbol = o.Symbol,
-                Id = o.Id,
-                ClientOrderId = o.ClientOrderId,
-                Price = o.Price,
-                OriginalQuantity = o.OriginalQuantity,
-                ExecutedQuantity = o.ExecutedQuantity,
-                Status = o.Status.GetOrderStatusName(),
-                TimeInForce = o.TimeInForce.GetTimeInForceName(),
-                Type = o.Type.GetOrderTypeName(),
-                Side = o.Side.GetOrderSideName(),
-                StopPrice = o.StopPrice,
-                IcebergQuantity = o.IcebergQuantity,
-                Time = o.Time,
-                IsWorking = o.IsWorking
-            }).ToList();
+            var orders = result.Select(o => o.GetViewOrder()).ToList();
             return orders;
         }
 

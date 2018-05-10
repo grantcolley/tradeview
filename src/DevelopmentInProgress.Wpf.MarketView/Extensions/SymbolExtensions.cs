@@ -7,7 +7,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Extensions
     {
         public static Interface.Symbol GetInterfaceSymbol(this Symbol s)
         {
-            var symbol = new Interface.Symbol
+            return new Interface.Symbol
             {
                 NotionalMinimumValue = s.NotionalMinimumValue,
                 BaseAsset = s.BaseAsset,
@@ -18,8 +18,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.Extensions
                 IsIcebergAllowed = s.IsIcebergAllowed,
                 OrderTypes = s.OrderTypes
             };
-
-            return symbol;
         }
 
         public static Symbol GetViewSymbol(this Interface.Symbol s)

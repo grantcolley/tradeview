@@ -1,5 +1,6 @@
 ﻿using DevelopmentInProgress.Wpf.Host.ViewModel;
 using DevelopmentInProgress.Wpf.MarketView.Events;
+using DevelopmentInProgress.Wpf.MarketView.Extensions;
 using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using System;
@@ -163,7 +164,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     }
 
                     var updated = (from o in Orders
-                                   join r in result on o.Symbol equals r.Symbol
+                                   join r in result on o.ClientOrderId equals r.ClientOrderId
                                    select o.Update(r)).ToList();
 
                     var remove = Orders.Where(o => !result.Any(r => r.Symbol.Equals(o.Symbol)));
