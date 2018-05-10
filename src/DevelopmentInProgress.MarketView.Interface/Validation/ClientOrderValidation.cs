@@ -1,8 +1,8 @@
-﻿using DevelopmentInProgress.MarketView.Interface.Model;
+﻿using DevelopmentInProgress.MarketView.Interface.Extensions;
+using DevelopmentInProgress.MarketView.Interface.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace DevelopmentInProgress.MarketView.Interface.Validation
 {
@@ -28,7 +28,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
             if (messageBuilder.Length > 0)
             {
                 message = messageBuilder.ToString();
-                message = message.Insert(0, $"{clientOrder.Symbol} {GetOrderTypeName(clientOrder.Type)} order not valid: ");
+                message = message.Insert(0, $"{clientOrder.Symbol} {clientOrder.Type.GetOrderTypeName()} order not valid: ");
                 if (message.EndsWith(";"))
                 {
                     message = message.Remove(message.Length - 1, 1);
@@ -38,12 +38,6 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
             }
 
             return true;
-        }
-
-        private string GetOrderTypeName(OrderType orderType)
-        {
-            var result = Enum.GetName(typeof(OrderType), orderType);
-            return Regex.Replace(result, "[A-Z]", " $0").Trim();
         }
     }
 }

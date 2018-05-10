@@ -56,6 +56,7 @@
     <Compile Include="MarketHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SymbolsExtensionsTest.cs" />
+    <Compile Include="OrderExtensionsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
