@@ -51,5 +51,28 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             Assert.AreEqual(symbol.SymbolStatistics, statistics);
             Assert.AreEqual(symbol.PriceChangePercentDirection, statistics.PriceChangePercent > 0 ? 1 : statistics.PriceChangePercent < 0 ? -1 : 0);
         }
+
+        [TestMethod]
+        public void UpdateStatistics()
+        {
+            // Arrange 
+            var symbol = MarketHelper.Eth.GetViewSymbol();
+            var statistics = MarketHelper.EthStats;
+            symbol.JoinStatistics(statistics.GetViewSymbolStatistics());
+            var updatedStatistics = MarketHelper.EthStats;
+
+            updatedStatistics.PriceChange = 0.00156M;
+            updatedStatistics.LastPrice = statistics.LastPrice + updatedStatistics.PriceChange;
+            updatedStatistics.PriceChangePercent = updatedStatistics.PriceChange / statistics.LastPrice * 100;
+
+            // Act
+            var symbols = symbol.UpdateStatistics(updatedStatistics);
+
+            // Assert
+            Assert.AreEqual(symbol.SymbolStatistics.PriceChangePercent, decimal.Round(updatedStatistics.PriceChangePercent, 2, System.MidpointRounding.AwayFromZero));
+            Assert.AreEqual(symbol.PriceChangePercentDirection, 1);
+            Assert.AreEqual(symbol.LastPriceChangeDirection, 1);
+            Assert.AreEqual(symbol.SymbolStatistics.LastPrice, updatedStatistics.LastPrice);
+        }
     }
 }

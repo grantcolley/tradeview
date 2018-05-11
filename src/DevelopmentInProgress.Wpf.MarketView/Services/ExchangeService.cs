@@ -37,16 +37,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
             var symbols = await GetSymbolsAsync(cancellationToken).ConfigureAwait(false);
             var stats = await Get24HourStatisticsAsync(cancellationToken).ConfigureAwait(false);
 
-            Func<Symbol, SymbolStatistics, Symbol> f = ((sy, st) => 
-            {
-                sy.SymbolStatistics = st;
-                sy.PriceChangePercentDirection = sy.SymbolStatistics.PriceChangePercent > 0 ? 1 : sy.SymbolStatistics.PriceChangePercent < 0 ? -1 : 0;
-                return sy;
-            });
-
             var updatedSymbols = (from sy in symbols
                                  join st in stats on sy.Name equals st.Symbol
-                                 select f(sy,st)).ToList();
+                                 select sy.JoinStatistics(st)).ToList();
+
             return updatedSymbols;
         }
 
@@ -55,17 +49,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
             exchangeApi.SubscribeStatistics(e =>
             {
                 var stats = e.Statistics.ToList();
-                Func<Symbol, Interface.SymbolStats, Symbol> f = ((sy, st) =>
-                { 
-                    sy.SymbolStatistics.PriceChangePercent = decimal.Round(st.PriceChangePercent, 2, MidpointRounding.AwayFromZero);
-                    sy.PriceChangePercentDirection = sy.SymbolStatistics.PriceChangePercent > 0 ? 1 : sy.SymbolStatistics.PriceChangePercent < 0 ? -1 : 0;
-                    sy.LastPriceChangeDirection = sy.SymbolStatistics.LastPrice > st.LastPrice ? 1 : sy.SymbolStatistics.LastPrice < st.LastPrice ? -1 : 0;
-                    sy.SymbolStatistics.LastPrice = st.LastPrice.Trim(sy.PricePrecision);
-                    sy.SymbolStatistics.Volume = Convert.ToInt64(st.Volume);
-                    return sy;
-                });
 
-                (from sy in symbols join st in stats on sy.Name equals st.Symbol select f(sy, st)).ToList();
+                (from sy in symbols join st in stats on sy.Name equals st.Symbol select sy.UpdateStatistics(st)).ToList();
 
             }, exception, cancellationToken);
         }

@@ -1,6 +1,4 @@
-﻿using DevelopmentInProgress.MarketView.Interface.Model;
-using DevelopmentInProgress.MarketView.Interface.Test;
-using DevelopmentInProgress.MarketView.Test.Helper;
+﻿using DevelopmentInProgress.MarketView.Test.Helper;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
@@ -12,21 +10,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
     [TestClass]
     public class ExchangeServiceTest
     {
-        private static Symbol trx;
-        private static SymbolStats trxStats;
-        private static Symbol eth;
-        private static SymbolStats ethStats;
-
-        [ClassInitialize()]
-        public static void ExchangeServiceTest_Initialize(TestContext testContext)
-        {
-            eth = MarketHelper.Eth;
-            ethStats = MarketHelper.EthStats;
-
-            trx = MarketHelper.Trx;
-            trxStats = MarketHelper.TrxStats;
-        }
-
         [TestMethod]
         public async Task GetSymbols24HourStatisticsAsync()
         {
@@ -44,8 +27,19 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         }
 
         [TestMethod]
-        public void SubscribeStatistics()
+        public async Task SubscribeStatistics()
         {
+            // Arrange
+            var exchangeApi = new TestExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var cxlToken = new CancellationToken();
+
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken).ConfigureAwait(false);
+
+            // Act
+            //exchangeService.SubscribeStatistics(symbols, , e)
+
+            // Assert
         }
     }
 }

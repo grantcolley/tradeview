@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 using DevelopmentInProgress.MarketView.Interface.Events;
 using DevelopmentInProgress.MarketView.Interface.Interfaces;
 using DevelopmentInProgress.MarketView.Interface.Model;
-using DevelopmentInProgress.MarketView.Test.Helper;
 
-namespace DevelopmentInProgress.MarketView.Interface.Test
+namespace DevelopmentInProgress.MarketView.Test.Helper
 {
     public class TestExchangeApi : IExchangeApi
     {

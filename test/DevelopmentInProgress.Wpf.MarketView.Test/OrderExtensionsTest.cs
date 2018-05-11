@@ -15,11 +15,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         public void UpdateOrder_Pass()
         {
             // Arrange
-            var originalOrder = MarketHelper.Orders.First();
-            var serialisedOrder = JsonConvert.SerializeObject(originalOrder);
-            var interfaceOrder = JsonConvert.DeserializeObject<Interface.Order>(serialisedOrder);
-            var updatedInterfaceOrder = JsonConvert.DeserializeObject<Interface.Order>(serialisedOrder);
+            var interfaceOrder = MarketHelper.Orders.First();
 
+            var updatedInterfaceOrder = MarketHelper.Orders.First();
             updatedInterfaceOrder.ExecutedQuantity = 100;
 
             var order = interfaceOrder.GetViewOrder();
@@ -38,11 +36,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         public void UpdateOrder_Fails_ClientOrderId()
         {
             // Arrange
-            var originalOrder = MarketHelper.Orders.First();
-            var serialisedOrder = JsonConvert.SerializeObject(originalOrder);
-            var interfaceOrder = JsonConvert.DeserializeObject<Interface.Order>(serialisedOrder);
-            var updatedInterfaceOrder = JsonConvert.DeserializeObject<Interface.Order>(serialisedOrder);
-
+            var interfaceOrder = MarketHelper.Orders.First();
+            var updatedInterfaceOrder = MarketHelper.Orders.First();
+            
             updatedInterfaceOrder.ClientOrderId = "123";
 
             var order = interfaceOrder.GetViewOrder();
