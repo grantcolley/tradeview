@@ -41,7 +41,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Extensions
         {
             sy.SymbolStatistics.PriceChangePercent = decimal.Round(st.PriceChangePercent, 2, MidpointRounding.AwayFromZero);
             sy.PriceChangePercentDirection = sy.SymbolStatistics.PriceChangePercent > 0 ? 1 : sy.SymbolStatistics.PriceChangePercent < 0 ? -1 : 0;
-            sy.LastPriceChangeDirection = sy.SymbolStatistics.LastPrice > st.LastPrice ? 1 : sy.SymbolStatistics.LastPrice < st.LastPrice ? -1 : 0;
+            sy.LastPriceChangeDirection = st.LastPrice > sy.SymbolStatistics.LastPrice ? 1 : st.LastPrice < sy.SymbolStatistics.LastPrice ? -1 : 0;
             sy.SymbolStatistics.LastPrice = st.LastPrice.Trim(sy.PricePrecision);
             sy.SymbolStatistics.Volume = Convert.ToInt64(st.Volume);
             return sy;
