@@ -36,5 +36,20 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             Assert.AreEqual(symbol.IsIcebergAllowed, interfaceSymbol.IsIcebergAllowed);
             Assert.IsFalse(missingOrderTypes.Any());
         }
+
+        [TestMethod]
+        public void JoinSymbolStatistics()
+        {
+            // Arrange 
+            var symbol = MarketHelper.Eth.GetViewSymbol();
+            var statistics = MarketHelper.EthStats.GetViewSymbolStatistics();
+
+            // Act
+            var symbols = symbol.JoinStatistics(statistics);
+
+            // Assert
+            Assert.AreEqual(symbol.SymbolStatistics, statistics);
+            Assert.AreEqual(symbol.PriceChangePercentDirection, statistics.PriceChangePercent > 0 ? 1 : statistics.PriceChangePercent < 0 ? -1 : 0);
+        }
     }
 }
