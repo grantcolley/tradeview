@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DevelopmentInProgress.MarketView.Interface.Events;
@@ -71,7 +72,17 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 
         public void SubscribeStatistics(Action<StatiscticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var ethStats = MarketHelper.EthStats;
+            var symbolsStats = MarketHelper.SymbolsStatistics;
+
+            var newStats = MarketHelper.EthStats_UpdatedLastPrice_Upwards;
+
+            var updatedEthStats = symbolsStats.Single(s => s.Symbol.Equals("ETHBTC"));
+            updatedEthStats.PriceChange = newStats.PriceChange;
+            updatedEthStats.LastPrice = newStats.LastPrice;
+            updatedEthStats.PriceChangePercent = newStats.PriceChangePercent;
+
+            callback.Invoke(new StatiscticsEventArgs { Statistics = symbolsStats });
         }
     }
 }

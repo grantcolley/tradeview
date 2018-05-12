@@ -90,5 +90,33 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
                 return JsonConvert.DeserializeObject<SymbolStats>(ethStats);
             }
         }
+
+        public static SymbolStats EthStats_UpdatedLastPrice_Upwards
+        {
+            get
+            {
+                var origEthStats = EthStats;
+                var updatedEthStats = EthStats;
+
+                updatedEthStats.PriceChange = 0.00156M;
+                updatedEthStats.LastPrice = origEthStats.LastPrice + updatedEthStats.PriceChange;
+
+                return updatedEthStats;
+            }
+        }
+
+        public static SymbolStats EthStats_UpdatedLastPrice_Downwards
+        {
+            get
+            {
+                var origEthStats = EthStats;
+                var updatedEthStats = EthStats;
+
+                updatedEthStats.PriceChange = 0.00156M;
+                updatedEthStats.LastPrice = origEthStats.LastPrice - updatedEthStats.PriceChange;
+
+                return updatedEthStats;
+            }
+        }
     }
 }
