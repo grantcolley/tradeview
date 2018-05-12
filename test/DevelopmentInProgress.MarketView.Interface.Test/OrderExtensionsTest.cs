@@ -1,6 +1,8 @@
 ﻿using DevelopmentInProgress.MarketView.Interface.Extensions;
 using DevelopmentInProgress.MarketView.Interface.Model;
+using DevelopmentInProgress.MarketView.Test.Helper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace DevelopmentInProgress.MarketView.Interface.Test
 {
@@ -39,6 +41,31 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
             Assert.IsTrue(OrderType.TakeProfit.GetOrderTypeName().IsStopLoss());
             Assert.IsTrue(OrderType.StopLossLimit.GetOrderTypeName().IsStopLoss());
             Assert.IsTrue(OrderType.TakeProfitLimit.GetOrderTypeName().IsStopLoss());
+        }
+
+        [TestMethod]
+        public void GetOrderTypeNames_Pass()
+        {
+            // Arrange
+            var trx = MarketHelper.Trx;
+            var eth = MarketHelper.Eth;
+
+            // Act
+            var trxOrderTypes = trx.OrderTypes.GetOrderTypeNames();
+            var ethOrderTypes = eth.OrderTypes.GetOrderTypeNames();
+
+            // Assert
+            Assert.AreEqual(trxOrderTypes.Length, trx.OrderTypes.Count());
+            foreach(var orderType in trx.OrderTypes)
+            {
+                Assert.IsTrue(trxOrderTypes.Contains(orderType.GetOrderTypeName()));
+            }
+
+            Assert.AreEqual(ethOrderTypes.Length, eth.OrderTypes.Count());
+            foreach (var orderType in eth.OrderTypes)
+            {
+                Assert.IsTrue(ethOrderTypes.Contains(orderType.GetOrderTypeName()));
+            }
         }
     }
 }

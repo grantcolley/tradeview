@@ -1,5 +1,7 @@
 ﻿using DevelopmentInProgress.MarketView.Interface.Model;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace DevelopmentInProgress.MarketView.Interface.Extensions
@@ -13,6 +15,17 @@ namespace DevelopmentInProgress.MarketView.Interface.Extensions
             for (int i = 0; i < source.Length; i++)
             {
                 list[i] = Regex.Replace(source[i], "[A-Z]", " $0").Trim();
+            }
+
+            return list;
+        }
+
+        public static string[] GetOrderTypeNames(this IEnumerable<OrderType> orderTypes)
+        {
+            var list = new string[orderTypes.Count()];
+            for (int i = 0; i < orderTypes.Count(); i++)
+            {
+                list[i] = orderTypes.ElementAt(i).GetOrderTypeName();
             }
 
             return list;

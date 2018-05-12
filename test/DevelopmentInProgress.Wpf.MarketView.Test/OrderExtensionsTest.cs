@@ -1,7 +1,5 @@
-﻿using Interface = DevelopmentInProgress.MarketView.Interface.Model;
-using DevelopmentInProgress.MarketView.Test.Helper;
+﻿using DevelopmentInProgress.MarketView.Test.Helper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using System.Linq;
 using DevelopmentInProgress.Wpf.MarketView.Extensions;
 using System;
