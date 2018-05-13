@@ -20,7 +20,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         {
             // Arrange
             Account notifyAccount = null;
-            var exchangeApi = new TestExchangeApi();
+            var exchangeApi = TestExchangeHelper.GetExchangeApi();
             var exchangeService = new ExchangeService(exchangeApi);
             var accountViewModel = new AccountViewModel(exchangeService);
 
@@ -60,7 +60,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         {
             // Arrange
             string errorMessage = string.Empty;
-            var exchangeApi = new TestExchangeApi();
+            var exchangeApi = TestExchangeHelper.GetExchangeApi();
             var exchangeService = new ExchangeService(exchangeApi);
             var accountViewModel = new AccountViewModel(exchangeService);
 
@@ -101,7 +101,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var loggedInAccount = string.Empty;
             string errorMessage = string.Empty;
-            var exchangeApi = new TestExchangeApi();
+            var exchangeApi = TestExchangeHelper.GetExchangeApi();
             var exchangeService = new ExchangeService(exchangeApi);
             var accountViewModel = new AccountViewModel(exchangeService);
 
@@ -146,7 +146,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         public void SelectedAsset()
         {
             // Arrange
-            var exchangeApi = new TestExchangeApi();
+            var exchangeApi = TestExchangeHelper.GetExchangeApi();
             var exchangeService = new ExchangeService(exchangeApi);
             var accountViewModel = new AccountViewModel(exchangeService);
 

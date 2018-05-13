@@ -43,9 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExchangeApiType.cs" />
     <Compile Include="MarketHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestExchangeApi.cs" />
+    <Compile Include="TestExchangeApiAccountUpdate.cs" />
+    <Compile Include="TestExchangeHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AccountInfo.txt">
