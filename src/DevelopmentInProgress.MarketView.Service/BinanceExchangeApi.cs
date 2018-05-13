@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace DevelopmentInProgress.MarketView.Service
 {
@@ -36,12 +37,12 @@ namespace DevelopmentInProgress.MarketView.Service
 
         public async Task<Interface.Model.AccountInfo> GetAccountInfoAsync(Interface.Model.User user, CancellationToken cancellationToken)
         {
-                var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret);
-                var result = await binanceApi.GetAccountInfoAsync(apiUser, 0, cancellationToken);
-                var accountInfo = GetAccountInfo(result);
-                user.RateLimiter = new Interface.Model.RateLimiter { IsEnabled = result.User.RateLimiter.IsEnabled };
-                accountInfo.User = user;
-                return accountInfo;
+            var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret);
+            var result = await binanceApi.GetAccountInfoAsync(apiUser, 0, cancellationToken);
+            var accountInfo = GetAccountInfo(result);
+            user.RateLimiter = new Interface.Model.RateLimiter { IsEnabled = result.User.RateLimiter.IsEnabled };
+            accountInfo.User = user;
+            return accountInfo;
         }
 
         public async Task<IEnumerable<Interface.Model.Symbol>> GetSymbolsAsync(CancellationToken cancellationToken)
