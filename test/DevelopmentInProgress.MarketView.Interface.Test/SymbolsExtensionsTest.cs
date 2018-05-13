@@ -35,7 +35,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
             trx.ValidateClientOrder(clientOrder);
 
             // Assert
-            // Expected OrderValidationException
+            Assert.Fail();
         }
 
         [TestMethod]
@@ -62,7 +62,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
             trx.ValidateClientOrder(clientOrder);
 
             // Assert
-            // Expected OrderValidationException
+            Assert.Fail();
         }
 
         [TestMethod]
