@@ -3,12 +3,13 @@ using DevelopmentInProgress.MarketView.Interface.Interfaces;
 using DevelopmentInProgress.MarketView.Interface.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.MarketView.Test.Helper
 {
-    public class TestExchangeApiAccountUpdate : IExchangeApi
+    public class SubscribeAccountInfoAccountUpdate : IExchangeApi
     {
         public Task<string> CancelOrderAsync(User user, string symbol, long orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -54,7 +55,14 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 
         public void SubscribeAccountInfo(User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            // INTENTIONALLY EMPTY. LEAVE BLANK.
+            var accountInfo = MarketHelper.AccountInfo;
+            var btc = accountInfo.Balances.Single(ab => ab.Asset.Equals("BTC"));
+            var bcpt = accountInfo.Balances.Single(ab => ab.Asset.Equals("BCPT"));
+            accountInfo.Balances.Remove(btc);
+            accountInfo.Balances.Remove(bcpt);
+            accountInfo.Balances.Add(new AccountBalance { Asset = "TEST", Free = 1, Locked = 2 });
+
+            callback.Invoke(new AccountInfoEventArgs { AccountInfo = accountInfo });
         }
 
         public void SubscribeAggregateTrades(string symbol, int limit, Action<AggregateTradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)

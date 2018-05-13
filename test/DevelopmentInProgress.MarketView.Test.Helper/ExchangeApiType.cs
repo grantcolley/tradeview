@@ -3,6 +3,6 @@
     public enum ExchangeApiType
     {
         Standard,
-        AccountUpdate
+        SubscribeAccountInfo
     }
 }
