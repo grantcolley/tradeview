@@ -173,38 +173,47 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         private void AccountInfoUpdate(Interface.Model.AccountInfo e)
         {
-            Dispatcher.Invoke(() =>
+            Action<Interface.Model.AccountInfo> action = aie =>
             {
-                if (e.Balances == null
-                || !e.Balances.Any())
+                if (aie.Balances == null
+                    || !aie.Balances.Any())
                 {
                     Account.Balances.Clear();
                     return;
                 }
 
                 Func<AccountBalance, Interface.Model.AccountBalance, AccountBalance> f = ((ab, nb) =>
-                    {
-                        ab.Free = nb.Free;
-                        ab.Locked = nb.Locked;
-                        return ab;
-                    });
+                {
+                    ab.Free = nb.Free;
+                    ab.Locked = nb.Locked;
+                    return ab;
+                });
 
                 var balances = (from ab in Account.Balances
-                               join nb in e.Balances on ab.Asset equals nb.Asset
-                               select f(ab, nb)).ToList();
+                                join nb in aie.Balances on ab.Asset equals nb.Asset
+                                select f(ab, nb)).ToList();
 
-                var remove = Account.Balances.Where(ab => !e.Balances.Any(nb => nb.Asset.Equals(ab.Asset))).ToList();
+                var remove = Account.Balances.Where(ab => !aie.Balances.Any(nb => nb.Asset.Equals(ab.Asset))).ToList();
                 foreach (var ob in remove)
                 {
                     Account.Balances.Remove(ob);
                 }
 
-                var add = e.Balances.Where(nb => !Account.Balances.Any(ab => ab.Asset.Equals(nb.Asset))).ToList();
-                foreach(var nb in add)
+                var add = aie.Balances.Where(nb => !Account.Balances.Any(ab => ab.Asset.Equals(nb.Asset))).ToList();
+                foreach (var nb in add)
                 {
                     Account.Balances.Add(new AccountBalance { Asset = nb.Asset, Free = nb.Free, Locked = nb.Locked });
                 }
-            });
+            };
+
+            if (Dispatcher == null)
+            {
+                action(e);
+            }
+            else
+            {
+                Dispatcher.Invoke(action, e);
+            }
 
             AccountNotification(new AccountEventArgs { Value = Account, AccountEventType = AccountEventType.UpdateOrders });
         }
