@@ -25,7 +25,9 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 
         public Task<AccountInfo> GetAccountInfoAsync(User user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var tcs = new TaskCompletionSource<AccountInfo>();
+            tcs.SetResult(MarketHelper.AccountInfo);
+            return tcs.Task;
         }
 
         public Task<IEnumerable<AggregateTrade>> GetAggregateTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
@@ -57,7 +59,7 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 
         public void SubscribeAccountInfo(User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            // INTENTIONALLY EMPTY. LEAVE BLANK.
         }
 
         public void SubscribeAggregateTrades(string symbol, int limit, Action<AggregateTradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)

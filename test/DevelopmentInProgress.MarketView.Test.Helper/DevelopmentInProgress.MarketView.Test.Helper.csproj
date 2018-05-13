@@ -48,6 +48,9 @@
     <Compile Include="TestExchangeApi.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AccountInfo.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Orders.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

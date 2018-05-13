@@ -112,7 +112,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        private async void Login(object param)
+        public async void Login(object param)
         {
             if (string.IsNullOrWhiteSpace(Account.AccountInfo.User.ApiKey)
                 || string.IsNullOrWhiteSpace(Account.AccountInfo.User.ApiSecret))

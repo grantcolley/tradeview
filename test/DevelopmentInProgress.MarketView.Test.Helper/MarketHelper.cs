@@ -15,12 +15,14 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
         private static string ethStats;
         private static string trx;
         private static string trxStats;
+        private static string accountInfo;
 
         static  MarketHelper()
         {
             symbols = File.ReadAllText("Symbols.txt");
             symbolsStatistics = File.ReadAllText("SymbolsStatistics.txt");
             orders = File.ReadAllText("Orders.txt");
+            accountInfo = File.ReadAllText("AccountInfo.txt");
             
             var e = Symbols.Single(s => s.BaseAsset.Symbol.Equals("ETH") && s.QuoteAsset.Symbol.Equals("BTC"));
             eth = JsonConvert.SerializeObject(e);
@@ -56,6 +58,14 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             get
             {
                 return JsonConvert.DeserializeObject<List<Order>>(orders);
+            }
+        }
+
+        public static AccountInfo AccountInfo
+        {
+            get
+            {
+                return JsonConvert.DeserializeObject<AccountInfo>(accountInfo);
             }
         }
 
