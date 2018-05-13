@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace DevelopmentInProgress.Wpf.MarketView.Model
+﻿namespace DevelopmentInProgress.Wpf.MarketView.Model
 {
     public class OrderBookPriceLevel : EntityBase
     {
