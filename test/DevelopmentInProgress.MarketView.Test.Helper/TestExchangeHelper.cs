@@ -16,7 +16,7 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
                 case ExchangeApiType.Standard:
                     return new TestExchangeApi();
                 case ExchangeApiType.AccountUpdate:
-                    return new TestExchangeApi();
+                    return new TestExchangeApiAccountUpdate();
                 default:
                     return new TestExchangeApi();
             }
