@@ -9,7 +9,7 @@ using DevelopmentInProgress.MarketView.Interface.Model;
 
 namespace DevelopmentInProgress.MarketView.Test.Helper
 {
-    public class TestExchangeApi : IExchangeApi
+    public class ExchangeApi : IExchangeApi
     {
         public Task<string> CancelOrderAsync(User user, string symbol, long orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {

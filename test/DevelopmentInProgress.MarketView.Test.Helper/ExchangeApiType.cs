@@ -3,6 +3,7 @@
     public enum ExchangeApiType
     {
         Standard,
-        SubscribeAccountInfo
+        SubscribeAccountInfo,
+        SymbolsViewModel
     }
 }

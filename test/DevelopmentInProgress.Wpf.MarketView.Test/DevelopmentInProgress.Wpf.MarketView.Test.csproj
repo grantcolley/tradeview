@@ -74,10 +74,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AccountTest.cs" />
     <Compile Include="OrderExtensionsTest.cs" />
-    <Compile Include="OrderBookPriceLevel.cs" />
     <Compile Include="ExchangeServiceTest.cs" />
     <Compile Include="AccountViewModelTest.cs" />
     <Compile Include="SymbolExtensionsTest.cs" />
+    <Compile Include="SymbolsViewModelTest.cs" />
     <Compile Include="SymbolViewModel.cs" />
     <Compile Include="TradeViewModel.cs" />
     <Compile Include="SymbolStatisticsExtensionsTest.cs" />

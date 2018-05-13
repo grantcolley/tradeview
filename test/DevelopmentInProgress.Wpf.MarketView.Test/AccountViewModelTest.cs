@@ -21,7 +21,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var fail = false;
             Account notifyAccount = null;
-            var exchangeApi = TestExchangeHelper.GetExchangeApi();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
             var exchangeService = new ExchangeService(exchangeApi);
             var accountViewModel = new AccountViewModel(exchangeService);
 
@@ -63,7 +63,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var fail = false;
             string errorMessage = string.Empty;
-            var exchangeApi = TestExchangeHelper.GetExchangeApi();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
             var exchangeService = new ExchangeService(exchangeApi);
             var accountViewModel = new AccountViewModel(exchangeService);
 
@@ -106,7 +106,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var fail = false;
             var loggedInAccount = string.Empty;
             string errorMessage = string.Empty;
-            var exchangeApi = TestExchangeHelper.GetExchangeApi();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
             var exchangeService = new ExchangeService(exchangeApi);
             var accountViewModel = new AccountViewModel(exchangeService);
 
@@ -155,7 +155,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var fail = false;
             var hasUpdated = false;
             string errorMessage = string.Empty;
-            var exchangeApi = TestExchangeHelper.GetExchangeApi(ExchangeApiType.SubscribeAccountInfo);
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi(ExchangeApiType.SubscribeAccountInfo);
             var exchangeService = new ExchangeService(exchangeApi);
             var accountViewModel = new AccountViewModel(exchangeService);
 
@@ -210,7 +210,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var fail = false;
             AccountBalance selectedAccountBalance = null;
-            var exchangeApi = TestExchangeHelper.GetExchangeApi();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
             var exchangeService = new ExchangeService(exchangeApi);
             var accountViewModel = new AccountViewModel(exchangeService);
 

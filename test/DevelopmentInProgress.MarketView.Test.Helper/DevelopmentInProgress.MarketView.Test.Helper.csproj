@@ -43,12 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExchangeApiSymbolsViewModel.cs" />
     <Compile Include="ExchangeApiType.cs" />
     <Compile Include="MarketHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestExchangeApi.cs" />
-    <Compile Include="TestExchangeApiAccountUpdate.cs" />
-    <Compile Include="TestExchangeHelper.cs" />
+    <Compile Include="ExchangeApi.cs" />
+    <Compile Include="ExchangeApiSubscribeAccountInfoAccountUpdate.cs" />
+    <Compile Include="ExchangeApiHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AccountInfo.txt">

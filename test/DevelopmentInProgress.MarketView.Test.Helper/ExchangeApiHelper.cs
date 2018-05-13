@@ -2,7 +2,7 @@
 
 namespace DevelopmentInProgress.MarketView.Test.Helper
 {
-    public static class TestExchangeHelper
+    public static class ExchangeApiHelper
     {
         public static IExchangeApi GetExchangeApi()
         {
@@ -14,11 +14,13 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             switch(exchangeApiType)
             {
                 case ExchangeApiType.Standard:
-                    return new TestExchangeApi();
+                    return new ExchangeApi();
                 case ExchangeApiType.SubscribeAccountInfo:
-                    return new SubscribeAccountInfoAccountUpdate();
+                    return new ExchangeApiSubscribeAccountInfoAccountUpdate();
+                case ExchangeApiType.SymbolsViewModel:
+                    return new ExchangeApiSymbolsViewModel();
                 default:
-                    return new TestExchangeApi();
+                    return new ExchangeApi();
             }
         }
     }
