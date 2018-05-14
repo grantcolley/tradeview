@@ -19,14 +19,14 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
         public Task<IEnumerable<SymbolStats>> Get24HourStatisticsAsync(CancellationToken cancellationToken)
         {
             var tcs = new TaskCompletionSource<IEnumerable<SymbolStats>>();
-            tcs.SetResult(MarketHelper.SymbolsStatistics);
+            tcs.SetResult(TestHelper.SymbolsStatistics);
             return tcs.Task;
         }
 
         public Task<AccountInfo> GetAccountInfoAsync(User user, CancellationToken cancellationToken)
         {
             var tcs = new TaskCompletionSource<AccountInfo>();
-            tcs.SetResult(MarketHelper.AccountInfo);
+            tcs.SetResult(TestHelper.AccountInfo);
             return tcs.Task;
         }
 
@@ -48,7 +48,7 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
         public Task<IEnumerable<Symbol>> GetSymbolsAsync(CancellationToken cancellationToken)
         {
             var tcs = new TaskCompletionSource<IEnumerable<Symbol>>();
-            tcs.SetResult(MarketHelper.Symbols);
+            tcs.SetResult(TestHelper.Symbols);
             return tcs.Task;
         }
 
@@ -74,10 +74,10 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 
         public void SubscribeStatistics(Action<StatiscticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            var ethStats = MarketHelper.EthStats;
-            var symbolsStats = MarketHelper.SymbolsStatistics;
+            var ethStats = TestHelper.EthStats;
+            var symbolsStats = TestHelper.SymbolsStatistics;
 
-            var newStats = MarketHelper.EthStats_UpdatedLastPrice_Upwards;
+            var newStats = TestHelper.EthStats_UpdatedLastPrice_Upwards;
 
             var updatedEthStats = symbolsStats.Single(s => s.Symbol.Equals("ETHBTC"));
             updatedEthStats.PriceChange = newStats.PriceChange;

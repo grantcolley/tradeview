@@ -44,7 +44,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
 
             // Assert
             var eth = symbols.Single(s => s.Name.Equals("ETHBTC"));
-            var updatedEthStats = MarketHelper.EthStats_UpdatedLastPrice_Upwards;
+            var updatedEthStats = TestHelper.EthStats_UpdatedLastPrice_Upwards;
 
             Assert.AreEqual(eth.SymbolStatistics.PriceChangePercent, updatedEthStats.PriceChangePercent);
             Assert.AreEqual(eth.LastPriceChangeDirection, 1);

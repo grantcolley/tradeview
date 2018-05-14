@@ -1,10 +1,13 @@
 ﻿using DevelopmentInProgress.MarketView.Test.Helper;
 using DevelopmentInProgress.Wpf.MarketView.Events;
 using DevelopmentInProgress.Wpf.MarketView.Model;
+using DevelopmentInProgress.Wpf.MarketView.Personalise;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using DevelopmentInProgress.Wpf.MarketView.ViewModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -45,7 +48,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             await Task.Delay(1000);
 
             // Assert
-            Assert.AreEqual(symbolsViewModel.Symbols.Count, MarketHelper.Symbols.Count);
+            Assert.AreEqual(symbolsViewModel.Symbols.Count, TestHelper.Symbols.Count);
             Assert.IsNull(symbolsViewModel.User);
             Assert.IsNull(symbolsViewModel.SelectedSymbol);
             Assert.IsFalse(fail);
@@ -94,9 +97,32 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         }
 
         [TestMethod]
-        public void User()
+        public async Task User()
         {
-            Assert.Fail();
+            // Arrange
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi(ExchangeApiType.SymbolsViewModel);
+            var exchangeService = new ExchangeService(exchangeApi);
+            var symbolsViewModel = new SymbolsViewModel(exchangeService);
+
+            var userData = File.ReadAllText("UserPreferences.txt");
+            var user = JsonConvert.DeserializeObject<User>(userData);
+
+            await Task.Delay(1000);
+
+            // Act
+            symbolsViewModel.SetUser(user);
+
+            // Assert
+            var favourites = from s in symbolsViewModel.Symbols
+                             join f in user.Preferences.FavouriteSymbols on s.Name equals f
+                             select s;
+
+            foreach(var favourite in favourites)
+            {
+                Assert.IsNotNull(symbolsViewModel.Symbols.First(s => s.Name.Equals(favourite.Name) && s.IsFavourite.Equals(true)));
+            }
+
+            Assert.AreEqual(symbolsViewModel.SelectedSymbol.Name, user.Preferences.SelectedSymbol);
         }
     }
 }

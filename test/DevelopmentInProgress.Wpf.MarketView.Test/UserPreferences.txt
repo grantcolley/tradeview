@@ -1,0 +1,1 @@
+﻿{"ApiKey":"apikey","ApiSecret":"apisecret","Preferences":{"FavouriteSymbols":["ETHBTC","TRXBTC"],"SelectedSymbol":"TRXBTC","ShowFavourites":true}}

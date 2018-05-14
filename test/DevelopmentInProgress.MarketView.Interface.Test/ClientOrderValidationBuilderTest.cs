@@ -14,8 +14,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
         {
             // Arrange
             string message;
-            var trx = MarketHelper.Trx;
-            var trxStats = MarketHelper.TrxStats;
+            var trx = TestHelper.Trx;
+            var trxStats = TestHelper.TrxStats;
             var clientOrder = new ClientOrder() { Type = OrderType.Limit, Quantity = 0.00090000M, Price = trxStats.LastPrice };
 
             trx.OrderTypes = trx.OrderTypes.Where(t => t != OrderType.Limit);
@@ -34,8 +34,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
         {
             // Arrange
             string message;
-            var trx = MarketHelper.Trx;
-            var trxStats = MarketHelper.TrxStats;
+            var trx = TestHelper.Trx;
+            var trxStats = TestHelper.TrxStats;
             var clientOrder = new ClientOrder() { Type = OrderType.Limit, Quantity = 150000000.00000000M, Price = trxStats.LastPrice };
 
             trx.OrderTypes = trx.OrderTypes.Where(t => t != OrderType.Limit);
@@ -54,8 +54,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
         {
             // Arrange
             string message;
-            var trx = MarketHelper.Trx;
-            var trxStats = MarketHelper.TrxStats;
+            var trx = TestHelper.Trx;
+            var trxStats = TestHelper.TrxStats;
             var clientOrder = new ClientOrder() { Symbol = "ETHBTC", Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice };
 
             // Act
@@ -72,8 +72,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
         {
             // Arrange
             string message;
-            var trx = MarketHelper.Trx;
-            var trxStats = MarketHelper.TrxStats;
+            var trx = TestHelper.Trx;
+            var trxStats = TestHelper.TrxStats;
             var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice };
 
             // Act
@@ -90,8 +90,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
         {
             // Arrange
             string message;
-            var trx = MarketHelper.Trx;
-            var trxStats = MarketHelper.TrxStats;
+            var trx = TestHelper.Trx;
+            var trxStats = TestHelper.TrxStats;
             var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Type = OrderType.Limit, Quantity = 500.00000000M, Price = 0.000000001M };
             
             // Act
@@ -111,8 +111,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
         {
             // Arrange
             string message;
-            var trx = MarketHelper.Trx;
-            var trxStats = MarketHelper.TrxStats;
+            var trx = TestHelper.Trx;
+            var trxStats = TestHelper.TrxStats;
             var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Type = OrderType.Limit, Quantity = 500.00000000M, Price = 15000000.00000000M };
 
             // Act
@@ -132,8 +132,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
         {
             // Arrange
             string message;
-            var trx = MarketHelper.Trx;
-            var trxStats = MarketHelper.TrxStats;
+            var trx = TestHelper.Trx;
+            var trxStats = TestHelper.TrxStats;
             var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice };
 
             // Act
@@ -153,8 +153,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
         {
             // Arrange
             string message;
-            var trx = MarketHelper.Trx;
-            var trxStats = MarketHelper.TrxStats;
+            var trx = TestHelper.Trx;
+            var trxStats = TestHelper.TrxStats;
             var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice, StopPrice = 0.000000001M };
 
             // Act
@@ -175,8 +175,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
         {
             // Arrange
             string message;
-            var trx = MarketHelper.Trx;
-            var trxStats = MarketHelper.TrxStats;
+            var trx = TestHelper.Trx;
+            var trxStats = TestHelper.TrxStats;
             var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice, StopPrice = 15000000.00000000M };
 
             // Act
@@ -197,8 +197,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
         {
             // Arrange
             string message;
-            var trx = MarketHelper.Trx;
-            var trxStats = MarketHelper.TrxStats;
+            var trx = TestHelper.Trx;
+            var trxStats = TestHelper.TrxStats;
             var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice, StopPrice = (trxStats.LastPrice + (100 * trx.Price.Increment)) };
 
             // Act

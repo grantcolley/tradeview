@@ -12,7 +12,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         public void ConvertSymbols_Pass()
         {
             // Arrange
-            var symbol = MarketHelper.Trx;
+            var symbol = TestHelper.Trx;
 
             // Act
             var viewSymbol = symbol.GetViewSymbol();
@@ -41,8 +41,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         public void JoinSymbolStatistics()
         {
             // Arrange 
-            var symbol = MarketHelper.Eth.GetViewSymbol();
-            var statistics = MarketHelper.EthStats.GetViewSymbolStatistics();
+            var symbol = TestHelper.Eth.GetViewSymbol();
+            var statistics = TestHelper.EthStats.GetViewSymbolStatistics();
 
             // Act
             var symbols = symbol.JoinStatistics(statistics);
@@ -56,10 +56,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         public void UpdateStatistics_PriceChange_Upwards()
         {
             // Arrange 
-            var symbol = MarketHelper.Eth.GetViewSymbol();
-            var statistics = MarketHelper.EthStats;
+            var symbol = TestHelper.Eth.GetViewSymbol();
+            var statistics = TestHelper.EthStats;
             symbol.JoinStatistics(statistics.GetViewSymbolStatistics());
-            var updatedStatistics = MarketHelper.EthStats_UpdatedLastPrice_Upwards;
+            var updatedStatistics = TestHelper.EthStats_UpdatedLastPrice_Upwards;
 
             // Act
             var symbols = symbol.UpdateStatistics(updatedStatistics);
@@ -74,10 +74,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         public void UpdateStatistics_PriceChange_Downwards()
         {
             // Arrange 
-            var symbol = MarketHelper.Eth.GetViewSymbol();
-            var statistics = MarketHelper.EthStats;
+            var symbol = TestHelper.Eth.GetViewSymbol();
+            var statistics = TestHelper.EthStats;
             symbol.JoinStatistics(statistics.GetViewSymbolStatistics());
-            var updatedStatistics = MarketHelper.EthStats_UpdatedLastPrice_Downwards;
+            var updatedStatistics = TestHelper.EthStats_UpdatedLastPrice_Downwards;
 
             // Act
             var symbols = symbol.UpdateStatistics(updatedStatistics);

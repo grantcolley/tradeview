@@ -141,7 +141,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Assert
             var accountViewModelAccount = JsonConvert.SerializeObject(accountViewModel.Account);
             var accountInfo = JsonConvert.SerializeObject(accountViewModel.Account.AccountInfo);
-            var testAccountInfo = JsonConvert.SerializeObject(MarketHelper.AccountInfo);
+            var testAccountInfo = JsonConvert.SerializeObject(TestHelper.AccountInfo);
 
             Assert.AreEqual(accountViewModelAccount, loggedInAccount);
             Assert.AreEqual(accountInfo, testAccountInfo);

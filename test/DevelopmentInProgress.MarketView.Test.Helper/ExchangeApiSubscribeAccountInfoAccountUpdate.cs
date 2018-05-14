@@ -24,7 +24,7 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
         public Task<AccountInfo> GetAccountInfoAsync(User user, CancellationToken cancellationToken)
         {
             var tcs = new TaskCompletionSource<AccountInfo>();
-            tcs.SetResult(MarketHelper.AccountInfo);
+            tcs.SetResult(TestHelper.AccountInfo);
             return tcs.Task;
         }
 
@@ -55,7 +55,7 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 
         public void SubscribeAccountInfo(User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            var accountInfo = MarketHelper.AccountInfo;
+            var accountInfo = TestHelper.AccountInfo;
             var btc = accountInfo.Balances.Single(ab => ab.Asset.Equals("BTC"));
             var bcpt = accountInfo.Balances.Single(ab => ab.Asset.Equals("BCPT"));
             accountInfo.Balances.Remove(btc);

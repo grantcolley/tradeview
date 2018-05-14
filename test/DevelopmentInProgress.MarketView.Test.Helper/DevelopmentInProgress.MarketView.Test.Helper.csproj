@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="ExchangeApiSymbolsViewModel.cs" />
     <Compile Include="ExchangeApiType.cs" />
-    <Compile Include="MarketHelper.cs" />
+    <Compile Include="TestHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExchangeApi.cs" />
     <Compile Include="ExchangeApiSubscribeAccountInfoAccountUpdate.cs" />

@@ -47,8 +47,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
         public void GetOrderTypeNames_Pass()
         {
             // Arrange
-            var trx = MarketHelper.Trx;
-            var eth = MarketHelper.Eth;
+            var trx = TestHelper.Trx;
+            var eth = TestHelper.Eth;
 
             // Act
             var trxOrderTypes = trx.OrderTypes.GetOrderTypeNames();

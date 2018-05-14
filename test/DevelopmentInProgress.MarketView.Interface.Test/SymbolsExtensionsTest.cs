@@ -17,11 +17,11 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
         [ClassInitialize()]
         public static void SymbolsExtensionsTest_Initialize(TestContext testContext)
         {
-            eth = MarketHelper.Eth;
-            ethStats = MarketHelper.EthStats;
+            eth = TestHelper.Eth;
+            ethStats = TestHelper.EthStats;
 
-            trx = MarketHelper.Trx;
-            trxStats = MarketHelper.TrxStats;
+            trx = TestHelper.Trx;
+            trxStats = TestHelper.TrxStats;
         }
 
         [TestMethod]

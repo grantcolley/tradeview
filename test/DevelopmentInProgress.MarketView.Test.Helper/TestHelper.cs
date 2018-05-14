@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace DevelopmentInProgress.MarketView.Test.Helper
 {
-    public static class MarketHelper
+    public static class TestHelper
     {
         private static string symbols;
         private static string symbolsStatistics;
@@ -17,13 +17,13 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
         private static string trxStats;
         private static string accountInfo;
 
-        static  MarketHelper()
+        static  TestHelper()
         {
             symbols = File.ReadAllText("Symbols.txt");
             symbolsStatistics = File.ReadAllText("SymbolsStatistics.txt");
             orders = File.ReadAllText("Orders.txt");
             accountInfo = File.ReadAllText("AccountInfo.txt");
-            
+
             var e = Symbols.Single(s => s.BaseAsset.Symbol.Equals("ETH") && s.QuoteAsset.Symbol.Equals("BTC"));
             eth = JsonConvert.SerializeObject(e);
 
@@ -36,7 +36,7 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             var ts = SymbolsStatistics.Single(s => s.Symbol.Equals("TRXBTC"));
             trxStats = JsonConvert.SerializeObject(ts);
         }
-
+        
         public static List<Symbol> Symbols
         {
             get

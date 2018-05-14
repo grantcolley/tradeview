@@ -12,7 +12,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         public void GetViewSymbolStatistics_Pass()
         {
             // Arrange
-            var interfaceStats = MarketHelper.TrxStats;
+            var interfaceStats = TestHelper.TrxStats;
 
             // Act
             var viewStats = interfaceStats.GetViewSymbolStatistics();

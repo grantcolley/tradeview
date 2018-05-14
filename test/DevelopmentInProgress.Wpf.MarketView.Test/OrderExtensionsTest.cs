@@ -13,9 +13,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         public void UpdateOrder_Pass()
         {
             // Arrange
-            var interfaceOrder = MarketHelper.Orders.First();
+            var interfaceOrder = TestHelper.Orders.First();
 
-            var updatedInterfaceOrder = MarketHelper.Orders.First();
+            var updatedInterfaceOrder = TestHelper.Orders.First();
             updatedInterfaceOrder.ExecutedQuantity = 100;
 
             var order = interfaceOrder.GetViewOrder();
@@ -34,8 +34,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         public void UpdateOrder_Fails_ClientOrderId()
         {
             // Arrange
-            var interfaceOrder = MarketHelper.Orders.First();
-            var updatedInterfaceOrder = MarketHelper.Orders.First();
+            var interfaceOrder = TestHelper.Orders.First();
+            var updatedInterfaceOrder = TestHelper.Orders.First();
             
             updatedInterfaceOrder.ClientOrderId = "123";
 
