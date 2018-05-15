@@ -107,7 +107,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        public async void SetAccount(Account account)
+        public async Task SetAccount(Account account)
         {
             IsLoading = true;
 
@@ -149,36 +149,45 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             IsLoading = false;
         }
 
-        public async void UpdateOrders(Account acccount)
+        public async Task UpdateOrders(Account acccount)
         {
             try
             {
                 var result = await Task.Run(async () => await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User));
 
-                Dispatcher.Invoke(() =>
+                Action<IEnumerable<Order>> action = res =>
                 {
-                    if (!result.Any())
+                    if (!res.Any())
                     {
                         Orders.Clear();
                         return;
                     }
 
                     var updated = (from o in Orders
-                                   join r in result on o.ClientOrderId equals r.ClientOrderId
+                                   join r in res on o.ClientOrderId equals r.ClientOrderId
                                    select o.Update(r)).ToList();
 
-                    var remove = Orders.Where(o => !result.Any(r => r.Symbol.Equals(o.Symbol)));
+                    var remove = Orders.Where(o => !res.Any(r => r.Symbol.Equals(o.Symbol)));
                     foreach (var order in remove)
                     {
                         Orders.Remove(order);
                     }
 
-                    var add = result.Where(r => !Orders.Any(o => o.Symbol.Equals(r.Symbol)));
+                    var add = res.Where(r => !Orders.Any(o => o.Symbol.Equals(r.Symbol)));
                     foreach (var order in add)
                     {
                         Orders.Add(order);
                     }
-                });
+                };
+
+                if (Dispatcher == null)
+                {
+                    action(result);
+                }
+                else
+                {
+                    Dispatcher.Invoke(action, result);
+                }
             }
             catch (Exception ex)
             {

@@ -70,7 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DecimalExtensionsTest.cs" />
-    <Compile Include="OrdersViewModel.cs" />
+    <Compile Include="OrdersViewModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AccountTest.cs" />
     <Compile Include="OrderExtensionsTest.cs" />

@@ -19,6 +19,8 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
                     return new ExchangeApiSubscribeAccountInfoAccountUpdate();
                 case ExchangeApiType.SymbolsViewModel:
                     return new ExchangeApiSymbolsViewModel();
+                case ExchangeApiType.UpdateOrders:
+                    return new ExchangeApiUpdateOrders();
                 default:
                     return new ExchangeApi();
             }

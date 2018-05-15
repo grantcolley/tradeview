@@ -4,6 +4,7 @@
     {
         Standard,
         SubscribeAccountInfo,
-        SymbolsViewModel
+        SymbolsViewModel,
+        UpdateOrders
     }
 }
