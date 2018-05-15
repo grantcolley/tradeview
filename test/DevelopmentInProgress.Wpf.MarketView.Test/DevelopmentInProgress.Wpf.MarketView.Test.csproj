@@ -79,7 +79,7 @@
     <Compile Include="SymbolExtensionsTest.cs" />
     <Compile Include="SymbolsViewModelTest.cs" />
     <Compile Include="SymbolViewModel.cs" />
-    <Compile Include="TradeViewModel.cs" />
+    <Compile Include="TradeViewModelTest.cs" />
     <Compile Include="SymbolStatisticsExtensionsTest.cs" />
   </ItemGroup>
   <ItemGroup>
