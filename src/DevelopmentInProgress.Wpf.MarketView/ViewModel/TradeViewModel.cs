@@ -192,7 +192,16 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             {
                 if (stopPrice != value)
                 {
-                    stopPrice = value;
+                    if (SelectedSymbol != null
+                        && value.HasRemainder())
+                    {
+                        stopPrice = value.Trim(SelectedSymbol.PricePrecision);
+                    }
+                    else
+                    {
+                        stopPrice = value;
+                    }
+
                     OnPropertyChanged("StopPrice");
                 }
             }

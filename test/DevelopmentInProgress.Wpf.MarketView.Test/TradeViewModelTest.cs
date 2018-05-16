@@ -7,6 +7,7 @@ using DevelopmentInProgress.Wpf.MarketView.Services;
 using DevelopmentInProgress.Wpf.MarketView.ViewModel;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using DevelopmentInProgress.Wpf.MarketView.Extensions;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Test
 {
@@ -112,94 +113,278 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             Assert.IsNull(tradeViewModel.QuoteAccountBalance);
         }
 
-        //[TestMethod]
-        //public async Task SelectedSymbol_HasAccount()
-        //{
-        //    // Arrange
-        //    var cxlToken = new CancellationToken();
-        //    var exchangeApi = ExchangeApiHelper.GetExchangeApi();
-        //    var exchangeService = new ExchangeService(exchangeApi);
-        //    var tradeViewModel = new TradeViewModel(exchangeService);
-
-        //    var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
-        //    {
-        //        ApiKey = "apikey",
-        //        ApiSecret = "apisecret"
-        //    };
-
-        //    account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
-
-        //    //tradeViewModel.SetAccount(account)
-
-        //    var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
-        //    tradeViewModel.SetSymbols(symbols.ToList());
-        //    var trx = tradeViewModel.Symbols.Single(s => s.Name.Equals("TRXBTC"));
-
-        //    // Act
-        //    tradeViewModel.SelectedSymbol = trx;
-
-        //    // Assert
-        //    Assert.AreEqual(tradeViewModel.SelectedSymbol, trx);
-        //    Assert.AreEqual(tradeViewModel.Quantity, 0);
-        //    Assert.AreEqual(tradeViewModel.Price, trx.SymbolStatistics.LastPrice);
-        //    Assert.AreEqual(tradeViewModel.StopPrice, trx.SymbolStatistics.LastPrice);
-        //    Assert.IsNull(tradeViewModel.BaseAccountBalance);
-        //    Assert.IsNull(tradeViewModel.QuoteAccountBalance);
-        //}
-
         [TestMethod]
-        public void Quantity_and_Price()
+        public async Task SelectedSymbol_HasAccount()
         {
             // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+
+            var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
+            {
+                ApiKey = "apikey",
+                ApiSecret = "apisecret"
+            };
+
+            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            var baseBalance = account.Balances.Single(a => a.Asset.Equals("TRX"));
+            var quoteAsset = account.Balances.Single(a => a.Asset.Equals("BTC"));
+
+            tradeViewModel.SetAccount(account, null);
+
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            tradeViewModel.SetSymbols(symbols.ToList());
+            var trx = tradeViewModel.Symbols.Single(s => s.Name.Equals("TRXBTC"));
 
             // Act
+            tradeViewModel.SelectedSymbol = trx;
 
             // Assert
-            Assert.Fail();
+            Assert.AreEqual(tradeViewModel.SelectedSymbol, trx);
+            Assert.AreEqual(tradeViewModel.Quantity, 0);
+            Assert.AreEqual(tradeViewModel.Price, trx.SymbolStatistics.LastPrice);
+            Assert.AreEqual(tradeViewModel.StopPrice, trx.SymbolStatistics.LastPrice);
+            Assert.AreEqual(tradeViewModel.BaseAccountBalance, baseBalance);
+            Assert.AreEqual(tradeViewModel.QuoteAccountBalance, quoteAsset);
         }
 
         [TestMethod]
-        public void SelectedOrderType()
+        public async Task SelectedSymbol_Null()
         {
             // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+
+            var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
+            {
+                ApiKey = "apikey",
+                ApiSecret = "apisecret"
+            };
+
+            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+
+            tradeViewModel.SetAccount(account, null);
+
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            tradeViewModel.SetSymbols(symbols.ToList());
+            var trx = tradeViewModel.Symbols.Single(s => s.Name.Equals("TRXBTC"));
+
+            tradeViewModel.SelectedSymbol = trx;
 
             // Act
+            tradeViewModel.SelectedSymbol = null;
 
             // Assert
-            Assert.Fail();
+            Assert.IsNull(tradeViewModel.SelectedSymbol);
+            Assert.AreEqual(tradeViewModel.Quantity, 0);
+            Assert.AreEqual(tradeViewModel.Price, 0);
+            Assert.AreEqual(tradeViewModel.StopPrice, 0);
+            Assert.IsNull(tradeViewModel.BaseAccountBalance);
+            Assert.IsNull(tradeViewModel.QuoteAccountBalance);
         }
 
         [TestMethod]
-        public void IsPriceEditable()
+        public async Task Quantity_and_Price_and_StopPrice_Trim()
         {
             // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            tradeViewModel.SetSymbols(symbols.ToList());
+            var trx = tradeViewModel.Symbols.Single(s => s.Name.Equals("TRXBTC"));
+
+            tradeViewModel.SelectedSymbol = trx;
+
+            var quantity = 294.123m;
+            var price = 1.123456789m;
 
             // Act
+            tradeViewModel.Quantity = quantity;
+            tradeViewModel.Price = price;
+            tradeViewModel.StopPrice = price;
 
             // Assert
-            Assert.Fail();
+            Assert.AreEqual(tradeViewModel.Quantity, quantity.Trim(trx.QuantityPrecision));
+            Assert.AreEqual(tradeViewModel.Price, price.Trim(trx.PricePrecision));
+            Assert.AreEqual(tradeViewModel.StopPrice, price.Trim(trx.PricePrecision));
         }
 
         [TestMethod]
-        public void IsMarketPrice()
+        public async Task Quantity_and_Price_and_StopPrice_NoTrim()
         {
             // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            tradeViewModel.SetSymbols(symbols.ToList());
+            var trx = tradeViewModel.Symbols.Single(s => s.Name.Equals("TRXBTC"));
+
+            tradeViewModel.SelectedSymbol = trx;
+
+            var quantity = 294m;
+            var price = 1.12345678m;
 
             // Act
+            tradeViewModel.Quantity = quantity;
+            tradeViewModel.Price = price;
+            tradeViewModel.StopPrice = price;
 
             // Assert
-            Assert.Fail();
+            Assert.AreEqual(tradeViewModel.Quantity, quantity.Trim(trx.QuantityPrecision));
+            Assert.AreEqual(tradeViewModel.Price, price.Trim(trx.PricePrecision));
+            Assert.AreEqual(tradeViewModel.StopPrice, price.Trim(trx.PricePrecision));
+        }
+
+
+        [TestMethod]
+        public void Quantity_and_Price_and_StopPrice_NoSelectedSymbol()
+        {
+            // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+
+            var quantity = 294.123m;
+            var price = 1.123456789m;
+
+            // Act
+            tradeViewModel.Quantity = quantity;
+            tradeViewModel.Price = price;
+            tradeViewModel.StopPrice = price;
+
+            // Assert
+            Assert.AreEqual(tradeViewModel.Quantity, quantity);
+            Assert.AreEqual(tradeViewModel.Price, price);
+            Assert.AreEqual(tradeViewModel.StopPrice, price);
+        }
+        
+        [TestMethod]
+        public async Task SelectedOrderType_SelectedSymbol()
+        {
+            // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            tradeViewModel.SetSymbols(symbols.ToList());
+            var trx = tradeViewModel.Symbols.Single(s => s.Name.Equals("TRXBTC"));
+
+            tradeViewModel.SelectedSymbol = trx;
+
+            // Act
+            tradeViewModel.SelectedOrderType = "Limit";
+
+            // Assert
+            Assert.AreEqual(tradeViewModel.SelectedOrderType, "Limit");
+            Assert.AreEqual(tradeViewModel.Price, trx.SymbolStatistics.LastPrice);
+            Assert.AreEqual(tradeViewModel.StopPrice, trx.SymbolStatistics.LastPrice);
         }
 
         [TestMethod]
-        public void IsStopLoss()
+        public async Task SelectedOrderType_IsMarketOrder_Not_IsLoading()
         {
             // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            tradeViewModel.SetSymbols(symbols.ToList());
+            var trx = tradeViewModel.Symbols.Single(s => s.Name.Equals("TRXBTC"));
+
+            tradeViewModel.SelectedSymbol = trx;
 
             // Act
+            tradeViewModel.SelectedOrderType = "Market";
 
             // Assert
-            Assert.Fail();
+            Assert.IsFalse(tradeViewModel.IsPriceEditable);
+            Assert.IsTrue(tradeViewModel.IsMarketPrice);
+        }
+
+        [TestMethod]
+        public async Task SelectedOrderType_IsMarketOrder_IsLoading()
+        {
+            // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            tradeViewModel.SetSymbols(symbols.ToList());
+            var trx = tradeViewModel.Symbols.Single(s => s.Name.Equals("TRXBTC"));
+
+            tradeViewModel.IsLoading = true;
+            tradeViewModel.SelectedSymbol = trx;
+
+            // Act
+            tradeViewModel.SelectedOrderType = "Market";
+
+            // Assert
+            Assert.IsFalse(tradeViewModel.IsPriceEditable);
+            Assert.IsFalse(tradeViewModel.IsMarketPrice);
+        }
+
+        [TestMethod]
+        public async Task SelectedOrderType_IsStopLoss_Not_IsLoading()
+        {
+            // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            tradeViewModel.SetSymbols(symbols.ToList());
+            var trx = tradeViewModel.Symbols.Single(s => s.Name.Equals("TRXBTC"));
+
+            tradeViewModel.SelectedSymbol = trx;
+
+            // Act
+            tradeViewModel.SelectedOrderType = "Stop Loss";
+
+            // Assert
+            Assert.IsFalse(tradeViewModel.IsPriceEditable);
+            Assert.IsTrue(tradeViewModel.IsMarketPrice);
+        }
+
+        [TestMethod]
+        public async Task SelectedOrderType_IsStopLoss_IsLoading()
+        {
+            // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            tradeViewModel.SetSymbols(symbols.ToList());
+            var trx = tradeViewModel.Symbols.Single(s => s.Name.Equals("TRXBTC"));
+
+            tradeViewModel.IsLoading = true;
+            tradeViewModel.SelectedSymbol = trx;
+
+            // Act
+            tradeViewModel.SelectedOrderType = "Stop Loss";
+
+            // Assert
+            Assert.IsFalse(tradeViewModel.IsPriceEditable);
+            Assert.IsFalse(tradeViewModel.IsMarketPrice);
         }
 
         [TestMethod]
