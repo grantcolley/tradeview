@@ -1,13 +1,14 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DevelopmentInProgress.Wpf.MarketView.Extensions;
 using DevelopmentInProgress.MarketView.Test.Helper;
 using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using DevelopmentInProgress.Wpf.MarketView.ViewModel;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
+using InterfaceExtensions = DevelopmentInProgress.MarketView.Interface.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DevelopmentInProgress.Wpf.MarketView.Extensions;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Test
 {
@@ -388,37 +389,118 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         }
 
         [TestMethod]
-        public void HasBaseBalance()
+        public void HasQuoteBaseBalance_Null()
         {
             // Arrange
-
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+            
             // Act
 
             // Assert
-            Assert.Fail();
+            Assert.IsFalse(tradeViewModel.HasBaseBalance);
+            Assert.IsFalse(tradeViewModel.HasQuoteBalance);
         }
 
         [TestMethod]
-        public void HasQuoteBalance()
+        public void HasQuoteBaseBalance_Zero()
         {
             // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+
+            var quoteBalance = new AccountBalance { Free = 0m };
+            var baseBalance = new AccountBalance { Free = 0m };
 
             // Act
+            tradeViewModel.QuoteAccountBalance = quoteBalance;
+            tradeViewModel.BaseAccountBalance = baseBalance;
 
             // Assert
-            Assert.Fail();
+            Assert.IsFalse(tradeViewModel.HasBaseBalance);
+            Assert.IsFalse(tradeViewModel.HasQuoteBalance);
         }
 
         [TestMethod]
-        public void OrderTypes()
+        public void HasQuoteBaseBalance()
         {
             // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+
+            var quoteBalance = new AccountBalance { Free = 299m };
+            var baseBalance = new AccountBalance { Free = 0.000123m };
 
             // Act
+            tradeViewModel.QuoteAccountBalance = quoteBalance;
+            tradeViewModel.BaseAccountBalance = baseBalance;
 
             // Assert
-            Assert.Fail();
+            Assert.IsTrue(tradeViewModel.HasBaseBalance);
+            Assert.IsTrue(tradeViewModel.HasQuoteBalance);
         }
+
+        [TestMethod]
+        public async Task OrderTypes_NoSelectedSymbol()
+        {
+            // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+
+            tradeViewModel.SetSymbols(symbols.ToList());
+
+            // Act
+            var orderTypes = tradeViewModel.OrderTypes;
+
+            // Assert
+            Assert.IsNull(tradeViewModel.SelectedSymbol);
+
+            var intersection = tradeViewModel.OrderTypes.Intersect(InterfaceExtensions.OrderExtensions.OrderTypes()).ToList();
+            Assert.IsTrue(InterfaceExtensions.OrderExtensions.OrderTypes().Count().Equals(intersection.Count));
+        }
+
+        [TestMethod]
+        public async Task OrderTypes_SelectedSymbol()
+        {
+            // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+
+            var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
+            tradeViewModel.SetSymbols(symbols.ToList());
+            tradeViewModel.SelectedSymbol = trx;
+
+            // Act
+            var orderTypes = tradeViewModel.OrderTypes;
+
+            // Assert
+            Assert.AreEqual(tradeViewModel.SelectedSymbol, trx);
+            
+            var missing = InterfaceExtensions.OrderExtensions.OrderTypes().Except(tradeViewModel.OrderTypes).ToList();
+            foreach(var orderType in missing)
+            {
+                if (orderType != InterfaceExtensions.OrderExtensions.GetOrderTypeName(Interface.OrderType.StopLoss)
+                    && orderType != InterfaceExtensions.OrderExtensions.GetOrderTypeName(Interface.OrderType.TakeProfit))
+                {
+                    Assert.Fail();
+                }
+            }
+        }
+
 
         [TestMethod]
         public void BuyQuantity()

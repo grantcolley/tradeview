@@ -133,9 +133,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                         StopPrice = 0;
                         Quantity = 0;
                         BaseAccountBalance = null;
-                        QuoteAccountBalance = null;
+                        QuoteAccountBalance = null;                        
                     }
 
+                    OnPropertyChanged("OrderTypes");
                     OnPropertyChanged("SelectedSymbol");
                 }
             }
