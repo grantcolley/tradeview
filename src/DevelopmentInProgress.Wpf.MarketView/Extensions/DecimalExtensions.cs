@@ -7,14 +7,19 @@
             var p = v.ToString();
             var pos = p.IndexOf(".");
 
-            if(pos == -1)
+            if (pos == -1)
             {
                 return v;
             }
 
-            if(precision > 0)
+            if (precision > 0)
             {
                 pos++;
+            }
+
+            if (p.Length <= (pos + precision))
+            {
+                return v;
             }
 
             return decimal.Parse(p.Substring(0, pos + precision));
