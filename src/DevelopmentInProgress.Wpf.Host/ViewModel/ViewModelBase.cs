@@ -303,27 +303,32 @@ namespace DevelopmentInProgress.Wpf.Host.ViewModel
         /// appened to existing messages or existing messages are first cleared.</param>
         protected void ShowMessages(List<Message> messagesToShow, bool appendMessage = false)
         {
-            if (messages == null)
+            Action<List<Message>, bool> action = (msgs, append) =>
             {
-                messages = new ObservableCollection<Message>();
-            }
+                if (messages == null)
+                {
+                    messages = new ObservableCollection<Message>();
+                }
 
-            messagesToShow.ForEach(
-                m => Logger.Log(m.Text, ConvertMessageTypeToLogCategory(m.MessageType), Priority.None));
+                msgs.ForEach(
+                    m => Logger.Log(m.Text, ConvertMessageTypeToLogCategory(m.MessageType), Priority.None));
 
-            if (appendMessage)
-            {
-                messagesToShow.ForEach(m => this.messages.Insert(0, m));
-            }
-            else
-            {
-                messages.Clear();
-                messages.AddRange(messagesToShow);
-            }
+                if (append)
+                {
+                    msgs.ForEach(m => this.messages.Insert(0, m));
+                }
+                else
+                {
+                    messages.Clear();
+                    messages.AddRange(msgs);
+                }
 
-            IsMessagesExpanded = true;
-            OnPropertyChanged("Messages");
-            OnPropertyChanged("IsMessagesVisible");
+                IsMessagesExpanded = true;
+                OnPropertyChanged("Messages");
+                OnPropertyChanged("IsMessagesVisible");
+            };
+
+            ViewModelContext.UiDispatcher.Invoke(action, new object[] { messagesToShow, appendMessage });
         }
 
         /// <summary>
