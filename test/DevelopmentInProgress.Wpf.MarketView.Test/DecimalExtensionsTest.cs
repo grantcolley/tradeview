@@ -19,6 +19,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var g = 1.123456789M;
             var h = 1.123456789M;
             var i = 1.123456789M;
+            var j = 0.000123M;
 
             // Act
             var ai = a.Trim(0);
@@ -30,6 +31,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var gi = g.Trim(6);
             var hi = h.Trim(7);
             var ii = i.Trim(8);
+            var ji = j.Trim(8);
 
             // Assert
             Assert.IsTrue(ai.Equals(1M));
@@ -41,6 +43,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             Assert.IsTrue(gi.Equals(1.123456M));
             Assert.IsTrue(hi.Equals(1.1234567M));
             Assert.IsTrue(ii.Equals(1.12345678M));
+            Assert.IsTrue(ji.Equals(0.000123M));
         }
         
         [TestMethod]
