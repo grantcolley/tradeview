@@ -5,6 +5,7 @@
         Standard,
         SubscribeAccountInfo,
         SymbolsViewModel,
-        UpdateOrders
+        UpdateOrders,
+        PlaceOrderException
     }
 }

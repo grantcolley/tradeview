@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExchangeApiPlaceOrderException.cs" />
     <Compile Include="ExchangeApiSymbolsViewModel.cs" />
     <Compile Include="ExchangeApiType.cs" />
     <Compile Include="ExchangeApiUpdateOrders.cs" />

@@ -327,7 +327,7 @@ namespace DevelopmentInProgress.Wpf.Host.ViewModel
                 OnPropertyChanged("Messages");
                 OnPropertyChanged("IsMessagesVisible");
             };
-
+            
             ViewModelContext.UiDispatcher.Invoke(action, new object[] { messagesToShow, appendMessage });
         }
 

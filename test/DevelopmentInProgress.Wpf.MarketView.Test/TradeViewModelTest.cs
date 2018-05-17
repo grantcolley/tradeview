@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DevelopmentInProgress.Wpf.MarketView.Extensions;
@@ -9,6 +10,9 @@ using DevelopmentInProgress.Wpf.MarketView.ViewModel;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 using InterfaceExtensions = DevelopmentInProgress.MarketView.Interface.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Reactive.Linq;
+using DevelopmentInProgress.Wpf.MarketView.Events;
+using DevelopmentInProgress.MarketView.Interface.Validation;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Test
 {
@@ -500,72 +504,352 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
                 }
             }
         }
-
-
+        
         [TestMethod]
-        public void BuyQuantity()
+        public async Task BuyQuantity_InsufficientFunds()
         {
             // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
+
+            var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
+            {
+                ApiKey = "apikey",
+                ApiSecret = "apisecret"
+            };
+
+            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
+
+            tradeViewModel.SetSymbols(symbols.ToList());
+            tradeViewModel.SetAccount(account, selectedAsset);
 
             // Act
+            tradeViewModel.BuyQuantityCommand.Execute(75);
 
             // Assert
-            Assert.Fail();
+            Assert.IsTrue(tradeViewModel.Quantity.Equals(0));
         }
 
         [TestMethod]
-        public void SellQuantity()
+        public async Task BuyQuantity_SufficientFunds()
         {
             // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
+
+            var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
+            {
+                ApiKey = "apikey",
+                ApiSecret = "apisecret"
+            };
+
+            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
+
+            tradeViewModel.SetSymbols(symbols.ToList());
+            tradeViewModel.SetAccount(account, selectedAsset);
+            tradeViewModel.QuoteAccountBalance.Free = 0.00012693M;
 
             // Act
+            tradeViewModel.BuyQuantityCommand.Execute(75);
 
             // Assert
-            Assert.Fail();
+            Assert.IsTrue(tradeViewModel.Quantity.Equals(10));
         }
 
         [TestMethod]
-        public void SetQuantity()
+        public async Task SellQuantity()
         {
             // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
+
+            var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
+            {
+                ApiKey = "apikey",
+                ApiSecret = "apisecret"
+            };
+
+            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
+
+            tradeViewModel.SetSymbols(symbols.ToList());
+            tradeViewModel.SetAccount(account, selectedAsset);
 
             // Act
+            tradeViewModel.SellQuantityCommand.Execute(75);
 
             // Assert
-            Assert.Fail();
+            Assert.IsTrue(tradeViewModel.Quantity.Equals((selectedAsset.Free*0.75m).Trim(trx.QuantityPrecision)));
         }
 
         [TestMethod]
-        public void Buy()
+        public async Task Buy_Pass()
         {
             // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
+
+            var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
+            {
+                ApiKey = "apikey",
+                ApiSecret = "apisecret"
+            };
+
+            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
+
+            tradeViewModel.SetSymbols(symbols.ToList());
+            tradeViewModel.SetAccount(account, selectedAsset);
+            
+            tradeViewModel.SelectedOrderType = "Limit";
+            tradeViewModel.Quantity = 200m;
+            tradeViewModel.Price = 0.00000900M;
+            tradeViewModel.QuoteAccountBalance.Free = 200m * 0.00000900M;
+
+            var tradeObservable = Observable.FromEventPattern<TradeEventArgs>(
+                eventHandler => tradeViewModel.OnTradeNotification += eventHandler,
+                eventHandler => tradeViewModel.OnTradeNotification -= eventHandler)
+                .Select(eventPattern => eventPattern.EventArgs);
+
+            Exception ex = null;
+            tradeObservable.Subscribe(args =>
+            {
+                if (args.HasException)
+                {
+                    ex = args.Exception;
+                }
+            });
 
             // Act
+            tradeViewModel.BuyCommand.Execute(null);
 
             // Assert
-            Assert.Fail();
+            Assert.IsNull(ex);
         }
 
         [TestMethod]
-        public void Sell()
+        public async Task Buy_Fails_No_OrderType()
         {
             // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
+
+            var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
+            {
+                ApiKey = "apikey",
+                ApiSecret = "apisecret"
+            };
+
+            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
+
+            tradeViewModel.SetSymbols(symbols.ToList());
+            tradeViewModel.SetAccount(account, selectedAsset);
+            
+            tradeViewModel.Quantity = 200m;
+            tradeViewModel.Price = 0.00000900M;
+
+            var tradeObservable = Observable.FromEventPattern<TradeEventArgs>(
+                eventHandler => tradeViewModel.OnTradeNotification += eventHandler,
+                eventHandler => tradeViewModel.OnTradeNotification -= eventHandler)
+                .Select(eventPattern => eventPattern.EventArgs);
+
+            Exception ex = null;
+            tradeObservable.Subscribe(args =>
+            {
+                if (args.HasException)
+                {
+                    ex = args.Exception;
+                }
+            });
 
             // Act
+            tradeViewModel.BuyCommand.Execute(null);
 
             // Assert
-            Assert.Fail();
+            Assert.IsNotNull(ex);
+            Assert.IsTrue(ex.Message.Contains("order type"));
         }
 
         [TestMethod]
-        public void SendClientOrder()
+        public async Task Buy_Fails_Order_Validation()
         {
             // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
+
+            var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
+            {
+                ApiKey = "apikey",
+                ApiSecret = "apisecret"
+            };
+
+            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
+
+            tradeViewModel.SetSymbols(symbols.ToList());
+            tradeViewModel.SetAccount(account, selectedAsset);
+
+            tradeViewModel.QuoteAccountBalance.Free = 0.00012693M;
+
+            tradeViewModel.SelectedOrderType = "Limit";
+            tradeViewModel.Price = 0.00000900M;
+
+            var tradeObservable = Observable.FromEventPattern<TradeEventArgs>(
+                eventHandler => tradeViewModel.OnTradeNotification += eventHandler,
+                eventHandler => tradeViewModel.OnTradeNotification -= eventHandler)
+                .Select(eventPattern => eventPattern.EventArgs);
+
+            Exception ex = null;
+            tradeObservable.Subscribe(args =>
+            {
+                if (args.HasException)
+                {
+                    ex = args.Exception;
+                }
+            });
 
             // Act
+            tradeViewModel.BuyCommand.Execute(null);
 
             // Assert
-            Assert.Fail();
+            Assert.IsInstanceOfType(ex, typeof(OrderValidationException));
+        }
+
+        [TestMethod]
+        public async Task Buy_Fails_PlaceOrder()
+        {
+            // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi(ExchangeApiType.PlaceOrderException);
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
+
+            var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
+            {
+                ApiKey = "apikey",
+                ApiSecret = "apisecret"
+            };
+
+            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
+
+            tradeViewModel.SetSymbols(symbols.ToList());
+            tradeViewModel.SetAccount(account, selectedAsset);
+
+            tradeViewModel.QuoteAccountBalance.Free = 0.00012693M;
+
+            tradeViewModel.SelectedOrderType = "Limit";
+            tradeViewModel.Quantity = 200m;
+            tradeViewModel.Price = 0.00000900M;
+            tradeViewModel.QuoteAccountBalance.Free = 200m * 0.00000900M;
+
+            var tradeObservable = Observable.FromEventPattern<TradeEventArgs>(
+                eventHandler => tradeViewModel.OnTradeNotification += eventHandler,
+                eventHandler => tradeViewModel.OnTradeNotification -= eventHandler)
+                .Select(eventPattern => eventPattern.EventArgs);
+
+            Exception ex = null;
+            tradeObservable.Subscribe(args =>
+            {
+                if (args.HasException)
+                {
+                    ex = args.Exception;
+                }
+            });
+
+            // Act
+            tradeViewModel.BuyCommand.Execute(null);
+
+            // Assert
+            Assert.IsNotNull(ex);
+            Assert.IsTrue(ex.Message.Contains("failed to place order"));
+        }
+
+        [TestMethod]
+        public async Task Sell_Pass()
+        {
+            // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
+
+            var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
+            {
+                ApiKey = "apikey",
+                ApiSecret = "apisecret"
+            };
+
+            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
+
+            tradeViewModel.SetSymbols(symbols.ToList());
+            tradeViewModel.SetAccount(account, selectedAsset);
+
+            tradeViewModel.QuoteAccountBalance.Free = 0.00012693M;
+
+            tradeViewModel.SelectedOrderType = "Limit";
+            tradeViewModel.Quantity = tradeViewModel.BaseAccountBalance.Free;
+            tradeViewModel.Price = 0.00000850M;
+
+            var tradeObservable = Observable.FromEventPattern<TradeEventArgs>(
+                eventHandler => tradeViewModel.OnTradeNotification += eventHandler,
+                eventHandler => tradeViewModel.OnTradeNotification -= eventHandler)
+                .Select(eventPattern => eventPattern.EventArgs);
+
+            Exception ex = null;
+            tradeObservable.Subscribe(args =>
+            {
+                if (args.HasException)
+                {
+                    ex = args.Exception;
+                }
+            });
+
+            // Act
+            tradeViewModel.SellCommand.Execute(null);
+
+            // Assert
+            Assert.IsNull(ex);
         }
     }
 }

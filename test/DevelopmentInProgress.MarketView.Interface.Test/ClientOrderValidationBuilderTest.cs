@@ -16,7 +16,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
             string message;
             var trx = TestHelper.Trx;
             var trxStats = TestHelper.TrxStats;
-            var clientOrder = new ClientOrder() { Type = OrderType.Limit, Quantity = 0.00090000M, Price = trxStats.LastPrice };
+            var clientOrder = new ClientOrder() { Type = OrderType.Limit, Side = OrderSide.Buy, Quantity = 0.00090000M, Price = trxStats.LastPrice };
+            clientOrder.QuoteAccountBalance = new AccountBalance { Free = clientOrder.Price * clientOrder.Quantity };
 
             trx.OrderTypes = trx.OrderTypes.Where(t => t != OrderType.Limit);
 
@@ -36,7 +37,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
             string message;
             var trx = TestHelper.Trx;
             var trxStats = TestHelper.TrxStats;
-            var clientOrder = new ClientOrder() { Type = OrderType.Limit, Quantity = 150000000.00000000M, Price = trxStats.LastPrice };
+            var clientOrder = new ClientOrder() { Type = OrderType.Limit, Side = OrderSide.Buy, Quantity = 150000000.00000000M, Price = trxStats.LastPrice };
+            clientOrder.QuoteAccountBalance = new AccountBalance { Free = clientOrder.Price * clientOrder.Quantity };
 
             trx.OrderTypes = trx.OrderTypes.Where(t => t != OrderType.Limit);
 
@@ -56,7 +58,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
             string message;
             var trx = TestHelper.Trx;
             var trxStats = TestHelper.TrxStats;
-            var clientOrder = new ClientOrder() { Symbol = "ETHBTC", Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice };
+            var clientOrder = new ClientOrder() { Symbol = "ETHBTC", Side = OrderSide.Buy, Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice };
+            clientOrder.QuoteAccountBalance = new AccountBalance { Free = clientOrder.Price * clientOrder.Quantity };
 
             // Act
             var clientOrderValidation = new ClientOrderValidationBuilder().Build();
@@ -74,7 +77,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
             string message;
             var trx = TestHelper.Trx;
             var trxStats = TestHelper.TrxStats;
-            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice };
+            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Side = OrderSide.Buy, Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice };
+            clientOrder.QuoteAccountBalance = new AccountBalance { Free = clientOrder.Price * clientOrder.Quantity };
 
             // Act
             var clientOrderValidation = new ClientOrderValidationBuilder().Build();
@@ -92,8 +96,17 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
             string message;
             var trx = TestHelper.Trx;
             var trxStats = TestHelper.TrxStats;
-            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Type = OrderType.Limit, Quantity = 500.00000000M, Price = 0.000000001M };
-            
+            var clientOrder = new ClientOrder()
+            {
+                Symbol = "TRXBTC",
+                Side = OrderSide.Buy,
+                Type = OrderType.Limit,
+                Quantity = 500.00000000M,
+                Price = 0.000000001M
+            };
+
+            clientOrder.QuoteAccountBalance = new AccountBalance { Free = clientOrder.Price * clientOrder.Quantity };
+
             // Act
             var clientOrderValidation = new ClientOrderValidationBuilder()
                 .AddPriceValidation()
@@ -113,7 +126,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
             string message;
             var trx = TestHelper.Trx;
             var trxStats = TestHelper.TrxStats;
-            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Type = OrderType.Limit, Quantity = 500.00000000M, Price = 15000000.00000000M };
+            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Side = OrderSide.Buy, Type = OrderType.Limit, Quantity = 500.00000000M, Price = 15000000.00000000M };
+            clientOrder.QuoteAccountBalance = new AccountBalance { Free = clientOrder.Price * clientOrder.Quantity };
 
             // Act
             var clientOrderValidation = new ClientOrderValidationBuilder()
@@ -134,7 +148,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
             string message;
             var trx = TestHelper.Trx;
             var trxStats = TestHelper.TrxStats;
-            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice };
+            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Side = OrderSide.Buy, Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice };
+            clientOrder.QuoteAccountBalance = new AccountBalance { Free = clientOrder.Price * clientOrder.Quantity };
 
             // Act
             var clientOrderValidation = new ClientOrderValidationBuilder()
@@ -155,7 +170,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
             string message;
             var trx = TestHelper.Trx;
             var trxStats = TestHelper.TrxStats;
-            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice, StopPrice = 0.000000001M };
+            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Side = OrderSide.Buy, Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice, StopPrice = 0.000000001M };
+            clientOrder.QuoteAccountBalance = new AccountBalance { Free = clientOrder.Price * clientOrder.Quantity };
 
             // Act
             var clientOrderValidation = new ClientOrderValidationBuilder()
@@ -177,7 +193,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
             string message;
             var trx = TestHelper.Trx;
             var trxStats = TestHelper.TrxStats;
-            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice, StopPrice = 15000000.00000000M };
+            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Side = OrderSide.Buy, Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice, StopPrice = 15000000.00000000M };
+            clientOrder.QuoteAccountBalance = new AccountBalance { Free = clientOrder.Price * clientOrder.Quantity };
 
             // Act
             var clientOrderValidation = new ClientOrderValidationBuilder()
@@ -189,7 +206,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
 
             // Assert
             Assert.IsFalse(result);
-            Assert.AreEqual(message, $"{clientOrder.Symbol} {clientOrder.Type} order not valid: Stop Price {clientOrder.StopPrice} cannot be above the maximum {trx.Price.Maximum}");
+            Assert.AreEqual(message, $"{clientOrder.Symbol} {clientOrder.Type} order not valid: Insufficient funds to buy: {clientOrder.StopPrice * clientOrder.Quantity} is greater than the available {clientOrder.QuoteAccountBalance.Free};Stop Price {clientOrder.StopPrice} cannot be above the maximum {trx.Price.Maximum}");
         }
 
         [TestMethod]
@@ -199,7 +216,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
             string message;
             var trx = TestHelper.Trx;
             var trxStats = TestHelper.TrxStats;
-            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice, StopPrice = (trxStats.LastPrice + (100 * trx.Price.Increment)) };
+            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Side = OrderSide.Buy, Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice, StopPrice = (trxStats.LastPrice + (100 * trx.Price.Increment)) };
+            clientOrder.QuoteAccountBalance = new AccountBalance { Free = (trxStats.LastPrice + (100 * trx.Price.Increment)) * clientOrder.Quantity };
 
             // Act
             var clientOrderValidation = new ClientOrderValidationBuilder()

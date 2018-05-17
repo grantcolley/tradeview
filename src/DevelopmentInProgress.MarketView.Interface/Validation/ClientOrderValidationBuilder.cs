@@ -1,4 +1,5 @@
-﻿using DevelopmentInProgress.MarketView.Interface.Model;
+﻿using DevelopmentInProgress.MarketView.Interface.Extensions;
+using DevelopmentInProgress.MarketView.Interface.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,31 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
                 {
                     sb.Append($"{o.Type} order is not permitted;");
                 }
-                
+
+                if (o.Side.Equals(OrderSide.Sell)
+                    && !o.BaseAccountBalance.HasAvailableQuantity(o.Quantity))
+                {
+                    sb.Append($"Insufficient quantity to sell: {o.Quantity} is greater than the available quantity {o.BaseAccountBalance.Free};");
+                }
+                else if (o.Side.Equals(OrderSide.Buy)
+                    && !o.QuoteAccountBalance.HasAvailableFunds(o.Price, o.Quantity))
+                {
+                    switch(o.Type)
+                    {
+                        case OrderType.Market:
+                        case OrderType.TakeProfit:
+                        case OrderType.StopLoss:
+                            sb.Append($"Insufficient funds to buy: Indicative cost {o.Price * o.Quantity} is greater than the available funds {o.QuoteAccountBalance.Free};");
+                            break;
+                        case OrderType.Limit:
+                        case OrderType.LimitMaker:
+                        case OrderType.StopLossLimit:
+                        case OrderType.TakeProfitLimit:
+                            sb.Append($"Insufficient funds to buy: {o.Price * o.Quantity} is greater than the available funds {o.QuoteAccountBalance.Free};");
+                            break;
+                    }
+                }
+
                 if (o.Quantity < s.Quantity.Minimum)
                 {
                     sb.Append($"Quantity {o.Quantity} is below the minimum {s.Quantity.Minimum};");
@@ -87,6 +112,12 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
         {
             validations.Add((s, o, sb) =>
             {
+                if (o.Side == OrderSide.Buy
+                && !o.QuoteAccountBalance.HasAvailableFunds(o.StopPrice, o.Quantity))
+                {
+                    sb.Append($"Insufficient funds to buy: {o.StopPrice * o.Quantity} is greater than the available {o.QuoteAccountBalance.Free};");
+                }
+
                 if (o.StopPrice < s.Price.Minimum)
                 {
                     sb.Append($"Stop Price {o.StopPrice} cannot be below the minimum {s.Price.Minimum};");

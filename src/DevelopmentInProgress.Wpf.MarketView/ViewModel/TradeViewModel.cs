@@ -389,12 +389,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     Side = orderSide,
                     Quantity = Quantity,
                     Price = Price,
-                    StopPrice = StopPrice
+                    StopPrice = StopPrice,
+                    BaseAccountBalance = BaseAccountBalance.GetInterfaceAccountBalance(),
+                    QuoteAccountBalance = QuoteAccountBalance.GetInterfaceAccountBalance()
                 };
 
                 SelectedSymbol.GetInterfaceSymbol().ValidateClientOrder(clientOrder);
 
-                var order = await ExchangeService.PlaceOrder(Account.AccountInfo.User, clientOrder).ConfigureAwait(false);
+                await ExchangeService.PlaceOrder(Account.AccountInfo.User, clientOrder).ConfigureAwait(false);
             }
             catch (Exception e)
             {

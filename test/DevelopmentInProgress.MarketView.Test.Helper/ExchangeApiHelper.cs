@@ -21,6 +21,8 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
                     return new ExchangeApiSymbolsViewModel();
                 case ExchangeApiType.UpdateOrders:
                     return new ExchangeApiUpdateOrders();
+                case ExchangeApiType.PlaceOrderException:
+                    return new ExchangeApiPlaceOrderException();
                 default:
                     return new ExchangeApi();
             }

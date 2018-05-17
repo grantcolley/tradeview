@@ -17,5 +17,9 @@
         public TimeInForce TimeInForce { get; set; }
 
         public decimal StopPrice { get; set; }
+
+        public AccountBalance BaseAccountBalance { get; set; }
+
+        public AccountBalance QuoteAccountBalance { get; set; }
     }
 }
