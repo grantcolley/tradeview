@@ -16,6 +16,10 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
         private static string trx;
         private static string trxStats;
         private static string accountInfo;
+        private static string aggregateTrades;
+        private static string aggregateTradesUpdated;
+        private static string orderBook;
+        private static string orderBookUpdated;
 
         static  TestHelper()
         {
@@ -23,6 +27,10 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             symbolsStatistics = File.ReadAllText("SymbolsStatistics.txt");
             orders = File.ReadAllText("Orders.txt");
             accountInfo = File.ReadAllText("AccountInfo.txt");
+            aggregateTrades = File.ReadAllText("AggregateTrades.txt");
+            aggregateTradesUpdated = File.ReadAllText("AggregateTradesUpdated.txt");
+            orderBook = File.ReadAllText("OrderBook");
+            orderBookUpdated = File.ReadAllText("OrderBookUpdated");
 
             var e = Symbols.Single(s => s.BaseAsset.Symbol.Equals("ETH") && s.QuoteAsset.Symbol.Equals("BTC"));
             eth = JsonConvert.SerializeObject(e);
@@ -58,6 +66,38 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             get
             {
                 return JsonConvert.DeserializeObject<List<Order>>(orders);
+            }
+        }
+
+        public static List<OrderBook> OrderBook
+        {
+            get
+            {
+                return JsonConvert.DeserializeObject<List<OrderBook>>(orderBook);
+            }
+        }
+
+        public static List<OrderBook> OrderBookUpdated
+        {
+            get
+            {
+                return JsonConvert.DeserializeObject<List<OrderBook>>(orderBookUpdated);
+            }
+        }
+
+        public static List<AggregateTrade> AggregateTrades
+        {
+            get
+            {
+                return JsonConvert.DeserializeObject<List<AggregateTrade>>(aggregateTrades);
+            }
+        }
+
+        public static List<AggregateTrade> AggregateTradesUpdated
+        {
+            get
+            {
+                return JsonConvert.DeserializeObject<List<AggregateTrade>>(aggregateTradesUpdated);
             }
         }
 
