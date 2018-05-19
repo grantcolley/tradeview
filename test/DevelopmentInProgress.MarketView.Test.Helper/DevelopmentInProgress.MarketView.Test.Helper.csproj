@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExchangeApiSubscribeOrderBookAggregateTrades.cs" />
     <Compile Include="ExchangeApiPlaceOrderException.cs" />
     <Compile Include="ExchangeApiSymbolsViewModel.cs" />
     <Compile Include="ExchangeApiType.cs" />
@@ -50,7 +51,7 @@
     <Compile Include="TestHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExchangeApi.cs" />
-    <Compile Include="ExchangeApiSubscribeAccountInfoAccountUpdate.cs" />
+    <Compile Include="ExchangeApiSubscribeAccountInfoAccount.cs" />
     <Compile Include="ExchangeApiHelper.cs" />
   </ItemGroup>
   <ItemGroup>

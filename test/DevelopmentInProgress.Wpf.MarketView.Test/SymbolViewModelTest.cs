@@ -1,7 +1,5 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 using DevelopmentInProgress.MarketView.Test.Helper;
 using DevelopmentInProgress.Wpf.MarketView.Extensions;
 using DevelopmentInProgress.Wpf.MarketView.Services;
@@ -30,47 +28,44 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Assert
             Assert.AreEqual(symbolViewModel.Symbol, trx);
             Assert.IsNotNull(symbolViewModel.OrderBook);
+            Assert.AreEqual(symbolViewModel.OrderBook.LastUpdateId, TestHelper.OrderBook.LastUpdateId);
             Assert.IsNotNull(symbolViewModel.OrderBook.Top);
             Assert.IsTrue(symbolViewModel.OrderBook.Asks.Count > 0);
             Assert.IsTrue(symbolViewModel.OrderBook.Bids.Count > 0);
+            Assert.IsTrue(symbolViewModel.AggregateTrades.Count > 0);
         }
 
         [TestMethod]
-        public void GetOrderBook()
+        public async Task UpdateOrderBook()
         {
             // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi(ExchangeApiType.SubscribeOrderBookAggregateTrades);
+            var exchangeService = new ExchangeService(exchangeApi);
+            var symbolViewModel = new SymbolViewModel(exchangeService);
+
+            var trx = TestHelper.Trx.GetViewSymbol();
 
             // Act
+            await symbolViewModel.SetSymbol(trx);
 
             // Assert
+            Assert.AreEqual(symbolViewModel.OrderBook.LastUpdateId, TestHelper.OrderBookUpdated.LastUpdateId);
         }
 
         [TestMethod]
-        public void UpdateOrderBook()
+        public async Task UpdateAggregateTrades()
         {
             // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi(ExchangeApiType.SubscribeOrderBookAggregateTrades);
+            var exchangeService = new ExchangeService(exchangeApi);
+            var symbolViewModel = new SymbolViewModel(exchangeService);
+
+            var trx = TestHelper.Trx.GetViewSymbol();
 
             // Act
-
-            // Assert
-        }
-
-        [TestMethod]
-        public void GetTrades()
-        {
-            // Arrange
-
-            // Act
-
-            // Assert
-        }
-
-        [TestMethod]
-        public void UpdateAggregateTrades()
-        {
-            // Arrange
-
-            // Act
+            await symbolViewModel.SetSymbol(trx);
 
             // Assert
         }

@@ -16,13 +16,15 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
                 case ExchangeApiType.Standard:
                     return new ExchangeApi();
                 case ExchangeApiType.SubscribeAccountInfo:
-                    return new ExchangeApiSubscribeAccountInfoAccountUpdate();
+                    return new ExchangeApiSubscribeAccountInfoAccount();
                 case ExchangeApiType.SymbolsViewModel:
                     return new ExchangeApiSymbolsViewModel();
                 case ExchangeApiType.UpdateOrders:
                     return new ExchangeApiUpdateOrders();
                 case ExchangeApiType.PlaceOrderException:
                     return new ExchangeApiPlaceOrderException();
+                case ExchangeApiType.SubscribeOrderBookAggregateTrades:
+                    return new ExchangeApiSubscribeOrderBookAggregateTrades();
                 default:
                     return new ExchangeApi();
             }

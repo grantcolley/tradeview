@@ -6,6 +6,7 @@
         SubscribeAccountInfo,
         SymbolsViewModel,
         UpdateOrders,
-        PlaceOrderException
+        PlaceOrderException,
+        SubscribeOrderBookAggregateTrades
     }
 }
