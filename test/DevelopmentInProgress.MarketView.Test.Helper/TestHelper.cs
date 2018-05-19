@@ -29,8 +29,8 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             accountInfo = File.ReadAllText("AccountInfo.txt");
             aggregateTrades = File.ReadAllText("AggregateTrades.txt");
             aggregateTradesUpdated = File.ReadAllText("AggregateTradesUpdated.txt");
-            orderBook = File.ReadAllText("OrderBook");
-            orderBookUpdated = File.ReadAllText("OrderBookUpdated");
+            orderBook = File.ReadAllText("OrderBook.txt");
+            orderBookUpdated = File.ReadAllText("OrderBookUpdated.txt");
 
             var e = Symbols.Single(s => s.BaseAsset.Symbol.Equals("ETH") && s.QuoteAsset.Symbol.Equals("BTC"));
             eth = JsonConvert.SerializeObject(e);
@@ -69,19 +69,19 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             }
         }
 
-        public static List<OrderBook> OrderBook
+        public static OrderBook OrderBook
         {
             get
             {
-                return JsonConvert.DeserializeObject<List<OrderBook>>(orderBook);
+                return JsonConvert.DeserializeObject<OrderBook>(orderBook);
             }
         }
 
-        public static List<OrderBook> OrderBookUpdated
+        public static OrderBook OrderBookUpdated
         {
             get
             {
-                return JsonConvert.DeserializeObject<List<OrderBook>>(orderBookUpdated);
+                return JsonConvert.DeserializeObject<OrderBook>(orderBookUpdated);
             }
         }
 

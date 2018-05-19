@@ -270,7 +270,17 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     var orderedTrades = (from t in trades orderby t.Time
                                          select new AggregateTrade { Id = t.Id, Time = t.Time, Price = t.Price.Trim(Symbol.PricePrecision), Quantity = t.Quantity.Trim(Symbol.QuantityPrecision), IsBuyerMaker = t.IsBuyerMaker });
                     AggregateTradesChart = new ChartValues<AggregateTrade>(orderedTrades);
-                    Dispatcher.Invoke(() => { AggregateTrades = new ObservableCollection<AggregateTrade>(orderedTrades); });                    
+
+                    Action initialiseAggregateTrades = () => { AggregateTrades = new ObservableCollection<AggregateTrade>(orderedTrades); };
+
+                    if (Dispatcher == null)
+                    {
+                        initialiseAggregateTrades();
+                    }
+                    else
+                    {
+                        Dispatcher.Invoke(initialiseAggregateTrades);
+                    }
                 }
                 else
                 {
@@ -291,7 +301,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                     AggregateTradesChart.AddRange(orderedAggregateTrades);
 
-                    Dispatcher.Invoke(() =>
+                    Action updateAggregateTrades = () =>
                     {
                         for (int i = 0; i < newCount; i++)
                         {
@@ -302,7 +312,16 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                             AggregateTrades.Insert(0, orderedAggregateTrades[i]);
                         }
-                    });
+                    };
+
+                    if (Dispatcher == null)
+                    {
+                        updateAggregateTrades();
+                    }
+                    else
+                    {
+                        Dispatcher.Invoke(updateAggregateTrades);
+                    }
                 }
             }
         }

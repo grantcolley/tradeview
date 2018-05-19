@@ -46,11 +46,9 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 
         public Task<OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
-            //var tcs = new TaskCompletionSource<OrderBook>();
-            //tcs.SetResult(TestHelper.OrderBook);
-            //return tcs.Task;
-
-            throw new NotImplementedException();
+            var tcs = new TaskCompletionSource<OrderBook>();
+            tcs.SetResult(TestHelper.OrderBook);
+            return tcs.Task;
         }
 
         public Task<IEnumerable<Symbol>> GetSymbolsAsync(CancellationToken cancellationToken)
@@ -74,12 +72,12 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 
         public void SubscribeAggregateTrades(string symbol, int limit, Action<AggregateTradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            // INTENTIONALLY EMPTY. LEAVE BLANK.
         }
 
         public void SubscribeOrderBook(string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            // INTENTIONALLY EMPTY. LEAVE BLANK.
         }
 
         public void SubscribeStatistics(Action<StatiscticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
