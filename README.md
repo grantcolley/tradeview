@@ -6,4 +6,4 @@ Real-time crypto currency trading application.
 
 Development in progress...
 
-![Alt text](/README-images/tradeview.png?raw=true "Trade View")
+![Alt text](/README-images/tradeview-screen.png?raw=true "Trade View")
