@@ -167,13 +167,13 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                                    join r in res on o.ClientOrderId equals r.ClientOrderId
                                    select o.Update(r)).ToList();
 
-                    var remove = Orders.Where(o => !res.Any(r => r.Symbol.Equals(o.Symbol)));
+                    var remove = Orders.Where(o => !res.Any(r => r.ClientOrderId.Equals(o.ClientOrderId)));
                     foreach (var order in remove)
                     {
                         Orders.Remove(order);
                     }
 
-                    var add = res.Where(r => !Orders.Any(o => o.Symbol.Equals(r.Symbol)));
+                    var add = res.Where(r => !Orders.Any(o => o.ClientOrderId.Equals(r.ClientOrderId)));
                     foreach (var order in add)
                     {
                         Orders.Add(order);
