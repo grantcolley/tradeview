@@ -72,9 +72,9 @@
                 <ColumnDefinition Width="2"/>
                 <ColumnDefinition Width="23*"/>
                 <ColumnDefinition Width="2"/>
-                <ColumnDefinition Width="23*"/>
+                <ColumnDefinition Width="30*"/>
                 <ColumnDefinition Width="2"/>
-                <ColumnDefinition Width="31*"/>
+                <ColumnDefinition Width="24*"/>
             </Grid.ColumnDefinitions>
 
             <DockPanel Grid.Column="0" LastChildFill="True">

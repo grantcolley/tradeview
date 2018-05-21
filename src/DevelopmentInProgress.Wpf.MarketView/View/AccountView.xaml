@@ -52,7 +52,7 @@
                 <filterbox:XamlFilterBox DockPanel.Dock="Top" ItemsSource="{Binding Account.Balances}" FilterFieldName="Asset" VisibilityFieldName="IsVisible" SupportsDeepTraversal="False"  Margin="2"/>
                 <Grid DockPanel.Dock="Top">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="120"/>
                         <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
@@ -72,7 +72,7 @@
                         <DataTemplate DataType="{x:Type model:Symbol}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="120"/>
+                                    <ColumnDefinition Width="100"/>
                                     <ColumnDefinition Width="120"/>
                                     <ColumnDefinition Width="120"/>
                                 </Grid.ColumnDefinitions>
