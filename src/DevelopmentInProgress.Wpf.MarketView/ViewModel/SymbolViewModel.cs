@@ -242,17 +242,35 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     OrderBook.LastUpdateId = orderBook.LastUpdateId;
                     OrderBook.Top = new OrderBookTop
                     {
-                        Ask = new OrderBookPriceLevel { Price = orderBook.Top.Ask.Price.Trim(Symbol.PricePrecision), Quantity = orderBook.Top.Ask.Quantity.Trim(Symbol.QuantityPrecision) },
-                        Bid = new OrderBookPriceLevel { Price = orderBook.Top.Bid.Price.Trim(Symbol.PricePrecision), Quantity = orderBook.Top.Bid.Quantity.Trim(Symbol.QuantityPrecision) }
+                        Ask = new OrderBookPriceLevel
+                        {
+                            Price = orderBook.Top.Ask.Price.Trim(Symbol.PricePrecision),
+                            Quantity = orderBook.Top.Ask.Quantity.Trim(Symbol.QuantityPrecision)
+                        },
+                        Bid = new OrderBookPriceLevel
+                        {
+                            Price = orderBook.Top.Bid.Price.Trim(Symbol.PricePrecision),
+                            Quantity = orderBook.Top.Bid.Quantity.Trim(Symbol.QuantityPrecision)
+                        }
                     };
 
                     var asks = new List<OrderBookPriceLevel>(
-                        (from ask in orderBook.Asks orderby ask.Price descending
-                         select new OrderBookPriceLevel { Price = ask.Price.Trim(Symbol.PricePrecision), Quantity = ask.Quantity.Trim(Symbol.QuantityPrecision) }));
+                        (from ask in orderBook.Asks
+                         orderby ask.Price descending
+                         select new OrderBookPriceLevel
+                         {
+                             Price = ask.Price.Trim(Symbol.PricePrecision),
+                             Quantity = ask.Quantity.Trim(Symbol.QuantityPrecision)
+                         }));
 
                     var bids = new List<OrderBookPriceLevel>(
-                        (from bid in orderBook.Bids orderby bid.Price descending
-                         select new OrderBookPriceLevel { Price = bid.Price.Trim(Symbol.PricePrecision), Quantity = bid.Quantity.Trim(Symbol.QuantityPrecision) }));
+                        (from bid in orderBook.Bids
+                         orderby bid.Price descending
+                         select new OrderBookPriceLevel
+                         {
+                             Price = bid.Price.Trim(Symbol.PricePrecision),
+                             Quantity = bid.Quantity.Trim(Symbol.QuantityPrecision)
+                         }));
 
                     OrderBook.Asks = asks;
                     OrderBook.Bids = bids;
@@ -267,8 +285,17 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 if (AggregateTrades == null
                     || AggregateTradesChart == null)
                 {
-                    var orderedTrades = (from t in trades orderby t.Time
-                                         select new AggregateTrade { Id = t.Id, Time = t.Time, Price = t.Price.Trim(Symbol.PricePrecision), Quantity = t.Quantity.Trim(Symbol.QuantityPrecision), IsBuyerMaker = t.IsBuyerMaker });
+                    var orderedTrades = (from t in trades
+                                         orderby t.Id
+                                         select new AggregateTrade
+                                         {
+                                             Id = t.Id,
+                                             Time = t.Time,
+                                             Price = t.Price.Trim(Symbol.PricePrecision),
+                                             Quantity = t.Quantity.Trim(Symbol.QuantityPrecision),
+                                             IsBuyerMaker = t.IsBuyerMaker
+                                         });
+
                     AggregateTradesChart = new ChartValues<AggregateTrade>(orderedTrades);
 
                     Action initialiseAggregateTrades = () => { AggregateTrades = new ObservableCollection<AggregateTrade>(orderedTrades); };
@@ -285,8 +312,17 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 else
                 {
                     var maxId = AggregateTrades.Max(at => at.Id);
-                    var orderedAggregateTrades = (from t in trades where t.Id > maxId orderby t.Time
-                                                  select new AggregateTrade { Id = t.Id, Time = t.Time, Price = t.Price.Trim(Symbol.PricePrecision), Quantity = t.Quantity.Trim(Symbol.QuantityPrecision), IsBuyerMaker = t.IsBuyerMaker }).ToList();
+                    var orderedAggregateTrades = (from t in trades
+                                                  where t.Id > maxId
+                                                  orderby t.Id
+                                                  select new AggregateTrade
+                                                  {
+                                                      Id = t.Id,
+                                                      Time = t.Time,
+                                                      Price = t.Price.Trim(Symbol.PricePrecision),
+                                                      Quantity = t.Quantity.Trim(Symbol.QuantityPrecision),
+                                                      IsBuyerMaker = t.IsBuyerMaker
+                                                  }).ToList();
 
                     var newCount = orderedAggregateTrades.Count;
 
