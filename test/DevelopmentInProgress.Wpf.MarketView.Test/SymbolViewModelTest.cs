@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System.Diagnostics;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using DevelopmentInProgress.MarketView.Test.Helper;
 using DevelopmentInProgress.Wpf.MarketView.Extensions;
@@ -68,6 +70,31 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             await symbolViewModel.SetSymbol(trx);
 
             // Assert
+            var trades = TestHelper.AggregateTrades;
+            var updatedtrades = TestHelper.AggregateTradesUpdated;
+
+            var maxId = trades.Max(t => t.Id);          
+            var newTrades = (from t in updatedtrades
+                               where t.Id > maxId
+                               orderby t.Time
+                               select t).ToList();
+
+            for(int i = 0; i < newTrades.Count(); i++)
+            {
+                if (trades.Count >= 21)
+                {
+                    trades.RemoveAt(trades.Count - 1);
+                }
+
+                trades.Insert(0, newTrades[i]);
+            }
+
+            Assert.AreEqual(symbolViewModel.AggregateTrades.Count, trades.Count);
+
+            for(int i = 0; i < symbolViewModel.AggregateTrades.Count; i++)
+            {
+                Assert.AreEqual(symbolViewModel.AggregateTrades[i].Id, trades[i].Id);
+            }
         }
     }
 }
