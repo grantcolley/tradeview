@@ -7,12 +7,14 @@
              xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Host.Converters;assembly=DevelopmentInProgress.Wpf.Host"
              xmlns:progress="clr-namespace:DevelopmentInProgress.Wpf.Host.Controls.Progress;assembly=DevelopmentInProgress.Wpf.Host"
              xmlns:filterbox="clr-namespace:DevelopmentInProgress.Wpf.Controls.FilterBox;assembly=DevelopmentInProgress.Wpf.Controls"
+             xmlns:localConverters="clr-namespace:DevelopmentInProgress.Wpf.MarketView.Converters"
              mc:Ignorable="d" >
     <UserControl.Resources>
 
         <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
         <converters:InvertBoolToVisibilityConverter x:Key="invertBoolToVisibilityConverter"/>
-
+        <localConverters:ZeroToHiddenConverter x:Key="zeroToHiddenConverter"/>
+        
     </UserControl.Resources>
     
     <DockPanel LastChildFill="True">
@@ -86,7 +88,7 @@
                                     <Label Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Content="{Binding Time}"/>
                                     <Label Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Content="{Binding OriginalQuantity}"/>
                                     <Label Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Content="{Binding Price}"/>
-                                    <Label Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Content="{Binding StopPrice}"/>
+                                    <Label Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Content="{Binding StopPrice, Converter={StaticResource zeroToHiddenConverter}}"/>
                                     <Label Grid.Row="0" Grid.Column="4" VerticalAlignment="Center" Content="{Binding FilledPercent}"/>
                                     <StackPanel Grid.Row="1" Grid.Column="4">
                                         <Button Width="50" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center"
