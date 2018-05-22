@@ -323,7 +323,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        public void SetAccount(Account account, AccountBalance selectedAsset)
+        public void SetAccount(Account account)
         {
             try
             {
@@ -333,7 +333,17 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     Account = account;
                     SelectedOrderType = string.Empty;
                 }
+            }
+            catch (Exception e)
+            {
+                OnException("TradeViewModel.SetAccount", e);
+            }
+        }
 
+        public void SetSymbol(AccountBalance selectedAsset)
+        {
+            try
+            {
                 if (selectedAsset == null)
                 {
                     SelectedSymbol = null;

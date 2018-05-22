@@ -41,16 +41,48 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             };
 
             account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
-
-            var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
-
+            
             // Act
-            tradeViewModel.SetAccount(account, selectedAsset);
+            tradeViewModel.SetAccount(account);
 
             // Assert
             Assert.AreEqual(tradeViewModel.Account, account);
             Assert.AreEqual(tradeViewModel.SelectedOrderType, string.Empty);
-            Assert.AreEqual(tradeViewModel.SelectedSymbol, trx);
+            Assert.IsNull(tradeViewModel.SelectedSymbol);
+        }
+
+        [TestMethod]
+        public async Task SetSymbol()
+        {
+            // Arrange
+            var cxlToken = new CancellationToken();
+            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeService = new ExchangeService(exchangeApi);
+            var tradeViewModel = new TradeViewModel(exchangeService);
+
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+
+            var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
+
+            tradeViewModel.SetSymbols(symbols.ToList());
+
+            var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
+            {
+                ApiKey = "apikey",
+                ApiSecret = "apisecret"
+            };
+
+            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            var asset = account.Balances.Single(a => a.Asset.Equals("TRX"));
+            tradeViewModel.SetAccount(account);
+            
+            // Act
+            tradeViewModel.SetSymbol(asset);
+
+            // Assert
+            Assert.AreEqual(tradeViewModel.Account, account);
+            Assert.AreEqual(tradeViewModel.SelectedOrderType, string.Empty);
+            Assert.AreEqual(tradeViewModel.SelectedSymbol.Name, trx.Name);
         }
 
         [TestMethod]
@@ -74,9 +106,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
 
             account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
 
-            var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
-
-            tradeViewModel.SetAccount(account, selectedAsset);
+            tradeViewModel.SetAccount(account);
 
             var differentAccount = new Account(new Interface.AccountInfo { User = new Interface.User() })
             {
@@ -85,7 +115,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             };
 
             // Act
-            tradeViewModel.SetAccount(differentAccount, null);
+            tradeViewModel.SetAccount(differentAccount);
 
             // Assert
             Assert.AreEqual(tradeViewModel.Account, differentAccount);
@@ -137,7 +167,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var baseBalance = account.Balances.Single(a => a.Asset.Equals("TRX"));
             var quoteAsset = account.Balances.Single(a => a.Asset.Equals("BTC"));
 
-            tradeViewModel.SetAccount(account, null);
+            tradeViewModel.SetAccount(account);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -172,7 +202,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
 
             account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
 
-            tradeViewModel.SetAccount(account, null);
+            tradeViewModel.SetAccount(account);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -527,7 +557,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());
-            tradeViewModel.SetAccount(account, selectedAsset);
+            tradeViewModel.SetAccount(account);
+            tradeViewModel.SetSymbol(selectedAsset);
 
             // Act
             tradeViewModel.BuyQuantityCommand.Execute(75);
@@ -558,7 +589,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());
-            tradeViewModel.SetAccount(account, selectedAsset);
+            tradeViewModel.SetAccount(account);
+            tradeViewModel.SetSymbol(selectedAsset);
             tradeViewModel.QuoteAccountBalance.Free = 0.00012693M;
 
             // Act
@@ -590,7 +622,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());
-            tradeViewModel.SetAccount(account, selectedAsset);
+            tradeViewModel.SetAccount(account);
+            tradeViewModel.SetSymbol(selectedAsset);
 
             // Act
             tradeViewModel.SellQuantityCommand.Execute(75);
@@ -621,7 +654,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());
-            tradeViewModel.SetAccount(account, selectedAsset);
+            tradeViewModel.SetAccount(account);
+            tradeViewModel.SetSymbol(selectedAsset);
             
             tradeViewModel.SelectedOrderType = "Limit";
             tradeViewModel.Quantity = 200m;
@@ -671,7 +705,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());
-            tradeViewModel.SetAccount(account, selectedAsset);
+            tradeViewModel.SetAccount(account);
+            tradeViewModel.SetSymbol(selectedAsset);
             
             tradeViewModel.Quantity = 200m;
             tradeViewModel.Price = 0.00000900M;
@@ -720,7 +755,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());
-            tradeViewModel.SetAccount(account, selectedAsset);
+            tradeViewModel.SetAccount(account);
+            tradeViewModel.SetSymbol(selectedAsset);
 
             tradeViewModel.QuoteAccountBalance.Free = 0.00012693M;
 
@@ -770,7 +806,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());
-            tradeViewModel.SetAccount(account, selectedAsset);
+            tradeViewModel.SetAccount(account);
+            tradeViewModel.SetSymbol(selectedAsset);
 
             tradeViewModel.QuoteAccountBalance.Free = 0.00012693M;
 
@@ -823,7 +860,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());
-            tradeViewModel.SetAccount(account, selectedAsset);
+            tradeViewModel.SetAccount(account);
+            tradeViewModel.SetSymbol(selectedAsset);
 
             tradeViewModel.QuoteAccountBalance.Free = 0.00012693M;
 

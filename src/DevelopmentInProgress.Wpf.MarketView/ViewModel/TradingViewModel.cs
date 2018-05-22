@@ -264,7 +264,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 }
                 else if (args.Symbols != null)
                 {
-                    tradeViewModel.SetSymbols(args.Symbols);
+                    TradeViewModel.SetSymbols(args.Symbols);
                 }
             });
         }
@@ -285,6 +285,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 else if (args.AccountEventType.Equals(AccountEventType.LoggedIn)
                         || args.AccountEventType.Equals(AccountEventType.LoggedOut))
                 {
+                    TradeViewModel.SetAccount(args.Value);
                     OrdersViewModel.SetAccount(args.Value);
                 }
                 else if (args.AccountEventType.Equals(AccountEventType.UpdateOrders))
@@ -293,7 +294,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 }
                 else if (args.AccountEventType.Equals(AccountEventType.SelectedAsset))
                 {
-                    TradeViewModel.SetAccount(args.Value, args.SelectedAsset);
+                    TradeViewModel.SetSymbol(args.SelectedAsset);
                 }
             });
         }
