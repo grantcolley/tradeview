@@ -115,31 +115,26 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             get { return selectedSymbol; }
             set
             {
-                if (selectedSymbol != value)
-                {
-                    selectedSymbol = value;
+                selectedSymbol = value;
 
-                    if (selectedSymbol != null)
-                    {
-                        SelectedOrderType = string.Empty;
-                        Quantity = 0;
-                        Price = SelectedSymbol.SymbolStatistics.LastPrice;
-                        StopPrice = SelectedSymbol.SymbolStatistics.LastPrice;
-                        BaseAccountBalance = Account?.Balances.SingleOrDefault(ab => ab.Asset.Equals(selectedSymbol.BaseAsset.Symbol));
-                        QuoteAccountBalance = Account?.Balances.SingleOrDefault(ab => ab.Asset.Equals(selectedSymbol.QuoteAsset.Symbol));
-                    }
-                    else
-                    {
-                        SelectedOrderType = string.Empty;
-                        Price = 0;
-                        StopPrice = 0;
-                        Quantity = 0;
-                        BaseAccountBalance = null;
-                        QuoteAccountBalance = null;
-                    }
-                    
-                    OnPropertyChanged("SelectedSymbol");
+                if (selectedSymbol != null)
+                {
+                    Quantity = 0;
+                    Price = SelectedSymbol.SymbolStatistics.LastPrice;
+                    StopPrice = SelectedSymbol.SymbolStatistics.LastPrice;
+                    BaseAccountBalance = Account?.Balances.SingleOrDefault(ab => ab.Asset.Equals(selectedSymbol.BaseAsset.Symbol));
+                    QuoteAccountBalance = Account?.Balances.SingleOrDefault(ab => ab.Asset.Equals(selectedSymbol.QuoteAsset.Symbol));
                 }
+                else
+                {
+                    Price = 0;
+                    StopPrice = 0;
+                    Quantity = 0;
+                    BaseAccountBalance = null;
+                    QuoteAccountBalance = null;
+                }
+
+                OnPropertyChanged("SelectedSymbol");
             }
         }
 
@@ -341,6 +336,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
+        public void Touch()
+        {
+            SelectedSymbol = SelectedSymbol;
+        }
+
         public void SetSymbol(AccountBalance selectedAsset)
         {
             try
@@ -401,8 +401,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     Quantity = Quantity,
                     Price = Price,
                     StopPrice = StopPrice,
-                    BaseAccountBalance = BaseAccountBalance.GetInterfaceAccountBalance(),
-                    QuoteAccountBalance = QuoteAccountBalance.GetInterfaceAccountBalance()
+                    BaseAccountBalance = BaseAccountBalance?.GetInterfaceAccountBalance(),
+                    QuoteAccountBalance = QuoteAccountBalance?.GetInterfaceAccountBalance()
                 };
 
                 SelectedSymbol.GetInterfaceSymbol().ValidateClientOrder(clientOrder);

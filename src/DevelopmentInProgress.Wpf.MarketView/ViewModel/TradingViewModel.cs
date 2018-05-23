@@ -290,6 +290,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 }
                 else if (args.AccountEventType.Equals(AccountEventType.UpdateOrders))
                 {
+                    TradeViewModel.Touch();
                     OrdersViewModel.UpdateOrders(args.Value);
                 }
                 else if (args.AccountEventType.Equals(AccountEventType.SelectedAsset))

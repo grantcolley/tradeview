@@ -61,9 +61,9 @@
                     </ComboBox>
                     <Label Grid.Row="1" Grid.Column="0" Content="Order Type" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                     <ComboBox Grid.Row="1" Grid.Column="1" 
-                          Margin="2" 
+                          Margin="2" IsReadOnly="True"
                           ItemsSource="{Binding OrderTypes}"
-                          SelectedItem="{Binding SelectedOrderType}"
+                          SelectedItem="{Binding SelectedOrderType, Mode=TwoWay}"
                           Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                     <Label Grid.Row="2" Grid.Column="0" Content="Quantity" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                     <decimalBox:XamlDecimalUpDown Grid.Row="2" Grid.Column="1" Margin="2" 
