@@ -327,7 +327,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     || !Account.ApiKey.Equals(account.ApiKey))
                 {
                     Account = account;
-                    SelectedOrderType = string.Empty;
                 }
             }
             catch (Exception e)
