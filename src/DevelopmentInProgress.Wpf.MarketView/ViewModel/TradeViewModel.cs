@@ -118,9 +118,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 if (selectedSymbol != value)
                 {
                     selectedSymbol = value;
-                    
-                    if(selectedSymbol != null)
+
+                    if (selectedSymbol != null)
                     {
+                        SelectedOrderType = string.Empty;
                         Quantity = 0;
                         Price = SelectedSymbol.SymbolStatistics.LastPrice;
                         StopPrice = SelectedSymbol.SymbolStatistics.LastPrice;
@@ -129,14 +130,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     }
                     else
                     {
+                        SelectedOrderType = string.Empty;
                         Price = 0;
                         StopPrice = 0;
                         Quantity = 0;
                         BaseAccountBalance = null;
-                        QuoteAccountBalance = null;                        
+                        QuoteAccountBalance = null;
                     }
-
-                    OnPropertyChanged("OrderTypes");
+                    
                     OnPropertyChanged("SelectedSymbol");
                 }
             }
@@ -310,7 +311,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 return InterfaceExtensions.OrderExtensions.OrderTypes();
             }
         }
-        
+
         public void SetSymbols(List<Symbol> symbols)
         {
             try
