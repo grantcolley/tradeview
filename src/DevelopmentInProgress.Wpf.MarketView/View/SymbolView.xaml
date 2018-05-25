@@ -31,12 +31,7 @@
                     <RowDefinition Height="50*"/>
                 </Grid.RowDefinitions>
                 <DockPanel Grid.Row="0" Grid.Column="0" LastChildFill="True">
-                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Left">
-                        <Label Content="{Binding Symbol.BaseAsset.Symbol}" FontWeight="Bold" FontSize="14"/>
-                        <Label Content="/"/>
-                        <Label Content="{Binding Symbol.QuoteAsset.Symbol}" FontSize="12" VerticalAlignment="Center"/>
-                        <Label Content="Orders" FontSize="12" VerticalAlignment="center"/>
-                    </StackPanel>
+                    <Label DockPanel.Dock="Left" Content="Orders" FontSize="12" VerticalAlignment="center"/>
                     <Label DockPanel.Dock="Left" Content="Price" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                     <Label DockPanel.Dock="Left" Content="{Binding OrderBook.QuoteSymbol}" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                     <Label DockPanel.Dock="Right" Content="{Binding OrderBook.BaseSymbol}" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>

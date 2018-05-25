@@ -14,10 +14,6 @@
             <localView:SymbolsView/>
         </DataTemplate>
         
-        <DataTemplate DataType="{x:Type localViewModel:SymbolViewModel}">
-            <localView:SymbolView></localView:SymbolView>
-        </DataTemplate>
-
         <DataTemplate DataType="{x:Type localViewModel:AccountViewModel}">
             <localView:AccountView></localView:AccountView>
         </DataTemplate>
@@ -33,9 +29,9 @@
         <DataTemplate DataType="{x:Type localViewModel:StrategyViewModel}">
             <localView:StrategyView></localView:StrategyView>
         </DataTemplate>
-        
+
         <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
-        
+            
     </view:DocumentViewBase.Resources>
 
     <Grid>
@@ -59,7 +55,22 @@
             <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
             
             <DockPanel Grid.Column="2" LastChildFill="True">
-                <ContentControl Content="{Binding SymbolViewModel}"/>
+                <TabControl ItemsSource="{Binding Symbols}" Background="Transparent" Foreground="White">
+                    <TabControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{Binding Symbol.BaseAsset.Symbol}" FontWeight="Bold" FontSize="14"/>
+                                <Label Content="/"/>
+                                <Label Content="{Binding Symbol.QuoteAsset.Symbol}" FontSize="12" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </TabControl.ItemTemplate>
+                    <TabControl.ContentTemplate>
+                        <DataTemplate DataType="{x:Type localViewModel:SymbolViewModel}">
+                            <localView:SymbolView></localView:SymbolView>
+                        </DataTemplate>
+                    </TabControl.ContentTemplate>
+                </TabControl>
             </DockPanel>
 
         </Grid>

@@ -11,6 +11,7 @@ using System.Linq;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 using System.Reactive.Linq;
 using DevelopmentInProgress.Wpf.MarketView.Events;
+using System.Collections.ObjectModel;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
@@ -19,7 +20,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private IExchangeService exchangeService;
         private IPersonaliseService personaliseService;
         private Symbol selectedSymbol;
-        private SymbolViewModel symbolViewModel;
         private AccountViewModel accountViewModel;
         private TradeViewModel tradeViewModel;
         private SymbolsViewModel symbolsViewModel;
@@ -27,27 +27,28 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private StrategyViewModel strategyViewModel;
         private User user;
         private Account account;
-        
+
+        private ObservableCollection<SymbolViewModel> symbols;
+
         public TradingViewModel(ViewModelContext viewModelContext, 
             AccountViewModel accountViewModel, SymbolsViewModel symbolsViewModel,
-            TradeViewModel tradeViewModel, SymbolViewModel symbolViewModel,
-            OrdersViewModel ordersViewModel, StrategyViewModel strategyViewModel,
+            TradeViewModel tradeViewModel, OrdersViewModel ordersViewModel, StrategyViewModel strategyViewModel,
             IExchangeService exchangeService, IPersonaliseService personaliseService)
             : base(viewModelContext)
         {
             AccountViewModel = accountViewModel;
             SymbolsViewModel = symbolsViewModel;
             TradeViewModel = tradeViewModel;
-            SymbolViewModel = symbolViewModel;
             OrdersViewModel = ordersViewModel;
             StrategyViewModel = strategyViewModel;
+
+            Symbols = new ObservableCollection<SymbolViewModel>();
 
             this.exchangeService = exchangeService;
             this.personaliseService = personaliseService;
 
             ObserveSymbols();
             ObserveAccount();
-            ObserveSymbol();
             ObserveTrade();
             ObserveOrders();
         }
@@ -91,15 +92,15 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        public SymbolViewModel SymbolViewModel
+        public ObservableCollection<SymbolViewModel> Symbols
         {
-            get { return symbolViewModel; }
+            get { return symbols; }
             private set
             {
-                if (symbolViewModel != value)
+                if (symbols != value)
                 {
-                    symbolViewModel = value;
-                    OnPropertyChanged("SymbolViewModel");
+                    symbols = value;
+                    OnPropertyChanged("Symbols");
                 }
             }
         }
@@ -169,7 +170,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             accountViewModel.Dispatcher = ViewModelContext.UiDispatcher;
             symbolsViewModel.Dispatcher = ViewModelContext.UiDispatcher;
             tradeViewModel.Dispatcher = ViewModelContext.UiDispatcher;
-            symbolViewModel.Dispatcher = ViewModelContext.UiDispatcher;
             ordersViewModel.Dispatcher = ViewModelContext.UiDispatcher;
             strategyViewModel.Dispatcher = ViewModelContext.UiDispatcher;
 
@@ -223,9 +223,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 AccountViewModel.Dispose();
             }
 
-            if (SymbolViewModel != null)
+            foreach(var symbol in Symbols)
             {
-                SymbolViewModel.Dispose();
+                symbol.Dispose();
             }
 
             if (SymbolsViewModel != null)
@@ -260,7 +260,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 else if (args.Value != null)
                 {
                     SelectedSymbol = args.Value;
-                    await SymbolViewModel.SetSymbol(selectedSymbol);
+                    var symbol = new SymbolViewModel(exchangeService);
+                    symbol.Dispatcher = ViewModelContext.UiDispatcher;
+                    ObserveSymbol(symbol);
+                    Symbols.Add(symbol);
+                    await symbol.SetSymbol(selectedSymbol);
                 }
                 else if (args.Symbols != null)
                 {
@@ -300,11 +304,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             });
         }
 
-        private void ObserveSymbol()
+        private void ObserveSymbol(SymbolViewModel symbol)
         {
             var symbolObservable = Observable.FromEventPattern<SymbolEventArgs>(
-                eventHandler => SymbolViewModel.OnSymbolNotification += eventHandler,
-                eventHandler => SymbolViewModel.OnSymbolNotification -= eventHandler)
+                eventHandler => symbol.OnSymbolNotification += eventHandler,
+                eventHandler => symbol.OnSymbolNotification -= eventHandler)
                 .Select(eventPattern => eventPattern.EventArgs);
 
             symbolObservable.Subscribe(args =>

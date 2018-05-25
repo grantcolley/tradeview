@@ -43,6 +43,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             TimeFormatter = value => new DateTime((long)value).ToString("H:mm:ss");
             PriceFormatter = value => value.ToString("0.00000000");
+
+            OnPropertyChanged("");
         }
 
         public event EventHandler<SymbolEventArgs> OnSymbolNotification;
