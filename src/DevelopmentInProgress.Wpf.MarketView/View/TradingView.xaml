@@ -36,9 +36,9 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="65*"/>
+            <RowDefinition Height="66*"/>
             <RowDefinition Height="2"/>
-            <RowDefinition Height="35*"/>
+            <RowDefinition Height="34*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -55,10 +55,17 @@
             <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
             
             <DockPanel Grid.Column="2" LastChildFill="True">
-                <TabControl ItemsSource="{Binding Symbols}" Background="Transparent" Foreground="White">
+                <TabControl Background="Transparent"
+                            ItemsSource="{Binding Symbols}"
+                            SelectedItem="{Binding SelectedSymbol, Mode=TwoWay}">
+                    <TabControl.Resources>
+                        <Style TargetType="{x:Type TabPanel}">
+                            <Setter Property="Background" Value="#FF181818"></Setter>
+                        </Style>
+                    </TabControl.Resources>
                     <TabControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" Background="Transparent">
                                 <Label Content="{Binding Symbol.BaseAsset.Symbol}" FontWeight="Bold" FontSize="14"/>
                                 <Label Content="/"/>
                                 <Label Content="{Binding Symbol.QuoteAsset.Symbol}" FontSize="12" VerticalAlignment="Center"/>

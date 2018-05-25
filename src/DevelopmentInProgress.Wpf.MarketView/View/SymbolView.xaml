@@ -31,11 +31,12 @@
                     <RowDefinition Height="50*"/>
                 </Grid.RowDefinitions>
                 <DockPanel Grid.Row="0" Grid.Column="0" LastChildFill="True">
-                    <Label DockPanel.Dock="Left" Content="Orders" FontSize="12" VerticalAlignment="center"/>
-                    <Label DockPanel.Dock="Left" Content="Price" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                    <Label DockPanel.Dock="Left" Content="{Binding OrderBook.QuoteSymbol}" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                    <Label DockPanel.Dock="Right" Content="{Binding OrderBook.BaseSymbol}" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                    <Label DockPanel.Dock="Right" Content="Qty" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Label Content=" " FontWeight="Bold" FontSize="14"/>
+                        <Label Content="Orders" HorizontalAlignment="Center" VerticalAlignment="center" FontSize="12"/>
+                    </StackPanel>
+                    <Label DockPanel.Dock="Left" Content="Orders" Width="60" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                    <Label DockPanel.Dock="Right" Content="Price"  Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                     <ContentControl/>
                 </DockPanel>
                 <Viewbox Grid.Row="1" Grid.Column="0" Grid.RowSpan="3"

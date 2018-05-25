@@ -19,7 +19,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
     {
         private IExchangeService exchangeService;
         private IPersonaliseService personaliseService;
-        private Symbol selectedSymbol;
+        private SymbolViewModel selectedSymbol;
         private AccountViewModel accountViewModel;
         private TradeViewModel tradeViewModel;
         private SymbolsViewModel symbolsViewModel;
@@ -144,10 +144,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        public Symbol SelectedSymbol
+        public SymbolViewModel SelectedSymbol
         {
             get { return selectedSymbol; }
-            private set
+            set
             {
                 if(selectedSymbol != value)
                 {
@@ -206,9 +206,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 user.Preferences.FavouriteSymbols = (from s in SymbolsViewModel.Symbols where s.IsFavourite select s.Name).ToList();
             }
             
-            if(SelectedSymbol != null)
+            if(SelectedSymbol != null
+                && SelectedSymbol.Symbol != null)
             {
-                user.Preferences.SelectedSymbol = SelectedSymbol.Name;
+                user.Preferences.SelectedSymbol = SelectedSymbol.Symbol.Name;
             }
 
             await personaliseService.SavePreferences(user);
@@ -259,12 +260,12 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 }
                 else if (args.Value != null)
                 {
-                    SelectedSymbol = args.Value;
                     var symbol = new SymbolViewModel(exchangeService);
                     symbol.Dispatcher = ViewModelContext.UiDispatcher;
                     ObserveSymbol(symbol);
                     Symbols.Add(symbol);
-                    await symbol.SetSymbol(selectedSymbol);
+                    SelectedSymbol = symbol;
+                    await symbol.SetSymbol(args.Value);
                 }
                 else if (args.Symbols != null)
                 {
