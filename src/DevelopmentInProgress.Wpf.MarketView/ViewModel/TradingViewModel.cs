@@ -260,12 +260,21 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 }
                 else if (args.Value != null)
                 {
-                    var symbol = new SymbolViewModel(exchangeService);
-                    symbol.Dispatcher = ViewModelContext.UiDispatcher;
-                    ObserveSymbol(symbol);
-                    Symbols.Add(symbol);
-                    SelectedSymbol = symbol;
-                    await symbol.SetSymbol(args.Value);
+                    var symbol = Symbols.FirstOrDefault(s => s.Symbol.Name.Equals(args.Value.Name));
+                    if (symbol != null)
+                    {
+                        SelectedSymbol = symbol;
+                    }
+                    else
+                    {
+                        symbol = new SymbolViewModel(exchangeService);
+                        symbol.Dispatcher = ViewModelContext.UiDispatcher;
+                        ObserveSymbol(symbol);
+                        Symbols.Add(symbol);
+                        SelectedSymbol = symbol;
+                        await symbol.SetSymbol(args.Value);
+                    }
+                    
                 }
                 else if (args.Symbols != null)
                 {
