@@ -47,7 +47,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
 
             // Assert
             Assert.AreEqual(tradeViewModel.Account, account);
-            Assert.AreEqual(tradeViewModel.SelectedOrderType, string.Empty);
+            Assert.AreEqual(tradeViewModel.SelectedOrderType, null);
             Assert.IsNull(tradeViewModel.SelectedSymbol);
         }
 
@@ -81,7 +81,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
 
             // Assert
             Assert.AreEqual(tradeViewModel.Account, account);
-            Assert.AreEqual(tradeViewModel.SelectedOrderType, string.Empty);
+            Assert.AreEqual(tradeViewModel.SelectedOrderType, null);
             Assert.AreEqual(tradeViewModel.SelectedSymbol.Name, trx.Name);
         }
 
@@ -119,7 +119,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
 
             // Assert
             Assert.AreEqual(tradeViewModel.Account, differentAccount);
-            Assert.AreEqual(tradeViewModel.SelectedOrderType, string.Empty);
+            Assert.AreEqual(tradeViewModel.SelectedOrderType, null);
             Assert.IsNull(tradeViewModel.SelectedSymbol);
         }
 
