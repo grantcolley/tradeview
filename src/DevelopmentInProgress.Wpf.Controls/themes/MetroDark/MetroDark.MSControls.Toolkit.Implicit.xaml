@@ -939,6 +939,7 @@
     <Style  TargetType="{x:Type TabControl}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Margin" Value="2" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabControl}">
@@ -953,7 +954,7 @@
                                   Margin="0,0,4,-1"
                                   IsItemsHost="True"
                                   KeyboardNavigation.TabIndex="1"
-                                  Background="Transparent" />
+                                  Background="{StaticResource TabControlBackgroundBrush}" />
                         <Border x:Name="Border"
                                 Grid.Row="1"
                                 BorderThickness="2"

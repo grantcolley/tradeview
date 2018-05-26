@@ -36,9 +36,9 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="66*"/>
+            <RowDefinition Height="70*"/>
             <RowDefinition Height="2"/>
-            <RowDefinition Height="34*"/>
+            <RowDefinition Height="30*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
