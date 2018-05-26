@@ -55,8 +55,7 @@
             <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
             
             <DockPanel Grid.Column="2" LastChildFill="True">
-                <TabControl Background="Transparent"
-                            ItemsSource="{Binding Symbols}"
+                <TabControl ItemsSource="{Binding Symbols}"
                             SelectedItem="{Binding SelectedSymbol, Mode=TwoWay}">
                     <TabControl.Resources>
                         <Style TargetType="{x:Type TabPanel}">
@@ -65,7 +64,7 @@
                     </TabControl.Resources>
                     <TabControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Background="Transparent">
+                            <StackPanel Orientation="Horizontal">
                                 <Label Content="{Binding Symbol.BaseAsset.Symbol}" FontWeight="Bold" FontSize="14"/>
                                 <Label Content="/"/>
                                 <Label Content="{Binding Symbol.QuoteAsset.Symbol}" FontSize="12" VerticalAlignment="Center"/>
