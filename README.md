@@ -6,4 +6,4 @@ Real-time trading.
 
 Development in progress...
 
-![Alt text](/README-images/tradeview.png?raw=true "Trade View")
+![Alt text](/README-images/tradeview1.png?raw=true "Trade View")
