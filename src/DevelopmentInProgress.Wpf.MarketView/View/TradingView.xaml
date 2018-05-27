@@ -57,27 +57,12 @@
             <DockPanel Grid.Column="2" LastChildFill="True">
                 <TabControl ItemsSource="{Binding Symbols}"
                             SelectedItem="{Binding SelectedSymbol, Mode=TwoWay}">
-                    <TabControl.Resources>
-                        <Style x:Key="TabHeaderLabel" TargetType="{x:Type Label}" BasedOn="{StaticResource LabelStyle}">
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <!--<Style.Triggers>
-                                <DataTrigger Binding="{Binding ElementName=stk, Path=IsMouseOver}" Value="True">
-                                    <Setter Property="FontSize" Value="14"/>
-                                    <Setter Property="FontWeight" Value="Bold"/>
-                                    <Setter Property="Foreground" Value="White"/>
-                                </DataTrigger>
-                            </Style.Triggers>-->
-                        </Style>
-                        <!--<Style TargetType="{x:Type TabPanel}">
-                            <Setter Property="Background" Value="#FF181818"></Setter>
-                        </Style>-->
-                    </TabControl.Resources>
                     <TabControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Name="stk"  Orientation="Horizontal" Background="Transparent">
-                                <Label Content="{Binding Symbol.BaseAsset.Symbol}" FontSize="14" Style="{StaticResource TabHeaderLabel}"/>
-                                <Label Content="/" Style="{StaticResource TabHeaderLabel}"/>
-                                <Label Content="{Binding Symbol.QuoteAsset.Symbol}" Style="{StaticResource TabHeaderLabel}"/>
+                                <Label Name="baseSymbol" Content="{Binding Symbol.BaseAsset.Symbol}" FontSize="14" VerticalAlignment="Center"/>
+                                <Label Name="divider" Content="/" VerticalAlignment="Center"/>
+                                <Label Name="quoteSymbol" Content="{Binding Symbol.QuoteAsset.Symbol}" VerticalAlignment="Center"/>
                             </StackPanel>
                         </DataTemplate>
                     </TabControl.ItemTemplate>

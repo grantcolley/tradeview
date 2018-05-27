@@ -938,7 +938,7 @@
     <SolidColorBrush x:Key="TabItemBorderIsSelected" Color="{StaticResource Color_024}" />
     <SolidColorBrush x:Key="TabItemIsSelected" Color="{StaticResource Color_006}" />
     
-    <Style  TargetType="{x:Type TabControl}">
+    <Style TargetType="{x:Type TabControl}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Margin" Value="2" />
@@ -994,12 +994,10 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource TabItemBorderIsSelected}"/>
                             <Setter TargetName="Border" Property="Background" Value="{StaticResource TabItemIsSelected}"/>
-                            <Setter TargetName="Border" Property="Opacity" Value="0.5"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource TabItemBorderIsSelected}"/>
                             <Setter TargetName="Border" Property="Background" Value="{StaticResource TabItemIsSelected}"/>
-                            <Setter TargetName="Border" Property="Opacity" Value="0.5"/>
                             <Setter Property="Panel.ZIndex" Value="100" />
                         </Trigger>
                     </ControlTemplate.Triggers>
