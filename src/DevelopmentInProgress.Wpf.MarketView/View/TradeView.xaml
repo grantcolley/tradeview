@@ -85,9 +85,10 @@
                                Foreground="{Binding SelectedSymbol.LastPriceChangeDirection, Converter={StaticResource LastPriceChangeDirectionColourConverter}}"/>
                     </DockPanel>
                     <Label Grid.Row="4" Grid.Column="0" Content="Stop Loss" Visibility="{Binding IsStopLoss, Converter={StaticResource boolToVisibilityConverter}}"/>
-                    <decimalBox:XamlDecimalUpDown Grid.Row="4" Grid.Column="1" Margin="2" 
-                                              DecimalValue="{Binding StopPrice, Mode=TwoWay}"
-                                              Visibility="{Binding IsStopLoss, Converter={StaticResource boolToVisibilityConverter}}"/>
+                    <decimalBox:XamlDecimalUpDown Grid.Row="4" Grid.Column="1" Margin="2"
+                                                  DecimalValue="{Binding StopPrice, Mode=TwoWay}"
+                                                  Increment="{Binding SelectedSymbol.Price.Increment}"
+                                                  Visibility="{Binding IsStopLoss, Converter={StaticResource boolToVisibilityConverter}}"/>
                     <DockPanel Grid.Row="7" Grid.Column="1" LastChildFill="True" Visibility="{Binding IsLoading, Converter={StaticResource invertBoolToVisibilityConverter}}">
                         <tradecontrol:XamlTradeControl DockPanel.Dock="Left"
                                                    Margin="2"
