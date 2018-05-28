@@ -893,11 +893,11 @@
   <BorderGapMaskConverter x:Key="BorderGapMaskConverter" />
   <Style x:Key="GroupBoxStyle" TargetType="{x:Type GroupBox}">
     <Setter Property="FontFamily" Value="Segoe UI" />
-    <Setter Property="FontSize" Value="14.667" />
+    <Setter Property="FontSize" Value="11" />
     <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
     <Setter Property="BorderBrush" Value="{StaticResource GroupBoxBorderBrush}" />
     <Setter Property="BorderThickness" Value="1" />
-    <Setter Property="Padding" Value="5" />
+    <Setter Property="Padding" Value="3" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="Template">
       <Setter.Value>
