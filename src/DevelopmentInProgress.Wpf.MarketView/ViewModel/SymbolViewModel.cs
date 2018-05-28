@@ -30,7 +30,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         private int limit = 20;
         private int chartDisplayLimit = 100;
-        private int tradesDisplayLimit = 21;
+        private int tradesDisplayLimit = 20;
 
         public SymbolViewModel(IExchangeService exchangeService)
             : base(exchangeService)
