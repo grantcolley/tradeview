@@ -12,6 +12,7 @@ using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 using System.Reactive.Linq;
 using DevelopmentInProgress.Wpf.MarketView.Events;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
@@ -27,6 +28,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private StrategyViewModel strategyViewModel;
         private User user;
         private Account account;
+
+        public ICommand CloseCommand { get; set; }
 
         private ObservableCollection<SymbolViewModel> symbols;
 
@@ -51,6 +54,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             ObserveAccount();
             ObserveTrade();
             ObserveOrders();
+
+            CloseCommand = new ViewModelCommand(Close);
         }
 
         public AccountViewModel AccountViewModel
@@ -214,6 +219,16 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             await personaliseService.SavePreferences(user);
         }
+        
+        public async void Close(object param)
+        {
+            var symbol = param as SymbolViewModel;
+            if(symbol != null)
+            {
+                symbol.Dispose();
+                Symbols.Remove(symbol);
+            }
+        }
 
         protected override void OnDisposing()
         {
@@ -234,9 +249,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 SymbolsViewModel.Dispose();
             }
 
-            if(tradeViewModel != null)
+            if(TradeViewModel != null)
             {
-                tradeViewModel.Dispose();
+                TradeViewModel.Dispose();
             }
 
             if(OrdersViewModel != null)
