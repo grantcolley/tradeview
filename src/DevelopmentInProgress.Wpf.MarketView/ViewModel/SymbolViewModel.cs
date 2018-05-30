@@ -258,7 +258,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                     var asks = new List<OrderBookPriceLevel>(
                         (from ask in orderBook.Asks
-                         orderby ask.Price descending
+                         orderby ask.Price
                          select new OrderBookPriceLevel
                          {
                              Price = ask.Price.Trim(Symbol.PricePrecision),
@@ -267,15 +267,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                     var bids = new List<OrderBookPriceLevel>(
                         (from bid in orderBook.Bids
-                         orderby bid.Price descending
+                         orderby bid.Price
                          select new OrderBookPriceLevel
                          {
                              Price = bid.Price.Trim(Symbol.PricePrecision),
                              Quantity = bid.Quantity.Trim(Symbol.QuantityPrecision)
                          }));
 
-                    OrderBook.Asks = asks;
-                    OrderBook.Bids = bids;
+                    OrderBook.Update(asks, bids);
                 }
             }
         }

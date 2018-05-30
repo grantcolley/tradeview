@@ -1,5 +1,6 @@
 ﻿using LiveCharts;
 using LiveCharts.Configurations;
+using LiveCharts.Defaults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
         private List<OrderBookPriceLevel> bids;
         private ChartValues<OrderBookPriceLevel> chartAsks;
         private ChartValues<OrderBookPriceLevel> chartBids;
+        private ChartValues<OrderBookPriceLevel> chartAggregatedAsks;
+        private ChartValues<OrderBookPriceLevel> chartAggregatedBids;
 
         static OrderBook()
         {
@@ -29,6 +32,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
         {
             chartAsks = new ChartValues<OrderBookPriceLevel>();
             chartBids = new ChartValues<OrderBookPriceLevel>();
+            chartAggregatedAsks = new ChartValues<OrderBookPriceLevel>();
+            chartAggregatedBids = new ChartValues<OrderBookPriceLevel>();
         }
 
         public string Symbol { get; set; }
@@ -73,20 +78,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
             }
         }
 
-        public List<OrderBookPriceLevel> Asks
-        {
-            get { return asks; }
-            set
-            {
-                if (asks != value)
-                {
-                    asks = value;
-                    ChartAsks = new ChartValues<OrderBookPriceLevel>(asks.OrderBy(a => a.Price));
-                    OnPropertyChanged("TopAsks");
-                }
-            }
-        }
-
         public List<OrderBookPriceLevel> TopAsks
         {
             get { return asks?.Skip(asks.Count() - 10).ToList(); }
@@ -105,16 +96,15 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
             }
         }
 
-        public List<OrderBookPriceLevel> Bids
+        public ChartValues<OrderBookPriceLevel> ChartAggregatedAsks
         {
-            get { return bids; }
+            get { return chartAggregatedAsks; }
             set
             {
-                if (bids != value)
+                if (chartAggregatedAsks != value)
                 {
-                    bids = value;
-                    ChartBids = new ChartValues<OrderBookPriceLevel>(bids);
-                    OnPropertyChanged("TopBids");                    
+                    chartAggregatedAsks = value;
+                    OnPropertyChanged("ChartAggregatedAsks");
                 }
             }
         }
@@ -135,6 +125,144 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
                     OnPropertyChanged("ChartBids");
                 }
             }
+        }
+
+        public ChartValues<OrderBookPriceLevel> ChartAggregatedBids
+        {
+            get { return chartAggregatedBids; }
+            set
+            {
+                if (chartAggregatedBids != value)
+                {
+                    chartAggregatedBids = value;
+                    OnPropertyChanged("ChartAggregatedBids");
+                }
+            }
+        }
+
+        public void Update(List<OrderBookPriceLevel> asks, List<OrderBookPriceLevel> bids)
+        {
+            this.asks = asks.OrderByDescending(a => a.Price).ToList();
+            this.bids = bids.OrderByDescending(b => b.Price).ToList();
+
+            if (ChartAsks.Any())
+            {
+                UpdateChartValues(ChartAsks, asks, true);
+            }
+            else
+            {
+                ChartAsks = new ChartValues<OrderBookPriceLevel>(asks.OrderBy(a => a.Price));
+            }
+
+            if (ChartAggregatedAsks.Any())
+            {
+                UpdateChartValues(ChartBids, bids, false);
+            }
+            else
+            {
+                ChartBids = new ChartValues<OrderBookPriceLevel>(bids.OrderByDescending(b => b.Price));
+            }
+
+            var aggregatedAsks = GetAggregatedList(asks.OrderBy(a => a.Price).ToList());
+            if (ChartAggregatedAsks.Any())
+            {
+                UpdateChartValues(ChartAggregatedAsks, aggregatedAsks, true);
+            }
+            else
+            {
+                ChartAggregatedAsks = new ChartValues<OrderBookPriceLevel>(aggregatedAsks.OrderBy(a => a.Price));
+            }
+
+            var aggregatedBids = GetAggregatedList(bids.OrderByDescending(a => a.Price).ToList());
+            if (ChartAggregatedBids.Any())
+            {
+                UpdateChartValues(ChartAggregatedBids, aggregatedBids, false);
+            }
+            else
+            {
+                ChartAggregatedBids = new ChartValues<OrderBookPriceLevel>(aggregatedBids.OrderByDescending(b => b.Price));
+            }
+
+            OnPropertyChanged("TopAsks");
+            OnPropertyChanged("TopBids");
+        }
+
+        public void UpdateChartValues(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl, bool isAsk)
+        {
+            Func<OrderBookPriceLevel, OrderBookPriceLevel, OrderBookPriceLevel> f = ((p, n) =>
+            {
+                p.Quantity = n.Quantity;
+                return p;
+            });
+
+            var removePoints = cv.Where(v => !pl.Any(p => p.Price == v.Price)).ToList();
+            foreach (var point in removePoints)
+            {
+                cv.Remove(point);
+            }
+
+            (from v in cv
+             join p in pl
+             on v.Price equals p.Price
+             select f(v, p)).ToList();
+
+            var addPoints = pl.Where(p => !cv.Any(v => v.Price == p.Price)).ToList();
+            var appendRange = new List<OrderBookPriceLevel>();
+
+            foreach (var point in addPoints)
+            {
+                for (int i = 0; i < cv.Count; i++)
+                {
+                    if (isAsk)
+                    {
+                        if (point.Price < cv[i].Price)
+                        {
+                            cv.Insert(i, point);
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if (point.Price > cv[i].Price)
+                        {
+                            cv.Insert(i, point);
+                            break;
+                        }
+                    }
+
+                    if (i == cv.Count - 1)
+                    {
+                        appendRange.Add(point);
+                    }
+                }
+            }
+
+            if (appendRange.Any())
+            {
+                if (isAsk)
+                {
+                    cv.AddRange(appendRange.OrderBy(p => p.Price));
+                }
+                else
+                {
+                    cv.AddRange(appendRange.OrderByDescending(p => p.Price));
+                }
+            }
+        }
+
+        public List<OrderBookPriceLevel> GetAggregatedList(List<OrderBookPriceLevel> pl)
+        {
+            var aggregatedList = pl.Select(p => new OrderBookPriceLevel { Price = p.Price, Quantity = p.Quantity }).ToList();
+
+            for(int i = 0; i < pl.Count; i++)
+            {
+                if (i > 0)
+                {
+                    aggregatedList[i].Quantity = aggregatedList[i].Quantity + aggregatedList[i - 1].Quantity;
+                }
+            }
+
+            return aggregatedList;
         }
     }
 }
