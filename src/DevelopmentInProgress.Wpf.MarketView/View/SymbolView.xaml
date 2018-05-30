@@ -137,9 +137,8 @@
                              Visibility="{Binding IsLoadingTrades, Converter={StaticResource boolToVisibilityConverter}}">
                         <progress:CircularProgress/>
                     </Viewbox>
-                    
-                    <!--DisableAnimations="True"-->
-                    <lc:CartesianChart Hoverable="False" DataTooltip="{x:Null}"
+
+                    <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}"
                                        Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}">
                         <lc:CartesianChart.Series>
                             <lc:StepLineSeries Values="{Binding AggregateTradesChart}" 
