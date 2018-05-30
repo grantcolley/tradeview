@@ -32,8 +32,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             Assert.IsNotNull(symbolViewModel.OrderBook);
             Assert.AreEqual(symbolViewModel.OrderBook.LastUpdateId, TestHelper.OrderBook.LastUpdateId);
             Assert.IsNotNull(symbolViewModel.OrderBook.Top);
-            Assert.IsTrue(symbolViewModel.OrderBook.Asks.Count > 0);
-            Assert.IsTrue(symbolViewModel.OrderBook.Bids.Count > 0);
+            Assert.IsTrue(symbolViewModel.OrderBook.TopAsks.Count > 0);
+            Assert.IsTrue(symbolViewModel.OrderBook.TopBids.Count > 0);
             Assert.IsTrue(symbolViewModel.AggregateTrades.Count > 0);
         }
 
@@ -81,7 +81,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
 
             for(int i = 0; i < newTrades.Count(); i++)
             {
-                if (trades.Count >= 21)
+                if (trades.Count >= 20)
                 {
                     trades.RemoveAt(trades.Count - 1);
                 }

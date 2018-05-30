@@ -154,7 +154,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
                 ChartAsks = new ChartValues<OrderBookPriceLevel>(asks.OrderBy(a => a.Price));
             }
 
-            if (ChartAggregatedAsks.Any())
+            if (ChartBids.Any())
             {
                 UpdateChartValues(ChartBids, bids, false);
             }

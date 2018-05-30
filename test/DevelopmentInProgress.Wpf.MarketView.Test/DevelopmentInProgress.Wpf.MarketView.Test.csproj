@@ -39,6 +39,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df" />
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MSTest.TestFramework.1.2.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
     </Reference>
@@ -82,6 +83,7 @@
     <Compile Include="TradeViewModelTest.cs" />
     <Compile Include="SymbolStatisticsExtensionsTest.cs" />
     <Compile Include="ScratchPad.cs" />
+    <Compile Include="OrderBookTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
