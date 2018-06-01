@@ -43,7 +43,7 @@
             <Button Click="SaveAllClick" ToolTip="Save All" Style="{StaticResource ButtonImageStyle}" BorderThickness="0">
                 <Image Source="Images/SaveAll.png" Height="16" Width="16"/>
             </Button>
-            <Button Click="RefreshAllClick" ToolTip="Refresh All" Style="{StaticResource ButtonImageStyle}" BorderThickness="0">
+            <Button Click="RefreshAllClick" ToolTip="Refresh All" Style="{StaticResource ButtonImageStyle}" BorderThickness="0" Visibility="Collapsed">
                 <Image Source="Images/Refresh.png" Height="16" Width="16"/>
             </Button>
             <ContentControl/>

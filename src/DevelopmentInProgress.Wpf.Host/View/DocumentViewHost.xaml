@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
         <Border Grid.Row="0" BorderBrush="{StaticResource TextBoxBorderBrush}" BorderThickness="1" Background="{StaticResource TextBoxBackgroundBrush}">
             <StackPanel Orientation="Horizontal">
-                <Button Command="{Binding Refresh}" ToolTip="Refresh" Style="{StaticResource ButtonImageStyle}">
+                <Button Command="{Binding Refresh}" ToolTip="Refresh" Style="{StaticResource ButtonImageStyle}" Visibility="Collapsed">
                     <Image Source="..\Images\Refresh.png" Height="20" Width="20" />
                 </Button>
                 <ItemsControl ItemsSource="{Binding NavigationHistory}">
