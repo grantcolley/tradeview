@@ -14,7 +14,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private CancellationTokenSource symbolsCancellationTokenSource;
         private List<Symbol> symbols;
         private Symbol selectedSymbol;
-        private User user;
+        private AccountPreferences accountPreferences;
         private bool showFavourites;
         private bool isLoadingSymbols;
         private bool disposed;
@@ -61,14 +61,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        public User User
+        public AccountPreferences AccountPreferences
         {
-            get { return user; }
+            get { return accountPreferences; }
             set
             {
-                if (user != value)
+                if (accountPreferences != value)
                 {
-                    user = value;
+                    accountPreferences = value;
                     SetPreferences();
                 }
             }
@@ -128,11 +128,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             disposed = true;
         }
 
-        public void SetUser(User user)
+        public void SetUser(AccountPreferences accountPreferences)
         {
             try
             {
-                User = user;
+                AccountPreferences = accountPreferences;
             }
             catch (Exception ex)
             {
@@ -187,13 +187,13 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         private void SetPreferences()
         {
-            if (user != null 
-                && user.Preferences != null 
+            if (accountPreferences != null 
+                && accountPreferences.Preferences != null 
                 && Symbols != null 
                 && Symbols.Any())
             {
-                if (user.Preferences.FavouriteSymbols != null
-                    && user.Preferences.FavouriteSymbols.Any())
+                if (accountPreferences.Preferences.FavouriteSymbols != null
+                    && accountPreferences.Preferences.FavouriteSymbols.Any())
                 {
                     Func<Symbol, string, Symbol> f = ((s, p) =>
                     {
@@ -201,13 +201,13 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                         return s;
                     });
 
-                    (from s in Symbols join fs in user.Preferences.FavouriteSymbols on s.Name equals fs.ToString() select f(s, fs)).ToList();
+                    (from s in Symbols join fs in accountPreferences.Preferences.FavouriteSymbols on s.Name equals fs.ToString() select f(s, fs)).ToList();
 
-                    ShowFavourites = user.Preferences.ShowFavourites;
+                    ShowFavourites = accountPreferences.Preferences.ShowFavourites;
 
-                    if (!string.IsNullOrWhiteSpace(user.Preferences.SelectedSymbol))
+                    if (!string.IsNullOrWhiteSpace(accountPreferences.Preferences.SelectedSymbol))
                     {
-                        var symbol = Symbols.FirstOrDefault(s => s.Name.Equals(user.Preferences.SelectedSymbol));
+                        var symbol = Symbols.FirstOrDefault(s => s.Name.Equals(accountPreferences.Preferences.SelectedSymbol));
                         if (symbol != null)
                         {
                             SelectedSymbol = symbol;

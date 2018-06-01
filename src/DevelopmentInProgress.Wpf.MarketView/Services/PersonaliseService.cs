@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Services
 {
-    public class PersonaliseService : IPersonaliseService
+    public class PersonaliseService : IAccountsService
     {
         private string preferencesFile;
 
@@ -16,23 +16,23 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
             preferencesFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{Environment.UserName}.txt");
         }
 
-        public async Task<User> GetPreferencesAsync()
+        public async Task<AccountPreferences> GetAccountsAsync()
         {
             if (File.Exists(preferencesFile))
             {
                 using (var reader = File.OpenText(preferencesFile))
                 {
                     var json = await reader.ReadToEndAsync().ConfigureAwait(false);
-                    return DeserializeJson<User>(json);
+                    return DeserializeJson<AccountPreferences>(json);
                 }
             }
 
-            return new User();
+            return new AccountPreferences();
         }
 
-        public async Task SavePreferences(User user)
+        public async Task SaveAccountAsync(AccountPreferences accountPreferences)
         {
-            var json = SerializeToJson(user);
+            var json = SerializeToJson(accountPreferences);
             using (StreamWriter writer = File.CreateText(preferencesFile))
             {
                 await writer.WriteAsync(json).ConfigureAwait(false);

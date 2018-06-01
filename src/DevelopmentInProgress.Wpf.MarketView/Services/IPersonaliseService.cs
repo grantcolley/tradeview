@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Services
 {
-    public interface IPersonaliseService
+    public interface IAccountsService
     {
-        Task<User> GetPreferencesAsync();
-        Task SavePreferences(User user);
+        Task<AccountPreferences> GetAccountsAsync();
+        Task SaveAccountAsync(AccountPreferences accountPreferences);
     }
 }

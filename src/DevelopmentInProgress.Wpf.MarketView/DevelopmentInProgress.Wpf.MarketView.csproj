@@ -90,7 +90,8 @@
     <Compile Include="Model\OrderBook.cs" />
     <Compile Include="Model\OrderBookPriceLevel.cs" />
     <Compile Include="Model\OrderBookTop.cs" />
-    <Compile Include="Personalise\User.cs" />
+    <Compile Include="Personalise\AccountPreferences.cs" />
+    <Compile Include="Personalise\AccountsList.cs" />
     <Compile Include="Personalise\Preferences.cs" />
     <Compile Include="Model\EntityBase.cs" />
     <Compile Include="Model\Symbol.cs" />

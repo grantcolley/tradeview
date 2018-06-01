@@ -49,7 +49,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
 
             // Assert
             Assert.AreEqual(symbolsViewModel.Symbols.Count, TestHelper.Symbols.Count);
-            Assert.IsNull(symbolsViewModel.User);
+            Assert.IsNull(symbolsViewModel.AccountPreferences);
             Assert.IsNull(symbolsViewModel.SelectedSymbol);
             Assert.IsFalse(fail);
         }
@@ -97,15 +97,15 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         }
 
         [TestMethod]
-        public async Task User()
+        public async Task AccountPreferences()
         {
             // Arrange
             var exchangeApi = ExchangeApiHelper.GetExchangeApi(ExchangeApiType.SymbolsViewModel);
             var exchangeService = new ExchangeService(exchangeApi);
             var symbolsViewModel = new SymbolsViewModel(exchangeService);
 
-            var userData = File.ReadAllText("UserPreferences.txt");
-            var user = JsonConvert.DeserializeObject<User>(userData);
+            var userData = File.ReadAllText("AccountPreferences.txt");
+            var user = JsonConvert.DeserializeObject<AccountPreferences>(userData);
 
             await Task.Delay(1000);
 

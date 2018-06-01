@@ -19,14 +19,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
     public class TradingViewModel : DocumentViewModel
     {
         private IExchangeService exchangeService;
-        private IPersonaliseService personaliseService;
+        private IAccountsService personaliseService;
         private SymbolViewModel selectedSymbol;
         private AccountViewModel accountViewModel;
         private TradeViewModel tradeViewModel;
         private SymbolsViewModel symbolsViewModel;
         private OrdersViewModel ordersViewModel;
         private StrategyViewModel strategyViewModel;
-        private User user;
+        private AccountPreferences accountPreferences;
         private Account account;
 
         public ICommand CloseCommand { get; set; }
@@ -36,7 +36,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         public TradingViewModel(ViewModelContext viewModelContext, 
             AccountViewModel accountViewModel, SymbolsViewModel symbolsViewModel,
             TradeViewModel tradeViewModel, OrdersViewModel ordersViewModel, StrategyViewModel strategyViewModel,
-            IExchangeService exchangeService, IPersonaliseService personaliseService)
+            IExchangeService exchangeService, IAccountsService personaliseService)
             : base(viewModelContext)
         {
             AccountViewModel = accountViewModel;
@@ -180,19 +180,19 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             Account = new Account(new Interface.AccountInfo { User = new Interface.User() });
             
-            user = await personaliseService.GetPreferencesAsync();
+            accountPreferences = await personaliseService.GetAccountsAsync();
 
-            if (user != null
-                && user.Preferences != null)
+            if (accountPreferences != null
+                && accountPreferences.Preferences != null)
             {
-                if (!string.IsNullOrWhiteSpace(user.ApiKey))
+                if (!string.IsNullOrWhiteSpace(accountPreferences.ApiKey))
                 {
-                    Account.ApiKey = user.ApiKey;
-                    Account.ApiSecret = user.ApiSecret;
+                    Account.ApiKey = accountPreferences.ApiKey;
+                    Account.ApiSecret = accountPreferences.ApiSecret;
                 }
             }
 
-            SymbolsViewModel.SetUser(user);
+            SymbolsViewModel.SetUser(accountPreferences);
             AccountViewModel.SetAccount(account);
 
             IsBusy = false;
@@ -202,22 +202,22 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         {
             base.SaveDocument();
 
-            user.ApiKey = Account.ApiKey;
-            user.ApiSecret = Account.AccountInfo.User.ApiSecret;
-            user.Preferences = new Preferences();
+            accountPreferences.ApiKey = Account.ApiKey;
+            accountPreferences.ApiSecret = Account.AccountInfo.User.ApiSecret;
+            accountPreferences.Preferences = new SymbolPreferences();
             if(SymbolsViewModel != null)
             {
-                user.Preferences.ShowFavourites = SymbolsViewModel.ShowFavourites;
-                user.Preferences.FavouriteSymbols = (from s in SymbolsViewModel.Symbols where s.IsFavourite select s.Name).ToList();
+                accountPreferences.Preferences.ShowFavourites = SymbolsViewModel.ShowFavourites;
+                accountPreferences.Preferences.FavouriteSymbols = (from s in SymbolsViewModel.Symbols where s.IsFavourite select s.Name).ToList();
             }
             
             if(SelectedSymbol != null
                 && SelectedSymbol.Symbol != null)
             {
-                user.Preferences.SelectedSymbol = SelectedSymbol.Symbol.Name;
+                accountPreferences.Preferences.SelectedSymbol = SelectedSymbol.Symbol.Name;
             }
 
-            await personaliseService.SavePreferences(user);
+            await personaliseService.SaveAccountAsync(accountPreferences);
         }
         
         public async void Close(object param)

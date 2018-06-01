@@ -2,7 +2,7 @@
 
 namespace DevelopmentInProgress.Wpf.MarketView.Personalise
 {
-    public class Preferences
+    public class SymbolPreferences
     {
         public bool ShowFavourites { get; set; }
         public string SelectedSymbol { get; set; }
