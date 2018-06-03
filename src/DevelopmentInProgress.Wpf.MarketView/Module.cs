@@ -6,16 +6,20 @@ using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Unity;
 using System;
 using DevelopmentInProgress.Wpf.MarketView.Services;
+using DevelopmentInProgress.Wpf.Host.View;
 
 namespace DevelopmentInProgress.Wpf.MarketView
 {
     public class Module : ModuleBase
     {
         public const string ModuleName = "Market View";
+        private static string AccountUser = $"Accounts : {Environment.UserName}";
+        private static IUnityContainer StaticContainer;
 
         public Module(IUnityContainer container, ModuleNavigator moduleNavigator, ILoggerFacade logger)
             : base(container, moduleNavigator, logger)
         {
+            StaticContainer = Container;
         }
 
         public override void Initialize()
@@ -30,7 +34,7 @@ namespace DevelopmentInProgress.Wpf.MarketView
             moduleSettings.ModuleImagePath = @"/DevelopmentInProgress.Wpf.MarketView;component/Images/diptrade.png";
 
             var moduleGroup = new ModuleGroup();
-            moduleGroup.ModuleGroupName = $"Accounts : {Environment.UserName}";
+            moduleGroup.ModuleGroupName = AccountUser;
 
             var accountsService = Container.Resolve<IAccountsService>();
 
@@ -45,18 +49,42 @@ namespace DevelopmentInProgress.Wpf.MarketView
 
             foreach (var userAccount in userAccounts.Accounts)
             {
-                var tradingDocument = new ModuleGroupItem();
-                tradingDocument.ModuleGroupItemName = userAccount.AccountName;
-                tradingDocument.TargetView = typeof(TradingView).Name;
-                tradingDocument.TargetViewTitle = userAccount.AccountName;
-                tradingDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.Wpf.MarketView;component/Images/trade.png";
-                moduleGroup.ModuleGroupItems.Add(tradingDocument);
+                var accountDocument = CreateAccountModuleGroupItem(userAccount.AccountName, userAccount.AccountName);
+                moduleGroup.ModuleGroupItems.Add(accountDocument);
             }
 
             moduleSettings.ModuleGroups.Add(moduleGroup);
             ModuleNavigator.AddModuleNavigation(moduleSettings);
 
             Logger.Log("Initialize DevelopmentInProgress.Wpf.MarketView Complete", Category.Info, Priority.None);
+        }
+
+        public static void AddAccount(string accountName)
+        {
+            var accountDocument = CreateAccountModuleGroupItem(accountName, accountName);
+
+            var modulesNavigationView = StaticContainer.Resolve(typeof(ModulesNavigationView),
+                typeof(ModulesNavigationView).Name) as ModulesNavigationView;
+
+            modulesNavigationView.AddNavigationListItem(ModuleName, AccountUser, accountDocument);
+        }
+
+        public static void RemoveAccount(string accountName)
+        {
+            var modulesNavigationView = StaticContainer.Resolve(typeof(ModulesNavigationView),
+                typeof(ModulesNavigationView).Name) as ModulesNavigationView;
+
+            modulesNavigationView.RemoveNavigationListItem(ModuleName, AccountUser, accountName);
+        }
+
+        private static ModuleGroupItem CreateAccountModuleGroupItem(string name, string title)
+        {
+            var accountDocument = new ModuleGroupItem();
+            accountDocument.ModuleGroupItemName = name;
+            accountDocument.TargetView = typeof(TradingView).Name;
+            accountDocument.TargetViewTitle = title;
+            accountDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.Wpf.MarketView;component/Images/trade.png";
+            return accountDocument;
         }
     }
 }
