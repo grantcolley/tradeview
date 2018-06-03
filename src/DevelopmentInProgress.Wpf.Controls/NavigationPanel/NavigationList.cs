@@ -5,7 +5,7 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -27,8 +27,8 @@ namespace DevelopmentInProgress.Wpf.Controls.NavigationPanel
             DefaultStyleKeyProperty.OverrideMetadata(typeof(NavigationList), new FrameworkPropertyMetadata(typeof(NavigationList)));
 
             NavigationListNameProperty = DependencyProperty.Register("NavigationListName", typeof(string), typeof(NavigationList));
-            NavigationListItemsProperty = DependencyProperty.Register("NavigationListItems", typeof(List<NavigationListItem>), 
-                typeof(NavigationList), new FrameworkPropertyMetadata(new List<NavigationListItem>()));
+            NavigationListItemsProperty = DependencyProperty.Register("NavigationListItems", typeof(ObservableCollection<NavigationListItem>), 
+                typeof(NavigationList), new FrameworkPropertyMetadata(new ObservableCollection<NavigationListItem>()));
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace DevelopmentInProgress.Wpf.Controls.NavigationPanel
         /// </summary>
         public NavigationList()
         {
-            NavigationListItems = new List<NavigationListItem>();
+            NavigationListItems = new ObservableCollection<NavigationListItem>();
         }
 
         /// <summary>
@@ -51,9 +51,9 @@ namespace DevelopmentInProgress.Wpf.Controls.NavigationPanel
         /// <summary>
         /// Gets or sets the list of <see cref="NavigationListItem"/>'s.
         /// </summary>
-        public List<NavigationListItem> NavigationListItems
+        public ObservableCollection<NavigationListItem> NavigationListItems
         {
-            get { return (List<NavigationListItem>)GetValue(NavigationListItemsProperty); }
+            get { return (ObservableCollection<NavigationListItem>)GetValue(NavigationListItemsProperty); }
             set { SetValue(NavigationListItemsProperty, value); }
         }
     }
