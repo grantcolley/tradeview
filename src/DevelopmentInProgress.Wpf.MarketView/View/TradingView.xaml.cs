@@ -1,6 +1,6 @@
 ﻿using DevelopmentInProgress.Wpf.Host.Context;
-using DevelopmentInProgress.Wpf.MarketView.ViewModel;
 using DevelopmentInProgress.Wpf.Host.View;
+using DevelopmentInProgress.Wpf.MarketView.ViewModel;
 
 namespace DevelopmentInProgress.Wpf.MarketView.View
 {

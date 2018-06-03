@@ -90,9 +90,9 @@
     <Compile Include="Model\OrderBook.cs" />
     <Compile Include="Model\OrderBookPriceLevel.cs" />
     <Compile Include="Model\OrderBookTop.cs" />
-    <Compile Include="Personalise\AccountPreferences.cs" />
-    <Compile Include="Personalise\AccountsList.cs" />
-    <Compile Include="Personalise\Preferences.cs" />
+    <Compile Include="Model\UserAccount.cs" />
+    <Compile Include="Model\UserAccounts.cs" />
+    <Compile Include="Model\Preferences.cs" />
     <Compile Include="Model\EntityBase.cs" />
     <Compile Include="Model\Symbol.cs" />
     <Compile Include="Model\SymbolStatistics.cs" />
@@ -100,8 +100,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ExchangeService.cs" />
     <Compile Include="Services\IExchangeService.cs" />
-    <Compile Include="Services\IPersonaliseService.cs" />
-    <Compile Include="Services\PersonaliseService.cs" />
+    <Compile Include="Services\IAccountsService.cs" />
+    <Compile Include="Services\AccountsService.cs" />
     <Compile Include="ViewModel\AccountViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\OrdersViewModel.cs" />
@@ -130,6 +130,10 @@
     </Compile>
     <Compile Include="View\TradingView.xaml.cs">
       <DependentUpon>TradingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\UserAccountsViewModel.cs" />
+    <Compile Include="View\UserAccountsView.xaml.cs">
+      <DependentUpon>UserAccountsView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +188,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TradingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserAccountsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

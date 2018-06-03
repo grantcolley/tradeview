@@ -4,6 +4,8 @@ using DevelopmentInProgress.Wpf.Host.Module;
 using DevelopmentInProgress.Wpf.Host.Navigation;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Unity;
+using System;
+using DevelopmentInProgress.Wpf.MarketView.Services;
 
 namespace DevelopmentInProgress.Wpf.MarketView
 {
@@ -18,6 +20,8 @@ namespace DevelopmentInProgress.Wpf.MarketView
 
         public override void Initialize()
         {
+            Container.RegisterType<object, UserAccountsView>(typeof(UserAccountsView).Name);
+            Container.RegisterType<UserAccountsViewModel>(typeof(UserAccountsViewModel).Name);
             Container.RegisterType<object, TradingView>(typeof(TradingView).Name);
             Container.RegisterType<TradingViewModel>(typeof(TradingViewModel).Name);
 
@@ -26,15 +30,29 @@ namespace DevelopmentInProgress.Wpf.MarketView
             moduleSettings.ModuleImagePath = @"/DevelopmentInProgress.Wpf.MarketView;component/Images/diptrade.png";
 
             var moduleGroup = new ModuleGroup();
-            moduleGroup.ModuleGroupName = "Market View";
+            moduleGroup.ModuleGroupName = $"Accounts : {Environment.UserName}";
 
-            var tradingDocument = new ModuleGroupItem();
-            tradingDocument.ModuleGroupItemName = "Market";
-            tradingDocument.TargetView = typeof(TradingView).Name;
-            tradingDocument.TargetViewTitle = "Market";
-            tradingDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.Wpf.MarketView;component/Images/trade.png";
+            var accountsService = Container.Resolve<IAccountsService>();
 
-            moduleGroup.ModuleGroupItems.Add(tradingDocument);
+            var userAccounts = accountsService.GetAccounts();
+
+            var manageAccountsDocument = new ModuleGroupItem();
+            manageAccountsDocument.ModuleGroupItemName = "Manage Accounts";
+            manageAccountsDocument.TargetView = typeof(UserAccountsView).Name;
+            manageAccountsDocument.TargetViewTitle = "Manage Accounts";
+            manageAccountsDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.Wpf.MarketView;component/Images/trade.png";
+            moduleGroup.ModuleGroupItems.Add(manageAccountsDocument);
+
+            foreach (var userAccount in userAccounts.Accounts)
+            {
+                var tradingDocument = new ModuleGroupItem();
+                tradingDocument.ModuleGroupItemName = userAccount.AccountName;
+                tradingDocument.TargetView = typeof(TradingView).Name;
+                tradingDocument.TargetViewTitle = userAccount.AccountName;
+                tradingDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.Wpf.MarketView;component/Images/trade.png";
+                moduleGroup.ModuleGroupItems.Add(tradingDocument);
+            }
+
             moduleSettings.ModuleGroups.Add(moduleGroup);
             ModuleNavigator.AddModuleNavigation(moduleSettings);
 

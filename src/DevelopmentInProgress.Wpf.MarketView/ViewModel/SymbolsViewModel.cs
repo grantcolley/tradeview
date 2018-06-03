@@ -1,6 +1,5 @@
 ﻿using DevelopmentInProgress.Wpf.MarketView.Events;
 using DevelopmentInProgress.Wpf.MarketView.Model;
-using DevelopmentInProgress.Wpf.MarketView.Personalise;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using System;
 using System.Collections.Generic;
@@ -14,7 +13,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private CancellationTokenSource symbolsCancellationTokenSource;
         private List<Symbol> symbols;
         private Symbol selectedSymbol;
-        private AccountPreferences accountPreferences;
+        private UserAccount accountPreferences;
         private bool showFavourites;
         private bool isLoadingSymbols;
         private bool disposed;
@@ -61,7 +60,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        public AccountPreferences AccountPreferences
+        public UserAccount AccountPreferences
         {
             get { return accountPreferences; }
             set
@@ -128,7 +127,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             disposed = true;
         }
 
-        public void SetUser(AccountPreferences accountPreferences)
+        public void SetAccount(UserAccount accountPreferences)
         {
             try
             {

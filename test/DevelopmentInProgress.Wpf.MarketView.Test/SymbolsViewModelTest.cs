@@ -1,12 +1,12 @@
 ﻿using DevelopmentInProgress.MarketView.Test.Helper;
 using DevelopmentInProgress.Wpf.MarketView.Events;
 using DevelopmentInProgress.Wpf.MarketView.Model;
-using DevelopmentInProgress.Wpf.MarketView.Personalise;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using DevelopmentInProgress.Wpf.MarketView.ViewModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
@@ -103,18 +103,20 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var exchangeApi = ExchangeApiHelper.GetExchangeApi(ExchangeApiType.SymbolsViewModel);
             var exchangeService = new ExchangeService(exchangeApi);
             var symbolsViewModel = new SymbolsViewModel(exchangeService);
+            
+            var userData = File.ReadAllText("UserAccounts.txt");
+            var accounts = JsonConvert.DeserializeObject<UserAccounts>(userData);
 
-            var userData = File.ReadAllText("AccountPreferences.txt");
-            var user = JsonConvert.DeserializeObject<AccountPreferences>(userData);
+            var account = accounts.Accounts.First();
 
             await Task.Delay(1000);
 
             // Act
-            symbolsViewModel.SetUser(user);
+            symbolsViewModel.SetAccount(account);
 
             // Assert
             var favourites = from s in symbolsViewModel.Symbols
-                             join f in user.Preferences.FavouriteSymbols on s.Name equals f
+                             join f in account.Preferences.FavouriteSymbols on s.Name equals f
                              select s;
 
             foreach(var favourite in favourites)
@@ -122,7 +124,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
                 Assert.IsNotNull(symbolsViewModel.Symbols.First(s => s.Name.Equals(favourite.Name) && s.IsFavourite.Equals(true)));
             }
 
-            Assert.AreEqual(symbolsViewModel.SelectedSymbol.Name, user.Preferences.SelectedSymbol);
+            Assert.AreEqual(symbolsViewModel.SelectedSymbol.Name, account.Preferences.SelectedSymbol);
         }
     }
 }

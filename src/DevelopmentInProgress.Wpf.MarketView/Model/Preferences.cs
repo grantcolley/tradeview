@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace DevelopmentInProgress.Wpf.MarketView.Personalise
+namespace DevelopmentInProgress.Wpf.MarketView.Model
 {
-    public class SymbolPreferences
+    public class Preferences
     {
         public bool ShowFavourites { get; set; }
         public string SelectedSymbol { get; set; }
