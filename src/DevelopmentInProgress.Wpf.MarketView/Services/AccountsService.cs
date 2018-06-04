@@ -31,6 +31,22 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
             return new UserAccounts();
         }
 
+        public UserAccount GetAccount(string accountName)
+        {
+            if (File.Exists(userAccountsFile))
+            {
+                lock (accountsLock)
+                {
+                    var json = File.ReadAllText(userAccountsFile);
+                    var userAccounts = DeserializeJson<UserAccounts>(json);
+                    var userAccount = userAccounts.Accounts.Single(a => a.AccountName.Equals(accountName));
+                    return userAccount;
+                }
+            }
+
+            throw new Exception($"Account {accountName} not available.");
+        }
+
         public void SaveAccount(UserAccount userAccount)
         {
             lock (accountsLock)
@@ -45,8 +61,15 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
                 else
                 {
                     userAccounts = new UserAccounts();
-                    userAccounts.Accounts.Add(userAccount);
                 }
+
+                var dupe = userAccounts.Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName));
+                if(dupe != null)
+                {
+                    userAccounts.Accounts.Add(dupe);
+                }
+
+                userAccounts.Accounts.Add(userAccount);
 
                 var wjson = SerializeToJson(userAccounts);
                 File.WriteAllText(userAccountsFile, wjson);

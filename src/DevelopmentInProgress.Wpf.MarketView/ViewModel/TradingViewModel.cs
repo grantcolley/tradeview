@@ -2,7 +2,6 @@
 using DevelopmentInProgress.Wpf.Host.Context;
 using DevelopmentInProgress.Wpf.Host.ViewModel;
 using DevelopmentInProgress.Wpf.MarketView.Model;
-using DevelopmentInProgress.Wpf.MarketView.Personalise;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using System;
 using System.Collections.Generic;
@@ -19,14 +18,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
     public class TradingViewModel : DocumentViewModel
     {
         private IExchangeService exchangeService;
-        private IAccountsService personaliseService;
+        private IAccountsService accountsService;
         private SymbolViewModel selectedSymbol;
         private AccountViewModel accountViewModel;
         private TradeViewModel tradeViewModel;
         private SymbolsViewModel symbolsViewModel;
         private OrdersViewModel ordersViewModel;
         private StrategyViewModel strategyViewModel;
-        private AccountPreferences accountPreferences;
+        private UserAccount userAccount;
         private Account account;
 
         public ICommand CloseCommand { get; set; }
@@ -36,7 +35,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         public TradingViewModel(ViewModelContext viewModelContext, 
             AccountViewModel accountViewModel, SymbolsViewModel symbolsViewModel,
             TradeViewModel tradeViewModel, OrdersViewModel ordersViewModel, StrategyViewModel strategyViewModel,
-            IExchangeService exchangeService, IAccountsService personaliseService)
+            IExchangeService exchangeService, IAccountsService accountsService)
             : base(viewModelContext)
         {
             AccountViewModel = accountViewModel;
@@ -48,7 +47,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             Symbols = new ObservableCollection<SymbolViewModel>();
 
             this.exchangeService = exchangeService;
-            this.personaliseService = personaliseService;
+            this.accountsService = accountsService;
 
             ObserveSymbols();
             ObserveAccount();
@@ -97,19 +96,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        public ObservableCollection<SymbolViewModel> Symbols
-        {
-            get { return symbols; }
-            private set
-            {
-                if (symbols != value)
-                {
-                    symbols = value;
-                    OnPropertyChanged("Symbols");
-                }
-            }
-        }
-
         public OrdersViewModel OrdersViewModel
         {
             get { return ordersViewModel; }
@@ -132,6 +118,19 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 {
                     strategyViewModel = value;
                     OnPropertyChanged("StrategyViewModel");
+                }
+            }
+        }
+
+        public ObservableCollection<SymbolViewModel> Symbols
+        {
+            get { return symbols; }
+            private set
+            {
+                if (symbols != value)
+                {
+                    symbols = value;
+                    OnPropertyChanged("Symbols");
                 }
             }
         }
@@ -179,20 +178,20 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             strategyViewModel.Dispatcher = ViewModelContext.UiDispatcher;
 
             Account = new Account(new Interface.AccountInfo { User = new Interface.User() });
-            
-            accountPreferences = await personaliseService.GetAccountsAsync();
 
-            if (accountPreferences != null
-                && accountPreferences.Preferences != null)
+            userAccount = accountsService.GetAccount(Title);
+
+            if (userAccount != null
+                && userAccount.Preferences != null)
             {
-                if (!string.IsNullOrWhiteSpace(accountPreferences.ApiKey))
+                if (!string.IsNullOrWhiteSpace(userAccount.ApiKey))
                 {
-                    Account.ApiKey = accountPreferences.ApiKey;
-                    Account.ApiSecret = accountPreferences.ApiSecret;
+                    Account.ApiKey = userAccount.ApiKey;
+                    Account.ApiSecret = userAccount.ApiSecret;
                 }
             }
 
-            SymbolsViewModel.SetUser(accountPreferences);
+            SymbolsViewModel.SetAccount(userAccount);
             AccountViewModel.SetAccount(account);
 
             IsBusy = false;
@@ -202,22 +201,22 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         {
             base.SaveDocument();
 
-            accountPreferences.ApiKey = Account.ApiKey;
-            accountPreferences.ApiSecret = Account.AccountInfo.User.ApiSecret;
-            accountPreferences.Preferences = new SymbolPreferences();
+            userAccount.ApiKey = Account.ApiKey;
+            userAccount.ApiSecret = Account.AccountInfo.User.ApiSecret;
+            userAccount.Preferences = new Preferences();
             if(SymbolsViewModel != null)
             {
-                accountPreferences.Preferences.ShowFavourites = SymbolsViewModel.ShowFavourites;
-                accountPreferences.Preferences.FavouriteSymbols = (from s in SymbolsViewModel.Symbols where s.IsFavourite select s.Name).ToList();
+                userAccount.Preferences.ShowFavourites = SymbolsViewModel.ShowFavourites;
+                userAccount.Preferences.FavouriteSymbols = (from s in SymbolsViewModel.Symbols where s.IsFavourite select s.Name).ToList();
             }
             
             if(SelectedSymbol != null
                 && SelectedSymbol.Symbol != null)
             {
-                accountPreferences.Preferences.SelectedSymbol = SelectedSymbol.Symbol.Name;
+                userAccount.Preferences.SelectedSymbol = SelectedSymbol.Symbol.Name;
             }
 
-            await personaliseService.SaveAccountAsync(accountPreferences);
+            accountsService.SaveAccount(userAccount);
         }
         
         public async void Close(object param)

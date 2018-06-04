@@ -44,6 +44,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             var userAccount = new UserAccount { AccountName = param.ToString() };
             accountsService.SaveAccount(userAccount);
             Accounts.Add(userAccount);
+            Module.AddAccount(userAccount.AccountName);
         }
 
         private void DeleteAccount(object param)
@@ -56,6 +57,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             accountsService.DeleteAccount(userAccount);
             Accounts.Remove(userAccount);
+            Module.RemoveAccount(userAccount.AccountName);
         }
     }
 }

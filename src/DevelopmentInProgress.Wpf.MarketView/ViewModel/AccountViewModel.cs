@@ -90,7 +90,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             disposed = true;
         }
 
-        public void SetAccount(Account account)
+        public async void SetAccount(Account account)
         {
             try
             {
@@ -104,7 +104,15 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                 Account = account;
 
-                OnAccountLoggedOut();
+                if (!string.IsNullOrWhiteSpace(Account.ApiKey)
+                    && !string.IsNullOrWhiteSpace(Account.ApiSecret))
+                {
+                    Login(Account);
+                }
+                else
+                {
+                    OnAccountLoggedOut();
+                }
             }
             catch (Exception ex)
             {

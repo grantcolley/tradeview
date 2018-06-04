@@ -127,11 +127,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             disposed = true;
         }
 
-        public void SetAccount(UserAccount accountPreferences)
+        public void SetAccount(UserAccount userAccount)
         {
             try
             {
-                AccountPreferences = accountPreferences;
+                AccountPreferences = userAccount;
             }
             catch (Exception ex)
             {
