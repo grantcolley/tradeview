@@ -1016,7 +1016,6 @@
         <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
         <Setter Property="FontSize" Value="9" />
         <Setter Property="FontFamily" Value="Segoe UI" />
-        <Setter Property="Content" Value="X" />
         <Setter Property="Height" Value="20" />
         <Setter Property="Width" Value="20" />
         <Setter Property="VerticalAlignment" Value="Top" />

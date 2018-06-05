@@ -250,12 +250,6 @@
     <Resource Include="Images\Clipboard32.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\SaveAll.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Save.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Close.png" />
   </ItemGroup>
   <ItemGroup>
@@ -272,6 +266,10 @@
       <Project>{5acdc574-0f6f-48bc-ad2a-2f29bd7009fe}</Project>
       <Name>DevelopmentInProgress.Wpf.Controls</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Save.png" />
+    <Resource Include="Images\SaveAll.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

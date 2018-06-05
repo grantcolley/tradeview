@@ -35,7 +35,7 @@
                     <TextBox Grid.Row="1" Grid.Column="1" Margin="2" Text="{Binding Account.ApiSecret}"/>
                     <Button Grid.Row="1" Grid.Column="2"
                                 Style="{StaticResource ButtonImageStyle}"
-                                Height="18" Width="18"                                                    
+                                Height="32" Width="32"                                                 
                                 Margin="2"
                                 ToolTip="Login"
                                 Command="{Binding LoginCommand}" 

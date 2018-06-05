@@ -31,7 +31,7 @@ namespace DevelopmentInProgress.Wpf.MarketView
 
             var moduleSettings = new ModuleSettings();
             moduleSettings.ModuleName = ModuleName;
-            moduleSettings.ModuleImagePath = @"/DevelopmentInProgress.Wpf.MarketView;component/Images/diptrade.png";
+            moduleSettings.ModuleImagePath = @"/DevelopmentInProgress.Wpf.MarketView;component/Images/marketview.png";
 
             var moduleGroup = new ModuleGroup();
             moduleGroup.ModuleGroupName = AccountUser;
@@ -44,7 +44,7 @@ namespace DevelopmentInProgress.Wpf.MarketView
             manageAccountsDocument.ModuleGroupItemName = "Manage Accounts";
             manageAccountsDocument.TargetView = typeof(UserAccountsView).Name;
             manageAccountsDocument.TargetViewTitle = "Manage Accounts";
-            manageAccountsDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.Wpf.MarketView;component/Images/trade.png";
+            manageAccountsDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.Wpf.MarketView;component/Images/accounts.png";
             moduleGroup.ModuleGroupItems.Add(manageAccountsDocument);
 
             foreach (var userAccount in userAccounts.Accounts)
@@ -83,7 +83,7 @@ namespace DevelopmentInProgress.Wpf.MarketView
             accountDocument.ModuleGroupItemName = name;
             accountDocument.TargetView = typeof(TradingView).Name;
             accountDocument.TargetViewTitle = title;
-            accountDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.Wpf.MarketView;component/Images/trade.png";
+            accountDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.Wpf.MarketView;component/Images/account.png";
             return accountDocument;
         }
     }

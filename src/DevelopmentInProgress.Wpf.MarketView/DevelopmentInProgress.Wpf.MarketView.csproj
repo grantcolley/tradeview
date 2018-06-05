@@ -159,10 +159,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\trade.png" />
-    <Resource Include="Images\diptrade.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Page Include="View\AccountView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -206,6 +202,14 @@
     <PackageReference Include="System.Reactive">
       <Version>3.1.1</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\account.png" />
+    <Resource Include="Images\accounts.png" />
+    <Resource Include="Images\account_add.png" />
+    <Resource Include="Images\account_delete.png" />
+    <Resource Include="Images\close.png" />
+    <Resource Include="Images\marketview.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

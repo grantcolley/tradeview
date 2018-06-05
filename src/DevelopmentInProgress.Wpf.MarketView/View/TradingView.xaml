@@ -65,7 +65,9 @@
                                 <Label Name="quoteSymbol" Content="{Binding Symbol.QuoteAsset.Symbol}" VerticalAlignment="Center"/>
                                 <Button Style="{StaticResource CloseButtonStyle}"                                        
                                         Command="{Binding Path=DataContext.CloseCommand, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}}"
-                                        CommandParameter="{Binding .}"/>
+                                        CommandParameter="{Binding .}">
+                                    <Image Source="../Images/close.png"/>
+                                </Button>
                             </StackPanel>
                         </DataTemplate>
                     </TabControl.ItemTemplate>
