@@ -5,14 +5,21 @@
         Title="Exception" 
         WindowStyle="ToolWindow" Width="600" Height="400"
         WindowStartupLocation="CenterScreen"
-        Background="{StaticResource TextBoxBackgroundBrush}">
+        Background="{StaticResource TextBoxBackgroundBrush}"
+        BorderThickness="1"
+        BorderBrush="#FF747474">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../themes/MetroDark/MetroDark.MSControls.Core.Implicit.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <converters:MessageTextToImageConverter x:Key="imageConverter"/>
+            <converters:MessageTextToImageConverter x:Key="imageConverter" >
+                <converters:MessageTextToImageConverter.ResourceDictionary>
+                    <ResourceDictionary Source="ImageResources.xaml" />
+                </converters:MessageTextToImageConverter.ResourceDictionary>
+            </converters:MessageTextToImageConverter>
+            
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -28,8 +35,8 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0" Margin="5,5,5,5">
-            <Image Source="{Binding Type, Converter={StaticResource imageConverter}, ConverterParameter='MSGBOX'}" 
-                   Height="32" Width="32" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            <ContentControl Height="32" Width="32" VerticalAlignment="Center" HorizontalAlignment="Left"
+                            Content="{Binding Type, Converter={StaticResource imageConverter}}"/>
         </StackPanel>
         <TextBlock Grid.Row="0" Grid.Column="1" Text="Exception:" Margin="5,5,5,5" Foreground="DimGray" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center"/>
         <TextBlock Grid.Row="0" Grid.Column="2" Name="txtMessage" Text="{Binding Message}" Margin="5,5,5,5" Foreground="Firebrick" FontSize="12" VerticalAlignment="Center"/>
@@ -40,7 +47,7 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type Button}">
-                                    <Image Source="{Binding Clipboard, Converter={StaticResource imageConverter}, ConverterParameter='MSGBOX'}" 
+                                    <Image Source="{Binding Clipboard, Converter={StaticResource imageConverter}}" 
                                            Height="32" Width="32" VerticalAlignment="Center" HorizontalAlignment="Right" ToolTip="Copy to clipboard"/>
                                 </ControlTemplate>
                             </Setter.Value>

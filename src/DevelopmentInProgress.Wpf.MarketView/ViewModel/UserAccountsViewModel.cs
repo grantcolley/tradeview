@@ -35,7 +35,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         private void AddAccount(object param)
         {
-            if(param == null 
+            if (param == null 
                 || string.IsNullOrEmpty(param.ToString()))
             {
                 return;

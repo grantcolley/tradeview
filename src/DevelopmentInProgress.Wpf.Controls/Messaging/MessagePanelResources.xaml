@@ -8,9 +8,14 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../themes/MetroDark/MetroDark.MSControls.Core.Implicit.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    
+
+    <converters:MessageTextToImageConverter x:Key="imageConverter" >
+        <converters:MessageTextToImageConverter.ResourceDictionary>
+            <ResourceDictionary Source="ImageResources.xaml" />
+        </converters:MessageTextToImageConverter.ResourceDictionary>
+    </converters:MessageTextToImageConverter>
+
     <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
-    <converters:MessageTextToImageConverter x:Key="imageConverter"/>
     <converters:TextToForegroundConverter x:Key="foregroundConverter"/>
 
     <Style TargetType="{x:Type messaging:MessagePanel}">
@@ -59,8 +64,8 @@
                                         <ContentControl MouseDoubleClick="MessageMouseDoubleClick"
                                                         Tag="{Binding Path=Tag, ElementName=MessageListBox}">
                                             <DockPanel>
-                                                <Image Margin="2" Height="10" Width="10" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Left"
-                                                       Source="{Binding Path=Type, Converter={StaticResource imageConverter}}"/>
+                                                <ContentControl Margin="2" Height="10" Width="10" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Left"
+                                                                Content="{Binding Type, Converter={StaticResource imageConverter}, ConverterParameter='small'}"/>
                                                 <TextBlock Text="{Binding Path=Text}" Foreground="{Binding Type, Converter={StaticResource foregroundConverter}}"/>
                                             </DockPanel>
                                         </ContentControl>

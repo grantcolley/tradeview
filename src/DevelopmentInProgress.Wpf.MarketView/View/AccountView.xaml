@@ -9,10 +9,16 @@
              xmlns:filterbox="clr-namespace:DevelopmentInProgress.Wpf.Controls.FilterBox;assembly=DevelopmentInProgress.Wpf.Controls"
              mc:Ignorable="d">
     <UserControl.Resources>
-        
-        <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
-        <converters:InvertBoolToVisibilityConverter x:Key="invertBoolToVisibilityConverter"/>
-        
+        <ResourceDictionary>
+            
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Images/ImageResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
+            <converters:InvertBoolToVisibilityConverter x:Key="invertBoolToVisibilityConverter"/>
+            
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <DockPanel LastChildFill="True">
@@ -40,7 +46,7 @@
                                 ToolTip="Login"
                                 Command="{Binding LoginCommand}" 
                                 Visibility="{Binding IsLoggingIn, Converter={StaticResource invertBoolToVisibilityConverter}}">
-                        <Image Source="../Images/login.png"/>
+                        <ContentControl Content="{StaticResource login}"/>
                     </Button>
                     <Viewbox Grid.Row="1" Grid.Column="2"
                                  Height="18" Width="18"

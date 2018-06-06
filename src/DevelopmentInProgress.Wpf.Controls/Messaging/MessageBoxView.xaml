@@ -9,15 +9,22 @@
         SizeToContent="WidthAndHeight" 
         Title="{Binding Title}"
         Closing="WindowClosing"
-        >
+        BorderThickness="1"
+        BorderBrush="#FF747474">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../themes/MetroDark/MetroDark.MSControls.Core.Implicit.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <converters:MessageTextToImageConverter x:Key="imageConverter" >
+                <converters:MessageTextToImageConverter.ResourceDictionary>
+                    <ResourceDictionary Source="ImageResources.xaml" />
+                </converters:MessageTextToImageConverter.ResourceDictionary>
+            </converters:MessageTextToImageConverter>
+
             <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
-            <converters:MessageTextToImageConverter x:Key="imageConverter"/>
+            
         </ResourceDictionary>
     </Window.Resources> 
     <DockPanel LastChildFill="True" Background="{StaticResource TextBoxBackgroundBrush}">
@@ -44,8 +51,7 @@
             </Button>
         </StackPanel>
         <StackPanel DockPanel.Dock="Left" Margin="5,5,5,5">
-            <Image Source="{Binding Type, Converter={StaticResource imageConverter}, ConverterParameter='MSGBOX'}" 
-                   Height="24" Width="24" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            <ContentControl Content="{Binding Type, Converter={StaticResource imageConverter}}" Height="24" Width="24" VerticalAlignment="Center" HorizontalAlignment="Left"/>
         </StackPanel>
         <TextBox Text="{Binding Message, Mode=OneWay}" 
                      Foreground="{StaticResource ForegroundBrush}" FontSize="14" Margin="5,5,5,5"  

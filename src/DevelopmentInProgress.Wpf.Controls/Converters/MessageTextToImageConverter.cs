@@ -6,6 +6,7 @@
 
 using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
@@ -16,6 +17,14 @@ namespace DevelopmentInProgress.Wpf.Controls.Converters
     /// </summary>
     public sealed class MessageTextToImageConverter : IValueConverter
     {
+        private ResourceDictionary resourceDictionary;
+
+        public ResourceDictionary ResourceDictionary
+        {
+            get { return resourceDictionary; }
+            set { resourceDictionary = value; }
+        }
+
         /// <summary>
         /// Converts the value to the converted type.
         /// </summary>
@@ -34,38 +43,19 @@ namespace DevelopmentInProgress.Wpf.Controls.Converters
 
             try
             {
-                String size = String.Empty;
-                if (parameter != null
-                    && parameter.ToString().ToUpper().Equals("MSGBOX"))
+                if(parameter != null)
                 {
-                    size = "32";
+                    value += parameter.ToString();
                 }
 
                 string image = value.ToString();
                 switch (image.ToLower())
                 {
-                    case "info":
-                        return
-                            new BitmapImage(new Uri(String.Format(@"..\Images\Information{0}.png", size),
-                                UriKind.RelativeOrAbsolute));
-                    case "warn":
-                        return
-                            new BitmapImage(new Uri(String.Format(@"..\Images\Warning{0}.png", size),
-                                UriKind.RelativeOrAbsolute));
-                    case "error":
-                        return
-                            new BitmapImage(new Uri(String.Format(@"..\Images\Error{0}.png", size),
-                                UriKind.RelativeOrAbsolute));
-                    case "question":
-                        return
-                            new BitmapImage(new Uri(String.Format(@"..\Images\Question{0}.png", size),
-                                UriKind.RelativeOrAbsolute));
                     case "clipboard":
                         return
-                            new BitmapImage(new Uri(String.Format(@"..\Images\Clipboard{0}.png", size),
-                                UriKind.RelativeOrAbsolute));
+                            new BitmapImage(new Uri($@"..\Images\{image.ToLower()}.png", UriKind.RelativeOrAbsolute));
                     default:
-                        return null;
+                        return ResourceDictionary[image.ToLower()];
                 }
             }
             catch

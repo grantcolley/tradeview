@@ -10,7 +10,6 @@
              Background="{StaticResource TextBoxBackgroundBrush}">
     <UserControl.Resources>
         <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
-        <converters:MessageTextToImageConverter x:Key="imageConverter"/>
         <converters:TextToForegroundConverter x:Key="foregroundConverter"/>
     </UserControl.Resources>
     <Grid Background="{StaticResource TextBoxBackgroundBrush}">

@@ -118,7 +118,6 @@
     <Compile Include="Converters\UriStringToImageConverter.cs" />
     <Compile Include="Converters\InvertBoolToVisibilityConverter.cs" />
     <Compile Include="Converters\TextToForegroundConverter.cs" />
-    <Compile Include="Converters\MessageTextToImageConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Module\ModuleBase.cs" />
     <Compile Include="Navigation\ModuleEventArgs.cs" />
@@ -233,30 +232,7 @@
     <Resource Include="Images\Refresh.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Error.png" />
-    <Resource Include="Images\Information.png" />
-    <Resource Include="Images\Warning.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Error32.png" />
-    <Resource Include="Images\Information32.png" />
-    <Resource Include="Images\Question32.png" />
-    <Resource Include="Images\Warning32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Question.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Clipboard32.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Close.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\ArrowLeft.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\ArrowRight.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\GroupListItem.png" />

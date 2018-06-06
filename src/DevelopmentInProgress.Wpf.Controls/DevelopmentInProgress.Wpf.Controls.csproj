@@ -77,6 +77,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Messaging\ImageResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Messaging\MessageBoxView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -201,16 +205,8 @@
     <Resource Include="Images\AddNewItem.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Clipboard32.png" />
+    <Resource Include="Images\clipboard.png" />
     <Resource Include="Images\Close.png" />
-    <Resource Include="Images\Error.png" />
-    <Resource Include="Images\Error32.png" />
-    <Resource Include="Images\Information.png" />
-    <Resource Include="Images\Information32.png" />
-    <Resource Include="Images\Question.png" />
-    <Resource Include="Images\Question32.png" />
-    <Resource Include="Images\Warning.png" />
-    <Resource Include="Images\Warning32.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="themes\MetroDark\HowToApplyTheme.txt" />
