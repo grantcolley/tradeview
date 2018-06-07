@@ -17,6 +17,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private Account account;
         private AccountBalance selectedAsset;
         private bool isLoggingIn;
+        private bool isLoggedIn;
         private bool disposed;
 
         public AccountViewModel(IExchangeService exchangeService)
@@ -67,6 +68,19 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 {
                     isLoggingIn = value;
                     OnPropertyChanged("IsLoggingIn");
+                }
+            }
+        }
+
+        public bool IsLoggedIn
+        {
+            get { return isLoggedIn; }
+            set
+            {
+                if (isLoggedIn != value)
+                {
+                    isLoggedIn = value;
+                    OnPropertyChanged("IsLoggedIn");
                 }
             }
         }
@@ -138,10 +152,13 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 OnAccountLoggedIn(Account);
 
                 ExchangeService.SubscribeAccountInfo(Account.AccountInfo.User, e => AccountInfoUpdate(e.AccountInfo), SubscribeAccountInfoException, accountCancellationTokenSource.Token);
+
+                IsLoggedIn = true;
             }
             catch(Exception ex)
             {
                 OnException("AccountViewModel.Login", ex);
+                IsLoggedIn = false;
             }
 
             IsLoggingIn = false;

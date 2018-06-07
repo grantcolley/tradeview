@@ -7,14 +7,17 @@
              xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Host.Converters;assembly=DevelopmentInProgress.Wpf.Host"
              xmlns:progress="clr-namespace:DevelopmentInProgress.Wpf.Host.Controls.Progress;assembly=DevelopmentInProgress.Wpf.Host"
              xmlns:filterbox="clr-namespace:DevelopmentInProgress.Wpf.Controls.FilterBox;assembly=DevelopmentInProgress.Wpf.Controls"
+             xmlns:localConverters="clr-namespace:DevelopmentInProgress.Wpf.MarketView.Converters"
              mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
-            
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Images/ImageResources.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
 
+            <localConverters:BoolToLoginConverter x:Key="boolToLoginConverter" >
+                <localConverters:BoolToLoginConverter.ResourceDictionary>
+                    <ResourceDictionary Source="../Images/ImageResources.xaml" />
+                </localConverters:BoolToLoginConverter.ResourceDictionary>
+            </localConverters:BoolToLoginConverter>
+            
             <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
             <converters:InvertBoolToVisibilityConverter x:Key="invertBoolToVisibilityConverter"/>
             
@@ -46,7 +49,7 @@
                                 ToolTip="Login"
                                 Command="{Binding LoginCommand}" 
                                 Visibility="{Binding IsLoggingIn, Converter={StaticResource invertBoolToVisibilityConverter}}">
-                        <ContentControl Content="{StaticResource login}"/>
+                        <ContentControl Content="{Binding IsLoggedIn, Converter={StaticResource boolToLoginConverter}}"/>
                     </Button>
                     <Viewbox Grid.Row="1" Grid.Column="2"
                                  Height="18" Width="18"

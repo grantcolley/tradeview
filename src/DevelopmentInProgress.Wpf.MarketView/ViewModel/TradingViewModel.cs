@@ -27,6 +27,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private StrategyViewModel strategyViewModel;
         private UserAccount userAccount;
         private Account account;
+        private bool isOpen;
 
         public ICommand CloseCommand { get; set; }
 
@@ -163,6 +164,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         protected override async void OnPublished(object data)
         {
+            if(isOpen)
+            {
+                return;
+            }
+
             IsBusy = true;
 
             if(Messages != null
@@ -193,6 +199,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             SymbolsViewModel.SetAccount(userAccount);
             AccountViewModel.SetAccount(account);
+
+            isOpen = true;
 
             IsBusy = false;
         }
