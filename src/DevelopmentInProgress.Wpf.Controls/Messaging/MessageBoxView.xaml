@@ -7,6 +7,8 @@
         mc:Ignorable="d"         
         WindowStyle="ToolWindow"
         SizeToContent="WidthAndHeight" 
+        MaxHeight="700"
+        MaxWidth="750"
         Title="{Binding Title}"
         Closing="WindowClosing"
         BorderThickness="1"
@@ -53,13 +55,14 @@
         <StackPanel DockPanel.Dock="Left" Margin="5,5,5,5">
             <ContentControl Content="{Binding Type, Converter={StaticResource imageConverter}}" Height="24" Width="24" VerticalAlignment="Center" HorizontalAlignment="Left"/>
         </StackPanel>
-        <TextBox Text="{Binding Message, Mode=OneWay}" 
-                     Foreground="{StaticResource ForegroundBrush}" FontSize="14" Margin="5,5,5,5"  
-                     MaxWidth="{Binding TextAreaMaxWidth, Mode=OneWay}" MinWidth="200"
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <TextBox Text="{Binding Message, Mode=OneWay}" 
+                     Foreground="{StaticResource ForegroundBrush}" FontSize="14" Margin="5,5,5,5" MinWidth="200"
                      IsHitTestVisible="False" BorderThickness="0" Focusable="False" IsTabStop="False"
                      HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"
                      HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                      TextWrapping="Wrap" TextAlignment="{Binding TextAlignment, Mode=OneWay}"
                      Background="{StaticResource TextBoxBackgroundBrush}" IsReadOnly="True" Style="{x:Null}"/>
+        </ScrollViewer>
     </DockPanel>
 </Window>

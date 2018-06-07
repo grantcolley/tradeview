@@ -33,9 +33,7 @@ namespace DevelopmentInProgress.Wpf.Controls.Messaging
             this.messageBoxSettings = messageBoxSettings;
 
             TextAlignment = messageBoxSettings.MessageBoxText.TextAlignment;
-
-            TextAreaMaxWidth = messageBoxSettings.MessageBoxText.MaxWidth;
-
+            
             CopyToClipboardEnabled = messageBoxSettings.CopyToClipboardEnabled;
 
             switch (messageBoxSettings.MessageBoxButtons)
@@ -140,11 +138,6 @@ namespace DevelopmentInProgress.Wpf.Controls.Messaging
         /// Gets or sets the text alignment.
         /// </summary>
         public TextAlignment TextAlignment { get; set; }
-
-        /// <summary>
-        /// Gets or sets the text area max width.
-        /// </summary>
-        public int TextAreaMaxWidth { get; set; }
 
         /// <summary>
         /// Handles the button click.

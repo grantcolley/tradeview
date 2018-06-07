@@ -42,7 +42,7 @@ namespace DevelopmentInProgress.Wpf.Controls.Messaging
                 MessageType = message.MessageType,
                 MessageBoxButtons = MessageBoxButtons.Ok,
                 CopyToClipboardEnabled = true,
-                MessageBoxText = new MessageBoxText { TextAlignment = messagePanel.ShowMessageTextAlignment, MaxWidth = messagePanel.ShowMessageTextAreaMaxWidth }
+                MessageBoxText = new MessageBoxText { TextAlignment = messagePanel.ShowMessageTextAlignment }
             };
 
             Dialog.ShowMessage(messageBoxSettings);

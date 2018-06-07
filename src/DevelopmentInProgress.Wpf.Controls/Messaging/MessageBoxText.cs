@@ -16,11 +16,6 @@ namespace DevelopmentInProgress.Wpf.Controls.Messaging
         /// <summary>
         /// Gets or sets the text alignment. Default is Center aligned.
         /// </summary>
-        public TextAlignment TextAlignment { get; set; } = TextAlignment.Center;
-
-        /// <summary>
-        /// Gets or sets the max width of the text area. Default is 250.
-        /// </summary>
-        public int MaxWidth { get; set; } = 250;
+        public TextAlignment TextAlignment { get; set; } = TextAlignment.Center;        
     }
 }
