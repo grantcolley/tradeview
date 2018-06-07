@@ -66,7 +66,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
                 var dupe = userAccounts.Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName));
                 if(dupe != null)
                 {
-                    userAccounts.Accounts.Add(dupe);
+                    userAccounts.Accounts.Remove(dupe);
                 }
 
                 userAccounts.Accounts.Add(userAccount);

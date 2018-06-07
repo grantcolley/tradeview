@@ -1,7 +1,10 @@
-﻿using DevelopmentInProgress.Wpf.Host.Context;
+﻿using DevelopmentInProgress.Wpf.Controls.Messaging;
+using DevelopmentInProgress.Wpf.Host.Context;
 using DevelopmentInProgress.Wpf.Host.ViewModel;
 using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.MarketView.Services;
+using Newtonsoft.Json;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -10,6 +13,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
     public class UserAccountsViewModel : DocumentViewModel
     {
         private IAccountsService accountsService;
+        private UserAccount selectedUserAccount;
+        private string selectedUserAccountJson;
 
         public UserAccountsViewModel(ViewModelContext viewModelContext, IAccountsService accountsService)
             : base(viewModelContext)
@@ -25,12 +30,67 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         public ObservableCollection<UserAccount> Accounts { get; set; }
 
+        public UserAccount SelectedUserAccount
+        {
+            get { return selectedUserAccount; }
+            set
+            {
+                if (selectedUserAccount != value)
+                {
+                    selectedUserAccount = value;
+                    if (selectedUserAccount == null)
+                    {
+                        SelectedUserAccountJson = string.Empty;
+                    }
+                    else
+                    {
+                        SelectedUserAccountJson = JsonConvert.SerializeObject(selectedUserAccount, Formatting.Indented);
+                    }
+
+                    OnPropertyChanged("SelectedUserAccount");
+                }
+            }
+        }
+
+        public string SelectedUserAccountJson
+        {
+            get { return selectedUserAccountJson; }
+            set
+            {
+                if (selectedUserAccountJson != value)
+                {
+                    selectedUserAccountJson = value;
+                    OnPropertyChanged("SelectedUserAccountJson");
+                }
+            }
+
+        }
+
         protected override void OnPublished(object data)
         {
             base.OnPublished(data);
 
             var accounts = accountsService.GetAccounts();
             Accounts = new ObservableCollection<UserAccount>(accounts.Accounts);
+        }
+
+        protected override void SaveDocument()
+        {
+            if(SelectedUserAccount != null)
+            {
+                try
+                {
+                    var userAccount = JsonConvert.DeserializeObject<UserAccount>(selectedUserAccountJson);
+                    accountsService.SaveAccount(userAccount);
+                    Accounts.Remove(SelectedUserAccount);
+                    Accounts.Add(userAccount);
+                    SelectedUserAccount = userAccount;
+                }
+                catch(Exception ex)
+                {
+                    ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message });
+                }
+            }
         }
 
         private void AddAccount(object param)
