@@ -18,7 +18,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private bool isLoadingSymbols;
         private bool disposed;
 
-        public SymbolsViewModel(IExchangeService exchangeService)
+        public SymbolsViewModel(IWpfExchangeService exchangeService)
             : base(exchangeService)
         {
             symbolsCancellationTokenSource = new CancellationTokenSource();

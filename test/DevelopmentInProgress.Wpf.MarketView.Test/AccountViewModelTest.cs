@@ -22,7 +22,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var fail = false;
             Account notifyAccount = null;
             var exchangeApi = ExchangeApiHelper.GetExchangeApi();
-            var exchangeService = new ExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi);
             var accountViewModel = new AccountViewModel(exchangeService);
 
             var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
@@ -64,7 +64,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var fail = false;
             string errorMessage = string.Empty;
             var exchangeApi = ExchangeApiHelper.GetExchangeApi();
-            var exchangeService = new ExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi);
             var accountViewModel = new AccountViewModel(exchangeService);
 
             var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
@@ -107,7 +107,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var loggedInAccount = string.Empty;
             string errorMessage = string.Empty;
             var exchangeApi = ExchangeApiHelper.GetExchangeApi();
-            var exchangeService = new ExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi);
             var accountViewModel = new AccountViewModel(exchangeService);
 
             var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
@@ -156,7 +156,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var hasUpdated = false;
             string errorMessage = string.Empty;
             var exchangeApi = ExchangeApiHelper.GetExchangeApi(ExchangeApiType.SubscribeAccountInfo);
-            var exchangeService = new ExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi);
             var accountViewModel = new AccountViewModel(exchangeService);
 
             var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
@@ -211,7 +211,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var fail = false;
             AccountBalance selectedAccountBalance = null;
             var exchangeApi = ExchangeApiHelper.GetExchangeApi();
-            var exchangeService = new ExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi);
             var accountViewModel = new AccountViewModel(exchangeService);
 
             var account = new Account(new Interface.AccountInfo { User = new Interface.User() })

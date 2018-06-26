@@ -99,8 +99,8 @@
     <Compile Include="Model\SymbolStatistics.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ExchangeService.cs" />
-    <Compile Include="Services\IExchangeService.cs" />
+    <Compile Include="Services\WpfExchangeService.cs" />
+    <Compile Include="Services\IWpfExchangeService.cs" />
     <Compile Include="Services\IAccountsService.cs" />
     <Compile Include="Services\AccountsService.cs" />
     <Compile Include="ViewModel\AccountViewModel.cs" />
@@ -141,10 +141,6 @@
     <ProjectReference Include="..\DevelopmentInProgress.MarketView.Interface\DevelopmentInProgress.MarketView.Interface.csproj">
       <Project>{86695062-90cc-419d-b455-d6d8c364a215}</Project>
       <Name>DevelopmentInProgress.MarketView.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DevelopmentInProgress.MarketView.Service\DevelopmentInProgress.MarketView.Service.csproj">
-      <Project>{28fb133e-13b2-46b5-be18-5f655b318563}</Project>
-      <Name>DevelopmentInProgress.MarketView.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\DevelopmentInProgress.Wpf.Controls\DevelopmentInProgress.Wpf.Controls.csproj">
       <Project>{5acdc574-0f6f-48bc-ad2a-2f29bd7009fe}</Project>
@@ -200,6 +196,9 @@
   <ItemGroup>
     <PackageReference Include="LiveCharts">
       <Version>0.9.7</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>11.0.2</Version>
     </PackageReference>
     <PackageReference Include="System.Reactive">
       <Version>3.1.1</Version>

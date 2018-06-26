@@ -32,7 +32,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private int chartDisplayLimit = 100;
         private int tradesDisplayLimit = 20;
 
-        public SymbolViewModel(IExchangeService exchangeService)
+        public SymbolViewModel(IWpfExchangeService exchangeService)
             : base(exchangeService)
         {
             var mapper = Mappers.Xy<AggregateTrade>()

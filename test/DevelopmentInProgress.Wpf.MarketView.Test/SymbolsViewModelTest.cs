@@ -23,7 +23,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var fail = false;
             var exchangeApi = ExchangeApiHelper.GetExchangeApi(ExchangeApiType.SymbolsViewModel);
-            var exchangeService = new ExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi);
 
             // Act
             var symbolsViewModel = new SymbolsViewModel(exchangeService);
@@ -61,7 +61,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var fail = false;
             Symbol selectedSymbol = null;
             var exchangeApi = ExchangeApiHelper.GetExchangeApi(ExchangeApiType.SymbolsViewModel);
-            var exchangeService = new ExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi);
             var symbolsViewModel = new SymbolsViewModel(exchangeService);
 
             var symbolsObservable = Observable.FromEventPattern<SymbolsEventArgs>(
@@ -101,7 +101,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         {
             // Arrange
             var exchangeApi = ExchangeApiHelper.GetExchangeApi(ExchangeApiType.SymbolsViewModel);
-            var exchangeService = new ExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi);
             var symbolsViewModel = new SymbolsViewModel(exchangeService);
             
             var userData = File.ReadAllText("UserAccounts.txt");

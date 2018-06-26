@@ -24,7 +24,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private bool isCancellAllVisible;
         private bool disposed;
 
-        public OrdersViewModel(IExchangeService exchangeService)
+        public OrdersViewModel(IWpfExchangeService exchangeService)
             : base(exchangeService)
         {
             CancelOrderCommand = new ViewModelCommand(Cancel);

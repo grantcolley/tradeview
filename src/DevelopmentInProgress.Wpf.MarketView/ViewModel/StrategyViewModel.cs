@@ -5,7 +5,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
     public class StrategyViewModel : BaseViewModel
     {
-        public StrategyViewModel(IExchangeService exchangeService)
+        public StrategyViewModel(IWpfExchangeService exchangeService)
             : base(exchangeService)
         {
         }

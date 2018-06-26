@@ -17,7 +17,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         {
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeApiHelper.GetExchangeApi();
-            var exchangeService = new ExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
 

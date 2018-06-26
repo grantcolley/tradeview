@@ -11,25 +11,13 @@ using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Services
 {
-    public class ExchangeService : IExchangeService
+    public class WpfExchangeService : IWpfExchangeService
     {
         private IExchangeApi exchangeApi;
 
-        public ExchangeService(IExchangeApi exchangeApi)
+        public WpfExchangeService(IExchangeApi exchangeApi)
         {
             this.exchangeApi = exchangeApi;
-        }
-
-        public async Task<Interface.Order> PlaceOrder(Interface.User user, Interface.ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var result = await exchangeApi.PlaceOrder(user, clientOrder, recWindow, cancellationToken).ConfigureAwait(false);
-            return result;
-        }
-
-        public async Task<string> CancelOrderAsync(Interface.User user, string symbol, long orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var result = await exchangeApi.CancelOrderAsync(user, symbol, orderId, newClientOrderId, recWindow, cancellationToken).ConfigureAwait(false);
-            return result;
         }
 
         public async Task<IEnumerable<Symbol>> GetSymbols24HourStatisticsAsync(CancellationToken cancellationToken)
@@ -55,18 +43,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
             }, exception, cancellationToken);
         }
 
-        public async Task<IEnumerable<Interface.AggregateTrade>> GetAggregateTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
-        {
-            var aggregateTrades = await exchangeApi.GetAggregateTradesAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
-            return aggregateTrades;
-        }
-
-        public async Task<Interface.OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken)
-        {
-            var orderBook = await exchangeApi.GetOrderBookAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
-            return orderBook;
-        }
-
         public async Task<IEnumerable<Order>> GetOpenOrdersAsync(Interface.User user, string symbol = null, long recWindow = 0, Action<Exception> exception = default(Action<Exception>), CancellationToken cancellationToken = default(CancellationToken))
         {
             var result = await exchangeApi.GetOpenOrdersAsync(user, symbol, recWindow, exception, cancellationToken).ConfigureAwait(false);
@@ -74,25 +50,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
             return orders;
         }
 
-        public void SubscribeOrderBook(string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
-        {
-            exchangeApi.SubscribeOrderBook(symbol, limit, callback, exception, cancellationToken);
-        }
-
         public async Task<Account> GetAccountInfoAsync(string apiKey, string apiSecret, CancellationToken cancellationToken)
         {
             var accountInfo = await exchangeApi.GetAccountInfoAsync(new Interface.User { ApiKey = apiKey, ApiSecret = apiSecret}, cancellationToken).ConfigureAwait(false);
             return new Account(accountInfo);
-        }
-
-        public void SubscribeAggregateTrades(string symbol, int limit, Action<AggregateTradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
-        {
-            exchangeApi.SubscribeAggregateTrades(symbol, limit, callback, exception, cancellationToken);
-        }
-
-        public void SubscribeAccountInfo(Interface.User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
-        {
-            exchangeApi.SubscribeAccountInfo(user, callback, exception, cancellationToken);
         }
 
         private async Task<IEnumerable<Symbol>> GetSymbolsAsync(CancellationToken cancellationToken)
@@ -107,6 +68,52 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
             var results = await exchangeApi.Get24HourStatisticsAsync(cancellationToken).ConfigureAwait(false);
             var symbols = results.Select(s => s.GetViewSymbolStatistics()).ToList();
             return symbols;
+        }
+
+
+
+
+
+
+
+
+        public async Task<Interface.Order> PlaceOrder(Interface.User user, Interface.ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var result = await exchangeApi.PlaceOrder(user, clientOrder, recWindow, cancellationToken).ConfigureAwait(false);
+            return result;
+        }
+
+        public async Task<string> CancelOrderAsync(Interface.User user, string symbol, long orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var result = await exchangeApi.CancelOrderAsync(user, symbol, orderId, newClientOrderId, recWindow, cancellationToken).ConfigureAwait(false);
+            return result;
+        }
+
+        public async Task<IEnumerable<Interface.AggregateTrade>> GetAggregateTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
+        {
+            var aggregateTrades = await exchangeApi.GetAggregateTradesAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
+            return aggregateTrades;
+        }
+
+        public async Task<Interface.OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken)
+        {
+            var orderBook = await exchangeApi.GetOrderBookAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
+            return orderBook;
+        }
+
+        public void SubscribeOrderBook(string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        {
+            exchangeApi.SubscribeOrderBook(symbol, limit, callback, exception, cancellationToken);
+        }
+
+        public void SubscribeAggregateTrades(string symbol, int limit, Action<AggregateTradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        {
+            exchangeApi.SubscribeAggregateTrades(symbol, limit, callback, exception, cancellationToken);
+        }
+
+        public void SubscribeAccountInfo(Interface.User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        {
+            exchangeApi.SubscribeAccountInfo(user, callback, exception, cancellationToken);
         }
     }
 }

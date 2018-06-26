@@ -9,7 +9,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public BaseViewModel(IExchangeService exchangeService)
+        public BaseViewModel(IWpfExchangeService exchangeService)
         {
             ExchangeService = exchangeService;
         }
@@ -24,7 +24,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             GC.SuppressFinalize(this);
         }
 
-        protected IExchangeService ExchangeService { get; private set; }
+        protected IWpfExchangeService ExchangeService { get; private set; }
 
         protected void OnPropertyChanged(string propertyName, bool isDirty = false)
         {

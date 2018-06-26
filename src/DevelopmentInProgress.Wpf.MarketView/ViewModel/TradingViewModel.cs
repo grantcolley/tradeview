@@ -17,7 +17,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
     public class TradingViewModel : DocumentViewModel
     {
-        private IExchangeService exchangeService;
+        private IWpfExchangeService exchangeService;
         private IAccountsService accountsService;
         private SymbolViewModel selectedSymbol;
         private AccountViewModel accountViewModel;
@@ -36,7 +36,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         public TradingViewModel(ViewModelContext viewModelContext, 
             AccountViewModel accountViewModel, SymbolsViewModel symbolsViewModel,
             TradeViewModel tradeViewModel, OrdersViewModel ordersViewModel, StrategyViewModel strategyViewModel,
-            IExchangeService exchangeService, IAccountsService accountsService)
+            IWpfExchangeService exchangeService, IAccountsService accountsService)
             : base(viewModelContext)
         {
             AccountViewModel = accountViewModel;

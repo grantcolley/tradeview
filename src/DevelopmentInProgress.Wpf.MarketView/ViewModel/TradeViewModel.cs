@@ -27,7 +27,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private bool disposed;
         private bool isLoading;
 
-        public TradeViewModel(IExchangeService exchangeService)
+        public TradeViewModel(IWpfExchangeService exchangeService)
             : base(exchangeService)
         {
             BuyCommand = new ViewModelCommand(Buy);

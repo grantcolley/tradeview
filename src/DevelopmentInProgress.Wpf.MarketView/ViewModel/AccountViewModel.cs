@@ -20,7 +20,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private bool isLoggedIn;
         private bool disposed;
 
-        public AccountViewModel(IExchangeService exchangeService)
+        public AccountViewModel(IWpfExchangeService exchangeService)
             : base(exchangeService)
         {
             accountCancellationTokenSource = new CancellationTokenSource();
