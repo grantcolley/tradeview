@@ -26,10 +26,6 @@
             <localView:OrdersView></localView:OrdersView>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type localViewModel:StrategyViewModel}">
-            <localView:StrategyView></localView:StrategyView>
-        </DataTemplate>
-
         <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
             
     </view:DocumentViewBase.Resources>
@@ -85,13 +81,11 @@
 
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="23*"/>
-                <ColumnDefinition Width="2"/>
-                <ColumnDefinition Width="23*"/>
+                <ColumnDefinition Width="40*"/>
                 <ColumnDefinition Width="2"/>
                 <ColumnDefinition Width="30*"/>
                 <ColumnDefinition Width="2"/>
-                <ColumnDefinition Width="24*"/>
+                <ColumnDefinition Width="40*"/>
             </Grid.ColumnDefinitions>
 
             <DockPanel Grid.Column="0" LastChildFill="True">
@@ -112,10 +106,6 @@
 
             <GridSplitter Grid.Column="5" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
 
-            <DockPanel Grid.Column="6" LastChildFill="True">
-                <ContentControl Content="{Binding StrategyViewModel}"/>
-            </DockPanel>
-            
         </Grid>
 
     </Grid>

@@ -24,7 +24,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private TradeViewModel tradeViewModel;
         private SymbolsViewModel symbolsViewModel;
         private OrdersViewModel ordersViewModel;
-        private StrategyViewModel strategyViewModel;
         private UserAccount userAccount;
         private Account account;
         private bool isOpen;
@@ -35,7 +34,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         public TradingViewModel(ViewModelContext viewModelContext, 
             AccountViewModel accountViewModel, SymbolsViewModel symbolsViewModel,
-            TradeViewModel tradeViewModel, OrdersViewModel ordersViewModel, StrategyViewModel strategyViewModel,
+            TradeViewModel tradeViewModel, OrdersViewModel ordersViewModel,
             IWpfExchangeService exchangeService, IAccountsService accountsService)
             : base(viewModelContext)
         {
@@ -43,7 +42,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             SymbolsViewModel = symbolsViewModel;
             TradeViewModel = tradeViewModel;
             OrdersViewModel = ordersViewModel;
-            StrategyViewModel = strategyViewModel;
 
             Symbols = new ObservableCollection<SymbolViewModel>();
 
@@ -110,19 +108,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        public StrategyViewModel StrategyViewModel
-        {
-            get { return strategyViewModel; }
-            private set
-            {
-                if (strategyViewModel != value)
-                {
-                    strategyViewModel = value;
-                    OnPropertyChanged("StrategyViewModel");
-                }
-            }
-        }
-
         public ObservableCollection<SymbolViewModel> Symbols
         {
             get { return symbols; }
@@ -181,7 +166,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             symbolsViewModel.Dispatcher = ViewModelContext.UiDispatcher;
             tradeViewModel.Dispatcher = ViewModelContext.UiDispatcher;
             ordersViewModel.Dispatcher = ViewModelContext.UiDispatcher;
-            strategyViewModel.Dispatcher = ViewModelContext.UiDispatcher;
 
             Account = new Account(new Interface.AccountInfo { User = new Interface.User() });
 
