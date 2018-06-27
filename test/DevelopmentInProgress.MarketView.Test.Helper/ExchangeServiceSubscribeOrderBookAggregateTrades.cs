@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DevelopmentInProgress.MarketView.Interface.Events;
@@ -9,7 +8,7 @@ using DevelopmentInProgress.MarketView.Interface.Model;
 
 namespace DevelopmentInProgress.MarketView.Test.Helper
 {
-    public class ExchangeApiPlaceOrderException : IExchangeApi
+    public class ExchangeServiceSubscribeOrderBookAggregateTrades : IExchangeService
     {
         public Task<string> CancelOrderAsync(User user, string symbol, long orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -18,75 +17,61 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 
         public Task<IEnumerable<SymbolStats>> Get24HourStatisticsAsync(CancellationToken cancellationToken)
         {
-            var tcs = new TaskCompletionSource<IEnumerable<SymbolStats>>();
-            tcs.SetResult(TestHelper.SymbolsStatistics);
-            return tcs.Task;
+            throw new NotImplementedException();
         }
 
         public Task<AccountInfo> GetAccountInfoAsync(User user, CancellationToken cancellationToken)
         {
-            var tcs = new TaskCompletionSource<AccountInfo>();
-            tcs.SetResult(TestHelper.AccountInfo);
-            return tcs.Task;
+            throw new NotImplementedException();
         }
 
         public Task<IEnumerable<AggregateTrade>> GetAggregateTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var tcs = new TaskCompletionSource<IEnumerable<AggregateTrade>>();
+            tcs.SetResult(TestHelper.AggregateTrades);
+            return tcs.Task;
         }
 
         public Task<IEnumerable<Order>> GetOpenOrdersAsync(User user, string symbol = null, long recWindow = 0, Action<Exception> exception = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var tcs = new TaskCompletionSource<IEnumerable<Order>>();
-            tcs.SetResult(TestHelper.Orders);
-            return tcs.Task;
+            throw new NotImplementedException();
         }
 
         public Task<OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var tcs = new TaskCompletionSource<OrderBook>();
+            tcs.SetResult(TestHelper.OrderBook);
+            return tcs.Task;
         }
 
         public Task<IEnumerable<Symbol>> GetSymbolsAsync(CancellationToken cancellationToken)
         {
-            var tcs = new TaskCompletionSource<IEnumerable<Symbol>>();
-            tcs.SetResult(TestHelper.Symbols);
-            return tcs.Task;
+            throw new NotImplementedException();
         }
 
         public Task<Order> PlaceOrder(User user, ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new Exception("failed to place order");
+            throw new NotImplementedException();
         }
 
         public void SubscribeAccountInfo(User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            // INTENTIONALLY EMPTY. LEAVE BLANK.
+            throw new NotImplementedException();
         }
 
         public void SubscribeAggregateTrades(string symbol, int limit, Action<AggregateTradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            callback.Invoke(new AggregateTradeEventArgs { AggregateTrades = TestHelper.AggregateTradesUpdated });
         }
 
         public void SubscribeOrderBook(string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            callback.Invoke(new OrderBookEventArgs { OrderBook = TestHelper.OrderBookUpdated });
         }
 
         public void SubscribeStatistics(Action<StatiscticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            var ethStats = TestHelper.EthStats;
-            var symbolsStats = TestHelper.SymbolsStatistics;
-
-            var newStats = TestHelper.EthStats_UpdatedLastPrice_Upwards;
-
-            var updatedEthStats = symbolsStats.Single(s => s.Symbol.Equals("ETHBTC"));
-            updatedEthStats.PriceChange = newStats.PriceChange;
-            updatedEthStats.LastPrice = newStats.LastPrice;
-            updatedEthStats.PriceChangePercent = newStats.PriceChangePercent;
-
-            callback.Invoke(new StatiscticsEventArgs { Statistics = symbolsStats });
+            throw new NotImplementedException();
         }
     }
 }

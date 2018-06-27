@@ -1,6 +1,6 @@
 ﻿namespace DevelopmentInProgress.MarketView.Test.Helper
 {
-    public enum ExchangeApiType
+    public enum ExchangeServiceType
     {
         Standard,
         SubscribeAccountInfo,

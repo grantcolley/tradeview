@@ -22,7 +22,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         {
             // Arrange
             var fail = false;
-            var exchangeApi = ExchangeApiHelper.GetExchangeApi(ExchangeApiType.SymbolsViewModel);
+            var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SymbolsViewModel);
             var exchangeService = new WpfExchangeService(exchangeApi);
 
             // Act
@@ -60,7 +60,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var fail = false;
             Symbol selectedSymbol = null;
-            var exchangeApi = ExchangeApiHelper.GetExchangeApi(ExchangeApiType.SymbolsViewModel);
+            var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SymbolsViewModel);
             var exchangeService = new WpfExchangeService(exchangeApi);
             var symbolsViewModel = new SymbolsViewModel(exchangeService);
 
@@ -100,7 +100,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         public async Task AccountPreferences()
         {
             // Arrange
-            var exchangeApi = ExchangeApiHelper.GetExchangeApi(ExchangeApiType.SymbolsViewModel);
+            var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SymbolsViewModel);
             var exchangeService = new WpfExchangeService(exchangeApi);
             var symbolsViewModel = new SymbolsViewModel(exchangeService);
             

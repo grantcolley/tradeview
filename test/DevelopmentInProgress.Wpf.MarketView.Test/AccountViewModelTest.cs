@@ -21,7 +21,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var fail = false;
             Account notifyAccount = null;
-            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
             var accountViewModel = new AccountViewModel(exchangeService);
 
@@ -38,7 +38,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
 
             accountObservable.Subscribe(args =>
             {
-                if (args.AccountEventType.Equals(AccountEventType.LoggedOut))
+                if (args.AccountEventType.Equals(AccountEventType.LoggedIn))
                 {
                     notifyAccount = args.Value;
                 }
@@ -52,8 +52,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             accountViewModel.SetAccount(account);
 
             // Assert
-            Assert.AreSame(account, accountViewModel.Account);
-            Assert.IsNull(notifyAccount);
+            Assert.AreEqual(account.ApiKey, accountViewModel.Account.ApiKey);
+            Assert.AreEqual(account.AccountInfo.User.ApiSecret, accountViewModel.Account.AccountInfo.User.ApiSecret);
+            Assert.IsNotNull(notifyAccount);
+            Assert.AreEqual(account.ApiKey, notifyAccount.ApiKey);
+            Assert.AreEqual(account.AccountInfo.User.ApiSecret, notifyAccount.AccountInfo.User.ApiSecret);
             Assert.IsFalse(fail);
         }
 
@@ -63,7 +66,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var fail = false;
             string errorMessage = string.Empty;
-            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
             var accountViewModel = new AccountViewModel(exchangeService);
 
@@ -106,7 +109,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var fail = false;
             var loggedInAccount = string.Empty;
             string errorMessage = string.Empty;
-            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
             var accountViewModel = new AccountViewModel(exchangeService);
 
@@ -155,7 +158,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var fail = false;
             var hasUpdated = false;
             string errorMessage = string.Empty;
-            var exchangeApi = ExchangeApiHelper.GetExchangeApi(ExchangeApiType.SubscribeAccountInfo);
+            var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeAccountInfo);
             var exchangeService = new WpfExchangeService(exchangeApi);
             var accountViewModel = new AccountViewModel(exchangeService);
 
@@ -210,7 +213,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var fail = false;
             AccountBalance selectedAccountBalance = null;
-            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
             var accountViewModel = new AccountViewModel(exchangeService);
 

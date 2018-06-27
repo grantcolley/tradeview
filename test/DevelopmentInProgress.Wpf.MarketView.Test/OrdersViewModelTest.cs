@@ -18,7 +18,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         public async Task SetAccount_NewAccount()
         {
             // Arrange
-            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
             var accountViewModel = new OrdersViewModel(exchangeService);
 
@@ -43,7 +43,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         public async Task SetAccount_OverrideAccount()
         {
             // Arrange
-            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
             var accountViewModel = new OrdersViewModel(exchangeService);
 
@@ -78,7 +78,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         public async Task SetAccount_NullAccount()
         {
             // Arrange
-            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
             var accountViewModel = new OrdersViewModel(exchangeService);
 
@@ -106,7 +106,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         public async Task UpdateOrders()
         {
             // Arrange
-            var exchangeApi = ExchangeApiHelper.GetExchangeApi(ExchangeApiType.UpdateOrders);
+            var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.UpdateOrders);
             var exchangeService = new WpfExchangeService(exchangeApi);
             var accountViewModel = new OrdersViewModel(exchangeService);
 

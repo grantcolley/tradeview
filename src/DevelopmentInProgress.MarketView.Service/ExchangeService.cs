@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.MarketView.Service
 {
-    public class ExchangeService : IExchangeApi
+    public class ExchangeService : IExchangeService
     {
         private IExchangeApi exchangeApi;
 

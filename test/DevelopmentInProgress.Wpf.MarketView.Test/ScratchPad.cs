@@ -16,7 +16,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         public async Task GetRangeOfOrderTypes()
         {
             var cxlToken = new CancellationToken();
-            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);

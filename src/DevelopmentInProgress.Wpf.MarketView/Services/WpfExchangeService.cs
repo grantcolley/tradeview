@@ -13,11 +13,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
 {
     public class WpfExchangeService : IWpfExchangeService
     {
-        private IExchangeApi exchangeApi;
+        private IExchangeService exchangeService;
 
-        public WpfExchangeService(IExchangeApi exchangeApi)
+        public WpfExchangeService(IExchangeService exchangeService)
         {
-            this.exchangeApi = exchangeApi;
+            this.exchangeService = exchangeService;
         }
 
         public async Task<IEnumerable<Symbol>> GetSymbols24HourStatisticsAsync(CancellationToken cancellationToken)
@@ -34,7 +34,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
 
         public void SubscribeStatistics(IEnumerable<Symbol> symbols, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            exchangeApi.SubscribeStatistics(e =>
+            exchangeService.SubscribeStatistics(e =>
             {
                 var stats = e.Statistics.ToList();
 
@@ -45,27 +45,27 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
 
         public async Task<IEnumerable<Order>> GetOpenOrdersAsync(Interface.User user, string symbol = null, long recWindow = 0, Action<Exception> exception = default(Action<Exception>), CancellationToken cancellationToken = default(CancellationToken))
         {
-            var result = await exchangeApi.GetOpenOrdersAsync(user, symbol, recWindow, exception, cancellationToken).ConfigureAwait(false);
+            var result = await exchangeService.GetOpenOrdersAsync(user, symbol, recWindow, exception, cancellationToken).ConfigureAwait(false);
             var orders = result.Select(o => o.GetViewOrder()).ToList();
             return orders;
         }
 
         public async Task<Account> GetAccountInfoAsync(string apiKey, string apiSecret, CancellationToken cancellationToken)
         {
-            var accountInfo = await exchangeApi.GetAccountInfoAsync(new Interface.User { ApiKey = apiKey, ApiSecret = apiSecret}, cancellationToken).ConfigureAwait(false);
+            var accountInfo = await exchangeService.GetAccountInfoAsync(new Interface.User { ApiKey = apiKey, ApiSecret = apiSecret}, cancellationToken).ConfigureAwait(false);
             return new Account(accountInfo);
         }
 
         private async Task<IEnumerable<Symbol>> GetSymbolsAsync(CancellationToken cancellationToken)
         {
-            var results = await exchangeApi.GetSymbolsAsync(cancellationToken).ConfigureAwait(false);
+            var results = await exchangeService.GetSymbolsAsync(cancellationToken).ConfigureAwait(false);
             var symbols = results.Select(s => s.GetViewSymbol()).ToList();
             return symbols;
         }
 
         private async Task<IEnumerable<SymbolStatistics>> Get24HourStatisticsAsync(CancellationToken cancellationToken)
         {
-            var results = await exchangeApi.Get24HourStatisticsAsync(cancellationToken).ConfigureAwait(false);
+            var results = await exchangeService.Get24HourStatisticsAsync(cancellationToken).ConfigureAwait(false);
             var symbols = results.Select(s => s.GetViewSymbolStatistics()).ToList();
             return symbols;
         }
@@ -79,41 +79,41 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
 
         public async Task<Interface.Order> PlaceOrder(Interface.User user, Interface.ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var result = await exchangeApi.PlaceOrder(user, clientOrder, recWindow, cancellationToken).ConfigureAwait(false);
+            var result = await exchangeService.PlaceOrder(user, clientOrder, recWindow, cancellationToken).ConfigureAwait(false);
             return result;
         }
 
         public async Task<string> CancelOrderAsync(Interface.User user, string symbol, long orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var result = await exchangeApi.CancelOrderAsync(user, symbol, orderId, newClientOrderId, recWindow, cancellationToken).ConfigureAwait(false);
+            var result = await exchangeService.CancelOrderAsync(user, symbol, orderId, newClientOrderId, recWindow, cancellationToken).ConfigureAwait(false);
             return result;
         }
 
         public async Task<IEnumerable<Interface.AggregateTrade>> GetAggregateTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
-            var aggregateTrades = await exchangeApi.GetAggregateTradesAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
+            var aggregateTrades = await exchangeService.GetAggregateTradesAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
             return aggregateTrades;
         }
 
         public async Task<Interface.OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
-            var orderBook = await exchangeApi.GetOrderBookAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
+            var orderBook = await exchangeService.GetOrderBookAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
             return orderBook;
         }
 
         public void SubscribeOrderBook(string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            exchangeApi.SubscribeOrderBook(symbol, limit, callback, exception, cancellationToken);
+            exchangeService.SubscribeOrderBook(symbol, limit, callback, exception, cancellationToken);
         }
 
         public void SubscribeAggregateTrades(string symbol, int limit, Action<AggregateTradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            exchangeApi.SubscribeAggregateTrades(symbol, limit, callback, exception, cancellationToken);
+            exchangeService.SubscribeAggregateTrades(symbol, limit, callback, exception, cancellationToken);
         }
 
         public void SubscribeAccountInfo(Interface.User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            exchangeApi.SubscribeAccountInfo(user, callback, exception, cancellationToken);
+            exchangeService.SubscribeAccountInfo(user, callback, exception, cancellationToken);
         }
     }
 }

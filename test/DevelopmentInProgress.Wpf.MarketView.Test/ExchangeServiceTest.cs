@@ -15,7 +15,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         public async Task GetSymbols24HourStatisticsAsync()
         {
             // Arrange
-            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
             var cxlToken = new CancellationToken();
 
@@ -31,7 +31,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         public async Task SubscribeStatistics()
         {
             // Arrange
-            var exchangeApi = ExchangeApiHelper.GetExchangeApi();
+            var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
             var cxlToken = new CancellationToken();
 

@@ -9,19 +9,18 @@ using DevelopmentInProgress.MarketView.Interface.Model;
 
 namespace DevelopmentInProgress.MarketView.Test.Helper
 {
-    public class ExchangeApiSymbolsViewModel : IExchangeApi
+    public class ExchangeService : IExchangeService
     {
         public Task<string> CancelOrderAsync(User user, string symbol, long orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<SymbolStats>> Get24HourStatisticsAsync(CancellationToken cancellationToken)
+        public Task<IEnumerable<SymbolStats>> Get24HourStatisticsAsync(CancellationToken cancellationToken)
         {
-            await Task.Delay(500);
             var tcs = new TaskCompletionSource<IEnumerable<SymbolStats>>();
             tcs.SetResult(TestHelper.SymbolsStatistics);
-            return tcs.Task.Result;
+            return tcs.Task;
         }
 
         public Task<AccountInfo> GetAccountInfoAsync(User user, CancellationToken cancellationToken)
@@ -33,17 +32,23 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 
         public Task<IEnumerable<AggregateTrade>> GetAggregateTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var tcs = new TaskCompletionSource<IEnumerable<AggregateTrade>>();
+            tcs.SetResult(TestHelper.AggregateTrades);
+            return tcs.Task;
         }
 
         public Task<IEnumerable<Order>> GetOpenOrdersAsync(User user, string symbol = null, long recWindow = 0, Action<Exception> exception = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            var tcs = new TaskCompletionSource<IEnumerable<Order>>();
+            tcs.SetResult(TestHelper.Orders);
+            return tcs.Task;
         }
 
         public Task<OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var tcs = new TaskCompletionSource<OrderBook>();
+            tcs.SetResult(TestHelper.OrderBook);
+            return tcs.Task;
         }
 
         public Task<IEnumerable<Symbol>> GetSymbolsAsync(CancellationToken cancellationToken)
@@ -55,7 +60,9 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 
         public Task<Order> PlaceOrder(User user, ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            var tcs = new TaskCompletionSource<Order>();
+            tcs.SetResult(TestHelper.Orders.First());
+            return tcs.Task;
         }
 
         public void SubscribeAccountInfo(User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
@@ -65,12 +72,12 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 
         public void SubscribeAggregateTrades(string symbol, int limit, Action<AggregateTradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            // INTENTIONALLY EMPTY. LEAVE BLANK.
         }
 
         public void SubscribeOrderBook(string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            // INTENTIONALLY EMPTY. LEAVE BLANK.
         }
 
         public void SubscribeStatistics(Action<StatiscticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)

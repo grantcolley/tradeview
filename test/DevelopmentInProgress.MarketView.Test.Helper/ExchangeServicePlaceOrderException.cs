@@ -9,7 +9,7 @@ using DevelopmentInProgress.MarketView.Interface.Model;
 
 namespace DevelopmentInProgress.MarketView.Test.Helper
 {
-    public class ExchangeApi : IExchangeApi
+    public class ExchangeServicePlaceOrderException : IExchangeService
     {
         public Task<string> CancelOrderAsync(User user, string symbol, long orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -32,9 +32,7 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 
         public Task<IEnumerable<AggregateTrade>> GetAggregateTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
-            var tcs = new TaskCompletionSource<IEnumerable<AggregateTrade>>();
-            tcs.SetResult(TestHelper.AggregateTrades);
-            return tcs.Task;
+            throw new NotImplementedException();
         }
 
         public Task<IEnumerable<Order>> GetOpenOrdersAsync(User user, string symbol = null, long recWindow = 0, Action<Exception> exception = null, CancellationToken cancellationToken = default(CancellationToken))
@@ -46,9 +44,7 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 
         public Task<OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
-            var tcs = new TaskCompletionSource<OrderBook>();
-            tcs.SetResult(TestHelper.OrderBook);
-            return tcs.Task;
+            throw new NotImplementedException();
         }
 
         public Task<IEnumerable<Symbol>> GetSymbolsAsync(CancellationToken cancellationToken)
@@ -60,9 +56,7 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 
         public Task<Order> PlaceOrder(User user, ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var tcs = new TaskCompletionSource<Order>();
-            tcs.SetResult(TestHelper.Orders.First());
-            return tcs.Task;
+            throw new Exception("failed to place order");
         }
 
         public void SubscribeAccountInfo(User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
@@ -72,12 +66,12 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 
         public void SubscribeAggregateTrades(string symbol, int limit, Action<AggregateTradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            // INTENTIONALLY EMPTY. LEAVE BLANK.
+            throw new NotImplementedException();
         }
 
         public void SubscribeOrderBook(string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            // INTENTIONALLY EMPTY. LEAVE BLANK.
+            throw new NotImplementedException();
         }
 
         public void SubscribeStatistics(Action<StatiscticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)

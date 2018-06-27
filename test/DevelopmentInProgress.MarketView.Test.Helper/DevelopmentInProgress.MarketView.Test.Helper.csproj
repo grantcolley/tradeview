@@ -43,16 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExchangeApiSubscribeOrderBookAggregateTrades.cs" />
-    <Compile Include="ExchangeApiPlaceOrderException.cs" />
-    <Compile Include="ExchangeApiSymbolsViewModel.cs" />
-    <Compile Include="ExchangeApiType.cs" />
-    <Compile Include="ExchangeApiUpdateOrders.cs" />
+    <Compile Include="ExchangeServiceSubscribeOrderBookAggregateTrades.cs" />
+    <Compile Include="ExchangeServicePlaceOrderException.cs" />
+    <Compile Include="ExchangeServiceSymbolsViewModel.cs" />
+    <Compile Include="ExchangeServiceType.cs" />
+    <Compile Include="ExchangeServiceUpdateOrders.cs" />
     <Compile Include="TestHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ExchangeApi.cs" />
-    <Compile Include="ExchangeApiSubscribeAccountInfoAccount.cs" />
-    <Compile Include="ExchangeApiHelper.cs" />
+    <Compile Include="ExchangeService.cs" />
+    <Compile Include="ExchangeServiceSubscribeAccountInfoAccount.cs" />
+    <Compile Include="ExchangeServiceHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AccountInfo.txt">

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.MarketView.Test.Helper
 {
-    public class ExchangeApiSubscribeAccountInfoAccount : IExchangeApi
+    public class ExchangeServiceSubscribeAccountInfoAccount : IExchangeService
     {
         public Task<string> CancelOrderAsync(User user, string symbol, long orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
