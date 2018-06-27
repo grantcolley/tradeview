@@ -41,17 +41,18 @@
                         <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="120"/>
                         <ColumnDefinition Width="120"/>
-                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="55"/>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" VerticalAlignment="Center" Content="Side / Type" FontWeight="Bold"/>
                     <Label Grid.Column="1" VerticalAlignment="Center" Content="Asset / Time" FontWeight="Bold"/>
                     <Label Grid.Column="2" VerticalAlignment="Center" Content="Quantity / Price" FontWeight="Bold"/>
                     <Label Grid.Column="3" VerticalAlignment="Center" Content="Stop Price" FontWeight="Bold"/>
-                    <Label Grid.Column="4" VerticalAlignment="Center" Content="% Filled" FontWeight="Bold"/>
+                    <Label Grid.Column="5" VerticalAlignment="Center" Content="% Filled" FontWeight="Bold"/>
                 </Grid>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -76,6 +77,7 @@
                                         <ColumnDefinition Width="100"/>
                                         <ColumnDefinition Width="120"/>
                                         <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="55"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
@@ -89,8 +91,8 @@
                                     <Label Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Content="{Binding OriginalQuantity}"/>
                                     <Label Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Content="{Binding Price}"/>
                                     <Label Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Content="{Binding StopPrice, Converter={StaticResource zeroToHiddenConverter}}"/>
-                                    <Label Grid.Row="0" Grid.Column="4" VerticalAlignment="Center" Content="{Binding FilledPercent}"/>
-                                    <StackPanel Grid.Row="1" Grid.Column="4">
+                                    <Label Grid.Row="0" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{Binding FilledPercent}"/>
+                                    <StackPanel Grid.Row="1" Grid.Column="5">
                                         <Button Width="50" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center"
                                                 Command="{Binding Path=DataContext.CancelOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                                 CommandParameter="{Binding Id}"
