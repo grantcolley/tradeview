@@ -69,14 +69,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Services
             var symbols = results.Select(s => s.GetViewSymbolStatistics()).ToList();
             return symbols;
         }
-
-
-
-
-
-
-
-
+        
         public async Task<Interface.Order> PlaceOrder(Interface.User user, Interface.ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
             var result = await exchangeService.PlaceOrder(user, clientOrder, recWindow, cancellationToken).ConfigureAwait(false);
