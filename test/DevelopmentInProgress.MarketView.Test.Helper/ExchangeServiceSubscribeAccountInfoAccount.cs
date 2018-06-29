@@ -75,7 +75,7 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             throw new NotImplementedException();
         }
 
-        public void SubscribeStatistics(Action<StatiscticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public void SubscribeStatistics(Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

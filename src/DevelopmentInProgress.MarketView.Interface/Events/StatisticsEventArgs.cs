@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DevelopmentInProgress.MarketView.Interface.Events
 {
-    public class StatiscticsEventArgs
+    public class StatisticsEventArgs
     {
         public IEnumerable<SymbolStats> Statistics { get; set; }
     }

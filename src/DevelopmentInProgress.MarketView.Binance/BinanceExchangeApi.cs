@@ -152,8 +152,8 @@ namespace DevelopmentInProgress.MarketView.Binance
             var symbolsStats = stats.Select(s => NewSymbolStats(s)).ToList();
             return symbolsStats;
         }
-
-        public void SubscribeStatistics(Action<StatiscticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        
+        public void SubscribeStatistics(Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             try
             {
@@ -169,7 +169,7 @@ namespace DevelopmentInProgress.MarketView.Binance
                     try
                     {
                         var symbolsStats = e.Statistics.Select(s => NewSymbolStats(s)).ToList();
-                        callback.Invoke(new StatiscticsEventArgs { Statistics = symbolsStats });
+                        callback.Invoke(new StatisticsEventArgs { Statistics = symbolsStats });
                     }
                     catch (Exception ex)
                     {
