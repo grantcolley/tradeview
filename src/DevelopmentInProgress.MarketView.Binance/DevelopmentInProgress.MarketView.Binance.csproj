@@ -11,12 +11,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Binance" Version="0.2.0-alpha41" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="2.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Binance\src\Binance\Binance.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.MarketView.Interface\DevelopmentInProgress.MarketView.Interface.csproj" />
   </ItemGroup>
 
