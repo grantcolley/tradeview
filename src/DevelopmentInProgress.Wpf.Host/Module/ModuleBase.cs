@@ -6,9 +6,9 @@
 //-----------------------------------------------------------------------
 
 using DevelopmentInProgress.Wpf.Host.Navigation;
-using Microsoft.Practices.Prism.Logging;
-using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
+using Prism.Logging;
+using Prism.Modularity;
 
 namespace DevelopmentInProgress.Wpf.Host.Module
 {

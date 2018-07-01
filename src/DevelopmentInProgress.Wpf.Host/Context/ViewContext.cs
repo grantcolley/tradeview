@@ -6,8 +6,8 @@
 //-----------------------------------------------------------------------
 
 using DevelopmentInProgress.Wpf.Host.Navigation;
-using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Unity;
+using Prism.Logging;
 
 namespace DevelopmentInProgress.Wpf.Host.Context
 {

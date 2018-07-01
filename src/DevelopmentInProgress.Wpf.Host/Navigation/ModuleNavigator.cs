@@ -6,7 +6,6 @@
 //-----------------------------------------------------------------------
 
 using DevelopmentInProgress.Wpf.Host.View;
-using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 
 namespace DevelopmentInProgress.Wpf.Host.Navigation

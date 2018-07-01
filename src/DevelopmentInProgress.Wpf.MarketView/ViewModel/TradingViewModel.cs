@@ -5,13 +5,13 @@ using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using System;
 using System.Collections.Generic;
-using Microsoft.Practices.Prism.Logging;
 using System.Linq;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 using System.Reactive.Linq;
 using DevelopmentInProgress.Wpf.MarketView.Events;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using Prism.Logging;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {

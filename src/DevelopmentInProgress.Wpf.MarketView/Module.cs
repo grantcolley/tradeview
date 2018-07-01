@@ -2,11 +2,11 @@
 using DevelopmentInProgress.Wpf.MarketView.ViewModel;
 using DevelopmentInProgress.Wpf.Host.Module;
 using DevelopmentInProgress.Wpf.Host.Navigation;
-using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Unity;
 using System;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using DevelopmentInProgress.Wpf.Host.View;
+using Prism.Logging;
 
 namespace DevelopmentInProgress.Wpf.MarketView
 {

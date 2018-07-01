@@ -11,7 +11,7 @@ using System.Linq;
 using System.Windows.Input;
 using DevelopmentInProgress.Wpf.Host.Context;
 using DevelopmentInProgress.Wpf.Host.Navigation;
-using Microsoft.Practices.Prism.Regions;
+using Prism.Regions;
 
 namespace DevelopmentInProgress.Wpf.Host.ViewModel
 {
@@ -255,23 +255,23 @@ namespace DevelopmentInProgress.Wpf.Host.ViewModel
 
             uriQueryString = navigationContext.Uri.OriginalString;
 
-            foreach (KeyValuePair<string, string> parameter in navigationContext.Parameters)
+            foreach (KeyValuePair<string, object> parameter in navigationContext.Parameters)
             {
                 if (parameter.Key.Equals("Title"))
                 {
-                    Title = parameter.Value;
+                    Title = parameter.Value?.ToString();
                     continue;
                 }
 
                 if (parameter.Key.Equals("NavigationId"))
                 {
-                    NavigationId = parameter.Value;
+                    NavigationId = parameter.Value?.ToString();
                     continue;
                 }
 
                 if (parameter.Key.Equals("Navigation"))
                 {
-                    string[] history = NavigationTarget.GetNavigationHistory(parameter.Value);
+                    string[] history = NavigationTarget.GetNavigationHistory(parameter.Value?.ToString());
                     foreach (string target in history)
                     {
                         if (!String.IsNullOrEmpty(target))

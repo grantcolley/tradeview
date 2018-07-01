@@ -1,7 +1,7 @@
 ﻿<Window x:Class="DevelopmentInProgress.Wpf.Host.Shell"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:prism="http://www.codeplex.com/CompositeWPF"
+        xmlns:prism="http://prismlibrary.com/"
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:progress="clr-namespace:DevelopmentInProgress.Wpf.Host.Controls.Progress"
         xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Host.Converters"

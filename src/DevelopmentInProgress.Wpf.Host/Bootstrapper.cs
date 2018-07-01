@@ -10,13 +10,13 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using DevelopmentInProgress.Wpf.Host.RegionAdapters;
-using Microsoft.Practices.Prism.Logging;
-using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
+using Prism.Logging;
+using Prism.Modularity;
+using Prism.Regions;
+using Prism.Unity;
 using Serilog;
 using Serilog.Core;
 using Xceed.Wpf.AvalonDock;
@@ -55,7 +55,7 @@ namespace DevelopmentInProgress.Wpf.Host
         {
             using (Stream xamlStream = File.OpenRead("Configuration/ModuleCatalog.xaml"))
             {
-                var moduleCatalog = Microsoft.Practices.Prism.Modularity.ModuleCatalog.CreateFromXaml(xamlStream);
+                var moduleCatalog = Prism.Modularity.ModuleCatalog.CreateFromXaml(xamlStream);
                 return moduleCatalog;
             }
         }

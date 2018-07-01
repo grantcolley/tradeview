@@ -5,8 +5,8 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
-using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Unity;
+using Prism.Logging;
 
 namespace DevelopmentInProgress.Wpf.Host.Context
 {

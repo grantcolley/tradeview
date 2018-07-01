@@ -10,8 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DevelopmentInProgress.Wpf.Host.View;
 using DevelopmentInProgress.Wpf.Host.ViewModel;
-using Microsoft.Practices.Prism;
-using Microsoft.Practices.Prism.Regions;
+using Prism.Regions;
 
 namespace DevelopmentInProgress.Wpf.Host.Navigation
 {
@@ -51,7 +50,7 @@ namespace DevelopmentInProgress.Wpf.Host.Navigation
                 throw new Exception("Navigation Manager Exception : Target view not specified.");
             }
 
-            var query = new UriQuery();
+            var query = new NavigationParameters();
             query.Add("Title", navigationSettings.Title ?? navigationSettings.View);
             query.Add("Navigation", navigationSettings.NavigationHistory ?? String.Empty);
 
@@ -221,7 +220,7 @@ namespace DevelopmentInProgress.Wpf.Host.Navigation
                 }
 
                 var query = navigationResult.Context.Parameters;
-                var navigationId = query["NavigationId"];
+                var navigationId = query["NavigationId"].ToString();
 
                 NavigationSettings navigationSettings;
                 if (navigationSettingsList.TryGetValue(navigationId, out navigationSettings))

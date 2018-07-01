@@ -5,7 +5,7 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
-using Microsoft.Practices.Prism.Logging;
+using Prism.Logging;
 using Serilog;
 
 namespace DevelopmentInProgress.Wpf.Host.LoggerFacade

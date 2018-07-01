@@ -6,13 +6,12 @@
 //-----------------------------------------------------------------------
 
 using System;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Threading;
 using DevelopmentInProgress.Wpf.Host.Navigation;
-using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.ServiceLocation;
+using Prism.Logging;
 
 namespace DevelopmentInProgress.Wpf.Host
 {

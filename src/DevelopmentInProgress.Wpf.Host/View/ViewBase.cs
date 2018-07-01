@@ -9,7 +9,7 @@ using System.Windows.Controls;
 using DevelopmentInProgress.Wpf.Host.Context;
 using DevelopmentInProgress.Wpf.Host.Navigation;
 using DevelopmentInProgress.Wpf.Controls.Messaging;
-using Microsoft.Practices.Prism.Logging;
+using Prism.Logging;
 
 namespace DevelopmentInProgress.Wpf.Host.View
 {
