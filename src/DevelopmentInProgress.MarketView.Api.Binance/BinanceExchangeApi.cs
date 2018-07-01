@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace DevelopmentInProgress.MarketView.Binance
+namespace DevelopmentInProgress.MarketView.Api.Binance
 {
     public class BinanceExchangeApi : IExchangeApi
     {

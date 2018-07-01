@@ -1,6 +1,6 @@
 ﻿using Binance;
 
-namespace DevelopmentInProgress.MarketView.Binance
+namespace DevelopmentInProgress.MarketView.Api.Binance
 {
     public static class OrderHelper
     {

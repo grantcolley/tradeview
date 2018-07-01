@@ -2,17 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>DevelopmentInProgress.MarketView.Binance</RootNamespace>
-    <AssemblyName>DevelopmentInProgress.MarketView.Binance</AssemblyName>
+    <RootNamespace>DevelopmentInProgress.MarketView.Api.Binance</RootNamespace>
+    <AssemblyName>DevelopmentInProgress.MarketView.Api.Binance</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>C:\GitHub\tradeview\output\UI\</OutputPath>
+    <LangVersion>7</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Binance" Version="0.2.0-alpha41" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="2.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="2.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 

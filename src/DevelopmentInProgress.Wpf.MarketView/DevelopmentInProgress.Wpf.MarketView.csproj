@@ -134,9 +134,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DevelopmentInProgress.MarketView.Api.Binance\DevelopmentInProgress.MarketView.Api.Binance.csproj">
+      <Project>{733cca07-84f3-46f3-9d23-7fa195f0138f}</Project>
+      <Name>DevelopmentInProgress.MarketView.Api.Binance</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DevelopmentInProgress.MarketView.Interface\DevelopmentInProgress.MarketView.Interface.csproj">
       <Project>{86695062-90cc-419d-b455-d6d8c364a215}</Project>
       <Name>DevelopmentInProgress.MarketView.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DevelopmentInProgress.MarketView.Service\DevelopmentInProgress.MarketView.Service.csproj">
+      <Project>{97279bbf-8dd0-407c-9655-b38b6dc409a2}</Project>
+      <Name>DevelopmentInProgress.MarketView.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\DevelopmentInProgress.Wpf.Controls\DevelopmentInProgress.Wpf.Controls.csproj">
       <Project>{5acdc574-0f6f-48bc-ad2a-2f29bd7009fe}</Project>
