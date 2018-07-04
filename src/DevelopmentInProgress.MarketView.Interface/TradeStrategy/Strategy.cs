@@ -4,12 +4,15 @@ namespace DevelopmentInProgress.MarketView.Interface.TradeStrategy
 {
     public class Strategy
     {
+        public Strategy()
+        {
+            Symbols = new List<StrategySymbol>();
+        }
+
         public int Id { get; set; }
         public string Name { get; set; }
-        public string ApiKey { get; set; }
-        public string SecretKey { get; set; }
         public StrategyStatus Status { get; set; }
-        public List<SymbolSubscribe> Symbols { get; set; }
+        public List<StrategySymbol> Symbols { get; set; }
 
         /// <summary>
         /// The assembly to load and run. The assembly must contain a class that implements

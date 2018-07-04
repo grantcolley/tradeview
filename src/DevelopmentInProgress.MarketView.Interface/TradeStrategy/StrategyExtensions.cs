@@ -10,7 +10,6 @@ namespace DevelopmentInProgress.MarketView.Interface.TradeStrategy
             {
                 Id = strategy.Id,
                 Name = strategy.Name,
-                ApiKey = strategy.ApiKey,
                 Status = strategy.Status,
                 Symbols = strategy.Symbols,
                 TargetAssembly = strategy.TargetAssembly,
