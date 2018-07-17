@@ -7,4 +7,9 @@
                       ModuleType="DevelopmentInProgress.Wpf.MarketView.Module,DevelopmentInProgress.Wpf.MarketView"
                       InitializationMode="WhenAvailable"/>
 
+    <prism:ModuleInfo Ref="Strategy Manager"
+                      ModuleName="DevelopmentInProgress.Wpf.StrategyManager"
+                      ModuleType="DevelopmentInProgress.Wpf.StrategyManager.Module,DevelopmentInProgress.Wpf.StrategyManager"
+                      InitializationMode="WhenAvailable"/>
+
 </prism:ModuleCatalog>
