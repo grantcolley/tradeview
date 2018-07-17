@@ -125,9 +125,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\manageStrategies.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Images\strategyManager.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="Images\strategy.png" />
   </ItemGroup>
