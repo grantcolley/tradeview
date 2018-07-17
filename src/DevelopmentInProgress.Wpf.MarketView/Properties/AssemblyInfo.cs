@@ -6,10 +6,10 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("DevelopmentInProgress.MarketView")]
-[assembly: AssemblyDescription("Crypto trading")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Development In Progress Ltd")]
-[assembly: AssemblyProduct("DipTrade")]
+[assembly: AssemblyProduct("MarketView")]
 [assembly: AssemblyCopyright("Copyright ©  2018 Development In Progress Ltd")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
