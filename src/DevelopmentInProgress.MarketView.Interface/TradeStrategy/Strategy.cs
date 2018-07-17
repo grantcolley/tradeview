@@ -6,13 +6,13 @@ namespace DevelopmentInProgress.MarketView.Interface.TradeStrategy
     {
         public Strategy()
         {
-            Symbols = new List<StrategySymbol>();
+            StrategySubscriptions = new List<StrategySubscription>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
         public StrategyStatus Status { get; set; }
-        public List<StrategySymbol> Symbols { get; set; }
+        public List<StrategySubscription> StrategySubscriptions { get; set; }
 
         /// <summary>
         /// The assembly to load and run. The assembly must contain a class that implements

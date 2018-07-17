@@ -1,6 +1,6 @@
 ﻿namespace DevelopmentInProgress.MarketView.Interface.TradeStrategy
 {
-    public class StrategySymbol
+    public class StrategySubscription
     {
         public string Symbol { get; set; }
         public int Limit { get; set; }

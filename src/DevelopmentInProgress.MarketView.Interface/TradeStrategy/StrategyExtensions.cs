@@ -11,7 +11,7 @@ namespace DevelopmentInProgress.MarketView.Interface.TradeStrategy
                 Id = strategy.Id,
                 Name = strategy.Name,
                 Status = strategy.Status,
-                Symbols = strategy.Symbols,
+                StrategySubscriptions = strategy.StrategySubscriptions,
                 TargetAssembly = strategy.TargetAssembly,
                 Tag = strategy.Tag,
                 Machine = Environment.MachineName,
