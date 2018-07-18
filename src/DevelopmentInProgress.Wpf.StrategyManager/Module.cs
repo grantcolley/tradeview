@@ -1,5 +1,6 @@
 ﻿using DevelopmentInProgress.Wpf.Host.Module;
 using DevelopmentInProgress.Wpf.Host.Navigation;
+using DevelopmentInProgress.Wpf.Host.View;
 using DevelopmentInProgress.Wpf.StrategyManager.View;
 using DevelopmentInProgress.Wpf.StrategyManager.ViewModel;
 using Microsoft.Practices.Unity;
@@ -10,10 +11,12 @@ namespace DevelopmentInProgress.Wpf.StrategyManager
     public class Module : ModuleBase
     {
         public const string ModuleName = "Strategy Manager";
+        private static IUnityContainer StaticContainer;
 
         public Module(IUnityContainer container, ModuleNavigator moduleNavigator, ILoggerFacade logger)
             : base(container, moduleNavigator, logger)
         {
+            StaticContainer = container;
         }
 
         public override void Initialize()
@@ -26,7 +29,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager
             moduleSettings.ModuleImagePath = @"/DevelopmentInProgress.Wpf.StrategyManager;component/Images/strategyManager.png";
 
             var moduleGroup = new ModuleGroup();
-            moduleGroup.ModuleGroupName = "Strategy Manager";
+            moduleGroup.ModuleGroupName = ModuleName;
 
             var newDocument = new ModuleGroupItem();
             newDocument.ModuleGroupItemName = "Manage Strategies";
@@ -39,6 +42,34 @@ namespace DevelopmentInProgress.Wpf.StrategyManager
             ModuleNavigator.AddModuleNavigation(moduleSettings);
 
             Logger.Log("Initialize DevelopmentInProgress.Wpf.StrategyManager Complete", Category.Info, Priority.None);
+        }
+
+        public static void AddStrategy(string strategyName)
+        {
+            var strategyDocument = CreateAccountModuleGroupItem(strategyName, strategyName);
+
+            var modulesNavigationView = StaticContainer.Resolve(typeof(ModulesNavigationView),
+                typeof(ModulesNavigationView).Name) as ModulesNavigationView;
+
+            modulesNavigationView.AddNavigationListItem(ModuleName, ModuleName, strategyDocument);
+        }
+
+        public static void RemoveStrategy(string strategyName)
+        {
+            var modulesNavigationView = StaticContainer.Resolve(typeof(ModulesNavigationView),
+                typeof(ModulesNavigationView).Name) as ModulesNavigationView;
+
+            modulesNavigationView.RemoveNavigationListItem(ModuleName, ModuleName, strategyName);
+        }
+
+        private static ModuleGroupItem CreateAccountModuleGroupItem(string name, string title)
+        {
+            var accountDocument = new ModuleGroupItem();
+            accountDocument.ModuleGroupItemName = name;
+            accountDocument.TargetView = typeof(StrategyView).Name;
+            accountDocument.TargetViewTitle = title;
+            accountDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.Wpf.MarketView;component/Images/strategy.png";
+            return accountDocument;
         }
     }
 }
