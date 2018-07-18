@@ -1,6 +1,7 @@
 ﻿using DevelopmentInProgress.Wpf.Host.Module;
 using DevelopmentInProgress.Wpf.Host.Navigation;
 using DevelopmentInProgress.Wpf.Host.View;
+using DevelopmentInProgress.Wpf.StrategyManager.Services;
 using DevelopmentInProgress.Wpf.StrategyManager.View;
 using DevelopmentInProgress.Wpf.StrategyManager.ViewModel;
 using Microsoft.Practices.Unity;
@@ -23,6 +24,10 @@ namespace DevelopmentInProgress.Wpf.StrategyManager
         {
             Container.RegisterType<object, StrategyManagerView>(typeof(StrategyManagerView).Name);
             Container.RegisterType<StrategyManagerViewModel>(typeof(StrategyManagerViewModel).Name);
+            Container.RegisterType<object, StrategyView>(typeof(StrategyView).Name);
+            Container.RegisterType<StrategyViewModel>(typeof(StrategyViewModel).Name);
+
+            Container.RegisterType<IStrategyService>(typeof(StrategyService).Name);
 
             var moduleSettings = new ModuleSettings();
             moduleSettings.ModuleName = ModuleName;
