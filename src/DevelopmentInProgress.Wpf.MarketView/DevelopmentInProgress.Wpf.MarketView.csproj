@@ -81,7 +81,6 @@
     <Compile Include="Model\UserAccount.cs" />
     <Compile Include="Model\UserAccounts.cs" />
     <Compile Include="Model\Preferences.cs" />
-    <Compile Include="Model\EntityBase.cs" />
     <Compile Include="Model\Symbol.cs" />
     <Compile Include="Model\SymbolStatistics.cs" />
     <Compile Include="Module.cs" />
@@ -132,6 +131,10 @@
     <ProjectReference Include="..\DevelopmentInProgress.MarketView.Service\DevelopmentInProgress.MarketView.Service.csproj">
       <Project>{97279bbf-8dd0-407c-9655-b38b6dc409a2}</Project>
       <Name>DevelopmentInProgress.MarketView.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DevelopmentInProgress.Wpf.Common\DevelopmentInProgress.Wpf.Common.csproj">
+      <Project>{2b523839-ee20-4ed3-a1ba-ac2070c99f4d}</Project>
+      <Name>DevelopmentInProgress.Wpf.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\DevelopmentInProgress.Wpf.Controls\DevelopmentInProgress.Wpf.Controls.csproj">
       <Project>{5acdc574-0f6f-48bc-ad2a-2f29bd7009fe}</Project>

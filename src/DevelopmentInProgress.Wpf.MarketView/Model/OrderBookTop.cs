@@ -1,4 +1,6 @@
-﻿namespace DevelopmentInProgress.Wpf.MarketView.Model
+﻿using DevelopmentInProgress.Wpf.Common;
+
+namespace DevelopmentInProgress.Wpf.MarketView.Model
 {
     public class OrderBookTop : EntityBase
     {

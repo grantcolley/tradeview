@@ -94,6 +94,10 @@
       <Project>{86695062-90cc-419d-b455-d6d8c364a215}</Project>
       <Name>DevelopmentInProgress.MarketView.Interface</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\DevelopmentInProgress.Wpf.Common\DevelopmentInProgress.Wpf.Common.csproj">
+      <Project>{2b523839-ee20-4ed3-a1ba-ac2070c99f4d}</Project>
+      <Name>DevelopmentInProgress.Wpf.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\DevelopmentInProgress.Wpf.MarketView\DevelopmentInProgress.Wpf.MarketView.csproj">
       <Project>{2183c26d-6932-41d9-bb1e-16fa55adf983}</Project>
       <Name>DevelopmentInProgress.Wpf.MarketView</Name>

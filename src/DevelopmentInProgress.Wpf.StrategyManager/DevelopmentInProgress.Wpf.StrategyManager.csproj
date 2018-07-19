@@ -98,6 +98,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Strategy.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IStrategyService.cs" />
@@ -116,6 +117,10 @@
       <Project>{86695062-90cc-419d-b455-d6d8c364a215}</Project>
       <Name>DevelopmentInProgress.MarketView.Interface</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DevelopmentInProgress.Wpf.Common\DevelopmentInProgress.Wpf.Common.csproj">
+      <Project>{2b523839-ee20-4ed3-a1ba-ac2070c99f4d}</Project>
+      <Name>DevelopmentInProgress.Wpf.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DevelopmentInProgress.Wpf.Controls\DevelopmentInProgress.Wpf.Controls.csproj">
       <Project>{5acdc574-0f6f-48bc-ad2a-2f29bd7009fe}</Project>
       <Name>DevelopmentInProgress.Wpf.Controls</Name>
@@ -123,6 +128,10 @@
     <ProjectReference Include="..\DevelopmentInProgress.Wpf.Host\DevelopmentInProgress.Wpf.Host.csproj">
       <Project>{7bce5d35-0443-4031-843a-3563356290e1}</Project>
       <Name>DevelopmentInProgress.Wpf.Host</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DevelopmentInProgress.Wpf.MarketView\DevelopmentInProgress.Wpf.MarketView.csproj">
+      <Project>{2183C26D-6932-41D9-BB1E-16FA55ADF983}</Project>
+      <Name>DevelopmentInProgress.Wpf.MarketView</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +156,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\strategy_add.png" />
+    <Resource Include="Images\strategy_delete.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

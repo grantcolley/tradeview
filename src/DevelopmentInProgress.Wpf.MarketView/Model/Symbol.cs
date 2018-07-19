@@ -1,6 +1,7 @@
 ﻿using DevelopmentInProgress.Wpf.MarketView.Extensions;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 using System.Collections.Generic;
+using DevelopmentInProgress.Wpf.Common;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Model
 {

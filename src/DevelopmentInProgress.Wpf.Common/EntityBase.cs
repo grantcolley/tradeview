@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace DevelopmentInProgress.Wpf.MarketView.Model
+namespace DevelopmentInProgress.Wpf.Common
 {
     public abstract class EntityBase : INotifyPropertyChanged
     {
@@ -54,7 +54,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
                 }
             }
         }
-        
+
         public bool CanModify
         {
             get { return !IsReadOnly; }
