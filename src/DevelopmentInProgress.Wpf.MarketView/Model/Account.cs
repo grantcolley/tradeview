@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.Wpf.Common;
+﻿using DevelopmentInProgress.Wpf.Common.Model;
 using System.Collections.ObjectModel;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 

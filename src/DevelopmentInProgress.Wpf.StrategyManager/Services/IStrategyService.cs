@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.MarketView.Interface.TradeStrategy;
+﻿using DevelopmentInProgress.Wpf.StrategyManager.Model;
 using System.Collections.Generic;
 
 namespace DevelopmentInProgress.Wpf.StrategyManager.Services

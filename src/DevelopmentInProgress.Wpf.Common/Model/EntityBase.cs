@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace DevelopmentInProgress.Wpf.Common
+namespace DevelopmentInProgress.Wpf.Common.Model
 {
     public abstract class EntityBase : INotifyPropertyChanged
     {

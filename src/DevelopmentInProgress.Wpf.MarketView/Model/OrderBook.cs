@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.Wpf.Common;
+﻿using DevelopmentInProgress.Wpf.Common.Model;
 using LiveCharts;
 using LiveCharts.Configurations;
 using System;

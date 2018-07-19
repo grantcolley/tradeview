@@ -209,8 +209,6 @@
   <ItemGroup>
     <Resource Include="Images\account.png" />
     <Resource Include="Images\accounts.png" />
-    <Resource Include="Images\account_add.png" />
-    <Resource Include="Images\account_delete.png" />
     <Resource Include="Images\close.png" />
     <Resource Include="Images\marketview.png" />
   </ItemGroup>

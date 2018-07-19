@@ -1,7 +1,7 @@
-﻿using DevelopmentInProgress.MarketView.Interface.TradeStrategy;
-using DevelopmentInProgress.Wpf.Controls.Messaging;
+﻿using DevelopmentInProgress.Wpf.Controls.Messaging;
 using DevelopmentInProgress.Wpf.Host.Context;
 using DevelopmentInProgress.Wpf.Host.ViewModel;
+using DevelopmentInProgress.Wpf.StrategyManager.Model;
 using DevelopmentInProgress.Wpf.StrategyManager.Services;
 using System;
 using System.Collections.ObjectModel;

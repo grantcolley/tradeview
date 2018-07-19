@@ -9,9 +9,14 @@
              xmlns:model="clr-namespace:DevelopmentInProgress.Wpf.MarketView.Model"
              mc:Ignorable="d">
     <view:DocumentViewBase.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/DevelopmentInProgress.Wpf.Common;component/Images/ImageResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
 
-        <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
-        
+            <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
+
+        </ResourceDictionary>
     </view:DocumentViewBase.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -24,13 +29,12 @@
                 <DockPanel LastChildFill="True">
                     <DockPanel DockPanel.Dock="Top" LastChildFill="True" Margin="7">
                         <Label DockPanel.Dock="Left" Content="Add Account" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="12"/>
-                        <Button DockPanel.Dock="Right"   
-                                Height="18" Width="18"    
+                        <Button DockPanel.Dock="Right"     
                                 ToolTip="Add New Account"
                                 Style="{StaticResource ButtonImageStyle}"
                                 Command="{Binding AddAccountCommand}"
                                 CommandParameter="{Binding ElementName=addAccount, Path=Text}">
-                            <Image Source="../Images/account_add.png"/>
+                            <Control Template="{StaticResource add}"/>
                         </Button>
                         <TextBox DockPanel.Dock="Left" Name="addAccount"/>
                     </DockPanel>
@@ -51,14 +55,13 @@
                                 <DataTemplate DataType="{x:Type model:UserAccount}">
                                     <Border BorderThickness="1" BorderBrush="#FF454545" Margin="2">
                                         <DockPanel LastChildFill="True">
-                                            <Button DockPanel.Dock="Right"                                            
-                                                Height="18" Width="18"                                                    
+                                            <Button DockPanel.Dock="Right"                                                 
                                                 Margin="2"
                                                 ToolTip="Delete account" 
                                                 Style="{StaticResource ButtonImageStyle}"
                                                 Command="{Binding Path=DataContext.DeleteAccountCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                                 CommandParameter="{Binding .}">
-                                                <Image Source="../Images/account_delete.png"/>
+                                                <Control Template="{StaticResource delete}"/>
                                             </Button>
                                             <Label Content="{Binding AccountName}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                                         </DockPanel>

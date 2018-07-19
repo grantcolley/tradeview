@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.Wpf.Common;
+﻿using DevelopmentInProgress.Wpf.Common.Model;
 using System;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Model

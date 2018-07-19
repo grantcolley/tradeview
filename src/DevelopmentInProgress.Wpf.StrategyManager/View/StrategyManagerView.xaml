@@ -6,11 +6,17 @@
                        xmlns:view="clr-namespace:DevelopmentInProgress.Wpf.Host.View;assembly=DevelopmentInProgress.Wpf.Host"
                        xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Host.Converters;assembly=DevelopmentInProgress.Wpf.Host"
                        xmlns:filterbox="clr-namespace:DevelopmentInProgress.Wpf.Controls.FilterBox;assembly=DevelopmentInProgress.Wpf.Controls"
+                       xmlns:model="clr-namespace:DevelopmentInProgress.Wpf.StrategyManager.Model"
                        mc:Ignorable="d">
     <view:DocumentViewBase.Resources>
-        
-        <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
-        
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/DevelopmentInProgress.Wpf.Common;component/Images/ImageResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
+
+        </ResourceDictionary>
     </view:DocumentViewBase.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -23,13 +29,12 @@
                 <DockPanel LastChildFill="True">
                     <DockPanel DockPanel.Dock="Top" LastChildFill="True" Margin="7">
                         <Label DockPanel.Dock="Left" Content="Add Strategy" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="12"/>
-                        <Button DockPanel.Dock="Right"   
-                                Height="18" Width="18"    
+                        <Button DockPanel.Dock="Right"
                                 ToolTip="Add New Strategy"
                                 Style="{StaticResource ButtonImageStyle}"
                                 Command="{Binding AddStrategyCommand}"
                                 CommandParameter="{Binding ElementName=addStrategy, Path=Text}">
-                            <Image Source="../Images/strategy_add.png"/>
+                            <Control Template="{StaticResource add}"/>
                         </Button>
                         <TextBox DockPanel.Dock="Left" Name="addStrategy"/>
                     </DockPanel>
@@ -53,11 +58,11 @@
                                             <Button DockPanel.Dock="Right"                                            
                                                 Height="18" Width="18"                                                    
                                                 Margin="2"
-                                                ToolTip="Delete account" 
+                                                ToolTip="Delete strategy" 
                                                 Style="{StaticResource ButtonImageStyle}"
                                                 Command="{Binding Path=DataContext.DeleteStrategyCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                                 CommandParameter="{Binding .}">
-                                                <Image Source="../Images/strategy_delete.png"/>
+                                                <Control Template="{StaticResource delete}"/>
                                             </Button>
                                             <Label Content="{Binding Name}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                                         </DockPanel>
