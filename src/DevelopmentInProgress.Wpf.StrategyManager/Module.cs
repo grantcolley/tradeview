@@ -22,12 +22,11 @@ namespace DevelopmentInProgress.Wpf.StrategyManager
 
         public override void Initialize()
         {
+            Container.RegisterType<IStrategyService, StrategyService>();
             Container.RegisterType<object, StrategyManagerView>(typeof(StrategyManagerView).Name);
             Container.RegisterType<StrategyManagerViewModel>(typeof(StrategyManagerViewModel).Name);
             Container.RegisterType<object, StrategyView>(typeof(StrategyView).Name);
             Container.RegisterType<StrategyViewModel>(typeof(StrategyViewModel).Name);
-
-            Container.RegisterType<IStrategyService>(typeof(StrategyService).Name);
 
             var moduleSettings = new ModuleSettings();
             moduleSettings.ModuleName = ModuleName;
