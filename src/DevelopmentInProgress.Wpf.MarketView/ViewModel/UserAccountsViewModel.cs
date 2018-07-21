@@ -6,6 +6,7 @@ using DevelopmentInProgress.Wpf.MarketView.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
@@ -101,7 +102,15 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 return;
             }
 
-            var userAccount = new UserAccount { AccountName = param.ToString() };
+            var accountName = param.ToString();
+
+            if(Accounts.Any( a => a.AccountName.Equals(accountName)))
+            {
+                ShowMessage(new Message { MessageType = MessageType.Info, Text = $"An account with the name {accountName} already exists." });
+                return;
+            }
+
+            var userAccount = new UserAccount { AccountName = accountName };
             accountsService.SaveAccount(userAccount);
             Accounts.Add(userAccount);
             Module.AddAccount(userAccount.AccountName);
