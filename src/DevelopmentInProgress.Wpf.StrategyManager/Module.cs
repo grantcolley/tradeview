@@ -40,8 +40,18 @@ namespace DevelopmentInProgress.Wpf.StrategyManager
             newDocument.TargetView = typeof(StrategyManagerView).Name;
             newDocument.TargetViewTitle = "Manage Strategies";
             newDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.Wpf.StrategyManager;component/Images/manageStrategies.png";
-
             moduleGroup.ModuleGroupItems.Add(newDocument);
+
+            var strategyService = Container.Resolve<IStrategyService>();
+
+            var userStrategies = strategyService.GetStrategies();
+
+            foreach (var strategy in userStrategies)
+            {
+                var strategyDocument = CreateStrategyModuleGroupItem(strategy.Name, strategy.Name);
+                moduleGroup.ModuleGroupItems.Add(strategyDocument);
+            }
+
             moduleSettings.ModuleGroups.Add(moduleGroup);
             ModuleNavigator.AddModuleNavigation(moduleSettings);
 
@@ -50,7 +60,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager
 
         public static void AddStrategy(string strategyName)
         {
-            var strategyDocument = CreateAccountModuleGroupItem(strategyName, strategyName);
+            var strategyDocument = CreateStrategyModuleGroupItem(strategyName, strategyName);
 
             var modulesNavigationView = StaticContainer.Resolve(typeof(ModulesNavigationView),
                 typeof(ModulesNavigationView).Name) as ModulesNavigationView;
@@ -66,14 +76,14 @@ namespace DevelopmentInProgress.Wpf.StrategyManager
             modulesNavigationView.RemoveNavigationListItem(ModuleName, ModuleName, strategyName);
         }
 
-        private static ModuleGroupItem CreateAccountModuleGroupItem(string name, string title)
+        private static ModuleGroupItem CreateStrategyModuleGroupItem(string name, string title)
         {
-            var accountDocument = new ModuleGroupItem();
-            accountDocument.ModuleGroupItemName = name;
-            accountDocument.TargetView = typeof(StrategyView).Name;
-            accountDocument.TargetViewTitle = title;
-            accountDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.Wpf.MarketView;component/Images/strategy.png";
-            return accountDocument;
+            var strategyDocument = new ModuleGroupItem();
+            strategyDocument.ModuleGroupItemName = name;
+            strategyDocument.TargetView = typeof(StrategyView).Name;
+            strategyDocument.TargetViewTitle = title;
+            strategyDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.Wpf.StrategyManager;component/Images/strategy.png";
+            return strategyDocument;
         }
     }
 }

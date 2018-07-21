@@ -36,16 +36,16 @@ namespace DevelopmentInProgress.Wpf.MarketView
             var moduleGroup = new ModuleGroup();
             moduleGroup.ModuleGroupName = AccountUser;
 
-            var accountsService = Container.Resolve<IAccountsService>();
-
-            var userAccounts = accountsService.GetAccounts();
-
             var manageAccountsDocument = new ModuleGroupItem();
             manageAccountsDocument.ModuleGroupItemName = "Manage Accounts";
             manageAccountsDocument.TargetView = typeof(UserAccountsView).Name;
             manageAccountsDocument.TargetViewTitle = "Manage Accounts";
             manageAccountsDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.Wpf.MarketView;component/Images/accounts.png";
             moduleGroup.ModuleGroupItems.Add(manageAccountsDocument);
+
+            var accountsService = Container.Resolve<IAccountsService>();
+
+            var userAccounts = accountsService.GetAccounts();
 
             foreach (var userAccount in userAccounts.Accounts)
             {

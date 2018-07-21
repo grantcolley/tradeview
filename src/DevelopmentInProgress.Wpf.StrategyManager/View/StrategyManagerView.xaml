@@ -55,8 +55,7 @@
                                 <DataTemplate DataType="{x:Type model:Strategy}">
                                     <Border BorderThickness="1" BorderBrush="#FF454545" Margin="2" Background="#292222">
                                         <DockPanel LastChildFill="True">
-                                            <Button DockPanel.Dock="Right"                                            
-                                                Height="18" Width="18"                                                    
+                                            <Button DockPanel.Dock="Right"                                                                                               
                                                 Margin="2"
                                                 ToolTip="Delete strategy" 
                                                 Style="{StaticResource ButtonImageStyle}"

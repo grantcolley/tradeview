@@ -5,6 +5,7 @@ using DevelopmentInProgress.Wpf.StrategyManager.Model;
 using DevelopmentInProgress.Wpf.StrategyManager.Services;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
@@ -71,7 +72,15 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
                 return;
             }
 
-            var strategy = new Strategy { Name = param.ToString() };
+            var strategyName = param.ToString();
+
+            if (Strategies.Any(s => s.Name.Equals(strategyName)))
+            {
+                ShowMessage(new Message { MessageType = MessageType.Info, Text = $"A strategy with the name {strategyName} already exists." });
+                return;
+            }
+
+            var strategy = new Strategy { Name = strategyName };
             strategyService.SaveStrategy(strategy);
             Strategies.Add(strategy);
             Module.AddStrategy(strategy.Name);

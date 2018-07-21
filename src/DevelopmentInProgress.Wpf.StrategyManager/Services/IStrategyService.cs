@@ -5,7 +5,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.Services
 {
     public interface IStrategyService
     {
-        IList<Strategy> GetStrategies();
+        List<Strategy> GetStrategies();
         void SaveStrategy(Strategy strategy);
         void DeleteStrategy(Strategy strategy);
     }
