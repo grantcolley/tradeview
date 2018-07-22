@@ -6,6 +6,7 @@ using DevelopmentInProgress.Wpf.StrategyManager.View;
 using DevelopmentInProgress.Wpf.StrategyManager.ViewModel;
 using Microsoft.Practices.Unity;
 using Prism.Logging;
+using System;
 
 namespace DevelopmentInProgress.Wpf.StrategyManager
 {
@@ -13,6 +14,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager
     {
         public const string ModuleName = "Strategy Manager";
         private static IUnityContainer StaticContainer;
+        private static string StrategyUser = $"Strategies : {Environment.UserName}";
 
         public Module(IUnityContainer container, ModuleNavigator moduleNavigator, ILoggerFacade logger)
             : base(container, moduleNavigator, logger)
@@ -33,7 +35,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager
             moduleSettings.ModuleImagePath = @"/DevelopmentInProgress.Wpf.StrategyManager;component/Images/strategyManager.png";
 
             var moduleGroup = new ModuleGroup();
-            moduleGroup.ModuleGroupName = ModuleName;
+            moduleGroup.ModuleGroupName = StrategyUser;
 
             var newDocument = new ModuleGroupItem();
             newDocument.ModuleGroupItemName = "Manage Strategies";
@@ -65,7 +67,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager
             var modulesNavigationView = StaticContainer.Resolve(typeof(ModulesNavigationView),
                 typeof(ModulesNavigationView).Name) as ModulesNavigationView;
 
-            modulesNavigationView.AddNavigationListItem(ModuleName, ModuleName, strategyDocument);
+            modulesNavigationView.AddNavigationListItem(ModuleName, StrategyUser, strategyDocument);
         }
 
         public static void RemoveStrategy(string strategyName)
@@ -73,7 +75,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager
             var modulesNavigationView = StaticContainer.Resolve(typeof(ModulesNavigationView),
                 typeof(ModulesNavigationView).Name) as ModulesNavigationView;
 
-            modulesNavigationView.RemoveNavigationListItem(ModuleName, ModuleName, strategyName);
+            modulesNavigationView.RemoveNavigationListItem(ModuleName, StrategyUser, strategyName);
         }
 
         private static ModuleGroupItem CreateStrategyModuleGroupItem(string name, string title)
