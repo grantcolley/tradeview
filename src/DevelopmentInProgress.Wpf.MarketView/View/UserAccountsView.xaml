@@ -53,7 +53,7 @@
                             </ListView.Template>
                             <ListView.ItemTemplate>
                                 <DataTemplate DataType="{x:Type model:UserAccount}">
-                                    <Border BorderThickness="1" BorderBrush="#FF454545" Margin="2" Background="#292222">
+                                    <Border BorderThickness="1" BorderBrush="#FF454545" Margin="2" Background="{StaticResource ItemBackgroundBrush}">
                                         <DockPanel LastChildFill="True">
                                             <Button DockPanel.Dock="Right"                                                 
                                                 Margin="2"
