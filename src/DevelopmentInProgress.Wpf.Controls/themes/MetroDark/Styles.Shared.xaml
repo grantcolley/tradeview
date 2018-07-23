@@ -5,6 +5,9 @@
     <ResourceDictionary Source="Theme.Colors.xaml" />
   </ResourceDictionary.MergedDictionaries>
 
+  <!-- *****************************  ITEM BACKGROUND  ***************************** -->
+  <SolidColorBrush x:Key="ItemBackgroundBrush" Color="#292222" />
+    
   <!-- *********************************  BRUSHES  ********************************* -->
   <SolidColorBrush x:Key="ForegroundBrush" Color="{StaticResource Color_002}" />
   <SolidColorBrush x:Key="LightForegroundBrush" Color="{StaticResource Color_001}" />
