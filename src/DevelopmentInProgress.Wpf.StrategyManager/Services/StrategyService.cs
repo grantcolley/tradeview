@@ -34,6 +34,11 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.Services
 
         public void SaveStrategy(Strategy strategy)
         {
+            if(strategy == null)
+            {
+                return;
+            }
+
             lock (strategiesLock)
             {
                 List<Strategy> strategies;

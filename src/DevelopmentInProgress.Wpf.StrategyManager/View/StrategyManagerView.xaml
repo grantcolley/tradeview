@@ -16,6 +16,91 @@
             
             <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
 
+            <DataTemplate DataType="{x:Type model:StrategySubscription}">
+                <Border BorderThickness="1" BorderBrush="#FF454545" Margin="2" Background="{StaticResource ItemBackgroundBrush}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="Symbol:" Margin="2"/>
+                        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="2" HorizontalAlignment="Left">
+                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=Symbol}" Width="100"/>
+                            <ContentControl Width="20"/>
+                            <CheckBox IsChecked="{Binding Path=SubscribeAccount}" FlowDirection="RightToLeft">Account</CheckBox>
+                            <CheckBox IsChecked="{Binding Path=SubscribeAccount}" FlowDirection="RightToLeft">OrderBook</CheckBox>
+                            <CheckBox IsChecked="{Binding Path=SubscribeTrades}" FlowDirection="RightToLeft">Trades</CheckBox>
+                            <CheckBox IsChecked="{Binding Path=SubscribeStatistics}" FlowDirection="RightToLeft">Statistics</CheckBox>
+                        </StackPanel>
+                        <Label Grid.Row="1" Grid.Column="0" Content="API Key:" Margin="2"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=ApiKey}" Margin="2" Width="500"/>
+                        <Label Grid.Row="1" Grid.Column="2" Content="Secret Key:" Margin="2"/>
+                        <TextBox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4" Text="{Binding Path=SecretKey}" Margin="2" Width="500" HorizontalAlignment="Left"/>
+                        <Label Grid.Row="0" Grid.Column="2" Content="Exchange:" Margin="2"/>
+                        <ComboBox Grid.Row="0" Grid.Column="3" Text="{Binding Path=Exchange}" Margin="2" Width="200" HorizontalAlignment="Left"/>
+                        <Label Grid.Row="0" Grid.Column="4" Content="Limit:" Margin="2" HorizontalAlignment="Left"/>
+                        <TextBox Grid.Row="0" Grid.Column="5" Text="{Binding Path=Limit}" Margin="2" Width="100" HorizontalAlignment="Left"/>
+                        <Button Grid.Row="0" Grid.Column="6" ToolTip="Delete Strategy Subscription" Height="20" HorizontalAlignment="Right"
+                                Style="{StaticResource ButtonImageStyle}"
+                                Command="{Binding DataContext.DeleteStrategySubscriptionCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                CommandParameter="{Binding .}">
+                            <Control Template="{StaticResource delete}"/>
+                        </Button>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type model:Strategy}">
+                <DockPanel LastChildFill="True">
+                    <Grid DockPanel.Dock="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="Id:" Margin="2"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=Id}" Margin="2" Width="100" HorizontalAlignment="Left"/>
+                        <Label Grid.Row="1" Grid.Column="0" Content="Name:" Margin="2"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=Name}" Margin="2" Width="300" HorizontalAlignment="Left"/>
+                        <Label Grid.Row="2" Grid.Column="0" Content="Target Assembly:" Margin="2"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Path=TargetAssembly}" Margin="2" Width="500"/>
+                        <Label Grid.Row="3" Grid.Column="0" Content="Target Path:" Margin="2"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Path=TargetAssembly}" Margin="2" Width="500"/>
+                        <Label Grid.Row="4" Grid.Column="0" Content="Tag:" Margin="2"/>
+                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Path=Tag}" TextWrapping="Wrap" AcceptsReturn="True" Height="120" Margin="2" Width="500"/>
+                    </Grid>
+                    <GroupBox Margin="2">
+                        <GroupBox.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Add Subscription" Height="40"/>
+                                <Button ToolTip="Add New Strategy Subscription" Height="20"
+                                        Style="{StaticResource ButtonImageStyle}"
+                                        Command="{Binding DataContext.AddStrategySubscriptionCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
+                                    <Control Template="{StaticResource add}"/>
+                                </Button>
+                            </StackPanel>
+                        </GroupBox.Header>
+                        <ItemsControl Margin="10" ItemsSource="{Binding StrategySubscriptions}"/>
+                    </GroupBox>
+                </DockPanel>
+            </DataTemplate>
+
         </ResourceDictionary>
     </view:DocumentViewBase.Resources>
     <Grid>
@@ -53,7 +138,7 @@
                             </ListView.Template>
                             <ListView.ItemTemplate>
                                 <DataTemplate DataType="{x:Type model:Strategy}">
-                                    <Border BorderThickness="1" BorderBrush="#FF454545" Margin="2" Background="#292222">
+                                    <Border BorderThickness="1" BorderBrush="#FF454545" Margin="2" Background="{StaticResource ItemBackgroundBrush}">
                                         <DockPanel LastChildFill="True">
                                             <Button DockPanel.Dock="Right"                                                                                               
                                                 Margin="2"
@@ -82,7 +167,7 @@
         <DockPanel Grid.Column="1" LastChildFill="True">
             <GroupBox Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                    <!--<TextBox Text="{Binding SelectedUserAccountJson}" TextWrapping="Wrap" AcceptsReturn="True" BorderThickness="0" BorderBrush="Transparent"/>-->
+                    <ContentControl Content="{Binding SelectedStrategy}"/>
                 </ScrollViewer>
             </GroupBox>
         </DockPanel>

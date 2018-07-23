@@ -22,10 +22,14 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
             AddStrategyCommand = new ViewModelCommand(AddStrategy);
             DeleteStrategyCommand = new ViewModelCommand(DeleteStrategy);
+            AddStrategySubscriptionCommand = new ViewModelCommand(AddStrategySubscription);
+            DeleteStrategySubscriptionCommand = new ViewModelCommand(DeleteStrategySubscription);
         }
 
         public ICommand AddStrategyCommand { get; set; }
         public ICommand DeleteStrategyCommand { get; set; }
+        public ICommand AddStrategySubscriptionCommand { get; set; }
+        public ICommand DeleteStrategySubscriptionCommand { get; set; }
         public ObservableCollection<Strategy> Strategies { get; set; }
 
         public Strategy SelectedStrategy
@@ -97,6 +101,32 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             strategyService.DeleteStrategy(strategy);
             Strategies.Remove(strategy);
             Module.RemoveStrategy(strategy.Name);
+        }
+
+        private void AddStrategySubscription(object param)
+        {
+            if(SelectedStrategy == null)
+            {
+                return;
+            }
+
+            SelectedStrategy.StrategySubscriptions.Insert(0, new StrategySubscription());
+            strategyService.SaveStrategy(SelectedStrategy);
+        }
+
+        private void DeleteStrategySubscription(object param)
+        {
+            if (SelectedStrategy == null)
+            {
+                return;
+            }
+
+            var subscription = param as StrategySubscription;
+            if (subscription != null)
+            {
+                SelectedStrategy.StrategySubscriptions.Remove(subscription);
+                strategyService.SaveStrategy(SelectedStrategy);
+            }
         }
     }
 }
