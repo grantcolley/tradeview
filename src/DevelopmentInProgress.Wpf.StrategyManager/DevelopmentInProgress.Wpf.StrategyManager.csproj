@@ -99,6 +99,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\FileDialog.xaml.cs">
+      <DependentUpon>FileDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\Strategy.cs" />
     <Compile Include="Model\StrategySubscription.cs" />
     <Compile Include="Module.cs" />
@@ -150,6 +153,10 @@
     <Resource Include="Images\strategy.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\FileDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\StrategyManagerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -158,6 +165,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
