@@ -1,9 +1,11 @@
-﻿using DevelopmentInProgress.Wpf.Controls.Messaging;
+﻿using DevelopmentInProgress.MarketView.Interface.Extensions;
+using DevelopmentInProgress.Wpf.Controls.Messaging;
 using DevelopmentInProgress.Wpf.Host.Context;
 using DevelopmentInProgress.Wpf.Host.ViewModel;
 using DevelopmentInProgress.Wpf.StrategyManager.Model;
 using DevelopmentInProgress.Wpf.StrategyManager.Services;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -24,12 +26,15 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             DeleteStrategyCommand = new ViewModelCommand(DeleteStrategy);
             AddStrategySubscriptionCommand = new ViewModelCommand(AddStrategySubscription);
             DeleteStrategySubscriptionCommand = new ViewModelCommand(DeleteStrategySubscription);
+            DeleteStrategyDependencyCommand = new ViewModelCommand(DeleteStrategyDependency);
         }
 
         public ICommand AddStrategyCommand { get; set; }
         public ICommand DeleteStrategyCommand { get; set; }
         public ICommand AddStrategySubscriptionCommand { get; set; }
         public ICommand DeleteStrategySubscriptionCommand { get; set; }
+        public ICommand DeleteStrategyDependencyCommand { get; set; }
+
         public ObservableCollection<Strategy> Strategies { get; set; }
 
         public Strategy SelectedStrategy
@@ -43,6 +48,44 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
                     OnPropertyChanged("SelectedStrategy");
                 }
             }
+        }
+
+        public IEnumerable<string> TargetAssembly
+        {
+            set
+            {
+                if(SelectedStrategy != null)
+                {
+                    if(value != null
+                        && value.Count() > 0)
+                    {
+                        SelectedStrategy.TargetAssembly = new StrategyFile { File = value.First() };
+                    }
+                }
+            }
+        }
+
+        public IEnumerable<string> Dependencies
+        {
+            set
+            {
+                if (SelectedStrategy != null)
+                {
+                    if (value != null
+                        && value.Count() > 0)
+                    {
+                        foreach (string file in value)
+                        {
+                            SelectedStrategy.Dependencies.Insert(0, new StrategyFile { File = file });
+                        }
+                    }
+                }
+            }
+        }
+
+        public string[] Exchanges
+        {
+            get { return ExchangeExtensions.Exchanges(); }
         }
 
         protected override void OnPublished(object data)
@@ -105,12 +148,15 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
         private void AddStrategySubscription(object param)
         {
-            if(SelectedStrategy == null)
+            if(SelectedStrategy == null
+                || string.IsNullOrEmpty(param.ToString()))
             {
                 return;
             }
 
-            SelectedStrategy.StrategySubscriptions.Insert(0, new StrategySubscription());
+            var symbol = param.ToString();
+
+            SelectedStrategy.StrategySubscriptions.Insert(0, new StrategySubscription { Symbol = symbol });
             strategyService.SaveStrategy(SelectedStrategy);
         }
 
@@ -125,6 +171,21 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             if (subscription != null)
             {
                 SelectedStrategy.StrategySubscriptions.Remove(subscription);
+                strategyService.SaveStrategy(SelectedStrategy);
+            }
+        }
+
+        private void DeleteStrategyDependency(object param)
+        {
+            if (SelectedStrategy == null)
+            {
+                return;
+            }
+
+            var file = param as StrategyFile;
+            if (file != null)
+            {
+                SelectedStrategy.Dependencies.Remove(file);
                 strategyService.SaveStrategy(SelectedStrategy);
             }
         }

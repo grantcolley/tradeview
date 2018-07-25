@@ -6,22 +6,22 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.Model
 {
     public class Strategy : EntityBase
     {
-        private string targetAssembly;
+        private StrategyFile targetAssembly;
 
         public Strategy()
         {
             StrategySubscriptions = new ObservableCollection<StrategySubscription>();
-            Dependencies = new ObservableCollection<string>();
+            Dependencies = new ObservableCollection<StrategyFile>();
         }
 
         public string Name { get; set; }
         public StrategyStatus Status { get; set; }
         public ObservableCollection<StrategySubscription> StrategySubscriptions { get; set; }
-        public ObservableCollection<string> Dependencies { get; set; }
+        public ObservableCollection<StrategyFile> Dependencies { get; set; }
         public string TargetType { get; set; }
         public string Tag { get; set; }
 
-        public string TargetAssembly
+        public StrategyFile TargetAssembly
         {
             get { return targetAssembly; }
             set

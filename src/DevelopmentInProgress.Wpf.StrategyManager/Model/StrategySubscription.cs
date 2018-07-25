@@ -15,5 +15,6 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.Model
         public bool SubscribeOrderBook { get; set; }
         public bool SubscribeTrades { get; set; }
         public bool SubscribeStatistics { get; set; }
+        public string SelectedExchange { get; set; }
     }
 }

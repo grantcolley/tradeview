@@ -7,6 +7,7 @@
                        xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Host.Converters;assembly=DevelopmentInProgress.Wpf.Host"
                        xmlns:filterbox="clr-namespace:DevelopmentInProgress.Wpf.Controls.FilterBox;assembly=DevelopmentInProgress.Wpf.Controls"
                        xmlns:model="clr-namespace:DevelopmentInProgress.Wpf.StrategyManager.Model"
+                       xmlns:controls="clr-namespace:DevelopmentInProgress.Wpf.StrategyManager.Controls"
                        mc:Ignorable="d">
     <view:DocumentViewBase.Resources>
         <ResourceDictionary>
@@ -16,6 +17,20 @@
             
             <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
 
+            <DataTemplate DataType="{x:Type model:StrategyFile}">
+                <Border BorderThickness="1" BorderBrush="#FF454545" Margin="2" Background="{StaticResource ItemBackgroundBrush}">
+                    <DockPanel LastChildFill="True">
+                        <Button DockPanel.Dock="Right" ToolTip="Delete dependency" Height="20" HorizontalAlignment="Right"
+                                Style="{StaticResource ButtonImageStyle}"
+                                Command="{Binding DataContext.DeleteStrategyDependencyCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                CommandParameter="{Binding .}">
+                            <Control Template="{StaticResource delete}"/>
+                        </Button>
+                        <TextBox Text="{Binding Path=DisplayName, Mode=OneWay}" ToolTip="{Binding Path=File, Mode=OneWay}"/>
+                    </DockPanel>
+                </Border>
+            </DataTemplate>
+            
             <DataTemplate DataType="{x:Type model:StrategySubscription}">
                 <Border BorderThickness="1" BorderBrush="#FF454545" Margin="2" Background="{StaticResource ItemBackgroundBrush}">
                     <Grid>
@@ -34,19 +49,33 @@
                         </Grid.RowDefinitions>
                         <Label Grid.Row="0" Grid.Column="0" Content="Symbol:" Margin="2"/>
                         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="2" HorizontalAlignment="Left">
-                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=Symbol}" Width="100"/>
+                            <Label Grid.Row="0" Grid.Column="1" Content="{Binding Path=Symbol}" Width="100" FontWeight="Bold"/>
                             <ContentControl Width="20"/>
-                            <CheckBox IsChecked="{Binding Path=SubscribeAccount}" FlowDirection="RightToLeft">Account</CheckBox>
-                            <CheckBox IsChecked="{Binding Path=SubscribeAccount}" FlowDirection="RightToLeft">OrderBook</CheckBox>
-                            <CheckBox IsChecked="{Binding Path=SubscribeTrades}" FlowDirection="RightToLeft">Trades</CheckBox>
-                            <CheckBox IsChecked="{Binding Path=SubscribeStatistics}" FlowDirection="RightToLeft">Statistics</CheckBox>
+                            <WrapPanel>
+                                <Label Content="Account"/>
+                                <CheckBox VerticalAlignment="Center" IsChecked="{Binding Path=SubscribeAccount}"/>
+                            </WrapPanel>
+                            <WrapPanel>
+                                <Label Content="Order Book"/>
+                                <CheckBox VerticalAlignment="Center" IsChecked="{Binding Path=SubscribeOrderBook}"/>
+                            </WrapPanel>
+                            <WrapPanel>
+                                <Label Content="Trades"/>
+                                <CheckBox VerticalAlignment="Center" IsChecked="{Binding Path=SubscribeTrades}"/>
+                            </WrapPanel>
+                            <WrapPanel>
+                                <Label Content="Statistics"/>
+                                <CheckBox VerticalAlignment="Center" IsChecked="{Binding Path=SubscribeStatistics}"/>
+                            </WrapPanel>
                         </StackPanel>
                         <Label Grid.Row="1" Grid.Column="0" Content="API Key:" Margin="2"/>
                         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=ApiKey}" Margin="2" Width="500"/>
                         <Label Grid.Row="1" Grid.Column="2" Content="Secret Key:" Margin="2"/>
                         <TextBox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4" Text="{Binding Path=SecretKey}" Margin="2" Width="500" HorizontalAlignment="Left"/>
                         <Label Grid.Row="0" Grid.Column="2" Content="Exchange:" Margin="2"/>
-                        <ComboBox Grid.Row="0" Grid.Column="3" Text="{Binding Path=Exchange}" Margin="2" Width="200" HorizontalAlignment="Left"/>
+                        <ComboBox Grid.Row="0" Grid.Column="3" Margin="2" IsReadOnly="True" Width="200" HorizontalAlignment="Left"
+                                  ItemsSource="{Binding DataContext.Exchanges, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                  SelectedItem="{Binding SelectedExchange, Mode=TwoWay}"/>
                         <Label Grid.Row="0" Grid.Column="4" Content="Limit:" Margin="2" HorizontalAlignment="Left"/>
                         <TextBox Grid.Row="0" Grid.Column="5" Text="{Binding Path=Limit}" Margin="2" Width="100" HorizontalAlignment="Left"/>
                         <Button Grid.Row="0" Grid.Column="6" ToolTip="Delete Strategy Subscription" Height="20" HorizontalAlignment="Right"
@@ -62,42 +91,76 @@
             <DataTemplate DataType="{x:Type model:Strategy}">
                 <DockPanel LastChildFill="True">
                     <Grid DockPanel.Dock="Top">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="2"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Label Grid.Row="0" Grid.Column="0" Content="Id:" Margin="2"/>
-                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=Id}" Margin="2" Width="100" HorizontalAlignment="Left"/>
-                        <Label Grid.Row="1" Grid.Column="0" Content="Name:" Margin="2"/>
-                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=Name}" Margin="2" Width="300" HorizontalAlignment="Left"/>
-                        <Label Grid.Row="2" Grid.Column="0" Content="Target Assembly:" Margin="2"/>
-                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Path=TargetAssembly}" Margin="2" Width="500"/>
-                        <Label Grid.Row="3" Grid.Column="0" Content="Target Path:" Margin="2"/>
-                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Path=TargetAssembly}" Margin="2" Width="500"/>
-                        <Label Grid.Row="4" Grid.Column="0" Content="Tag:" Margin="2"/>
-                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Path=Tag}" TextWrapping="Wrap" AcceptsReturn="True" Height="120" Margin="2" Width="500"/>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50*"/>
+                                <ColumnDefinition Width="2"/>
+                                <ColumnDefinition Width="50*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" Grid.Column="0" Content="Id:" Margin="2"/>
+                                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=Id}" Margin="2" Width="100" HorizontalAlignment="Left"/>
+                                <Label Grid.Row="1" Grid.Column="0" Content="Name:" Margin="2"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=Name}" Margin="2" Width="300" HorizontalAlignment="Left"/>
+                                <Label Grid.Row="2" Grid.Column="0" Content="Target Assembly:" Margin="2"/>
+                                <DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="True" Margin="2">
+                                    <controls:FileDialog DockPanel.Dock="Right" Files="{Binding DataContext.TargetAssembly, Mode=OneWayToSource, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                                    <TextBox Text="{Binding Path=TargetAssembly.DisplayName, Mode=OneWay}" ToolTip="{Binding Path=TargetAssembly.File, Mode=OneWay}"/>
+                                </DockPanel>
+                                <Label Grid.Row="3" Grid.Column="0" Content="Target Type:" Margin="2"/>
+                                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Path=TargetType}"  Margin="2"/>
+                                <Label Grid.Row="4" Grid.Column="0" Content="Tag:" Margin="2"/>
+                                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Path=Tag}" TextWrapping="Wrap" MinHeight="300" AcceptsReturn="True" Margin="2"/>
+                            </Grid>
+
+                            <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
+
+                            <DockPanel Grid.Column="2" Margin="2" LastChildFill="True">
+                                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                                    <Label Content="Add Target Assembly Dependencies" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom"/>
+                                    <controls:FileDialog DockPanel.Dock="Right" MultiSelect="True"
+                                                            Files="{Binding DataContext.Dependencies, Mode=OneWayToSource, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                                </StackPanel>
+                                <GroupBox Style="{StaticResource GroupBoxNoHeaderStyle}">
+                                    <ItemsControl Margin="10" ItemsSource="{Binding Dependencies}"/>
+                                </GroupBox>
+                            </DockPanel>
+                        </Grid>
+
+                        <GridSplitter Grid.Row="1" Height="2" HorizontalAlignment="Stretch" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext"/>
+
+                        <GroupBox Grid.Row="2" Margin="2" Header="Subscriptions">
+                            <DockPanel LastChildFill="True">
+                                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Left">
+                                    <Label Content="Add Symbol"/>
+                                    <TextBox Name="addSubscription" Text="{Binding Path=Symbol}" Width="100"/>
+                                    <Button ToolTip="Add new symbol subscription" Height="20"
+                                            Style="{StaticResource ButtonImageStyle}"
+                                            Command="{Binding DataContext.AddStrategySubscriptionCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                            CommandParameter="{Binding ElementName=addSubscription, Path=Text}">
+                                        <Control Template="{StaticResource add}"/>
+                                    </Button>
+                                </StackPanel>
+                                <ItemsControl Margin="10" ItemsSource="{Binding StrategySubscriptions}"/>
+                            </DockPanel>
+                        </GroupBox>
                     </Grid>
-                    <GroupBox Margin="2">
-                        <GroupBox.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Add Subscription" Height="40"/>
-                                <Button ToolTip="Add New Strategy Subscription" Height="20"
-                                        Style="{StaticResource ButtonImageStyle}"
-                                        Command="{Binding DataContext.AddStrategySubscriptionCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
-                                    <Control Template="{StaticResource add}"/>
-                                </Button>
-                            </StackPanel>
-                        </GroupBox.Header>
-                        <ItemsControl Margin="10" ItemsSource="{Binding StrategySubscriptions}"/>
-                    </GroupBox>
                 </DockPanel>
             </DataTemplate>
 

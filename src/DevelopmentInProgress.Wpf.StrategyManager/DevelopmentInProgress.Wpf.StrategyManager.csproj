@@ -103,6 +103,7 @@
       <DependentUpon>FileDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Strategy.cs" />
+    <Compile Include="Model\StrategyFile.cs" />
     <Compile Include="Model\StrategySubscription.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
