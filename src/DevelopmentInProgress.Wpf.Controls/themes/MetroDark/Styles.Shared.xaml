@@ -191,7 +191,7 @@
 
   <!-- *********************************  ComboBoxToggleButton Style   ********************************* -->
   <Style x:Key="ComboBoxToggleButtonStyle" TargetType="ToggleButton">
-    <Setter Property="FontSize" Value="10" />
+    <Setter Property="FontSize" Value="12" />
     <Setter Property="FontFamily" Value="Segoe UI" />
     <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
     <Setter Property="BorderBrush" Value="{StaticResource ComboBoxToggleButtonBorderBrush}" />
@@ -274,7 +274,7 @@
 
   <!-- *********************************  ComboBoxItem Style  ********************************* -->
   <Style x:Key="ComboBoxItemStyle" TargetType="ComboBoxItem">
-    <Setter Property="FontSize" Value="10" />
+    <Setter Property="FontSize" Value="12" />
     <Setter Property="FontFamily" Value="Segoe UI" />
     <Setter Property="MinHeight" Value="30" />
     <Setter Property="Padding" Value="6,0" />
@@ -383,7 +383,7 @@
   <Style x:Key="ListBoxItemStyle" TargetType="ListBoxItem">
     <Setter Property="Background" Value="{StaticResource TransparentBrush}" />
     <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
-    <Setter Property="FontSize" Value="10" />
+    <Setter Property="FontSize" Value="12" />
     <Setter Property="FontFamily" Value="Segoe UI" />
     <Setter Property="MinHeight" Value="30" />
     <Setter Property="Padding" Value="6,2" />
@@ -516,7 +516,7 @@
   <!-- ********************************** CheckBoxStyle **********************************-->
   <Style x:Key="CheckBoxStyle" TargetType="CheckBox">
     <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
-    <Setter Property="FontSize" Value="10" />
+    <Setter Property="FontSize" Value="12" />
     <Setter Property="FontFamily" Value="Segoe UI" />
     <Setter Property="HorizontalContentAlignment" Value="Left" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -607,7 +607,7 @@
   <!-- ********************************** RadioButton Style **********************************-->
   <Style x:Key="RadioButtonStyle" TargetType="RadioButton">
     <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
-    <Setter Property="FontSize" Value="10" />
+    <Setter Property="FontSize" Value="12" />
     <Setter Property="FontFamily" Value="Segoe UI" />
     <Setter Property="HorizontalContentAlignment" Value="Left" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -693,7 +693,7 @@
   <!-- *********************************  ButtonStyle  ********************************* -->
   <Style x:Key="ButtonStyle" TargetType="Button">
     <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
-    <Setter Property="FontSize" Value="10" />
+    <Setter Property="FontSize" Value="12" />
     <Setter Property="FontFamily" Value="Segoe UI" />
     <Setter Property="Padding" Value="10,0,10,2" />
     <Setter Property="MinHeight" Value="30" />
@@ -773,7 +773,7 @@
     <!-- *********************************  ButtonImageStyle  ********************************* -->
     <Style x:Key="ButtonImageStyle" TargetType="Button">
         <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
-        <Setter Property="FontSize" Value="10" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Padding" Value="10,0,10,2" />
         <Setter Property="MinHeight" Value="30" />
@@ -853,7 +853,7 @@
     <!-- *********************************  BuyButtonStyle  ********************************* -->
     <Style x:Key="BuyButtonStyle" TargetType="Button">
         <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
-        <Setter Property="FontSize" Value="10" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Padding" Value="10,0,10,2" />
         <Setter Property="MinHeight" Value="30" />
@@ -935,7 +935,7 @@
     <!-- *********************************  SellButtonStyle  ********************************* -->
     <Style x:Key="SellButtonStyle" TargetType="Button">
         <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
-        <Setter Property="FontSize" Value="10" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Padding" Value="10,0,10,2" />
         <Setter Property="MinHeight" Value="30" />

@@ -66,14 +66,14 @@
   <!-- *********************************  TextBlock Style  ********************************* -->
   <Style x:Key="TextBlockStyle" TargetType="TextBlock">
     <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
-    <Setter Property="FontSize" Value="10" />
+    <Setter Property="FontSize" Value="12" />
     <Setter Property="FontFamily" Value="Segoe UI" />
   </Style>
 
   <!-- *********************************  Label Style  ********************************* -->
   <Style x:Key="LabelStyle" TargetType="{x:Type Label}">
     <Setter Property="FontFamily" Value="Segoe UI" />
-    <Setter Property="FontSize" Value="10" />
+    <Setter Property="FontSize" Value="12" />
     <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
     <Setter Property="IsTabStop" Value="False" />
     <Setter Property="HorizontalContentAlignment" Value="Left" />
@@ -529,7 +529,7 @@
   <Style x:Key="{x:Type ToolTip}" TargetType="ToolTip">
     <Setter Property="OverridesDefaultStyle" Value="true" />
     <Setter Property="FontFamily" Value="Segoe UI" />
-    <Setter Property="FontSize" Value="10" />
+    <Setter Property="FontSize" Value="12" />
     <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
     <Setter Property="Background" Value="{StaticResource TooltipBackgroundBrush}" />
     <Setter Property="BorderBrush" Value="{StaticResource TooltipBorderBrush}" />
