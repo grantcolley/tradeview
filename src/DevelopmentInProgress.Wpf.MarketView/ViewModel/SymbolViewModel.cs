@@ -30,7 +30,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         private int limit = 20;
         private int chartDisplayLimit = 100;
-        private int tradesDisplayLimit = 20;
+        private int tradesDisplayLimit = 18;
 
         public SymbolViewModel(IWpfExchangeService exchangeService)
             : base(exchangeService)
@@ -299,7 +299,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                     AggregateTradesChart = new ChartValues<AggregateTrade>(orderedTrades);
 
-                    Action initialiseAggregateTrades = () => { AggregateTrades = new ObservableCollection<AggregateTrade>(orderedTrades); };
+                    Action initialiseAggregateTrades = () => { AggregateTrades = new ObservableCollection<AggregateTrade>(orderedTrades.Take(tradesDisplayLimit)); };
 
                     if (Dispatcher == null)
                     {
@@ -342,7 +342,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     {
                         for (int i = 0; i < newCount; i++)
                         {
-                            if (AggregateTrades.Count >= tradesDisplayLimit)
+                            while (AggregateTrades.Count >= tradesDisplayLimit)
                             {
                                 AggregateTrades.RemoveAt(AggregateTrades.Count - 1);
                             }

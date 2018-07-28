@@ -72,8 +72,8 @@
                                         <Label Content="{Binding QuoteAsset.Symbol}" VerticalAlignment="Center"/>
                                     </StackPanel>
                                     <StackPanel Grid.Row="1" Grid.Column="1" Background="Transparent" Orientation="Horizontal">
-                                        <Label Content="Vol"/>
-                                        <Label Content="{Binding SymbolStatistics.Volume}"/>
+                                        <Label Content="Vol" FontSize="10"/>
+                                        <Label Content="{Binding SymbolStatistics.Volume}" FontSize="10"/>
                                     </StackPanel>
                                     <Label Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" VerticalAlignment="Center" Content="{Binding SymbolStatistics.LastPrice}" Foreground="{Binding LastPriceChangeDirection, Converter={StaticResource LastPriceChangeDirectionColourConverter}}"/>
                                     <GroupBox Grid.Row="0" Grid.Column="3" Grid.RowSpan="2" Margin="4" Style="{StaticResource GroupBoxNoHeaderStyle}" BorderThickness="0" Background="{Binding PriceChangePercentDirection, Converter={StaticResource PriceChangePercentConverter}}">

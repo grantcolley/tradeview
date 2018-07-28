@@ -29,9 +29,9 @@
             <GroupBox Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" BorderThickness="0.5" Margin="2" Header="Order Book">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="21"/>
+                        <RowDefinition Height="23"/>
                         <RowDefinition Height="50*"/>
-                        <RowDefinition Height="21"/>
+                        <RowDefinition Height="23"/>
                         <RowDefinition Height="50*"/>
                     </Grid.RowDefinitions>
                     <DockPanel Grid.Row="0" LastChildFill="True">
@@ -85,7 +85,7 @@
             <GroupBox Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" BorderThickness="0.5" Margin="2" Header="Trades">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="21"/>
+                        <RowDefinition Height="23"/>
                         <RowDefinition Height="100*"/>
                     </Grid.RowDefinitions>
                     <DockPanel Grid.Row="0" LastChildFill="True">
