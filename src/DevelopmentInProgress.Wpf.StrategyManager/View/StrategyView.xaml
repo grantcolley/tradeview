@@ -3,10 +3,56 @@
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-                       xmlns:local="clr-namespace:DevelopmentInProgress.Wpf.StrategyManager.View"
+                       xmlns:model="clr-namespace:DevelopmentInProgress.Wpf.StrategyManager.Model"
                        xmlns:view="clr-namespace:DevelopmentInProgress.Wpf.Host.View;assembly=DevelopmentInProgress.Wpf.Host"
+                       xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Controls.Converters;assembly=DevelopmentInProgress.Wpf.Controls"
                        mc:Ignorable="d">
-    <Grid>
+    <view:DocumentViewBase.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/DevelopmentInProgress.Wpf.Common;component/Images/ImageResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
             
+            <DataTemplate DataType="{x:Type model:Strategy}">
+                <DockPanel LastChildFill="True">
+                    <Label DockPanel.Dock="Left" Content="{Binding Name}" FontWeight="Bold"/>
+                    <ContentControl/>
+                </DockPanel>
+            </DataTemplate>
+            
+        </ResourceDictionary>
+    </view:DocumentViewBase.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="80*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="30*"/>
+        </Grid.RowDefinitions>
+        
+        <GroupBox Grid.Row="0" Grid.Column="0" Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
+            <ContentControl Content="{Binding Strategy}"/>
+        </GroupBox>
+
+        <GroupBox Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
+
+        </GroupBox>
+
+        <GroupBox Grid.Row="1" Grid.Column="0" Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <ContentControl Content="{Binding Trades}"/>
+            </ScrollViewer>
+        </GroupBox>
+        
+        <GroupBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <ContentControl Content="{Binding Messages}"/>
+            </ScrollViewer>
+        </GroupBox>
     </Grid>
 </view:DocumentViewBase>

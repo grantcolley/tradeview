@@ -11,7 +11,6 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.Services
     public class StrategyService : IStrategyService
     {
         private string userStrategiesFile;
-        private object strategiesLock = new object();
 
         public StrategyService()
         {
@@ -22,66 +21,71 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.Services
         {
             if (File.Exists(userStrategiesFile))
             {
-                lock (strategiesLock)
-                {
-                    var json = File.ReadAllText(userStrategiesFile);
-                    return DeserializeJson<List<Strategy>>(json);
-                }
+                var json = File.ReadAllText(userStrategiesFile);
+                return DeserializeJson<List<Strategy>>(json);
             }
 
             return new List<Strategy>();
         }
 
+        public Strategy GetStrategy(string strategyName)
+        {
+            Strategy strategy = null;
+
+            if (File.Exists(userStrategiesFile))
+            {
+                var rjson = File.ReadAllText(userStrategiesFile);
+                var strategies = DeserializeJson<List<Strategy>>(rjson);
+                strategy = strategies.FirstOrDefault(s => s.Name.Equals(strategyName));
+            }
+
+            return strategy;
+        }
+
         public void SaveStrategy(Strategy strategy)
         {
-            if(strategy == null)
+            if (strategy == null)
             {
                 return;
             }
 
-            lock (strategiesLock)
+            List<Strategy> strategies;
+
+            if (File.Exists(userStrategiesFile))
             {
-                List<Strategy> strategies;
-
-                if (File.Exists(userStrategiesFile))
-                {
-                    var rjson = File.ReadAllText(userStrategiesFile);
-                    strategies = DeserializeJson<List<Strategy>>(rjson);
-                }
-                else
-                {
-                    strategies = new List<Strategy>();
-                }
-
-                var dupe = strategies.FirstOrDefault(s => s.Name.Equals(strategy.Name));
-                if (dupe != null)
-                {
-                    strategies.Remove(dupe);
-                }
-
-                strategies.Add(strategy);
-
-                var wjson = SerializeToJson(strategies);
-                File.WriteAllText(userStrategiesFile, wjson);
+                var rjson = File.ReadAllText(userStrategiesFile);
+                strategies = DeserializeJson<List<Strategy>>(rjson);
             }
+            else
+            {
+                strategies = new List<Strategy>();
+            }
+
+            var dupe = strategies.FirstOrDefault(s => s.Name.Equals(strategy.Name));
+            if (dupe != null)
+            {
+                strategies.Remove(dupe);
+            }
+
+            strategies.Add(strategy);
+
+            var wjson = SerializeToJson(strategies);
+            File.WriteAllText(userStrategiesFile, wjson);
         }
 
         public void DeleteStrategy(Strategy strategy)
         {
-            lock (strategiesLock)
+            if (File.Exists(userStrategiesFile))
             {
-                if (File.Exists(userStrategiesFile))
-                {
-                    var rjson = File.ReadAllText(userStrategiesFile);
-                    var strategies = DeserializeJson<List<Strategy>>(rjson);
+                var rjson = File.ReadAllText(userStrategiesFile);
+                var strategies = DeserializeJson<List<Strategy>>(rjson);
 
-                    var remove = strategies.FirstOrDefault(s => s.Name.Equals(strategy.Name));
-                    if (remove != null)
-                    {
-                        strategies.Remove(remove);
-                        var wjson = SerializeToJson(strategies);
-                        File.WriteAllText(userStrategiesFile, wjson);
-                    }
+                var remove = strategies.FirstOrDefault(s => s.Name.Equals(strategy.Name));
+                if (remove != null)
+                {
+                    strategies.Remove(remove);
+                    var wjson = SerializeToJson(strategies);
+                    File.WriteAllText(userStrategiesFile, wjson);
                 }
             }
         }
