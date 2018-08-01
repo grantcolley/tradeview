@@ -2,6 +2,7 @@
 using DevelopmentInProgress.Wpf.Host.ViewModel;
 using DevelopmentInProgress.Wpf.StrategyManager.Model;
 using DevelopmentInProgress.Wpf.StrategyManager.Services;
+using System.Windows.Input;
 
 namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 {
@@ -14,7 +15,17 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             : base(viewModelContext)
         {
             this.strategyService = strategyService;
+
+            RunCommand = new ViewModelCommand(RunStrategy);
+            MonitorCommand = new ViewModelCommand(MonitorStrategy);
+            DisconnectCommand = new ViewModelCommand(Disconnect);
+            StopCommand = new ViewModelCommand(StopStrategy);
         }
+
+        public ICommand RunCommand { get; set; }
+        public ICommand MonitorCommand { get; set; }
+        public ICommand DisconnectCommand { get; set; }
+        public ICommand StopCommand { get; set; }
 
         protected override void OnPublished(object data)
         {
@@ -32,6 +43,26 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
                     OnPropertyChanged("Strategy");
                 }
             }
+        }
+
+        private void RunStrategy(object param)
+        {
+
+        }
+
+        private void MonitorStrategy(object param)
+        {
+
+        }
+
+        private void Disconnect(object param)
+        {
+
+        }
+
+        private void StopStrategy(object param)
+        {
+
         }
     }
 }

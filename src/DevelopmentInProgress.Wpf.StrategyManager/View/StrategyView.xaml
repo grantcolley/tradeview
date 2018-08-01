@@ -6,11 +6,13 @@
                        xmlns:model="clr-namespace:DevelopmentInProgress.Wpf.StrategyManager.Model"
                        xmlns:view="clr-namespace:DevelopmentInProgress.Wpf.Host.View;assembly=DevelopmentInProgress.Wpf.Host"
                        xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Controls.Converters;assembly=DevelopmentInProgress.Wpf.Controls"
+                       xmlns:messaging="clr-namespace:DevelopmentInProgress.Wpf.Controls.Messaging;assembly=DevelopmentInProgress.Wpf.Controls"
                        mc:Ignorable="d">
     <view:DocumentViewBase.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/DevelopmentInProgress.Wpf.Common;component/Images/ImageResources.xaml"/>
+                <ResourceDictionary Source="../Images/ImageResources.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
@@ -18,6 +20,38 @@
             <DataTemplate DataType="{x:Type model:Strategy}">
                 <DockPanel LastChildFill="True">
                     <Label DockPanel.Dock="Left" Content="{Binding Name}" FontWeight="Bold"/>
+                    <Button DockPanel.Dock="Right" Margin="5" Height="18" Width="18"
+                            Style="{StaticResource ButtonImageStyle}"
+                            ToolTip="Run Strategy"
+                            Command="{Binding Path=DataContext.RunCommand, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}}"
+                            CommandParameter="{Binding}"
+                            Visibility="{Binding IsRunEnabled, Converter={StaticResource boolToVisibilityConverter}}">
+                        <ContentControl Content="{StaticResource runstrategy}"/>
+                    </Button>
+                    <Button DockPanel.Dock="Right" Margin="5" Height="18" Width="18"
+                            Style="{StaticResource ButtonImageStyle}"
+                            Command="{Binding Path=DataContext.MonitorCommand, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}}"
+                            CommandParameter="{Binding}"
+                            ToolTip="Monitor Strategy"
+                            Visibility="{Binding IsMonitorEnabled, Converter={StaticResource boolToVisibilityConverter}}">
+                        <ContentControl Content="{StaticResource monitorstrategy}"/>
+                    </Button>
+                    <Button DockPanel.Dock="Right" Margin="5" Height="15" Width="15"
+                            Style="{StaticResource ButtonImageStyle}"
+                            Command="{Binding Path=DataContext.DisconnectCommand, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}}"
+                            CommandParameter="{Binding}"
+                            ToolTip="Disconnect (leaves strategy running)"
+                            Visibility="{Binding IsConnected, Converter={StaticResource boolToVisibilityConverter}}">
+                        <ContentControl Content="{StaticResource disconnect}"/>
+                    </Button>
+                    <Button DockPanel.Dock="Right" Margin="5" Height="18" Width="18"
+                            Style="{StaticResource ButtonImageStyle}"
+                            ToolTip="Stop Strategy"
+                            Command="{Binding Path=DataContext.StopCommand, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}}"
+                            CommandParameter="{Binding}"
+                            Visibility="{Binding IsStopEnabled, Converter={StaticResource boolToVisibilityConverter}}">
+                        <ContentControl Content="{StaticResource stopstrategy}"/>
+                    </Button>
                     <ContentControl/>
                 </DockPanel>
             </DataTemplate>
@@ -50,9 +84,13 @@
         </GroupBox>
         
         <GroupBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <ContentControl Content="{Binding Messages}"/>
-            </ScrollViewer>
+            <messaging:MessagePanel HeaderBackground="Transparent"
+                                    HeaderText="Notifications"
+                                    Messages="{Binding Notifications}" 
+                                    ClearMessages="{Binding ClearNotificationsCommand}" 
+                                    IsExpanded="True"
+                                    ShowMessageTextAlignment="Left"
+                                    Margin="2"/>
         </GroupBox>
     </Grid>
 </view:DocumentViewBase>
