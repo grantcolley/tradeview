@@ -19,8 +19,8 @@
             
             <DataTemplate DataType="{x:Type model:Strategy}">
                 <DockPanel LastChildFill="True">
-                    <Label DockPanel.Dock="Left" Content="{Binding Name}" FontWeight="Bold"/>
-                    <Button DockPanel.Dock="Right" Margin="5" Height="18" Width="18"
+                    <Label DockPanel.Dock="Left" Content="{Binding Name}" Margin="2" FontWeight="Bold"/>
+                    <Button DockPanel.Dock="Right" Margin="2" Height="18" Width="18"
                             Style="{StaticResource ButtonImageStyle}"
                             ToolTip="Run Strategy"
                             Command="{Binding Path=DataContext.RunCommand, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}}"
@@ -28,7 +28,7 @@
                             Visibility="{Binding IsRunEnabled, Converter={StaticResource boolToVisibilityConverter}}">
                         <ContentControl Content="{StaticResource runstrategy}"/>
                     </Button>
-                    <Button DockPanel.Dock="Right" Margin="5" Height="18" Width="18"
+                    <Button DockPanel.Dock="Right" Margin="2" Height="18" Width="18"
                             Style="{StaticResource ButtonImageStyle}"
                             Command="{Binding Path=DataContext.MonitorCommand, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}}"
                             CommandParameter="{Binding}"
@@ -36,7 +36,7 @@
                             Visibility="{Binding IsMonitorEnabled, Converter={StaticResource boolToVisibilityConverter}}">
                         <ContentControl Content="{StaticResource monitorstrategy}"/>
                     </Button>
-                    <Button DockPanel.Dock="Right" Margin="5" Height="15" Width="15"
+                    <Button DockPanel.Dock="Right" Margin="2" Height="18" Width="18"
                             Style="{StaticResource ButtonImageStyle}"
                             Command="{Binding Path=DataContext.DisconnectCommand, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}}"
                             CommandParameter="{Binding}"
@@ -44,7 +44,7 @@
                             Visibility="{Binding IsConnected, Converter={StaticResource boolToVisibilityConverter}}">
                         <ContentControl Content="{StaticResource disconnect}"/>
                     </Button>
-                    <Button DockPanel.Dock="Right" Margin="5" Height="18" Width="18"
+                    <Button DockPanel.Dock="Right" Margin="2" Height="18" Width="18"
                             Style="{StaticResource ButtonImageStyle}"
                             ToolTip="Stop Strategy"
                             Command="{Binding Path=DataContext.StopCommand, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}}"
