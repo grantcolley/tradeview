@@ -112,6 +112,7 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <Label Grid.Row="0" Grid.Column="0" Content="Id:" Margin="2"/>
@@ -124,9 +125,11 @@
                                     <TextBox Text="{Binding Path=TargetAssembly.DisplayName, Mode=OneWay}" ToolTip="{Binding Path=TargetAssembly.File, Mode=OneWay}"/>
                                 </DockPanel>
                                 <Label Grid.Row="3" Grid.Column="0" Content="Target Type:" Margin="2"/>
-                                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Path=TargetType}"  Margin="2"/>
-                                <Label Grid.Row="4" Grid.Column="0" Content="Tag:" Margin="2"/>
-                                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Path=Tag}" TextWrapping="Wrap" MinHeight="300" AcceptsReturn="True" Margin="2"/>
+                                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Path=TargetType}" Margin="2"/>
+                                <Label Grid.Row="4" Grid.Column="0" Content="Strategy Server URL:" Margin="2"/>
+                                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Path=StrategyServerUrl}" Margin="2"/>
+                                <Label Grid.Row="5" Grid.Column="0" Content="Tag:" Margin="2"/>
+                                <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Path=Tag}" TextWrapping="Wrap" MinHeight="300" AcceptsReturn="True" Margin="2"/>
                             </Grid>
 
                             <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
