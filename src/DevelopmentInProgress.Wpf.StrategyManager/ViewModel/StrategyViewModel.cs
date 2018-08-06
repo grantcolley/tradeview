@@ -30,11 +30,11 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             : base(viewModelContext)
         {
             this.strategyService = strategyService;
-            
+
             IsRunEnabled = true;
             IsMonitoEnabled = true;
-            IsConnected = true;
-            IsStopEnabled = true;
+            //IsConnected = true;
+            //IsStopEnabled = true;
 
             Notifications = new ObservableCollection<Message>();
 
@@ -138,9 +138,9 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             }
         }
 
-        private void RunStrategy(object param)
+        private async void RunStrategy(object param)
         {
-
+            await Run();
         }
 
         private async void MonitorStrategy(object param)
@@ -173,7 +173,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             }
         }
 
-        private async void Run()
+        private async Task Run()
         {
             try
             {
@@ -186,7 +186,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
                     var strategyRunnerClient = new DevelopmentInProgress.MarketView.Interface.TradeStrategy.StrategyRunnerClient();
 
-                    var response = await strategyRunnerClient.PostAsync(Strategy.StrategyServerUrl, jsonContent, dependencies);
+                    var response = await strategyRunnerClient.PostAsync($"{Strategy.StrategyServerUrl}/notificationhub", jsonContent, dependencies);
                 }
             }
             catch (Exception ex)
@@ -203,7 +203,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             }
 
             HubConnection = new HubConnectionBuilder()
-                .WithUrl($"{Strategy.StrategyServerUrl}/notificationhub?strategyname={Strategy.Name}", HttpTransportType.WebSockets)
+                .WithUrl($"{Strategy.StrategyServerUrl}/runstrategy?strategyname={Strategy.Name}", HttpTransportType.WebSockets)
                 .Build();
 
             HubConnection.On<object>("Connected", message =>
@@ -230,9 +230,9 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
                 return IsConnected;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                OnConnected(new Message { MessageType = MessageType.Error, Text = $"{DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt")} Failed to connect", Timestamp = DateTime.Now });
+                OnConnected(new Message { MessageType = MessageType.Error, Text = $"{DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt")} Failed to connect", TextVerbose=ex.ToString(), Timestamp = DateTime.Now });
                 throw;
             }
         }

@@ -5,6 +5,9 @@
         Debug = 0,
         Information = 1,
         Warning = 2,
-        Error = 3
+        Error = 3,
+        Trade = 4,
+        OrderBook = 5,
+        Account = 6
     }
 }
