@@ -3,8 +3,8 @@ using DevelopmentInProgress.Wpf.Host.Context;
 using DevelopmentInProgress.Wpf.Host.ViewModel;
 using DevelopmentInProgress.Wpf.StrategyManager.Model;
 using DevelopmentInProgress.Wpf.StrategyManager.Services;
-using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.AspNetCore.Sockets;
 using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
@@ -186,7 +186,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
                     var strategyRunnerClient = new DevelopmentInProgress.MarketView.Interface.TradeStrategy.StrategyRunnerClient();
 
-                    var response = await strategyRunnerClient.PostAsync($"{Strategy.StrategyServerUrl}/notificationhub", jsonContent, dependencies);
+                    var response = await strategyRunnerClient.PostAsync($"{Strategy.StrategyServerUrl}/runstrategy", jsonContent, dependencies);
                 }
             }
             catch (Exception ex)
@@ -203,7 +203,8 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             }
 
             HubConnection = new HubConnectionBuilder()
-                .WithUrl($"{Strategy.StrategyServerUrl}/runstrategy?strategyname={Strategy.Name}", HttpTransportType.WebSockets)
+                .WithUrl($"{Strategy.StrategyServerUrl}/notificationhub?strategyname={Strategy.Name}")
+                .WithTransport(TransportType.WebSockets)
                 .Build();
 
             HubConnection.On<object>("Connected", message =>
