@@ -64,7 +64,8 @@
                                 Messages="{Binding Messages}" 
                                 ClearMessages="{Binding ClearMessageBox}" 
                                 IsExpanded="{Binding IsMessagesExpanded}" 
-                                Visibility="{Binding IsMessagesVisible, Converter={StaticResource boolToVisibilityConverter}}">
+                                Visibility="{Binding IsMessagesVisible, Converter={StaticResource boolToVisibilityConverter}}"
+                                ShowMessageTextAlignment="Left">
         </messaging:MessagePanel>        
     </Grid>
 </UserControl>

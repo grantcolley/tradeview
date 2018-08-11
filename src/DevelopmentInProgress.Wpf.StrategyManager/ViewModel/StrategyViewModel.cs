@@ -182,9 +182,19 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
                     var jsonContent = JsonConvert.SerializeObject(Strategy);
                     var dependencies = strategy.Dependencies.Select(d => d.File);
 
-                    var strategyRunnerClient = new DevelopmentInProgress.MarketView.Interface.TradeStrategy.StrategyRunnerClient();
+                    var strategyRunnerClient = new MarketView.Interface.TradeStrategy.StrategyRunnerClient();
 
                     var response = await strategyRunnerClient.PostAsync($"{Strategy.StrategyServerUrl}/runstrategy", jsonContent, dependencies);
+
+                    var content = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
+
+                    ShowMessage(
+                        new Message
+                        {
+                            MessageType = response.StatusCode == System.Net.HttpStatusCode.OK ? MessageType.Info : MessageType.Error,
+                            Text = response.StatusCode.ToString(),
+                            TextVerbose = JsonConvert.SerializeObject(content, Formatting.Indented)
+                        });
                 }
             }
             catch (Exception ex)
