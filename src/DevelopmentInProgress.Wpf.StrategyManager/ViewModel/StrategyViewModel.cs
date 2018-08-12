@@ -188,7 +188,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
                     var content = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
 
-                    ShowMessage(
+                    OnConnected(
                         new Message
                         {
                             MessageType = response.StatusCode == System.Net.HttpStatusCode.OK ? MessageType.Info : MessageType.Error,
