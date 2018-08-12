@@ -137,8 +137,8 @@
                             <DockPanel Grid.Column="2" Margin="2" LastChildFill="True">
                                 <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
                                     <Label Content="Add Target Assembly Dependencies" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom"/>
-                                    <controls:FileDialog DockPanel.Dock="Right" MultiSelect="True"
-                                                            Files="{Binding DataContext.Dependencies, Mode=OneWayToSource, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                                    <controls:FileDialog DockPanel.Dock="Right" MultiSelect="True" Margin="2"
+                                                         Files="{Binding DataContext.Dependencies, Mode=OneWayToSource, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
                                 </StackPanel>
                                 <GroupBox Style="{StaticResource GroupBoxNoHeaderStyle}">
                                     <ItemsControl Margin="10" ItemsSource="{Binding Dependencies}"/>

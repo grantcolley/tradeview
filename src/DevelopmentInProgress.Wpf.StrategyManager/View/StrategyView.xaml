@@ -26,7 +26,7 @@
                             Command="{Binding Path=DataContext.RunCommand, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}}"
                             CommandParameter="{Binding}"
                             Visibility="{Binding IsRunEnabled, Converter={StaticResource boolToVisibilityConverter}}">
-                        <ContentControl Content="{StaticResource runstrategy}"/>
+                        <Control Template="{StaticResource runstrategy}"/>
                     </Button>
                     <Button DockPanel.Dock="Right" Margin="2" Height="18" Width="18"
                             Style="{StaticResource ButtonImageStyle}"
@@ -34,7 +34,7 @@
                             CommandParameter="{Binding}"
                             ToolTip="Monitor Strategy"
                             Visibility="{Binding IsMonitorEnabled, Converter={StaticResource boolToVisibilityConverter}}">
-                        <ContentControl Content="{StaticResource monitorstrategy}"/>
+                        <Control Template="{StaticResource monitorstrategy}"/>
                     </Button>
                     <Button DockPanel.Dock="Right" Margin="2" Height="18" Width="18"
                             Style="{StaticResource ButtonImageStyle}"
@@ -42,7 +42,7 @@
                             CommandParameter="{Binding}"
                             ToolTip="Disconnect (leaves strategy running)"
                             Visibility="{Binding IsConnected, Converter={StaticResource boolToVisibilityConverter}}">
-                        <ContentControl Content="{StaticResource disconnect}"/>
+                        <Control Template="{StaticResource disconnect}"/>
                     </Button>
                     <Button DockPanel.Dock="Right" Margin="2" Height="18" Width="18"
                             Style="{StaticResource ButtonImageStyle}"
@@ -50,7 +50,7 @@
                             Command="{Binding Path=DataContext.StopCommand, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}}"
                             CommandParameter="{Binding}"
                             Visibility="{Binding IsStopEnabled, Converter={StaticResource boolToVisibilityConverter}}">
-                        <ContentControl Content="{StaticResource stopstrategy}"/>
+                        <Control Template="{StaticResource stopstrategy}"/>
                     </Button>
                     <ContentControl/>
                 </DockPanel>
