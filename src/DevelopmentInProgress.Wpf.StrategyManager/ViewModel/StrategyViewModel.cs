@@ -21,6 +21,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
         private bool isMonitoEnabled;
         private bool isConnected;
         private bool isStopEnabled;
+        private bool isConnecting;
         private HubConnection hubConnection;
         private ObservableCollection<Message> notifications;
 
@@ -31,8 +32,9 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
             IsRunEnabled = true;
             IsMonitoEnabled = true;
-            //IsConnected = true;
-            //IsStopEnabled = true;
+            IsConnected = false;
+            IsStopEnabled = false;
+            IsConnecting = false;
 
             Notifications = new ObservableCollection<Message>();
 
@@ -46,12 +48,6 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
         public ICommand MonitorCommand { get; set; }
         public ICommand DisconnectCommand { get; set; }
         public ICommand StopCommand { get; set; }
-
-        public HubConnection HubConnection
-        {
-            get { return hubConnection; }
-            set { hubConnection = value; }
-        }
 
         public ObservableCollection<Message> Notifications
         {
@@ -118,6 +114,19 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             }
         }
 
+        public bool IsConnecting
+        {
+            get { return isConnecting; }
+            set
+            {
+                if (isConnecting != value)
+                {
+                    isConnecting = value;
+                    OnPropertyChanged("IsConnecting");
+                }
+            }
+        }
+
         protected override void OnPublished(object data)
         {
             Strategy = strategyService.GetStrategy(Title);
@@ -146,9 +155,9 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             await Monitor();
         }
 
-        private void Disconnect(object param)
+        private async void Disconnect(object param)
         {
-
+            await Disconnect();
         }
 
         private void StopStrategy(object param)
@@ -163,10 +172,10 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
         private async Task Disconnect()
         {
-            if (HubConnection != null)
+            if (hubConnection != null)
             {
-                await HubConnection.DisposeAsync();
-                HubConnection = null;
+                await hubConnection.DisposeAsync();
+                hubConnection = null;
                 IsConnected = false;
             }
         }
@@ -210,11 +219,11 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
                 return IsConnected;
             }
 
-            HubConnection = new HubConnectionBuilder()
+            hubConnection = new HubConnectionBuilder()
                 .WithUrl($"{Strategy.StrategyServerUrl}/notificationhub?strategyname={Strategy.Name}")
                 .Build();
 
-            HubConnection.On<object>("Connected", message =>
+            hubConnection.On<object>("Connected", message =>
             {
                 ViewModelContext.UiDispatcher.Invoke(() =>
                 {
@@ -222,7 +231,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
                 });
             });
 
-            HubConnection.On<object>("Send", (message) =>
+            hubConnection.On<object>("Send", (message) =>
             {
                 ViewModelContext.UiDispatcher.Invoke(() =>
                 {
@@ -232,7 +241,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
             try
             {
-                await HubConnection.StartAsync();
+                await hubConnection.StartAsync();
 
                 IsConnected = true;
 

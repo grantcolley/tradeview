@@ -6,6 +6,7 @@
                        xmlns:model="clr-namespace:DevelopmentInProgress.Wpf.StrategyManager.Model"
                        xmlns:view="clr-namespace:DevelopmentInProgress.Wpf.Host.View;assembly=DevelopmentInProgress.Wpf.Host"
                        xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Controls.Converters;assembly=DevelopmentInProgress.Wpf.Controls"
+                       xmlns:progress="clr-namespace:DevelopmentInProgress.Wpf.Host.Controls.Progress;assembly=DevelopmentInProgress.Wpf.Host"
                        xmlns:messaging="clr-namespace:DevelopmentInProgress.Wpf.Controls.Messaging;assembly=DevelopmentInProgress.Wpf.Controls"
                        mc:Ignorable="d">
     <view:DocumentViewBase.Resources>
@@ -25,15 +26,20 @@
                             ToolTip="Run Strategy"
                             Command="{Binding Path=DataContext.RunCommand, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}}"
                             CommandParameter="{Binding}"
-                            Visibility="{Binding IsRunEnabled, Converter={StaticResource boolToVisibilityConverter}}">
+                            Visibility="{Binding Path=DataContext.IsRunEnabled, Converter={StaticResource boolToVisibilityConverter}}">
                         <Control Template="{StaticResource runstrategy}"/>
                     </Button>
+                    <Viewbox DockPanel.Dock="Right" Margin="2"
+                             Height="18" Width="18"
+                             Visibility="{Binding Path=DataContext.IsConnecting, Converter={StaticResource boolToVisibilityConverter}}">
+                        <progress:CircularProgress/>
+                    </Viewbox>
                     <Button DockPanel.Dock="Right" Margin="2" Height="18" Width="18"
                             Style="{StaticResource ButtonImageStyle}"
                             Command="{Binding Path=DataContext.MonitorCommand, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}}"
                             CommandParameter="{Binding}"
                             ToolTip="Monitor Strategy"
-                            Visibility="{Binding IsMonitorEnabled, Converter={StaticResource boolToVisibilityConverter}}">
+                            Visibility="{Binding Path=DataContext.IsMonitorEnabled, Converter={StaticResource boolToVisibilityConverter}}">
                         <Control Template="{StaticResource monitorstrategy}"/>
                     </Button>
                     <Button DockPanel.Dock="Right" Margin="2" Height="18" Width="18"
@@ -41,7 +47,7 @@
                             Command="{Binding Path=DataContext.DisconnectCommand, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}}"
                             CommandParameter="{Binding}"
                             ToolTip="Disconnect (leaves strategy running)"
-                            Visibility="{Binding IsConnected, Converter={StaticResource boolToVisibilityConverter}}">
+                            Visibility="{Binding Path=DataContext.IsConnected, Converter={StaticResource boolToVisibilityConverter}}">
                         <Control Template="{StaticResource disconnect}"/>
                     </Button>
                     <Button DockPanel.Dock="Right" Margin="2" Height="18" Width="18"
@@ -49,7 +55,7 @@
                             ToolTip="Stop Strategy"
                             Command="{Binding Path=DataContext.StopCommand, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}}"
                             CommandParameter="{Binding}"
-                            Visibility="{Binding IsStopEnabled, Converter={StaticResource boolToVisibilityConverter}}">
+                            Visibility="{Binding Path=DataContext.IsStopEnabled, Converter={StaticResource boolToVisibilityConverter}}">
                         <Control Template="{StaticResource stopstrategy}"/>
                     </Button>
                     <ContentControl/>
