@@ -17,10 +17,8 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
     {
         private IStrategyService strategyService;
         private Strategy strategy;
-        private bool isRunEnabled;
-        private bool isMonitoEnabled;
+        private bool canConnect;
         private bool isConnected;
-        private bool isStopEnabled;
         private bool isConnecting;
         private HubConnection hubConnection;
         private ObservableCollection<Message> notifications;
@@ -30,10 +28,8 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
         {
             this.strategyService = strategyService;
 
-            IsRunEnabled = true;
-            IsMonitoEnabled = true;
+            CanConnect = true;
             IsConnected = false;
-            IsStopEnabled = false;
             IsConnecting = false;
 
             Notifications = new ObservableCollection<Message>();
@@ -62,28 +58,15 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             }
         }
 
-        public bool IsRunEnabled
+        public bool CanConnect
         {
-            get { return isRunEnabled; }
+            get { return canConnect; }
             set
             {
-                if (isRunEnabled != value)
+                if (canConnect != value)
                 {
-                    isRunEnabled = value;
-                    OnPropertyChanged("IsRunEnabled");
-                }
-            }
-        }
-
-        public bool IsMonitoEnabled
-        {
-            get { return isMonitoEnabled; }
-            set
-            {
-                if (isMonitoEnabled != value)
-                {
-                    isMonitoEnabled = value;
-                    OnPropertyChanged("IsMonitoEnabled");
+                    canConnect = value;
+                    OnPropertyChanged("CanConnect");
                 }
             }
         }
@@ -97,19 +80,6 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
                 {
                     isConnected = value;
                     OnPropertyChanged("IsConnected");
-                }
-            }
-        }
-
-        public bool IsStopEnabled
-        {
-            get { return isStopEnabled; }
-            set
-            {
-                if (isStopEnabled != value)
-                {
-                    isStopEnabled = value;
-                    OnPropertyChanged("IsStopEnabled");
                 }
             }
         }
@@ -184,7 +154,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
         {
             try
             {
-                var result = await Monitor();
+                var result = await Monitor(true);
 
                 if (result)
                 {
@@ -204,20 +174,25 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
                             Text = response.StatusCode.ToString(),
                             TextVerbose = JsonConvert.SerializeObject(content, Formatting.Indented)
                         });
+
+                    SetCommandVisibility(false, false, true);
                 }
             }
             catch (Exception ex)
             {
                 ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message });
+                SetCommandVisibility(true, false, false);
             }
         }
         
-        private async Task<bool> Monitor()
+        private async Task<bool> Monitor(bool isForRun = false)
         {
             if(IsConnected)
             {
                 return IsConnected;
             }
+
+            SetCommandVisibility(false, true, false);
 
             hubConnection = new HubConnectionBuilder()
                 .WithUrl($"{Strategy.StrategyServerUrl}/notificationhub?strategyname={Strategy.Name}")
@@ -243,14 +218,18 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             {
                 await hubConnection.StartAsync();
 
-                IsConnected = true;
+                if (!isForRun)
+                {
+                    SetCommandVisibility(false, false, true);
+                }
 
-                return IsConnected;
+                return true;
             }
             catch (Exception ex)
             {
                 OnConnected(new Message { MessageType = MessageType.Error, Text = $"{DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt")} Failed to connect", TextVerbose=ex.ToString(), Timestamp = DateTime.Now });
-                throw;
+                SetCommandVisibility(true, false, false);
+                return false;
             }
         }
 
@@ -262,6 +241,13 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
         private void OnNotificationRecieved(object message)
         {
 
+        }
+
+        private void SetCommandVisibility(bool canconnect, bool connecting, bool connected)
+        {
+            CanConnect = canconnect;
+            IsConnecting = connecting;
+            isConnected = connected;
         }
     }
 }
