@@ -151,6 +151,8 @@
     <Compile Include="Controls\FileDialog.xaml.cs">
       <DependentUpon>FileDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\StrategyExtensions.cs" />
+    <Compile Include="Extensions\StrategySubscriptionExtensions.cs" />
     <Compile Include="Model\Strategy.cs" />
     <Compile Include="Model\StrategyFile.cs" />
     <Compile Include="Model\StrategySubscription.cs" />
@@ -194,9 +196,7 @@
   <ItemGroup>
     <Resource Include="Images\strategyManager.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\DevelopmentInProgress.MarketView.Interface\DevelopmentInProgress.MarketView.Interface.csproj">
       <Project>{86695062-90cc-419d-b455-d6d8c364a215}</Project>

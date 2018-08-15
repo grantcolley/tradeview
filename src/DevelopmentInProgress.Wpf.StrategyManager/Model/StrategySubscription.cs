@@ -10,7 +10,6 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.Model
         public string ApiKey { get; set; }
         public string SecretKey { get; set; }
         public Exchange Exchange { get; set; }
-        public Subscribe Subscribe { get; set; }
         public bool SubscribeAccount { get; set; }
         public bool SubscribeOrderBook { get; set; }
         public bool SubscribeTrades { get; set; }

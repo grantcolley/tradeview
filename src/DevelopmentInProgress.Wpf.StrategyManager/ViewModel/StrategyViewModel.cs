@@ -154,16 +154,23 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
         {
             try
             {
-                var result = await Monitor(true);
+                var result = await Monitor(true).ConfigureAwait(false);
 
                 if (result)
                 {
+                    SetCommandVisibility(false, false, true);
+
                     var jsonContent = JsonConvert.SerializeObject(Strategy);
                     var dependencies = strategy.Dependencies.Select(d => d.File);
 
                     var strategyRunnerClient = new MarketView.Interface.TradeStrategy.StrategyRunnerClient();
 
-                    var response = await strategyRunnerClient.PostAsync($"{Strategy.StrategyServerUrl}/runstrategy", jsonContent, dependencies);
+                    var response = await strategyRunnerClient.PostAsync($"{Strategy.StrategyServerUrl}/runstrategy", jsonContent, dependencies).ConfigureAwait(false);
+
+                    if(response.StatusCode != System.Net.HttpStatusCode.OK)
+                    {
+                        await Disconnect().ConfigureAwait(false);
+                    }
 
                     var content = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
 
@@ -174,15 +181,15 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
                             Text = response.StatusCode.ToString(),
                             TextVerbose = JsonConvert.SerializeObject(content, Formatting.Indented)
                         });
-
-                    SetCommandVisibility(false, false, true);
                 }
             }
             catch (Exception ex)
             {
                 ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message });
-                SetCommandVisibility(true, false, false);
+                await Disconnect().ConfigureAwait(false);
             }
+
+            SetCommandVisibility(true, false, false);
         }
         
         private async Task<bool> Monitor(bool isForRun = false)
@@ -216,7 +223,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
             try
             {
-                await hubConnection.StartAsync();
+                await hubConnection.StartAsync().ConfigureAwait(false);
 
                 if (!isForRun)
                 {
@@ -229,6 +236,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             {
                 OnConnected(new Message { MessageType = MessageType.Error, Text = $"{DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt")} Failed to connect", TextVerbose=ex.ToString(), Timestamp = DateTime.Now });
                 SetCommandVisibility(true, false, false);
+                await Disconnect().ConfigureAwait(false);
                 return false;
             }
         }
@@ -247,7 +255,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
         {
             CanConnect = canconnect;
             IsConnecting = connecting;
-            isConnected = connected;
+            IsConnected = connected;
         }
     }
 }
