@@ -1,6 +1,7 @@
 ﻿using DevelopmentInProgress.Wpf.Controls.Messaging;
 using DevelopmentInProgress.Wpf.Host.Context;
 using DevelopmentInProgress.Wpf.Host.ViewModel;
+using DevelopmentInProgress.Wpf.StrategyManager.Extensions;
 using DevelopmentInProgress.Wpf.StrategyManager.Model;
 using DevelopmentInProgress.Wpf.StrategyManager.Services;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -38,12 +39,14 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             MonitorCommand = new ViewModelCommand(MonitorStrategy);
             DisconnectCommand = new ViewModelCommand(Disconnect);
             StopCommand = new ViewModelCommand(StopStrategy);
+            ClearNotificationsCommand = new ViewModelCommand(ClearNotifications);
         }
 
         public ICommand RunCommand { get; set; }
         public ICommand MonitorCommand { get; set; }
         public ICommand DisconnectCommand { get; set; }
         public ICommand StopCommand { get; set; }
+        public ICommand ClearNotificationsCommand { get; set; }
 
         public ObservableCollection<Message> Notifications
         {
@@ -135,6 +138,11 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
         }
 
+        private void ClearNotifications(object param)
+        {
+            Notifications.Clear();
+        }
+
         protected async override void OnDisposing()
         {
             await Disconnect();
@@ -160,7 +168,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
                 {
                     SetCommandVisibility(false, false, true);
 
-                    var jsonContent = JsonConvert.SerializeObject(Strategy);
+                    var jsonContent = JsonConvert.SerializeObject(Strategy.GetInterfaceStrategy());
                     var dependencies = strategy.Dependencies.Select(d => d.File);
 
                     var strategyRunnerClient = new MarketView.Interface.TradeStrategy.StrategyRunnerClient();
@@ -174,13 +182,16 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
                     var content = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
 
-                    OnConnected(
-                        new Message
-                        {
-                            MessageType = response.StatusCode == System.Net.HttpStatusCode.OK ? MessageType.Info : MessageType.Error,
-                            Text = response.StatusCode.ToString(),
-                            TextVerbose = JsonConvert.SerializeObject(content, Formatting.Indented)
-                        });
+                    ViewModelContext.UiDispatcher.Invoke(() =>
+                    {
+                        OnConnected(
+                            new Message
+                            {
+                                MessageType = response.StatusCode == System.Net.HttpStatusCode.OK ? MessageType.Info : MessageType.Error,
+                                Text = response.StatusCode.ToString(),
+                                TextVerbose = JsonConvert.SerializeObject(content, Formatting.Indented)
+                            });
+                    });
                 }
             }
             catch (Exception ex)
