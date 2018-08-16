@@ -80,7 +80,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
 
         public List<OrderBookPriceLevel> TopAsks
         {
-            get { return asks?.Skip(asks.Count() - 10).ToList(); }
+            get { return asks?.Skip(asks.Count() - 9).ToList(); }
         }
 
         public ChartValues<OrderBookPriceLevel> ChartAsks
@@ -111,7 +111,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Model
 
         public List<OrderBookPriceLevel> TopBids
         {
-            get { return bids?.Take(10).ToList(); ; }
+            get { return bids?.Take(9).ToList(); ; }
         }
 
         public ChartValues<OrderBookPriceLevel> ChartBids
