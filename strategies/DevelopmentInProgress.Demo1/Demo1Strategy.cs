@@ -9,9 +9,14 @@ namespace DevelopmentInProgress.Demo1
     {
         public event EventHandler<TradeStrategyNotificationEventArgs> TradeStrategyNotificationEvent;
 
-        public Task<Strategy> RunAsync(Strategy strategy)
+        public async Task<Strategy> RunAsync(Strategy strategy)
         {
-            throw new NotImplementedException();
+            while (true)
+            {
+                await Task.Delay(100000);
+            }
+
+            return strategy;
         }
 
         public void SubscribeAccountInfo(AccountInfoEventArgs accountInfoEventArgs)
