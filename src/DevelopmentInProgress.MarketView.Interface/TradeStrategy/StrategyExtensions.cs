@@ -13,6 +13,7 @@ namespace DevelopmentInProgress.MarketView.Interface.TradeStrategy
                 Status = strategy.Status,
                 StrategySubscriptions = strategy.StrategySubscriptions,
                 TargetAssembly = strategy.TargetAssembly,
+                TargetType = strategy.TargetType,
                 Tag = strategy.Tag,
                 Machine = Environment.MachineName,
                 NotificationEvent = notificationEvent,
