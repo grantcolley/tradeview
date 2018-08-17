@@ -152,6 +152,7 @@
       <DependentUpon>FileDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Extensions\StrategyExtensions.cs" />
+    <Compile Include="Extensions\StrategyNotificationExtensions.cs" />
     <Compile Include="Extensions\StrategySubscriptionExtensions.cs" />
     <Compile Include="Model\Strategy.cs" />
     <Compile Include="Model\StrategyFile.cs" />

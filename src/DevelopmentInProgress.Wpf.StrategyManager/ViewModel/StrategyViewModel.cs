@@ -7,6 +7,7 @@ using DevelopmentInProgress.Wpf.StrategyManager.Services;
 using Microsoft.AspNetCore.SignalR.Client;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -184,7 +185,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
                     ViewModelContext.UiDispatcher.Invoke(() =>
                     {
-                        OnConnected(
+                        NotificationsAdd(
                             new Message
                             {
                                 MessageType = response.StatusCode == System.Net.HttpStatusCode.OK ? MessageType.Info : MessageType.Error,
@@ -196,7 +197,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             }
             catch (Exception ex)
             {
-                ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message });
+                NotificationsAdd(new Message { MessageType = MessageType.Error, Text = ex.Message, TextVerbose = ex.ToString() });
                 await Disconnect().ConfigureAwait(false);
             }
 
@@ -212,6 +213,8 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
             SetCommandVisibility(false, true, false);
 
+            Notifications.Clear();
+
             hubConnection = new HubConnectionBuilder()
                 .WithUrl($"{Strategy.StrategyServerUrl}/notificationhub?strategyname={Strategy.Name}")
                 .Build();
@@ -220,7 +223,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             {
                 ViewModelContext.UiDispatcher.Invoke(() =>
                 {
-                    OnConnected(new Message { MessageType = MessageType.Info, Text = $"{DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt")} {message.ToString()}", Timestamp = DateTime.Now });
+                    NotificationsAdd(new Message { MessageType = MessageType.Info, Text = $"{DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt")} {message.ToString()}", Timestamp = DateTime.Now });
                 });
             });
 
@@ -228,7 +231,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             {
                 ViewModelContext.UiDispatcher.Invoke(() =>
                 {
-                    OnNotificationRecieved(message);
+                    OnStrategyNotification(message);
                 });
             });
 
@@ -245,21 +248,55 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             }
             catch (Exception ex)
             {
-                OnConnected(new Message { MessageType = MessageType.Error, Text = $"{DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt")} Failed to connect", TextVerbose=ex.ToString(), Timestamp = DateTime.Now });
+                NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"{DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt")} Failed to connect", TextVerbose=ex.ToString(), Timestamp = DateTime.Now });
                 SetCommandVisibility(true, false, false);
                 await Disconnect().ConfigureAwait(false);
                 return false;
             }
         }
 
-        private void OnConnected(Message message)
+        private void NotificationsAdd(Message message)
         {
             Notifications.Add(message);
         }
 
-        private void OnNotificationRecieved(object message)
+        private void OnStrategyNotification(object message)
         {
+            try
+            {
+                var strategyNotifications = JsonConvert.DeserializeObject<List<MarketView.Interface.TradeStrategy.StrategyNotification>>(message.ToString());
 
+                ViewModelContext.UiDispatcher.Invoke(() =>
+                {
+                    HandleNotifications(strategyNotifications);
+                });
+            }
+            catch (Exception ex)
+            {
+                NotificationsAdd(new Message { MessageType = MessageType.Error, Text = ex.Message, TextVerbose = ex.ToString() });
+            }
+        }
+
+        private void HandleNotifications(List<MarketView.Interface.TradeStrategy.StrategyNotification> strategyNotifications)
+        {
+            foreach (var notification in strategyNotifications)
+            {
+                switch (notification.NotificationLevel)
+                {
+                    case MarketView.Interface.TradeStrategy.NotificationLevel.Account:
+
+                        break;
+                    case MarketView.Interface.TradeStrategy.NotificationLevel.Trade:
+
+                        break;
+                    case MarketView.Interface.TradeStrategy.NotificationLevel.OrderBook:
+
+                        break;
+                    default:
+                        NotificationsAdd(notification.GetMessage());
+                        break;
+                }
+            }
         }
 
         private void SetCommandVisibility(bool canconnect, bool connecting, bool connected)
