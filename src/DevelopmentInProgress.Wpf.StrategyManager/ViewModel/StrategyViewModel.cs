@@ -153,9 +153,19 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
         {
             if (hubConnection != null)
             {
-                await hubConnection.DisposeAsync();
-                hubConnection = null;
-                IsConnected = false;
+                try
+                {
+                    await hubConnection.DisposeAsync();
+                }
+                catch (Exception ex)
+                {
+                    NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Disconnect - {ex.Message}", TextVerbose = ex.ToString() });
+                }
+                finally
+                {
+                    hubConnection = null;
+                    IsConnected = false;
+                }
             }
         }
 
@@ -197,7 +207,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             }
             catch (Exception ex)
             {
-                NotificationsAdd(new Message { MessageType = MessageType.Error, Text = ex.Message, TextVerbose = ex.ToString() });
+                NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Run - {ex.Message}", TextVerbose = ex.ToString() });
                 await Disconnect().ConfigureAwait(false);
             }
 
@@ -223,11 +233,11 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             {
                 ViewModelContext.UiDispatcher.Invoke(() =>
                 {
-                    NotificationsAdd(new Message { MessageType = MessageType.Info, Text = $"{DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt")} {message.ToString()}", Timestamp = DateTime.Now });
+                    NotificationsAdd(new Message { MessageType = MessageType.Info, Text = $"Connected - {message.ToString()}", Timestamp = DateTime.Now });
                 });
             });
 
-            hubConnection.On<object>("Send", (message) =>
+            hubConnection.On<object>("Trade", (message) =>
             {
                 ViewModelContext.UiDispatcher.Invoke(() =>
                 {
@@ -248,7 +258,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             }
             catch (Exception ex)
             {
-                NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"{DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt")} Failed to connect", TextVerbose=ex.ToString(), Timestamp = DateTime.Now });
+                NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Monitor - {ex.Message}", TextVerbose=ex.ToString(), Timestamp = DateTime.Now });
                 SetCommandVisibility(true, false, false);
                 await Disconnect().ConfigureAwait(false);
                 return false;
@@ -257,6 +267,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
         private void NotificationsAdd(Message message)
         {
+            message.Text = $"{DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt")} {message.Text}";
             Notifications.Add(message);
         }
 
@@ -273,7 +284,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             }
             catch (Exception ex)
             {
-                NotificationsAdd(new Message { MessageType = MessageType.Error, Text = ex.Message, TextVerbose = ex.ToString() });
+                NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"OnStrategyNotification - {ex.Message}", TextVerbose = ex.ToString() });
             }
         }
 
