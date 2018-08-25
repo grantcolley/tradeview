@@ -237,11 +237,35 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
                 });
             });
 
-            hubConnection.On<object>("Trade", (message) =>
+            hubConnection.On<object>("Notification", (message) =>
             {
                 ViewModelContext.UiDispatcher.Invoke(() =>
                 {
                     OnStrategyNotification(message);
+                });
+            });
+
+            hubConnection.On<object>("Trade", (message) =>
+            {
+                ViewModelContext.UiDispatcher.Invoke(() =>
+                {
+                    OnTradeNotification(message);
+                });
+            });
+
+            hubConnection.On<object>("OrderBook", (message) =>
+            {
+                ViewModelContext.UiDispatcher.Invoke(() =>
+                {
+                    OnOrderBookNotification(message);
+                });
+            });
+
+            hubConnection.On<object>("Account", (message) =>
+            {
+                ViewModelContext.UiDispatcher.Invoke(() =>
+                {
+                    OnAccountNotification(message);
                 });
             });
 
@@ -265,22 +289,16 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             }
         }
 
-        private void NotificationsAdd(Message message)
-        {
-            message.Text = $"{DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt")} {message.Text}";
-            Notifications.Add(message);
-        }
-
         private void OnStrategyNotification(object message)
         {
             try
             {
                 var strategyNotifications = JsonConvert.DeserializeObject<List<MarketView.Interface.TradeStrategy.StrategyNotification>>(message.ToString());
 
-                ViewModelContext.UiDispatcher.Invoke(() =>
+                foreach (var notification in strategyNotifications)
                 {
-                    HandleNotifications(strategyNotifications);
-                });
+                    NotificationsAdd(notification.GetMessage());
+                }
             }
             catch (Exception ex)
             {
@@ -288,26 +306,61 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             }
         }
 
-        private void HandleNotifications(List<MarketView.Interface.TradeStrategy.StrategyNotification> strategyNotifications)
+        private void OnTradeNotification(object message)
         {
-            foreach (var notification in strategyNotifications)
+            try
             {
-                switch (notification.NotificationLevel)
+                var strategyNotifications = JsonConvert.DeserializeObject<List<MarketView.Interface.TradeStrategy.StrategyNotification>>(message.ToString());
+
+                foreach (var notification in strategyNotifications)
                 {
-                    case MarketView.Interface.TradeStrategy.NotificationLevel.Account:
-
-                        break;
-                    case MarketView.Interface.TradeStrategy.NotificationLevel.Trade:
-
-                        break;
-                    case MarketView.Interface.TradeStrategy.NotificationLevel.OrderBook:
-
-                        break;
-                    default:
-                        NotificationsAdd(notification.GetMessage());
-                        break;
+                    NotificationsAdd(notification.GetMessage());
                 }
             }
+            catch (Exception ex)
+            {
+                NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"OnStrategyNotification - {ex.Message}", TextVerbose = ex.ToString() });
+            }
+        }
+
+        private void OnOrderBookNotification(object message)
+        {
+            try
+            {
+                var strategyNotifications = JsonConvert.DeserializeObject<List<MarketView.Interface.TradeStrategy.StrategyNotification>>(message.ToString());
+
+                foreach (var notification in strategyNotifications)
+                {
+                    NotificationsAdd(notification.GetMessage());
+                }
+            }
+            catch (Exception ex)
+            {
+                NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"OnStrategyNotification - {ex.Message}", TextVerbose = ex.ToString() });
+            }
+        }
+
+        private void OnAccountNotification(object message)
+        {
+            try
+            {
+                var strategyNotifications = JsonConvert.DeserializeObject<List<MarketView.Interface.TradeStrategy.StrategyNotification>>(message.ToString());
+
+                foreach (var notification in strategyNotifications)
+                {
+                    NotificationsAdd(notification.GetMessage());
+                }
+            }
+            catch (Exception ex)
+            {
+                NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"OnStrategyNotification - {ex.Message}", TextVerbose = ex.ToString() });
+            }
+        }
+
+        private void NotificationsAdd(Message message)
+        {
+            message.Text = $"{DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt")} {message.Text}";
+            Notifications.Add(message);
         }
 
         private void SetCommandVisibility(bool canconnect, bool connecting, bool connected)
