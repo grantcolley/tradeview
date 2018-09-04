@@ -173,7 +173,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
         {
             try
             {
-                var result = await Monitor(true).ConfigureAwait(false);
+                var result = await Monitor(true);
 
                 if (result)
                 {
@@ -184,14 +184,14 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
                     var strategyRunnerClient = new MarketView.Interface.TradeStrategy.StrategyRunnerClient();
 
-                    var response = await strategyRunnerClient.PostAsync($"{Strategy.StrategyServerUrl}/runstrategy", jsonContent, dependencies).ConfigureAwait(false);
+                    var response = await strategyRunnerClient.PostAsync($"{Strategy.StrategyServerUrl}/runstrategy", jsonContent, dependencies);
 
                     if(response.StatusCode != System.Net.HttpStatusCode.OK)
                     {
                         await Disconnect().ConfigureAwait(false);
                     }
 
-                    var content = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
+                    var content = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
 
                     ViewModelContext.UiDispatcher.Invoke(() =>
                     {
@@ -261,7 +261,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
                 });
             });
 
-            hubConnection.On<object>("Account", (message) =>
+            hubConnection.On<object>("AccountInfo", (message) =>
             {
                 ViewModelContext.UiDispatcher.Invoke(() =>
                 {
@@ -271,7 +271,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
             try
             {
-                await hubConnection.StartAsync().ConfigureAwait(false);
+                await hubConnection.StartAsync();
 
                 if (!isForRun)
                 {
@@ -359,7 +359,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
         private void NotificationsAdd(Message message)
         {
-            message.Text = $"{DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt")} {message.Text}";
+            message.Text = $"{message.Timestamp.ToString("dd/MM/yyyy hh:mm:ss.fff tt")} {message.Text}";
             Notifications.Add(message);
         }
 
