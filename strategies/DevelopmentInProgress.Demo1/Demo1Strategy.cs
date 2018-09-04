@@ -7,7 +7,10 @@ namespace DevelopmentInProgress.Demo1
 {
     public class Demo1Strategy : ITradeStrategy
     {
-        public event EventHandler<TradeStrategyNotificationEventArgs> TradeStrategyNotificationEvent;
+        public event EventHandler<TradeStrategyNotificationEventArgs> StrategyAccountInfoEvent;
+        public event EventHandler<TradeStrategyNotificationEventArgs> StrategyNotificationEvent;
+        public event EventHandler<TradeStrategyNotificationEventArgs> StrategyOrderBookEvent;
+        public event EventHandler<TradeStrategyNotificationEventArgs> StrategyTradeEvent;
 
         public async Task<Strategy> RunAsync(Strategy strategy)
         {
@@ -21,42 +24,42 @@ namespace DevelopmentInProgress.Demo1
 
         public void SubscribeAccountInfo(AccountInfoEventArgs accountInfoEventArgs)
         {
-            throw new NotImplementedException();
+            StrategyAccountInfoEvent?.Invoke(this, new TradeStrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Message = "SubscribeAccountInfo" } });
         }
 
         public void SubscribeAccountInfoException(Exception exception)
         {
-            throw new NotImplementedException();
+            StrategyAccountInfoEvent?.Invoke(this, new TradeStrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Message = "SubscribeAccountInfoException" } });
         }
 
         public void SubscribeAggregateTrades(AggregateTradeEventArgs aggregateTradeEventArgs)
         {
-            throw new NotImplementedException();
+            StrategyTradeEvent?.Invoke(this, new TradeStrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Message = "SubscribeAggregateTrades" } });
         }
 
         public void SubscribeAggregateTradesException(Exception exception)
         {
-            throw new NotImplementedException();
+            StrategyTradeEvent?.Invoke(this, new TradeStrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Message = "SubscribeAggregateTradesException" } });
         }
 
         public void SubscribeOrderBook(OrderBookEventArgs orderBookEventArgs)
         {
-            throw new NotImplementedException();
+            StrategyOrderBookEvent?.Invoke(this, new TradeStrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Message = "SubscribeOrderBook" } });
         }
 
         public void SubscribeOrderBookException(Exception exception)
         {
-            throw new NotImplementedException();
+            StrategyOrderBookEvent?.Invoke(this, new TradeStrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Message = "SubscribeOrderBookException" } });
         }
 
         public void SubscribeStatistics(StatisticsEventArgs statisticsEventArgs)
         {
-            throw new NotImplementedException();
+            StrategyNotificationEvent?.Invoke(this, new TradeStrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Message = "SubscribeStatistics" } });
         }
 
         public void SubscribeStatisticsException(Exception exception)
         {
-            throw new NotImplementedException();
+            StrategyNotificationEvent?.Invoke(this, new TradeStrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Message = "SubscribeStatisticsException" } });
         }
     }
 }

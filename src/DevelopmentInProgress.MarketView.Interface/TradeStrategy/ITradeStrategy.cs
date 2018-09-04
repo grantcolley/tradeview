@@ -8,7 +8,13 @@ namespace DevelopmentInProgress.MarketView.Interface.TradeStrategy
     {
         Task<Strategy> RunAsync(Strategy strategy);
 
-        event EventHandler<TradeStrategyNotificationEventArgs> TradeStrategyNotificationEvent;
+        event EventHandler<TradeStrategyNotificationEventArgs> StrategyAccountInfoEvent;
+        
+        event EventHandler<TradeStrategyNotificationEventArgs> StrategyNotificationEvent;
+
+        event EventHandler<TradeStrategyNotificationEventArgs> StrategyOrderBookEvent;
+
+        event EventHandler<TradeStrategyNotificationEventArgs> StrategyTradeEvent;
 
         void SubscribeStatistics(StatisticsEventArgs statisticsEventArgs);
 
