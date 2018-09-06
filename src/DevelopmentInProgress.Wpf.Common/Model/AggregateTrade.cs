@@ -1,7 +1,6 @@
-﻿using DevelopmentInProgress.Wpf.Common.Model;
-using System;
+﻿using System;
 
-namespace DevelopmentInProgress.Wpf.MarketView.Model
+namespace DevelopmentInProgress.Wpf.Common.Model
 {
     public class AggregateTrade : EntityBase
     {
