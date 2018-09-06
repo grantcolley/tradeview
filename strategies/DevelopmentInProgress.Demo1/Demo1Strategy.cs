@@ -1,5 +1,6 @@
 ﻿using DevelopmentInProgress.MarketView.Interface.Events;
 using DevelopmentInProgress.MarketView.Interface.TradeStrategy;
+using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 
@@ -28,7 +29,7 @@ namespace DevelopmentInProgress.Demo1
 
         public void SubscribeAccountInfo(AccountInfoEventArgs accountInfoEventArgs)
         {
-            StrategyAccountInfoEvent?.Invoke(this, new TradeStrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = strategy.Name, Message = "SubscribeAccountInfo" } });
+            StrategyTradeEvent?.Invoke(this, new TradeStrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = strategy.Name, Message = "SubscribeAggregateTrades" } });
         }
 
         public void SubscribeAccountInfoException(Exception exception)
@@ -36,14 +37,31 @@ namespace DevelopmentInProgress.Demo1
             StrategyAccountInfoEvent?.Invoke(this, new TradeStrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = strategy.Name, Message = "SubscribeAccountInfoException" } });
         }
 
-        public void SubscribeAggregateTrades(AggregateTradeEventArgs aggregateTradeEventArgs)
+        public void SubscribeTrades(AggregateTradeEventArgs aggregateTradeEventArgs)
         {
-            StrategyTradeEvent?.Invoke(this, new TradeStrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = strategy.Name, Message = "SubscribeAggregateTrades" } });
+            var strategyNotification = new StrategyNotification { Name = strategy.Name, NotificationLevel = NotificationLevel.Trade };
+            string message;
+
+            try
+            {
+                message = JsonConvert.SerializeObject(aggregateTradeEventArgs.AggregateTrades);
+            }
+            catch(Exception ex)
+            {
+                message = JsonConvert.SerializeObject(ex);
+            }
+
+            strategyNotification.Message = message;
+            StrategyTradeEvent?.Invoke(this, new TradeStrategyNotificationEventArgs { StrategyNotification = strategyNotification });
         }
 
-        public void SubscribeAggregateTradesException(Exception exception)
+        public void SubscribeTradesException(Exception exception)
         {
-            StrategyTradeEvent?.Invoke(this, new TradeStrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = strategy.Name, Message = "SubscribeAggregateTradesException" } });
+            var message = JsonConvert.SerializeObject(exception);
+
+            var strategyNotification = new StrategyNotification { Name = strategy.Name, Message = message, NotificationLevel = NotificationLevel.TradeError };
+
+            StrategyTradeEvent?.Invoke(this, new TradeStrategyNotificationEventArgs { StrategyNotification = strategyNotification });
         }
 
         public void SubscribeOrderBook(OrderBookEventArgs orderBookEventArgs)
