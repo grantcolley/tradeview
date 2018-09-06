@@ -7,7 +7,10 @@
         Warning = 2,
         Error = 3,
         Trade = 4,
-        OrderBook = 5,
-        Account = 6
+        TradeError = 5,
+        OrderBook = 6,
+        OrderBookError = 7,
+        Account = 8,
+        AccountError = 9
     }
 }
