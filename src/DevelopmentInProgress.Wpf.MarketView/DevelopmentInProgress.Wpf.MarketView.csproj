@@ -67,10 +67,7 @@
     <Compile Include="Events\SymbolsEventArgs.cs" />
     <Compile Include="Events\TradeEventArgs.cs" />
     <Compile Include="Extensions\AccountBalanceExtensions.cs" />
-    <Compile Include="Extensions\DecimalExtensions.cs" />
     <Compile Include="Extensions\OrderExtensions.cs" />
-    <Compile Include="Extensions\SymbolExtensions.cs" />
-    <Compile Include="Extensions\SymbolStatisticsExtensions.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\AccountBalance.cs" />
     <Compile Include="Model\Order.cs" />
@@ -80,8 +77,6 @@
     <Compile Include="Model\UserAccount.cs" />
     <Compile Include="Model\UserAccounts.cs" />
     <Compile Include="Model\Preferences.cs" />
-    <Compile Include="Model\Symbol.cs" />
-    <Compile Include="Model\SymbolStatistics.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\WpfExchangeService.cs" />

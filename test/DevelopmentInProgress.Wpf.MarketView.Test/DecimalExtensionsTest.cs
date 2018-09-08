@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.Wpf.MarketView.Extensions;
+﻿using DevelopmentInProgress.Wpf.Common.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Test

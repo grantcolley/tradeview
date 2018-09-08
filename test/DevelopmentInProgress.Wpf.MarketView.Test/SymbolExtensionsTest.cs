@@ -1,5 +1,5 @@
 ﻿using DevelopmentInProgress.MarketView.Test.Helper;
-using DevelopmentInProgress.Wpf.MarketView.Extensions;
+using DevelopmentInProgress.Wpf.Common.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
