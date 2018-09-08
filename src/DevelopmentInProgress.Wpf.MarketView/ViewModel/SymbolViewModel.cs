@@ -1,7 +1,6 @@
 ﻿using DevelopmentInProgress.Wpf.Common.Extensions;
 using DevelopmentInProgress.Wpf.Common.Model;
 using DevelopmentInProgress.Wpf.MarketView.Events;
-using DevelopmentInProgress.Wpf.MarketView.Extensions;
 using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using LiveCharts;
@@ -276,7 +275,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                              Quantity = bid.Quantity.Trim(Symbol.QuantityPrecision)
                          }));
 
-                    OrderBook.Update(asks, bids);
+                    if (Dispatcher == null)
+                    {
+                        OrderBook.Update(asks, bids);
+                    }
+                    else
+                    {
+                        Dispatcher.Invoke(() => { OrderBook.Update(asks, bids); });
+                    }
                 }
             }
         }
@@ -299,9 +305,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                                              IsBuyerMaker = t.IsBuyerMaker
                                          });
 
-                    AggregateTradesChart = new ChartValues<AggregateTrade>(orderedTrades);
-
-                    Action initialiseAggregateTrades = () => { AggregateTrades = new ObservableCollection<AggregateTrade>(orderedTrades.Take(tradesDisplayLimit)); };
+                    Action initialiseAggregateTrades = () =>
+                    {
+                        AggregateTradesChart = new ChartValues<AggregateTrade>(orderedTrades); ;
+                        AggregateTrades = new ObservableCollection<AggregateTrade>(orderedTrades.Take(tradesDisplayLimit));
+                    };
 
                     if (Dispatcher == null)
                     {
@@ -338,10 +346,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                         }
                     }
 
-                    AggregateTradesChart.AddRange(orderedAggregateTrades);
-
                     Action updateAggregateTrades = () =>
                     {
+                        AggregateTradesChart.AddRange(orderedAggregateTrades);
+
                         for (int i = 0; i < newCount; i++)
                         {
                             while (AggregateTrades.Count >= tradesDisplayLimit)
