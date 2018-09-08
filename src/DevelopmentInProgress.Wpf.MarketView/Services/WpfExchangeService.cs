@@ -5,6 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using DevelopmentInProgress.MarketView.Interface.Events;
 using DevelopmentInProgress.MarketView.Interface.Interfaces;
+using DevelopmentInProgress.Wpf.Common.Extensions;
+using DevelopmentInProgress.Wpf.Common.Model;
 using DevelopmentInProgress.Wpf.MarketView.Extensions;
 using DevelopmentInProgress.Wpf.MarketView.Model;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;

@@ -1,4 +1,4 @@
-﻿namespace DevelopmentInProgress.Wpf.MarketView.Extensions
+﻿namespace DevelopmentInProgress.Wpf.Common.Extensions
 {
     public static class DecimalExtensions
     {

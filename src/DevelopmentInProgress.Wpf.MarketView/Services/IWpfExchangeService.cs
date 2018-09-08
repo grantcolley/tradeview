@@ -1,4 +1,5 @@
 ﻿using DevelopmentInProgress.MarketView.Interface.Events;
+using DevelopmentInProgress.Wpf.Common.Model;
 using DevelopmentInProgress.Wpf.MarketView.Model;
 using System;
 using System.Collections.Generic;

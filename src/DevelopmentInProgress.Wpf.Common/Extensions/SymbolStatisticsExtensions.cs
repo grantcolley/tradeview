@@ -1,8 +1,8 @@
-﻿using DevelopmentInProgress.Wpf.MarketView.Model;
+﻿using DevelopmentInProgress.Wpf.Common.Model;
 using System;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 
-namespace DevelopmentInProgress.Wpf.MarketView.Extensions
+namespace DevelopmentInProgress.Wpf.Common.Extensions
 {
     public static class SymbolStatisticsExtensions
     {

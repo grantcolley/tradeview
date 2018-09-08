@@ -1,4 +1,6 @@
 ﻿using DevelopmentInProgress.MarketView.Interface.Extensions;
+using DevelopmentInProgress.Wpf.Common.Extensions;
+using DevelopmentInProgress.Wpf.Common.Model;
 using DevelopmentInProgress.Wpf.Host.ViewModel;
 using DevelopmentInProgress.Wpf.MarketView.Events;
 using DevelopmentInProgress.Wpf.MarketView.Extensions;

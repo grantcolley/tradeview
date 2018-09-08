@@ -1,9 +1,8 @@
-﻿using DevelopmentInProgress.Wpf.MarketView.Extensions;
+﻿using DevelopmentInProgress.Wpf.Common.Extensions;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 using System.Collections.Generic;
-using DevelopmentInProgress.Wpf.Common.Model;
 
-namespace DevelopmentInProgress.Wpf.MarketView.Model
+namespace DevelopmentInProgress.Wpf.Common.Model
 {
     public class Symbol : EntityBase
     {

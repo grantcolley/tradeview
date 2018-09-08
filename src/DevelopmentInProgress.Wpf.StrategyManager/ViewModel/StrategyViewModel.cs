@@ -1,9 +1,12 @@
-﻿using DevelopmentInProgress.Wpf.Controls.Messaging;
+﻿using Interface = DevelopmentInProgress.MarketView.Interface.Model;
+using DevelopmentInProgress.Wpf.Common.Model;
+using DevelopmentInProgress.Wpf.Controls.Messaging;
 using DevelopmentInProgress.Wpf.Host.Context;
 using DevelopmentInProgress.Wpf.Host.ViewModel;
 using DevelopmentInProgress.Wpf.StrategyManager.Extensions;
 using DevelopmentInProgress.Wpf.StrategyManager.Model;
 using DevelopmentInProgress.Wpf.StrategyManager.Services;
+using LiveCharts;
 using Microsoft.AspNetCore.SignalR.Client;
 using Newtonsoft.Json;
 using System;
@@ -12,6 +15,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using DevelopmentInProgress.Wpf.Common.Extensions;
 
 namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 {
@@ -24,6 +28,11 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
         private bool isConnecting;
         private HubConnection hubConnection;
         private ObservableCollection<Message> notifications;
+        private ObservableCollection<Symbol> symbols;
+        private ChartValues<AggregateTrade> aggregateTradesChart;
+        private object orderBookLock = new object();
+        private object aggregateTradesLock = new object();
+        private int chartDisplayLimit = 500;
 
         public StrategyViewModel(ViewModelContext viewModelContext, IStrategyService strategyService)
             : base(viewModelContext)
@@ -35,6 +44,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             IsConnecting = false;
 
             Notifications = new ObservableCollection<Message>();
+            Symbols = new ObservableCollection<Symbol>();
 
             RunCommand = new ViewModelCommand(RunStrategy);
             MonitorCommand = new ViewModelCommand(MonitorStrategy);
@@ -58,6 +68,32 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
                 {
                     notifications = value;
                     OnPropertyChanged("Notifications");
+                }
+            }
+        }
+
+        public ObservableCollection<Symbol> Symbols
+        {
+            get { return symbols; }
+            set
+            {
+                if (symbols != value)
+                {
+                    symbols = value;
+                    OnPropertyChanged("Symbols");
+                }
+            }
+        }
+
+        public ChartValues<AggregateTrade> AggregateTradesChart
+        {
+            get { return aggregateTradesChart; }
+            set
+            {
+                if (aggregateTradesChart != value)
+                {
+                    aggregateTradesChart = value;
+                    OnPropertyChanged("AggregateTradesChart");
                 }
             }
         }
@@ -354,6 +390,59 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             catch (Exception ex)
             {
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"OnStrategyNotification - {ex.Message}", TextVerbose = ex.ToString() });
+            }
+        }
+
+        private void UpdateAggregateTrades(IEnumerable<Interface.AggregateTrade> trades)
+        {
+            lock (aggregateTradesLock)
+            {
+                var trade = trades.First();
+                var symbol = Symbols.First(s => s.Name.Equals(trade.Symbol));
+
+                if (AggregateTradesChart == null)
+                {
+                    var orderedTrades = (from t in trades
+                                         orderby t.Id
+                                         select new AggregateTrade
+                                         {
+                                             Id = t.Id,
+                                             Time = t.Time,
+                                             Price = t.Price.Trim(symbol.PricePrecision),
+                                             Quantity = t.Quantity.Trim(symbol.QuantityPrecision),
+                                             IsBuyerMaker = t.IsBuyerMaker
+                                         });
+
+                    AggregateTradesChart = new ChartValues<AggregateTrade>(orderedTrades);
+                }
+                else
+                {
+                    var maxId = AggregateTradesChart.Max(at => at.Id);
+                    var orderedAggregateTrades = (from t in trades
+                                                  where t.Id > maxId
+                                                  orderby t.Id
+                                                  select new AggregateTrade
+                                                  {
+                                                      Id = t.Id,
+                                                      Time = t.Time,
+                                                      Price = t.Price.Trim(symbol.PricePrecision),
+                                                      Quantity = t.Quantity.Trim(symbol.QuantityPrecision),
+                                                      IsBuyerMaker = t.IsBuyerMaker
+                                                  }).ToList();
+
+                    var newCount = orderedAggregateTrades.Count();
+
+                    if (AggregateTradesChart.Count >= chartDisplayLimit)
+                    {
+                        var oldTrades = AggregateTradesChart.Take(newCount);
+                        foreach (var oldTrade in oldTrades)
+                        {
+                            AggregateTradesChart.Remove(oldTrade);
+                        }
+                    }
+
+                    AggregateTradesChart.AddRange(orderedAggregateTrades);
+                }
             }
         }
 
