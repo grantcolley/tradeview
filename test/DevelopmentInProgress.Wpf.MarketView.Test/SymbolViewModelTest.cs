@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DevelopmentInProgress.MarketView.Test.Helper;
 using DevelopmentInProgress.Wpf.Common.Extensions;
-using DevelopmentInProgress.Wpf.MarketView.Services;
+using DevelopmentInProgress.Wpf.Common.Services;
 using DevelopmentInProgress.Wpf.MarketView.ViewModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

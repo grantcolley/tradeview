@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.Wpf.MarketView.Model;
+﻿using DevelopmentInProgress.Wpf.Common.Model;
 using System.Collections.Generic;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Events

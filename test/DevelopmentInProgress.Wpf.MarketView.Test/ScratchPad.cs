@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 using DevelopmentInProgress.MarketView.Test.Helper;
-using DevelopmentInProgress.Wpf.MarketView.Services;
+using DevelopmentInProgress.Wpf.Common.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Test

@@ -2,12 +2,11 @@
 using DevelopmentInProgress.Wpf.Common.Model;
 using DevelopmentInProgress.Wpf.MarketView.Events;
 using DevelopmentInProgress.Wpf.MarketView.Model;
-using DevelopmentInProgress.Wpf.MarketView.Services;
+using DevelopmentInProgress.Wpf.Common.Services;
 using DevelopmentInProgress.Wpf.MarketView.ViewModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
@@ -63,7 +62,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             Symbol selectedSymbol = null;
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SymbolsViewModel);
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var symbolsViewModel = new SymbolsViewModel(exchangeService);
+            var symbolsViewModel = new ViewModel.SymbolsViewModel(exchangeService);
 
             var symbolsObservable = Observable.FromEventPattern<SymbolsEventArgs>(
                 eventHandler => symbolsViewModel.OnSymbolsNotification += eventHandler,

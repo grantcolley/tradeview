@@ -1,9 +1,9 @@
 ﻿using Interface = DevelopmentInProgress.MarketView.Interface.Model;
-using DevelopmentInProgress.Wpf.MarketView.Model;
+using DevelopmentInProgress.Wpf.Common.Model;
 using System;
 using DevelopmentInProgress.MarketView.Interface.Extensions;
 
-namespace DevelopmentInProgress.Wpf.MarketView.Extensions
+namespace DevelopmentInProgress.Wpf.Common.Extensions
 {
     public static class OrderExtensions
     {

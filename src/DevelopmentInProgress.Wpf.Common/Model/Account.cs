@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 
-namespace DevelopmentInProgress.Wpf.MarketView.Model
+namespace DevelopmentInProgress.Wpf.Common.Model
 {
     public class Account : EntityBase
     {

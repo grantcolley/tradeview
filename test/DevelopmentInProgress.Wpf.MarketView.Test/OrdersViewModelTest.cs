@@ -1,12 +1,12 @@
 ﻿using DevelopmentInProgress.MarketView.Test.Helper;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
-using DevelopmentInProgress.Wpf.MarketView.Services;
+using DevelopmentInProgress.Wpf.Common.Services;
 using DevelopmentInProgress.Wpf.MarketView.ViewModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DevelopmentInProgress.Wpf.MarketView.Model;
+using DevelopmentInProgress.Wpf.Common.Model;
 using System.Linq;
 using System.Threading.Tasks;
-using DevelopmentInProgress.Wpf.MarketView.Extensions;
+using DevelopmentInProgress.Wpf.Common.Extensions;
 using System;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Test

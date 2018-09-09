@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:model="clr-namespace:DevelopmentInProgress.Wpf.MarketView.Model"
+             xmlns:model="clr-namespace:DevelopmentInProgress.Wpf.Common.Model;assembly=DevelopmentInProgress.Wpf.Common"
              xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Host.Converters;assembly=DevelopmentInProgress.Wpf.Host"
              xmlns:progress="clr-namespace:DevelopmentInProgress.Wpf.Host.Controls.Progress;assembly=DevelopmentInProgress.Wpf.Host"
              xmlns:filterbox="clr-namespace:DevelopmentInProgress.Wpf.Controls.FilterBox;assembly=DevelopmentInProgress.Wpf.Controls"

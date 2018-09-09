@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using DevelopmentInProgress.Wpf.Common.Model;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 using Interface = DevelopmentInProgress.MarketView.Interface;
@@ -27,7 +28,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
 
             // Act
-            var account = new Model.Account(new Interface.Model.AccountInfo { User = user, Balances = balances });
+            var account = new Account(new Interface.Model.AccountInfo { User = user, Balances = balances });
 
             // Assert
             Assert.IsTrue(account.ApiKey.Equals(apiKey));
@@ -40,7 +41,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         public void SetApiSecret_Pass()
         {
             // Arrange
-            var account = new Model.Account(new Interface.Model.AccountInfo { User = user });
+            var account = new Account(new Interface.Model.AccountInfo { User = user });
 
             // Act
             account.ApiSecret = "0123456789";

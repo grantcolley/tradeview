@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.Wpf.MarketView.Services;
+﻿using DevelopmentInProgress.Wpf.Common.Services;
 using System;
 using System.ComponentModel;
 using System.Windows.Threading;
