@@ -11,13 +11,44 @@ using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 
 namespace DevelopmentInProgress.Wpf.Common.Services
 {
-    public class WpfExchangeService : IWpfExchangeService
+    public class WpfExchangeService : IWpfExchangeService, IDisposable
     {
         private IExchangeService exchangeService;
+
+        private List<Symbol> symbols;
+        public event EventHandler<Exception> OnSubscribeSymbolsException;
+        private CancellationTokenSource subscribeSymbolsCxlTokenSrc = new CancellationTokenSource();
+        private object lockSubscriptions = new object();
+        private bool disposed;
 
         public WpfExchangeService(IExchangeService exchangeService)
         {
             this.exchangeService = exchangeService;
+        }
+
+        public async Task<List<Symbol>> GetSymbolsSubscription()
+        {
+            if (symbols == null)
+            {
+                var results = await GetSymbols24HourStatisticsAsync(subscribeSymbolsCxlTokenSrc.Token);
+
+                lock (lockSubscriptions)
+                {
+                    if (symbols == null)
+                    {
+                        symbols = new List<Symbol>(results);
+                        SubscribeStatistics(symbols, SubscribeStatisticsException, subscribeSymbolsCxlTokenSrc.Token);
+                    }
+                }
+            }
+
+            return symbols;
+        }
+
+        private void SubscribeStatisticsException(Exception exception)
+        {
+            var onSubscribeSymbolsException = OnSubscribeSymbolsException;
+            onSubscribeSymbolsException?.Invoke(this, exception);
         }
 
         public async Task<IEnumerable<Symbol>> GetSymbols24HourStatisticsAsync(CancellationToken cancellationToken)
@@ -107,6 +138,23 @@ namespace DevelopmentInProgress.Wpf.Common.Services
         public void SubscribeAccountInfo(Interface.User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             exchangeService.SubscribeAccountInfo(user, callback, exception, cancellationToken);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if(!disposed)
+            {
+                if(!subscribeSymbolsCxlTokenSrc.IsCancellationRequested)
+                {
+                    subscribeSymbolsCxlTokenSrc.Cancel();
+                }
+            }
         }
     }
 }

@@ -146,12 +146,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             try
             {
-                var results = await ExchangeService.GetSymbols24HourStatisticsAsync(symbolsCancellationTokenSource.Token);
+                var results = await ExchangeService.GetSymbolsSubscription();
 
                 Symbols = new List<Symbol>(results);
-
-                ExchangeService.SubscribeStatistics(symbols, SubscribeStatisticsException, symbolsCancellationTokenSource.Token);
-
+                
                 SetPreferences();
             }
             catch(Exception ex)

@@ -59,8 +59,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IWpfExchangeService.cs" />
     <Compile Include="Services\WpfExchangeService.cs" />
-    <Compile Include="Subscriptions\SymbolsSubscription.cs" />
-    <Compile Include="Subscriptions\ISymbolsSubscription.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Images\ImageResources.xaml">
