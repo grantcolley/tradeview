@@ -18,7 +18,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var symbolViewModel = new SymbolViewModel(exchangeService);
 
             var trx = TestHelper.Trx.GetViewSymbol();
@@ -42,7 +42,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var symbolViewModel = new SymbolViewModel(exchangeService);
 
             var trx = TestHelper.Trx.GetViewSymbol();
@@ -60,7 +60,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var symbolViewModel = new SymbolViewModel(exchangeService);
 
             var trx = TestHelper.Trx.GetViewSymbol();

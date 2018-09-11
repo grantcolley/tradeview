@@ -78,6 +78,7 @@
     <Compile Include="ExchangeServiceTest.cs" />
     <Compile Include="AccountViewModelTest.cs" />
     <Compile Include="SymbolExtensionsTest.cs" />
+    <Compile Include="SymbolsCacheHelper.cs" />
     <Compile Include="SymbolsViewModelTest.cs" />
     <Compile Include="SymbolViewModelTest.cs" />
     <Compile Include="TradeViewModelTest.cs" />
@@ -97,6 +98,10 @@
     <ProjectReference Include="..\..\src\DevelopmentInProgress.Wpf.Common\DevelopmentInProgress.Wpf.Common.csproj">
       <Project>{2b523839-ee20-4ed3-a1ba-ac2070c99f4d}</Project>
       <Name>DevelopmentInProgress.Wpf.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\DevelopmentInProgress.Wpf.Controls\DevelopmentInProgress.Wpf.Controls.csproj">
+      <Project>{5acdc574-0f6f-48bc-ad2a-2f29bd7009fe}</Project>
+      <Name>DevelopmentInProgress.Wpf.Controls</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\DevelopmentInProgress.Wpf.MarketView\DevelopmentInProgress.Wpf.MarketView.csproj">
       <Project>{2183c26d-6932-41d9-bb1e-16fa55adf983}</Project>

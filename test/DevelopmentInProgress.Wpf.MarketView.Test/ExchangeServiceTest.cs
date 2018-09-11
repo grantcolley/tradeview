@@ -16,7 +16,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         {
             // Arrange
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var cxlToken = new CancellationToken();
 
             // Act
@@ -32,7 +32,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         {
             // Arrange
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var cxlToken = new CancellationToken();
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken).ConfigureAwait(false);

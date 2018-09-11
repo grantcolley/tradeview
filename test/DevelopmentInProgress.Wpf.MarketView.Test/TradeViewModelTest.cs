@@ -25,7 +25,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
@@ -57,7 +57,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
@@ -91,7 +91,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
@@ -129,7 +129,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
@@ -154,7 +154,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
@@ -191,7 +191,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
@@ -228,7 +228,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
@@ -257,7 +257,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
@@ -287,7 +287,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var quantity = 294.123m;
@@ -310,7 +310,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
@@ -334,7 +334,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
@@ -357,7 +357,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
@@ -381,7 +381,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
@@ -404,7 +404,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
@@ -428,7 +428,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
             
             // Act
@@ -444,7 +444,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var quoteBalance = new AccountBalance { Free = 0m };
@@ -465,7 +465,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var quoteBalance = new AccountBalance { Free = 299m };
@@ -486,7 +486,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
@@ -509,7 +509,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
@@ -541,7 +541,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
@@ -573,7 +573,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
@@ -606,7 +606,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
@@ -638,7 +638,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
@@ -689,7 +689,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
@@ -739,7 +739,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
@@ -790,7 +790,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.PlaceOrderException);
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
@@ -844,7 +844,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
             var tradeViewModel = new TradeViewModel(exchangeService);
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
