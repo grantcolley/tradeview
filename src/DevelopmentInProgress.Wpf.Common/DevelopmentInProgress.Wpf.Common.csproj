@@ -57,7 +57,9 @@
     <Compile Include="Model\SymbolStatistics.cs" />
     <Compile Include="Extensions\SymbolStatisticsExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Cache\ISymbolsCache.cs" />
     <Compile Include="Services\IWpfExchangeService.cs" />
+    <Compile Include="Cache\SymbolsCache.cs" />
     <Compile Include="Services\WpfExchangeService.cs" />
   </ItemGroup>
   <ItemGroup>
