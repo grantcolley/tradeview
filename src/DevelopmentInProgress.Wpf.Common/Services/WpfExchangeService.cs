@@ -5,44 +5,46 @@ using System.Threading;
 using System.Threading.Tasks;
 using DevelopmentInProgress.MarketView.Interface.Events;
 using DevelopmentInProgress.MarketView.Interface.Interfaces;
+using DevelopmentInProgress.Wpf.Common.Cache;
 using DevelopmentInProgress.Wpf.Common.Extensions;
 using DevelopmentInProgress.Wpf.Common.Model;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 
 namespace DevelopmentInProgress.Wpf.Common.Services
 {
-    public class WpfExchangeService : IWpfExchangeService, IDisposable
+    public class WpfExchangeService : IWpfExchangeService
     {
         private IExchangeService exchangeService;
+        private ISymbolsCache symbolsCache;
 
-        private List<Symbol> symbols;
         public event EventHandler<Exception> OnSubscribeSymbolsException;
         private CancellationTokenSource subscribeSymbolsCxlTokenSrc = new CancellationTokenSource();
         private object lockSubscriptions = new object();
         private bool disposed;
 
-        public WpfExchangeService(IExchangeService exchangeService)
+        public WpfExchangeService(IExchangeService exchangeService, ISymbolsCache symbolsCache)
         {
             this.exchangeService = exchangeService;
+            this.symbolsCache = symbolsCache;
         }
 
         public async Task<List<Symbol>> GetSymbolsSubscription()
         {
-            if (symbols == null)
+            if (!symbolsCache.Symbols.Any())
             {
                 var results = await GetSymbols24HourStatisticsAsync(subscribeSymbolsCxlTokenSrc.Token);
 
                 lock (lockSubscriptions)
                 {
-                    if (symbols == null)
+                    if (!symbolsCache.Symbols.Any())
                     {
-                        symbols = new List<Symbol>(results);
-                        SubscribeStatistics(symbols, SubscribeStatisticsException, subscribeSymbolsCxlTokenSrc.Token);
+                        symbolsCache.Symbols.AddRange(results);
+                        SubscribeStatistics(symbolsCache.Symbols, SubscribeStatisticsException, subscribeSymbolsCxlTokenSrc.Token);
                     }
                 }
             }
 
-            return symbols;
+            return symbolsCache.Symbols;
         }
 
         private void SubscribeStatisticsException(Exception exception)
