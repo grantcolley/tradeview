@@ -44,6 +44,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="Extensions\AccountBalanceExtensions.cs" />
     <Compile Include="Extensions\DecimalExtensions.cs" />
     <Compile Include="Extensions\OrderExtensions.cs" />
