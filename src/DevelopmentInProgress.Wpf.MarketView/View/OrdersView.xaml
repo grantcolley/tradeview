@@ -22,8 +22,8 @@
             <DockPanel Grid.Row="0" Grid.Column="0" LastChildFill="True">
                 <Label DockPanel.Dock="Top" Content="Orders" FontWeight="Bold" FontSize="12"/>
                 <DockPanel DockPanel.Dock="Top" LastChildFill="True">
-                    <StackPanel DockPanel.Dock="Right" Width="65" VerticalAlignment="Center">
-                        <Button VerticalAlignment="Center" Width="65" Height="26"
+                    <StackPanel DockPanel.Dock="Right" Width="75" VerticalAlignment="Center">
+                        <Button VerticalAlignment="Center" Width="75" Height="26"
                                 Command="{Binding CancelAllOrdersCommand}" 
                                 Visibility="{Binding IsCancellAllVisible, Converter={StaticResource boolToVisibilityConverter}}">
                             <TextBlock Text="Cancel All" Foreground="Orange"/>
