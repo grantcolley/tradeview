@@ -34,10 +34,23 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
         private object aggregateTradesLock = new object();
         private int chartDisplayLimit = 500;
 
-        public StrategyViewModel(ViewModelContext viewModelContext, IStrategyService strategyService)
+        private AccountViewModel accountViewModel;
+        private TradesViewModel tradesViewModel;
+        private SymbolsViewModel symbolsViewModel;
+        private OrdersViewModel ordersViewModel;
+        private ChartViewModel chartViewModel;
+
+        public StrategyViewModel(ViewModelContext viewModelContext, AccountViewModel accountViewModel, SymbolsViewModel symbolsViewModel,
+            TradesViewModel tradesViewModel, OrdersViewModel ordersViewModel, ChartViewModel chartViewModel, IStrategyService strategyService)
             : base(viewModelContext)
         {
             this.strategyService = strategyService;
+
+            AccountViewModel = accountViewModel;
+            SymbolsViewModel = symbolsViewModel;
+            TradesViewModel = tradesViewModel;
+            OrdersViewModel = ordersViewModel;
+            ChartViewModel = chartViewModel;
 
             CanConnect = true;
             IsConnected = false;
@@ -58,6 +71,71 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
         public ICommand DisconnectCommand { get; set; }
         public ICommand StopCommand { get; set; }
         public ICommand ClearNotificationsCommand { get; set; }
+
+        public AccountViewModel AccountViewModel
+        {
+            get { return accountViewModel; }
+            private set
+            {
+                if (accountViewModel != value)
+                {
+                    accountViewModel = value;
+                    OnPropertyChanged("AccountViewModel");
+                }
+            }
+        }
+
+        public SymbolsViewModel SymbolsViewModel
+        {
+            get { return symbolsViewModel; }
+            private set
+            {
+                if (symbolsViewModel != value)
+                {
+                    symbolsViewModel = value;
+                    OnPropertyChanged("SymbolsViewModel");
+                }
+            }
+        }
+
+        public TradesViewModel TradesViewModel
+        {
+            get { return tradesViewModel; }
+            private set
+            {
+                if (tradesViewModel != value)
+                {
+                    tradesViewModel = value;
+                    OnPropertyChanged("TradesViewModel");
+                }
+            }
+        }
+
+        public OrdersViewModel OrdersViewModel
+        {
+            get { return ordersViewModel; }
+            private set
+            {
+                if (ordersViewModel != value)
+                {
+                    ordersViewModel = value;
+                    OnPropertyChanged("OrdersViewModel");
+                }
+            }
+        }
+
+        public ChartViewModel ChartViewModel
+        {
+            get { return chartViewModel; }
+            private set
+            {
+                if (chartViewModel != value)
+                {
+                    chartViewModel = value;
+                    OnPropertyChanged("ChartViewModel");
+                }
+            }
+        }
 
         public ObservableCollection<Message> Notifications
         {

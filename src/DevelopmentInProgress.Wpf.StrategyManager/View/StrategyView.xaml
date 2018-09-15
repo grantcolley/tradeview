@@ -8,6 +8,8 @@
                        xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Controls.Converters;assembly=DevelopmentInProgress.Wpf.Controls"
                        xmlns:progress="clr-namespace:DevelopmentInProgress.Wpf.Host.Controls.Progress;assembly=DevelopmentInProgress.Wpf.Host"
                        xmlns:messaging="clr-namespace:DevelopmentInProgress.Wpf.Controls.Messaging;assembly=DevelopmentInProgress.Wpf.Controls"
+                       xmlns:localViewModel="clr-namespace:DevelopmentInProgress.Wpf.StrategyManager.ViewModel"
+                       xmlns:localView="clr-namespace:DevelopmentInProgress.Wpf.StrategyManager.View"
                        mc:Ignorable="d">
     <view:DocumentViewBase.Resources>
         <ResourceDictionary>
@@ -16,6 +18,26 @@
                 <ResourceDictionary Source="../Images/ImageResources.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <DataTemplate DataType="{x:Type localViewModel:SymbolsViewModel}">
+                <localView:SymbolsView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type localViewModel:AccountViewModel}">
+                <localView:AccountView></localView:AccountView>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type localViewModel:TradesViewModel}">
+                <localView:TradesView></localView:TradesView>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type localViewModel:OrdersViewModel}">
+                <localView:OrdersView></localView:OrdersView>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type localViewModel:ChartViewModel}">
+                <localView:ChartView></localView:ChartView>
+            </DataTemplate>
+            
             <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
             
             <DataTemplate DataType="{x:Type model:Strategy}">
@@ -75,40 +97,71 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20*"/>
                 <ColumnDefinition Width="2"/>
-                <ColumnDefinition Width="80*"/>
+                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="2"/>
+                <ColumnDefinition Width="60*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="100*"/>
+                <RowDefinition Height="50*"/>
+                <RowDefinition Height="2"/>
+                <RowDefinition Height="50*"/>
             </Grid.RowDefinitions>
 
             <GroupBox Grid.Row="0" Grid.Column="0" Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
                 <ContentControl Content="{Binding Strategy}"/>
             </GroupBox>
 
-            <GroupBox Grid.Row="1" Grid.Column="0" Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                    <ContentControl Content="{Binding Trades}"/>
-                </ScrollViewer>
-            </GroupBox>
+            <DockPanel Grid.Row="1" Grid.Column="0" LastChildFill="True">
+                <ContentControl Content="{Binding SymbolsViewModel}"/>
+            </DockPanel>
 
-            <GridSplitter Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
+            <GridSplitter Grid.Row="2" Grid.Column="0" Height="2" HorizontalAlignment="Stretch" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext"/>
+            
+            <DockPanel Grid.Row="3" Grid.Column="0" LastChildFill="True">
+                <ContentControl Content="{Binding AccountViewModel}"/>
+            </DockPanel>
+            
+            <GridSplitter Grid.Row="0" Grid.Column="1" Grid.RowSpan="4" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
 
-            <GroupBox Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
+            <DockPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" LastChildFill="True">
+                <ContentControl Content="{Binding TradesViewModel}"/>
+            </DockPanel>
 
-            </GroupBox>
+            <GridSplitter Grid.Row="0" Grid.Column="3" Grid.RowSpan="4" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
+
+            <DockPanel Grid.Row="0" Grid.Column="4" Grid.RowSpan="4" LastChildFill="True">
+                <ContentControl Content="{Binding ChartViewModel}"/>
+            </DockPanel>
+            
         </Grid>
 
         <GridSplitter Grid.Row="1" Height="2" HorizontalAlignment="Stretch" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext"/>
-        
-        <GroupBox Grid.Row="2" Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
-            <messaging:MessagePanel HeaderBackground="Transparent"
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40*"/>
+                <ColumnDefinition Width="2"/>
+                <ColumnDefinition Width="60*"/>
+            </Grid.ColumnDefinitions>
+
+            <DockPanel Grid.Column="0" LastChildFill="True">
+                <ContentControl Content="{Binding OrdersViewModel}"/>
+            </DockPanel>
+
+            <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
+
+            <GroupBox Grid.Column="2" Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
+                <messaging:MessagePanel HeaderBackground="Transparent"
                                     HeaderText="Notifications"
                                     Messages="{Binding Notifications}" 
                                     ClearMessages="{Binding ClearNotificationsCommand}" 
                                     IsExpanded="True"
                                     ShowMessageTextAlignment="Left"
                                     Margin="2"/>
-        </GroupBox>
+            </GroupBox>
+            
+        </Grid>
+       
     </Grid>
 </view:DocumentViewBase>
