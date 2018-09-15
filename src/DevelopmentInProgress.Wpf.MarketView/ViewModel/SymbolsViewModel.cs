@@ -11,7 +11,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
     public class SymbolsViewModel : BaseViewModel
     {
-        private CancellationTokenSource symbolsCancellationTokenSource;
         private List<Symbol> symbols;
         private Symbol selectedSymbol;
         private UserAccount accountPreferences;
@@ -22,8 +21,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         public SymbolsViewModel(IWpfExchangeService exchangeService)
             : base(exchangeService)
         {
-            symbolsCancellationTokenSource = new CancellationTokenSource();
-
             GetSymbols();
         }
 
@@ -118,11 +115,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             if (disposing)
             {
-                if (symbolsCancellationTokenSource != null
-                    && !symbolsCancellationTokenSource.IsCancellationRequested)
-                {
-                    symbolsCancellationTokenSource.Cancel();
-                }
+                // nothing to do here...
             }
 
             disposed = true;
