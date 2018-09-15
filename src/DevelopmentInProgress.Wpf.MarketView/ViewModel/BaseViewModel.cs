@@ -29,10 +29,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         protected void OnPropertyChanged(string propertyName, bool isDirty = false)
         {
             var propertyChangedHandler = PropertyChanged;
-            if (propertyChangedHandler != null)
-            {
-                propertyChangedHandler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            propertyChangedHandler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
