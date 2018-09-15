@@ -115,7 +115,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             if (disposing)
             {
-                // nothing to do here...
+                ExchangeService.OnSubscribeSymbolsException -= SubscribeStatisticsException;
             }
 
             disposed = true;
@@ -139,6 +139,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             try
             {
+                ExchangeService.OnSubscribeSymbolsException += SubscribeStatisticsException;
+
                 var results = await ExchangeService.GetSymbolsSubscription();
 
                 Symbols = new List<Symbol>(results);
@@ -153,9 +155,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             IsLoadingSymbols = false;
         }
 
-        private void SubscribeStatisticsException(Exception exception)
+        private void SubscribeStatisticsException(object sender, Exception exception)
         {
-            OnException("SymbolsViewModel.GetSymbols - ExchangeService.SubscribeStatistics", exception);
+            OnException("SymbolsViewModel.GetSymbols - ExchangeService.GetSymbolsSubscription", exception);
         }
 
         private void OnException(string message, Exception exception)
