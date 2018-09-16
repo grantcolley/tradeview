@@ -61,7 +61,6 @@
     <Compile Include="Converters\ZeroToHiddenConverter.cs" />
     <Compile Include="Events\AccountEventArgs.cs" />
     <Compile Include="Events\AccountEventType.cs" />
-    <Compile Include="Events\EventArgsBase.cs" />
     <Compile Include="Events\OrdersEventArgs.cs" />
     <Compile Include="Events\SymbolEventArgs.cs" />
     <Compile Include="Events\SymbolsEventArgs.cs" />

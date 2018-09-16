@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DevelopmentInProgress.Wpf.MarketView.Events
+namespace DevelopmentInProgress.Wpf.Common.Events
 {
     public abstract class EventArgsBase<T> : EventArgs
     {
