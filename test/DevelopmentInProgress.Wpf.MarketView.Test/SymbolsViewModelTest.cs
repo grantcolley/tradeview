@@ -23,10 +23,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var fail = false;
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SymbolsViewModel);
-            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
+            var exchangeService = new WpfExchangeService(exchangeApi);
+            var symbolsCache = SymbolsCacheHelper.GetSymbolsCache(exchangeService);
 
             // Act
-            var symbolsViewModel = new SymbolsViewModel(exchangeService);
+            var symbolsViewModel = new SymbolsViewModel(exchangeService, symbolsCache);
 
             var symbolsObservable = Observable.FromEventPattern<SymbolsEventArgs>(
                 eventHandler => symbolsViewModel.OnSymbolsNotification += eventHandler,
@@ -61,8 +62,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var fail = false;
             Symbol selectedSymbol = null;
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SymbolsViewModel);
-            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
-            var symbolsViewModel = new ViewModel.SymbolsViewModel(exchangeService);
+            var exchangeService = new WpfExchangeService(exchangeApi);
+            var symbolsCache = SymbolsCacheHelper.GetSymbolsCache(exchangeService);
+            var symbolsViewModel = new SymbolsViewModel(exchangeService, symbolsCache);
 
             var symbolsObservable = Observable.FromEventPattern<SymbolsEventArgs>(
                 eventHandler => symbolsViewModel.OnSymbolsNotification += eventHandler,
@@ -101,8 +103,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         {
             // Arrange
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SymbolsViewModel);
-            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
-            var symbolsViewModel = new SymbolsViewModel(exchangeService);
+            var exchangeService = new WpfExchangeService(exchangeApi);
+            var symbolsCache = SymbolsCacheHelper.GetSymbolsCache(exchangeService);
+            var symbolsViewModel = new SymbolsViewModel(exchangeService, symbolsCache);
             
             var userData = File.ReadAllText("UserAccounts.txt");
             var accounts = JsonConvert.DeserializeObject<UserAccounts>(userData);

@@ -19,7 +19,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         {
             // Arrange
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
+            var exchangeService = new WpfExchangeService(exchangeApi);
             var accountViewModel = new OrdersViewModel(exchangeService);
 
             var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
@@ -44,7 +44,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         {
             // Arrange
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
+            var exchangeService = new WpfExchangeService(exchangeApi);
             var accountViewModel = new OrdersViewModel(exchangeService);
 
             var firstAccount = new Account(new Interface.AccountInfo { User = new Interface.User() })
@@ -79,7 +79,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         {
             // Arrange
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
+            var exchangeService = new WpfExchangeService(exchangeApi);
             var accountViewModel = new OrdersViewModel(exchangeService);
 
             var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
@@ -107,7 +107,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         {
             // Arrange
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.UpdateOrders);
-            var exchangeService = new WpfExchangeService(exchangeApi, SymbolsCacheHelper.GetSymbolsCache());
+            var exchangeService = new WpfExchangeService(exchangeApi);
             var accountViewModel = new OrdersViewModel(exchangeService);
 
             var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
