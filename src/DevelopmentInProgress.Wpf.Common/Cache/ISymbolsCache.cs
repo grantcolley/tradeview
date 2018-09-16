@@ -1,10 +1,13 @@
 ﻿using DevelopmentInProgress.Wpf.Common.Model;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.Wpf.Common.Cache
 {
     public interface ISymbolsCache
     {
-        List<Symbol> Symbols { get; }
+        event EventHandler<Exception> OnSymbolsCacheException;
+        Task<List<Symbol>> GetSymbols();
     }
 }

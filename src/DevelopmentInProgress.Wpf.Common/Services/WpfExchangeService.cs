@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using DevelopmentInProgress.MarketView.Interface.Events;
 using DevelopmentInProgress.MarketView.Interface.Interfaces;
-using DevelopmentInProgress.Wpf.Common.Cache;
 using DevelopmentInProgress.Wpf.Common.Extensions;
 using DevelopmentInProgress.Wpf.Common.Model;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
@@ -15,42 +14,10 @@ namespace DevelopmentInProgress.Wpf.Common.Services
     public class WpfExchangeService : IWpfExchangeService
     {
         private IExchangeService exchangeService;
-        private ISymbolsCache symbolsCache;
 
-        public event EventHandler<Exception> OnSubscribeSymbolsException;
-        private CancellationTokenSource subscribeSymbolsCxlTokenSrc = new CancellationTokenSource();
-        private object lockSubscriptions = new object();
-        private bool disposed;
-
-        public WpfExchangeService(IExchangeService exchangeService, ISymbolsCache symbolsCache)
+        public WpfExchangeService(IExchangeService exchangeService)
         {
             this.exchangeService = exchangeService;
-            this.symbolsCache = symbolsCache;
-        }
-
-        public async Task<List<Symbol>> GetSymbolsSubscription()
-        {
-            if (!symbolsCache.Symbols.Any())
-            {
-                var results = await GetSymbols24HourStatisticsAsync(subscribeSymbolsCxlTokenSrc.Token);
-
-                lock (lockSubscriptions)
-                {
-                    if (!symbolsCache.Symbols.Any())
-                    {
-                        symbolsCache.Symbols.AddRange(results);
-                        SubscribeStatistics(symbolsCache.Symbols, SubscribeStatisticsException, subscribeSymbolsCxlTokenSrc.Token);
-                    }
-                }
-            }
-
-            return symbolsCache.Symbols;
-        }
-
-        private void SubscribeStatisticsException(Exception exception)
-        {
-            var onSubscribeSymbolsException = OnSubscribeSymbolsException;
-            onSubscribeSymbolsException?.Invoke(this, exception);
         }
 
         public async Task<IEnumerable<Symbol>> GetSymbols24HourStatisticsAsync(CancellationToken cancellationToken)
@@ -140,23 +107,6 @@ namespace DevelopmentInProgress.Wpf.Common.Services
         public void SubscribeAccountInfo(Interface.User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             exchangeService.SubscribeAccountInfo(user, callback, exception, cancellationToken);
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(bool disposing)
-        {
-            if(!disposed)
-            {
-                if(!subscribeSymbolsCxlTokenSrc.IsCancellationRequested)
-                {
-                    subscribeSymbolsCxlTokenSrc.Cancel();
-                }
-            }
         }
     }
 }
