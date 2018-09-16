@@ -5,12 +5,13 @@ using DevelopmentInProgress.Wpf.Common.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
+using DevelopmentInProgress.Wpf.Common.Cache;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
     public class SymbolsViewModel : BaseViewModel
     {
+        private ISymbolsCache symbolsCache;
         private List<Symbol> symbols;
         private Symbol selectedSymbol;
         private UserAccount accountPreferences;
@@ -18,9 +19,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private bool isLoadingSymbols;
         private bool disposed;
 
-        public SymbolsViewModel(IWpfExchangeService exchangeService)
+        public SymbolsViewModel(IWpfExchangeService exchangeService, ISymbolsCache symbolsCache)
             : base(exchangeService)
         {
+            this.symbolsCache = symbolsCache;
+
             GetSymbols();
         }
 
@@ -115,7 +118,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             if (disposing)
             {
-                ExchangeService.OnSubscribeSymbolsException -= SubscribeStatisticsException;
+                symbolsCache.OnSymbolsCacheException -= SymbolsCacheException;
             }
 
             disposed = true;
@@ -139,9 +142,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             try
             {
-                ExchangeService.OnSubscribeSymbolsException += SubscribeStatisticsException;
+                symbolsCache.OnSymbolsCacheException += SymbolsCacheException;
 
-                var results = await ExchangeService.GetSymbolsSubscription();
+                var results = await symbolsCache.GetSymbols();
 
                 Symbols = new List<Symbol>(results);
                 
@@ -155,7 +158,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             IsLoadingSymbols = false;
         }
 
-        private void SubscribeStatisticsException(object sender, Exception exception)
+        private void SymbolsCacheException(object sender, Exception exception)
         {
             OnException("SymbolsViewModel.GetSymbols - ExchangeService.GetSymbolsSubscription", exception);
         }

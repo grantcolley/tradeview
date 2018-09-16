@@ -14,6 +14,7 @@ using System.Windows.Input;
 using Prism.Logging;
 using DevelopmentInProgress.Wpf.Common.Model;
 using DevelopmentInProgress.Wpf.Common.Services;
+using DevelopmentInProgress.Wpf.Common.Events;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {

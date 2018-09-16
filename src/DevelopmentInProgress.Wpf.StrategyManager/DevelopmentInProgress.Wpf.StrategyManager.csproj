@@ -151,6 +151,7 @@
     <Compile Include="Controls\FileDialog.xaml.cs">
       <DependentUpon>FileDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Events\StrategyEventArgs.cs" />
     <Compile Include="Extensions\StrategyExtensions.cs" />
     <Compile Include="Extensions\StrategyNotificationExtensions.cs" />
     <Compile Include="Extensions\StrategySubscriptionExtensions.cs" />
