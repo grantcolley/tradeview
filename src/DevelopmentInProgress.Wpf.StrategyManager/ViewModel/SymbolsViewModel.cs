@@ -1,8 +1,11 @@
 ﻿using DevelopmentInProgress.Wpf.Common.Cache;
+using DevelopmentInProgress.Wpf.Common.Model;
 using DevelopmentInProgress.Wpf.Common.ViewModel;
 using DevelopmentInProgress.Wpf.StrategyManager.Events;
 using DevelopmentInProgress.Wpf.StrategyManager.Model;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 {
@@ -10,17 +13,42 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
     {
         private Strategy strategy;
         private ISymbolsCache symbolsCache;
+        private List<Symbol> symbols;
         private bool isLoadingSymbols;
         private bool disposed;
 
-        public SymbolsViewModel(Strategy strategy, ISymbolsCache symbolsCache)
+        public SymbolsViewModel(ISymbolsCache symbolsCache)
         {
-            this.strategy = strategy;
-
-            GetSymbols();
+            this.symbolsCache = symbolsCache;
         }
 
         public event EventHandler<StrategyEventArgs> OnSymbolsNotification;
+
+        public Strategy Strategy
+        {
+            get { return strategy; }
+            set
+            {
+                if (strategy != value)
+                {
+                    strategy = value;
+                    GetSymbols();
+                }
+            }
+        }
+
+        public List<Symbol> Symbols
+        {
+            get { return symbols; }
+            set
+            {
+                if (symbols != value)
+                {
+                    symbols = value;
+                    OnPropertyChanged("Symbols");
+                }
+            }
+        }
 
         public bool IsLoadingSymbols
         {
@@ -60,7 +88,9 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
                 var results = await symbolsCache.GetSymbols();
 
-                //Symbols = new List<Symbol>(results);
+                var strategySymbols = strategy.StrategySubscriptions.Select(s => s.Symbol);
+
+                Symbols = new List<Symbol>(results.Where(r => strategySymbols.Contains($"{r.BaseAsset.Symbol}{r.QuoteAsset.Symbol}")));
             }
             catch (Exception ex)
             {

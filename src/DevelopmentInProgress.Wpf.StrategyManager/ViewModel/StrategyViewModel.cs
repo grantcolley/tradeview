@@ -218,6 +218,8 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
         protected override void OnPublished(object data)
         {
             Strategy = strategyService.GetStrategy(Title);
+
+            SymbolsViewModel.Strategy = Strategy;
         }
 
         public Strategy Strategy
