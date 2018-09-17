@@ -3,9 +3,9 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace DevelopmentInProgress.Wpf.MarketView.Converters
+namespace DevelopmentInProgress.Wpf.Common.Converters
 {
-    public class LastPriceChangeDirectionColourConverter : IValueConverter
+    public class PriceChangePercentConverter : IValueConverter
     {
         public object Convert(object value, Type targetType,
                               object parameter, CultureInfo culture)
@@ -14,8 +14,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.Converters
                 || String.IsNullOrEmpty(value.ToString())
                 || !(value is int))
             {
-                // neutral
-                return (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFBABABA"));
+                // grey
+                return (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF808080"));
             }
 
             var posnegIndicator = (int)value;
@@ -32,8 +32,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.Converters
                 return (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFC71585"));
             }
 
-            // neutral
-            return (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFBABABA"));
+            // grey
+            return (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF808080"));
         }
 
         public object ConvertBack(object value, Type targetType,

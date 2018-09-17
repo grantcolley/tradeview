@@ -6,12 +6,12 @@
              xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Host.Converters;assembly=DevelopmentInProgress.Wpf.Host"
              xmlns:lc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:progress="clr-namespace:DevelopmentInProgress.Wpf.Host.Controls.Progress;assembly=DevelopmentInProgress.Wpf.Host"
-             xmlns:localConverters="clr-namespace:DevelopmentInProgress.Wpf.MarketView.Converters"
+             xmlns:commonConverters="clr-namespace:DevelopmentInProgress.Wpf.Common.Converters;assembly=DevelopmentInProgress.Wpf.Common"
              mc:Ignorable="d">
     <UserControl.Resources>
         <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
         <converters:InvertBoolToVisibilityConverter x:Key="invertBoolToVisibilityConverter"/>
-        <localConverters:LastPriceChangeDirectionColourConverter x:Key="LastPriceChangeDirectionColourConverter"/>
+        <commonConverters:LastPriceChangeDirectionColourConverter x:Key="LastPriceChangeDirectionColourConverter"/>
     </UserControl.Resources>
 
     <DockPanel LastChildFill="True" Margin="2">

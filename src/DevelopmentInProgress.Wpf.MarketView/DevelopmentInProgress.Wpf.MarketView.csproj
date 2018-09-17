@@ -56,8 +56,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\BoolToLoginConverter.cs" />
-    <Compile Include="Converters\PriceChangePercentConverter.cs" />
-    <Compile Include="Converters\LastPriceChangeDirectionColourConverter.cs" />
     <Compile Include="Converters\ZeroToHiddenConverter.cs" />
     <Compile Include="Events\AccountEventArgs.cs" />
     <Compile Include="Events\AccountEventType.cs" />

@@ -95,11 +95,11 @@
 
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="22*"/>
                 <ColumnDefinition Width="2"/>
-                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="22*"/>
                 <ColumnDefinition Width="2"/>
-                <ColumnDefinition Width="60*"/>
+                <ColumnDefinition Width="56*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
