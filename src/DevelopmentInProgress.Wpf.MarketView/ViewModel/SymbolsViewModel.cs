@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DevelopmentInProgress.Wpf.Common.Cache;
+using System.Threading.Tasks;
+using DevelopmentInProgress.Wpf.Common.Extensions;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
@@ -24,7 +26,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         {
             this.symbolsCache = symbolsCache;
 
-            GetSymbols();
+            GetSymbols().FireAndForget();
         }
 
         public event EventHandler<SymbolsEventArgs> OnSymbolsNotification;
@@ -136,7 +138,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        private async void GetSymbols()
+        private async Task GetSymbols()
         {
             IsLoadingSymbols = true;
 

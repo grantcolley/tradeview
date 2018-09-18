@@ -183,8 +183,13 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
                 exception.Invoke(ex);
             }
         }
-        
-        public async void SubscribeAccountInfo(Interface.Model.User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+
+        public void SubscribeAccountInfo(Interface.Model.User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        {
+            SubscribeAccountInfoAsync(user, callback, exception, cancellationToken).FireAndForget();
+        }
+
+        private async Task SubscribeAccountInfoAsync(Interface.Model.User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             try
             {

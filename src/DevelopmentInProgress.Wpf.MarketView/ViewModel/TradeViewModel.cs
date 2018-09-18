@@ -10,6 +10,7 @@ using System.Linq;
 using System.Windows.Input;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 using InterfaceExtensions = DevelopmentInProgress.MarketView.Interface.Extensions;
+using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
@@ -375,15 +376,15 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         private void Buy(object param)
         {
-            SendClientOrder(Interface.OrderSide.Buy);
+            SendClientOrder(Interface.OrderSide.Buy).FireAndForget();
         }
 
         private void Sell(object param)
         {
-            SendClientOrder(Interface.OrderSide.Sell);
+            SendClientOrder(Interface.OrderSide.Sell).FireAndForget();
         }
 
-        private async void SendClientOrder(Interface.OrderSide orderSide)
+        private async Task SendClientOrder(Interface.OrderSide orderSide)
         {
             try
             {

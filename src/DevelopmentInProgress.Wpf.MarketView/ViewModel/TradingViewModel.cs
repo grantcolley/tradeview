@@ -150,7 +150,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        protected override async void OnPublished(object data)
+        protected override void OnPublished(object data)
         {
             if(isOpen)
             {
@@ -192,7 +192,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             IsBusy = false;
         }
 
-        protected async override void SaveDocument()
+        protected override void SaveDocument()
         {
             base.SaveDocument();
 
@@ -214,7 +214,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             accountsService.SaveAccount(userAccount);
         }
         
-        public async void Close(object param)
+        public void Close(object param)
         {
             var symbol = param as SymbolViewModel;
             if(symbol != null)

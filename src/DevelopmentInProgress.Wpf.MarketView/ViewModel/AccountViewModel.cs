@@ -8,6 +8,8 @@ using System.Threading;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Interface = DevelopmentInProgress.MarketView.Interface;
+using System.Threading.Tasks;
+using DevelopmentInProgress.Wpf.Common.Extensions;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
@@ -104,7 +106,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             disposed = true;
         }
 
-        public async void SetAccount(Account account)
+        public void SetAccount(Account account)
         {
             try
             {
@@ -121,7 +123,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 if (!string.IsNullOrWhiteSpace(Account.ApiKey)
                     && !string.IsNullOrWhiteSpace(Account.ApiSecret))
                 {
-                    Login(Account);
+                    Login().FireAndForget();
                 }
                 else
                 {
@@ -134,7 +136,12 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        public async void Login(object param)
+        public void Login(object param)
+        {
+            Login().FireAndForget();
+        }
+
+        private async Task Login()
         {
             if (string.IsNullOrWhiteSpace(Account.AccountInfo.User.ApiKey)
                 || string.IsNullOrWhiteSpace(Account.AccountInfo.User.ApiSecret))

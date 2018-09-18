@@ -214,11 +214,23 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             disposed = true;
         }
 
-        private async void Cancel(object param)
+        private void Cancel(object param)
         {
             try
             {
                 var orderId = long.Parse(param.ToString());
+                Cancel(orderId).FireAndForget();
+            }
+            catch (Exception ex)
+            {
+                OnException("OrdersViewModel.Cancel", ex);
+            }
+        }
+
+        private async Task Cancel(long orderId)
+        {
+            try
+            {
                 var order = orders.Single(o => o.Id == orderId);
                 order.IsVisible = false;
                 var result = await ExchangeService.CancelOrderAsync(Account.AccountInfo.User, order.Symbol, order.Id, null, 0, ordersCancellationTokenSource.Token);
