@@ -69,7 +69,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             await symbolViewModel.SetSymbol(trx);
 
             // Assert
-            var trades = TestHelper.AggregateTrades;
+            var trades = TestHelper.AggregateTrades.Take(symbolViewModel.TradesDisplayLimit).ToList();
             var updatedtrades = TestHelper.AggregateTradesUpdated;
 
             var maxId = trades.Max(t => t.Id);          
@@ -80,7 +80,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
 
             for(int i = 0; i < newTrades.Count(); i++)
             {
-                if (trades.Count >= 20)
+                if (trades.Count >= symbolViewModel.TradesDisplayLimit)
                 {
                     trades.RemoveAt(trades.Count - 1);
                 }

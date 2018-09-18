@@ -13,11 +13,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("DevelopmentInProgress.Wpf.MarketView.Test")]
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
     public class SymbolViewModel : BaseViewModel
     {
+        internal int Limit => 20;
+        internal int ChartDisplayLimit => 100;
+        internal int TradesDisplayLimit => 18;
+
         private CancellationTokenSource symbolCancellationTokenSource;
         private Symbol symbol;
         private OrderBook orderBook;
@@ -28,10 +34,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private bool isLoadingTrades;
         private bool isLoadingOrderBook;
         private bool disposed;
-
-        private int limit = 20;
-        private int chartDisplayLimit = 100;
-        private int tradesDisplayLimit = 18;
 
         public SymbolViewModel(IWpfExchangeService exchangeService)
             : base(exchangeService)
@@ -186,11 +188,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             try
             {
-                var orderBook = await ExchangeService.GetOrderBookAsync(Symbol.Name, limit, symbolCancellationTokenSource.Token);
+                var orderBook = await ExchangeService.GetOrderBookAsync(Symbol.Name, Limit, symbolCancellationTokenSource.Token);
 
                 UpdateOrderBook(orderBook);
 
-                ExchangeService.SubscribeOrderBook(Symbol.Name, limit, e => UpdateOrderBook(e.OrderBook), SubscribeOrderBookException, symbolCancellationTokenSource.Token);
+                ExchangeService.SubscribeOrderBook(Symbol.Name, Limit, e => UpdateOrderBook(e.OrderBook), SubscribeOrderBookException, symbolCancellationTokenSource.Token);
             }
             catch (Exception ex)
             {
@@ -206,11 +208,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             try
             {
-                var trades = await ExchangeService.GetAggregateTradesAsync(Symbol.Name, limit, symbolCancellationTokenSource.Token);
+                var trades = await ExchangeService.GetAggregateTradesAsync(Symbol.Name, Limit, symbolCancellationTokenSource.Token);
 
                 UpdateAggregateTrades(trades);
 
-                ExchangeService.SubscribeAggregateTrades(Symbol.Name, limit, e => UpdateAggregateTrades(e.AggregateTrades), SubscribeAggregateTradesException, symbolCancellationTokenSource.Token);
+                ExchangeService.SubscribeAggregateTrades(Symbol.Name, Limit, e => UpdateAggregateTrades(e.AggregateTrades), SubscribeAggregateTradesException, symbolCancellationTokenSource.Token);
             }
             catch (Exception ex)
             {
@@ -308,7 +310,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     Action initialiseAggregateTrades = () =>
                     {
                         AggregateTradesChart = new ChartValues<AggregateTrade>(orderedTrades); ;
-                        AggregateTrades = new ObservableCollection<AggregateTrade>(orderedTrades.Take(tradesDisplayLimit));
+                        AggregateTrades = new ObservableCollection<AggregateTrade>(orderedTrades.Take(TradesDisplayLimit));
                     };
 
                     if (Dispatcher == null)
@@ -337,7 +339,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                     var newCount = orderedAggregateTrades.Count;
 
-                    if (AggregateTradesChart.Count >= chartDisplayLimit)
+                    if (AggregateTradesChart.Count >= ChartDisplayLimit)
                     {
                         var oldTrades = AggregateTradesChart.Take(newCount);
                         foreach(var oldTrade in oldTrades)
@@ -352,7 +354,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                         for (int i = 0; i < newCount; i++)
                         {
-                            while (AggregateTrades.Count >= tradesDisplayLimit)
+                            while (AggregateTrades.Count >= TradesDisplayLimit)
                             {
                                 AggregateTrades.RemoveAt(AggregateTrades.Count - 1);
                             }
