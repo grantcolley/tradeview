@@ -78,7 +78,7 @@
                         </ControlTemplate>
                     </ListView.Template>
                     <ListView.ItemTemplate>
-                        <DataTemplate DataType="{x:Type model:Symbol}">
+                        <DataTemplate DataType="{x:Type model:AccountBalance}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="100"/>
