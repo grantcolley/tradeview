@@ -1,5 +1,4 @@
-﻿using DevelopmentInProgress.Wpf.Common.Model;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 
 namespace DevelopmentInProgress.Wpf.Common.Model

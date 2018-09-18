@@ -6,6 +6,7 @@ using DevelopmentInProgress.Wpf.StrategyManager.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 {
@@ -32,7 +33,6 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
                 if (strategy != value)
                 {
                     strategy = value;
-                    GetSymbols();
                 }
             }
         }
@@ -78,23 +78,25 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             disposed = true;
         }
 
-        private async void GetSymbols()
+        public async Task GetSymbols(Strategy arg)
         {
             IsLoadingSymbols = true;
 
             try
             {
+                Strategy = arg;
+
                 symbolsCache.OnSymbolsCacheException += SymbolsCacheException;
 
                 var results = await symbolsCache.GetSymbols();
 
-                var strategySymbols = strategy.StrategySubscriptions.Select(s => s.Symbol);
+                var strategySymbols = Strategy.StrategySubscriptions.Select(s => s.Symbol);
 
                 Symbols = new List<Symbol>(results.Where(r => strategySymbols.Contains($"{r.BaseAsset.Symbol}{r.QuoteAsset.Symbol}")));
             }
             catch (Exception ex)
             {
-                OnException("SymbolsViewModel.GetSymbols", ex);
+                OnException($"SymbolsViewModel.GetSymbols {ex.Message}", ex);
             }
 
             IsLoadingSymbols = false;
@@ -102,7 +104,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
         private void SymbolsCacheException(object sender, Exception exception)
         {
-            OnException("SymbolsViewModel.GetSymbols - SymbolsCache.GetSymbols", exception);
+            OnException($"SymbolsCache.GetSymbols {exception.Message}", exception);
         }
 
         private void OnException(string message, Exception exception)

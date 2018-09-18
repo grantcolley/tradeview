@@ -16,6 +16,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using DevelopmentInProgress.Wpf.Common.Extensions;
+using DevelopmentInProgress.Wpf.StrategyManager.Events;
+using System.Reactive.Linq;
 
 namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 {
@@ -64,6 +66,9 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             DisconnectCommand = new ViewModelCommand(Disconnect);
             StopCommand = new ViewModelCommand(StopStrategy);
             ClearNotificationsCommand = new ViewModelCommand(ClearNotifications);
+
+            ObserveSymbols();
+            ObserveAccount();
         }
 
         public ICommand RunCommand { get; set; }
@@ -219,7 +224,16 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
         {
             Strategy = strategyService.GetStrategy(Title);
 
-            SymbolsViewModel.Strategy = Strategy;
+            SymbolsViewModel.GetSymbols(Strategy).FireAndForget();
+
+            var strategySubscription = Strategy.StrategySubscriptions.First();
+            var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
+            {
+                ApiKey = strategySubscription.ApiKey,
+                ApiSecret = strategySubscription.SecretKey
+            };
+
+            AccountViewModel.Login(account).FireAndForget();
         }
 
         public Strategy Strategy
@@ -235,16 +249,28 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             }
         }
 
+        /// <summary>
+        /// This is triggered by a Command, hence the async void.
+        /// </summary>
+        /// <param name="param"></param>
         private async void RunStrategy(object param)
         {
             await Run();
         }
 
+        /// <summary>
+        /// This is triggered by a Command, hence the async void.
+        /// </summary>
+        /// <param name="param"></param>
         private async void MonitorStrategy(object param)
         {
             await Monitor();
         }
 
+        /// <summary>
+        /// This is triggered by a Command, hence the async void.
+        /// </summary>
+        /// <param name="param"></param>
         private async void Disconnect(object param)
         {
             await Disconnect();
@@ -524,6 +550,47 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
                     AggregateTradesChart.AddRange(orderedAggregateTrades);
                 }
             }
+        }
+
+        private void ObserveSymbols()
+        {
+            var symbolsObservable = Observable.FromEventPattern<StrategyEventArgs>(
+                eventHandler => SymbolsViewModel.OnSymbolsNotification += eventHandler,
+                eventHandler => SymbolsViewModel.OnSymbolsNotification -= eventHandler)
+                .Select(eventPattern => eventPattern.EventArgs);
+
+            symbolsObservable.Subscribe(async (args) =>
+            {
+                if (args.HasException)
+                {
+                    NotificationsAdd(new Message { MessageType = MessageType.Error, Text = args.Message, TextVerbose = args.Exception.ToString() });
+                }
+                else
+                {
+                    NotificationsAdd(new Message { MessageType = MessageType.Info, Text = args.Message});
+                }
+            });
+        }
+
+        private void ObserveAccount()
+        {
+            var accountObservable = Observable.FromEventPattern<AccountEventArgs>(
+                eventHandler => AccountViewModel.OnAccountNotification += eventHandler,
+                eventHandler => AccountViewModel.OnAccountNotification -= eventHandler)
+                .Select(eventPattern => eventPattern.EventArgs);
+
+            accountObservable.Subscribe(args =>
+            {
+                if (args.HasException)
+                {
+                    NotificationsAdd(new Message { MessageType = MessageType.Error, Text = args.Message, TextVerbose = args.Exception.ToString() });
+                }
+                else
+                {
+                    NotificationsAdd(new Message { MessageType = MessageType.Info, Text = args.Message });
+                    //OrdersViewModel.UpdateOrders(args.Value);
+                }
+            });
         }
 
         private void NotificationsAdd(Message message)
