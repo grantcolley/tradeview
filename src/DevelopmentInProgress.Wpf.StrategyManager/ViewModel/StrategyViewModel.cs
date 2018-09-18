@@ -249,31 +249,19 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             }
         }
 
-        /// <summary>
-        /// This is triggered by a Command, hence the async void.
-        /// </summary>
-        /// <param name="param"></param>
-        private async void RunStrategy(object param)
+        private void RunStrategy(object param)
         {
-            await Run();
+            Run().FireAndForget();
         }
 
-        /// <summary>
-        /// This is triggered by a Command, hence the async void.
-        /// </summary>
-        /// <param name="param"></param>
-        private async void MonitorStrategy(object param)
+        private void MonitorStrategy(object param)
         {
-            await Monitor();
+            Monitor().FireAndForget();
         }
 
-        /// <summary>
-        /// This is triggered by a Command, hence the async void.
-        /// </summary>
-        /// <param name="param"></param>
-        private async void Disconnect(object param)
+        private void Disconnect(object param)
         {
-            await Disconnect();
+            Disconnect().FireAndForget();
         }
 
         private void StopStrategy(object param)
