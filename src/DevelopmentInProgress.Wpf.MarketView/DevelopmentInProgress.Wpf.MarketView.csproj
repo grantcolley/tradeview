@@ -74,7 +74,6 @@
     <Compile Include="Services\IAccountsService.cs" />
     <Compile Include="Services\AccountsService.cs" />
     <Compile Include="ViewModel\AccountViewModel.cs" />
-    <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\OrdersViewModel.cs" />
     <Compile Include="ViewModel\SymbolsViewModel.cs" />
     <Compile Include="ViewModel\SymbolViewModel.cs" />

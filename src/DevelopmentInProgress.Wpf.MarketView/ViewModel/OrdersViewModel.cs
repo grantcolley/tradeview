@@ -11,10 +11,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
+using DevelopmentInProgress.Wpf.Common.ViewModel;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
-    public class OrdersViewModel : BaseViewModel
+    public class OrdersViewModel : ExchangeViewModel
     {
         private CancellationTokenSource ordersCancellationTokenSource;
         private Account account;

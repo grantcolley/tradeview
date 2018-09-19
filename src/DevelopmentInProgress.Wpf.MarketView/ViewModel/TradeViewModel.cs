@@ -11,10 +11,11 @@ using System.Windows.Input;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 using InterfaceExtensions = DevelopmentInProgress.MarketView.Interface.Extensions;
 using System.Threading.Tasks;
+using DevelopmentInProgress.Wpf.Common.ViewModel;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
-    public class TradeViewModel : BaseViewModel
+    public class TradeViewModel : ExchangeViewModel
     {
         private List<Symbol> symbols;
         private Symbol selectedSymbol;

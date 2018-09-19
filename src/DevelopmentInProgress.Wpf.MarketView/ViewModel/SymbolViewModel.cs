@@ -14,11 +14,12 @@ using System.Threading.Tasks;
 using System.Windows.Threading;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 using System.Runtime.CompilerServices;
+using DevelopmentInProgress.Wpf.Common.ViewModel;
 
 [assembly: InternalsVisibleTo("DevelopmentInProgress.Wpf.MarketView.Test")]
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
-    public class SymbolViewModel : BaseViewModel
+    public class SymbolViewModel : ExchangeViewModel
     {
         internal int Limit => 20;
         internal int ChartDisplayLimit => 100;

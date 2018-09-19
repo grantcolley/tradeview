@@ -1,10 +1,10 @@
 ﻿using DevelopmentInProgress.Wpf.Common.Services;
 
-namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
+namespace DevelopmentInProgress.Wpf.Common.ViewModel
 {
-    public abstract class BaseViewModel : Common.ViewModel.BaseViewModel
+    public abstract class ExchangeViewModel : BaseViewModel
     {
-        public BaseViewModel(IWpfExchangeService exchangeService)
+        public ExchangeViewModel(IWpfExchangeService exchangeService)
         {
             ExchangeService = exchangeService;
         }

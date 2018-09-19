@@ -8,10 +8,11 @@ using System.Linq;
 using DevelopmentInProgress.Wpf.Common.Cache;
 using System.Threading.Tasks;
 using DevelopmentInProgress.Wpf.Common.Extensions;
+using DevelopmentInProgress.Wpf.Common.ViewModel;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
-    public class SymbolsViewModel : BaseViewModel
+    public class SymbolsViewModel : ExchangeViewModel
     {
         private ISymbolsCache symbolsCache;
         private List<Symbol> symbols;

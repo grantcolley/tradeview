@@ -66,6 +66,7 @@
     <Compile Include="Services\IWpfExchangeService.cs" />
     <Compile Include="Cache\SymbolsCache.cs" />
     <Compile Include="Services\WpfExchangeService.cs" />
+    <Compile Include="ViewModel\ExchangeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Images\ImageResources.xaml">

@@ -10,10 +10,11 @@ using System.Windows.Threading;
 using Interface = DevelopmentInProgress.MarketView.Interface;
 using System.Threading.Tasks;
 using DevelopmentInProgress.Wpf.Common.Extensions;
+using DevelopmentInProgress.Wpf.Common.ViewModel;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
-    public class AccountViewModel : BaseViewModel
+    public class AccountViewModel : ExchangeViewModel
     {
         private CancellationTokenSource accountCancellationTokenSource;
         private Account account;
