@@ -9,18 +9,16 @@ using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 {
-    public class AccountViewModel : BaseViewModel
+    public class AccountViewModel : ExchangeViewModel
     {
-        IWpfExchangeService exchangeService;
         private CancellationTokenSource accountCancellationTokenSource;
         private Account account;
         private bool isLoggingIn;
         private bool disposed;
         
         public AccountViewModel(IWpfExchangeService exchangeService)
+            : base(exchangeService)
         {
-            this.exchangeService = exchangeService;
-
             accountCancellationTokenSource = new CancellationTokenSource();
         }
 
@@ -85,9 +83,9 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
             try
             {
-                Account = await exchangeService.GetAccountInfoAsync(accountLogin.AccountInfo.User.ApiKey, accountLogin.AccountInfo.User.ApiSecret, accountCancellationTokenSource.Token);
+                Account = await ExchangeService.GetAccountInfoAsync(accountLogin.AccountInfo.User.ApiKey, accountLogin.AccountInfo.User.ApiSecret, accountCancellationTokenSource.Token);
 
-                exchangeService.SubscribeAccountInfo(Account.AccountInfo.User, e => AccountInfoUpdate(e.AccountInfo), SubscribeAccountInfoException, accountCancellationTokenSource.Token);
+                ExchangeService.SubscribeAccountInfo(Account.AccountInfo.User, e => AccountInfoUpdate(e.AccountInfo), SubscribeAccountInfoException, accountCancellationTokenSource.Token);
             }
             catch (Exception ex)
             {
