@@ -35,6 +35,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,9 +45,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Command\ViewModelCommand.cs" />
     <Compile Include="Converters\LastPriceChangeDirectionColourConverter.cs" />
     <Compile Include="Converters\PriceChangePercentConverter.cs" />
+    <Compile Include="Converters\ZeroToHiddenConverter.cs" />
     <Compile Include="Events\EventArgsBase.cs" />
+    <Compile Include="Events\OrdersEventArgs.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="Extensions\AccountBalanceExtensions.cs" />
@@ -67,9 +71,17 @@
     <Compile Include="Cache\SymbolsCache.cs" />
     <Compile Include="Services\WpfExchangeService.cs" />
     <Compile Include="ViewModel\ExchangeViewModel.cs" />
+    <Compile Include="ViewModel\OrdersViewModel.cs" />
+    <Compile Include="View\OrdersView.xaml.cs">
+      <DependentUpon>OrdersView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Images\ImageResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\OrdersView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -82,6 +94,10 @@
     <ProjectReference Include="..\DevelopmentInProgress.MarketView.Service\DevelopmentInProgress.MarketView.Service.csproj">
       <Project>{97279bbf-8dd0-407c-9655-b38b6dc409a2}</Project>
       <Name>DevelopmentInProgress.MarketView.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DevelopmentInProgress.Wpf.Controls\DevelopmentInProgress.Wpf.Controls.csproj">
+      <Project>{5acdc574-0f6f-48bc-ad2a-2f29bd7009fe}</Project>
+      <Name>DevelopmentInProgress.Wpf.Controls</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -7,6 +7,8 @@
                        xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Host.Converters;assembly=DevelopmentInProgress.Wpf.Host"
                        xmlns:localViewModel="clr-namespace:DevelopmentInProgress.Wpf.MarketView.ViewModel"
                        xmlns:localView="clr-namespace:DevelopmentInProgress.Wpf.MarketView.View"
+                       xmlns:commonViewModel="clr-namespace:DevelopmentInProgress.Wpf.Common.ViewModel;assembly=DevelopmentInProgress.Wpf.Common"
+                       xmlns:commonView="clr-namespace:DevelopmentInProgress.Wpf.Common.View;assembly=DevelopmentInProgress.Wpf.Common"
                        mc:Ignorable="d">
     <view:DocumentViewBase.Resources>
 
@@ -22,8 +24,8 @@
             <localView:TradeView></localView:TradeView>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type localViewModel:OrdersViewModel}">
-            <localView:OrdersView></localView:OrdersView>
+        <DataTemplate DataType="{x:Type commonViewModel:OrdersViewModel}">
+            <commonView:OrdersView></commonView:OrdersView>
         </DataTemplate>
 
         <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>

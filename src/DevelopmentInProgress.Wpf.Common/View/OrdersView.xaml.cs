@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace DevelopmentInProgress.Wpf.MarketView.View
+namespace DevelopmentInProgress.Wpf.Common.View
 {
     /// <summary>
     /// Interaction logic for OrdersView.xaml

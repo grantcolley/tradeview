@@ -1,5 +1,4 @@
-﻿using DevelopmentInProgress.Wpf.Host.ViewModel;
-using DevelopmentInProgress.Wpf.MarketView.Events;
+﻿using DevelopmentInProgress.Wpf.Common.Command;
 using DevelopmentInProgress.Wpf.Common.Extensions;
 using DevelopmentInProgress.Wpf.Common.Model;
 using DevelopmentInProgress.Wpf.Common.Services;
@@ -11,9 +10,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
-using DevelopmentInProgress.Wpf.Common.ViewModel;
+using DevelopmentInProgress.Wpf.Common.Events;
 
-namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
+namespace DevelopmentInProgress.Wpf.Common.ViewModel
 {
     public class OrdersViewModel : ExchangeViewModel
     {

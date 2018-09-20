@@ -33,7 +33,7 @@ namespace DevelopmentInProgress.Wpf.Controls.Progress
         #region Constructors
         static CircularProgress()
         {
-            ColourProperty = DependencyProperty.Register("Colour", typeof(SolidColorBrush), typeof(CircularProgress), new PropertyMetadata(new SolidColorBrush(Colors.Green)));
+            ColourProperty = DependencyProperty.Register("Colour", typeof(SolidColorBrush), typeof(CircularProgress));
         }
 
         public CircularProgress()

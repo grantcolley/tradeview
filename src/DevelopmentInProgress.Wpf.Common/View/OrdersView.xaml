@@ -1,13 +1,13 @@
-﻿<UserControl x:Class="DevelopmentInProgress.Wpf.MarketView.View.OrdersView"
+﻿<UserControl x:Class="DevelopmentInProgress.Wpf.Common.View.OrdersView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:model="clr-namespace:DevelopmentInProgress.Wpf.Common.Model;assembly=DevelopmentInProgress.Wpf.Common"
-             xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Host.Converters;assembly=DevelopmentInProgress.Wpf.Host"
-             xmlns:progress="clr-namespace:DevelopmentInProgress.Wpf.Host.Controls.Progress;assembly=DevelopmentInProgress.Wpf.Host"
+             xmlns:model="clr-namespace:DevelopmentInProgress.Wpf.Common.Model"
+             xmlns:localConverters="clr-namespace:DevelopmentInProgress.Wpf.Common.Converters"
+             xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Controls.Converters;assembly=DevelopmentInProgress.Wpf.Controls"
+             xmlns:progress="clr-namespace:DevelopmentInProgress.Wpf.Controls.Progress;assembly=DevelopmentInProgress.Wpf.Controls"
              xmlns:filterbox="clr-namespace:DevelopmentInProgress.Wpf.Controls.FilterBox;assembly=DevelopmentInProgress.Wpf.Controls"
-             xmlns:localConverters="clr-namespace:DevelopmentInProgress.Wpf.MarketView.Converters"
              mc:Ignorable="d" >
     <UserControl.Resources>
 
@@ -30,7 +30,7 @@
                         </Button>
                         <Viewbox Height="18" Width="18" 
                                  Visibility="{Binding IsCancellAllVisible, Converter={StaticResource invertBoolToVisibilityConverter}}">
-                            <progress:CircularProgress/>
+                            <progress:CircularProgress Colour="#69A1BF"/>
                         </Viewbox>
                     </StackPanel>
                     <filterbox:XamlFilterBox ItemsSource="{Binding Orders}" FilterFieldName="Symbol" VisibilityFieldName="IsVisible" SupportsDeepTraversal="False"  Margin="2"/>
@@ -101,7 +101,7 @@
                                         </Button>
                                         <Viewbox Height="18" Width="18"
                                                  Visibility="{Binding IsVisible, Converter={StaticResource invertBoolToVisibilityConverter}}">
-                                            <progress:CircularProgress/>
+                                            <progress:CircularProgress Colour="#69A1BF"/>
                                         </Viewbox>
                                     </StackPanel>
                                 </Grid>
@@ -117,7 +117,7 @@
                     <Viewbox Grid.Row="0" Grid.Column="0"
                              Height="50" Width="50" Margin="2" HorizontalAlignment="Center"
                              Visibility="{Binding IsLoading, Converter={StaticResource boolToVisibilityConverter}}">
-                        <progress:CircularProgress/>
+                        <progress:CircularProgress Colour="#69A1BF"/>
                     </Viewbox>
                 </Grid>
             </DockPanel>

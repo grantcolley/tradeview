@@ -1,7 +1,7 @@
 ﻿using DevelopmentInProgress.MarketView.Test.Helper;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 using DevelopmentInProgress.Wpf.Common.Services;
-using DevelopmentInProgress.Wpf.MarketView.ViewModel;
+using DevelopmentInProgress.Wpf.Common.ViewModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DevelopmentInProgress.Wpf.Common.Model;
 using System.Linq;

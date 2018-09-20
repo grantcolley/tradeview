@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace DevelopmentInProgress.Wpf.MarketView.Converters
+namespace DevelopmentInProgress.Wpf.Common.Converters
 {
     public class ZeroToHiddenConverter : IValueConverter
     {
