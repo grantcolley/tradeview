@@ -86,6 +86,8 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
                 Account = await ExchangeService.GetAccountInfoAsync(accountLogin.AccountInfo.User.ApiKey, accountLogin.AccountInfo.User.ApiSecret, accountCancellationTokenSource.Token);
 
                 ExchangeService.SubscribeAccountInfo(Account.AccountInfo.User, e => AccountInfoUpdate(e.AccountInfo), SubscribeAccountInfoException, accountCancellationTokenSource.Token);
+
+                AccountNotification(AccountEventType.SetAccount);
             }
             catch (Exception ex)
             {
@@ -106,10 +108,10 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             onAccountNotification?.Invoke(this, new AccountEventArgs { Message = message, Exception = exception });
         }
 
-        private void AccountNotification()
+        private void AccountNotification(AccountEventType accountEventType)
         {
             var onAccountNotification = OnAccountNotification;
-            onAccountNotification?.Invoke(this, new AccountEventArgs());
+            onAccountNotification?.Invoke(this, new AccountEventArgs { AccountEventType = accountEventType });
         }
 
         private void AccountInfoUpdate(MarketView.Interface.Model.AccountInfo e)
@@ -156,7 +158,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
                 Dispatcher.Invoke(action, e);
             }
 
-            AccountNotification();
+            AccountNotification(AccountEventType.UpdateOrders);
         }
     }
 }

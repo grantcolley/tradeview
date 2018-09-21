@@ -18,6 +18,8 @@ using System.Windows.Input;
 using DevelopmentInProgress.Wpf.Common.Extensions;
 using DevelopmentInProgress.Wpf.StrategyManager.Events;
 using System.Reactive.Linq;
+using DevelopmentInProgress.Wpf.Common.ViewModel;
+using DevelopmentInProgress.Wpf.Common.Events;
 
 namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 {
@@ -69,6 +71,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
             ObserveSymbols();
             ObserveAccount();
+            ObserveOrders();
         }
 
         public ICommand RunCommand { get; set; }
@@ -224,6 +227,10 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
         {
             Strategy = strategyService.GetStrategy(Title);
 
+            AccountViewModel.Dispatcher = ViewModelContext.UiDispatcher;
+            SymbolsViewModel.Dispatcher = ViewModelContext.UiDispatcher;
+            OrdersViewModel.Dispatcher = ViewModelContext.UiDispatcher;
+
             SymbolsViewModel.GetSymbols(Strategy).FireAndForget();
 
             var strategySubscription = Strategy.StrategySubscriptions.First();
@@ -276,7 +283,24 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
         protected async override void OnDisposing()
         {
+            base.OnDisposing();
+
             await Disconnect();
+
+            if (AccountViewModel != null)
+            {
+                AccountViewModel.Dispose();
+            }
+
+            if (SymbolsViewModel != null)
+            {
+                SymbolsViewModel.Dispose();
+            }
+
+            if (OrdersViewModel != null)
+            {
+                OrdersViewModel.Dispose();
+            }
         }
 
         private async Task Disconnect()
@@ -573,10 +597,33 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
                 {
                     NotificationsAdd(new Message { MessageType = MessageType.Error, Text = args.Message, TextVerbose = args.Exception.ToString() });
                 }
+                else if(args.AccountEventType.Equals(AccountEventType.SetAccount))
+                {
+                    OrdersViewModel.SetAccount(args.Value).FireAndForget();
+                }
+                else if (args.AccountEventType.Equals(AccountEventType.UpdateOrders))
+                {
+                    OrdersViewModel.UpdateOrders(args.Value).FireAndForget();
+                }
+            });
+        }
+
+        private void ObserveOrders()
+        {
+            var ordersObservable = Observable.FromEventPattern<OrdersEventArgs>(
+                eventHandler => OrdersViewModel.OnOrdersNotification += eventHandler,
+                eventHandler => OrdersViewModel.OnOrdersNotification -= eventHandler)
+                .Select(eventPattern => eventPattern.EventArgs);
+
+            ordersObservable.Subscribe(args =>
+            {
+                if (args.HasException)
+                {
+                    NotificationsAdd(new Message { MessageType = MessageType.Error, Text = args.Message, TextVerbose = args.Exception.ToString() });
+                }
                 else
                 {
                     NotificationsAdd(new Message { MessageType = MessageType.Info, Text = args.Message });
-                    //OrdersViewModel.UpdateOrders(args.Value);
                 }
             });
         }

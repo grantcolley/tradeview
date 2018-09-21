@@ -168,6 +168,7 @@
       <DependentUpon>FileDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Events\AccountEventArgs.cs" />
+    <Compile Include="Events\AccountEventType.cs" />
     <Compile Include="Events\StrategyEventArgs.cs" />
     <Compile Include="Extensions\StrategyExtensions.cs" />
     <Compile Include="Extensions\StrategyNotificationExtensions.cs" />
@@ -181,7 +182,6 @@
     <Compile Include="Services\StrategyService.cs" />
     <Compile Include="ViewModel\AccountViewModel.cs" />
     <Compile Include="ViewModel\ChartViewModel.cs" />
-    <Compile Include="ViewModel\OrdersViewModel.cs" />
     <Compile Include="ViewModel\StrategyManagerViewModel.cs" />
     <Compile Include="ViewModel\StrategyViewModel.cs" />
     <Compile Include="ViewModel\SymbolsViewModel.cs" />
@@ -191,9 +191,6 @@
     </Compile>
     <Compile Include="View\ChartView.xaml.cs">
       <DependentUpon>ChartView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\OrdersView.xaml.cs">
-      <DependentUpon>OrdersView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\StrategyManagerView.xaml.cs">
       <DependentUpon>StrategyManagerView.xaml</DependentUpon>
@@ -222,10 +219,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ChartView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\OrdersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

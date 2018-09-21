@@ -16,6 +16,7 @@ using DevelopmentInProgress.Wpf.Common.Model;
 using DevelopmentInProgress.Wpf.Common.Services;
 using DevelopmentInProgress.Wpf.Common.Events;
 using DevelopmentInProgress.Wpf.Common.ViewModel;
+using DevelopmentInProgress.Wpf.Common.Extensions;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
@@ -310,12 +311,12 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                         || args.AccountEventType.Equals(AccountEventType.LoggedOut))
                 {
                     TradeViewModel.SetAccount(args.Value);
-                    OrdersViewModel.SetAccount(args.Value);
+                    OrdersViewModel.SetAccount(args.Value).FireAndForget();
                 }
                 else if (args.AccountEventType.Equals(AccountEventType.UpdateOrders))
                 {
                     TradeViewModel.Touch();
-                    OrdersViewModel.UpdateOrders(args.Value);
+                    OrdersViewModel.UpdateOrders(args.Value).FireAndForget();
                 }
                 else if (args.AccountEventType.Equals(AccountEventType.SelectedAsset))
                 {

@@ -10,6 +10,8 @@
                        xmlns:messaging="clr-namespace:DevelopmentInProgress.Wpf.Controls.Messaging;assembly=DevelopmentInProgress.Wpf.Controls"
                        xmlns:localViewModel="clr-namespace:DevelopmentInProgress.Wpf.StrategyManager.ViewModel"
                        xmlns:localView="clr-namespace:DevelopmentInProgress.Wpf.StrategyManager.View"
+                       xmlns:commonViewModel="clr-namespace:DevelopmentInProgress.Wpf.Common.ViewModel;assembly=DevelopmentInProgress.Wpf.Common"
+                       xmlns:commonView="clr-namespace:DevelopmentInProgress.Wpf.Common.View;assembly=DevelopmentInProgress.Wpf.Common"
                        mc:Ignorable="d">
     <view:DocumentViewBase.Resources>
         <ResourceDictionary>
@@ -30,8 +32,8 @@
                 <localView:TradesView></localView:TradesView>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type localViewModel:OrdersViewModel}">
-                <localView:OrdersView></localView:OrdersView>
+            <DataTemplate DataType="{x:Type commonViewModel:OrdersViewModel}">
+                <commonView:OrdersView></commonView:OrdersView>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type localViewModel:ChartViewModel}">
