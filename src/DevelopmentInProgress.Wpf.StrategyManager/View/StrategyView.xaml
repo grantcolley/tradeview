@@ -99,9 +99,9 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="22*"/>
                 <ColumnDefinition Width="2"/>
-                <ColumnDefinition Width="22*"/>
+                <ColumnDefinition Width="18*"/>
                 <ColumnDefinition Width="2"/>
-                <ColumnDefinition Width="56*"/>
+                <ColumnDefinition Width="60*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
