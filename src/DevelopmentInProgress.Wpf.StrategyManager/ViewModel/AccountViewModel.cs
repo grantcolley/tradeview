@@ -111,7 +111,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
         private void AccountNotification(AccountEventType accountEventType)
         {
             var onAccountNotification = OnAccountNotification;
-            onAccountNotification?.Invoke(this, new AccountEventArgs { AccountEventType = accountEventType });
+            onAccountNotification?.Invoke(this, new AccountEventArgs { Value = Account, AccountEventType = accountEventType });
         }
 
         private void AccountInfoUpdate(MarketView.Interface.Model.AccountInfo e)
