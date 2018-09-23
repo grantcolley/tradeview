@@ -15,6 +15,7 @@ using System.Windows.Threading;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 using System.Runtime.CompilerServices;
 using DevelopmentInProgress.Wpf.Common.ViewModel;
+using DevelopmentInProgress.Wpf.Common.Chart;
 
 [assembly: InternalsVisibleTo("DevelopmentInProgress.Wpf.MarketView.Test")]
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
@@ -36,17 +37,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private bool isLoadingOrderBook;
         private bool disposed;
 
-        public SymbolViewModel(IWpfExchangeService exchangeService)
+        public SymbolViewModel(IWpfExchangeService exchangeService, IChartHelper chartHelper)
             : base(exchangeService)
         {
-            var mapper = Mappers.Xy<AggregateTrade>()
-                .X(model => model.Time.Ticks)
-                .Y(model => Convert.ToDouble(model.Price));
-
-            Charting.For<AggregateTrade>(mapper);
-
-            TimeFormatter = value => new DateTime((long)value).ToString("H:mm:ss");
-            PriceFormatter = value => value.ToString("0.00000000");
+            TimeFormatter = chartHelper.TimeFormatter;
+            PriceFormatter = chartHelper.PriceFormatter;
 
             OnPropertyChanged("");
         }

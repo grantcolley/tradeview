@@ -17,6 +17,7 @@ using DevelopmentInProgress.Wpf.Common.Services;
 using DevelopmentInProgress.Wpf.Common.Events;
 using DevelopmentInProgress.Wpf.Common.ViewModel;
 using DevelopmentInProgress.Wpf.Common.Extensions;
+using DevelopmentInProgress.Wpf.Common.Chart;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
@@ -24,6 +25,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
     {
         private IWpfExchangeService exchangeService;
         private IAccountsService accountsService;
+        private IChartHelper chartHelper;
         private SymbolViewModel selectedSymbol;
         private AccountViewModel accountViewModel;
         private TradeViewModel tradeViewModel;
@@ -40,7 +42,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         public TradingViewModel(ViewModelContext viewModelContext, 
             AccountViewModel accountViewModel, SymbolsViewModel symbolsViewModel,
             TradeViewModel tradeViewModel, OrdersViewModel ordersViewModel,
-            IWpfExchangeService exchangeService, IAccountsService accountsService)
+            IWpfExchangeService exchangeService, IAccountsService accountsService,
+            IChartHelper chartHelper)
             : base(viewModelContext)
         {
             AccountViewModel = accountViewModel;
@@ -52,6 +55,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             this.exchangeService = exchangeService;
             this.accountsService = accountsService;
+            this.chartHelper = chartHelper;
 
             ObserveSymbols();
             ObserveAccount();
@@ -278,7 +282,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     }
                     else
                     {
-                        symbol = new SymbolViewModel(exchangeService);
+                        symbol = new SymbolViewModel(exchangeService, chartHelper);
                         symbol.Dispatcher = ViewModelContext.UiDispatcher;
                         ObserveSymbol(symbol);
                         Symbols.Add(symbol);
