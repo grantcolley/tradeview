@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using DevelopmentInProgress.MarketView.Test.Helper;
+using DevelopmentInProgress.Wpf.Common.Chart;
 using DevelopmentInProgress.Wpf.Common.Extensions;
 using DevelopmentInProgress.Wpf.Common.Services;
 using DevelopmentInProgress.Wpf.MarketView.ViewModel;
@@ -12,6 +13,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
     [TestClass]
     public class SymbolViewModelTest
     {
+        IChartHelper chartHelper;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            chartHelper = new ChartHelper();
+        }
+
         [TestMethod]
         public async Task SetSymbol()
         {
@@ -19,7 +28,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var symbolViewModel = new SymbolViewModel(exchangeService);
+            var symbolViewModel = new SymbolViewModel(exchangeService, chartHelper);
 
             var trx = TestHelper.Trx.GetViewSymbol();
             
@@ -43,7 +52,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var symbolViewModel = new SymbolViewModel(exchangeService);
+            var symbolViewModel = new SymbolViewModel(exchangeService, chartHelper);
 
             var trx = TestHelper.Trx.GetViewSymbol();
 
@@ -61,7 +70,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var symbolViewModel = new SymbolViewModel(exchangeService);
+            var symbolViewModel = new SymbolViewModel(exchangeService, chartHelper);
 
             var trx = TestHelper.Trx.GetViewSymbol();
 
