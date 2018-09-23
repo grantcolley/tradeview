@@ -32,11 +32,6 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
         private bool isConnecting;
         private HubConnection hubConnection;
         private ObservableCollection<Message> notifications;
-        private ObservableCollection<Symbol> symbols;
-        private ChartValues<AggregateTrade> aggregateTradesChart;
-        private object orderBookLock = new object();
-        private object aggregateTradesLock = new object();
-        private int chartDisplayLimit = 500;
 
         private AccountViewModel accountViewModel;
         private TradesViewModel tradesViewModel;
@@ -61,7 +56,6 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             IsConnecting = false;
 
             Notifications = new ObservableCollection<Message>();
-            Symbols = new ObservableCollection<Symbol>();
 
             RunCommand = new ViewModelCommand(RunStrategy);
             MonitorCommand = new ViewModelCommand(MonitorStrategy);
@@ -154,32 +148,6 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
                 {
                     notifications = value;
                     OnPropertyChanged("Notifications");
-                }
-            }
-        }
-
-        public ObservableCollection<Symbol> Symbols
-        {
-            get { return symbols; }
-            set
-            {
-                if (symbols != value)
-                {
-                    symbols = value;
-                    OnPropertyChanged("Symbols");
-                }
-            }
-        }
-
-        public ChartValues<AggregateTrade> AggregateTradesChart
-        {
-            get { return aggregateTradesChart; }
-            set
-            {
-                if (aggregateTradesChart != value)
-                {
-                    aggregateTradesChart = value;
-                    OnPropertyChanged("AggregateTradesChart");
                 }
             }
         }
@@ -283,24 +251,14 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
         protected async override void OnDisposing()
         {
-            base.OnDisposing();
+            Dispose();
 
             await Disconnect();
 
-            if (AccountViewModel != null)
-            {
-                AccountViewModel.Dispose();
-            }
-
-            if (SymbolsViewModel != null)
-            {
-                SymbolsViewModel.Dispose();
-            }
-
-            if (OrdersViewModel != null)
-            {
-                OrdersViewModel.Dispose();
-            }
+            AccountViewModel.Dispose();
+            SymbolsViewModel.Dispose();
+            OrdersViewModel.Dispose();
+            ChartViewModel.Dispose();
         }
 
         private async Task Disconnect()
@@ -427,6 +385,8 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             {
                 await hubConnection.StartAsync();
 
+                ChartViewModel.IsActive = true;
+
                 if (!isForRun)
                 {
                     SetCommandVisibility(false, false, true);
@@ -468,7 +428,8 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
 
                 foreach (var notification in strategyNotifications)
                 {
-                    NotificationsAdd(notification.GetMessage());
+                    var trades = JsonConvert.DeserializeObject<IEnumerable<Interface.AggregateTrade>>(notification.Message);
+                    ChartViewModel.UpdateTrades(trades);
                 }
             }
             catch (Exception ex)
@@ -511,59 +472,6 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
             }
         }
 
-        private void UpdateAggregateTrades(IEnumerable<Interface.AggregateTrade> trades)
-        {
-            lock (aggregateTradesLock)
-            {
-                var trade = trades.First();
-                var symbol = Symbols.First(s => s.Name.Equals(trade.Symbol));
-
-                if (AggregateTradesChart == null)
-                {
-                    var orderedTrades = (from t in trades
-                                         orderby t.Id
-                                         select new AggregateTrade
-                                         {
-                                             Id = t.Id,
-                                             Time = t.Time,
-                                             Price = t.Price.Trim(symbol.PricePrecision),
-                                             Quantity = t.Quantity.Trim(symbol.QuantityPrecision),
-                                             IsBuyerMaker = t.IsBuyerMaker
-                                         });
-
-                    AggregateTradesChart = new ChartValues<AggregateTrade>(orderedTrades);
-                }
-                else
-                {
-                    var maxId = AggregateTradesChart.Max(at => at.Id);
-                    var orderedAggregateTrades = (from t in trades
-                                                  where t.Id > maxId
-                                                  orderby t.Id
-                                                  select new AggregateTrade
-                                                  {
-                                                      Id = t.Id,
-                                                      Time = t.Time,
-                                                      Price = t.Price.Trim(symbol.PricePrecision),
-                                                      Quantity = t.Quantity.Trim(symbol.QuantityPrecision),
-                                                      IsBuyerMaker = t.IsBuyerMaker
-                                                  }).ToList();
-
-                    var newCount = orderedAggregateTrades.Count();
-
-                    if (AggregateTradesChart.Count >= chartDisplayLimit)
-                    {
-                        var oldTrades = AggregateTradesChart.Take(newCount);
-                        foreach (var oldTrade in oldTrades)
-                        {
-                            AggregateTradesChart.Remove(oldTrade);
-                        }
-                    }
-
-                    AggregateTradesChart.AddRange(orderedAggregateTrades);
-                }
-            }
-        }
-
         private void ObserveSymbols()
         {
             var symbolsObservable = Observable.FromEventPattern<StrategyEventArgs>(
@@ -577,9 +485,13 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
                 {
                     NotificationsAdd(new Message { MessageType = MessageType.Error, Text = args.Message, TextVerbose = args.Exception.ToString() });
                 }
-                else
+                else if (string.IsNullOrWhiteSpace(args.Message) && args.Value.Any())
                 {
-                    NotificationsAdd(new Message { MessageType = MessageType.Info, Text = args.Message});
+                    ChartViewModel.Symbols = args.Value;
+                }
+                else if (!string.IsNullOrWhiteSpace(args.Message))
+                {
+                    NotificationsAdd(new Message { MessageType = MessageType.Info, Text = args.Message });
                 }
             });
         }
@@ -605,6 +517,10 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
                 {
                     OrdersViewModel.UpdateOrders(args.Value).FireAndForget();
                 }
+                else if (!string.IsNullOrWhiteSpace(args.Message))
+                {
+                    NotificationsAdd(new Message { MessageType = MessageType.Info, Text = args.Message });
+                }
             });
         }
 
@@ -621,7 +537,7 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
                 {
                     NotificationsAdd(new Message { MessageType = MessageType.Error, Text = args.Message, TextVerbose = args.Exception.ToString() });
                 }
-                else
+                else if (!string.IsNullOrWhiteSpace(args.Message))
                 {
                     NotificationsAdd(new Message { MessageType = MessageType.Info, Text = args.Message });
                 }

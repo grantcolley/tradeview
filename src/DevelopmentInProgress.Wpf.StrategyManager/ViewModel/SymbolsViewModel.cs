@@ -93,6 +93,8 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
                 var strategySymbols = Strategy.StrategySubscriptions.Select(s => s.Symbol);
 
                 Symbols = new List<Symbol>(results.Where(r => strategySymbols.Contains($"{r.BaseAsset.Symbol}{r.QuoteAsset.Symbol}")));
+
+                SymbolsNotification();
             }
             catch (Exception ex)
             {
@@ -111,6 +113,12 @@ namespace DevelopmentInProgress.Wpf.StrategyManager.ViewModel
         {
             var onSymbolsNotification = OnSymbolsNotification;
             onSymbolsNotification?.Invoke(this, new StrategyEventArgs { Message = message, Exception = exception });
+        }
+
+        private void SymbolsNotification()
+        {
+            var onSymbolsNotification = OnSymbolsNotification;
+            onSymbolsNotification?.Invoke(this, new StrategyEventArgs { Value = Symbols });
         }
     }
 }

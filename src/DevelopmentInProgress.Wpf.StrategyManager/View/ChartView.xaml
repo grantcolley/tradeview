@@ -3,10 +3,62 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:DevelopmentInProgress.Wpf.StrategyManager.View"
+             xmlns:lc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Host.Converters;assembly=DevelopmentInProgress.Wpf.Host"
+             xmlns:progress="clr-namespace:DevelopmentInProgress.Wpf.Host.Controls.Progress;assembly=DevelopmentInProgress.Wpf.Host"
              mc:Ignorable="d" >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
+            <converters:InvertBoolToVisibilityConverter x:Key="invertBoolToVisibilityConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <DockPanel LastChildFill="True">
         <GroupBox Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
+            <Grid Visibility="{Binding IsActive, Converter={StaticResource boolToVisibilityConverter}}">
+                <Viewbox Height="50" Width="50"
+                             Margin="1"
+                             Visibility="{Binding IsLoadingTrades, Converter={StaticResource boolToVisibilityConverter}}">
+                    <progress:CircularProgress/>
+                </Viewbox>
+                <DockPanel LastChildFill="True">
+                    <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}"
+                                           Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}">
+                        <lc:CartesianChart.Series>
+                            <lc:LineSeries Values="{Binding AggregateTradesChart}" 
+                                                        DataLabels="False"
+                                                        Stroke="Orange" 
+                                                        PointForeground="Orange"
+                                                        StrokeThickness="1" 
+                                                        PointGeometrySize="1"/>
+                        </lc:CartesianChart.Series>
+                        <lc:CartesianChart.AxisX>
+                            <lc:Axis LabelFormatter="{Binding TimeFormatter}">
+                                <lc:Axis.Separator>
+                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="False">
+                                        <!--Here, see the IsEnabled => false-->
+                                        <lc:Separator.Stroke>
+                                            <SolidColorBrush Color="#404F56" />
+                                        </lc:Separator.Stroke>
+                                    </lc:Separator>
+                                </lc:Axis.Separator>
+                            </lc:Axis>
+                        </lc:CartesianChart.AxisX>
+                        <lc:CartesianChart.AxisY>
+                            <lc:Axis LabelFormatter="{Binding PriceFormatter}">
+                                <lc:Axis.Separator>
+                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="False">
+                                        <!--Here, see the IsEnabled => false-->
+                                        <lc:Separator.Stroke>
+                                            <SolidColorBrush Color="#404F56" />
+                                        </lc:Separator.Stroke>
+                                    </lc:Separator>
+                                </lc:Axis.Separator>
+                            </lc:Axis>
+                        </lc:CartesianChart.AxisY>
+                    </lc:CartesianChart>
+                </DockPanel>
+            </Grid>
         </GroupBox>
     </DockPanel>
 </UserControl>
