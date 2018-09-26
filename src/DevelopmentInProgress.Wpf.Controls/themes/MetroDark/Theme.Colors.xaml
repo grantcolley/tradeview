@@ -1,5 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
 
+    <Color x:Key="Origin_001">#42414141</Color>
+    
   <!-- ********************************** THEME BRUSHES - For Color Tuner **********************************-->
   <SolidColorBrush x:Key="Brush01" Color="#FF00AADE" />
   <SolidColorBrush x:Key="Brush02" Color="White" />

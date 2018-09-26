@@ -141,8 +141,10 @@
   <SolidColorBrush x:Key="TooltipBackgroundBrush" Color="{StaticResource Color_009}" />
   <SolidColorBrush x:Key="TooltipBorderBrush" Color="{StaticResource Color_006}" />
 
-  <!-- ******************************************************** SL-WPF SHARED INLINE CONTROLS RESOURCES ***********************************************************
-          ***********************************************************************************************************************************************************************    -->
+  <SolidColorBrush x:Key="NavigationPanelBackgroundBrush" Color="{StaticResource Origin_001}"/>
+  <SolidColorBrush x:Key="ToolbarBackgroundBrush" Color="{StaticResource Origin_001}"/>
+    
+  <!-- ********************************* SL-WPF SHARED INLINE CONTROLS RESOURCES ********************** -->
 
   <!-- *********************************  ValidationToolTip Template  ********************************* -->
   <ControlTemplate x:Key="ValidationToolTipTemplate">
