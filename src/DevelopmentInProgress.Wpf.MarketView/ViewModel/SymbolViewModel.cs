@@ -4,7 +4,6 @@ using DevelopmentInProgress.Wpf.MarketView.Events;
 using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.Common.Services;
 using LiveCharts;
-using LiveCharts.Configurations;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
