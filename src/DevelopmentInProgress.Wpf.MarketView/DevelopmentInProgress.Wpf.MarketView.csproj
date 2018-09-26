@@ -97,10 +97,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DevelopmentInProgress.MarketView.Api.Binance\DevelopmentInProgress.MarketView.Api.Binance.csproj">
-      <Project>{733cca07-84f3-46f3-9d23-7fa195f0138f}</Project>
-      <Name>DevelopmentInProgress.MarketView.Api.Binance</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DevelopmentInProgress.MarketView.Interface\DevelopmentInProgress.MarketView.Interface.csproj">
       <Project>{86695062-90cc-419d-b455-d6d8c364a215}</Project>
       <Name>DevelopmentInProgress.MarketView.Interface</Name>
