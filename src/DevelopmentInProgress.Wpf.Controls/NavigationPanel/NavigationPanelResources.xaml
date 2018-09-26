@@ -14,7 +14,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type navigationPanel:NavigationListItem}">
-                    <StackPanel x:Name="stackListItem" Orientation="Horizontal" Margin="5,5,5,5">
+                    <StackPanel x:Name="stackListItem" Orientation="Horizontal" Margin="5,5,5,5" Background="Transparent">
                         <StackPanel.Style>
                             <Style TargetType="StackPanel">
                                 <Style.Triggers>
@@ -53,7 +53,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type navigationPanel:NavigationList}">
                     <Expander Header="{Binding Path=NavigationListName, RelativeSource={RelativeSource TemplatedParent}}"
-                              IsExpanded="True" Style="{StaticResource ExpanderStyle}">
+                              IsExpanded="True" Style="{StaticResource NavigationExpanderStyle}"
+                              Background="Transparent">
                         <ItemsControl ItemsSource="{Binding Path=NavigationListItems, RelativeSource={RelativeSource TemplatedParent}}"
                                       Margin="5,5,5,25"/>
                     </Expander>
@@ -72,7 +73,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type navigationPanel:NavigationPanelItem}">
-                    <StackPanel Orientation="Horizontal" x:Name="stackPanelItem">
+                    <StackPanel Orientation="Horizontal" x:Name="stackPanelItem" Background="Transparent">
                         <Image Source="{Binding ImageLocation, Converter={StaticResource imageConverter}}" ToolTip="{Binding NavigationPanelItemName}"
                                 Margin="2" MaxHeight="16" MaxWidth="16" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                         <TextBlock Name="txt" Text="{Binding NavigationPanelItemName}" FontSize="14" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center">
@@ -107,8 +108,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Border BorderThickness="2" Background="{StaticResource ListBoxBackgroundBrush}">
-                        <Grid Background="{StaticResource ListBoxBackgroundBrush}">
+                    <Border BorderThickness="2" Background="{StaticResource NavigationPanelBackgroundBrush}">
+                        <Grid Background="{StaticResource NavigationPanelBackgroundBrush}">
                             <Grid.Resources>
                                 <CollectionViewSource x:Key="NavigationPanelItemsView" Source="{Binding Path=NavigationPanelItems, RelativeSource={RelativeSource TemplatedParent}}"/>
                             </Grid.Resources>
@@ -121,7 +122,7 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <Border Grid.Row="0" Background="{StaticResource ListBoxBackgroundBrush}">
+                            <Border Grid.Row="0" Background="{StaticResource NavigationPanelBackgroundBrush}">
                                 <Image Source="..\Images\ArrowRight.png"
                                        ToolTip="Expand the navigation panel"
                                        HorizontalAlignment="Right"
@@ -147,7 +148,8 @@
                                      SelectedItem="{Binding SelectedNavigationPanelItem, RelativeSource={RelativeSource TemplatedParent}}"
                                      Tag="{Binding ., RelativeSource={RelativeSource TemplatedParent}}"
                                      SelectionChanged="NavigationPanelItemSelectionChanged"
-                                     Style="{StaticResource ListBoxStyle}">
+                                     Style="{StaticResource ListBoxStyle}"
+                                     Background="{StaticResource NavigationPanelBackgroundBrush}">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <Image Source="{Binding ImageLocation, Converter={StaticResource imageConverter}}" ToolTip="{Binding NavigationPanelItemName}"
@@ -165,8 +167,8 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type navigationPanel:NavigationPanel}">
-                            <Border BorderThickness="2" Background="{StaticResource ListBoxBackgroundBrush}">
-                                <Grid Background="{StaticResource ListBoxBackgroundBrush}">
+                            <Border BorderThickness="2" Background="{StaticResource NavigationPanelBackgroundBrush}">
+                                <Grid Background="{StaticResource NavigationPanelBackgroundBrush}">
                                     <Grid.Resources>
                                         <CollectionViewSource x:Key="NavigationPanelItemsView" Source="{Binding Path=NavigationPanelItems, RelativeSource={RelativeSource TemplatedParent}}"/>
                                     </Grid.Resources>
@@ -179,7 +181,7 @@
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
-                                    <Border Grid.Row="0" Background="{StaticResource ListBoxBackgroundBrush}">
+                                    <Border Grid.Row="0" Background="{StaticResource NavigationPanelBackgroundBrush}">
                                         <Image Source="..\Images\ArrowLeft.png"
                                                ToolTip="Collapse NavigationPanelItems List"
                                                HorizontalAlignment="Right" VerticalAlignment="Center"
@@ -202,7 +204,8 @@
                                              SelectedItem="{Binding SelectedNavigationPanelItem, RelativeSource={RelativeSource TemplatedParent}}"
                                              Foreground="{StaticResource ForegroundBrush}"
                                              Tag="{Binding ., RelativeSource={RelativeSource TemplatedParent}}"
-                                             Style="{StaticResource ListBoxSelectionChanged}">
+                                             Style="{StaticResource ListBoxSelectionChanged}"
+                                             Background="{StaticResource NavigationPanelBackgroundBrush}">
                                         <ListBox.ItemContainerStyle>
                                             <Style TargetType="{x:Type ListBoxItem}">
                                                 <Setter Property="Margin" Value="5,2,5,2"/>
