@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevelopmentInProgress.MarketView.Interface.TradeStrategy
+namespace DevelopmentInProgress.MarketView.Interface.Strategy
 {
     public class StrategyRunnerClient
     {

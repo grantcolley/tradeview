@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace DevelopmentInProgress.MarketView.Interface.TradeStrategy
+namespace DevelopmentInProgress.MarketView.Interface.Strategy
 {
     public class StrategyNotification : Strategy
     {

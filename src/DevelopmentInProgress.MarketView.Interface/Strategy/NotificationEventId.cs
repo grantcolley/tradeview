@@ -1,4 +1,4 @@
-﻿namespace DevelopmentInProgress.MarketView.Interface.TradeStrategy
+﻿namespace DevelopmentInProgress.MarketView.Interface.Strategy
 {
     public static class NotificationEventId
     {

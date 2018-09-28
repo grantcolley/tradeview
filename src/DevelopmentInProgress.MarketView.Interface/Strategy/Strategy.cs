@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DevelopmentInProgress.MarketView.Interface.TradeStrategy
+namespace DevelopmentInProgress.MarketView.Interface.Strategy
 {
     public class Strategy
     {

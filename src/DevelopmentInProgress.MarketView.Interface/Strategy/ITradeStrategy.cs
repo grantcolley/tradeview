@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace DevelopmentInProgress.MarketView.Interface.TradeStrategy
+namespace DevelopmentInProgress.MarketView.Interface.Strategy
 {
     public interface ITradeStrategy
     {
