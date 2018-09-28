@@ -12,4 +12,9 @@
                       ModuleType="DevelopmentInProgress.Wpf.StrategyManager.Module,DevelopmentInProgress.Wpf.StrategyManager"
                       InitializationMode="WhenAvailable"/>
 
+    <prism:ModuleInfo Ref="Strategy Development"
+                      ModuleName="DevelopmentInProgress.Wpf.StrategyDevelopment"
+                      ModuleType="DevelopmentInProgress.Wpf.StrategyDevelopment.Module,DevelopmentInProgress.Wpf.StrategyDevelopment"
+                      InitializationMode="WhenAvailable"/>
+    
 </prism:ModuleCatalog>
