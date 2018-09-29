@@ -178,7 +178,6 @@
   <ItemGroup>
     <Resource Include="Images\account.png" />
     <Resource Include="Images\accounts.png" />
-    <Resource Include="Images\close.png" />
     <Resource Include="Images\marketview.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
