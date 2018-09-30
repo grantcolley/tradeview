@@ -43,8 +43,7 @@
                     <filterbox:XamlFilterBox DockPanel.Dock="Top" ItemsSource="{Binding Accounts}" FilterFieldName="Name" VisibilityFieldName="IsVisible" SupportsDeepTraversal="False"  Margin="2"/>
                     <GroupBox Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}" BorderThickness="0.2">
                         <ListView x:Name="SymbolsList" ItemsSource="{Binding Accounts}" 
-                                  SelectionMode="Single"
-                                  Background="Transparent" BorderThickness="0"
+                                  SelectionMode="Single" BorderThickness="0" Background="Transparent"
                                   SelectedItem="{Binding SelectedUserAccount}">
                             <ListView.Template>
                                 <ControlTemplate>
@@ -55,7 +54,7 @@
                             </ListView.Template>
                             <ListView.ItemTemplate>
                                 <DataTemplate DataType="{x:Type model:UserAccount}">
-                                    <Border BorderThickness="1" BorderBrush="#FF454545" Margin="2" Background="{StaticResource ItemBackgroundBrush}">
+                                    <Border BorderThickness="1" BorderBrush="#FF454545" Margin="2">
                                         <DockPanel LastChildFill="True">
                                             <Button DockPanel.Dock="Right"                                                 
                                                 Margin="2"

@@ -96,15 +96,20 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
         protected override void SaveDocument()
         {
-            if(SelectedUserAccount != null)
+            foreach(var userAccountViewModel in SelectedUserAccountViewModels)
             {
                 try
                 {
-                    var userAccount = JsonConvert.DeserializeObject<UserAccount>(SelectedUserAccountViewModel.UserAccountJson);
+                    var userAccount = JsonConvert.DeserializeObject<UserAccount>(userAccountViewModel.UserAccountJson);
                     accountsService.SaveAccount(userAccount);
-                    Accounts.Remove(SelectedUserAccount);
-                    Accounts.Add(userAccount);
-                    SelectedUserAccount = userAccount;
+
+                    var account = Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName));
+                    if (account != null)
+                    {
+                        var index = Accounts.IndexOf(account);
+                        Accounts.RemoveAt(index);
+                        Accounts.Insert(index, userAccount);
+                    }
                 }
                 catch(Exception ex)
                 {
@@ -143,8 +148,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 return;
             }
 
+            var userAccountViewModel = SelectedUserAccountViewModels.FirstOrDefault(a => a.UserAccount.AccountName.Equals(userAccount.AccountName));
+            if(userAccountViewModel != null)
+            {
+                Close(userAccountViewModel);
+            }
+
             accountsService.DeleteAccount(userAccount);
-            Accounts.Remove(userAccount);
+            Accounts.Remove(userAccount);            
             Module.RemoveAccount(userAccount.AccountName);
         }
     }
