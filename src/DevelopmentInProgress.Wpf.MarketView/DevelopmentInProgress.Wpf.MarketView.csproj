@@ -76,6 +76,7 @@
     <Compile Include="ViewModel\SymbolViewModel.cs" />
     <Compile Include="ViewModel\TradeViewModel.cs" />
     <Compile Include="ViewModel\TradingViewModel.cs" />
+    <Compile Include="ViewModel\UserAccountViewModel.cs" />
     <Compile Include="View\AccountView.xaml.cs">
       <DependentUpon>AccountView.xaml</DependentUpon>
     </Compile>
@@ -94,6 +95,9 @@
     <Compile Include="ViewModel\UserAccountsViewModel.cs" />
     <Compile Include="View\UserAccountsView.xaml.cs">
       <DependentUpon>UserAccountsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserAccountView.xaml.cs">
+      <DependentUpon>UserAccountView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +152,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserAccountsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserAccountView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

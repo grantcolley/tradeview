@@ -15,7 +15,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
     {
         private IAccountsService accountsService;
         private UserAccount selectedUserAccount;
-        private string selectedUserAccountJson;
+        private UserAccountViewModel selectedUserAccountViewModel;
 
         public UserAccountsViewModel(ViewModelContext viewModelContext, IAccountsService accountsService)
             : base(viewModelContext)
@@ -24,12 +24,18 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             AddAccountCommand = new ViewModelCommand(AddAccount);
             DeleteAccountCommand = new ViewModelCommand(DeleteAccount);
+            CloseCommand = new ViewModelCommand(Close);
+
+            SelectedUserAccountViewModels = new ObservableCollection<UserAccountViewModel>();
         }
 
         public ICommand AddAccountCommand { get; set; }
         public ICommand DeleteAccountCommand { get; set; }
+        public ICommand CloseCommand { get; set; }
 
         public ObservableCollection<UserAccount> Accounts { get; set; }
+
+        public ObservableCollection<UserAccountViewModel> SelectedUserAccountViewModels { get; set; }
 
         public UserAccount SelectedUserAccount
         {
@@ -39,13 +45,17 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 if (selectedUserAccount != value)
                 {
                     selectedUserAccount = value;
-                    if (selectedUserAccount == null)
+
+                    if (selectedUserAccount != null)
                     {
-                        SelectedUserAccountJson = string.Empty;
-                    }
-                    else
-                    {
-                        SelectedUserAccountJson = JsonConvert.SerializeObject(selectedUserAccount, Formatting.Indented);
+                        SelectedUserAccountViewModel = SelectedUserAccountViewModels.FirstOrDefault(s => s.UserAccount.AccountName.Equals(selectedUserAccount.AccountName));
+
+                        if (SelectedUserAccountViewModel == null)
+                        {
+                            var userAccountViewModel = new UserAccountViewModel(selectedUserAccount);
+                            SelectedUserAccountViewModels.Add(userAccountViewModel);
+                            SelectedUserAccountViewModel = userAccountViewModel;
+                        }
                     }
 
                     OnPropertyChanged("SelectedUserAccount");
@@ -53,18 +63,27 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        public string SelectedUserAccountJson
+        public UserAccountViewModel SelectedUserAccountViewModel
         {
-            get { return selectedUserAccountJson; }
+            get { return selectedUserAccountViewModel; }
             set
             {
-                if (selectedUserAccountJson != value)
+                if (selectedUserAccountViewModel != value)
                 {
-                    selectedUserAccountJson = value;
-                    OnPropertyChanged("SelectedUserAccountJson");
+                    selectedUserAccountViewModel = value;
+                    OnPropertyChanged("SelectedUserAccountViewModel");
                 }
             }
+        }
 
+        public void Close(object param)
+        {
+            var userAccount = param as UserAccountViewModel;
+            if (userAccount != null)
+            {
+                userAccount.Dispose();
+                SelectedUserAccountViewModels.Remove(userAccount);
+            }
         }
 
         protected override void OnPublished(object data)
@@ -81,7 +100,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             {
                 try
                 {
-                    var userAccount = JsonConvert.DeserializeObject<UserAccount>(selectedUserAccountJson);
+                    var userAccount = JsonConvert.DeserializeObject<UserAccount>(SelectedUserAccountViewModel.UserAccountJson);
                     accountsService.SaveAccount(userAccount);
                     Accounts.Remove(SelectedUserAccount);
                     Accounts.Add(userAccount);

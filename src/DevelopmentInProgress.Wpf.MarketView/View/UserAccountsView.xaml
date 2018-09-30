@@ -7,6 +7,8 @@
              xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Host.Converters;assembly=DevelopmentInProgress.Wpf.Host"
              xmlns:filterbox="clr-namespace:DevelopmentInProgress.Wpf.Controls.FilterBox;assembly=DevelopmentInProgress.Wpf.Controls"
              xmlns:model="clr-namespace:DevelopmentInProgress.Wpf.MarketView.Model"
+             xmlns:localView="clr-namespace:DevelopmentInProgress.Wpf.MarketView.View"
+             xmlns:localViewModel="clr-namespace:DevelopmentInProgress.Wpf.MarketView.ViewModel"
              mc:Ignorable="d">
     <view:DocumentViewBase.Resources>
         <ResourceDictionary>
@@ -80,11 +82,26 @@
             </GroupBox>
         </DockPanel>
         <DockPanel Grid.Column="1" LastChildFill="True">
-            <GroupBox Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                    <TextBox Text="{Binding SelectedUserAccountJson}" TextWrapping="Wrap" AcceptsReturn="True" BorderThickness="0" BorderBrush="Transparent"/>
-                </ScrollViewer>
-            </GroupBox>
+            <TabControl ItemsSource="{Binding SelectedUserAccountViewModels}"
+                        SelectedItem="{Binding SelectedUserAccountViewModel, Mode=TwoWay}">
+                <TabControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Name="strategy" Orientation="Horizontal" Background="Transparent">
+                            <Label Name="baseSymbol" Content="{Binding UserAccount.AccountName}" FontSize="14" VerticalAlignment="Center"/>
+                            <Button Style="{StaticResource CloseButtonStyle}"                                        
+                                        Command="{Binding Path=DataContext.CloseCommand, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}}"
+                                        CommandParameter="{Binding .}" VerticalContentAlignment="Center">
+                                <Image Source="/DevelopmentInProgress.Wpf.Common;Component/Images/close.png" VerticalAlignment="Center"/>
+                            </Button>
+                        </StackPanel>
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
+                <TabControl.ContentTemplate>
+                    <DataTemplate DataType="{x:Type localViewModel:UserAccountViewModel}">
+                        <localView:UserAccountView></localView:UserAccountView>
+                    </DataTemplate>
+                </TabControl.ContentTemplate>
+            </TabControl>
         </DockPanel>
     </Grid>
 </view:DocumentViewBase>
