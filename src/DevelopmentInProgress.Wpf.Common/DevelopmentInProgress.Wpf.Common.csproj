@@ -59,7 +59,13 @@
     <Compile Include="Converters\ZeroToHiddenConverter.cs" />
     <Compile Include="Events\EventArgsBase.cs" />
     <Compile Include="Events\OrdersEventArgs.cs" />
+    <Compile Include="Extensions\StrategyExtensions.cs" />
+    <Compile Include="Extensions\StrategyNotificationExtensions.cs" />
+    <Compile Include="Extensions\StrategySubscriptionExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
+    <Compile Include="Model\Strategy.cs" />
+    <Compile Include="Model\StrategyFile.cs" />
+    <Compile Include="Model\StrategySubscription.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="Extensions\AccountBalanceExtensions.cs" />
     <Compile Include="Extensions\DecimalExtensions.cs" />
