@@ -37,6 +37,9 @@
     <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
       <HintPath>..\..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -66,6 +69,8 @@
     <Compile Include="Model\Strategy.cs" />
     <Compile Include="Model\StrategyFile.cs" />
     <Compile Include="Model\StrategySubscription.cs" />
+    <Compile Include="Services\IStrategyService.cs" />
+    <Compile Include="Services\StrategyService.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="Extensions\AccountBalanceExtensions.cs" />
     <Compile Include="Extensions\DecimalExtensions.cs" />
