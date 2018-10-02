@@ -1,13 +1,14 @@
 ﻿using DevelopmentInProgress.Wpf.Common.Model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.Wpf.Common.Services
 {
     public interface IStrategyService
     {
-        List<Strategy> GetStrategies();
-        Strategy GetStrategy(string strategyName);
-        void SaveStrategy(Strategy strategy);
-        void DeleteStrategy(Strategy strategy);
+        Task<List<Strategy>> GetStrategies();
+        Task<Strategy> GetStrategy(string strategyName);
+        Task SaveStrategy(Strategy strategy);
+        Task DeleteStrategy(Strategy strategy);
     }
 }

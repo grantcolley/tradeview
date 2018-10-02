@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.Wpf.Common.Services
 {
@@ -16,33 +18,39 @@ namespace DevelopmentInProgress.Wpf.Common.Services
             userStrategiesFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{Environment.UserName}_Strategies.txt");
         }
 
-        public List<Strategy> GetStrategies()
+        public async Task<List<Strategy>> GetStrategies()
         {
             if (File.Exists(userStrategiesFile))
             {
-                var json = File.ReadAllText(userStrategiesFile);
-                var strategies = JsonConvert.DeserializeObject<List<Strategy>>(json);
-                return strategies;
+                using (var reader = File.OpenText(userStrategiesFile))
+                {
+                    var json = await reader.ReadToEndAsync();
+                    var strategies = JsonConvert.DeserializeObject<List<Strategy>>(json);
+                    return strategies;
+                }
             }
 
             return new List<Strategy>();
         }
 
-        public Strategy GetStrategy(string strategyName)
+        public async Task<Strategy> GetStrategy(string strategyName)
         {
             Strategy strategy = null;
 
             if (File.Exists(userStrategiesFile))
             {
-                var json = File.ReadAllText(userStrategiesFile);
-                var strategies = JsonConvert.DeserializeObject<List<Strategy>>(json);
-                strategy = strategies.FirstOrDefault(s => s.Name.Equals(strategyName));
+                using (var reader = File.OpenText(userStrategiesFile))
+                {
+                    var json = await reader.ReadToEndAsync();
+                    var strategies = JsonConvert.DeserializeObject<List<Strategy>>(json);
+                    strategy = strategies.FirstOrDefault(s => s.Name.Equals(strategyName));
+                }
             }
 
             return strategy;
         }
 
-        public void SaveStrategy(Strategy strategy)
+        public async Task SaveStrategy(Strategy strategy)
         {
             if (strategy == null)
             {
@@ -53,8 +61,11 @@ namespace DevelopmentInProgress.Wpf.Common.Services
 
             if (File.Exists(userStrategiesFile))
             {
-                var rjson = File.ReadAllText(userStrategiesFile);
-                strategies = JsonConvert.DeserializeObject<List<Strategy>>(rjson);
+                using (var reader = File.OpenText(userStrategiesFile))
+                {
+                    var rjson = await reader.ReadToEndAsync();
+                    strategies = JsonConvert.DeserializeObject<List<Strategy>>(rjson);
+                }
             }
             else
             {
@@ -70,22 +81,39 @@ namespace DevelopmentInProgress.Wpf.Common.Services
             strategies.Add(strategy);
 
             var wjson = JsonConvert.SerializeObject(strategies);
-            File.WriteAllText(userStrategiesFile, wjson);
+            
+            UnicodeEncoding encoding = new UnicodeEncoding();
+            char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
+            using (StreamWriter writer = File.CreateText(userStrategiesFile))
+            {
+                await writer.WriteAsync(chars, 0, chars.Length);
+            }
         }
 
-        public void DeleteStrategy(Strategy strategy)
+        public async Task DeleteStrategy(Strategy strategy)
         {
             if (File.Exists(userStrategiesFile))
             {
-                var rjson = File.ReadAllText(userStrategiesFile);
-                var strategies = JsonConvert.DeserializeObject<List<Strategy>>(rjson);
+                List<Strategy> strategies = null;
+
+                using (var reader = File.OpenText(userStrategiesFile))
+                {
+                    var rjson = await reader.ReadToEndAsync();
+                    strategies = JsonConvert.DeserializeObject<List<Strategy>>(rjson);
+                }
 
                 var remove = strategies.FirstOrDefault(s => s.Name.Equals(strategy.Name));
                 if (remove != null)
                 {
                     strategies.Remove(remove);
                     var wjson = JsonConvert.SerializeObject(strategies);
-                    File.WriteAllText(userStrategiesFile, wjson);
+
+                    UnicodeEncoding encoding = new UnicodeEncoding();
+                    char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
+                    using (StreamWriter writer = File.CreateText(userStrategiesFile))
+                    {
+                        await writer.WriteAsync(chars, 0, chars.Length);
+                    }
                 }
             }
         }
