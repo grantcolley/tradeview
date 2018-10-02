@@ -22,7 +22,7 @@ namespace DevelopmentInProgress.Wpf.MarketView
             StaticContainer = Container;
         }
 
-        public override void Initialize()
+        public async override void Initialize()
         {
             Container.RegisterType<object, UserAccountsView>(typeof(UserAccountsView).Name);
             Container.RegisterType<UserAccountsViewModel>(typeof(UserAccountsViewModel).Name);
@@ -45,7 +45,7 @@ namespace DevelopmentInProgress.Wpf.MarketView
 
             var accountsService = Container.Resolve<IAccountsService>();
 
-            var userAccounts = accountsService.GetAccounts();
+            var userAccounts = await accountsService.GetAccounts();
 
             foreach (var userAccount in userAccounts.Accounts)
             {

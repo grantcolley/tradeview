@@ -86,22 +86,22 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        protected override void OnPublished(object data)
+        protected async override void OnPublished(object data)
         {
             base.OnPublished(data);
 
-            var accounts = accountsService.GetAccounts();
+            var accounts = await accountsService.GetAccounts();
             Accounts = new ObservableCollection<UserAccount>(accounts.Accounts);
         }
 
-        protected override void SaveDocument()
+        protected async override void SaveDocument()
         {
             foreach(var userAccountViewModel in SelectedUserAccountViewModels)
             {
                 try
                 {
                     var userAccount = JsonConvert.DeserializeObject<UserAccount>(userAccountViewModel.UserAccountJson);
-                    accountsService.SaveAccount(userAccount);
+                    await accountsService.SaveAccount(userAccount);
 
                     var account = Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName));
                     if (account != null)
@@ -118,7 +118,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        private void AddAccount(object param)
+        private async void AddAccount(object param)
         {
             if (param == null 
                 || string.IsNullOrEmpty(param.ToString()))
@@ -135,12 +135,12 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
 
             var userAccount = new UserAccount { AccountName = accountName };
-            accountsService.SaveAccount(userAccount);
+            await accountsService.SaveAccount(userAccount);
             Accounts.Add(userAccount);
             Module.AddAccount(userAccount.AccountName);
         }
 
-        private void DeleteAccount(object param)
+        private async void DeleteAccount(object param)
         {
             var userAccount = param as UserAccount;
             if(userAccount == null)
@@ -154,7 +154,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 Close(userAccountViewModel);
             }
 
-            accountsService.DeleteAccount(userAccount);
+            await accountsService.DeleteAccount(userAccount);
             Accounts.Remove(userAccount);            
             Module.RemoveAccount(userAccount.AccountName);
         }

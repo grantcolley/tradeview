@@ -156,7 +156,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        protected override void OnPublished(object data)
+        protected async override void OnPublished(object data)
         {
             if(isOpen)
             {
@@ -178,7 +178,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             Account = new Account(new Interface.AccountInfo { User = new Interface.User() });
 
-            userAccount = accountsService.GetAccount(Title);
+            userAccount = await accountsService.GetAccount(Title);
 
             if (userAccount != null
                 && userAccount.Preferences != null)
@@ -198,7 +198,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             IsBusy = false;
         }
 
-        protected override void SaveDocument()
+        protected async override void SaveDocument()
         {
             base.SaveDocument();
 
@@ -217,7 +217,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 userAccount.Preferences.SelectedSymbol = SelectedSymbol.Symbol.Name;
             }
 
-            accountsService.SaveAccount(userAccount);
+            await accountsService.SaveAccount(userAccount);
         }
         
         public void Close(object param)

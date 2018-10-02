@@ -1,127 +1,114 @@
 ﻿using DevelopmentInProgress.Wpf.MarketView.Model;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Services
 {
     public class AccountsService : IAccountsService
     {
         private string userAccountsFile;
-        private object accountsLock = new object();
         
         public AccountsService()
         {
             userAccountsFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{Environment.UserName}.txt");
         }
 
-        public UserAccounts GetAccounts()
+        public async Task<UserAccounts> GetAccounts()
         {
             if (File.Exists(userAccountsFile))
             {
-                lock (accountsLock)
+                using (var reader = File.OpenText(userAccountsFile))
                 {
-                    var json = File.ReadAllText(userAccountsFile);
-                    return DeserializeJson<UserAccounts>(json);
+                    var json = await reader.ReadToEndAsync();
+                    return JsonConvert.DeserializeObject<UserAccounts>(json);
                 }
             }
 
             return new UserAccounts();
         }
 
-        public UserAccount GetAccount(string accountName)
+        public async Task<UserAccount> GetAccount(string accountName)
         {
             if (File.Exists(userAccountsFile))
             {
-                lock (accountsLock)
+                string json;
+                using (var reader = File.OpenText(userAccountsFile))
                 {
-                    var json = File.ReadAllText(userAccountsFile);
-                    var userAccounts = DeserializeJson<UserAccounts>(json);
-                    var userAccount = userAccounts.Accounts.Single(a => a.AccountName.Equals(accountName));
-                    return userAccount;
+                    json = await reader.ReadToEndAsync();
                 }
+
+                var userAccounts = JsonConvert.DeserializeObject<UserAccounts>(json);
+                var userAccount = userAccounts.Accounts.Single(a => a.AccountName.Equals(accountName));
+                return userAccount;
             }
 
             throw new Exception($"Account {accountName} not available.");
         }
 
-        public void SaveAccount(UserAccount userAccount)
+        public async Task SaveAccount(UserAccount userAccount)
         {
-            lock (accountsLock)
+            UserAccounts userAccounts;
+
+            if (File.Exists(userAccountsFile))
+            {
+                using (var reader = File.OpenText(userAccountsFile))
+                {
+                    var rjson = await reader.ReadToEndAsync();
+                    userAccounts = JsonConvert.DeserializeObject<UserAccounts>(rjson);
+                }
+            }
+            else
+            {
+                userAccounts = new UserAccounts();
+            }
+
+            var dupe = userAccounts.Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName));
+            if (dupe != null)
+            {
+                userAccounts.Accounts.Remove(dupe);
+            }
+
+            userAccounts.Accounts.Add(userAccount);
+
+            var wjson = JsonConvert.SerializeObject(userAccounts);
+
+            UnicodeEncoding encoding = new UnicodeEncoding();
+            char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
+            using (StreamWriter writer = File.CreateText(userAccountsFile))
+            {
+                await writer.WriteAsync(chars, 0, chars.Length);
+            }
+        }
+
+        public async Task DeleteAccount(UserAccount userAccount)
+        {
+            if (File.Exists(userAccountsFile))
             {
                 UserAccounts userAccounts;
 
-                if (File.Exists(userAccountsFile))
+                using (var reader = File.OpenText(userAccountsFile))
                 {
-                    var rjson = File.ReadAllText(userAccountsFile);
-                    userAccounts = DeserializeJson<UserAccounts>(rjson);
-                }
-                else
-                {
-                    userAccounts = new UserAccounts();
+                    var rjson = await reader.ReadToEndAsync();
+                    userAccounts = JsonConvert.DeserializeObject<UserAccounts>(rjson);
                 }
 
-                var dupe = userAccounts.Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName));
-                if(dupe != null)
+                var remove = userAccounts.Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName));
+                if (remove != null)
                 {
-                    userAccounts.Accounts.Remove(dupe);
-                }
+                    userAccounts.Accounts.Remove(remove);
+                    var wjson = JsonConvert.SerializeObject(userAccounts);
 
-                userAccounts.Accounts.Add(userAccount);
-
-                var wjson = SerializeToJson(userAccounts);
-                File.WriteAllText(userAccountsFile, wjson);
-            }
-        }
-
-        public void DeleteAccount(UserAccount userAccount)
-        {
-            lock(accountsLock)
-            {
-                if(File.Exists(userAccountsFile))
-                {
-                    var rjson = File.ReadAllText(userAccountsFile);
-                    var userAccounts = DeserializeJson<UserAccounts>(rjson);
-
-                    var remove = userAccounts.Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName));
-                    if(remove != null)
+                    UnicodeEncoding encoding = new UnicodeEncoding();
+                    char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
+                    using (StreamWriter writer = File.CreateText(userAccountsFile))
                     {
-                        userAccounts.Accounts.Remove(remove);
-                        var wjson = SerializeToJson(userAccounts);
-                        File.WriteAllText(userAccountsFile, wjson);
+                        await writer.WriteAsync(chars, 0, chars.Length);
                     }
                 }
-            }
-        }
-
-        private T DeserializeJson<T>(string json)
-        {
-            if (string.IsNullOrEmpty(json))
-            {
-                return default(T);
-            }
-
-            var jsonSerializer = new DataContractJsonSerializer(typeof(T));
-            using (var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(json)))
-            {
-                return (T)jsonSerializer.ReadObject(memoryStream);
-            }
-        }
-
-        private string SerializeToJson<T>(T obj)
-        {
-            if (obj == null)
-            {
-                return null;
-            }
-
-            var jsonSerializer = new DataContractJsonSerializer(obj.GetType());
-            using (var memoryStream = new MemoryStream())
-            {
-                jsonSerializer.WriteObject(memoryStream, obj);
-                return Encoding.UTF8.GetString(memoryStream.ToArray());
             }
         }
     }
