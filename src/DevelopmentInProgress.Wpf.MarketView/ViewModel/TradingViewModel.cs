@@ -18,6 +18,7 @@ using DevelopmentInProgress.Wpf.Common.Events;
 using DevelopmentInProgress.Wpf.Common.ViewModel;
 using DevelopmentInProgress.Wpf.Common.Extensions;
 using DevelopmentInProgress.Wpf.Common.Chart;
+using System.Reactive;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
@@ -34,10 +35,15 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private UserAccount userAccount;
         private Account account;
         private bool isOpen;
-
-        public ICommand CloseCommand { get; set; }
+        private bool disposed;
 
         private ObservableCollection<SymbolViewModel> symbols;
+
+        private IDisposable symbolsObservableSubscription;
+        private IDisposable accountObservableSubscription;
+        private IDisposable tradeObservableSubscription;
+        private IDisposable ordersObservableSubscription;
+        private Dictionary<string, IDisposable> symbolObservableSubscriptions;
 
         public TradingViewModel(ViewModelContext viewModelContext, 
             AccountViewModel accountViewModel, SymbolsViewModel symbolsViewModel,
@@ -52,6 +58,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             OrdersViewModel = ordersViewModel;
 
             Symbols = new ObservableCollection<SymbolViewModel>();
+            symbolObservableSubscriptions = new Dictionary<string, IDisposable>();
 
             this.exchangeService = exchangeService;
             this.accountsService = accountsService;
@@ -64,6 +71,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             CloseCommand = new ViewModelCommand(Close);
         }
+
+        public ICommand CloseCommand { get; set; }
 
         public AccountViewModel AccountViewModel
         {
@@ -239,39 +248,62 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             var symbol = param as SymbolViewModel;
             if(symbol != null)
             {
-                symbol.Dispose();
                 Symbols.Remove(symbol);
+
+                IDisposable subscription;
+                if(symbolObservableSubscriptions.TryGetValue(symbol.Symbol.Name, out subscription))
+                {
+                    subscription.Dispose();
+                }
+
+                symbolObservableSubscriptions.Remove(symbol.Symbol.Name);
+
+                symbol.Dispose();
             }
         }
 
         protected override void OnDisposing()
         {
-            base.OnDisposing();
-
-            if(AccountViewModel != null)
+            if (disposed)
             {
+                return;
+            }
+
+            if (AccountViewModel != null)
+            {
+                accountObservableSubscription.Dispose();
                 AccountViewModel.Dispose();
+            }
+
+            foreach(var subscription in symbolObservableSubscriptions.Values)
+            {
+                subscription.Dispose();
             }
 
             foreach(var symbol in Symbols)
             {
                 symbol.Dispose();
             }
-
+            
             if (SymbolsViewModel != null)
             {
+                symbolsObservableSubscription.Dispose();
                 SymbolsViewModel.Dispose();
             }
-
+            
             if(TradeViewModel != null)
             {
+                tradeObservableSubscription.Dispose();
                 TradeViewModel.Dispose();
             }
 
             if(OrdersViewModel != null)
             {
+                ordersObservableSubscription.Dispose();
                 OrdersViewModel.Dispose();
             }
+
+            disposed = true;
         }
 
         private void ObserveSymbols()
@@ -281,7 +313,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 eventHandler => SymbolsViewModel.OnSymbolsNotification -= eventHandler)
                 .Select(eventPattern => eventPattern.EventArgs);
 
-            symbolsObservable.Subscribe(async (args) =>
+            symbolsObservableSubscription = symbolsObservable.Subscribe(async (args) =>
             {
                 if (args.HasException)
                 {
@@ -298,13 +330,13 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     {
                         symbol = new SymbolViewModel(exchangeService, chartHelper);
                         symbol.Dispatcher = ViewModelContext.UiDispatcher;
-                        ObserveSymbol(symbol);
                         Symbols.Add(symbol);
                         SelectedSymbol = symbol;
 
                         try
                         {
                             await symbol.SetSymbol(args.Value);
+                            ObserveSymbol(symbol);
                         }
                         catch (Exception ex)
                         {
@@ -326,7 +358,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 eventHandler => AccountViewModel.OnAccountNotification -= eventHandler)
                 .Select(eventPattern => eventPattern.EventArgs);
 
-            accountObservable.Subscribe(args =>
+            accountObservableSubscription = accountObservable.Subscribe(args =>
             {
                 if (args.HasException)
                 {
@@ -357,13 +389,15 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 eventHandler => symbol.OnSymbolNotification -= eventHandler)
                 .Select(eventPattern => eventPattern.EventArgs);
 
-            symbolObservable.Subscribe(args =>
+            var symbolObservableSubscription =symbolObservable.Subscribe(args =>
             {
                 if(args.HasException)
                 {
                     TradeViewModelException(args);
                 }
             });
+
+            symbolObservableSubscriptions.Add(symbol.Symbol.Name, symbolObservableSubscription);
         }
 
         private void ObserveTrade()
@@ -373,7 +407,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 eventHandler => TradeViewModel.OnTradeNotification -= eventHandler)
                 .Select(eventPattern => eventPattern.EventArgs);
 
-            tradeObservable.Subscribe(args =>
+            tradeObservableSubscription = tradeObservable.Subscribe(args =>
             {
                 if (args.HasException)
                 {
@@ -383,13 +417,13 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         }
 
         private void ObserveOrders()
-        {
+        {            
             var ordersObservable = Observable.FromEventPattern<OrdersEventArgs>(
                 eventHandler => OrdersViewModel.OnOrdersNotification += eventHandler,
                 eventHandler => OrdersViewModel.OnOrdersNotification -= eventHandler)
                 .Select(eventPattern => eventPattern.EventArgs);
 
-            ordersObservable.Subscribe(args =>
+            ordersObservableSubscription = ordersObservable.Subscribe(args =>
             {
                 if (args.HasException)
                 {
