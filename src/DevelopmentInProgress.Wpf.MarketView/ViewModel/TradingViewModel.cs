@@ -178,7 +178,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             Account = new Account(new Interface.AccountInfo { User = new Interface.User() });
 
-            userAccount = await accountsService.GetAccount(Title);
+            try
+            {
+                userAccount = await accountsService.GetAccount(Title);
+            }
+            catch (Exception ex)
+            {
+                TradeViewModelException(ex.ToString(), ex);
+            }
 
             if (userAccount != null
                 && userAccount.Preferences != null)
@@ -217,7 +224,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 userAccount.Preferences.SelectedSymbol = SelectedSymbol.Symbol.Name;
             }
 
-            await accountsService.SaveAccount(userAccount);
+            try
+            {
+                await accountsService.SaveAccount(userAccount);
+            }
+            catch (Exception ex)
+            {
+                TradeViewModelException(ex.ToString(), ex);
+            }
         }
         
         public void Close(object param)
@@ -287,9 +301,16 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                         ObserveSymbol(symbol);
                         Symbols.Add(symbol);
                         SelectedSymbol = symbol;
-                        await symbol.SetSymbol(args.Value);
+
+                        try
+                        {
+                            await symbol.SetSymbol(args.Value);
+                        }
+                        catch (Exception ex)
+                        {
+                            TradeViewModelException(ex.ToString(), ex);
+                        }
                     }
-                    
                 }
                 else if (args.Symbols != null)
                 {

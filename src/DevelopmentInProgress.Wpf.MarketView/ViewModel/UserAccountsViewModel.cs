@@ -90,8 +90,15 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         {
             base.OnPublished(data);
 
-            var accounts = await accountsService.GetAccounts();
-            Accounts = new ObservableCollection<UserAccount>(accounts.Accounts);
+            try
+            {
+                var accounts = await accountsService.GetAccounts();
+                Accounts = new ObservableCollection<UserAccount>(accounts.Accounts);
+            }
+            catch (Exception ex)
+            {
+                ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message });
+            }
         }
 
         protected async override void SaveDocument()
@@ -134,10 +141,17 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 return;
             }
 
-            var userAccount = new UserAccount { AccountName = accountName };
-            await accountsService.SaveAccount(userAccount);
-            Accounts.Add(userAccount);
-            Module.AddAccount(userAccount.AccountName);
+            try
+            {
+                var userAccount = new UserAccount { AccountName = accountName };
+                await accountsService.SaveAccount(userAccount);
+                Accounts.Add(userAccount);
+                Module.AddAccount(userAccount.AccountName);
+            }
+            catch (Exception ex)
+            {
+                ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message });
+            }
         }
 
         private async void DeleteAccount(object param)
@@ -154,9 +168,16 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 Close(userAccountViewModel);
             }
 
-            await accountsService.DeleteAccount(userAccount);
-            Accounts.Remove(userAccount);            
-            Module.RemoveAccount(userAccount.AccountName);
+            try
+            {
+                await accountsService.DeleteAccount(userAccount);
+                Accounts.Remove(userAccount);
+                Module.RemoveAccount(userAccount.AccountName);
+            }
+            catch (Exception ex)
+            {
+                ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message });
+            }
         }
     }
 }
