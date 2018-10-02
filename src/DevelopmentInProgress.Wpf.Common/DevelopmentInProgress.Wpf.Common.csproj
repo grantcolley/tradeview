@@ -62,6 +62,7 @@
     <Compile Include="Converters\ZeroToHiddenConverter.cs" />
     <Compile Include="Events\EventArgsBase.cs" />
     <Compile Include="Events\OrdersEventArgs.cs" />
+    <Compile Include="Events\StrategyEventArgs.cs" />
     <Compile Include="Extensions\StrategyExtensions.cs" />
     <Compile Include="Extensions\StrategyNotificationExtensions.cs" />
     <Compile Include="Extensions\StrategySubscriptionExtensions.cs" />
