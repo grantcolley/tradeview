@@ -12,4 +12,8 @@
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy &quot;$(SolutionDir)output\UI\netstandard2.0\*&quot; &quot;$(SolutionDir)output\UI\&quot; /Y /I" />
+  </Target>
+
 </Project>
