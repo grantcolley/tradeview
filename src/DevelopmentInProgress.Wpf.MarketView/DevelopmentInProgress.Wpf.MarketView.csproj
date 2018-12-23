@@ -165,7 +165,7 @@
       <Version>0.9.7</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>11.0.2</Version>
+      <Version>12.0.1</Version>
     </PackageReference>
     <PackageReference Include="Prism.Core">
       <Version>6.3.0</Version>
