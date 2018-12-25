@@ -7,7 +7,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
         public bool TryValidate(Symbol symbol, ClientOrder clientOrder, out string message)
         {
             var clientOrderValidation = new ClientOrderValidationBuilder()
-                .AddPriceValidation()
+                //.AddPriceValidation()
                 .AddStopPriceValidation()
                 .Build();
 

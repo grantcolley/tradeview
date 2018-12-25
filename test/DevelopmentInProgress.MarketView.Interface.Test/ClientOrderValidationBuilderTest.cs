@@ -89,147 +89,147 @@ namespace DevelopmentInProgress.MarketView.Interface.Test
             Assert.AreEqual(message, string.Empty);
         }
 
-        [TestMethod]
-        public void PriceValidation_Failed_MinPrice_TickSize()
-        {
-            // Arrange
-            string message;
-            var trx = TestHelper.Trx;
-            var trxStats = TestHelper.TrxStats;
-            var clientOrder = new ClientOrder()
-            {
-                Symbol = "TRXBTC",
-                Side = OrderSide.Buy,
-                Type = OrderType.Limit,
-                Quantity = 500.00000000M,
-                Price = 0.000000001M
-            };
+        //[TestMethod]
+        //public void PriceValidation_Failed_MinPrice_TickSize()
+        //{
+        //    // Arrange
+        //    string message;
+        //    var trx = TestHelper.Trx;
+        //    var trxStats = TestHelper.TrxStats;
+        //    var clientOrder = new ClientOrder()
+        //    {
+        //        Symbol = "TRXBTC",
+        //        Side = OrderSide.Buy,
+        //        Type = OrderType.Limit,
+        //        Quantity = 500.00000000M,
+        //        Price = 0.000000001M
+        //    };
 
-            clientOrder.QuoteAccountBalance = new AccountBalance { Free = clientOrder.Price * clientOrder.Quantity };
+        //    clientOrder.QuoteAccountBalance = new AccountBalance { Free = clientOrder.Price * clientOrder.Quantity };
 
-            // Act
-            var clientOrderValidation = new ClientOrderValidationBuilder()
-                .AddPriceValidation()
-                .Build();
+        //    // Act
+        //    var clientOrderValidation = new ClientOrderValidationBuilder()
+        //        .AddPriceValidation()
+        //        .Build();
 
-            var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
+        //    var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
 
-            // Assert
-            Assert.IsFalse(result);
-            Assert.AreEqual(message, $"{clientOrder.Symbol} {clientOrder.Type} order not valid: Notional {clientOrder.Price * clientOrder.Quantity} is less than the minimum notional {trx.NotionalMinimumValue};Price {clientOrder.Price} cannot be below the minimum {trx.Price.Minimum};Price {clientOrder.Price} doesn't meet the tick size {trx.Price.Increment}");
-        }
+        //    // Assert
+        //    Assert.IsFalse(result);
+        //    Assert.AreEqual(message, $"{clientOrder.Symbol} {clientOrder.Type} order not valid: Notional {clientOrder.Price * clientOrder.Quantity} is less than the minimum notional {trx.NotionalMinimumValue};Price {clientOrder.Price} cannot be below the minimum {trx.Price.Minimum};Price {clientOrder.Price} doesn't meet the tick size {trx.Price.Increment}");
+        //}
 
-        [TestMethod]
-        public void PriceValidation_Failed_MaxPrice()
-        {
-            // Arrange
-            string message;
-            var trx = TestHelper.Trx;
-            var trxStats = TestHelper.TrxStats;
-            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Side = OrderSide.Buy, Type = OrderType.Limit, Quantity = 500.00000000M, Price = 15000000.00000000M };
-            clientOrder.QuoteAccountBalance = new AccountBalance { Free = clientOrder.Price * clientOrder.Quantity };
+        //[TestMethod]
+        //public void PriceValidation_Failed_MaxPrice()
+        //{
+        //    // Arrange
+        //    string message;
+        //    var trx = TestHelper.Trx;
+        //    var trxStats = TestHelper.TrxStats;
+        //    var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Side = OrderSide.Buy, Type = OrderType.Limit, Quantity = 500.00000000M, Price = 15000000.00000000M };
+        //    clientOrder.QuoteAccountBalance = new AccountBalance { Free = clientOrder.Price * clientOrder.Quantity };
 
-            // Act
-            var clientOrderValidation = new ClientOrderValidationBuilder()
-                .AddPriceValidation()
-                .Build();
+        //    // Act
+        //    var clientOrderValidation = new ClientOrderValidationBuilder()
+        //        .AddPriceValidation()
+        //        .Build();
 
-            var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
+        //    var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
 
-            // Assert
-            Assert.IsFalse(result);
-            Assert.AreEqual(message, $"{clientOrder.Symbol} {clientOrder.Type} order not valid: Price {clientOrder.Price} cannot be above the maximum {trx.Price.Maximum}");
-        }
+        //    // Assert
+        //    Assert.IsFalse(result);
+        //    Assert.AreEqual(message, $"{clientOrder.Symbol} {clientOrder.Type} order not valid: Price {clientOrder.Price} cannot be above the maximum {trx.Price.Maximum}");
+        //}
 
-        [TestMethod]
-        public void PriceValidation_Pass()
-        {
-            // Arrange
-            string message;
-            var trx = TestHelper.Trx;
-            var trxStats = TestHelper.TrxStats;
-            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Side = OrderSide.Buy, Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice };
-            clientOrder.QuoteAccountBalance = new AccountBalance { Free = clientOrder.Price * clientOrder.Quantity };
+        //[TestMethod]
+        //public void PriceValidation_Pass()
+        //{
+        //    // Arrange
+        //    string message;
+        //    var trx = TestHelper.Trx;
+        //    var trxStats = TestHelper.TrxStats;
+        //    var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Side = OrderSide.Buy, Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice };
+        //    clientOrder.QuoteAccountBalance = new AccountBalance { Free = clientOrder.Price * clientOrder.Quantity };
 
-            // Act
-            var clientOrderValidation = new ClientOrderValidationBuilder()
-                .AddPriceValidation()
-                .Build();
+        //    // Act
+        //    var clientOrderValidation = new ClientOrderValidationBuilder()
+        //        .AddPriceValidation()
+        //        .Build();
 
-            var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
+        //    var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
 
-            // Assert
-            Assert.IsTrue(result);
-            Assert.AreEqual(message, string.Empty);
-        }
+        //    // Assert
+        //    Assert.IsTrue(result);
+        //    Assert.AreEqual(message, string.Empty);
+        //}
 
-        [TestMethod]
-        public void StopPriceValidation_Failed_MinPrice_TickSize()
-        {
-            // Arrange
-            string message;
-            var trx = TestHelper.Trx;
-            var trxStats = TestHelper.TrxStats;
-            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Side = OrderSide.Buy, Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice, StopPrice = 0.000000001M };
-            clientOrder.QuoteAccountBalance = new AccountBalance { Free = clientOrder.Price * clientOrder.Quantity };
+        //[TestMethod]
+        //public void StopPriceValidation_Failed_MinPrice_TickSize()
+        //{
+        //    // Arrange
+        //    string message;
+        //    var trx = TestHelper.Trx;
+        //    var trxStats = TestHelper.TrxStats;
+        //    var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Side = OrderSide.Buy, Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice, StopPrice = 0.000000001M };
+        //    clientOrder.QuoteAccountBalance = new AccountBalance { Free = clientOrder.Price * clientOrder.Quantity };
 
-            // Act
-            var clientOrderValidation = new ClientOrderValidationBuilder()
-                .AddPriceValidation()
-                .AddStopPriceValidation()
-                .Build();
+        //    // Act
+        //    var clientOrderValidation = new ClientOrderValidationBuilder()
+        //        .AddPriceValidation()
+        //        .AddStopPriceValidation()
+        //        .Build();
 
-            var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
+        //    var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
 
-            // Assert
-            Assert.IsFalse(result);
-            Assert.AreEqual(message, $"{clientOrder.Symbol} {clientOrder.Type} order not valid: Stop Price {clientOrder.StopPrice} cannot be below the minimum {trx.Price.Minimum};Stop Price {clientOrder.StopPrice} doesn't meet the tick size {trx.Price.Increment}");
-        }
+        //    // Assert
+        //    Assert.IsFalse(result);
+        //    Assert.AreEqual(message, $"{clientOrder.Symbol} {clientOrder.Type} order not valid: Stop Price {clientOrder.StopPrice} cannot be below the minimum {trx.Price.Minimum};Stop Price {clientOrder.StopPrice} doesn't meet the tick size {trx.Price.Increment}");
+        //}
 
-        [TestMethod]
-        public void StopPriceValidation_Failed_MaxPrice()
-        {
-            // Arrange
-            string message;
-            var trx = TestHelper.Trx;
-            var trxStats = TestHelper.TrxStats;
-            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Side = OrderSide.Buy, Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice, StopPrice = 15000000.00000000M };
-            clientOrder.QuoteAccountBalance = new AccountBalance { Free = clientOrder.Price * clientOrder.Quantity };
+        //[TestMethod]
+        //public void StopPriceValidation_Failed_MaxPrice()
+        //{
+        //    // Arrange
+        //    string message;
+        //    var trx = TestHelper.Trx;
+        //    var trxStats = TestHelper.TrxStats;
+        //    var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Side = OrderSide.Buy, Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice, StopPrice = 15000000.00000000M };
+        //    clientOrder.QuoteAccountBalance = new AccountBalance { Free = clientOrder.Price * clientOrder.Quantity };
 
-            // Act
-            var clientOrderValidation = new ClientOrderValidationBuilder()
-                .AddPriceValidation()
-                .AddStopPriceValidation()
-                .Build();
+        //    // Act
+        //    var clientOrderValidation = new ClientOrderValidationBuilder()
+        //        .AddPriceValidation()
+        //        .AddStopPriceValidation()
+        //        .Build();
 
-            var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
+        //    var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
 
-            // Assert
-            Assert.IsFalse(result);
-            Assert.AreEqual(message, $"{clientOrder.Symbol} {clientOrder.Type} order not valid: Insufficient funds to buy: {clientOrder.StopPrice * clientOrder.Quantity} is greater than the available {clientOrder.QuoteAccountBalance.Free};Stop Price {clientOrder.StopPrice} cannot be above the maximum {trx.Price.Maximum}");
-        }
+        //    // Assert
+        //    Assert.IsFalse(result);
+        //    Assert.AreEqual(message, $"{clientOrder.Symbol} {clientOrder.Type} order not valid: Insufficient funds to buy: {clientOrder.StopPrice * clientOrder.Quantity} is greater than the available {clientOrder.QuoteAccountBalance.Free};Stop Price {clientOrder.StopPrice} cannot be above the maximum {trx.Price.Maximum}");
+        //}
 
-        [TestMethod]
-        public void StopPriceValidation_Pass()
-        {
-            // Arrange
-            string message;
-            var trx = TestHelper.Trx;
-            var trxStats = TestHelper.TrxStats;
-            var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Side = OrderSide.Buy, Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice, StopPrice = (trxStats.LastPrice + (100 * trx.Price.Increment)) };
-            clientOrder.QuoteAccountBalance = new AccountBalance { Free = (trxStats.LastPrice + (100 * trx.Price.Increment)) * clientOrder.Quantity };
+        //[TestMethod]
+        //public void StopPriceValidation_Pass()
+        //{
+        //    // Arrange
+        //    string message;
+        //    var trx = TestHelper.Trx;
+        //    var trxStats = TestHelper.TrxStats;
+        //    var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Side = OrderSide.Buy, Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice, StopPrice = (trxStats.LastPrice + (100 * trx.Price.Increment)) };
+        //    clientOrder.QuoteAccountBalance = new AccountBalance { Free = (trxStats.LastPrice + (100 * trx.Price.Increment)) * clientOrder.Quantity };
 
-            // Act
-            var clientOrderValidation = new ClientOrderValidationBuilder()
-                .AddPriceValidation()
-                .AddStopPriceValidation()
-                .Build();
+        //    // Act
+        //    var clientOrderValidation = new ClientOrderValidationBuilder()
+        //        .AddPriceValidation()
+        //        .AddStopPriceValidation()
+        //        .Build();
 
-            var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
+        //    var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
 
-            // Assert
-            Assert.IsTrue(result);
-            Assert.AreEqual(message, string.Empty);
-        }
+        //    // Assert
+        //    Assert.IsTrue(result);
+        //    Assert.AreEqual(message, string.Empty);
+        //}
     }
 }

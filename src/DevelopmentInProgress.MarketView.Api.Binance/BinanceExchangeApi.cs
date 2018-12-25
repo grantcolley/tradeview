@@ -52,7 +52,7 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
             {
                 NotionalMinimumValue = s.NotionalMinimumValue,
                 BaseAsset = new Interface.Model.Asset { Symbol = s.BaseAsset.Symbol, Precision = s.BaseAsset.Precision },
-                Price = new Interface.Model.InclusiveRange { Increment = s.Price.Increment, Minimum = s.Price.Minimum, Maximum = s.Price.Maximum },
+                Price = new Interface.Model.InclusiveRange { Increment = s.Price.Increment /*, Minimum = s.Price.Minimum, Maximum = s.Price.Maximum*/ }, // HACK : remove Price Min and Max because it realtime calcs hits performance.
                 Quantity = new Interface.Model.InclusiveRange { Increment = s.Quantity.Increment, Minimum = s.Quantity.Minimum, Maximum = s.Quantity.Maximum },
                 QuoteAsset = new Interface.Model.Asset { Symbol = s.QuoteAsset.Symbol, Precision = s.QuoteAsset.Precision },
                 Status = (Interface.Model.SymbolStatus)s.Status,
