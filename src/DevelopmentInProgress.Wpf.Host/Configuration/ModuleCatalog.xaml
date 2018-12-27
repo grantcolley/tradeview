@@ -1,20 +1,30 @@
 ﻿<prism:ModuleCatalog xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                      xmlns:prism="clr-namespace:Prism.Modularity;assembly=Prism.Wpf">
 
-    <prism:ModuleInfo Ref="Market View"
-                      ModuleName="DevelopmentInProgress.Wpf.MarketView"
-                      ModuleType="DevelopmentInProgress.Wpf.MarketView.Module,DevelopmentInProgress.Wpf.MarketView"
-                      InitializationMode="WhenAvailable"/>
-
     <prism:ModuleInfo Ref="Strategy Manager"
-                      ModuleName="DevelopmentInProgress.Wpf.StrategyManager"
+                      ModuleName="StrategyManager"
                       ModuleType="DevelopmentInProgress.Wpf.StrategyManager.Module,DevelopmentInProgress.Wpf.StrategyManager"
-                      InitializationMode="WhenAvailable"/>
+                      InitializationMode="WhenAvailable">
+    </prism:ModuleInfo>
 
     <prism:ModuleInfo Ref="Strategy Development"
-                      ModuleName="DevelopmentInProgress.Wpf.StrategyDevelopment"
+                      ModuleName="StrategyDevelopment"
                       ModuleType="DevelopmentInProgress.Wpf.StrategyDevelopment.Module,DevelopmentInProgress.Wpf.StrategyDevelopment"
-                      InitializationMode="WhenAvailable"/>
+                      InitializationMode="WhenAvailable">
+        <prism:ModuleInfo.DependsOn>
+            <sys:String>StrategyManager</sys:String>
+        </prism:ModuleInfo.DependsOn>
+    </prism:ModuleInfo>
     
+    <prism:ModuleInfo Ref="Market View"
+                      ModuleName="MarketView"
+                      ModuleType="DevelopmentInProgress.Wpf.MarketView.Module,DevelopmentInProgress.Wpf.MarketView"
+                      InitializationMode="WhenAvailable">
+        <prism:ModuleInfo.DependsOn>
+            <sys:String>StrategyDevelopment</sys:String>
+        </prism:ModuleInfo.DependsOn>
+    </prism:ModuleInfo>
+
 </prism:ModuleCatalog>
