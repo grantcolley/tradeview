@@ -141,10 +141,9 @@
                     <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}"
                                        Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}">
                         <lc:CartesianChart.Series>
-                            <lc:StepLineSeries Values="{Binding AggregateTradesChart}" 
+                            <lc:LineSeries Values="{Binding AggregateTradesChart}" 
                                                     DataLabels="False"
                                                     Stroke="Orange" 
-                                                    AlternativeStroke="Orange" 
                                                     PointForeground="Orange"
                                                     StrokeThickness="1" 
                                                     PointGeometrySize="1"/>
