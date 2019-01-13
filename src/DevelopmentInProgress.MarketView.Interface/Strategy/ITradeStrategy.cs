@@ -1,12 +1,13 @@
 ﻿using DevelopmentInProgress.MarketView.Interface.Events;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.MarketView.Interface.Strategy
 {
     public interface ITradeStrategy
     {
-        Task<Strategy> RunAsync(Strategy strategy);
+        Task<Strategy> RunAsync(Strategy strategy, CancellationToken cancellationToken);
 
         event EventHandler<TradeStrategyNotificationEventArgs> StrategyAccountInfoEvent;
         
