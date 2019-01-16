@@ -46,6 +46,9 @@
             <Button Click="RefreshAllClick" ToolTip="Refresh All" Style="{StaticResource ButtonImageStyle}" BorderThickness="0" Visibility="Collapsed">
                 <Image Source="Images/Refresh.png" Height="16" Width="16"/>
             </Button>
+            <Button Click="OpenLogClick" ToolTip="Log File" Style="{StaticResource ButtonImageStyle}" BorderThickness="0">
+                <Image Source="Images/Log.png" Height="16" Width="16"/>
+            </Button>
             <ContentControl/>
         </DockPanel>
         <ContentControl Grid.Row="2" Grid.Column="0" prism:RegionManager.RegionName="NavigationRegion"/>

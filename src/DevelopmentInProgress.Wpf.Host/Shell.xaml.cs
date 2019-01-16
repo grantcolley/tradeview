@@ -106,6 +106,16 @@ namespace DevelopmentInProgress.Wpf.Host
         }
 
         /// <summary>
+        /// Open the log file.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">Event arguments.</param>
+        private void OpenLogClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        /// <summary>
         /// Performs the specified action on the currently active document.
         /// </summary>
         /// <param name="action">The action to perform.</param>
