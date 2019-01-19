@@ -21,8 +21,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
     public class SymbolViewModel : ExchangeViewModel
     {
-        internal int Limit => 20;
-        internal int ChartDisplayLimit => 100;
+        internal int Limit => 500;
+        internal int ChartDisplayLimit => 500;
         internal int TradesDisplayLimit => 18;
 
         private CancellationTokenSource symbolCancellationTokenSource;

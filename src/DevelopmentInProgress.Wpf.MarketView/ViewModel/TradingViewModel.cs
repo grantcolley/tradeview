@@ -18,7 +18,6 @@ using DevelopmentInProgress.Wpf.Common.Events;
 using DevelopmentInProgress.Wpf.Common.ViewModel;
 using DevelopmentInProgress.Wpf.Common.Extensions;
 using DevelopmentInProgress.Wpf.Common.Chart;
-using System.Reactive;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
