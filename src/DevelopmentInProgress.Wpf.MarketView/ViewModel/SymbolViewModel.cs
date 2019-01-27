@@ -291,6 +291,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 if (AggregateTrades == null
                     || AggregateTradesChart == null)
                 {
+                    // Check - order by Id or Time
                     var orderedTrades = (from t in trades
                                          orderby t.Id
                                          select new AggregateTrade
@@ -304,7 +305,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                     Action initialiseAggregateTrades = () =>
                     {
-                        AggregateTradesChart = new ChartValues<AggregateTrade>(orderedTrades); ;
+                        AggregateTradesChart = new ChartValues<AggregateTrade>(orderedTrades);
+
+                        // CHECK - Take first or Skip to last display limit
                         AggregateTrades = new ObservableCollection<AggregateTrade>(orderedTrades.Take(TradesDisplayLimit));
                     };
 
@@ -319,6 +322,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 }
                 else
                 {
+                    // TODO: save max Trade so no need to query for it again
                     var maxId = AggregateTrades.Max(at => at.Id);
                     var orderedAggregateTrades = (from t in trades
                                                   where t.Id > maxId
