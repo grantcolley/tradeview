@@ -89,9 +89,9 @@
                         <RowDefinition Height="100*"/>
                     </Grid.RowDefinitions>
                     <DockPanel Grid.Row="0" LastChildFill="True">
-                        <Label DockPanel.Dock="Left" Content="Time" Width="60" VerticalAlignment="Top" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                        <Label DockPanel.Dock="Right" Content="Qty" VerticalAlignment="Top" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                        <Label Content="Price" VerticalAlignment="Top" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                        <Label DockPanel.Dock="Left" Content="Time" Width="60" VerticalAlignment="Top" Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                        <Label DockPanel.Dock="Right" Content="Qty" VerticalAlignment="Top" Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                        <Label Content="Price" VerticalAlignment="Top" Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                     </DockPanel>
                     <Viewbox Grid.Row="1"
                              Height="50" Width="50"
