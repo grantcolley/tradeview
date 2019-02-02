@@ -88,6 +88,12 @@ namespace DevelopmentInProgress.Wpf.Common.Services
             return aggregateTrades;
         }
 
+        public async Task<IEnumerable<Interface.Trade>> GetTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
+        {
+            var trades = await exchangeService.GetTradesAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
+            return trades;
+        }
+
         public async Task<Interface.OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
             var orderBook = await exchangeService.GetOrderBookAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
@@ -102,6 +108,11 @@ namespace DevelopmentInProgress.Wpf.Common.Services
         public void SubscribeAggregateTrades(string symbol, int limit, Action<AggregateTradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             exchangeService.SubscribeAggregateTrades(symbol, limit, callback, exception, cancellationToken);
+        }
+
+        public void SubscribeTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        {
+            exchangeService.SubscribeTrades(symbol, limit, callback, exception, cancellationToken);
         }
 
         public void SubscribeAccountInfo(Interface.User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)

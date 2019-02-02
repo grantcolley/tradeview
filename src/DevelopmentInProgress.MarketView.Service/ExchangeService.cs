@@ -35,6 +35,12 @@ namespace DevelopmentInProgress.MarketView.Service
             return aggregateTrades;
         }
 
+        public async Task<IEnumerable<Trade>> GetTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
+        {
+            var trades = await exchangeApi.GetTradesAsync(symbol, limit, cancellationToken);
+            return trades;
+        }
+
         public async Task<OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
             var orderBook = await exchangeApi.GetOrderBookAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
@@ -49,6 +55,11 @@ namespace DevelopmentInProgress.MarketView.Service
         public void SubscribeAggregateTrades(string symbol, int limit, Action<AggregateTradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             exchangeApi.SubscribeAggregateTrades(symbol, limit, callback, exception, cancellationToken);
+        }
+
+        public void SubscribeTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        {
+            exchangeApi.SubscribeTrades(symbol, limit, callback, exception, cancellationToken);
         }
 
         public void SubscribeAccountInfo(User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)

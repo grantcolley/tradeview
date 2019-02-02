@@ -107,6 +107,13 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
             return aggregateTrades;
         }
 
+        public async Task<IEnumerable<Interface.Model.Trade>> GetTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
+        {
+            var result = await binanceApi.GetTradesAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
+            var trades = result.Select(t => NewTrade(t)).ToList();
+            return trades;
+        }
+
         public async Task<IEnumerable<Interface.Model.Order>> GetOpenOrdersAsync(Interface.Model.User user, string symbol = null, long recWindow = 0, Action<Exception> exception = default(Action<Exception>), CancellationToken cancellationToken = default(CancellationToken))
         {
             var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret);
@@ -136,6 +143,37 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
                     catch (Exception ex)
                     {
                         aggregateTradeCache.Unsubscribe();
+                        exception.Invoke(ex);
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                exception.Invoke(ex);
+            }
+        }
+
+        public void SubscribeTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var tradeCache = new TradeCache(binanceApi, new TradeWebSocketClient());
+                tradeCache.Subscribe(symbol, limit, e =>
+                {
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        tradeCache.Unsubscribe();
+                        return;
+                    }
+
+                    try
+                    {
+                        var trades = e.Trades.Select(t => NewTrade(t)).ToList();
+                        callback.Invoke(new TradeEventArgs { Trades = trades });
+                    }
+                    catch (Exception ex)
+                    {
+                        tradeCache.Unsubscribe();
                         exception.Invoke(ex);
                     }
                 });
@@ -346,6 +384,22 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
                 IsBestPriceMatch = at.IsBestPriceMatch,
                 FirstTradeId = at.FirstTradeId,
                 LastTradeId = at.LastTradeId
+            };
+        }
+
+        private Interface.Model.Trade NewTrade(Trade t)
+        {
+            return new Interface.Model.Trade
+            {
+                Symbol = t.Symbol,
+                Id = t.Id,
+                Price = t.Price,
+                Quantity = t.Quantity,
+                Time = t.Time,
+                BuyerOrderId = t.BuyerOrderId,
+                SellerOrderId = t.SellerOrderId,
+                IsBuyerMaker = t.IsBuyerMaker,
+                IsBestPriceMatch = t.IsBestPriceMatch
             };
         }
     }
