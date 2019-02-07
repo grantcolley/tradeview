@@ -9,11 +9,16 @@ namespace DevelopmentInProgress.Wpf.Common.Chart
     {
         public ChartHelper()
         {
-            var mapper = Mappers.Xy<AggregateTrade>()
+            var tradeMapper = Mappers.Xy<Trade>()
                 .X(model => model.Time.Ticks)
                 .Y(model => Convert.ToDouble(model.Price));
 
-            Charting.For<AggregateTrade>(mapper);
+            var aggregateTradeMapper = Mappers.Xy<AggregateTrade>()
+                .X(model => model.Time.Ticks)
+                .Y(model => Convert.ToDouble(model.Price));
+
+            Charting.For<Trade>(tradeMapper);
+            Charting.For<AggregateTrade>(aggregateTradeMapper);
         }
 
         public Func<double, string> TimeFormatter => value => new DateTime((long)value).ToString("H:mm:ss");

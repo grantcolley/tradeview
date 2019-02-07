@@ -100,7 +100,7 @@
                         <progress:CircularProgress/>
                     </Viewbox>
                     <ItemsControl Grid.Row="1"
-                                  ItemsSource="{Binding AggregateTrades}"
+                                  ItemsSource="{Binding Trades}"
                                   Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -141,7 +141,7 @@
                     <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}"
                                        Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}">
                         <lc:CartesianChart.Series>
-                            <lc:LineSeries Values="{Binding AggregateTradesChart}" 
+                            <lc:LineSeries Values="{Binding TradesChart}" 
                                                     DataLabels="False"
                                                     Stroke="Orange" 
                                                     PointForeground="Orange"

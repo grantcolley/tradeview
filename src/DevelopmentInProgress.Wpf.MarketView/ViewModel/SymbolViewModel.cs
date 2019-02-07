@@ -28,10 +28,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private CancellationTokenSource symbolCancellationTokenSource;
         private Symbol symbol;
         private OrderBook orderBook;
-        private ChartValues<AggregateTrade> aggregateTradesChart;
-        private ObservableCollection<AggregateTrade> aggregateTrades;
+        private ChartValues<Trade> tradesChart;
+        private ObservableCollection<Trade> trades;
         private object orderBookLock = new object();
-        private object aggregateTradesLock = new object();
+        private object tradesLock = new object();
         private bool isLoadingTrades;
         private bool isLoadingOrderBook;
         private bool disposed;
@@ -93,28 +93,28 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        public ObservableCollection<AggregateTrade> AggregateTrades
+        public ObservableCollection<Trade> Trades
         {
-            get { return aggregateTrades; }
+            get { return trades; }
             set
             {
-                if (aggregateTrades != value)
+                if (trades != value)
                 {
-                    aggregateTrades = value;
-                    OnPropertyChanged("AggregateTrades");
+                    trades = value;
+                    OnPropertyChanged("Trades");
                 }
             }
         }
 
-        public ChartValues<AggregateTrade> AggregateTradesChart
+        public ChartValues<Trade> TradesChart
         {
-            get { return aggregateTradesChart; }
+            get { return tradesChart; }
             set
             {
-                if (aggregateTradesChart != value)
+                if (tradesChart != value)
                 {
-                    aggregateTradesChart = value;
-                    OnPropertyChanged("AggregateTradesChart");
+                    tradesChart = value;
+                    OnPropertyChanged("TradesChart");
                 }
             }
         }
@@ -164,8 +164,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 symbolCancellationTokenSource = new CancellationTokenSource();
 
                 Symbol = symbol;
-                AggregateTradesChart = null;
-                AggregateTrades = null;
+                TradesChart = null;
+                Trades = null;
                 OrderBook = null;
 
                 var tasks = new List<Task>(new [] { GetOrderBook(), GetTrades() }).ToArray();
@@ -203,11 +203,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             try
             {
-                var trades = await ExchangeService.GetAggregateTradesAsync(Symbol.Name, Limit, symbolCancellationTokenSource.Token);
+                var trades = await ExchangeService.GetTradesAsync(Symbol.Name, Limit, symbolCancellationTokenSource.Token);
 
-                UpdateAggregateTrades(trades);
+                UpdateTrades(trades);
 
-                ExchangeService.SubscribeAggregateTrades(Symbol.Name, Limit, e => UpdateAggregateTrades(e.AggregateTrades), SubscribeAggregateTradesException, symbolCancellationTokenSource.Token);
+                ExchangeService.SubscribeTrades(Symbol.Name, Limit, e => UpdateTrades(e.Trades), SubscribeTradesException, symbolCancellationTokenSource.Token);
             }
             catch (Exception ex)
             {
@@ -284,17 +284,17 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        private void UpdateAggregateTrades(IEnumerable<Interface.AggregateTrade> trades)
+        private void UpdateTrades(IEnumerable<Interface.Trade> trades)
         {
-            lock (aggregateTradesLock)
+            lock (tradesLock)
             {
-                if (AggregateTrades == null
-                    || AggregateTradesChart == null)
+                if (Trades == null
+                    || TradesChart == null)
                 {
                     // Check - order by Id or Time
                     var orderedTrades = (from t in trades
                                          orderby t.Id
-                                         select new AggregateTrade
+                                         select new Trade
                                          {
                                              Id = t.Id,
                                              Time = t.Time,
@@ -303,31 +303,31 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                                              IsBuyerMaker = t.IsBuyerMaker
                                          });
 
-                    Action initialiseAggregateTrades = () =>
+                    Action initialiseTrades = () =>
                     {
-                        AggregateTradesChart = new ChartValues<AggregateTrade>(orderedTrades);
+                        TradesChart = new ChartValues<Trade>(orderedTrades);
 
                         // CHECK - Take first or Skip to last display limit
-                        AggregateTrades = new ObservableCollection<AggregateTrade>(orderedTrades.Take(TradesDisplayLimit));
+                        Trades = new ObservableCollection<Trade>(orderedTrades.Take(TradesDisplayLimit));
                     };
 
                     if (Dispatcher == null)
                     {
-                        initialiseAggregateTrades();
+                        initialiseTrades();
                     }
                     else
                     {
-                        Dispatcher.Invoke(initialiseAggregateTrades);
+                        Dispatcher.Invoke(initialiseTrades);
                     }
                 }
                 else
                 {
                     // TODO: save max Trade so no need to query for it again
-                    var maxId = AggregateTrades.Max(at => at.Id);
-                    var orderedAggregateTrades = (from t in trades
+                    var maxId = Trades.Max(at => at.Id);
+                    var orderedTrades = (from t in trades
                                                   where t.Id > maxId
                                                   orderby t.Id
-                                                  select new AggregateTrade
+                                                  select new Trade
                                                   {
                                                       Id = t.Id,
                                                       Time = t.Time,
@@ -336,47 +336,47 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                                                       IsBuyerMaker = t.IsBuyerMaker
                                                   }).ToList();
 
-                    var newCount = orderedAggregateTrades.Count;
+                    var newCount = orderedTrades.Count;
 
-                    if (AggregateTradesChart.Count >= ChartDisplayLimit)
+                    if (TradesChart.Count >= ChartDisplayLimit)
                     {
-                        var oldTrades = AggregateTradesChart.Take(newCount);
+                        var oldTrades = TradesChart.Take(newCount);
                         foreach(var oldTrade in oldTrades)
                         {
-                            AggregateTradesChart.Remove(oldTrade);
+                            TradesChart.Remove(oldTrade);
                         }
                     }
 
-                    Action updateAggregateTrades = () =>
+                    Action updateTrades = () =>
                     {
-                        AggregateTradesChart.AddRange(orderedAggregateTrades);
+                        TradesChart.AddRange(orderedTrades);
 
                         for (int i = 0; i < newCount; i++)
                         {
-                            while (AggregateTrades.Count >= TradesDisplayLimit)
+                            while (Trades.Count >= TradesDisplayLimit)
                             {
-                                AggregateTrades.RemoveAt(AggregateTrades.Count - 1);
+                                Trades.RemoveAt(Trades.Count - 1);
                             }
 
-                            AggregateTrades.Insert(0, orderedAggregateTrades[i]);
+                            Trades.Insert(0, orderedTrades[i]);
                         }
                     };
 
                     if (Dispatcher == null)
                     {
-                        updateAggregateTrades();
+                        updateTrades();
                     }
                     else
                     {
-                        Dispatcher.Invoke(updateAggregateTrades);
+                        Dispatcher.Invoke(updateTrades);
                     }
                 }
             }
         }
 
-        private void SubscribeAggregateTradesException(Exception exception)
+        private void SubscribeTradesException(Exception exception)
         {
-            OnException("SymbolViewModel.GetTrades - ExchangeService.SubscribeAggregateTrades", exception);
+            OnException("SymbolViewModel.GetTrades - ExchangeService.SubscribeTrades", exception);
         }
 
         private void SubscribeOrderBookException(Exception exception)
