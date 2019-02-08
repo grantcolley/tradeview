@@ -42,7 +42,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             Assert.IsNotNull(symbolViewModel.OrderBook.Top);
             Assert.IsTrue(symbolViewModel.OrderBook.TopAsks.Count > 0);
             Assert.IsTrue(symbolViewModel.OrderBook.TopBids.Count > 0);
-            Assert.IsTrue(symbolViewModel.AggregateTrades.Count > 0);
+            Assert.IsTrue(symbolViewModel.Trades.Count > 0);
         }
 
         [TestMethod]
@@ -64,7 +64,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         }
 
         [TestMethod]
-        public async Task UpdateAggregateTrades()
+        public async Task UpdateTrades()
         {
             // Arrange
             var cxlToken = new CancellationToken();
@@ -78,8 +78,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             await symbolViewModel.SetSymbol(trx);
 
             // Assert
-            var trades = TestHelper.AggregateTrades.Take(symbolViewModel.TradesDisplayLimit).ToList();
-            var updatedtrades = TestHelper.AggregateTradesUpdated;
+            var trades = TestHelper.Trades.Take(symbolViewModel.TradesDisplayLimit).ToList();
+            var updatedtrades = TestHelper.TradesUpdated;
 
             var maxId = trades.Max(t => t.Id);          
             var newTrades = (from t in updatedtrades
@@ -97,11 +97,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
                 trades.Insert(0, newTrades[i]);
             }
 
-            Assert.AreEqual(symbolViewModel.AggregateTrades.Count, trades.Count);
+            Assert.AreEqual(symbolViewModel.Trades.Count, trades.Count);
 
-            for(int i = 0; i < symbolViewModel.AggregateTrades.Count; i++)
+            for(int i = 0; i < symbolViewModel.Trades.Count; i++)
             {
-                Assert.AreEqual(symbolViewModel.AggregateTrades[i].Id, trades[i].Id);
+                Assert.AreEqual(symbolViewModel.Trades[i].Id, trades[i].Id);
             }
         }
     }

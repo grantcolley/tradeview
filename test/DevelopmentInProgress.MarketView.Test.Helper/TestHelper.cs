@@ -16,6 +16,8 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
         private static string trx;
         private static string trxStats;
         private static string accountInfo;
+        private static string trades;
+        private static string tradesUpdated;
         private static string aggregateTrades;
         private static string aggregateTradesUpdated;
         private static string orderBook;
@@ -29,6 +31,8 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             accountInfo = File.ReadAllText("AccountInfo.txt");
             aggregateTrades = File.ReadAllText("AggregateTrades.txt");
             aggregateTradesUpdated = File.ReadAllText("AggregateTradesUpdated.txt");
+            trades = File.ReadAllText("Trades.txt");
+            tradesUpdated = File.ReadAllText("TradesUpdated.txt");
             orderBook = File.ReadAllText("OrderBook.txt");
             orderBookUpdated = File.ReadAllText("OrderBookUpdated.txt");
 
@@ -98,6 +102,22 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             get
             {
                 return JsonConvert.DeserializeObject<List<AggregateTrade>>(aggregateTradesUpdated);
+            }
+        }
+
+        public static List<Trade> Trades
+        {
+            get
+            {
+                return JsonConvert.DeserializeObject<List<Trade>>(trades);
+            }
+        }
+
+        public static List<Trade> TradesUpdated
+        {
+            get
+            {
+                return JsonConvert.DeserializeObject<List<Trade>>(tradesUpdated);
             }
         }
 

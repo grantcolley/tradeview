@@ -34,7 +34,9 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 
         public Task<IEnumerable<Trade>> GetTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var tcs = new TaskCompletionSource<IEnumerable<Trade>>();
+            tcs.SetResult(TestHelper.Trades);
+            return tcs.Task;
         }
 
         public Task<IEnumerable<Order>> GetOpenOrdersAsync(User user, string symbol = null, long recWindow = 0, Action<Exception> exception = null, CancellationToken cancellationToken = default(CancellationToken))
@@ -71,7 +73,7 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 
         public void SubscribeTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            callback.Invoke(new TradeEventArgs { Trades = TestHelper.TradesUpdated });
         }
 
         public void SubscribeOrderBook(string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
