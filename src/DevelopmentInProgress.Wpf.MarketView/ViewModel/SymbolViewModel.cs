@@ -6,7 +6,6 @@ using DevelopmentInProgress.Wpf.Common.Services;
 using LiveCharts;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,14 +21,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
     public class SymbolViewModel : ExchangeViewModel
     {
         internal int Limit => 500;
-        internal int ChartDisplayLimit => 500;
-        internal int TradesDisplayLimit => 18;
+        internal int TradesChartDisplayCount => 500;
+        internal int TradesDisplayCount => 18;
 
         private CancellationTokenSource symbolCancellationTokenSource;
         private Symbol symbol;
         private OrderBook orderBook;
         private ChartValues<Trade> tradesChart;
-        private ObservableCollection<Trade> trades;
+        private List<Trade> trades;
         private object orderBookLock = new object();
         private object tradesLock = new object();
         private bool isLoadingTrades;
@@ -93,7 +92,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        public ObservableCollection<Trade> Trades
+        public List<Trade> Trades
         {
             get { return trades; }
             set
@@ -168,7 +167,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 Trades = null;
                 OrderBook = null;
 
-                var tasks = new List<Task>(new [] { GetOrderBook(), GetTrades() }).ToArray();
+                var tasks = new List<Task>(new [] { /*GetOrderBook(),*/ GetTrades() }).ToArray();
+
+                // don't await all - run on seperate tasks
                 await Task.WhenAll(tasks);
             }
             catch (Exception ex)
@@ -284,92 +285,149 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        private void UpdateTrades(IEnumerable<Interface.Trade> trades)
+        private void UpdateTrades(IEnumerable<Interface.Trade> tradesUpdate)
         {
             lock (tradesLock)
             {
-                if (Trades == null
-                    || TradesChart == null)
+                if (Trades == null)
                 {
-                    // Check - order by Id or Time
-                    var orderedTrades = (from t in trades
-                                         orderby t.Id
-                                         select new Trade
-                                         {
-                                             Id = t.Id,
-                                             Time = t.Time,
-                                             Price = t.Price.Trim(Symbol.PricePrecision),
-                                             Quantity = t.Quantity.Trim(Symbol.QuantityPrecision),
-                                             IsBuyerMaker = t.IsBuyerMaker
-                                         });
+                    // First set of incoming trades
+                    
+                    // Order by oldest to newest (as it will appear in chart).
+                    var newTrades = (from t in tradesUpdate
+                                        orderby t.Time, t.Id
+                                        select new Trade
+                                        {
+                                            Id = t.Id,
+                                            Time = t.Time,
+                                            Price = t.Price.Trim(Symbol.PricePrecision),
+                                            Quantity = t.Quantity.Trim(Symbol.QuantityPrecision),
+                                            IsBuyerMaker = t.IsBuyerMaker
+                                        }).ToList();
 
-                    Action initialiseTrades = () =>
+                    var newTradesCount = newTrades.Count;
+
+                    if (newTradesCount > TradesChartDisplayCount)
                     {
-                        TradesChart = new ChartValues<Trade>(orderedTrades);
-
-                        // CHECK - Take first or Skip to last display limit
-                        Trades = new ObservableCollection<Trade>(orderedTrades.Take(TradesDisplayLimit));
-                    };
-
-                    if (Dispatcher == null)
-                    {
-                        initialiseTrades();
+                        // More new trades than the chart can take, only takes the newest trades.
+                        var chartTrades = newTrades.Skip(newTradesCount - TradesChartDisplayCount);
+                        TradesChart = new ChartValues<Trade>(chartTrades);
                     }
                     else
                     {
-                        Dispatcher.Invoke(initialiseTrades);
+                        // New trades less (or equal) the 
+                        // total trades to show in the chart.
+                        TradesChart = new ChartValues<Trade>(newTrades);
+                    }
+
+                    if (newTradesCount > TradesDisplayCount)
+                    {
+                        // More new trades than the list can take, only takes the newest trades.
+                        var tradeBooktrades = newTrades.Skip(newTradesCount - TradesDisplayCount).ToList();
+
+                        // Order by newest to oldest (as it will appear on trade list)
+                        Trades = new List<Trade>(tradeBooktrades.OrderByDescending(t => t.Time));
+                    }
+                    else
+                    {
+                        // New trades less (or equal) the 
+                        // total trades to show in the trade list.
+                        // Order by newest to oldest (as it will appear on trade list)
+                        Trades = new List<Trade>(newTrades.OrderByDescending(t => t.Time));
                     }
                 }
                 else
                 {
-                    // TODO: save max Trade so no need to query for it again
-                    var maxId = Trades.Max(at => at.Id);
-                    var orderedTrades = (from t in trades
-                                                  where t.Id > maxId
-                                                  orderby t.Id
-                                                  select new Trade
-                                                  {
-                                                      Id = t.Id,
-                                                      Time = t.Time,
-                                                      Price = t.Price.Trim(Symbol.PricePrecision),
-                                                      Quantity = t.Quantity.Trim(Symbol.QuantityPrecision),
-                                                      IsBuyerMaker = t.IsBuyerMaker
-                                                  }).ToList();
+                    // Subsequent set of new trades
+                    
+                    // Get the latest available trade - the first trade on the 
+                    // trade list (which is also the last trade in the chart).
+                    var first = Trades.First();
 
-                    var newCount = orderedTrades.Count;
+                    // Extract new trades where time and id is greater than latest available trade. 
+                    // Order by oldest to newest (as it will appear in chart).
+                    var newTrades = (from t in tradesUpdate
+                                        where t.Time > first.Time && t.Id > first.Id
+                                        orderby t.Time, t.Id
+                                        select new Trade
+                                        {
+                                            Id = t.Id,
+                                            Time = t.Time,
+                                            Price = t.Price.Trim(Symbol.PricePrecision),
+                                            Quantity = t.Quantity.Trim(Symbol.QuantityPrecision),
+                                            IsBuyerMaker = t.IsBuyerMaker
+                                        }).ToList();
 
-                    if (TradesChart.Count >= ChartDisplayLimit)
+                    var newTradesCount = newTrades.Count;
+                    var tradesChartCount = TradesChart.Count;
+
+                    if (tradesChartCount >= TradesChartDisplayCount)
                     {
-                        var oldTrades = TradesChart.Take(newCount);
-                        foreach(var oldTrade in oldTrades)
+                        // For each additional new trade remove the oldest then add the new trade
+                        for (int i = 0; i < newTradesCount; i++)
                         {
-                            TradesChart.Remove(oldTrade);
+                            TradesChart.RemoveAt(0);
+                            TradesChart.Add(newTrades[i]);
                         }
-                    }
-
-                    Action updateTrades = () =>
-                    {
-                        TradesChart.AddRange(orderedTrades);
-
-                        for (int i = 0; i < newCount; i++)
-                        {
-                            while (Trades.Count >= TradesDisplayLimit)
-                            {
-                                Trades.RemoveAt(Trades.Count - 1);
-                            }
-
-                            Trades.Insert(0, orderedTrades[i]);
-                        }
-                    };
-
-                    if (Dispatcher == null)
-                    {
-                        updateTrades();
                     }
                     else
                     {
-                        Dispatcher.Invoke(updateTrades);
+                        // Get the difference between the number of trades the chart can take and the number it currently holds.
+                        var chartDisplayTopUpTradesCount = TradesChartDisplayCount - tradesChartCount;
+
+                        if(newTradesCount > chartDisplayTopUpTradesCount)
+                        {
+                            // There are more new trades than the chart can take.
+
+                            if (chartDisplayTopUpTradesCount > 0)
+                            {
+                                // The top up trades can simply be added to the chart as it will take it to the total the chart can hold
+                                var chartDisplayTopUpTrades = newTrades.Take(chartDisplayTopUpTradesCount);
+                                TradesChart.AddRange(chartDisplayTopUpTrades);
+                            }
+
+                            for (int i = chartDisplayTopUpTradesCount; i < newTradesCount; i++)
+                            {
+                                // For each additional new trade remove the oldest then add the new trade
+                                TradesChart.RemoveAt(0);
+                                TradesChart.Add(newTrades[i]);
+                            }
+                        }
+                        else
+                        {
+                            // Simply add new trades to current list as it wont be more than the total the chart can take.
+                            TradesChart.AddRange(newTrades);
+                        }
                     }
+
+                    if (newTradesCount > TradesDisplayCount)
+                    {
+                        // More new trades than the list can take, only takes the newest trades.
+                        var tradeBooktrades = newTrades.Skip(newTradesCount - TradesDisplayCount);
+
+                        // Order by newest to oldest (as it will appear on trade list)
+                        Trades = new List<Trade>(tradeBooktrades.OrderByDescending(t => t.Time));
+                    }
+                    else
+                    {
+                        var tradesCount = Trades.Count;
+
+                        // Order the new trades by newest first and oldest last
+                        var tradeBooktrades = newTrades.OrderByDescending(t => t.Time).ToList();
+
+                        if((newTradesCount + tradesCount) > TradesDisplayCount)
+                        {
+                            // Append to the new trades the balance from the existing trades to make up the trade list limit
+                            tradeBooktrades.AddRange(Trades.Take(TradesDisplayCount - newTradesCount));
+                        }
+                        else
+                        {
+                            // Simply append the existing trades to the new trades as it will fit in the trade list limit.
+                            tradeBooktrades.AddRange(Trades);
+                        }
+                        
+                        Trades = tradeBooktrades;
+                     }
                 }
             }
         }
