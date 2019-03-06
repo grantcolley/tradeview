@@ -1,6 +1,6 @@
 ﻿using DevelopmentInProgress.Wpf.Common.Model;
 
-namespace DevelopmentInProgress.Wpf.MarketView.Model
+namespace DevelopmentInProgress.Wpf.Common.Model
 {
     public class OrderBookTop : EntityBase
     {

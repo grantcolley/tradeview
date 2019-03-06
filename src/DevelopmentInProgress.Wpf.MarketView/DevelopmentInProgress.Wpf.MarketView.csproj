@@ -61,9 +61,6 @@
     <Compile Include="Events\SymbolEventArgs.cs" />
     <Compile Include="Events\SymbolsEventArgs.cs" />
     <Compile Include="Events\TradeEventArgs.cs" />
-    <Compile Include="Model\OrderBook.cs" />
-    <Compile Include="Model\OrderBookPriceLevel.cs" />
-    <Compile Include="Model\OrderBookTop.cs" />
     <Compile Include="Model\UserAccount.cs" />
     <Compile Include="Model\UserAccounts.cs" />
     <Compile Include="Model\Preferences.cs" />

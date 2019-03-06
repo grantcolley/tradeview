@@ -63,10 +63,15 @@
     <Compile Include="Events\EventArgsBase.cs" />
     <Compile Include="Events\OrdersEventArgs.cs" />
     <Compile Include="Events\StrategyEventArgs.cs" />
+    <Compile Include="Extensions\OrderBookExtensions.cs" />
     <Compile Include="Extensions\StrategyExtensions.cs" />
     <Compile Include="Extensions\StrategyNotificationExtensions.cs" />
     <Compile Include="Extensions\StrategySubscriptionExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
+    <Compile Include="Helpers\OrderBookHelper.cs" />
+    <Compile Include="Model\OrderBook.cs" />
+    <Compile Include="Model\OrderBookPriceLevel.cs" />
+    <Compile Include="Model\OrderBookTop.cs" />
     <Compile Include="Model\Trade.cs" />
     <Compile Include="Model\Strategy.cs" />
     <Compile Include="Model\StrategyFile.cs" />
