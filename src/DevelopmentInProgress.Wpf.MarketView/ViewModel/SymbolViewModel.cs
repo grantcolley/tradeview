@@ -14,16 +14,13 @@ using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 using System.Runtime.CompilerServices;
 using DevelopmentInProgress.Wpf.Common.ViewModel;
 using DevelopmentInProgress.Wpf.Common.Chart;
+using DevelopmentInProgress.Wpf.Common.Helpers;
 
 [assembly: InternalsVisibleTo("DevelopmentInProgress.Wpf.MarketView.Test")]
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
     public class SymbolViewModel : ExchangeViewModel
     {
-        internal int Limit => 500;
-        internal int TradesChartDisplayCount => 500;
-        internal int TradesDisplayCount => 18;
-
         private CancellationTokenSource symbolCancellationTokenSource;
         private Symbol symbol;
         private OrderBook orderBook;
@@ -35,9 +32,18 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private bool isLoadingOrderBook;
         private bool disposed;
 
-        public SymbolViewModel(IWpfExchangeService exchangeService, IChartHelper chartHelper)
+        public SymbolViewModel(IWpfExchangeService exchangeService, IChartHelper chartHelper, Preferences preferences = null)
             : base(exchangeService)
         {
+            TradeLimit = preferences.TradeLimit;
+            TradesDisplayCount = preferences.TradesDisplayCount;
+            TradesChartDisplayCount = preferences.TradesChartDisplayCount;
+
+            OrderBookLimit = preferences.OrderBookLimit;
+            OrderBookDisplayCount = preferences.OrderBookDisplayCount;
+            OrderBookChartDisplayCount = preferences.OrderBookChartDisplayCount;
+            OrderBookCount = OrderBookChartDisplayCount > OrderBookDisplayCount ? OrderBookChartDisplayCount : OrderBookDisplayCount;
+
             TimeFormatter = chartHelper.TimeFormatter;
             PriceFormatter = chartHelper.PriceFormatter;
 
@@ -45,6 +51,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         }
 
         public event EventHandler<SymbolEventArgs> OnSymbolNotification;
+
+        internal int TradeLimit { get; }
+        internal int TradesChartDisplayCount { get; }
+        internal int TradesDisplayCount { get; }
+        internal int OrderBookLimit { get; }
+        internal int OrderBookChartDisplayCount { get; }
+        internal int OrderBookDisplayCount { get; }
+        internal int OrderBookCount { get; set; }
 
         public bool HasSymbol => Symbol != null ? true : false;
 
@@ -167,9 +181,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 Trades = null;
                 OrderBook = null;
 
-                var tasks = new List<Task>(new [] { /*GetOrderBook(),*/ GetTrades() }).ToArray();
+                var tasks = new List<Task>(new[] { GetOrderBook(),  GetTrades()}).ToArray();
 
-                // don't await all - run on seperate tasks
                 await Task.WhenAll(tasks);
             }
             catch (Exception ex)
@@ -184,11 +197,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             try
             {
-                var orderBook = await ExchangeService.GetOrderBookAsync(Symbol.Name, Limit, symbolCancellationTokenSource.Token);
-
-                UpdateOrderBook(orderBook);
-
-                ExchangeService.SubscribeOrderBook(Symbol.Name, Limit, e => UpdateOrderBook(e.OrderBook), SubscribeOrderBookException, symbolCancellationTokenSource.Token);
+                ExchangeService.SubscribeOrderBook(Symbol.Name, OrderBookLimit, e => UpdateOrderBook(e.OrderBook), SubscribeOrderBookException, symbolCancellationTokenSource.Token);
             }
             catch (Exception ex)
             {
@@ -204,11 +213,11 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             try
             {
-                var trades = await ExchangeService.GetTradesAsync(Symbol.Name, Limit, symbolCancellationTokenSource.Token);
+                var trades = await ExchangeService.GetTradesAsync(Symbol.Name, TradeLimit, symbolCancellationTokenSource.Token);
 
                 UpdateTrades(trades);
 
-                ExchangeService.SubscribeTrades(Symbol.Name, Limit, e => UpdateTrades(e.Trades), SubscribeTradesException, symbolCancellationTokenSource.Token);
+                ExchangeService.SubscribeTrades(Symbol.Name, TradeLimit, e => UpdateTrades(e.Trades), SubscribeTradesException, symbolCancellationTokenSource.Token);
             }
             catch (Exception ex)
             {
@@ -222,14 +231,18 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         {
             if (!Symbol.Name.Equals(orderBook.Symbol))
             {
-                return;
+                throw new Exception("Orderbook update for wrong symbol");
             }
 
             lock (orderBookLock)
             {
-                if (OrderBook == null
-                    || OrderBook.Symbol != Symbol.Name)
+                bool firstOrders = false;
+
+                if (OrderBook == null)
                 {
+                    // First incoming order book create the local order book.
+                    firstOrders = true;
+
                     OrderBook = new OrderBook
                     {
                         Symbol = orderBook.Symbol,
@@ -237,50 +250,73 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                         QuoteSymbol = Symbol.QuoteAsset.Symbol
                     };
                 }
-
-                if (OrderBook.LastUpdateId < orderBook.LastUpdateId)
+                else if (OrderBook.LastUpdateId >= orderBook.LastUpdateId)
                 {
-                    OrderBook.LastUpdateId = orderBook.LastUpdateId;
-                    OrderBook.Top = new OrderBookTop
+                    // If the incoming order book is older than the local one ignore it.
+                    return;
+                }
+
+                OrderBook.LastUpdateId = orderBook.LastUpdateId;
+                OrderBook.Top = new OrderBookTop
+                {
+                    Ask = new OrderBookPriceLevel
                     {
-                        Ask = new OrderBookPriceLevel
-                        {
-                            Price = orderBook.Top.Ask.Price.Trim(Symbol.PricePrecision),
-                            Quantity = orderBook.Top.Ask.Quantity.Trim(Symbol.QuantityPrecision)
-                        },
-                        Bid = new OrderBookPriceLevel
-                        {
-                            Price = orderBook.Top.Bid.Price.Trim(Symbol.PricePrecision),
-                            Quantity = orderBook.Top.Bid.Quantity.Trim(Symbol.QuantityPrecision)
-                        }
-                    };
-
-                    var asks = new List<OrderBookPriceLevel>(
-                        (from ask in orderBook.Asks
-                         orderby ask.Price
-                         select new OrderBookPriceLevel
-                         {
-                             Price = ask.Price.Trim(Symbol.PricePrecision),
-                             Quantity = ask.Quantity.Trim(Symbol.QuantityPrecision)
-                         }));
-
-                    var bids = new List<OrderBookPriceLevel>(
-                        (from bid in orderBook.Bids
-                         orderby bid.Price
-                         select new OrderBookPriceLevel
-                         {
-                             Price = bid.Price.Trim(Symbol.PricePrecision),
-                             Quantity = bid.Quantity.Trim(Symbol.QuantityPrecision)
-                         }));
-
-                    if (Dispatcher == null)
+                        Price = orderBook.Top.Ask.Price.Trim(Symbol.PricePrecision),
+                        Quantity = orderBook.Top.Ask.Quantity.Trim(Symbol.QuantityPrecision)
+                    },
+                    Bid = new OrderBookPriceLevel
                     {
-                        OrderBook.Update(asks, bids);
+                        Price = orderBook.Top.Bid.Price.Trim(Symbol.PricePrecision),
+                        Quantity = orderBook.Top.Bid.Quantity.Trim(Symbol.QuantityPrecision)
                     }
-                    else
-                    {
-                        Dispatcher.Invoke(() => { OrderBook.Update(asks, bids); });
-                    }
+                };
+
+                // Ensure bids and asks ordered by price (ascending)
+                var orderedAsks = orderBook.Asks.OrderBy(a => a.Price).ToList();
+                var orderedBids = orderBook.Bids.OrderBy(b => b.Price).ToList();
+
+                // The OrderBookCount is the greater of the OrderBookDisplayCount OrderBookChartDisplayCount.
+                // Take the asks and bids for the OrderBookCount as new instances of type OrderBookPriceLevel 
+                // i.e. discard those that we are not interested in displaying on the screen.
+                var asks = orderedAsks.Take(OrderBookCount).Select(ask => new OrderBookPriceLevel
+                {
+                    Price = ask.Price.Trim(Symbol.PricePrecision),
+                    Quantity = ask.Quantity.Trim(Symbol.QuantityPrecision)
+                }).ToList();
+
+                var bids = orderedBids.Take(OrderBookCount).Select(bid => new OrderBookPriceLevel
+                {
+                    Price = bid.Price.Trim(Symbol.PricePrecision),
+                    Quantity = bid.Quantity.Trim(Symbol.QuantityPrecision)
+                }).ToList();
+
+                // Take the top bids and asks for the order book bid and ask lists and order descending.
+                OrderBook.TopAsks = asks.Take(OrderBookDisplayCount).OrderByDescending(a => a.Price).ToList();
+                OrderBook.TopBids = bids.Take(OrderBookDisplayCount).OrderByDescending(b => b.Price).ToList();
+
+                // Take the bid and aks to display in the the order book chart.
+                var chartAsks = asks.Take(OrderBookChartDisplayCount).ToList();
+                var chartBids = bids.Take(OrderBookChartDisplayCount).ToList();
+
+                // Create the aggregated bids and asks for the aggregated bid and ask chart.
+                var aggregatedAsks = OrderBookHelper.GetAggregatedList(chartAsks);
+                var aggregatedBids = OrderBookHelper.GetAggregatedList(chartBids);
+
+                if (firstOrders)
+                {
+                    // Create new instances of the chart bids and asks, reversing the bids.
+                    OrderBook.ChartAsks = new ChartValues<OrderBookPriceLevel>(chartAsks);
+                    OrderBook.ChartBids = new ChartValues<OrderBookPriceLevel>(chartBids.Reverse<OrderBookPriceLevel>().ToList());
+                    OrderBook.ChartAggregatedAsks = new ChartValues<OrderBookPriceLevel>(aggregatedAsks);
+                    OrderBook.ChartAggregatedBids = new ChartValues<OrderBookPriceLevel>(aggregatedBids.Reverse<OrderBookPriceLevel>().ToList());
+                }
+                else
+                {
+                    // Update the existing orderbook chart bids and asks, reversing the bids.
+                    OrderBook.UpdateChartAsks(chartAsks);
+                    OrderBook.UpdateChartBids(chartBids.Reverse<OrderBookPriceLevel>().ToList());
+                    OrderBook.UpdateChartAggregateAsks(aggregatedAsks);
+                    OrderBook.UpdateChartAggregateBids(aggregatedBids.Reverse<OrderBookPriceLevel>().ToList());
                 }
             }
         }

@@ -327,7 +327,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     }
                     else
                     {
-                        symbol = new SymbolViewModel(exchangeService, chartHelper);
+                        symbol = new SymbolViewModel(exchangeService, chartHelper, userAccount.Preferences);
                         symbol.Dispatcher = ViewModelContext.UiDispatcher;
                         Symbols.Add(symbol);
                         SelectedSymbol = symbol;
