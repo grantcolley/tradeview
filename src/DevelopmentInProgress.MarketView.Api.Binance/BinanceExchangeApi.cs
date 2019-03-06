@@ -365,8 +365,8 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
                 }
             };
 
-            orderBook.Asks = from ask in ob.Asks select new Interface.Model.OrderBookPriceLevel { Price = ask.Price, Quantity = ask.Quantity };
-            orderBook.Bids = from bid in ob.Bids select new Interface.Model.OrderBookPriceLevel { Price = bid.Price, Quantity = bid.Quantity };
+            orderBook.Asks = (from ask in ob.Asks select new Interface.Model.OrderBookPriceLevel { Price = ask.Price, Quantity = ask.Quantity }).ToList();
+            orderBook.Bids = (from bid in ob.Bids select new Interface.Model.OrderBookPriceLevel { Price = bid.Price, Quantity = bid.Quantity }).ToList();
 
             return orderBook;
         }
