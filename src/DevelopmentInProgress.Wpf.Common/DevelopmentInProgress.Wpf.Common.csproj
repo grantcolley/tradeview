@@ -68,7 +68,6 @@
     <Compile Include="Extensions\StrategyNotificationExtensions.cs" />
     <Compile Include="Extensions\StrategySubscriptionExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
-    <Compile Include="Helpers\OrderBookHelper.cs" />
     <Compile Include="Model\OrderBook.cs" />
     <Compile Include="Model\OrderBookPriceLevel.cs" />
     <Compile Include="Model\OrderBookTop.cs" />
