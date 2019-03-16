@@ -28,10 +28,16 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         public async Task SetSymbol()
         {
             // Arrange
+            var preferences = new Model.Preferences();
+            preferences.OrderBookChartDisplayCount = 8;
+            preferences.OrderBookDisplayCount = 5;
+            preferences.TradesDisplayCount = 5;
+            preferences.TradesChartDisplayCount = 8;
+
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var symbolViewModel = new SymbolViewModel(exchangeService, chartHelper, new Model.Preferences());
+            var symbolViewModel = new SymbolViewModel(exchangeService, chartHelper, preferences);
 
             var trx = TestHelper.Trx.GetViewSymbol();
             
@@ -183,13 +189,17 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         [TestMethod]
         public async Task UpdateTrades()
         {
-            throw new NotImplementedException();
-
             // Arrange
+            var preferences = new Model.Preferences();
+            preferences.OrderBookChartDisplayCount = 8;
+            preferences.OrderBookDisplayCount = 5;
+            preferences.TradesDisplayCount = 5;
+            preferences.TradesChartDisplayCount = 8;
+
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var symbolViewModel = new SymbolViewModel(exchangeService, chartHelper, new Model.Preferences());
+            var symbolViewModel = new SymbolViewModel(exchangeService, chartHelper, preferences);
 
             var trx = TestHelper.Trx.GetViewSymbol();
 

@@ -84,7 +84,6 @@
     <Compile Include="TradeViewModelTest.cs" />
     <Compile Include="SymbolStatisticsExtensionsTest.cs" />
     <Compile Include="ScratchPad.cs" />
-    <Compile Include="OrderBookTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
