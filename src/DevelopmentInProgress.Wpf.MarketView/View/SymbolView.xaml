@@ -190,8 +190,7 @@
                         </Grid.ColumnDefinitions>
                         <DockPanel LastChildFill="True">
                             <Label Grid.Column="0" DockPanel.Dock="Top" HorizontalAlignment="Center" Content="Orders"/>
-                            <!--DisableAnimations="True"-->
-                            <lc:CartesianChart Hoverable="False" DataTooltip="{x:Null}"
+                            <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}"
                                                Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}">
                                 <lc:CartesianChart.Series>
                                     <lc:StepLineSeries Values="{Binding OrderBook.ChartAsks}" 
@@ -240,8 +239,7 @@
 
                         <DockPanel Grid.Column="1" LastChildFill="True">
                             <Label DockPanel.Dock="Top" Content="Cumulative" HorizontalAlignment="Center"/>
-                            <!--DisableAnimations="True"-->                        
-                            <lc:CartesianChart Hoverable="False" DataTooltip="{x:Null}"
+                            <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}"
                                                Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}">
                                 <lc:CartesianChart.Series>
                                     <lc:StepLineSeries Values="{Binding OrderBook.ChartAggregatedAsks}" 
