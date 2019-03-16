@@ -9,12 +9,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 using System.Runtime.CompilerServices;
 using DevelopmentInProgress.Wpf.Common.ViewModel;
 using DevelopmentInProgress.Wpf.Common.Chart;
-using DevelopmentInProgress.Wpf.Common.Helpers;
 
 [assembly: InternalsVisibleTo("DevelopmentInProgress.Wpf.MarketView.Test")]
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
@@ -32,7 +30,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private bool isLoadingOrderBook;
         private bool disposed;
 
-        public SymbolViewModel(IWpfExchangeService exchangeService, IChartHelper chartHelper, Preferences preferences = null)
+        public SymbolViewModel(IWpfExchangeService exchangeService, IChartHelper chartHelper, Preferences preferences)
             : base(exchangeService)
         {
             TradeLimit = preferences.TradeLimit;
@@ -181,7 +179,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 Trades = null;
                 OrderBook = null;
 
-                var tasks = new List<Task>(new[] { GetOrderBook(),  GetTrades()}).ToArray();
+                var tasks = new List<Task>(new[] { GetOrderBook(), GetTrades()}).ToArray();
 
                 await Task.WhenAll(tasks);
             }
@@ -197,6 +195,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             try
             {
+                var orderBook = await ExchangeService.GetOrderBookAsync(Symbol.Name, OrderBookLimit, symbolCancellationTokenSource.Token);
+
+                UpdateOrderBook(orderBook);
+
                 ExchangeService.SubscribeOrderBook(Symbol.Name, OrderBookLimit, e => UpdateOrderBook(e.OrderBook), SubscribeOrderBookException, symbolCancellationTokenSource.Token);
             }
             catch (Exception ex)
@@ -227,7 +229,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             IsLoadingTrades = false;
         }
 
-        private void UpdateOrderBook(Interface.OrderBook orderBook)
+        internal void UpdateOrderBook(Interface.OrderBook orderBook)
         {
             if (!Symbol.Name.Equals(orderBook.Symbol))
             {
@@ -271,9 +273,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     }
                 };
 
-                // Ensure bids and asks ordered by price (ascending)
+                // Order by price: bids (DESC) and asks (ASC)
                 var orderedAsks = orderBook.Asks.OrderBy(a => a.Price).ToList();
-                var orderedBids = orderBook.Bids.OrderBy(b => b.Price).ToList();
+                var orderedBids = orderBook.Bids.OrderByDescending(b => b.Price).ToList();
 
                 // The OrderBookCount is the greater of the OrderBookDisplayCount OrderBookChartDisplayCount.
                 // Take the asks and bids for the OrderBookCount as new instances of type OrderBookPriceLevel 
@@ -291,16 +293,20 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                 }).ToList();
 
                 // Take the top bids and asks for the order book bid and ask lists and order descending.
-                OrderBook.TopAsks = asks.Take(OrderBookDisplayCount).OrderByDescending(a => a.Price).ToList();
-                OrderBook.TopBids = bids.Take(OrderBookDisplayCount).OrderByDescending(b => b.Price).ToList();
+                var topAsks = asks.Take(OrderBookDisplayCount).Reverse().ToList();
+                var topBids = bids.Take(OrderBookDisplayCount).ToList();
 
                 // Take the bid and aks to display in the the order book chart.
                 var chartAsks = asks.Take(OrderBookChartDisplayCount).ToList();
                 var chartBids = bids.Take(OrderBookChartDisplayCount).ToList();
 
                 // Create the aggregated bids and asks for the aggregated bid and ask chart.
-                var aggregatedAsks = OrderBookHelper.GetAggregatedList(chartAsks);
-                var aggregatedBids = OrderBookHelper.GetAggregatedList(chartBids);
+                var aggregatedAsks = chartAsks.GetAggregatedList();
+                var aggregatedBids = chartBids.GetAggregatedList();
+
+                // Create new instances of the top bids and asks, reversing the asks
+                OrderBook.TopAsks = topAsks;
+                OrderBook.TopBids = topBids;
 
                 if (firstOrders)
                 {
@@ -321,7 +327,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        private void UpdateTrades(IEnumerable<Interface.Trade> tradesUpdate)
+        internal void UpdateTrades(IEnumerable<Interface.Trade> tradesUpdate)
         {
             lock (tradesLock)
             {
@@ -411,7 +417,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                         // Get the difference between the number of trades the chart can take and the number it currently holds.
                         var chartDisplayTopUpTradesCount = TradesChartDisplayCount - tradesChartCount;
 
-                        if(newTradesCount > chartDisplayTopUpTradesCount)
+                        if (newTradesCount > chartDisplayTopUpTradesCount)
                         {
                             // There are more new trades than the chart can take.
 
