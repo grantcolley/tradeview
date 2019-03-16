@@ -1,1 +1,1 @@
-﻿{"Accounts":[{"AccountName":"grant","ApiKey":"apikey","ApiSecret":"apisecret","Preferences":{"ShowFavourites":true,"SelectedSymbol":"TRXBTC","FavouriteSymbols":["ETHBTC","TRXBTC"]}}]}
+﻿{"Accounts":[{"AccountName":"grant","ApiKey":"apikey","ApiSecret":"apisecret","Preferences":{"ShowFavourites":true,"SelectedSymbol":"TRXBTC","TradeLimit":500,"TradesChartDisplayCount":500,"TradesDisplayCount":18,"OrderBookLimit":0,"OrderBookChartDisplayCount":100,"OrderBookDisplayCount":9, "FavouriteSymbols":["ETHBTC","TRXBTC"]}}]}
