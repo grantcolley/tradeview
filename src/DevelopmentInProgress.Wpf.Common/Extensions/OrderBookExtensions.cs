@@ -8,13 +8,30 @@ namespace DevelopmentInProgress.Wpf.Common.Extensions
 {
     public static class OrderBookExtensions
     {
+        public static List<OrderBookPriceLevel> GetAggregatedList(this List<OrderBookPriceLevel> orders)
+        {
+            var count = orders.Count();
+
+            var aggregatedList = orders.Select(p => new OrderBookPriceLevel { Price = p.Price, Quantity = p.Quantity }).ToList();
+
+            for (int i = 0; i < count; i++)
+            {
+                if (i > 0)
+                {
+                    aggregatedList[i].Quantity = aggregatedList[i].Quantity + aggregatedList[i - 1].Quantity;
+                }
+            }
+
+            return aggregatedList;
+        }
+
         public static void UpdateChartBids(this OrderBook orderBook, List<OrderBookPriceLevel> pl)
         {
             RemoveOldPrices(orderBook.ChartBids, pl);
 
             UpdateMatchingPrices(orderBook.ChartBids, pl);
 
-            AddNewPrices(orderBook.ChartBids, pl, false);
+            AddNewPrices(orderBook.ChartBids, pl);
         }
 
         public static void UpdateChartAggregateBids(this OrderBook orderBook, List<OrderBookPriceLevel> pl)
@@ -23,7 +40,7 @@ namespace DevelopmentInProgress.Wpf.Common.Extensions
 
             UpdateMatchingPrices(orderBook.ChartAggregatedBids, pl);
 
-            AddNewPrices(orderBook.ChartAggregatedBids, pl, false);
+            AddNewPrices(orderBook.ChartAggregatedBids, pl);
         }
 
         public static void UpdateChartAsks(this OrderBook orderBook, List<OrderBookPriceLevel> pl)
@@ -32,7 +49,7 @@ namespace DevelopmentInProgress.Wpf.Common.Extensions
 
             UpdateMatchingPrices(orderBook.ChartAsks, pl);
 
-            AddNewPrices(orderBook.ChartAsks, pl, true);
+            AddNewPrices(orderBook.ChartAsks, pl);
         }
 
         public static void UpdateChartAggregateAsks(this OrderBook orderBook, List<OrderBookPriceLevel> pl)
@@ -41,7 +58,7 @@ namespace DevelopmentInProgress.Wpf.Common.Extensions
 
             UpdateMatchingPrices(orderBook.ChartAggregatedAsks, pl);
 
-            AddNewPrices(orderBook.ChartAggregatedAsks, pl, true);
+            AddNewPrices(orderBook.ChartAggregatedAsks, pl);
         }
 
         private static void RemoveOldPrices(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
@@ -67,38 +84,40 @@ namespace DevelopmentInProgress.Wpf.Common.Extensions
              select updateQuantity(v, p)).ToList();
         }
 
-        private static void AddNewPrices(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl, bool isAsks)
+        private static void AddNewPrices(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
         {
             var newPoints = pl.Where(p => !cv.Any(v => v.Price == p.Price)).ToList();
 
             var newPointsCount = newPoints.Count;
+
+            if(newPointsCount.Equals(0))
+            {
+                return;
+            }
+
             var chartValueCount = cv.Count;
 
             int currentNewPoint = 0;
 
             for (int i = 0; i < chartValueCount; i++)
             {
-                if (isAsks)
+                if (newPoints[currentNewPoint].Price < cv[i].Price)
                 {
-                    if (newPoints[currentNewPoint].Price < cv[i].Price)
-                    {
-                        cv.Insert(i, newPoints[currentNewPoint]);
-                        currentNewPoint++;
-                    }
-                }
-                else
-                {
-                    if (newPoints[currentNewPoint].Price > cv[i].Price)
-                    {
-                        cv.Insert(i, newPoints[currentNewPoint]);
-                        currentNewPoint++;
-                    }
+                    cv.Insert(i, newPoints[currentNewPoint]);
+
+                    // Increments
+                    currentNewPoint++;  // position in new points list
+                    chartValueCount++;  // number of items in the cv list after the insert
                 }
 
-                // TODO: does this only apply to asks?
+                if (currentNewPoint > (newPointsCount - 1))
+                {
+                    break;
+                }
+
                 if (i == chartValueCount - 1)
                 {
-                    if (currentNewPoint < newPointsCount - 1)
+                    if (currentNewPoint < newPointsCount)
                     {
                         var appendNewPoints = newPoints.Skip(currentNewPoint).ToList();
                         cv.AddRange(appendNewPoints);
