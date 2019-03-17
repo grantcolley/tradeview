@@ -368,20 +368,20 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                         var tradeBooktrades = newTrades.Skip(newTradesCount - TradesDisplayCount).ToList();
 
                         // Order by newest to oldest (as it will appear on trade list)
-                        Trades = new List<Trade>(tradeBooktrades.OrderByDescending(t => t.Time));
+                        Trades = new List<Trade>(tradeBooktrades.Reverse<Trade>());
                     }
                     else
                     {
                         // New trades less (or equal) the 
                         // total trades to show in the trade list.
                         // Order by newest to oldest (as it will appear on trade list)
-                        Trades = new List<Trade>(newTrades.OrderByDescending(t => t.Time));
+                        Trades = new List<Trade>(newTrades.Reverse<Trade>());
                     }
                 }
                 else
                 {
                     // Subsequent set of new trades
-                    
+
                     // Get the latest available trade - the first trade on the 
                     // trade list (which is also the last trade in the chart).
                     var first = Trades.First();
@@ -389,16 +389,16 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     // Extract new trades where time and id is greater than latest available trade. 
                     // Order by oldest to newest (as it will appear in chart).
                     var newTrades = (from t in tradesUpdate
-                                        where t.Time > first.Time && t.Id > first.Id
-                                        orderby t.Time, t.Id
-                                        select new Trade
-                                        {
-                                            Id = t.Id,
-                                            Time = t.Time,
-                                            Price = t.Price.Trim(Symbol.PricePrecision),
-                                            Quantity = t.Quantity.Trim(Symbol.QuantityPrecision),
-                                            IsBuyerMaker = t.IsBuyerMaker
-                                        }).ToList();
+                                     where t.Time > first.Time && t.Id > first.Id
+                                     orderby t.Time, t.Id
+                                     select new Trade
+                                     {
+                                         Id = t.Id,
+                                         Time = t.Time,
+                                         Price = t.Price.Trim(Symbol.PricePrecision),
+                                         Quantity = t.Quantity.Trim(Symbol.QuantityPrecision),
+                                         IsBuyerMaker = t.IsBuyerMaker
+                                     }).ToList();
 
                     var newTradesCount = newTrades.Count;
                     var tradesChartCount = TradesChart.Count;
@@ -457,7 +457,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                         // Order the new trades by newest first and oldest last
                         var tradeBooktrades = newTrades.OrderByDescending(t => t.Time).ToList();
 
-                        if((newTradesCount + tradesCount) > TradesDisplayCount)
+                        if ((newTradesCount + tradesCount) > TradesDisplayCount)
                         {
                             // Append to the new trades the balance from the existing trades to make up the trade list limit
                             tradeBooktrades.AddRange(Trades.Take(TradesDisplayCount - newTradesCount));
@@ -467,9 +467,9 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                             // Simply append the existing trades to the new trades as it will fit in the trade list limit.
                             tradeBooktrades.AddRange(Trades);
                         }
-                        
+
                         Trades = tradeBooktrades;
-                     }
+                    }
                 }
             }
         }
