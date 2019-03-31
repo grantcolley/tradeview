@@ -22,6 +22,7 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
         private static string aggregateTradesUpdated;
         private static string orderBook;
         private static string orderBookUpdated;
+        private static string bnb;
 
         static  TestHelper()
         {
@@ -47,6 +48,9 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 
             var ts = SymbolsStatistics.Single(s => s.Symbol.Equals("TRXBTC"));
             trxStats = JsonConvert.SerializeObject(ts);
+
+            var b = Symbols.Single(s => s.BaseAsset.Symbol.Equals("BNB") && s.QuoteAsset.Symbol.Equals("BTC"));
+            bnb = JsonConvert.SerializeObject(b);
         }
         
         public static List<Symbol> Symbols
@@ -134,6 +138,14 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             get
             {
                 return JsonConvert.DeserializeObject<Symbol>(trx);
+            }
+        }
+
+        public static Symbol BNB
+        {
+            get
+            {
+                return JsonConvert.DeserializeObject<Symbol>(bnb);
             }
         }
 

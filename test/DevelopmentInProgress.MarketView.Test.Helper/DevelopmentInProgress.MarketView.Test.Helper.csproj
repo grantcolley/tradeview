@@ -54,6 +54,7 @@
     <Compile Include="ExchangeService.cs" />
     <Compile Include="ExchangeServiceSubscribeAccountInfoAccount.cs" />
     <Compile Include="ExchangeServiceHelper.cs" />
+    <Compile Include="TradesUpdateHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AccountInfo.txt">
