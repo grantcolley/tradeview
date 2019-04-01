@@ -352,7 +352,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     if (newTradesCount > TradesChartDisplayCount)
                     {
                         // More new trades than the chart can take, only takes the newest trades.
-                        var chartTrades = newTrades.Skip(newTradesCount - TradesChartDisplayCount);
+                        var chartTrades = newTrades.Skip(newTradesCount - TradesChartDisplayCount).ToList();
                         TradesChart = new ChartValues<Trade>(chartTrades);
                     }
                     else
@@ -368,14 +368,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                         var tradeBooktrades = newTrades.Skip(newTradesCount - TradesDisplayCount).ToList();
 
                         // Order by newest to oldest (as it will appear on trade list)
-                        Trades = new List<Trade>(tradeBooktrades.Reverse<Trade>());
+                        Trades = new List<Trade>(tradeBooktrades.Reverse<Trade>().ToList());
                     }
                     else
                     {
                         // New trades less (or equal) the 
                         // total trades to show in the trade list.
                         // Order by newest to oldest (as it will appear on trade list)
-                        Trades = new List<Trade>(newTrades.Reverse<Trade>());
+                        Trades = new List<Trade>(newTrades.Reverse<Trade>().ToList());
                     }
                 }
                 else
@@ -424,7 +424,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                             if (chartDisplayTopUpTradesCount > 0)
                             {
                                 // The top up trades can simply be added to the chart as it will take it to the total the chart can hold
-                                var chartDisplayTopUpTrades = newTrades.Take(chartDisplayTopUpTradesCount);
+                                var chartDisplayTopUpTrades = newTrades.Take(chartDisplayTopUpTradesCount).ToList();
                                 TradesChart.AddRange(chartDisplayTopUpTrades);
                             }
 
@@ -444,23 +444,25 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                     if (newTradesCount > TradesDisplayCount)
                     {
-                        // More new trades than the list can take, only takes the newest trades.
-                        var tradeBooktrades = newTrades.Skip(newTradesCount - TradesDisplayCount);
+                        // More new trades than the list can take, only take the newest
+                        // trades and create a new instance of the trades list.
+                        var tradeBooktrades = newTrades.Skip(newTradesCount - TradesDisplayCount).ToList();
 
                         // Order by newest to oldest (as it will appear on trade list)
-                        Trades = new List<Trade>(tradeBooktrades.OrderByDescending(t => t.Time));
+                        Trades = new List<Trade>(tradeBooktrades.Reverse<Trade>().ToList());
                     }
                     else
                     {
                         var tradesCount = Trades.Count;
 
                         // Order the new trades by newest first and oldest last
-                        var tradeBooktrades = newTrades.OrderByDescending(t => t.Time).ToList();
+                        var tradeBooktrades = newTrades.Reverse<Trade>().ToList();
 
                         if ((newTradesCount + tradesCount) > TradesDisplayCount)
                         {
                             // Append to the new trades the balance from the existing trades to make up the trade list limit
-                            tradeBooktrades.AddRange(Trades.Take(TradesDisplayCount - newTradesCount));
+                            var balanceTrades = Trades.Take(TradesDisplayCount - newTradesCount).ToList();
+                            tradeBooktrades.AddRange(balanceTrades);
                         }
                         else
                         {
