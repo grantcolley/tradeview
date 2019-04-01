@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using DevelopmentInProgress.MarketView.Interface.Model;
 using DevelopmentInProgress.MarketView.Test.Helper;
@@ -34,7 +32,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             preferences.TradesDisplayCount = 5;
             preferences.TradesChartDisplayCount = 8;
 
-            var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
             var symbolViewModel = new SymbolViewModel(exchangeService, chartHelper, preferences);
@@ -77,6 +74,117 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
 
             // Assert
             AssertOrderBookUpdate(symbolViewModel, orderBook, preferences);
+        }
+
+        [TestMethod]
+        public void UpdateOrderBook_SecondUpdate()
+        {
+            // Arrange
+            var exchangeApi = ExchangeServiceHelper.GetExchangeService();
+            var exchangeService = new WpfExchangeService(exchangeApi);
+
+            var preferences = new Model.Preferences();
+            preferences.OrderBookChartDisplayCount = 8;
+            preferences.OrderBookDisplayCount = 5;
+
+            var symbolViewModel = new SymbolViewModel(exchangeService, chartHelper, preferences);
+
+            var trx = TestHelper.Trx.GetViewSymbol();
+            symbolViewModel.Symbol = trx;
+
+            var firstOrderBook = OrderBookUpdateHelper.OrderBook_Trx_GetFirstUpdate();
+            var secondOrderBook = OrderBookUpdateHelper.OrderBook_Trx_GetSecondUpdate();
+
+            // Act
+            symbolViewModel.UpdateOrderBook(firstOrderBook);
+
+            symbolViewModel.UpdateOrderBook(secondOrderBook);
+
+            // Assert
+            AssertOrderBookUpdate(symbolViewModel, secondOrderBook, preferences);
+        }
+
+        [TestMethod]
+        public void UpdateTrades_FirstUpdate()
+        {
+            // Arrange
+            var preferences = new Model.Preferences();
+            preferences.OrderBookChartDisplayCount = 8;
+            preferences.OrderBookDisplayCount = 5;
+            preferences.TradesDisplayCount = 5;
+            preferences.TradesChartDisplayCount = 8;
+
+            var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
+            var exchangeService = new WpfExchangeService(exchangeApi);
+            var symbolViewModel = new SymbolViewModel(exchangeService, chartHelper, preferences);
+
+            var trx = TestHelper.BNB.GetViewSymbol();
+            symbolViewModel.Symbol = trx;
+
+            var firstTrades = TradesUpdateHelper.Trades_BNB_InitialTradeUpdate_10_Trades();
+
+            // Act
+            symbolViewModel.UpdateTrades(firstTrades);
+
+            // Assert
+            AssertTradeUpdate(symbolViewModel, preferences, firstTrades);
+        }
+
+        [TestMethod]
+        public void UpdateTrades_SecondUpdate_5_New_Trades()
+        {
+            // Arrange
+            var preferences = new Model.Preferences();
+            preferences.OrderBookChartDisplayCount = 8;
+            preferences.OrderBookDisplayCount = 5;
+            preferences.TradesDisplayCount = 5;
+            preferences.TradesChartDisplayCount = 8;
+
+            var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
+            var exchangeService = new WpfExchangeService(exchangeApi);
+            var symbolViewModel = new SymbolViewModel(exchangeService, chartHelper, preferences);
+
+            var trx = TestHelper.BNB.GetViewSymbol();
+            symbolViewModel.Symbol = trx;
+
+            var firstTrades = TradesUpdateHelper.Trades_BNB_InitialTradeUpdate_10_Trades();
+
+            var secondTrades = TradesUpdateHelper.Trades_BNB_NextTradeUpdate(firstTrades, 5, 5);
+
+            // Act
+            symbolViewModel.UpdateTrades(firstTrades);
+
+            symbolViewModel.UpdateTrades(secondTrades);
+
+            // Assert
+            AssertTradeUpdate(symbolViewModel, preferences, secondTrades);
+        }
+
+        private void AssertTradeUpdate(SymbolViewModel symbolViewModel, Model.Preferences preferences, List<Trade> trades)
+        {
+            // Assert - trade counts
+            Assert.AreEqual(symbolViewModel.Trades.Count, preferences.TradesDisplayCount);
+            Assert.AreEqual(symbolViewModel.TradesChart.Count, preferences.TradesChartDisplayCount);
+
+            // Assert - trades
+            var lastTrades = trades.Skip(trades.Count - preferences.TradesDisplayCount).ToList();
+
+            var lastTradesReversed = lastTrades.Reverse<Trade>().ToList();
+
+            for (int i = 0; i < preferences.TradesDisplayCount; i++)
+            {
+                Assert.AreEqual(symbolViewModel.Trades[i].Id, lastTradesReversed[i].Id);
+                Assert.AreEqual(symbolViewModel.Trades[i].Time, lastTradesReversed[i].Time);
+            }
+
+            // Assert - chart trades
+            var lastChartTrades = trades.Skip(trades.Count - preferences.TradesChartDisplayCount).ToList();
+
+            for (int i = 0; i < preferences.TradesChartDisplayCount; i++)
+            {
+                Assert.AreEqual(symbolViewModel.TradesChart[i].Id, lastChartTrades[i].Id);
+                Assert.AreEqual(symbolViewModel.TradesChart[i].Time, lastChartTrades[i].Time);
+            }
         }
 
         private void AssertOrderBookUpdate(SymbolViewModel symbolViewModel, OrderBook orderBook, Model.Preferences preferences)
@@ -155,82 +263,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             {
                 Assert.AreEqual(symbolViewModel.OrderBook.ChartAggregatedBids[i].Price, reversedAggregateBidsList[i].Price);
                 Assert.AreEqual(symbolViewModel.OrderBook.ChartAggregatedBids[i].Quantity, reversedAggregateBidsList[i].Quantity);
-            }
-        }
-
-        [TestMethod]
-        public void UpdateOrderBook_SecondUpdate()
-        {
-            // Arrange
-            var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
-
-            var preferences = new Model.Preferences();
-            preferences.OrderBookChartDisplayCount = 8;
-            preferences.OrderBookDisplayCount = 5;
-
-            var symbolViewModel = new SymbolViewModel(exchangeService, chartHelper, preferences);
-
-            var trx = TestHelper.Trx.GetViewSymbol();
-            symbolViewModel.Symbol = trx;
-
-            var firstOrderBook = OrderBookUpdateHelper.OrderBook_Trx_GetFirstUpdate();
-            var secondOrderBook = OrderBookUpdateHelper.OrderBook_Trx_GetSecondUpdate();
-
-            // Act
-            symbolViewModel.UpdateOrderBook(firstOrderBook);
-
-            symbolViewModel.UpdateOrderBook(secondOrderBook);
-
-            // Assert
-            AssertOrderBookUpdate(symbolViewModel, secondOrderBook, preferences);
-        }
-
-        [TestMethod]
-        public async Task UpdateTrades()
-        {
-            // Arrange
-            var preferences = new Model.Preferences();
-            preferences.OrderBookChartDisplayCount = 8;
-            preferences.OrderBookDisplayCount = 5;
-            preferences.TradesDisplayCount = 5;
-            preferences.TradesChartDisplayCount = 8;
-
-            var cxlToken = new CancellationToken();
-            var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
-            var exchangeService = new WpfExchangeService(exchangeApi);
-            var symbolViewModel = new SymbolViewModel(exchangeService, chartHelper, preferences);
-
-            var trx = TestHelper.Trx.GetViewSymbol();
-
-            // Act
-            await symbolViewModel.SetSymbol(trx);
-
-            // Assert
-            var trades = TestHelper.Trades.Take(symbolViewModel.TradesDisplayCount).ToList();
-            var updatedtrades = TestHelper.TradesUpdated;
-
-            var maxId = trades.Max(t => t.Id);          
-            var newTrades = (from t in updatedtrades
-                               where t.Id > maxId
-                               orderby t.Time
-                               select t).ToList();
-
-            for(int i = 0; i < newTrades.Count(); i++)
-            {
-                if (trades.Count >= symbolViewModel.TradesDisplayCount)
-                {
-                    trades.RemoveAt(trades.Count - 1);
-                }
-
-                trades.Insert(0, newTrades[i]);
-            }
-
-            Assert.AreEqual(symbolViewModel.Trades.Count, trades.Count);
-
-            for(int i = 0; i < symbolViewModel.Trades.Count; i++)
-            {
-                Assert.AreEqual(symbolViewModel.Trades[i].Id, trades[i].Id);
             }
         }
     }

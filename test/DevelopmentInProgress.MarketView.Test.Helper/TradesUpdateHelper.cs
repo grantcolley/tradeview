@@ -7,7 +7,7 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 {
     public static class TradesUpdateHelper
     {
-        public static List<Trade> Trades_BNB_GetFirstUpdate()
+        public static List<Trade> Trades_BNB_InitialTradeUpdate_10_Trades()
         {
             //    "Symbol":"BNBBTC",
             //    "Id":39316368,
@@ -32,23 +32,31 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
                 IsBestPriceMatch = true
             };
 
-            return Trades_GetUpdate(new List<Trade> { trade });
+            return Trades_GetUpdate(new List<Trade> { trade }, 9);
         }
 
-        public static List<Trade> Trades_BNB_GetSecondUpdate(List<Trade> previousTrade)
+        /// <summary>
+        /// Gets a new update trades list based on the previous trades list.
+        /// Some trades from the previous trade update are kept and new ones added to it.
+        /// </summary>
+        /// <param name="previousTrades">The previous trade update list.</param>
+        /// <param name="skipPreviousTradesCount">The number of old trades to skip when creating the new updated trades list.</param>
+        /// <param name="newTradesCount">The number of new trades to create for the updates trades list. They get appended to the old trades that weren't skipped.</param>
+        /// <returns></returns>
+        public static List<Trade> Trades_BNB_NextTradeUpdate(List<Trade> previousTrades, int skipPreviousTradesCount, int newTradesCount)
         {
-            return Trades_GetUpdate(previousTrade.Skip(5).ToList());
+            return Trades_GetUpdate(previousTrades.Skip(skipPreviousTradesCount).ToList(), newTradesCount);
         }
 
-        private static List<Trade> Trades_GetUpdate(List<Trade> previousTrades)
+        private static List<Trade> Trades_GetUpdate(List<Trade> seedTrades, int newTradesCount)
         {
             var trades = new List<Trade>();
 
-            var seed = previousTrades.Count;
+            var seedCount = seedTrades.Count;
 
-            trades.AddRange(previousTrades);
+            trades.AddRange(seedTrades);
 
-            for (int i = seed; i < 10; i++)
+            for (int i = seedCount; i < newTradesCount; i++)
             {
                 trades.Add(NewTrade(trades[i - 1]));
             }
