@@ -54,6 +54,8 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 
             var seedCount = seedTrades.Count;
 
+            newTradesCount += seedCount;
+
             trades.AddRange(seedTrades);
 
             for (int i = seedCount; i < newTradesCount; i++)
