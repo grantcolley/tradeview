@@ -442,7 +442,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                         }
                     }
 
-                    if (newTradesCount > TradesDisplayCount)
+                    if (newTradesCount >= TradesDisplayCount)
                     {
                         // More new trades than the list can take, only take the newest
                         // trades and create a new instance of the trades list.
