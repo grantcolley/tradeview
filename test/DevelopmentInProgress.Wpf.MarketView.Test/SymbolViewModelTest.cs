@@ -220,25 +220,22 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             Assert.AreEqual(symbolViewModel.Trades.Count, 13);
             Assert.AreEqual(symbolViewModel.TradesChart.Count, 13);
 
-            var first = firstTrades.Skip(7).ToList();
-
-            // Assert - trades
-            var secondTradesReversed = secondTrades.ToList();
-            secondTradesReversed.Reverse<Trade>().ToList().AddRange(first);
-            var lastTradesReversed = secondTradesReversed;
-
-            for (int i = 0; i < preferences.TradesDisplayCount; i++)
-            {
-                Assert.AreEqual(symbolViewModel.Trades[i].Id, lastTradesReversed[i].Id);
-                Assert.AreEqual(symbolViewModel.Trades[i].Time, lastTradesReversed[i].Time);
-            }
+            var chart = firstTrades.Take(3).ToList();
+            chart.AddRange(secondTrades);
 
             // Assert - chart trades
-            first.AddRange(secondTrades);
-            for (int i = 0; i < preferences.TradesChartDisplayCount; i++)
+            for (int i = 0; i < 13; i++)
             {
-                Assert.AreEqual(symbolViewModel.TradesChart[i].Id, secondTrades[i].Id);
-                Assert.AreEqual(symbolViewModel.TradesChart[i].Time, secondTrades[i].Time);
+                Assert.AreEqual(symbolViewModel.TradesChart[i].Id, chart[i].Id);
+                Assert.AreEqual(symbolViewModel.TradesChart[i].Time, chart[i].Time);
+            }
+
+            // Assert - trades
+            var trades = chart.Reverse<Trade>().ToList();
+            for (int i = 0; i < 13; i++)
+            {
+                Assert.AreEqual(symbolViewModel.Trades[i].Id, trades[i].Id);
+                Assert.AreEqual(symbolViewModel.Trades[i].Time, trades[i].Time);
             }
         }
 
