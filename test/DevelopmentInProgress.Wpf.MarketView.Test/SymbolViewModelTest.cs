@@ -105,7 +105,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         }
 
         [TestMethod]
-        public void UpdateTrades_FirstUpdate()
+        public void UpdateTrades_First_Update()
         {
             // Arrange
             var preferences = new Model.Preferences();
@@ -131,7 +131,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         }
 
         [TestMethod]
-        public void UpdateTrades_SecondUpdate_5_New_Trades()
+        public void UpdateTrades_Second_Update_5_New_Trades()
         {
             // Arrange
             var preferences = new Model.Preferences();
@@ -161,7 +161,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         }
 
         [TestMethod]
-        public void UpdateTrades_SecondUpdate_3_New_Trades()
+        public void UpdateTrades_Second_Update_3_New_Trades()
         {
             // Arrange
             var preferences = new Model.Preferences();
@@ -191,7 +191,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
         }
 
         [TestMethod]
-        public void UpdateTrades_SecondUpdate_3_New_Trades_Less_Than_Limit()
+        public void UpdateTrades_Second_Update_3_New_Trades_Less_Than_Limit()
         {
             // Arrange
             var preferences = new Model.Preferences();
@@ -237,6 +237,43 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
                 Assert.AreEqual(symbolViewModel.Trades[i].Id, trades[i].Id);
                 Assert.AreEqual(symbolViewModel.Trades[i].Time, trades[i].Time);
             }
+        }
+
+        [TestMethod]
+        public void UpdateTrades_Third_Update()
+        {
+            // Arrange
+            var preferences = new Model.Preferences();
+            preferences.OrderBookChartDisplayCount = 8;
+            preferences.OrderBookDisplayCount = 5;
+            preferences.TradesDisplayCount = 15;
+            preferences.TradesChartDisplayCount = 18;
+
+            var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
+            var exchangeService = new WpfExchangeService(exchangeApi);
+            var symbolViewModel = new SymbolViewModel(exchangeService, chartHelper, preferences);
+
+            var trx = TestHelper.BNB.GetViewSymbol();
+            symbolViewModel.Symbol = trx;
+
+            var firstTrades = TradesUpdateHelper.Trades_BNB_InitialTradeUpdate_10_Trades();
+
+            var secondTrades = TradesUpdateHelper.Trades_BNB_NextTradeUpdate(firstTrades, 3, 3);
+
+            var thirdTrades = TradesUpdateHelper.Trades_BNB_NextTradeUpdate(secondTrades, 9, 9);
+
+            // Act
+            symbolViewModel.UpdateTrades(firstTrades);
+
+            symbolViewModel.UpdateTrades(secondTrades);
+
+            symbolViewModel.UpdateTrades(thirdTrades);
+
+            // Assert
+            var update = secondTrades.Skip(1).Take(8).ToList();
+            update.AddRange(thirdTrades);
+
+            AssertTradeUpdate(symbolViewModel, preferences, update);
         }
 
         private void AssertTradeUpdate(SymbolViewModel symbolViewModel, Model.Preferences preferences, List<Trade> trades)
