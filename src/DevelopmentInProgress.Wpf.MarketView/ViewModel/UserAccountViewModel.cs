@@ -1,6 +1,7 @@
 ﻿using DevelopmentInProgress.Wpf.Common.ViewModel;
 using DevelopmentInProgress.Wpf.MarketView.Model;
 using Newtonsoft.Json;
+using Prism.Logging;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
@@ -10,7 +11,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private string userAccountJson;
         private bool disposed = false;
 
-        public UserAccountViewModel(UserAccount userAccount)
+        public UserAccountViewModel(UserAccount userAccount, ILoggerFacade logger)
+            : base(logger)
         {
             UserAccount = userAccount;
         }

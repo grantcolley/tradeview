@@ -13,6 +13,8 @@ using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 using System.Runtime.CompilerServices;
 using DevelopmentInProgress.Wpf.Common.ViewModel;
 using DevelopmentInProgress.Wpf.Common.Chart;
+using System.Diagnostics;
+using Prism.Logging;
 
 [assembly: InternalsVisibleTo("DevelopmentInProgress.Wpf.MarketView.Test")]
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
@@ -30,8 +32,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private bool isLoadingOrderBook;
         private bool disposed;
 
-        public SymbolViewModel(IWpfExchangeService exchangeService, IChartHelper chartHelper, Preferences preferences)
-            : base(exchangeService)
+        public SymbolViewModel(IWpfExchangeService exchangeService, IChartHelper chartHelper, Preferences preferences, ILoggerFacade logger)
+            : base(exchangeService, logger)
         {
             TradeLimit = preferences.TradeLimit;
             TradesDisplayCount = preferences.TradesDisplayCount;
@@ -189,6 +191,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
+        private Stopwatch swOrderUpdate = new Stopwatch();
         private async Task GetOrderBook()
         {
             IsLoadingOrderBook = true;
@@ -199,6 +202,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                 UpdateOrderBook(orderBook);
 
+                swOrderUpdate.Start();
                 ExchangeService.SubscribeOrderBook(Symbol.Name, OrderBookLimit, e => UpdateOrderBook(e.OrderBook), SubscribeOrderBookException, symbolCancellationTokenSource.Token);
             }
             catch (Exception ex)
@@ -209,6 +213,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             IsLoadingOrderBook = false;
         }
 
+        private Stopwatch swTradeUpdate = new Stopwatch();
         private async Task GetTrades()
         {
             IsLoadingTrades = true;
@@ -219,6 +224,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                 UpdateTrades(trades);
 
+                swTradeUpdate.Start();
                 ExchangeService.SubscribeTrades(Symbol.Name, TradeLimit, e => UpdateTrades(e.Trades), SubscribeTradesException, symbolCancellationTokenSource.Token);
             }
             catch (Exception ex)
@@ -238,6 +244,12 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             lock (orderBookLock)
             {
+                Logger.Log($"Orders New Update {swOrderUpdate.Elapsed}", Category.Info, Priority.Low);
+
+                var sw = new Stopwatch();
+                sw.Start();
+                Logger.Log($"Start OrderBookUpdate", Category.Info, Priority.Low);
+
                 bool firstOrders = false;
 
                 if (OrderBook == null)
@@ -324,6 +336,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     OrderBook.UpdateChartAggregateAsks(aggregatedAsks);
                     OrderBook.UpdateChartAggregateBids(aggregatedBids.Reverse<OrderBookPriceLevel>().ToList());
                 }
+
+                sw.Stop();
+                Logger.Log($"End OrderBookUpdate {sw.Elapsed}", Category.Info, Priority.Low);
+                swOrderUpdate.Restart();
             }
         }
 
@@ -331,6 +347,12 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         {
             lock (tradesLock)
             {
+                Logger.Log($"Trade New Update {swTradeUpdate.Elapsed}", Category.Info, Priority.Low);
+                
+                var sw = new Stopwatch();
+                sw.Start();
+                Logger.Log($"Start TradeUpdate", Category.Info, Priority.Low);
+
                 if (Trades == null)
                 {
                     // First set of incoming trades
@@ -473,6 +495,10 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                         Trades = tradeBooktrades;
                     }
                 }
+
+                sw.Stop();
+                Logger.Log($"End TradeUpdate {sw.Elapsed}", Category.Info, Priority.Low);
+                swTradeUpdate.Restart();
             }
         }
 

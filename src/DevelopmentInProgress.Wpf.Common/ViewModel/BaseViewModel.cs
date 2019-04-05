@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Prism.Logging;
+using System;
 using System.ComponentModel;
 using System.Windows.Threading;
 
@@ -7,6 +8,13 @@ namespace DevelopmentInProgress.Wpf.Common.ViewModel
     public abstract class BaseViewModel : IDisposable, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public BaseViewModel(ILoggerFacade logger)
+        {
+            Logger = logger;
+        }
+
+        public ILoggerFacade Logger { get; private set; }
 
         public Dispatcher Dispatcher { get; set; }
 

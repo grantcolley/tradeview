@@ -52,7 +52,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                         if (SelectedUserAccountViewModel == null)
                         {
-                            var userAccountViewModel = new UserAccountViewModel(selectedUserAccount);
+                            var userAccountViewModel = new UserAccountViewModel(selectedUserAccount, Logger);
                             SelectedUserAccountViewModels.Add(userAccountViewModel);
                             SelectedUserAccountViewModel = userAccountViewModel;
                         }

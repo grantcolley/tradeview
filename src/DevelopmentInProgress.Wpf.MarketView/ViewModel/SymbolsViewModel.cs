@@ -9,6 +9,7 @@ using DevelopmentInProgress.Wpf.Common.Cache;
 using System.Threading.Tasks;
 using DevelopmentInProgress.Wpf.Common.Extensions;
 using DevelopmentInProgress.Wpf.Common.ViewModel;
+using Prism.Logging;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
@@ -22,8 +23,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private bool isLoadingSymbols;
         private bool disposed;
 
-        public SymbolsViewModel(IWpfExchangeService exchangeService, ISymbolsCache symbolsCache)
-            : base(exchangeService)
+        public SymbolsViewModel(IWpfExchangeService exchangeService, ISymbolsCache symbolsCache, ILoggerFacade logger)
+            : base(exchangeService, logger)
         {
             this.symbolsCache = symbolsCache;
 

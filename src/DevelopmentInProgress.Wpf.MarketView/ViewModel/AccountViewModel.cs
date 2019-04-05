@@ -11,6 +11,7 @@ using Interface = DevelopmentInProgress.MarketView.Interface;
 using System.Threading.Tasks;
 using DevelopmentInProgress.Wpf.Common.Extensions;
 using DevelopmentInProgress.Wpf.Common.ViewModel;
+using Prism.Logging;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
@@ -23,8 +24,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private bool isLoggedIn;
         private bool disposed;
 
-        public AccountViewModel(IWpfExchangeService exchangeService)
-            : base(exchangeService)
+        public AccountViewModel(IWpfExchangeService exchangeService, ILoggerFacade logger)
+            : base(exchangeService, logger)
         {
             accountCancellationTokenSource = new CancellationTokenSource();
 

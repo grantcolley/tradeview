@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
 using DevelopmentInProgress.Wpf.Common.Events;
+using Prism.Logging;
 
 namespace DevelopmentInProgress.Wpf.Common.ViewModel
 {
@@ -24,8 +25,8 @@ namespace DevelopmentInProgress.Wpf.Common.ViewModel
         private bool isCancellAllVisible;
         private bool disposed;
 
-        public OrdersViewModel(IWpfExchangeService exchangeService)
-            : base(exchangeService)
+        public OrdersViewModel(IWpfExchangeService exchangeService, ILoggerFacade logger)
+            : base(exchangeService, logger)
         {
             CancelOrderCommand = new ViewModelCommand(Cancel);
             CancelAllOrdersCommand = new ViewModelCommand(CancelAll);

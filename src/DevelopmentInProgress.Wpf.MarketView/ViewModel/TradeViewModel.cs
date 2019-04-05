@@ -12,6 +12,7 @@ using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 using InterfaceExtensions = DevelopmentInProgress.MarketView.Interface.Extensions;
 using System.Threading.Tasks;
 using DevelopmentInProgress.Wpf.Common.ViewModel;
+using Prism.Logging;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
@@ -29,8 +30,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private bool disposed;
         private bool isLoading;
 
-        public TradeViewModel(IWpfExchangeService exchangeService)
-            : base(exchangeService)
+        public TradeViewModel(IWpfExchangeService exchangeService, ILoggerFacade logger)
+            : base(exchangeService, logger)
         {
             BuyCommand = new ViewModelCommand(Buy);
             SellCommand = new ViewModelCommand(Sell);
