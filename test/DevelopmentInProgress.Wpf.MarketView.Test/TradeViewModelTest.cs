@@ -13,6 +13,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Reactive.Linq;
 using DevelopmentInProgress.Wpf.MarketView.Events;
 using DevelopmentInProgress.MarketView.Interface.Validation;
+using Prism.Logging;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Test
 {
@@ -26,7 +27,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
 
@@ -58,7 +59,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
 
@@ -92,7 +93,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
 
@@ -130,7 +131,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -155,7 +156,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
             {
@@ -192,7 +193,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
             {
@@ -229,7 +230,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -258,7 +259,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -288,7 +289,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var quantity = 294.123m;
             var price = 1.123456789m;
@@ -311,7 +312,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -335,7 +336,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -358,7 +359,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -382,7 +383,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -405,7 +406,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -429,7 +430,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
             
             // Act
 
@@ -445,7 +446,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var quoteBalance = new AccountBalance { Free = 0m };
             var baseBalance = new AccountBalance { Free = 0m };
@@ -466,7 +467,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var quoteBalance = new AccountBalance { Free = 299m };
             var baseBalance = new AccountBalance { Free = 0.000123m };
@@ -487,7 +488,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
 
@@ -510,7 +511,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
 
@@ -542,7 +543,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
@@ -574,7 +575,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
@@ -607,7 +608,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
@@ -639,7 +640,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
@@ -690,7 +691,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
@@ -740,7 +741,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
@@ -791,7 +792,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.PlaceOrderException);
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
@@ -845,7 +846,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var tradeViewModel = new TradeViewModel(exchangeService);
+            var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));

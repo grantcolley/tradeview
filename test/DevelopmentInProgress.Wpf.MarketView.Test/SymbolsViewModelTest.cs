@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using Prism.Logging;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Test
 {
@@ -27,7 +28,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var symbolsCache = SymbolsCacheHelper.GetSymbolsCache(exchangeService);
 
             // Act
-            var symbolsViewModel = new SymbolsViewModel(exchangeService, symbolsCache);
+            var symbolsViewModel = new SymbolsViewModel(exchangeService, symbolsCache, new DebugLogger());
 
             var symbolsObservable = Observable.FromEventPattern<SymbolsEventArgs>(
                 eventHandler => symbolsViewModel.OnSymbolsNotification += eventHandler,
@@ -64,7 +65,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SymbolsViewModel);
             var exchangeService = new WpfExchangeService(exchangeApi);
             var symbolsCache = SymbolsCacheHelper.GetSymbolsCache(exchangeService);
-            var symbolsViewModel = new SymbolsViewModel(exchangeService, symbolsCache);
+            var symbolsViewModel = new SymbolsViewModel(exchangeService, symbolsCache, new DebugLogger());
 
             var symbolsObservable = Observable.FromEventPattern<SymbolsEventArgs>(
                 eventHandler => symbolsViewModel.OnSymbolsNotification += eventHandler,
@@ -105,7 +106,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SymbolsViewModel);
             var exchangeService = new WpfExchangeService(exchangeApi);
             var symbolsCache = SymbolsCacheHelper.GetSymbolsCache(exchangeService);
-            var symbolsViewModel = new SymbolsViewModel(exchangeService, symbolsCache);
+            var symbolsViewModel = new SymbolsViewModel(exchangeService, symbolsCache, new DebugLogger());
             
             var userData = File.ReadAllText("UserAccounts.txt");
             var accounts = JsonConvert.DeserializeObject<UserAccounts>(userData);

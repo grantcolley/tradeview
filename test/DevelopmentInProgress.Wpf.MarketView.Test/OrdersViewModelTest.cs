@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DevelopmentInProgress.Wpf.Common.Extensions;
 using System;
+using Prism.Logging;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Test
 {
@@ -20,7 +21,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var accountViewModel = new OrdersViewModel(exchangeService);
+            var accountViewModel = new OrdersViewModel(exchangeService, new DebugLogger());
 
             var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
             {
@@ -45,7 +46,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var accountViewModel = new OrdersViewModel(exchangeService);
+            var accountViewModel = new OrdersViewModel(exchangeService, new DebugLogger());
 
             var firstAccount = new Account(new Interface.AccountInfo { User = new Interface.User() })
             {
@@ -80,7 +81,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var accountViewModel = new OrdersViewModel(exchangeService);
+            var accountViewModel = new OrdersViewModel(exchangeService, new DebugLogger());
 
             var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
             {
@@ -108,7 +109,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Arrange
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.UpdateOrders);
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var accountViewModel = new OrdersViewModel(exchangeService);
+            var accountViewModel = new OrdersViewModel(exchangeService, new DebugLogger());
 
             var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
             {
