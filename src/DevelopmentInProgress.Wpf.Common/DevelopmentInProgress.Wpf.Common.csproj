@@ -78,6 +78,7 @@
     <Compile Include="Model\Strategy.cs" />
     <Compile Include="Model\StrategyFile.cs" />
     <Compile Include="Model\StrategySubscription.cs" />
+    <Compile Include="Model\TradeBase.cs" />
     <Compile Include="Services\IStrategyService.cs" />
     <Compile Include="Services\StrategyService.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />

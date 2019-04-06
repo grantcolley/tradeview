@@ -15,6 +15,7 @@ using DevelopmentInProgress.Wpf.Common.ViewModel;
 using DevelopmentInProgress.Wpf.Common.Chart;
 using System.Diagnostics;
 using Prism.Logging;
+using DevelopmentInProgress.MarketView.Interface.Interfaces;
 
 [assembly: InternalsVisibleTo("DevelopmentInProgress.Wpf.MarketView.Test")]
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
@@ -24,8 +25,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private CancellationTokenSource symbolCancellationTokenSource;
         private Symbol symbol;
         private OrderBook orderBook;
-        private ChartValues<Trade> tradesChart;
-        private List<Trade> trades;
+        private ChartValues<TradeBase> tradesChart;
+        private List<TradeBase> trades;
         private object orderBookLock = new object();
         private object tradesLock = new object();
         private bool isLoadingTrades;
@@ -106,7 +107,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        public List<Trade> Trades
+        public List<TradeBase> Trades
         {
             get { return trades; }
             set
@@ -119,7 +120,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        public ChartValues<Trade> TradesChart
+        public ChartValues<TradeBase> TradesChart
         {
             get { return tradesChart; }
             set
@@ -343,7 +344,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        internal void UpdateTrades(IEnumerable<Interface.Trade> tradesUpdate)
+        internal void UpdateTrades(IEnumerable<ITrade> tradesUpdate)
         {
             lock (tradesLock)
             {
@@ -360,7 +361,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     // Order by oldest to newest (as it will appear in chart).
                     var newTrades = (from t in tradesUpdate
                                         orderby t.Time, t.Id
-                                        select new Trade
+                                        select new TradeBase
                                         {
                                             Id = t.Id,
                                             Time = t.Time,
@@ -375,13 +376,13 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     {
                         // More new trades than the chart can take, only takes the newest trades.
                         var chartTrades = newTrades.Skip(newTradesCount - TradesChartDisplayCount).ToList();
-                        TradesChart = new ChartValues<Trade>(chartTrades);
+                        TradesChart = new ChartValues<TradeBase>(chartTrades);
                     }
                     else
                     {
                         // New trades less (or equal) the 
                         // total trades to show in the chart.
-                        TradesChart = new ChartValues<Trade>(newTrades);
+                        TradesChart = new ChartValues<TradeBase>(newTrades);
                     }
 
                     if (newTradesCount > TradesDisplayCount)
@@ -390,14 +391,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                         var tradeBooktrades = newTrades.Skip(newTradesCount - TradesDisplayCount).ToList();
 
                         // Order by newest to oldest (as it will appear on trade list)
-                        Trades = new List<Trade>(tradeBooktrades.Reverse<Trade>().ToList());
+                        Trades = new List<TradeBase>(tradeBooktrades.Reverse<TradeBase>().ToList());
                     }
                     else
                     {
                         // New trades less (or equal) the 
                         // total trades to show in the trade list.
                         // Order by newest to oldest (as it will appear on trade list)
-                        Trades = new List<Trade>(newTrades.Reverse<Trade>().ToList());
+                        Trades = new List<TradeBase>(newTrades.Reverse<TradeBase>().ToList());
                     }
                 }
                 else
@@ -413,7 +414,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                     var newTrades = (from t in tradesUpdate
                                      where t.Time > first.Time && t.Id > first.Id
                                      orderby t.Time, t.Id
-                                     select new Trade
+                                     select new TradeBase
                                      {
                                          Id = t.Id,
                                          Time = t.Time,
@@ -471,14 +472,14 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
                         var tradeBooktrades = newTrades.Skip(newTradesCount - TradesDisplayCount).ToList();
 
                         // Order by newest to oldest (as it will appear on trade list)
-                        Trades = new List<Trade>(tradeBooktrades.Reverse<Trade>().ToList());
+                        Trades = new List<TradeBase>(tradeBooktrades.Reverse<TradeBase>().ToList());
                     }
                     else
                     {
                         var tradesCount = Trades.Count;
 
                         // Order the new trades by newest first and oldest last
-                        var tradeBooktrades = newTrades.Reverse<Trade>().ToList();
+                        var tradeBooktrades = newTrades.Reverse<TradeBase>().ToList();
 
                         if ((newTradesCount + tradesCount) > TradesDisplayCount)
                         {

@@ -1,8 +1,9 @@
-﻿using System;
+﻿using DevelopmentInProgress.MarketView.Interface.Interfaces;
+using System;
 
 namespace DevelopmentInProgress.MarketView.Interface.Model
 {
-    public class Trade
+    public class Trade : ITrade
     {
         public string Symbol { get; set; }
         public long Id { get; set; }

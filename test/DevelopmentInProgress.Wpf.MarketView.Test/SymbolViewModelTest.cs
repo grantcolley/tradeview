@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DevelopmentInProgress.MarketView.Interface.Interfaces;
 using DevelopmentInProgress.MarketView.Interface.Model;
 using DevelopmentInProgress.MarketView.Test.Helper;
 using DevelopmentInProgress.Wpf.Common.Chart;
@@ -232,7 +233,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             }
 
             // Assert - trades
-            var trades = chart.Reverse<Trade>().ToList();
+            var trades = chart.Reverse<ITrade>().ToList();
             for (int i = 0; i < 13; i++)
             {
                 Assert.AreEqual(symbolViewModel.Trades[i].Id, trades[i].Id);
@@ -277,7 +278,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             AssertTradeUpdate(symbolViewModel, preferences, update);
         }
 
-        private void AssertTradeUpdate(SymbolViewModel symbolViewModel, Model.Preferences preferences, List<Trade> trades)
+        private void AssertTradeUpdate(SymbolViewModel symbolViewModel, Model.Preferences preferences, List<ITrade> trades)
         {
             Assert.AreEqual(symbolViewModel.Trades.Count, preferences.TradesDisplayCount);
             Assert.AreEqual(symbolViewModel.TradesChart.Count, preferences.TradesChartDisplayCount);
@@ -285,7 +286,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             // Assert - trades
             var lastTrades = trades.Skip(trades.Count - preferences.TradesDisplayCount).ToList();
 
-            var lastTradesReversed = lastTrades.Reverse<Trade>().ToList();
+            var lastTradesReversed = lastTrades.Reverse<ITrade>().ToList();
 
             for (int i = 0; i < preferences.TradesDisplayCount; i++)
             {
