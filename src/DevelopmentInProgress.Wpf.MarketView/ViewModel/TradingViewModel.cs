@@ -18,6 +18,7 @@ using DevelopmentInProgress.Wpf.Common.Events;
 using DevelopmentInProgress.Wpf.Common.ViewModel;
 using DevelopmentInProgress.Wpf.Common.Extensions;
 using DevelopmentInProgress.Wpf.Common.Chart;
+using Newtonsoft.Json;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
@@ -189,6 +190,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             try
             {
                 userAccount = await accountsService.GetAccount(Title);
+                var json = JsonConvert.SerializeObject(userAccount, Formatting.Indented);
+                Logger.Log(json, Category.Info, Priority.Medium);
             }
             catch (Exception ex)
             {
