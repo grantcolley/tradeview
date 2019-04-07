@@ -138,7 +138,7 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
                     try
                     {
                         var aggregateTrades = e.Trades.Select(at => NewAggregateTrade(at)).ToList();
-                        callback.Invoke(new AggregateTradeEventArgs { AggregateTrades = aggregateTrades });
+                        callback.Invoke(new AggregateTradeEventArgs { Trades = aggregateTrades });
                     }
                     catch (Exception ex)
                     {

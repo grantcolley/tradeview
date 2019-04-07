@@ -40,6 +40,8 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             TradesDisplayCount = preferences.TradesDisplayCount;
             TradesChartDisplayCount = preferences.TradesChartDisplayCount;
 
+            UseAggregateTrades = preferences.UseAggregateTrades;
+
             OrderBookLimit = preferences.OrderBookLimit;
             OrderBookDisplayCount = preferences.OrderBookDisplayCount;
             OrderBookChartDisplayCount = preferences.OrderBookChartDisplayCount;
@@ -56,6 +58,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         internal int TradeLimit { get; }
         internal int TradesChartDisplayCount { get; }
         internal int TradesDisplayCount { get; }
+        internal bool UseAggregateTrades { get; }
         internal int OrderBookLimit { get; }
         internal int OrderBookChartDisplayCount { get; }
         internal int OrderBookDisplayCount { get; }
@@ -221,12 +224,28 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
             try
             {
-                var trades = await ExchangeService.GetTradesAsync(Symbol.Name, TradeLimit, symbolCancellationTokenSource.Token);
+                IEnumerable<ITrade> trades;
+
+                if (UseAggregateTrades)
+                {
+                    trades = await ExchangeService.GetAggregateTradesAsync(Symbol.Name, TradeLimit, symbolCancellationTokenSource.Token);
+                }
+                else
+                {
+                    trades = await ExchangeService.GetTradesAsync(Symbol.Name, TradeLimit, symbolCancellationTokenSource.Token);
+                }
 
                 UpdateTrades(trades);
-
                 swTradeUpdate.Start();
-                ExchangeService.SubscribeTrades(Symbol.Name, TradeLimit, e => UpdateTrades(e.Trades), SubscribeTradesException, symbolCancellationTokenSource.Token);
+
+                if (UseAggregateTrades)
+                {
+                    ExchangeService.SubscribeAggregateTrades(Symbol.Name, TradeLimit, e => UpdateTrades(e.Trades), SubscribeTradesException, symbolCancellationTokenSource.Token);
+                }
+                else
+                {
+                    ExchangeService.SubscribeTrades(Symbol.Name, TradeLimit, e => UpdateTrades(e.Trades), SubscribeTradesException, symbolCancellationTokenSource.Token);
+                }
             }
             catch (Exception ex)
             {
