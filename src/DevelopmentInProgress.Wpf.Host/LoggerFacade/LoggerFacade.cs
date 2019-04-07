@@ -29,7 +29,7 @@ namespace DevelopmentInProgress.Wpf.Host.LoggerFacade
 
             logger.Information("*********************************************");
             logger.Information("*********************************************");
-            logger.Information("Development In Progress - Wpf Host");
+            logger.Information("Development In Progress - Wpf Market View Host");
             logger.Information("Copyright © Development In Progress 2018");
             logger.Information("Start Application");
         }

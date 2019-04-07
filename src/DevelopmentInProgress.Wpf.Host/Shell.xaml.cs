@@ -6,10 +6,14 @@
 //-----------------------------------------------------------------------
 
 using System.Configuration;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using DevelopmentInProgress.Wpf.Host.View;
 using DevelopmentInProgress.Wpf.Host.ViewModel;
+using Microsoft.Practices.ServiceLocation;
+using Prism.Logging;
 using Xceed.Wpf.AvalonDock.Layout;
 
 namespace DevelopmentInProgress.Wpf.Host
@@ -42,6 +46,8 @@ namespace DevelopmentInProgress.Wpf.Host
         private static DependencyProperty IsToolBarVisibleProperty = DependencyProperty.Register("IsToolBarVisible",
             typeof (bool), typeof (Shell));
 
+        private ILoggerFacade logger;
+
         /// <summary>
         /// Initializes a new instance of the Shell class.
         /// </summary>
@@ -54,6 +60,8 @@ namespace DevelopmentInProgress.Wpf.Host
             ShellToolBar.Visibility = isShellToolBarVisible.ToUpper().Equals("TRUE")
                 ? Visibility.Visible
                 : Visibility.Collapsed;
+
+            logger = ServiceLocator.Current.GetInstance<ILoggerFacade>();
         }
 
         /// <summary>
@@ -112,9 +120,17 @@ namespace DevelopmentInProgress.Wpf.Host
         /// <param name="e">Event arguments.</param>
         private void OpenLogClick(object sender, RoutedEventArgs e)
         {
+            string filePath = ConfigurationManager.AppSettings["serilog:write-to:File.path"].ToString();
+            var dirPath = filePath.Substring(0, filePath.LastIndexOf('\\'));
+            var directory = new DirectoryInfo(dirPath);
+            var logFile = directory.GetFiles()
+                .Where(f => f.Name.Contains("DevelopmentInProgress.Wpf.MarketView"))
+                .OrderByDescending(f => f.LastWriteTime).First();
 
+            string logFileReader = ConfigurationManager.AppSettings["LogFileReader"].ToString();
+            Process.Start(logFileReader, logFile.FullName);
         }
-
+        
         /// <summary>
         /// Performs the specified action on the currently active document.
         /// </summary>

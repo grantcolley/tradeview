@@ -18,6 +18,7 @@ using Prism.Modularity;
 using Prism.Regions;
 using Prism.Unity;
 using Serilog;
+using Serilog.Configuration;
 using Serilog.Core;
 using Xceed.Wpf.AvalonDock;
 
@@ -33,7 +34,7 @@ namespace DevelopmentInProgress.Wpf.Host
         public Bootstrapper()
         {
           logger = new LoggerConfiguration()
-                .WriteTo.File("DevelopmentInProgress.Wpf.MarketView-.log", rollingInterval:RollingInterval.Day)
+                .ReadFrom.AppSettings()
                 .CreateLogger();
         }
 
