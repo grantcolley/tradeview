@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DevelopmentInProgress.Wpf.MarketView.Model
+namespace DevelopmentInProgress.Wpf.Common.Model
 {
     public class Preferences
     {

@@ -1,6 +1,4 @@
-﻿using DevelopmentInProgress.Wpf.Common.Model;
-
-namespace DevelopmentInProgress.Wpf.Common.Model
+﻿namespace DevelopmentInProgress.Wpf.Common.Model
 {
     public class OrderBookPriceLevel : EntityBase
     {

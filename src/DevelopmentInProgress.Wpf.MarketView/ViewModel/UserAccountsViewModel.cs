@@ -1,7 +1,7 @@
-﻿using DevelopmentInProgress.Wpf.Controls.Messaging;
+﻿using DevelopmentInProgress.Wpf.Common.Model;
+using DevelopmentInProgress.Wpf.Controls.Messaging;
 using DevelopmentInProgress.Wpf.Host.Context;
 using DevelopmentInProgress.Wpf.Host.ViewModel;
-using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using Newtonsoft.Json;
 using System;

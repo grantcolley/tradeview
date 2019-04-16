@@ -1,5 +1,5 @@
-﻿using DevelopmentInProgress.Wpf.Common.ViewModel;
-using DevelopmentInProgress.Wpf.MarketView.Model;
+﻿using DevelopmentInProgress.Wpf.Common.Model;
+using DevelopmentInProgress.Wpf.Common.ViewModel;
 using Newtonsoft.Json;
 using Prism.Logging;
 

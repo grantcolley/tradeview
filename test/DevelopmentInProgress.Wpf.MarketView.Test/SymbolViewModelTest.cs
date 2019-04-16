@@ -10,6 +10,7 @@ using DevelopmentInProgress.Wpf.Common.Services;
 using DevelopmentInProgress.Wpf.MarketView.ViewModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Prism.Logging;
+using Model = DevelopmentInProgress.Wpf.Common.Model;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Test
 {

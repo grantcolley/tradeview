@@ -2,7 +2,6 @@
 using LiveCharts.Configurations;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DevelopmentInProgress.Wpf.Common.Model
 {

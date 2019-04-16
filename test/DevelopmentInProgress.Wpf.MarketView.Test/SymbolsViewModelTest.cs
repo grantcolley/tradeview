@@ -1,7 +1,6 @@
 ﻿using DevelopmentInProgress.MarketView.Test.Helper;
 using DevelopmentInProgress.Wpf.Common.Model;
 using DevelopmentInProgress.Wpf.MarketView.Events;
-using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.Common.Services;
 using DevelopmentInProgress.Wpf.MarketView.ViewModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.Wpf.MarketView.Model;
+﻿using DevelopmentInProgress.Wpf.Common.Model;
 using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Services

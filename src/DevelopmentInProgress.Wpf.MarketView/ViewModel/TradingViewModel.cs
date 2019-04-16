@@ -1,7 +1,7 @@
-﻿using DevelopmentInProgress.Wpf.Controls.Messaging;
+﻿using DevelopmentInProgress.Wpf.Common.Model;
+using DevelopmentInProgress.Wpf.Controls.Messaging;
 using DevelopmentInProgress.Wpf.Host.Context;
 using DevelopmentInProgress.Wpf.Host.ViewModel;
-using DevelopmentInProgress.Wpf.MarketView.Model;
 using DevelopmentInProgress.Wpf.MarketView.Services;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,6 @@ using DevelopmentInProgress.Wpf.MarketView.Events;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Prism.Logging;
-using DevelopmentInProgress.Wpf.Common.Model;
 using DevelopmentInProgress.Wpf.Common.Services;
 using DevelopmentInProgress.Wpf.Common.Events;
 using DevelopmentInProgress.Wpf.Common.ViewModel;

@@ -61,9 +61,6 @@
     <Compile Include="Events\SymbolEventArgs.cs" />
     <Compile Include="Events\SymbolsEventArgs.cs" />
     <Compile Include="Events\TradeEventArgs.cs" />
-    <Compile Include="Model\UserAccount.cs" />
-    <Compile Include="Model\UserAccounts.cs" />
-    <Compile Include="Model\Preferences.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IAccountsService.cs" />

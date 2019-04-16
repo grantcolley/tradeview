@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.Wpf.MarketView.Model;
+﻿using DevelopmentInProgress.Wpf.Common.Model;
 using Newtonsoft.Json;
 using System;
 using System.IO;

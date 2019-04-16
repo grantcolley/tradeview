@@ -6,7 +6,7 @@
              xmlns:view="clr-namespace:DevelopmentInProgress.Wpf.Host.View;assembly=DevelopmentInProgress.Wpf.Host"
              xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Host.Converters;assembly=DevelopmentInProgress.Wpf.Host"
              xmlns:filterbox="clr-namespace:DevelopmentInProgress.Wpf.Controls.FilterBox;assembly=DevelopmentInProgress.Wpf.Controls"
-             xmlns:model="clr-namespace:DevelopmentInProgress.Wpf.MarketView.Model"
+             xmlns:model="clr-namespace:DevelopmentInProgress.Wpf.Common.Model;assembly=DevelopmentInProgress.Wpf.Common"
              xmlns:localView="clr-namespace:DevelopmentInProgress.Wpf.MarketView.View"
              xmlns:localViewModel="clr-namespace:DevelopmentInProgress.Wpf.MarketView.ViewModel"
              mc:Ignorable="d">
