@@ -19,6 +19,8 @@ namespace DevelopmentInProgress.Wpf.Common.Model
         public ObservableCollection<StrategyFile> Dependencies { get; set; }
         public string TargetType { get; set; }
         public string Tag { get; set; }
+        public int TradesChartDisplayCount { get; set; }
+        public int TradesDisplayCount { get; set; }
         public string StrategyServerUrl { get; set; }
 
         public string Name
