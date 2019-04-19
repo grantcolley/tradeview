@@ -14,5 +14,27 @@ namespace DevelopmentInProgress.MarketView.Interface.Model
         public DateTime Time { get; set; }
         public bool IsBuyerMaker { get; set; }
         public bool IsBestPriceMatch { get; set; }
+
+        public override bool Equals(Object obj)
+        {
+            if (obj == null || !(obj is Trade))
+            {
+                return false;
+            }
+            else
+            {
+                return (Id == ((Trade)obj).Id);
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return (int)Id;
+        }
+
+        public override string ToString()
+        {
+            return $"{this.GetType().Name} {Id}";
+        }
     }
 }
