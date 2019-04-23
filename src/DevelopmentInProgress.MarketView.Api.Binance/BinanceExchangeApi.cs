@@ -122,7 +122,7 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
             return orders;
         }
 
-        public void SubscribeAggregateTrades(string symbol, int limit, Action<AggregateTradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public void SubscribeAggregateTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             try
             {
@@ -138,7 +138,7 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
                     try
                     {
                         var aggregateTrades = e.Trades.Select(at => NewAggregateTrade(at)).ToList();
-                        callback.Invoke(new AggregateTradeEventArgs { Trades = aggregateTrades });
+                        callback.Invoke(new TradeEventArgs { Trades = aggregateTrades });
                     }
                     catch (Exception ex)
                     {

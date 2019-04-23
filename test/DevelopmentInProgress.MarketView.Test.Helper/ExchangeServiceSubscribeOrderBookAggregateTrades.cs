@@ -66,9 +66,9 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             throw new NotImplementedException();
         }
 
-        public void SubscribeAggregateTrades(string symbol, int limit, Action<AggregateTradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public void SubscribeAggregateTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            callback.Invoke(new AggregateTradeEventArgs { Trades = TestHelper.AggregateTradesUpdated });
+            callback.Invoke(new TradeEventArgs { Trades = TestHelper.AggregateTradesUpdated });
         }
 
         public void SubscribeTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)

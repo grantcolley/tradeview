@@ -105,7 +105,7 @@ namespace DevelopmentInProgress.Wpf.Common.Services
             exchangeService.SubscribeOrderBook(symbol, limit, callback, exception, cancellationToken);
         }
 
-        public void SubscribeAggregateTrades(string symbol, int limit, Action<AggregateTradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public void SubscribeAggregateTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             exchangeService.SubscribeAggregateTrades(symbol, limit, callback, exception, cancellationToken);
         }

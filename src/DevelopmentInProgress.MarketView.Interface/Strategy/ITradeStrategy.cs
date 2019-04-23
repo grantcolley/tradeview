@@ -25,7 +25,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Strategy
 
         void SubscribeOrderBookException(Exception exception);
 
-        void SubscribeTrades(AggregateTradeEventArgs aggregateTradeEventArgs);
+        void SubscribeTrades(TradeEventArgs tradeEventArgs);
 
         void SubscribeTradesException(Exception exception);
 

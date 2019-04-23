@@ -77,7 +77,7 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             // INTENTIONALLY EMPTY. LEAVE BLANK.
         }
 
-        public void SubscribeAggregateTrades(string symbol, int limit, Action<AggregateTradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public void SubscribeAggregateTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             // INTENTIONALLY EMPTY. LEAVE BLANK.
         }
