@@ -7,7 +7,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Strategy
     {
         None = 0,
         AccountInfo = 1,
-        AggregateTrades = 2,
+        Trades = 2,
         OrderBook = 4,
         Statistics = 8
     }
