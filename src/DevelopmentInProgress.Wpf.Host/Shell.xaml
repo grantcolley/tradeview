@@ -5,7 +5,6 @@
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:progress="clr-namespace:DevelopmentInProgress.Wpf.Host.Controls.Progress"
         xmlns:converters="clr-namespace:DevelopmentInProgress.Wpf.Host.Converters"
-        xmlns:progress1="clr-namespace:DevelopmentInProgress.Wpf.Host.Controls.Progress"
         Title="Origin" Height="600" Width="1000" 
         Icon="Images/Origin.png"
         ResizeMode="CanResizeWithGrip"
@@ -62,7 +61,7 @@
                     <DockPanel Background="{StaticResource TextBoxBackgroundBrush}">
                         <Viewbox Height="20" Width="20" 
                                  Visibility="{Binding Content.DataContext.IsBusy, Converter={StaticResource boolToVisibilityConverter}}">
-                            <progress1:CircularProgress/>
+                            <progress:CircularProgress/>
                         </Viewbox>
                         <TextBlock Text="*" TextAlignment="Right" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="16" Foreground="Firebrick"
                                    Visibility="{Binding Content.DataContext.IsDirty, Converter={StaticResource boolToVisibilityConverter}}"/>
