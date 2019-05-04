@@ -6,6 +6,7 @@
 //-----------------------------------------------------------------------
 
 using DevelopmentInProgress.Wpf.Host.Navigation;
+using Prism.Regions;
 
 namespace DevelopmentInProgress.Wpf.Host.Context
 {
@@ -26,5 +27,10 @@ namespace DevelopmentInProgress.Wpf.Host.Context
         /// manage model windows and to manage documents via prism navigation.
         /// </summary>
         NavigationManager NavigationManager { get; }
+
+        /// <summary>
+        /// Gets an instance of <see cref="IRegionManager"/>.
+        /// </summary>
+        IRegionManager RegionManager { get; }
     }
 }

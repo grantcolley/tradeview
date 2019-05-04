@@ -8,6 +8,7 @@
 using DevelopmentInProgress.Wpf.Host.Navigation;
 using Microsoft.Practices.Unity;
 using Prism.Logging;
+using Prism.Regions;
 
 namespace DevelopmentInProgress.Wpf.Host.Context
 {
@@ -20,6 +21,7 @@ namespace DevelopmentInProgress.Wpf.Host.Context
     {
         private readonly ModalNavigator modalManager;
         private readonly NavigationManager navigationManager;
+        private readonly IRegionManager regionManager;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewContext"/> class.
@@ -27,12 +29,14 @@ namespace DevelopmentInProgress.Wpf.Host.Context
         /// <param name="unityContainer">An instance of <see cref="IUnityContainer"/>.</param>
         /// <param name="modalManager">An instance of <see cref="ModalNavigator"/>.</param>
         /// <param name="navigationManager">An instance of <see cref="NavigationManager"/>.</param>
+        /// <param name="regionManager">An instance of Prism <see cref="RegionManager"/>.</param>
         /// <param name="logger">An instance of <see cref="ILoggerFacade"/>.</param>
-        public ViewContext(IUnityContainer unityContainer, ModalNavigator modalManager, NavigationManager navigationManager, ILoggerFacade logger)
+        public ViewContext(IUnityContainer unityContainer, ModalNavigator modalManager, NavigationManager navigationManager, IRegionManager regionManager, ILoggerFacade logger)
             : base(unityContainer, logger)
         {
             this.modalManager = modalManager;
             this.navigationManager = navigationManager;
+            this.regionManager = regionManager;
         }
 
         /// <summary>
@@ -46,5 +50,10 @@ namespace DevelopmentInProgress.Wpf.Host.Context
         /// manage model windows and to manage documents via prism navigation.
         /// </summary>
         public NavigationManager NavigationManager { get { return navigationManager; } }
+
+        /// <summary>
+        /// Gets an instance of the <see cref="IRegionManager"/>.
+        /// </summary>
+        public IRegionManager RegionManager { get { return regionManager; } }
     }
 }
