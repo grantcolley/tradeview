@@ -7,17 +7,22 @@ namespace DevelopmentInProgress.Wpf.Common.Model
     {
         private string name;
         private StrategyFile targetAssembly;
+        private StrategyFile displayAssembly;
 
         public Strategy()
         {
             StrategySubscriptions = new ObservableCollection<StrategySubscription>();
             Dependencies = new ObservableCollection<StrategyFile>();
+            DisplayDependencies = new ObservableCollection<StrategyFile>();
         }
 
         public StrategyStatus Status { get; set; }
         public ObservableCollection<StrategySubscription> StrategySubscriptions { get; set; }
         public ObservableCollection<StrategyFile> Dependencies { get; set; }
+        public ObservableCollection<StrategyFile> DisplayDependencies { get; set; }
         public string TargetType { get; set; }
+        public string DisplayViewType { get; set; }
+        public string DisplayViewModelType { get; set; }
         public string Tag { get; set; }
         public int TradesChartDisplayCount { get; set; }
         public int TradesDisplayCount { get; set; }
@@ -45,6 +50,19 @@ namespace DevelopmentInProgress.Wpf.Common.Model
                 {
                     targetAssembly = value;
                     OnPropertyChanged("TargetAssembly");
+                }
+            }
+        }
+
+        public StrategyFile DisplayAssembly
+        {
+            get { return displayAssembly; }
+            set
+            {
+                if (displayAssembly != value)
+                {
+                    displayAssembly = value;
+                    OnPropertyChanged("DisplayAssembly");
                 }
             }
         }
