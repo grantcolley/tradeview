@@ -23,5 +23,7 @@ namespace DevelopmentInProgress.Wpf.Common.Model
         }
 
         public string DisplayName { get; private set; }
+
+        public StrategyFileType FileType { get; set; }
     }
 }
