@@ -76,6 +76,7 @@
     <Compile Include="Model\OrderBookPriceLevel.cs" />
     <Compile Include="Model\OrderBookTop.cs" />
     <Compile Include="Model\Preferences.cs" />
+    <Compile Include="Model\StrategyFileType.cs" />
     <Compile Include="Model\Trade.cs" />
     <Compile Include="Model\Strategy.cs" />
     <Compile Include="Model\StrategyFile.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Services\WpfExchangeService.cs" />
     <Compile Include="ViewModel\ExchangeViewModel.cs" />
     <Compile Include="ViewModel\OrdersViewModel.cs" />
+    <Compile Include="ViewModel\StrategyDisplayViewModelBase.cs" />
     <Compile Include="View\OrdersView.xaml.cs">
       <DependentUpon>OrdersView.xaml</DependentUpon>
     </Compile>
