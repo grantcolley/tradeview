@@ -33,6 +33,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         private bool isLoadingOrderBook;
         private bool disposed;
         private Stopwatch swTradeUpdate = new Stopwatch();
+        private Stopwatch swOrderUpdate = new Stopwatch();
 
         public SymbolViewModel(IWpfExchangeService exchangeService, IChartHelper chartHelper, Preferences preferences, ILoggerFacade logger)
             : base(exchangeService, logger)
@@ -196,7 +197,6 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
         }
 
-        private Stopwatch swOrderUpdate = new Stopwatch();
         private async Task GetOrderBook()
         {
             IsLoadingOrderBook = true;
