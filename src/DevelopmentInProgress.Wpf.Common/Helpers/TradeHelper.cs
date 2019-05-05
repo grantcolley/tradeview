@@ -11,15 +11,15 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
 {
     public static class TradeHelper
     {
-        public static void SetTrades(
+        public static void SetTrades<T>(
             IEnumerable<ITrade> tradesUpdate,
             int pricePrecision,
             int quantityPrecision,
             int tradesDisplayCount,
             int tradesChartDisplayCount,
             ILoggerFacade logger,
-            out List<TradeBase> trades,
-            out ChartValues<TradeBase> tradesChart)
+            out List<T> trades,
+            out ChartValues<T> tradesChart) where T : TradeBase, new()
         {
             var sw = new Stopwatch();
             sw.Start();
@@ -28,13 +28,15 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             // Order by oldest to newest (as it will appear in the chart).
             var newTrades = (from t in tradesUpdate
                              orderby t.Time, t.Id
-                             select new TradeBase
+                             select new T
                              {
                                  Id = t.Id,
                                  Time = t.Time,
+                                 Symbol = t.Symbol,
+                                 IsBuyerMaker = t.IsBuyerMaker,
+                                 IsBestPriceMatch = t.IsBestPriceMatch,
                                  Price = t.Price.Trim(pricePrecision),
-                                 Quantity = t.Quantity.Trim(quantityPrecision),
-                                 IsBuyerMaker = t.IsBuyerMaker
+                                 Quantity = t.Quantity.Trim(quantityPrecision)
                              }).ToList();
 
             var newTradesCount = newTrades.Count;
@@ -43,13 +45,13 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             {
                 // More new trades than the chart can take, only takes the newest trades.
                 var chartTrades = newTrades.Skip(newTradesCount - tradesChartDisplayCount).ToList();
-                tradesChart = new ChartValues<TradeBase>(chartTrades);
+                tradesChart = new ChartValues<T>(chartTrades);
             }
             else
             {
                 // New trades less (or equal) the 
                 // total trades to show in the chart.
-                tradesChart = new ChartValues<TradeBase>(newTrades);
+                tradesChart = new ChartValues<T>(newTrades);
             }
 
             if (newTradesCount > tradesDisplayCount)
@@ -58,30 +60,30 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
                 var tradeBooktrades = newTrades.Skip(newTradesCount - tradesDisplayCount).ToList();
 
                 // Order by newest to oldest (as it will appear on trade list)
-                trades = new List<TradeBase>(tradeBooktrades.Reverse<TradeBase>().ToList());
+                trades = new List<T>(tradeBooktrades.Reverse<T>().ToList());
             }
             else
             {
                 // New trades less (or equal) the 
                 // total trades to show in the trade list.
                 // Order by newest to oldest (as it will appear on trade list)
-                trades = new List<TradeBase>(newTrades.Reverse<TradeBase>().ToList());
+                trades = new List<T>(newTrades.Reverse<T>().ToList());
             }
 
             sw.Stop();
             logger.Log($"End SetTrades {sw.Elapsed}", Category.Info, Priority.Low);
         }
 
-        public static void UpdateTrades(
+        public static void UpdateTrades<T>(
             IEnumerable<ITrade> tradesUpdate,
-            List<TradeBase> currentTrades,
+            List<T> currentTrades,
             int pricePrecision,
             int quantityPrecision,
             int tradesDisplayCount,
             int tradesChartDisplayCount,
             ILoggerFacade logger,
-            out List<TradeBase> trades,
-            ref ChartValues<TradeBase> tradesChart)
+            out List<T> trades,
+            ref ChartValues<T> tradesChart) where T : TradeBase, new()
         {
             var sw = new Stopwatch();
             sw.Start();
@@ -96,13 +98,15 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             var newTrades = (from t in tradesUpdate
                              where t.Time > seed.Time && t.Id > seed.Id
                              orderby t.Time, t.Id
-                             select new TradeBase
+                             select new T
                              {
                                  Id = t.Id,
                                  Time = t.Time,
+                                 Symbol = t.Symbol,
+                                 IsBuyerMaker = t.IsBuyerMaker,
+                                 IsBestPriceMatch = t.IsBestPriceMatch,
                                  Price = t.Price.Trim(pricePrecision),
-                                 Quantity = t.Quantity.Trim(quantityPrecision),
-                                 IsBuyerMaker = t.IsBuyerMaker
+                                 Quantity = t.Quantity.Trim(quantityPrecision)
                              }).ToList();
 
             var newTradesCount = newTrades.Count;
@@ -154,14 +158,14 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
                 var tradeBooktrades = newTrades.Skip(newTradesCount - tradesDisplayCount).ToList();
 
                 // Order by newest to oldest (as it will appear on trade list)
-                trades = new List<TradeBase>(tradeBooktrades.Reverse<TradeBase>().ToList());
+                trades = new List<T>(tradeBooktrades.Reverse<T>().ToList());
             }
             else
             {
                 var tradesCount = currentTrades.Count;
 
                 // Order the new trades by newest first and oldest last
-                var tradeBooktrades = newTrades.Reverse<TradeBase>().ToList();
+                var tradeBooktrades = newTrades.Reverse<T>().ToList();
 
                 if ((newTradesCount + tradesCount) > tradesDisplayCount)
                 {
