@@ -9,7 +9,9 @@ namespace DevelopmentInProgress.Wpf.Common.Model
         private DateTime time;
 
         public new long Id { get; set; }
+        public string Symbol { get; set; }
         public bool IsBuyerMaker { get; set; }
+        public bool IsBestPriceMatch { get; set; }
 
         public decimal Price
         {
