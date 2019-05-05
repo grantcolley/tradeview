@@ -1,5 +1,4 @@
-﻿using DevelopmentInProgress.MarketView.Interface.Interfaces;
-using DevelopmentInProgress.Wpf.Common.Model;
+﻿using DevelopmentInProgress.Wpf.Common.Model;
 using Prism.Logging;
 using System;
 using System.Collections.Generic;
@@ -47,7 +46,7 @@ namespace DevelopmentInProgress.Wpf.Common.ViewModel
             }
         }
 
-        public virtual void UpdateTrades(IEnumerable<ITrade> tradesUpdate)
+        public virtual void TradeNotifications(List<MarketView.Interface.Strategy.StrategyNotification> tradeNotifications)
         {
             throw new NotImplementedException("StrategyDisplayViewModelBase.UpdateTrades(IEnumerable<ITrade>)");
         }
