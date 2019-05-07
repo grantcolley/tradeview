@@ -82,6 +82,7 @@
     <Compile Include="Model\StrategyFile.cs" />
     <Compile Include="Model\StrategySubscription.cs" />
     <Compile Include="Model\TradeBase.cs" />
+    <Compile Include="Model\TradePoint.cs" />
     <Compile Include="Model\UserAccount.cs" />
     <Compile Include="Model\UserAccounts.cs" />
     <Compile Include="Services\IStrategyService.cs" />
