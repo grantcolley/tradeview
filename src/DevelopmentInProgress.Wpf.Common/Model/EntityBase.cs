@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace DevelopmentInProgress.Wpf.Common.Model
 {
@@ -14,6 +15,11 @@ namespace DevelopmentInProgress.Wpf.Common.Model
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public virtual T Clone<T>() where T : new()
+        {
+            throw new NotImplementedException($"Clone<{typeof(T).Name}>() not implemnted.");
+        }
 
         public virtual int Id
         {

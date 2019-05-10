@@ -15,11 +15,11 @@ namespace DevelopmentInProgress.Wpf.Common.Chart
 
             Charting.For<TradeBase>(tradeBaseMapper);
 
-            var tradePointMapper = Mappers.Xy<TradePoint>()
+            var tradeMapper = Mappers.Xy<Trade>()
                 .X(model => model.Time.Ticks)
                 .Y(model => Convert.ToDouble(model.Price));
 
-            Charting.For<TradePoint>(tradePointMapper);
+            Charting.For<Trade>(tradeMapper);
         }
 
         public Func<double, string> TimeFormatter => value => new DateTime((long)value).ToString("H:mm:ss");
