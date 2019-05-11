@@ -1,4 +1,5 @@
 ﻿using DevelopmentInProgress.MarketView.Interface.Events;
+using DevelopmentInProgress.MarketView.Interface.Interfaces;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,5 +33,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Strategy
         void SubscribeAccountInfo(AccountInfoEventArgs accountInfoEventArgs);
 
         void SubscribeAccountInfoException(Exception exception);
+
+        void AddExchangeService(Exchange exchange, IExchangeService exchangeService);
     }
 }
