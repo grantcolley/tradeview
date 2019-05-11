@@ -14,7 +14,7 @@ namespace DevelopmentInProgress.Wpf.Common.Extensions
                 Status = strategy.Status,
                 TargetAssembly = strategy.TargetAssembly.File,
                 TargetType = strategy.TargetType,
-                Tag = strategy.Tag
+                Parameters = strategy.Parameters
             };
 
             var subscriptions = strategy.StrategySubscriptions.Select(s => s.GetInterfaceStrategySubscription()).ToList();

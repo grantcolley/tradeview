@@ -8,6 +8,7 @@ namespace DevelopmentInProgress.Wpf.Common.Model
         private string name;
         private StrategyFile targetAssembly;
         private StrategyFile displayAssembly;
+        private string parameters;
 
         public Strategy()
         {
@@ -23,7 +24,6 @@ namespace DevelopmentInProgress.Wpf.Common.Model
         public string TargetType { get; set; }
         public string DisplayViewType { get; set; }
         public string DisplayViewModelType { get; set; }
-        public string Tag { get; set; }
         public int TradesChartDisplayCount { get; set; }
         public int TradesDisplayCount { get; set; }
         public string StrategyServerUrl { get; set; }
@@ -63,6 +63,19 @@ namespace DevelopmentInProgress.Wpf.Common.Model
                 {
                     displayAssembly = value;
                     OnPropertyChanged("DisplayAssembly");
+                }
+            }
+        }
+
+        public string Parameters
+        {
+            get { return parameters; }
+            set
+            {
+                if (parameters != value)
+                {
+                    parameters = value;
+                    OnPropertyChanged("Parameters");
                 }
             }
         }

@@ -14,7 +14,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Strategy
                 StrategySubscriptions = strategy.StrategySubscriptions,
                 TargetAssembly = strategy.TargetAssembly,
                 TargetType = strategy.TargetType,
-                Tag = strategy.Tag,
+                Parameters = strategy.Parameters,
                 Machine = Environment.MachineName,
                 NotificationEvent = notificationEvent,
                 NotificationLevel = notificationLevel,

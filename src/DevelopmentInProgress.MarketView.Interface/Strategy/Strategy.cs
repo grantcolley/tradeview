@@ -25,6 +25,6 @@ namespace DevelopmentInProgress.MarketView.Interface.Strategy
         /// The target type must implement <see cref="DevelopmentInProgress.TradeServer.TradeStrategy.ITradeStrategy"/>
         /// </summary>
         public string TargetType { get; set; }
-        public string Tag { get; set; }
+        public string Parameters { get; set; }
     }
 }
