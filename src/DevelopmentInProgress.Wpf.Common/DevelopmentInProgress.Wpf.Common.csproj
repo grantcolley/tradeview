@@ -88,7 +88,6 @@
     <Compile Include="Services\StrategyService.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="Extensions\AccountBalanceExtensions.cs" />
-    <Compile Include="Extensions\DecimalExtensions.cs" />
     <Compile Include="Extensions\OrderExtensions.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\AccountBalance.cs" />

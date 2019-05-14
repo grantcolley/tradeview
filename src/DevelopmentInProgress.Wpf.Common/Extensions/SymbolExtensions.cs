@@ -1,4 +1,5 @@
-﻿using DevelopmentInProgress.Wpf.Common.Model;
+﻿using DevelopmentInProgress.MarketView.Interface.Extensions;
+using DevelopmentInProgress.Wpf.Common.Model;
 using System;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DevelopmentInProgress.Wpf.Common.Extensions;
+using DevelopmentInProgress.MarketView.Interface.Extensions;
 using DevelopmentInProgress.MarketView.Test.Helper;
 using DevelopmentInProgress.Wpf.Common.Model;
 using DevelopmentInProgress.Wpf.Common.Services;

@@ -1,5 +1,5 @@
-﻿using DevelopmentInProgress.MarketView.Interface.Interfaces;
-using DevelopmentInProgress.Wpf.Common.Extensions;
+﻿using DevelopmentInProgress.MarketView.Interface.Extensions;
+using DevelopmentInProgress.MarketView.Interface.Interfaces;
 using DevelopmentInProgress.Wpf.Common.Model;
 using LiveCharts;
 using Prism.Logging;
