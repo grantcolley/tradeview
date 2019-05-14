@@ -35,6 +35,6 @@ namespace DevelopmentInProgress.MarketView.Interface.Strategy
 
         void SubscribeAccountInfoException(Exception exception);
 
-        void AddExchangeService(IEnumerable<StrategySubscription> strategySubscriptions, Exchange exchange, IExchangeService exchangeService);
+        Task AddExchangeService(IEnumerable<StrategySubscription> strategySubscriptions, Exchange exchange, IExchangeService exchangeService);
     }
 }
