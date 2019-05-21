@@ -11,7 +11,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Strategy
     {
         Task<Strategy> RunAsync(Strategy strategy, CancellationToken cancellationToken);
 
-        Task<bool> TryUpdateStrategy(Strategy strategy);
+        Task<bool> TryUpdateStrategy(string strategyParameters);
 
         event EventHandler<TradeStrategyNotificationEventArgs> StrategyAccountInfoEvent;
         

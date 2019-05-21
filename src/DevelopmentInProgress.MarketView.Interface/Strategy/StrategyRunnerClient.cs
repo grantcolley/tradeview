@@ -28,5 +28,13 @@ namespace DevelopmentInProgress.MarketView.Interface.Strategy
 
             return client.PostAsync(requestUri, multipartFormDataContent);
         }
+
+        public Task<HttpResponseMessage> PostAsync(string requestUri, string jsonSerializedStrategyParameters)
+        {
+            var client = new HttpClient();
+            var multipartFormDataContent = new MultipartFormDataContent();
+            multipartFormDataContent.Add(new StringContent(jsonSerializedStrategyParameters, Encoding.UTF8, "application/json"), "strategyparameters");
+            return client.PostAsync(requestUri, multipartFormDataContent);
+        }
     }
 }
