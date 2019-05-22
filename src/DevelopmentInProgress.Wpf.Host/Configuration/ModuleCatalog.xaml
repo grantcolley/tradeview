@@ -9,21 +9,21 @@
                       InitializationMode="WhenAvailable">
     </prism:ModuleInfo>
 
-    <prism:ModuleInfo Ref="Strategy Development"
+    <!--<prism:ModuleInfo Ref="Strategy Development"
                       ModuleName="StrategyDevelopment"
                       ModuleType="DevelopmentInProgress.Wpf.StrategyDevelopment.Module,DevelopmentInProgress.Wpf.StrategyDevelopment"
                       InitializationMode="WhenAvailable">
         <prism:ModuleInfo.DependsOn>
             <sys:String>StrategyManager</sys:String>
         </prism:ModuleInfo.DependsOn>
-    </prism:ModuleInfo>
+    </prism:ModuleInfo>-->
     
     <prism:ModuleInfo Ref="Market View"
                       ModuleName="MarketView"
                       ModuleType="DevelopmentInProgress.Wpf.MarketView.Module,DevelopmentInProgress.Wpf.MarketView"
                       InitializationMode="WhenAvailable">
         <prism:ModuleInfo.DependsOn>
-            <sys:String>StrategyDevelopment</sys:String>
+            <sys:String>StrategyManager</sys:String>
         </prism:ModuleInfo.DependsOn>
     </prism:ModuleInfo>
 
