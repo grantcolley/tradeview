@@ -25,6 +25,8 @@ namespace DevelopmentInProgress.Wpf.Common.ViewModel
         private bool isCancellAllVisible;
         private bool disposed;
 
+        private object lockOrders = new object();
+
         public OrdersViewModel(IWpfExchangeService exchangeService, ILoggerFacade logger)
             : base(exchangeService, logger)
         {
@@ -122,16 +124,24 @@ namespace DevelopmentInProgress.Wpf.Common.ViewModel
 
                     if (Account != null)
                     {
-                        Orders.Clear();
                         var result = await Task.Run(async () => await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User));
-                        foreach (var order in result)
+
+                        lock(lockOrders)
                         {
-                            Orders.Add(order);
+                            Orders.Clear();
+                            foreach (var order in result)
+                            {
+                                Orders.Add(order);
+                            }
                         }
                     }
                     else
                     {
-                        Orders.Clear();
+                        lock (lockOrders)
+                        {
+                            Orders.Clear();
+                        }
+
                         if (ordersCancellationTokenSource != null
                             && !ordersCancellationTokenSource.IsCancellationRequested)
                         {
@@ -158,26 +168,29 @@ namespace DevelopmentInProgress.Wpf.Common.ViewModel
 
                 Action<IEnumerable<Order>> action = res =>
                 {
-                    if (!res.Any())
+                    lock (lockOrders)
                     {
-                        Orders.Clear();
-                        return;
-                    }
+                        if (!res.Any())
+                        {
+                            Orders.Clear();
+                            return;
+                        }
 
-                    var updated = (from o in Orders
-                                   join r in res on o.ClientOrderId equals r.ClientOrderId
-                                   select o.Update(r)).ToList();
+                        var updated = (from o in Orders
+                                       join r in res on o.ClientOrderId equals r.ClientOrderId
+                                       select o.Update(r)).ToList();
 
-                    var remove = Orders.Where(o => !res.Any(r => r.ClientOrderId.Equals(o.ClientOrderId)));
-                    foreach (var order in remove)
-                    {
-                        Orders.Remove(order);
-                    }
+                        var remove = Orders.Where(o => !res.Any(r => r.ClientOrderId.Equals(o.ClientOrderId)));
+                        foreach (var order in remove)
+                        {
+                            Orders.Remove(order);
+                        }
 
-                    var add = res.Where(r => !Orders.Any(o => o.ClientOrderId.Equals(r.ClientOrderId)));
-                    foreach (var order in add)
-                    {
-                        Orders.Add(order);
+                        var add = res.Where(r => !Orders.Any(o => o.ClientOrderId.Equals(r.ClientOrderId)));
+                        foreach (var order in add)
+                        {
+                            Orders.Add(order);
+                        }
                     }
                 };
 
@@ -235,7 +248,10 @@ namespace DevelopmentInProgress.Wpf.Common.ViewModel
                 var order = orders.Single(o => o.Id == orderId);
                 order.IsVisible = false;
                 var result = await ExchangeService.CancelOrderAsync(Account.AccountInfo.User, order.Symbol, order.Id, null, 0, ordersCancellationTokenSource.Token);
-                Orders.Remove(order);
+                lock (lockOrders)
+                {
+                    Orders.Remove(order);
+                }
             }
             catch (Exception ex)
             {
@@ -249,7 +265,11 @@ namespace DevelopmentInProgress.Wpf.Common.ViewModel
             {
                 IsCancellAllVisible = false;
                 Parallel.ForEach(Orders, async order => { var result = await ExchangeService.CancelOrderAsync(Account.AccountInfo.User, order.Symbol, order.Id, null, 0, ordersCancellationTokenSource.Token); });
-                Orders.Clear();
+                lock (lockOrders)
+                {
+                    Orders.Clear();
+                }
+
                 IsCancellAllVisible = true;
             }
             catch (Exception ex)
