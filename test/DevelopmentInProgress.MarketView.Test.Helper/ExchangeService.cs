@@ -106,5 +106,10 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 
             callback.Invoke(new StatisticsEventArgs { Statistics = symbolsStats });
         }
+
+        public Task<IEnumerable<AccountTrade>> GetAccountTradesAsync(User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            throw new NotImplementedException();
+        }
     }
 }

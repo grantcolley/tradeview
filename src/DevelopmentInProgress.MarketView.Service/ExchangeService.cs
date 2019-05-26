@@ -29,6 +29,12 @@ namespace DevelopmentInProgress.MarketView.Service
             return result;
         }
 
+        public async Task<IEnumerable<AccountTrade>> GetAccountTradesAsync(User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var accountTrades = await exchangeApi.GetAccountTradesAsync(user, symbol, startDate, endDate, recWindow, cancellationToken).ConfigureAwait(false);
+            return accountTrades;
+        }
+
         public async Task<IEnumerable<AggregateTrade>> GetAggregateTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
             var aggregateTrades = await exchangeApi.GetAggregateTradesAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
@@ -37,7 +43,7 @@ namespace DevelopmentInProgress.MarketView.Service
 
         public async Task<IEnumerable<Trade>> GetTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
-            var trades = await exchangeApi.GetTradesAsync(symbol, limit, cancellationToken);
+            var trades = await exchangeApi.GetTradesAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
             return trades;
         }
 

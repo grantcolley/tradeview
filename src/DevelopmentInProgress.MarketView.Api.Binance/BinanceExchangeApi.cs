@@ -45,6 +45,14 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
             return accountInfo;
         }
 
+        public async Task<IEnumerable<Interface.Model.AccountTrade>> GetAccountTradesAsync(Interface.Model.User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret);
+            var result = await binanceApi.GetAccountTradesAsync(apiUser, symbol, startDate, endDate, recWindow, cancellationToken).ConfigureAwait(false);
+            var accountTrades = result.Select(at => NewAccountTrade(at)).ToList();
+            return accountTrades;
+        }
+
         public async Task<IEnumerable<Interface.Model.Symbol>> GetSymbolsAsync(CancellationToken cancellationToken)
         {
             var result = await binanceApi.GetSymbolsAsync(cancellationToken).ConfigureAwait(false);
@@ -76,7 +84,7 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
                 var orderBookCache = new OrderBookCache(binanceApi, new DepthWebSocketClient());
                 orderBookCache.Subscribe(symbol, limit, e =>
                 {
-                    if(cancellationToken.IsCancellationRequested)
+                    if (cancellationToken.IsCancellationRequested)
                     {
                         orderBookCache.Unsubscribe();
                         return;
@@ -87,7 +95,7 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
                         var orderBook = NewOrderBook(e.OrderBook);
                         callback.Invoke(new OrderBookEventArgs { OrderBook = orderBook });
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         orderBookCache.Unsubscribe();
                         exception.Invoke(ex);
@@ -190,7 +198,7 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
             var symbolsStats = stats.Select(s => NewSymbolStats(s)).ToList();
             return symbolsStats;
         }
-        
+
         public void SubscribeStatistics(Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             try
@@ -400,6 +408,28 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
                 SellerOrderId = t.SellerOrderId,
                 IsBuyerMaker = t.IsBuyerMaker,
                 IsBestPriceMatch = t.IsBestPriceMatch
+            };
+        }
+
+        private Interface.Model.AccountTrade NewAccountTrade(AccountTrade t)
+        {
+            return new Interface.Model.AccountTrade
+            {
+                Symbol = t.Symbol,
+                Id = t.Id,
+                Price = t.Price,
+                Quantity = t.Quantity,
+                Time = t.Time,
+                BuyerOrderId = t.BuyerOrderId,
+                SellerOrderId = t.SellerOrderId,
+                IsBuyerMaker = t.IsBuyerMaker,
+                IsBestPriceMatch = t.IsBestPriceMatch,
+                OrderId = t.OrderId,
+                QuoteQuantity = t.QuoteQuantity,
+                Commission = t.Commission,
+                CommissionAsset = t.CommissionAsset,
+                IsBuyer = t.IsBuyer,
+                IsMaker = t.IsMaker
             };
         }
     }
