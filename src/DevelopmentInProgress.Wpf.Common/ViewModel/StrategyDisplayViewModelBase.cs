@@ -48,7 +48,7 @@ namespace DevelopmentInProgress.Wpf.Common.ViewModel
 
         public virtual void TradeNotifications(List<MarketView.Interface.Strategy.StrategyNotification> tradeNotifications)
         {
-            throw new NotImplementedException("StrategyDisplayViewModelBase.UpdateTrades(IEnumerable<ITrade>)");
+            throw new NotImplementedException("StrategyDisplayViewModelBase.TradeNotifications(List<MarketView.Interface.Strategy.StrategyNotification> tradeNotifications)");
         }
     }
 }
