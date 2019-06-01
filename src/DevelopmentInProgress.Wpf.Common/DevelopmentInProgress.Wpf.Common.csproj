@@ -77,6 +77,7 @@
     <Compile Include="Model\OrderBookTop.cs" />
     <Compile Include="Model\Preferences.cs" />
     <Compile Include="Model\StrategyFileType.cs" />
+    <Compile Include="Model\TimeValuePoint.cs" />
     <Compile Include="Model\Trade.cs" />
     <Compile Include="Model\Strategy.cs" />
     <Compile Include="Model\StrategyFile.cs" />

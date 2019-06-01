@@ -20,6 +20,12 @@ namespace DevelopmentInProgress.Wpf.Common.Chart
                 .Y(model => Convert.ToDouble(model.Price));
 
             Charting.For<Trade>(tradeMapper);
+
+            var timeValuePointMapper = Mappers.Xy<TimeValuePoint>()
+                .X(model => model.X.Ticks)
+                .Y(model => Convert.ToDouble(model.Y));
+
+            Charting.For<TimeValuePoint>(timeValuePointMapper);
         }
 
         public Func<double, string> TimeFormatter => value => new DateTime((long)value).ToString("H:mm:ss");
