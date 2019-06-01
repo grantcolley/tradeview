@@ -100,6 +100,12 @@ namespace DevelopmentInProgress.Wpf.Common.Services
             return orderBook;
         }
 
+        public async Task<IEnumerable<Interface.AccountTrade>> GetAccountTradesAsync(Interface.User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var accountTrades = await exchangeService.GetAccountTradesAsync(user, symbol, startDate, endDate, recWindow, cancellationToken);
+            return accountTrades;
+        }
+
         public void SubscribeOrderBook(string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             exchangeService.SubscribeOrderBook(symbol, limit, callback, exception, cancellationToken);
