@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.MarketView.Interface.Model;
+﻿using System;
 using System.Collections.Generic;
 
 namespace DevelopmentInProgress.MarketView.Interface.Strategy
@@ -7,12 +7,11 @@ namespace DevelopmentInProgress.MarketView.Interface.Strategy
     {
         public StrategyPerformance()
         {
-            StrategyPerformanceIndicators = new List<StrategyPerformanceIndicator>();
-            StrategyTrades = new List<AccountTrade>();
+            StrategySymbolPerformances = new List<StrategySymbolPerformance>();
         }
 
         public string Strategy { get; set; }
-        public List<StrategyPerformanceIndicator> StrategyPerformanceIndicators { get; set; }
-        public List<AccountTrade> StrategyTrades { get; set; }
+        public DateTime StartTime { get; set; }
+        public List<StrategySymbolPerformance> StrategySymbolPerformances { get; set; }
     }
 }
