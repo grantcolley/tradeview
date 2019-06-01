@@ -241,7 +241,7 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
                              select new T
                              {
                                  Id = t.Id,
-                                 Time = t.Time,
+                                 Time = t.Time.ToLocalTime(),
                                  Symbol = t.Symbol,
                                  IsBuyerMaker = t.IsBuyerMaker,
                                  IsBestPriceMatch = t.IsBestPriceMatch,
@@ -311,7 +311,7 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
                              select new T
                              {
                                  Id = t.Id,
-                                 Time = t.Time,
+                                 Time = t.Time.ToLocalTime(),
                                  Symbol = t.Symbol,
                                  IsBuyerMaker = t.IsBuyerMaker,
                                  IsBestPriceMatch = t.IsBestPriceMatch,
