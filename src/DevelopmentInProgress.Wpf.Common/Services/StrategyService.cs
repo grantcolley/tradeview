@@ -117,5 +117,47 @@ namespace DevelopmentInProgress.Wpf.Common.Services
                 }
             }
         }
+
+        public async Task<MarketView.Interface.Strategy.StrategyPerformance> GetStrategyPerformance(string strategyName)
+        {
+            MarketView.Interface.Strategy.StrategyPerformance strategyPerformance = null;
+
+            var strategyPerformanceFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{Environment.UserName}_{strategyName}.txt");
+
+            if (File.Exists(strategyPerformanceFile))
+            {
+                using (var reader = File.OpenText(strategyPerformanceFile))
+                {
+                    var json = await reader.ReadToEndAsync();
+                    strategyPerformance = JsonConvert.DeserializeObject<MarketView.Interface.Strategy.StrategyPerformance>(json);
+                }
+            }
+            else
+            {
+                strategyPerformance = new MarketView.Interface.Strategy.StrategyPerformance { Strategy = strategyName };
+                await SaveStrategyPerformance(strategyPerformance).ConfigureAwait(false);
+            }
+
+            return strategyPerformance;
+        }
+
+        public async Task SaveStrategyPerformance(MarketView.Interface.Strategy.StrategyPerformance strategyPerformance)
+        {
+            if(strategyPerformance == null)
+            {
+                return;
+            }
+
+            var strategyPerformanceFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{Environment.UserName}_{strategyPerformance.Strategy}.txt");
+
+            var json = JsonConvert.SerializeObject(strategyPerformance);
+
+            UnicodeEncoding encoding = new UnicodeEncoding();
+            char[] chars = encoding.GetChars(encoding.GetBytes(json));
+            using (StreamWriter writer = File.CreateText(strategyPerformanceFile))
+            {
+                await writer.WriteAsync(chars, 0, chars.Length);
+            }
+        }
     }
 }

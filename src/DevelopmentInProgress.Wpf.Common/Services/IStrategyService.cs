@@ -10,5 +10,7 @@ namespace DevelopmentInProgress.Wpf.Common.Services
         Task<Strategy> GetStrategy(string strategyName);
         Task SaveStrategy(Strategy strategy);
         Task DeleteStrategy(Strategy strategy);
+        Task<MarketView.Interface.Strategy.StrategyPerformance> GetStrategyPerformance(string strategyName);
+        Task SaveStrategyPerformance(MarketView.Interface.Strategy.StrategyPerformance strategyPerformance);
     }
 }
