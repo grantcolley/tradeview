@@ -20,5 +20,10 @@ namespace DevelopmentInProgress.MarketView.Interface.Model
         public string CommissionAsset { get; set; }
         public bool IsBuyer { get; set; }
         public bool IsMaker { get; set; }
+
+        public AccountTrade Clone()
+        {
+            return MemberwiseClone() as AccountTrade;
+        }
     }
 }

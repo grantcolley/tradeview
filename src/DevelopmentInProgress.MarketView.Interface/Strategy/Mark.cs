@@ -12,5 +12,10 @@ namespace DevelopmentInProgress.MarketView.Interface.Strategy
         public decimal MarkValue { get; set; }
         public DateTime MarkTime { get; set; }
         public decimal Performance { get; set; }
+
+        public Mark Clone()
+        {
+            return MemberwiseClone() as Mark;
+        }
     }
 }
