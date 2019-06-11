@@ -7,5 +7,7 @@ namespace DevelopmentInProgress.Wpf.Common.Chart
         Func<double, string> TimeFormatter { get; }
 
         Func<double, string> PriceFormatter { get; }
+
+        Func<double, string> PercentageFormatter { get; }
     }
 }

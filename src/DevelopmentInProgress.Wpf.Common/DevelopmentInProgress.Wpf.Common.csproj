@@ -61,6 +61,7 @@
     <Compile Include="Chart\IChartHelper.cs" />
     <Compile Include="Command\ViewModelCommand.cs" />
     <Compile Include="Converters\LastPriceChangeDirectionColourConverter.cs" />
+    <Compile Include="Converters\PercentageChangeConverter.cs" />
     <Compile Include="Converters\PriceChangePercentConverter.cs" />
     <Compile Include="Converters\ZeroToHiddenConverter.cs" />
     <Compile Include="Events\EventArgsBase.cs" />

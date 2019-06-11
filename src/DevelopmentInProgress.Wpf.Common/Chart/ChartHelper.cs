@@ -31,5 +31,7 @@ namespace DevelopmentInProgress.Wpf.Common.Chart
         public Func<double, string> TimeFormatter => value => new DateTime((long)value).ToString("H:mm:ss");
 
         public Func<double, string> PriceFormatter => value => value.ToString("0.00000000");
+
+        public Func<double, string> PercentageFormatter => value => Math.Round(value, 2).ToString();
     }
 }
