@@ -12,6 +12,7 @@ namespace DevelopmentInProgress.Wpf.Common.Cache
     {
         private IWpfExchangeService wpfExchangeService;
         private List<Symbol> symbols;
+        private Symbol btcUsdt;
         private CancellationTokenSource subscribeSymbolsCxlTokenSrc = new CancellationTokenSource();
         private object lockSubscriptions = new object();
         private bool disposed;
@@ -36,12 +37,54 @@ namespace DevelopmentInProgress.Wpf.Common.Cache
                     if (!symbols.Any())
                     {
                         symbols.AddRange(results);
+
+                        btcUsdt = symbols.Single(s => s.Name.Equals("BTCUSDT"));
+
                         wpfExchangeService.SubscribeStatistics(symbols, SubscribeStatisticsException, subscribeSymbolsCxlTokenSrc.Token);
                     }
                 }
             }
 
             return symbols;
+        }
+
+        public decimal USDTValueBalances(List<AccountBalance> balances)
+        {
+            if(btcUsdt == null
+                || !symbols.Any())
+            {
+                return 0m;
+            }
+
+            decimal value = 0m;
+            decimal btc = 0m;
+
+            foreach(var balance in balances)
+            {
+                var qty = btc = balance.Free + balance.Locked;
+
+                if (qty <= 0)
+                {
+                    continue;
+                }
+
+                if (balance.Asset.Equals("BTC"))
+                {
+                    btc = qty;
+                }
+                else
+                {
+                    var symbol = symbols.FirstOrDefault(s => s.Name.Equals($"{balance.Asset}BTC"));
+                    if(symbol != null)
+                    {
+                        btc = symbol.SymbolStatistics.BidPrice * qty;
+                    }
+                }
+            }
+
+            value = btcUsdt.SymbolStatistics.BidPrice * btc;
+
+            return value;
         }
 
         private void SubscribeStatisticsException(Exception exception)
