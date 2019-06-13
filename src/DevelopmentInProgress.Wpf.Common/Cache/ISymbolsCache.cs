@@ -9,5 +9,6 @@ namespace DevelopmentInProgress.Wpf.Common.Cache
     {
         event EventHandler<Exception> OnSymbolsCacheException;
         Task<List<Symbol>> GetSymbols();
+        decimal USDTValueBalances(List<AccountBalance> balances);
     }
 }

@@ -61,7 +61,7 @@ namespace DevelopmentInProgress.Wpf.Common.Cache
 
             foreach(var balance in balances)
             {
-                var qty = btc = balance.Free + balance.Locked;
+                var qty = balance.Free + balance.Locked;
 
                 if (qty <= 0)
                 {
@@ -70,21 +70,21 @@ namespace DevelopmentInProgress.Wpf.Common.Cache
 
                 if (balance.Asset.Equals("BTC"))
                 {
-                    btc = qty;
+                    btc += qty;
                 }
                 else
                 {
                     var symbol = symbols.FirstOrDefault(s => s.Name.Equals($"{balance.Asset}BTC"));
                     if(symbol != null)
                     {
-                        btc = symbol.SymbolStatistics.BidPrice * qty;
+                        btc += symbol.SymbolStatistics.BidPrice * qty;
                     }
                 }
             }
 
             value = btcUsdt.SymbolStatistics.BidPrice * btc;
 
-            return value;
+            return Math.Round(value, 2);
         }
 
         private void SubscribeStatisticsException(Exception exception)
