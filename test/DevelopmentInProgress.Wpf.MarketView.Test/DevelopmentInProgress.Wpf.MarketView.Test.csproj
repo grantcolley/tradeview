@@ -82,6 +82,7 @@
     <Compile Include="AccountViewModelTest.cs" />
     <Compile Include="SymbolExtensionsTest.cs" />
     <Compile Include="SymbolsCacheHelper.cs" />
+    <Compile Include="SymbolsCacheTest.cs" />
     <Compile Include="SymbolsViewModelTest.cs" />
     <Compile Include="SymbolViewModelTest.cs" />
     <Compile Include="TradeViewModelTest.cs" />
