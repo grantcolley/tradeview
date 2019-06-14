@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DevelopmentInProgress.Wpf.Common.Model;
 using DevelopmentInProgress.Wpf.Common.Services;
+using DevelopmentInProgress.MarketView.Interface.Extensions;
 
 namespace DevelopmentInProgress.Wpf.Common.Cache
 {
@@ -48,18 +49,18 @@ namespace DevelopmentInProgress.Wpf.Common.Cache
             return symbols;
         }
 
-        public decimal USDTValueBalances(List<AccountBalance> balances)
+        public void ValueAccount(Account account)
         {
-            if(btcUsdt == null
+            if (btcUsdt == null
                 || !symbols.Any())
             {
-                return 0m;
+                return;
             }
 
-            decimal value = 0m;
+            decimal usdt = 0m;
             decimal btc = 0m;
 
-            foreach(var balance in balances)
+            foreach (var balance in account.Balances)
             {
                 var qty = balance.Free + balance.Locked;
 
@@ -75,16 +76,17 @@ namespace DevelopmentInProgress.Wpf.Common.Cache
                 else
                 {
                     var symbol = symbols.FirstOrDefault(s => s.Name.Equals($"{balance.Asset}BTC"));
-                    if(symbol != null)
+                    if (symbol != null)
                     {
                         btc += symbol.SymbolStatistics.BidPrice * qty;
                     }
                 }
             }
 
-            value = btcUsdt.SymbolStatistics.BidPrice * btc;
+            usdt = btcUsdt.SymbolStatistics.BidPrice * btc;
 
-            return Math.Round(value, 2);
+            account.BTCValue = Math.Round(btc, 8);
+            account.USDTValue = usdt.Trim(btcUsdt.PricePrecision);
         }
 
         private void SubscribeStatisticsException(Exception exception)
