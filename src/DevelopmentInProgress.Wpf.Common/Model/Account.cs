@@ -7,6 +7,10 @@ namespace DevelopmentInProgress.Wpf.Common.Model
     {
         private const string secretText = "**********";
         private string apiSecret;
+        private string btcDisplayValue;
+        private string usdtDisplayValue;
+        private decimal btcValue;
+        private decimal usdtValue;
 
         public Account(Interface.AccountInfo accountInfo)
         {
@@ -56,6 +60,60 @@ namespace DevelopmentInProgress.Wpf.Common.Model
                     AccountInfo.User.ApiSecret = value;
                     apiSecret = string.IsNullOrWhiteSpace(value) ? string.Empty : secretText; 
                     OnPropertyChanged("ApiSecret");
+                }
+            }
+        }
+
+        public string BTCDisplayValue
+        {
+            get { return btcDisplayValue; }
+            set
+            {
+                if (btcDisplayValue != value)
+                {
+                    btcDisplayValue = value;
+                    OnPropertyChanged("BTCDisplayValue");
+                }
+            }
+        }
+
+        public string USDTDisplayValue
+        {
+            get { return usdtDisplayValue; }
+            set
+            {
+                if (usdtDisplayValue != value)
+                {
+                    usdtDisplayValue = value;
+                    OnPropertyChanged("USDTDisplayValue");
+                }
+            }
+        }
+
+        public decimal BTCValue
+        {
+            get { return btcValue; }
+            set
+            {
+                if (btcValue != value)
+                {
+                    btcValue = value;
+                    BTCDisplayValue = $"BTC {btcValue}";
+                    OnPropertyChanged("BTCValue");
+                }
+            }
+        }
+
+        public decimal USDTValue
+        {
+            get { return usdtValue; }
+            set
+            {
+                if (usdtValue != value)
+                {
+                    usdtValue = value;
+                    USDTDisplayValue = $"${usdtValue}";
+                    OnPropertyChanged("USDTValue");
                 }
             }
         }
