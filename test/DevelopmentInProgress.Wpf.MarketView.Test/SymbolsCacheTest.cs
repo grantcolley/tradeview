@@ -4,6 +4,7 @@ using DevelopmentInProgress.Wpf.Common.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 
 namespace DevelopmentInProgress.Wpf.MarketView.Test
 {
@@ -19,14 +20,20 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var symbolsCache = SymbolsCacheHelper.GetSymbolsCache(exchangeService);
             var symbols = await symbolsCache.GetSymbols();
 
-            var balances = new List<AccountBalance>();
-            balances.Add(new AccountBalance { Asset = "BTC", Free = 0.00794722m });
+            var balances = new List<Interface.AccountBalance>();
+            balances.Add(new Interface.AccountBalance { Asset = "BTC", Free = 0.00794722m });
+
+            var accountInfo = new Interface.AccountInfo();
+            accountInfo.Balances.AddRange(balances);
+
+            var account = new Account(accountInfo);
 
             // Act
-            var usdtValue = symbolsCache.USDTValueBalances(balances);
+            symbolsCache.ValueAccount(account);
 
             // Assert
-            Assert.AreEqual(usdtValue, 64.84m);
+            Assert.AreEqual(account.USDTValue, 64.84m);
+            Assert.AreEqual(account.BTCValue, 0.00794722m);
         }
 
         [TestMethod]
@@ -38,14 +45,20 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var symbolsCache = SymbolsCacheHelper.GetSymbolsCache(exchangeService);
             var symbols = await symbolsCache.GetSymbols();
 
-            var balances = new List<AccountBalance>();
-            balances.Add(new AccountBalance { Asset = "BNB", Free = 1.88373641m });
+            var balances = new List<Interface.AccountBalance>();
+            balances.Add(new Interface.AccountBalance { Asset = "BNB", Free = 1.88373641m });
+
+            var accountInfo = new Interface.AccountInfo();
+            accountInfo.Balances.AddRange(balances);
+
+            var account = new Account(accountInfo);
 
             // Act
-            var usdtValue = symbolsCache.USDTValueBalances(balances);
+            symbolsCache.ValueAccount(account);
 
             // Assert
-            Assert.AreEqual(usdtValue, 64.57m);
+            Assert.AreEqual(account.USDTValue, 64.57m);
+            Assert.AreEqual(account.BTCValue, 0.00791452m);
         }
 
         [TestMethod]
@@ -57,15 +70,21 @@ namespace DevelopmentInProgress.Wpf.MarketView.Test
             var symbolsCache = SymbolsCacheHelper.GetSymbolsCache(exchangeService);
             var symbols = await symbolsCache.GetSymbols();
 
-            var balances = new List<AccountBalance>();
-            balances.Add(new AccountBalance { Asset = "BTC", Free = 0.00396715m });
-            balances.Add(new AccountBalance { Asset = "BNB", Free = 0.94444141m });
+            var balances = new List<Interface.AccountBalance>();
+            balances.Add(new Interface.AccountBalance { Asset = "BTC", Free = 0.00396715m });
+            balances.Add(new Interface.AccountBalance { Asset = "BNB", Free = 0.94444141m });
+
+            var accountInfo = new Interface.AccountInfo();
+            accountInfo.Balances.AddRange(balances);
+
+            var account = new Account(accountInfo);
 
             // Act
-            var usdtValue = symbolsCache.USDTValueBalances(balances);
-
+            symbolsCache.ValueAccount(account);
+            
             // Assert
-            Assert.AreEqual(usdtValue, 64.74m);
+            Assert.AreEqual(account.USDTValue, 64.74m);
+            Assert.AreEqual(account.BTCValue, 0.00793522m);
         }
     }
 }

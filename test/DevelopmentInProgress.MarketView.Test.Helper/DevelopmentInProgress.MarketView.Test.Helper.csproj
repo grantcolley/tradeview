@@ -52,6 +52,7 @@
     <Compile Include="ExchangeServiceType.cs" />
     <Compile Include="ExchangeServiceUpdateOrders.cs" />
     <Compile Include="OrderBookUpdateHelper.cs" />
+    <Compile Include="SymbolsCacheHelper.cs" />
     <Compile Include="TestHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExchangeService.cs" />
@@ -95,6 +96,10 @@
     <ProjectReference Include="..\..\src\DevelopmentInProgress.MarketView.Interface\DevelopmentInProgress.MarketView.Interface.csproj">
       <Project>{86695062-90cc-419d-b455-d6d8c364a215}</Project>
       <Name>DevelopmentInProgress.MarketView.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\DevelopmentInProgress.Wpf.Common\DevelopmentInProgress.Wpf.Common.csproj">
+      <Project>{2b523839-ee20-4ed3-a1ba-ac2070c99f4d}</Project>
+      <Name>DevelopmentInProgress.Wpf.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
