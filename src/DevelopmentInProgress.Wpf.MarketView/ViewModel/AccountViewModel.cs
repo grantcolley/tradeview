@@ -12,24 +12,30 @@ using System.Threading.Tasks;
 using DevelopmentInProgress.Wpf.Common.Extensions;
 using DevelopmentInProgress.Wpf.Common.ViewModel;
 using Prism.Logging;
+using DevelopmentInProgress.Wpf.Common.Cache;
 
 namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 {
     public class AccountViewModel : ExchangeViewModel
     {
         private CancellationTokenSource accountCancellationTokenSource;
+        private DispatcherTimer dispatcherTimer;
+        private ISymbolsCache symbolsCache;
         private Account account;
         private AccountBalance selectedAsset;
         private bool isLoggingIn;
         private bool isLoggedIn;
         private bool disposed;
+        private object balancesLock = new object();
 
-        public AccountViewModel(IWpfExchangeService exchangeService, ILoggerFacade logger)
+        public AccountViewModel(IWpfExchangeService exchangeService, ISymbolsCache symbolsCache, ILoggerFacade logger)
             : base(exchangeService, logger)
         {
             accountCancellationTokenSource = new CancellationTokenSource();
 
             LoginCommand = new ViewModelCommand(Login);
+
+            this.symbolsCache = symbolsCache;
         }
 
         public event EventHandler<AccountEventArgs> OnAccountNotification;
@@ -162,6 +168,13 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
 
                 ExchangeService.SubscribeAccountInfo(Account.AccountInfo.User, e => AccountInfoUpdate(e.AccountInfo), SubscribeAccountInfoException, accountCancellationTokenSource.Token);
 
+                dispatcherTimer = new DispatcherTimer();
+                dispatcherTimer.Tick += new EventHandler(DispatcherTimerTick);
+                dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
+                dispatcherTimer.Start();
+
+                DispatcherTimerTick(this, EventArgs.Empty);
+
                 IsLoggedIn = true;
             }
             catch(Exception ex)
@@ -171,6 +184,21 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             }
 
             IsLoggingIn = false;
+        }
+
+        private void DispatcherTimerTick(object sender, EventArgs e)
+        {
+            try
+            {
+                lock (balancesLock)
+                {
+                    symbolsCache.ValueAccount(Account);
+                }
+            }
+            catch (Exception ex)
+            {
+                OnException("AccountViewModel.DispatcherTimerTick", ex);
+            }
         }
 
         private void SubscribeAccountInfoException(Exception exception)
@@ -209,34 +237,37 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
         {
             Action<Interface.Model.AccountInfo> action = aie =>
             {
-                if (aie.Balances == null
-                    || !aie.Balances.Any())
+                lock (balancesLock)
                 {
-                    Account.Balances.Clear();
-                    return;
-                }
+                    if (aie.Balances == null
+                        || !aie.Balances.Any())
+                    {
+                        Account.Balances.Clear();
+                        return;
+                    }
 
-                Func<AccountBalance, Interface.Model.AccountBalance, AccountBalance> f = ((ab, nb) =>
-                {
-                    ab.Free = nb.Free;
-                    ab.Locked = nb.Locked;
-                    return ab;
-                });
+                    Func<AccountBalance, Interface.Model.AccountBalance, AccountBalance> f = ((ab, nb) =>
+                    {
+                        ab.Free = nb.Free;
+                        ab.Locked = nb.Locked;
+                        return ab;
+                    });
 
-                var balances = (from ab in Account.Balances
-                                join nb in aie.Balances on ab.Asset equals nb.Asset
-                                select f(ab, nb)).ToList();
+                    var balances = (from ab in Account.Balances
+                                    join nb in aie.Balances on ab.Asset equals nb.Asset
+                                    select f(ab, nb)).ToList();
 
-                var remove = Account.Balances.Where(ab => !aie.Balances.Any(nb => nb.Asset.Equals(ab.Asset))).ToList();
-                foreach (var ob in remove)
-                {
-                    Account.Balances.Remove(ob);
-                }
+                    var remove = Account.Balances.Where(ab => !aie.Balances.Any(nb => nb.Asset.Equals(ab.Asset))).ToList();
+                    foreach (var ob in remove)
+                    {
+                        Account.Balances.Remove(ob);
+                    }
 
-                var add = aie.Balances.Where(nb => !Account.Balances.Any(ab => ab.Asset.Equals(nb.Asset))).ToList();
-                foreach (var nb in add)
-                {
-                    Account.Balances.Add(new AccountBalance { Asset = nb.Asset, Free = nb.Free, Locked = nb.Locked });
+                    var add = aie.Balances.Where(nb => !Account.Balances.Any(ab => ab.Asset.Equals(nb.Asset))).ToList();
+                    foreach (var nb in add)
+                    {
+                        Account.Balances.Add(new AccountBalance { Asset = nb.Asset, Free = nb.Free, Locked = nb.Locked });
+                    }
                 }
             };
 
