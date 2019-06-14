@@ -1,7 +1,7 @@
 ﻿using DevelopmentInProgress.Wpf.Common.Cache;
 using DevelopmentInProgress.Wpf.Common.Services;
 
-namespace DevelopmentInProgress.Wpf.MarketView.Test
+namespace DevelopmentInProgress.MarketView.Test.Helper
 {
     public static class SymbolsCacheHelper
     {
