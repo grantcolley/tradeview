@@ -11,6 +11,8 @@
         OrderBook = 6,
         OrderBookError = 7,
         Account = 8,
-        AccountError = 9
+        AccountError = 9,
+        Statistics = 10,
+        StatisticsError = 11
     }
 }
