@@ -26,6 +26,8 @@ namespace DevelopmentInProgress.Wpf.Common.Model
         public string DisplayViewModelType { get; set; }
         public int TradesChartDisplayCount { get; set; }
         public int TradesDisplayCount { get; set; }
+        public int OrderBookChartDisplayCount { get; set; }
+        public int OrderBookDisplayCount { get; set; }
         public string StrategyServerUrl { get; set; }
 
         public string Name

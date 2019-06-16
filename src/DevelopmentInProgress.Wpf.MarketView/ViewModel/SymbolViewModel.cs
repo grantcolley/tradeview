@@ -53,7 +53,7 @@ namespace DevelopmentInProgress.Wpf.MarketView.ViewModel
             TimeFormatter = chartHelper.TimeFormatter;
             PriceFormatter = chartHelper.PriceFormatter;
 
-            OnPropertyChanged("");
+            OnPropertyChanged(string.Empty);
         }
 
         public event EventHandler<SymbolEventArgs> OnSymbolNotification;
