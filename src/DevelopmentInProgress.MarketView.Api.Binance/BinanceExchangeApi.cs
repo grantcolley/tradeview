@@ -53,6 +53,14 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
             return accountTrades;
         }
 
+        public async Task<IEnumerable<Interface.Model.Candlestick>> GetCandlesticksAsync(string symbol, Interface.Model.CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = 0, CancellationToken token = default(CancellationToken))
+        {
+            var candlestickInterval = interval.ToBinanceCandlestickInterval();
+            var results = await binanceApi.GetCandlesticksAsync(symbol, candlestickInterval, startTime, endTime, limit, token).ConfigureAwait(false);
+            var candlesticks = results.Select(cs => NewCandlestick(cs)).ToList();
+            return candlesticks;
+        }
+
         public async Task<IEnumerable<Interface.Model.Symbol>> GetSymbolsAsync(CancellationToken cancellationToken)
         {
             var result = await binanceApi.GetSymbolsAsync(cancellationToken).ConfigureAwait(false);
@@ -408,6 +416,28 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
                 SellerOrderId = t.SellerOrderId,
                 IsBuyerMaker = t.IsBuyerMaker,
                 IsBestPriceMatch = t.IsBestPriceMatch
+            };
+        }
+
+        private Interface.Model.Candlestick NewCandlestick(Candlestick c)
+        {
+            var interval = c.Interval.ToMarketViewCandlestickInterval();
+
+            return new Interface.Model.Candlestick
+            {
+                Symbol = c.Symbol,
+                Interval = interval,
+                OpenTime = c.OpenTime,
+                Open = c.Open,
+                High = c.High,
+                Low = c.Low,
+                Close = c.Close,
+                Volume = c.Volume,
+                CloseTime = c.CloseTime,
+                QuoteAssetVolume = c.QuoteAssetVolume,
+                NumberOfTrades = c.NumberOfTrades,
+                TakerBuyBaseAssetVolume = c.TakerBuyBaseAssetVolume,
+                TakerBuyQuoteAssetVolume = c.TakerBuyQuoteAssetVolume
             };
         }
 
