@@ -4,18 +4,18 @@ namespace DevelopmentInProgress.MarketView.Interface.Model
 {
     public class Candlestick
     {
-        public string Symbol { get; }
-        public CandlestickInterval Interval { get; }
-        public DateTime OpenTime { get; }
-        public decimal Open { get; }
-        public decimal High { get; }
-        public decimal Low { get; }
-        public decimal Close { get; }
-        public decimal Volume { get; }
-        public DateTime CloseTime { get; }
-        public decimal QuoteAssetVolume { get; }
-        public long NumberOfTrades { get; }
-        public decimal TakerBuyBaseAssetVolume { get; }
-        public decimal TakerBuyQuoteAssetVolume { get; }
+        public string Symbol { get; set; }
+        public CandlestickInterval Interval { get; set; }
+        public DateTime OpenTime { get; set; }
+        public decimal Open { get; set; }
+        public decimal High { get; set; }
+        public decimal Low { get; set; }
+        public decimal Close { get; set; }
+        public decimal Volume { get; set; }
+        public DateTime CloseTime { get; set; }
+        public decimal QuoteAssetVolume { get; set; }
+        public long NumberOfTrades { get; set; }
+        public decimal TakerBuyBaseAssetVolume { get; set; }
+        public decimal TakerBuyQuoteAssetVolume { get; set; }
     }
 }
