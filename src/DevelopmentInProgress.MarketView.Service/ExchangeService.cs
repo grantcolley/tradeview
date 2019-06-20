@@ -47,6 +47,12 @@ namespace DevelopmentInProgress.MarketView.Service
             return trades;
         }
 
+        public async Task<IEnumerable<Candlestick>> GetCandlesticksAsync(string symbol, CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = default(int), CancellationToken token = default(CancellationToken))
+        {
+            var candlesticks = await exchangeApi.GetCandlesticksAsync(symbol, interval, startTime, endTime, limit, token).ConfigureAwait(false);
+            return candlesticks;
+        }
+
         public async Task<OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
             var orderBook = await exchangeApi.GetOrderBookAsync(symbol, limit, cancellationToken).ConfigureAwait(false);

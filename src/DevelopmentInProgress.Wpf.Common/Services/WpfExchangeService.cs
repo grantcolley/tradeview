@@ -106,6 +106,13 @@ namespace DevelopmentInProgress.Wpf.Common.Services
             return accountTrades;
         }
 
+        public async Task<IEnumerable<Candlestick>> GetCandlesticksAsync(string symbol, Interface.CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = default(int), CancellationToken token = default(CancellationToken))
+        {
+            var results = await exchangeService.GetCandlesticksAsync(symbol, interval, startTime, endTime, limit, token).ConfigureAwait(false);
+            var candlesticks = results.Select(c => c.GetViewCandlestick()).ToList();
+            return candlesticks;
+        }
+
         public void SubscribeOrderBook(string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             exchangeService.SubscribeOrderBook(symbol, limit, callback, exception, cancellationToken);
