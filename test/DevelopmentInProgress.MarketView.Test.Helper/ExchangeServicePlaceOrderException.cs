@@ -64,6 +64,11 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             throw new Exception("failed to place order");
         }
 
+        public async Task<IEnumerable<Candlestick>> GetCandlesticksAsync(string symbol, CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = default(int), CancellationToken token = default(CancellationToken))
+        {
+            throw new NotImplementedException();
+        }
+
         public void SubscribeAccountInfo(User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             // INTENTIONALLY EMPTY. LEAVE BLANK.

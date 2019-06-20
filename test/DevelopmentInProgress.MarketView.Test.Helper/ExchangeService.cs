@@ -51,6 +51,11 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             return tcs.Task;
         }
 
+        public async Task<IEnumerable<Candlestick>> GetCandlesticksAsync(string symbol, CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = default(int), CancellationToken token = default(CancellationToken))
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
             var tcs = new TaskCompletionSource<OrderBook>();

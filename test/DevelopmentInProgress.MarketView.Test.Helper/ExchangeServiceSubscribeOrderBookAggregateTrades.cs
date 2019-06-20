@@ -61,6 +61,11 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             throw new NotImplementedException();
         }
 
+        public async Task<IEnumerable<Candlestick>> GetCandlesticksAsync(string symbol, CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = default(int), CancellationToken token = default(CancellationToken))
+        {
+            throw new NotImplementedException();
+        }
+
         public void SubscribeAccountInfo(User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
