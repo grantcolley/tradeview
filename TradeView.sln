@@ -43,6 +43,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.SMA.W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.SMA.Test", "test\DevelopmentInProgress.SMA.Test\DevelopmentInProgress.SMA.Test.csproj", "{3922C186-7F3C-4173-A3C1-A26207C602A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Common", "src\DevelopmentInProgress.Common\DevelopmentInProgress.Common.csproj", "{8ADF4563-822F-40B1-9ED2-0C6C629D9EF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,10 @@ Global
 		{3922C186-7F3C-4173-A3C1-A26207C602A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3922C186-7F3C-4173-A3C1-A26207C602A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3922C186-7F3C-4173-A3C1-A26207C602A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8ADF4563-822F-40B1-9ED2-0C6C629D9EF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8ADF4563-822F-40B1-9ED2-0C6C629D9EF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8ADF4563-822F-40B1-9ED2-0C6C629D9EF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8ADF4563-822F-40B1-9ED2-0C6C629D9EF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
