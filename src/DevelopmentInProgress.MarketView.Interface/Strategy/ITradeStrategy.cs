@@ -14,7 +14,9 @@ namespace DevelopmentInProgress.MarketView.Interface.Strategy
         Task<bool> TryUpdateStrategy(string strategyParameters);
 
         event EventHandler<TradeStrategyNotificationEventArgs> StrategyAccountInfoEvent;
-        
+
+        event EventHandler<TradeStrategyNotificationEventArgs> StrategyCustomNotificationEvent;
+
         event EventHandler<TradeStrategyNotificationEventArgs> StrategyNotificationEvent;
 
         event EventHandler<TradeStrategyNotificationEventArgs> StrategyOrderBookEvent;
