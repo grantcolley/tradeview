@@ -1,4 +1,5 @@
-﻿using DevelopmentInProgress.MarketView.Interface.Events;
+﻿using DevelopmentInProgress.Common.Extensions;
+using DevelopmentInProgress.MarketView.Interface.Events;
 using DevelopmentInProgress.MarketView.Interface.Interfaces;
 using Binance;
 using Binance.Cache;

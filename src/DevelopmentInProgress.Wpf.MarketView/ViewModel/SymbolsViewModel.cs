@@ -1,4 +1,5 @@
-﻿using DevelopmentInProgress.Wpf.Common.Model;
+﻿using DevelopmentInProgress.Common.Extensions;
+using DevelopmentInProgress.Wpf.Common.Model;
 using DevelopmentInProgress.Wpf.MarketView.Events;
 using DevelopmentInProgress.Wpf.Common.Services;
 using System;
@@ -6,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using DevelopmentInProgress.Wpf.Common.Cache;
 using System.Threading.Tasks;
-using DevelopmentInProgress.Wpf.Common.Extensions;
 using DevelopmentInProgress.Wpf.Common.ViewModel;
 using Prism.Logging;
 

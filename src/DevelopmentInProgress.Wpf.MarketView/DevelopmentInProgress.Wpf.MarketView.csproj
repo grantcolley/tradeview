@@ -95,6 +95,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DevelopmentInProgress.Common\DevelopmentInProgress.Common.csproj">
+      <Project>{8adf4563-822f-40b1-9ed2-0c6c629d9ef1}</Project>
+      <Name>DevelopmentInProgress.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DevelopmentInProgress.MarketView.Interface\DevelopmentInProgress.MarketView.Interface.csproj">
       <Project>{86695062-90cc-419d-b455-d6d8c364a215}</Project>
       <Name>DevelopmentInProgress.MarketView.Interface</Name>

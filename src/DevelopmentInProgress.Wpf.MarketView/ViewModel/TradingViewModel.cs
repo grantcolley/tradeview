@@ -1,4 +1,5 @@
-﻿using DevelopmentInProgress.Wpf.Common.Model;
+﻿using DevelopmentInProgress.Common.Extensions;
+using DevelopmentInProgress.Wpf.Common.Model;
 using DevelopmentInProgress.Wpf.Controls.Messaging;
 using DevelopmentInProgress.Wpf.Host.Context;
 using DevelopmentInProgress.Wpf.Host.ViewModel;

@@ -1,4 +1,5 @@
-﻿using DevelopmentInProgress.Wpf.Common.Command;
+﻿using DevelopmentInProgress.Common.Extensions;
+using DevelopmentInProgress.Wpf.Common.Command;
 using DevelopmentInProgress.Wpf.Common.Extensions;
 using DevelopmentInProgress.Wpf.Common.Model;
 using DevelopmentInProgress.Wpf.Common.Services;
