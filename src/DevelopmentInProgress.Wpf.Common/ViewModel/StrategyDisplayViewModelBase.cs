@@ -55,5 +55,10 @@ namespace DevelopmentInProgress.Wpf.Common.ViewModel
         {
             throw new NotImplementedException("StrategyDisplayViewModelBase.OrderNotifications(List<MarketView.Interface.Strategy.StrategyNotification> orderNotifications)");
         }
+
+        public virtual void CandlestickNotifications(List<MarketView.Interface.Strategy.StrategyNotification> candlestickNotifications)
+        {
+            throw new NotImplementedException("StrategyDisplayViewModelBase.CandlestickNotifications(List<MarketView.Interface.Strategy.StrategyNotification> candlestickNotifications)");
+        }
     }
 }
