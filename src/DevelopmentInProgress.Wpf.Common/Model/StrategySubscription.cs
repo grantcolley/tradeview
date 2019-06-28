@@ -13,6 +13,7 @@ namespace DevelopmentInProgress.Wpf.Common.Model
         public bool SubscribeOrderBook { get; set; }
         public bool SubscribeTrades { get; set; }
         public bool SubscribeStatistics { get; set; }
+        public bool SubscribeCandlesticks { get; set; }
         public string SelectedExchange { get; set; }
     }
 }

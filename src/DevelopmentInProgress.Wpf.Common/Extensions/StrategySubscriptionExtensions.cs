@@ -28,6 +28,11 @@ namespace DevelopmentInProgress.Wpf.Common.Extensions
                 subscribe += 8;
             }
 
+            if (strategySubscription.SubscribeCandlesticks)
+            {
+                subscribe += 16;
+            }
+
             var interfaceStrategySubscription = new MarketView.Interface.Strategy.StrategySubscription
             {
                 Symbol = strategySubscription.Symbol,

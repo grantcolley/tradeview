@@ -9,6 +9,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Strategy
         AccountInfo = 1,
         Trades = 2,
         OrderBook = 4,
-        Statistics = 8
+        Statistics = 8,
+        Candlesticks = 16
     }
 }
