@@ -99,5 +99,10 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
         {
             throw new NotImplementedException();
         }
+
+        public void SubscribeCandlesticks(string symbol, CandlestickInterval candlestickInterval, int limit, Action<CandlestickEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
