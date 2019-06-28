@@ -86,6 +86,38 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
             return orderBook;
         }
 
+        public void SubscribeCandlesticks(string symbol, Interface.Model.CandlestickInterval candlestickInterval, int limit, Action<CandlestickEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var interval = candlestickInterval.ToBinanceCandlestickInterval();
+                var canclestickCache = new CandlestickCache(binanceApi, new CandlestickWebSocketClient());
+                canclestickCache.Subscribe(symbol, interval, limit, e =>
+                {
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        canclestickCache.Unsubscribe();
+                        return;
+                    }
+
+                    try
+                    {
+                        var candlesticks = (from c in e.Candlesticks select NewCandlestick(c)).ToList();
+                        callback.Invoke(new CandlestickEventArgs { Candlesticks = candlesticks });
+                    }
+                    catch (Exception ex)
+                    {
+                        canclestickCache.Unsubscribe();
+                        exception.Invoke(ex);
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                exception.Invoke(ex);
+            }
+        }
+
         public void SubscribeOrderBook(string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             try

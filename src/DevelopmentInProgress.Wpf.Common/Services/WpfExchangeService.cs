@@ -113,6 +113,11 @@ namespace DevelopmentInProgress.Wpf.Common.Services
             return candlesticks;
         }
 
+        public void SubscribeCandlesticks(string symbol, Interface.CandlestickInterval candlestickInterval, int limit, Action<CandlestickEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        {
+            exchangeService.SubscribeCandlesticks(symbol, candlestickInterval, limit, callback, exception, cancellationToken);
+        }
+
         public void SubscribeOrderBook(string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             exchangeService.SubscribeOrderBook(symbol, limit, callback, exception, cancellationToken);

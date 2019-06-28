@@ -59,6 +59,11 @@ namespace DevelopmentInProgress.MarketView.Service
             return orderBook;
         }
 
+        public void SubscribeCandlesticks(string symbol, CandlestickInterval candlestickInterval, int limit, Action<CandlestickEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        {
+            exchangeApi.SubscribeCandlesticks(symbol, candlestickInterval, limit, callback, exception, cancellationToken);
+        }
+
         public void SubscribeOrderBook(string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             exchangeApi.SubscribeOrderBook(symbol, limit, callback, exception, cancellationToken);
