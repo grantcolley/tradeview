@@ -2,7 +2,7 @@
 
 namespace DevelopmentInProgress.MarketView.Interface.Strategy
 {
-    public class TradeStrategyNotificationEventArgs : EventArgs
+    public class StrategyNotificationEventArgs : EventArgs
     {
         public StrategyNotification StrategyNotification { get; set; }
     }

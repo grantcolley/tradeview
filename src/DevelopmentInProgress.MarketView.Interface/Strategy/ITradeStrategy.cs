@@ -13,15 +13,15 @@ namespace DevelopmentInProgress.MarketView.Interface.Strategy
 
         Task<bool> TryUpdateStrategy(string strategyParameters);
 
-        event EventHandler<TradeStrategyNotificationEventArgs> StrategyAccountInfoEvent;
+        event EventHandler<StrategyNotificationEventArgs> StrategyAccountInfoEvent;
 
-        event EventHandler<TradeStrategyNotificationEventArgs> StrategyCustomNotificationEvent;
+        event EventHandler<StrategyNotificationEventArgs> StrategyCustomNotificationEvent;
 
-        event EventHandler<TradeStrategyNotificationEventArgs> StrategyNotificationEvent;
+        event EventHandler<StrategyNotificationEventArgs> StrategyNotificationEvent;
 
-        event EventHandler<TradeStrategyNotificationEventArgs> StrategyOrderBookEvent;
+        event EventHandler<StrategyNotificationEventArgs> StrategyOrderBookEvent;
 
-        event EventHandler<TradeStrategyNotificationEventArgs> StrategyTradeEvent;
+        event EventHandler<StrategyNotificationEventArgs> StrategyTradeEvent;
 
         void SubscribeStatistics(StatisticsEventArgs statisticsEventArgs);
 
