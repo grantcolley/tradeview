@@ -13,15 +13,19 @@ namespace DevelopmentInProgress.MarketView.Interface.Strategy
 
         Task<bool> TryUpdateStrategy(string strategyParameters);
 
-        event EventHandler<StrategyNotificationEventArgs> StrategyAccountInfoEvent;
-
-        event EventHandler<StrategyNotificationEventArgs> StrategyCustomNotificationEvent;
-
         event EventHandler<StrategyNotificationEventArgs> StrategyNotificationEvent;
+
+        event EventHandler<StrategyNotificationEventArgs> StrategyAccountInfoEvent;
 
         event EventHandler<StrategyNotificationEventArgs> StrategyOrderBookEvent;
 
         event EventHandler<StrategyNotificationEventArgs> StrategyTradeEvent;
+
+        event EventHandler<StrategyNotificationEventArgs> StrategyCandlesticksEvent;
+
+        event EventHandler<StrategyNotificationEventArgs> StrategyStatisticsEvent;
+
+        event EventHandler<StrategyNotificationEventArgs> StrategyCustomNotificationEvent;
 
         void SubscribeStatistics(StatisticsEventArgs statisticsEventArgs);
 
@@ -34,6 +38,10 @@ namespace DevelopmentInProgress.MarketView.Interface.Strategy
         void SubscribeTrades(TradeEventArgs tradeEventArgs);
 
         void SubscribeTradesException(Exception exception);
+
+        void SubscribeCandlesticks(CandlestickEventArgs candlestickEventArgs);
+
+        void SubscribeCandlesticksException(Exception exception);
 
         void SubscribeAccountInfo(AccountInfoEventArgs accountInfoEventArgs);
 

@@ -13,6 +13,8 @@
         Account = 8,
         AccountError = 9,
         Statistics = 10,
-        StatisticsError = 11
+        StatisticsError = 11,
+        Candlesticks = 12,
+        CandlesticksError = 13
     }
 }
