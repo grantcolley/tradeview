@@ -1,4 +1,5 @@
 ﻿using DevelopmentInProgress.Wpf.Common.Model;
+using DevelopmentInProgress.MarketView.Interface.Extensions;
 
 namespace DevelopmentInProgress.Wpf.Common.Extensions
 {
@@ -40,7 +41,8 @@ namespace DevelopmentInProgress.Wpf.Common.Extensions
                 ApiKey = strategySubscription.ApiKey,
                 SecretKey = strategySubscription.SecretKey,
                 Exchange = strategySubscription.Exchange,
-                Subscribe = (MarketView.Interface.Strategy.Subscribe)subscribe
+                Subscribe = (MarketView.Interface.Strategy.Subscribe)subscribe,
+                CandlestickInterval = strategySubscription.CandlestickInterval.GetCandlestickInterval()
             };
 
             return interfaceStrategySubscription;
