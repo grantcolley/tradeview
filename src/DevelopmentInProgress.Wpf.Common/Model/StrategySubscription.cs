@@ -1,9 +1,12 @@
-﻿using DevelopmentInProgress.MarketView.Interface.Strategy;
+﻿using DevelopmentInProgress.MarketView.Interface.Model;
+using DevelopmentInProgress.MarketView.Interface.Strategy;
 
 namespace DevelopmentInProgress.Wpf.Common.Model
 {
     public class StrategySubscription : EntityBase
     {
+        private string candlestickInterval;
+
         public string Symbol { get; set; }
         public int Limit { get; set; }
         public string ApiKey { get; set; }
@@ -15,5 +18,18 @@ namespace DevelopmentInProgress.Wpf.Common.Model
         public bool SubscribeStatistics { get; set; }
         public bool SubscribeCandlesticks { get; set; }
         public string SelectedExchange { get; set; }
+
+        public string CandlestickInterval
+        {
+            get { return candlestickInterval; }
+            set
+            {
+                if(candlestickInterval != value)
+                {
+                    candlestickInterval = value;
+                    OnPropertyChanged("CandlestickInterval");
+                }
+            }
+        }
     }
 }
