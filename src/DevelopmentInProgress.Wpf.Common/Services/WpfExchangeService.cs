@@ -109,7 +109,7 @@ namespace DevelopmentInProgress.Wpf.Common.Services
         public async Task<IEnumerable<Candlestick>> GetCandlesticksAsync(string symbol, Interface.CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = default(int), CancellationToken token = default(CancellationToken))
         {
             var results = await exchangeService.GetCandlesticksAsync(symbol, interval, startTime, endTime, limit, token).ConfigureAwait(false);
-            var candlesticks = results.Select(c => c.GetViewCandlestick()).ToList();
+            var candlesticks = results.Select(c => c.ToViewCandlestick()).ToList();
             return candlesticks;
         }
 

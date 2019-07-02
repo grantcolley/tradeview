@@ -26,6 +26,15 @@ namespace DevelopmentInProgress.Wpf.Common.Chart
                 .Y(model => Convert.ToDouble(model.Y));
 
             Charting.For<TimeValuePoint>(timeValuePointMapper);
+
+            var candlestickMapper = Mappers.Financial<Candlestick>()
+                .X(model => model.OpenTime.Ticks)
+                .Open(model => Convert.ToDouble(model.Open))
+                .High(model => Convert.ToDouble(model.High))
+                .Low(model => Convert.ToDouble(model.Low))
+                .Close(model => Convert.ToDouble(model.Close));
+
+            Charting.For<Candlestick>(candlestickMapper);
         }
 
         public Func<double, string> TimeFormatter => value => new DateTime((long)value).ToString("H:mm:ss");

@@ -4,7 +4,7 @@ namespace DevelopmentInProgress.Wpf.Common.Extensions
 {
     public static class CandlestickExtensions
     {
-        public static Candlestick GetViewCandlestick(this MarketView.Interface.Model.Candlestick c)
+        public static Candlestick ToViewCandlestick(this MarketView.Interface.Model.Candlestick c)
         {
             return new Candlestick
             {
@@ -15,8 +15,8 @@ namespace DevelopmentInProgress.Wpf.Common.Extensions
                 High = c.High,
                 Low = c.Low,
                 Close = c.Close,
-                Volume = c.Volume,
                 CloseTime = c.CloseTime,
+                Volume = c.Volume,
                 QuoteAssetVolume = c.QuoteAssetVolume,
                 NumberOfTrades = c.NumberOfTrades,
                 TakerBuyBaseAssetVolume = c.TakerBuyBaseAssetVolume,
