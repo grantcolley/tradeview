@@ -28,13 +28,13 @@ namespace DevelopmentInProgress.Wpf.Common.Chart
             Charting.For<TimeValuePoint>(timeValuePointMapper);
 
             var candlestickMapper = Mappers.Financial<Candlestick>()
-                .X(model => model.OpenTime.Ticks)
+                .X((model, index) => index)
                 .Open(model => Convert.ToDouble(model.Open))
                 .High(model => Convert.ToDouble(model.High))
                 .Low(model => Convert.ToDouble(model.Low))
                 .Close(model => Convert.ToDouble(model.Close));
 
-            Charting.For<Candlestick>(candlestickMapper);
+            Charting.For<Candlestick>(candlestickMapper, SeriesOrientation.Horizontal);
         }
 
         public Func<double, string> TimeFormatter => value => new DateTime((long)value).ToString("H:mm:ss");
