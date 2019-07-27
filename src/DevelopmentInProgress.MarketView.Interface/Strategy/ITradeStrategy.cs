@@ -13,6 +13,8 @@ namespace DevelopmentInProgress.MarketView.Interface.Strategy
 
         Task<bool> TryUpdateStrategy(string strategyParameters);
 
+        Task<bool> TryStopStrategy(string strategyParameters);
+
         event EventHandler<StrategyNotificationEventArgs> StrategyNotificationEvent;
 
         event EventHandler<StrategyNotificationEventArgs> StrategyAccountInfoEvent;
