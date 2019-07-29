@@ -15,6 +15,7 @@
         Statistics = 10,
         StatisticsError = 11,
         Candlesticks = 12,
-        CandlesticksError = 13
+        CandlesticksError = 13,
+        DisconnectClient = 14
     }
 }
