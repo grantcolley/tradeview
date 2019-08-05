@@ -20,7 +20,7 @@
     
     <prism:ModuleInfo Ref="Market View"
                       ModuleName="MarketView"
-                      ModuleType="DevelopmentInProgress.Wpf.MarketView.Module,DevelopmentInProgress.Wpf.MarketView"
+                      ModuleType="DevelopmentInProgress.Wpf.Trading.Module,DevelopmentInProgress.Wpf.Trading"
                       InitializationMode="WhenAvailable">
         <prism:ModuleInfo.DependsOn>
             <sys:String>StrategyManager</sys:String>

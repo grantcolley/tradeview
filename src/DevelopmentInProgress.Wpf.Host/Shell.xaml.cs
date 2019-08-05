@@ -124,7 +124,7 @@ namespace DevelopmentInProgress.Wpf.Host
             var dirPath = filePath.Substring(0, filePath.LastIndexOf('\\'));
             var directory = new DirectoryInfo(dirPath);
             var logFile = directory.GetFiles()
-                .Where(f => f.Name.Contains("DevelopmentInProgress.Wpf.MarketView"))
+                .Where(f => f.Name.Contains("DevelopmentInProgress.Wpf.Trading"))
                 .OrderByDescending(f => f.LastWriteTime).First();
 
             string logFileReader = ConfigurationManager.AppSettings["LogFileReader"].ToString();
