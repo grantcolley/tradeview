@@ -111,7 +111,7 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             // Extract new trades where time and id is greater than latest available trade. 
             // Order by oldest to newest (as it will appear in chart).
             var newTrades = (from t in tradesUpdate
-                             where t.Time > seed.Time && t.Id > seed.Id
+                             where t.Time.ToLocalTime() > seed.Time && t.Id > seed.Id
                              orderby t.Time, t.Id
                              select create(t)).ToList();
 
@@ -171,7 +171,7 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             // Extract new trades where time and id is greater than latest available trade. 
             // Order by oldest to newest (as it will appear in chart).
             var newTrades = (from t in tradesUpdate
-                             where t.Time > seed.Time && t.Id > seed.Id
+                             where t.Time.ToLocalTime() > seed.Time && t.Id > seed.Id
                              orderby t.Time, t.Id
                              select create(t)).ToList();
 
