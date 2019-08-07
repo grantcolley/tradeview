@@ -25,8 +25,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Strategies", "Strategies", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Wpf.StrategyDevelopment", "..\tradeview.strategy\src\DevelopmentInProgress.Wpf.StrategyDevelopment\DevelopmentInProgress.Wpf.StrategyDevelopment.csproj", "{5532918F-2DED-441B-ACA5-4AB94B1C83DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Wpf.StrategyManager", "..\tradeview.strategy\src\DevelopmentInProgress.Wpf.StrategyManager\DevelopmentInProgress.Wpf.StrategyManager.csproj", "{6DA0B118-5B4E-4A0A-BA53-23C18D957006}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DipSocket", "..\dipsocket\src\DipSocket\DipSocket.csproj", "{6F832752-DDC0-41BD-BB5A-44BAE71EA42A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Binance", "Binance", "{3E427B35-E53D-4236-B15A-EF67633AE521}"
@@ -44,6 +42,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Wpf.Trading", "src\DevelopmentInProgress.Wpf.Trading\DevelopmentInProgress.Wpf.Trading.csproj", "{2183C26D-6932-41D9-BB1E-16FA55ADF983}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Wpf.Trading.Test", "test\DevelopmentInProgress.Wpf.Trading.Test\DevelopmentInProgress.Wpf.Trading.Test.csproj", "{BED25B87-79B9-4AFD-A785-8DB7CAFFF8BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Wpf.Strategies", "..\tradeview.strategy\src\DevelopmentInProgress.Wpf.Strategies\DevelopmentInProgress.Wpf.Strategies.csproj", "{6DA0B118-5B4E-4A0A-BA53-23C18D957006}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,10 +87,6 @@ Global
 		{5532918F-2DED-441B-ACA5-4AB94B1C83DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5532918F-2DED-441B-ACA5-4AB94B1C83DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5532918F-2DED-441B-ACA5-4AB94B1C83DE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6DA0B118-5B4E-4A0A-BA53-23C18D957006}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6DA0B118-5B4E-4A0A-BA53-23C18D957006}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6DA0B118-5B4E-4A0A-BA53-23C18D957006}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6DA0B118-5B4E-4A0A-BA53-23C18D957006}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6F832752-DDC0-41BD-BB5A-44BAE71EA42A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6F832752-DDC0-41BD-BB5A-44BAE71EA42A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F832752-DDC0-41BD-BB5A-44BAE71EA42A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -123,6 +119,10 @@ Global
 		{BED25B87-79B9-4AFD-A785-8DB7CAFFF8BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BED25B87-79B9-4AFD-A785-8DB7CAFFF8BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BED25B87-79B9-4AFD-A785-8DB7CAFFF8BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DA0B118-5B4E-4A0A-BA53-23C18D957006}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DA0B118-5B4E-4A0A-BA53-23C18D957006}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DA0B118-5B4E-4A0A-BA53-23C18D957006}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DA0B118-5B4E-4A0A-BA53-23C18D957006}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

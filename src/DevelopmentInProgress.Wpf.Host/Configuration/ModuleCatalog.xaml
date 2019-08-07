@@ -5,7 +5,7 @@
 
     <prism:ModuleInfo Ref="Strategy Manager"
                       ModuleName="StrategyManager"
-                      ModuleType="DevelopmentInProgress.Wpf.StrategyManager.Module,DevelopmentInProgress.Wpf.StrategyManager"
+                      ModuleType="DevelopmentInProgress.Wpf.Strategies.Module,DevelopmentInProgress.Wpf.Strategies"
                       InitializationMode="WhenAvailable">
     </prism:ModuleInfo>
 
