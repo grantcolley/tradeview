@@ -41,7 +41,7 @@ namespace DevelopmentInProgress.Wpf.Host.Module
         public IUnityContainer Container { get; private set; }
 
         /// <summary>
-        /// Gets an instance of teh module manager.
+        /// Gets an instance of the module manager.
         /// </summary>
         public ModuleNavigator ModuleNavigator { get; private set; }
 

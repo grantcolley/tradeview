@@ -8,15 +8,6 @@
                       ModuleType="DevelopmentInProgress.Wpf.Strategies.Module,DevelopmentInProgress.Wpf.Strategies"
                       InitializationMode="WhenAvailable">
     </prism:ModuleInfo>
-
-    <!--<prism:ModuleInfo Ref="Strategy Development"
-                      ModuleName="StrategyDevelopment"
-                      ModuleType="DevelopmentInProgress.Wpf.StrategyDevelopment.Module,DevelopmentInProgress.Wpf.StrategyDevelopment"
-                      InitializationMode="WhenAvailable">
-        <prism:ModuleInfo.DependsOn>
-            <sys:String>StrategyManager</sys:String>
-        </prism:ModuleInfo.DependsOn>
-    </prism:ModuleInfo>-->
     
     <prism:ModuleInfo Ref="Market View"
                       ModuleName="MarketView"
@@ -27,4 +18,13 @@
         </prism:ModuleInfo.DependsOn>
     </prism:ModuleInfo>
 
+    <prism:ModuleInfo Ref="Configuration"
+                      ModuleName="Configuration"
+                      ModuleType="DevelopmentInProgress.Wpf.Configuration.Module,DevelopmentInProgress.Wpf.Configuration"
+                      InitializationMode="WhenAvailable">
+        <prism:ModuleInfo.DependsOn>
+            <sys:String>MarketView</sys:String>
+        </prism:ModuleInfo.DependsOn>
+    </prism:ModuleInfo>
+    
 </prism:ModuleCatalog>
