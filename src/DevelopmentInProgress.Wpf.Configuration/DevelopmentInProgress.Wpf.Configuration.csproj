@@ -103,8 +103,8 @@
     </Compile>
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility\IStrategyAssemblyManager.cs" />
-    <Compile Include="Utility\StrategyAssemblyManager.cs" />
+    <Compile Include="Utility\IStrategyFileManager.cs" />
+    <Compile Include="Utility\StrategyFileManager.cs" />
     <Compile Include="ViewModel\StrategyManagerViewModel.cs" />
     <Compile Include="ViewModel\StrategyViewModel.cs" />
     <Compile Include="View\ParameterDialogView.xaml.cs">
@@ -167,7 +167,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\strategyManager.png" />
+    <Resource Include="Images\configuration.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

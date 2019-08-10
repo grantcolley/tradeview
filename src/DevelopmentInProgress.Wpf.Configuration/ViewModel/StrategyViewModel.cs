@@ -17,16 +17,16 @@ namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
     public class StrategyViewModel : BaseViewModel
     {
         private IStrategyService strategyService;
-        private IStrategyAssemblyManager strategyAssemblyManager;
+        private IStrategyFileManager strategyFileManager;
         private Strategy strategy;
         bool disposed = false;
 
-        public StrategyViewModel(Strategy strategy, IStrategyService strategyService, IStrategyAssemblyManager strategyAssemblyManager, ILoggerFacade logger)
+        public StrategyViewModel(Strategy strategy, IStrategyService strategyService, IStrategyFileManager strategyFileManager, ILoggerFacade logger)
             : base(logger)
         {
             this.strategy = strategy;
             this.strategyService = strategyService;
-            this.strategyAssemblyManager = strategyAssemblyManager;
+            this.strategyFileManager = strategyFileManager;
 
             AddStrategySubscriptionCommand = new ViewModelCommand(AddStrategySubscription);
             DeleteStrategySubscriptionCommand = new ViewModelCommand(DeleteStrategySubscription);
@@ -248,7 +248,7 @@ namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
 
             try
             {
-                var strategyTypeJson = strategyAssemblyManager.GetStrategyTypeAsJson(strategy.TargetAssembly);
+                var strategyTypeJson = strategyFileManager.GetStrategyTypeAsJson(strategy.TargetAssembly);
 
                 if(string.IsNullOrWhiteSpace(strategyTypeJson))
                 {

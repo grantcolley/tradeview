@@ -17,17 +17,17 @@ namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
     public class StrategyManagerViewModel : DocumentViewModel
     {
         private IStrategyService strategyService;
-        private IStrategyAssemblyManager strategyAssemblyManager;
+        private IStrategyFileManager strategyFileManager;
         private StrategyViewModel selectedStrategyViewModel;
         private Strategy selectedStrategy;
         private Dictionary<string, IDisposable> strategyObservableSubscriptions;
         private bool disposed;
 
-        public StrategyManagerViewModel(ViewModelContext viewModelContext, IStrategyService strategyService, IStrategyAssemblyManager strategyAssemblyManager)
+        public StrategyManagerViewModel(ViewModelContext viewModelContext, IStrategyService strategyService, IStrategyFileManager strategyFileManager)
             : base(viewModelContext)
         {
             this.strategyService = strategyService;
-            this.strategyAssemblyManager = strategyAssemblyManager;
+            this.strategyFileManager = strategyFileManager;
 
             AddStrategyCommand = new ViewModelCommand(AddStrategy);
             DeleteStrategyCommand = new ViewModelCommand(DeleteStrategy);
@@ -60,7 +60,7 @@ namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
 
                         if (SelectedStrategyViewModel == null)
                         {
-                            var strategyViewModel = new StrategyViewModel(selectedStrategy, strategyService, strategyAssemblyManager, Logger);
+                            var strategyViewModel = new StrategyViewModel(selectedStrategy, strategyService, strategyFileManager, Logger);
                             ObserveStrategy(strategyViewModel);
                             SelectedStrategyViewModels.Add(strategyViewModel);
                             SelectedStrategyViewModel = strategyViewModel;

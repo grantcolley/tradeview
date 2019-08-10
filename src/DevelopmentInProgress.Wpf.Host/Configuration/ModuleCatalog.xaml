@@ -3,18 +3,18 @@
                      xmlns:sys="clr-namespace:System;assembly=mscorlib"
                      xmlns:prism="clr-namespace:Prism.Modularity;assembly=Prism.Wpf">
 
-    <prism:ModuleInfo Ref="Strategy Manager"
-                      ModuleName="StrategyManager"
+    <prism:ModuleInfo Ref="Strategies"
+                      ModuleName="Strategies"
                       ModuleType="DevelopmentInProgress.Wpf.Strategies.Module,DevelopmentInProgress.Wpf.Strategies"
                       InitializationMode="WhenAvailable">
     </prism:ModuleInfo>
     
-    <prism:ModuleInfo Ref="Market View"
-                      ModuleName="MarketView"
+    <prism:ModuleInfo Ref="Trading"
+                      ModuleName="Trading"
                       ModuleType="DevelopmentInProgress.Wpf.Trading.Module,DevelopmentInProgress.Wpf.Trading"
                       InitializationMode="WhenAvailable">
         <prism:ModuleInfo.DependsOn>
-            <sys:String>StrategyManager</sys:String>
+            <sys:String>Strategies</sys:String>
         </prism:ModuleInfo.DependsOn>
     </prism:ModuleInfo>
 
@@ -23,7 +23,7 @@
                       ModuleType="DevelopmentInProgress.Wpf.Configuration.Module,DevelopmentInProgress.Wpf.Configuration"
                       InitializationMode="WhenAvailable">
         <prism:ModuleInfo.DependsOn>
-            <sys:String>MarketView</sys:String>
+            <sys:String>Trading</sys:String>
         </prism:ModuleInfo.DependsOn>
     </prism:ModuleInfo>
     

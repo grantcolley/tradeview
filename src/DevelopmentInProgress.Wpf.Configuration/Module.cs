@@ -11,7 +11,7 @@ namespace DevelopmentInProgress.Wpf.Configuration
     public class Module : ModuleBase
     {
         public const string ModuleName = "Configuration";
-        private static string StrategyUser = $"Strategies : {Environment.UserName}";
+        private static string StrategyUser = $"Configuration : {Environment.UserName}";
 
         public Module(IUnityContainer container, ModuleNavigator moduleNavigator, ILoggerFacade logger)
             : base(container, moduleNavigator, logger)
@@ -25,7 +25,7 @@ namespace DevelopmentInProgress.Wpf.Configuration
 
             var moduleSettings = new ModuleSettings();
             moduleSettings.ModuleName = ModuleName;
-            moduleSettings.ModuleImagePath = @"/DevelopmentInProgress.Wpf.Configuration;component/Images/strategyManager.png";
+            moduleSettings.ModuleImagePath = @"/DevelopmentInProgress.Wpf.Configuration;component/Images/configuration.png";
 
             var moduleGroup = new ModuleGroup();
             moduleGroup.ModuleGroupName = StrategyUser;
@@ -37,7 +37,6 @@ namespace DevelopmentInProgress.Wpf.Configuration
             newDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.Wpf.Configuration;component/Images/manageStrategies.png";
             moduleGroup.ModuleGroupItems.Add(newDocument);
 
-            moduleGroup.ModuleGroupItems.Add(newDocument);
             moduleSettings.ModuleGroups.Add(moduleGroup);
             ModuleNavigator.AddModuleNavigation(moduleSettings);
 
