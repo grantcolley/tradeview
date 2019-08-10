@@ -5,17 +5,25 @@ using DevelopmentInProgress.Wpf.Configuration.ViewModel;
 using Microsoft.Practices.Unity;
 using Prism.Logging;
 using System;
+using DevelopmentInProgress.Wpf.Host.View;
+using DevelopmentInProgress.Wpf.Strategies.View;
 
 namespace DevelopmentInProgress.Wpf.Configuration
 {
     public class Module : ModuleBase
     {
         public const string ModuleName = "Configuration";
-        private static string StrategyUser = $"Configuration : {Environment.UserName}";
+        private static string ConfigurationUser = $"Configuration : {Environment.UserName}";
+
+        public const string StrategyModuleName = "Strategies";
+        private static string StrategyUser = $"Strategies : {Environment.UserName}";
+
+        private static IUnityContainer StaticContainer;
 
         public Module(IUnityContainer container, ModuleNavigator moduleNavigator, ILoggerFacade logger)
             : base(container, moduleNavigator, logger)
         {
+            StaticContainer = container;
         }
 
         public override void Initialize()
@@ -28,7 +36,7 @@ namespace DevelopmentInProgress.Wpf.Configuration
             moduleSettings.ModuleImagePath = @"/DevelopmentInProgress.Wpf.Configuration;component/Images/configuration.png";
 
             var moduleGroup = new ModuleGroup();
-            moduleGroup.ModuleGroupName = StrategyUser;
+            moduleGroup.ModuleGroupName = ConfigurationUser;
 
             var newDocument = new ModuleGroupItem();
             newDocument.ModuleGroupItemName = "Manage Strategies";
@@ -45,10 +53,30 @@ namespace DevelopmentInProgress.Wpf.Configuration
 
         public static void AddStrategy(string strategyName)
         {
+            var strategyDocument = CreateStrategyModuleGroupItem(strategyName, strategyName);
+
+            var modulesNavigationView = StaticContainer.Resolve(typeof(ModulesNavigationView),
+                typeof(ModulesNavigationView).Name) as ModulesNavigationView;
+
+            modulesNavigationView.AddNavigationListItem(StrategyModuleName, StrategyUser, strategyDocument);
         }
 
         public static void RemoveStrategy(string strategyName)
         {
+            var modulesNavigationView = StaticContainer.Resolve(typeof(ModulesNavigationView),
+                typeof(ModulesNavigationView).Name) as ModulesNavigationView;
+
+            modulesNavigationView.RemoveNavigationListItem(StrategyModuleName, StrategyUser, strategyName);
+        }
+
+        private static ModuleGroupItem CreateStrategyModuleGroupItem(string name, string title)
+        {
+            var strategyDocument = new ModuleGroupItem();
+            strategyDocument.ModuleGroupItemName = name;
+            strategyDocument.TargetView = typeof(StrategyRunnerView).Name;
+            strategyDocument.TargetViewTitle = title;
+            strategyDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.Wpf.Strategies;component/Images/strategy.png";
+            return strategyDocument;
         }
     }
 }
