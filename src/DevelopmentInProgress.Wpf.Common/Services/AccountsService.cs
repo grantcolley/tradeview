@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevelopmentInProgress.Wpf.Trading.Services
+namespace DevelopmentInProgress.Wpf.Common.Services
 {
     public class AccountsService : IAccountsService
     {

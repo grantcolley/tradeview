@@ -3,7 +3,7 @@ using DevelopmentInProgress.Wpf.Common.ViewModel;
 using Newtonsoft.Json;
 using Prism.Logging;
 
-namespace DevelopmentInProgress.Wpf.Trading.ViewModel
+namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
 {
     public class UserAccountViewModel : BaseViewModel
     {

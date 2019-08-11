@@ -4,8 +4,7 @@ using DevelopmentInProgress.Wpf.Host.Module;
 using DevelopmentInProgress.Wpf.Host.Navigation;
 using Microsoft.Practices.Unity;
 using System;
-using DevelopmentInProgress.Wpf.Trading.Services;
-using DevelopmentInProgress.Wpf.Host.View;
+using DevelopmentInProgress.Wpf.Common.Services;
 using Prism.Logging;
 
 namespace DevelopmentInProgress.Wpf.Trading
@@ -24,8 +23,6 @@ namespace DevelopmentInProgress.Wpf.Trading
 
         public async override void Initialize()
         {
-            Container.RegisterType<object, UserAccountsView>(typeof(UserAccountsView).Name);
-            Container.RegisterType<UserAccountsViewModel>(typeof(UserAccountsViewModel).Name);
             Container.RegisterType<object, TradingView>(typeof(TradingView).Name);
             Container.RegisterType<TradingViewModel>(typeof(TradingViewModel).Name);
 
@@ -35,13 +32,6 @@ namespace DevelopmentInProgress.Wpf.Trading
 
             var moduleGroup = new ModuleGroup();
             moduleGroup.ModuleGroupName = AccountUser;
-
-            var manageAccountsDocument = new ModuleGroupItem();
-            manageAccountsDocument.ModuleGroupItemName = "Manage Accounts";
-            manageAccountsDocument.TargetView = typeof(UserAccountsView).Name;
-            manageAccountsDocument.TargetViewTitle = "Manage Accounts";
-            manageAccountsDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.Wpf.Trading;component/Images/accounts.png";
-            moduleGroup.ModuleGroupItems.Add(manageAccountsDocument);
 
             var accountsService = Container.Resolve<IAccountsService>();
 
@@ -64,24 +54,6 @@ namespace DevelopmentInProgress.Wpf.Trading
             {
                 Logger.Log($"Initialize DevelopmentInProgress.Wpf.Trading failed to load: {ex.ToString()}", Category.Exception, Priority.None);
             }
-        }
-
-        public static void AddAccount(string accountName)
-        {
-            var accountDocument = CreateAccountModuleGroupItem(accountName, accountName);
-
-            var modulesNavigationView = StaticContainer.Resolve(typeof(ModulesNavigationView),
-                typeof(ModulesNavigationView).Name) as ModulesNavigationView;
-
-            modulesNavigationView.AddNavigationListItem(ModuleName, AccountUser, accountDocument);
-        }
-
-        public static void RemoveAccount(string accountName)
-        {
-            var modulesNavigationView = StaticContainer.Resolve(typeof(ModulesNavigationView),
-                typeof(ModulesNavigationView).Name) as ModulesNavigationView;
-
-            modulesNavigationView.RemoveNavigationListItem(ModuleName, AccountUser, accountName);
         }
 
         private static ModuleGroupItem CreateAccountModuleGroupItem(string name, string title)

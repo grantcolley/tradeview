@@ -107,6 +107,8 @@
     <Compile Include="Utility\StrategyFileManager.cs" />
     <Compile Include="ViewModel\StrategyManagerViewModel.cs" />
     <Compile Include="ViewModel\StrategyViewModel.cs" />
+    <Compile Include="ViewModel\UserAccountsViewModel.cs" />
+    <Compile Include="ViewModel\UserAccountViewModel.cs" />
     <Compile Include="View\ParameterDialogView.xaml.cs">
       <DependentUpon>ParameterDialogView.xaml</DependentUpon>
     </Compile>
@@ -115,6 +117,12 @@
     </Compile>
     <Compile Include="View\StrategyView.xaml.cs">
       <DependentUpon>StrategyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserAccountsView.xaml.cs">
+      <DependentUpon>UserAccountsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserAccountView.xaml.cs">
+      <DependentUpon>UserAccountView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +149,10 @@
     <ProjectReference Include="..\..\..\tradeview\src\DevelopmentInProgress.Wpf.Host\DevelopmentInProgress.Wpf.Host.csproj">
       <Project>{7bce5d35-0443-4031-843a-3563356290e1}</Project>
       <Name>DevelopmentInProgress.Wpf.Host</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DevelopmentInProgress.Wpf.Trading\DevelopmentInProgress.Wpf.Trading.csproj">
+      <Project>{2183c26d-6932-41d9-bb1e-16fa55adf983}</Project>
+      <Name>DevelopmentInProgress.Wpf.Trading</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -169,9 +181,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\UserAccountsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\UserAccountView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\configuration.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\accounts.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

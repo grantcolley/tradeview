@@ -1,8 +1,8 @@
 ﻿using DevelopmentInProgress.Wpf.Host.Context;
 using DevelopmentInProgress.Wpf.Host.View;
-using DevelopmentInProgress.Wpf.Trading.ViewModel;
+using DevelopmentInProgress.Wpf.Configuration.ViewModel;
 
-namespace DevelopmentInProgress.Wpf.Trading.View
+namespace DevelopmentInProgress.Wpf.Configuration.View
 {
     /// <summary>
     /// Interaction logic for UserAccountsView.xaml

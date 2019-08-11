@@ -63,14 +63,11 @@
     <Compile Include="Events\TradeEventArgs.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\IAccountsService.cs" />
-    <Compile Include="Services\AccountsService.cs" />
     <Compile Include="ViewModel\AccountViewModel.cs" />
     <Compile Include="ViewModel\SymbolsViewModel.cs" />
     <Compile Include="ViewModel\SymbolViewModel.cs" />
     <Compile Include="ViewModel\TradeViewModel.cs" />
     <Compile Include="ViewModel\TradingViewModel.cs" />
-    <Compile Include="ViewModel\UserAccountViewModel.cs" />
     <Compile Include="View\AccountView.xaml.cs">
       <DependentUpon>AccountView.xaml</DependentUpon>
     </Compile>
@@ -85,13 +82,6 @@
     </Compile>
     <Compile Include="View\TradingView.xaml.cs">
       <DependentUpon>TradingView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModel\UserAccountsViewModel.cs" />
-    <Compile Include="View\UserAccountsView.xaml.cs">
-      <DependentUpon>UserAccountsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\UserAccountView.xaml.cs">
-      <DependentUpon>UserAccountView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -149,14 +139,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserAccountsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\UserAccountView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="LiveCharts">
@@ -186,7 +168,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\account.png" />
-    <Resource Include="Images\accounts.png" />
     <Resource Include="Images\marketview.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

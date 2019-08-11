@@ -2,14 +2,14 @@
 using DevelopmentInProgress.Wpf.Controls.Messaging;
 using DevelopmentInProgress.Wpf.Host.Context;
 using DevelopmentInProgress.Wpf.Host.ViewModel;
-using DevelopmentInProgress.Wpf.Trading.Services;
+using DevelopmentInProgress.Wpf.Common.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 
-namespace DevelopmentInProgress.Wpf.Trading.ViewModel
+namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
 {
     public class UserAccountsViewModel : DocumentViewModel
     {

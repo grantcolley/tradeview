@@ -1,7 +1,7 @@
 ﻿using DevelopmentInProgress.Wpf.Common.Model;
 using System.Threading.Tasks;
 
-namespace DevelopmentInProgress.Wpf.Trading.Services
+namespace DevelopmentInProgress.Wpf.Common.Services
 {
     public interface IAccountsService
     {

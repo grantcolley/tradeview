@@ -87,6 +87,8 @@
     <Compile Include="Model\TradeBase.cs" />
     <Compile Include="Model\UserAccount.cs" />
     <Compile Include="Model\UserAccounts.cs" />
+    <Compile Include="Services\AccountsService.cs" />
+    <Compile Include="Services\IAccountsService.cs" />
     <Compile Include="Services\IStrategyService.cs" />
     <Compile Include="Services\StrategyService.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
