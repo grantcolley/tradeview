@@ -9,12 +9,6 @@ namespace DevelopmentInProgress.MarketView.Interface.Strategy
 {
     public interface ITradeStrategy
     {
-        Task<Strategy> RunAsync(Strategy strategy, CancellationToken cancellationToken);
-
-        Task<bool> TryUpdateStrategy(string strategyParameters);
-
-        Task<bool> TryStopStrategy(string strategyParameters);
-
         event EventHandler<StrategyNotificationEventArgs> StrategyNotificationEvent;
 
         event EventHandler<StrategyNotificationEventArgs> StrategyAccountInfoEvent;
@@ -29,26 +23,34 @@ namespace DevelopmentInProgress.MarketView.Interface.Strategy
 
         event EventHandler<StrategyNotificationEventArgs> StrategyCustomNotificationEvent;
 
-        void SubscribeStatistics(StatisticsEventArgs statisticsEventArgs);
+        Task<Strategy> RunAsync(Strategy strategy, CancellationToken cancellationToken);
 
-        void SubscribeStatisticsException(Exception exception);
+        Task AddExchangeService(IEnumerable<StrategySubscription> strategySubscriptions, Exchange exchange, IExchangeService exchangeService);
 
-        void SubscribeOrderBook(OrderBookEventArgs orderBookEventArgs);
+        Task<bool> TryStopStrategy(string strategyParameters);
 
-        void SubscribeOrderBookException(Exception exception);
+        Task<bool> TryUpdateStrategy(string strategyParameters);
 
-        void SubscribeTrades(TradeEventArgs tradeEventArgs);
-
-        void SubscribeTradesException(Exception exception);
-
-        void SubscribeCandlesticks(CandlestickEventArgs candlestickEventArgs);
-
-        void SubscribeCandlesticksException(Exception exception);
+        void UpdateParameters(string parameters);
 
         void SubscribeAccountInfo(AccountInfoEventArgs accountInfoEventArgs);
 
         void SubscribeAccountInfoException(Exception exception);
 
-        Task AddExchangeService(IEnumerable<StrategySubscription> strategySubscriptions, Exchange exchange, IExchangeService exchangeService);
+        void SubscribeTrades(TradeEventArgs tradeEventArgs);
+
+        void SubscribeTradesException(Exception exception);
+
+        void SubscribeOrderBook(OrderBookEventArgs orderBookEventArgs);
+
+        void SubscribeOrderBookException(Exception exception);
+
+        void SubscribeStatistics(StatisticsEventArgs statisticsEventArgs);
+
+        void SubscribeStatisticsException(Exception exception);
+
+        void SubscribeCandlesticks(CandlestickEventArgs candlestickEventArgs);
+
+        void SubscribeCandlesticksException(Exception exception);
     }
 }
