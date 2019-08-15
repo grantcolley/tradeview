@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("DevelopmentInProgress.Wpf.Common")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("DevelopmentInProgress.Wpf.Common")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Development In Progress Ltd")]
 [assembly: AssemblyProduct("DevelopmentInProgress.Wpf.Common")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCopyright("Copyright © Development In Progress Ltd 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
