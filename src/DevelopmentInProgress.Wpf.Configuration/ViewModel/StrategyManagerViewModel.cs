@@ -56,13 +56,17 @@ namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
 
                     if (selectedStrategy != null)
                     {
-                        SelectedStrategyViewModel = SelectedStrategyViewModels.FirstOrDefault(s => s.Strategy.Name.Equals(selectedStrategy.Name));
+                        var strategyViewModel = SelectedStrategyViewModels.FirstOrDefault(s => s.Strategy.Name.Equals(selectedStrategy.Name));
 
-                        if (SelectedStrategyViewModel == null)
+                        if (strategyViewModel == null)
                         {
-                            var strategyViewModel = new StrategyViewModel(selectedStrategy, strategyService, strategyFileManager, Logger);
+                            strategyViewModel = new StrategyViewModel(selectedStrategy, strategyService, strategyFileManager, Logger);
                             ObserveStrategy(strategyViewModel);
                             SelectedStrategyViewModels.Add(strategyViewModel);
+                            SelectedStrategyViewModel = strategyViewModel;
+                        }
+                        else
+                        {
                             SelectedStrategyViewModel = strategyViewModel;
                         }
                     }
