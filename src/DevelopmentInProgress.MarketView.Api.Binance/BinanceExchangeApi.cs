@@ -86,6 +86,35 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
             return orderBook;
         }
 
+        public async Task<IEnumerable<Interface.Model.AggregateTrade>> GetAggregateTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
+        {
+            var trades = await binanceApi.GetAggregateTradesAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
+            var aggregateTrades = trades.Select(at => NewAggregateTrade(at)).ToList();
+            return aggregateTrades;
+        }
+
+        public async Task<IEnumerable<Interface.Model.Trade>> GetTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
+        {
+            var result = await binanceApi.GetTradesAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
+            var trades = result.Select(t => NewTrade(t)).ToList();
+            return trades;
+        }
+
+        public async Task<IEnumerable<Interface.Model.Order>> GetOpenOrdersAsync(Interface.Model.User user, string symbol = null, long recWindow = 0, Action<Exception> exception = default(Action<Exception>), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret);
+            var result = await binanceApi.GetOpenOrdersAsync(apiUser, symbol, recWindow, cancellationToken).ConfigureAwait(false);
+            var orders = result.Select(o => NewOrder(user, o)).ToList();
+            return orders;
+        }
+
+        public async Task<IEnumerable<Interface.Model.SymbolStats>> Get24HourStatisticsAsync(CancellationToken cancellationToken)
+        {
+            var stats = await binanceApi.Get24HourStatisticsAsync(cancellationToken).ConfigureAwait(false);
+            var symbolsStats = stats.Select(s => NewSymbolStats(s)).ToList();
+            return symbolsStats;
+        }
+
         public void SubscribeCandlesticks(string symbol, Interface.Model.CandlestickInterval candlestickInterval, int limit, Action<CandlestickEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             try
@@ -149,28 +178,6 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
             }
         }
 
-        public async Task<IEnumerable<Interface.Model.AggregateTrade>> GetAggregateTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
-        {
-            var trades = await binanceApi.GetAggregateTradesAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
-            var aggregateTrades = trades.Select(at => NewAggregateTrade(at)).ToList();
-            return aggregateTrades;
-        }
-
-        public async Task<IEnumerable<Interface.Model.Trade>> GetTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
-        {
-            var result = await binanceApi.GetTradesAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
-            var trades = result.Select(t => NewTrade(t)).ToList();
-            return trades;
-        }
-
-        public async Task<IEnumerable<Interface.Model.Order>> GetOpenOrdersAsync(Interface.Model.User user, string symbol = null, long recWindow = 0, Action<Exception> exception = default(Action<Exception>), CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret);
-            var result = await binanceApi.GetOpenOrdersAsync(apiUser, symbol, recWindow, cancellationToken).ConfigureAwait(false);
-            var orders = result.Select(o => NewOrder(user, o)).ToList();
-            return orders;
-        }
-
         public void SubscribeAggregateTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             try
@@ -231,13 +238,6 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
             {
                 exception.Invoke(ex);
             }
-        }
-
-        public async Task<IEnumerable<Interface.Model.SymbolStats>> Get24HourStatisticsAsync(CancellationToken cancellationToken)
-        {
-            var stats = await binanceApi.Get24HourStatisticsAsync(cancellationToken).ConfigureAwait(false);
-            var symbolsStats = stats.Select(s => NewSymbolStats(s)).ToList();
-            return symbolsStats;
         }
 
         public void SubscribeStatistics(Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
