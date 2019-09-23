@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Binance\src\Binance\Binance.csproj" />
-    <ProjectReference Include="..\DevelopmentInProgress.Common\DevelopmentInProgress.Common.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.MarketView.Interface\DevelopmentInProgress.MarketView.Interface.csproj" />
   </ItemGroup>
 
