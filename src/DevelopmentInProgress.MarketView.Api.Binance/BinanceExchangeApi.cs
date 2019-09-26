@@ -137,6 +137,7 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
                     {
                         canclestickCache.Unsubscribe();
                         exception.Invoke(ex);
+                        return;
                     }
                 });
             }
@@ -168,6 +169,7 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
                     {
                         orderBookCache.Unsubscribe();
                         exception.Invoke(ex);
+                        return;
                     }
                 });
             }
@@ -199,6 +201,7 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
                     {
                         aggregateTradeCache.Unsubscribe();
                         exception.Invoke(ex);
+                        return;
                     }
                 });
             }
@@ -230,6 +233,7 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
                     {
                         tradeCache.Unsubscribe();
                         exception.Invoke(ex);
+                        return;
                     }
                 });
             }
@@ -261,6 +265,7 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
                     {
                         symbolStatisticsCache.Unsubscribe();
                         exception.Invoke(ex);
+                        return;
                     }
                 });
             }
@@ -302,10 +307,9 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
                     {
                         accountInfoCache.Unsubscribe();
                         exception.Invoke(ex);
+                        return;
                     }
                 });
-
-                // TODO: Implement a keep alive every 30mins or after 60mins the 
             }
             catch (Exception ex)
             {
