@@ -135,7 +135,59 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
 
         public void SubscribeStatistics(Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var kucoinSocketClient = new KucoinSocketClient();
+
+            CallResult<UpdateSubscription> result = null;
+
+            try
+            {
+                var kucoinClient = new KucoinClient();
+                var markets = kucoinClient.GetMarkets();
+
+                foreach (var market in markets.Data)
+                {
+                    result = kucoinSocketClient.SubscribeToSnapshotUpdates(market, data =>
+                    {
+                        if (cancellationToken.IsCancellationRequested)
+                        {
+                            kucoinSocketClient.Unsubscribe(result.Data).FireAndForget();
+                            return;
+                        }
+
+                        try
+                        {
+                            var symbolStats = new SymbolStats
+                            {
+                                Symbol = data.Symbol,
+                                CloseTime = data.Timestamp,
+                                Volume = data.Volume,
+                                LowPrice = data.Low,
+                                HighPrice = data.High,
+                                LastPrice = data.LastPrice,
+                                PriceChange = data.ChangePrice,
+                                PriceChangePercent = data.ChangePercentage
+                            };
+
+                            callback.Invoke(new StatisticsEventArgs { Statistics = new[] { symbolStats } });
+                        }
+                        catch (Exception ex)
+                        {
+                            kucoinSocketClient.Unsubscribe(result.Data).FireAndForget();
+                            exception.Invoke(ex);
+                            return;
+                        }
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                if (result != null)
+                {
+                    kucoinSocketClient.Unsubscribe(result.Data).FireAndForget();
+                }
+
+                exception.Invoke(ex);
+            }
         }
 
         public void SubscribeTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
