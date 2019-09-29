@@ -68,9 +68,36 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Symbol>> GetSymbolsAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerable<Symbol>> GetSymbolsAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var kucoinClient = new KucoinClient();
+            var result = await kucoinClient.GetSymbolsAsync().ConfigureAwait(false);
+            var symbols = result.Data.Select(s => new Symbol
+            {
+                NotionalMinimumValue = s.QuoteMinSize,
+                BaseAsset = new Asset { Symbol = s.BaseCurrency },
+                QuoteAsset = new Asset { Symbol = s.QuoteCurrency },
+                Price = new InclusiveRange { Increment = s.PriceIncrement, Maximum = s.QuoteMaxSize, Minimum = s.PriceIncrement },
+                Quantity = new InclusiveRange { Increment = s.BaseIncrement, Maximum = s.BaseMaxSize, Minimum = s.BaseIncrement }
+            }).ToList();
+
+            var currencies = await kucoinClient.GetCurrenciesAsync().ConfigureAwait(false);
+
+            Func<Asset, KucoinCurrency, Asset> f = (a, c) => 
+            {
+                a.Precision = c.Precision;
+                return a;
+            };
+
+            (from s in symbols
+             join c in currencies.Data on s.BaseAsset.Symbol equals c.Currency
+             select f(s.BaseAsset, c)).ToList();
+
+            (from s in symbols
+             join c in currencies.Data on s.QuoteAsset.Symbol equals c.Currency
+             select f(s.QuoteAsset, c)).ToList();
+
+            return symbols;
         }
 
         public async Task<IEnumerable<Trade>> GetTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
