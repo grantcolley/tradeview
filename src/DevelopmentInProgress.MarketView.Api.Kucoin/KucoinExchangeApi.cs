@@ -34,7 +34,7 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
 
             var accountInfo = new AccountInfo { User = user, Balances = new List<AccountBalance>() };
             var kucoinClient = new KucoinClient(options);
-            var accounts = await kucoinClient.GetAccountsAsync(accountType: KucoinAccountType.Trade);
+            var accounts = await kucoinClient.GetAccountsAsync(accountType: KucoinAccountType.Trade).ConfigureAwait(false);
             foreach (var balance in accounts.Data)
             {
                 accountInfo.Balances.Add(new AccountBalance { Asset = balance.Currency, Free = balance.Available, Locked = balance.Holds });
@@ -50,7 +50,7 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
 
         public Task<IEnumerable<AggregateTrade>> GetAggregateTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return GetAggregateTradesAsync(symbol, limit, cancellationToken);
         }
 
         public Task<IEnumerable<Candlestick>> GetCandlesticksAsync(string symbol, CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = 0, CancellationToken token = default(CancellationToken))
@@ -73,9 +73,21 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Trade>> GetTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Trade>> GetTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var kucoinClint = new KucoinClient();
+            var result = await kucoinClint.GetTradeHistoryAsync(symbol).ConfigureAwait(false);
+            var trades = result.Data.Select(t => new Trade
+            {
+                Symbol = symbol,
+                Id = t.Sequence,
+                Price = t.Price,
+                Quantity = t.Quantity,
+                Time = t.Timestamp,
+                IsBuyerMaker = t.Side == KucoinOrderSide.Sell ? true : false
+            }).ToList();
+
+            return trades;
         }
 
         public Task<Order> PlaceOrder(User user, ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
