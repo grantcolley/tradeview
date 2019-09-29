@@ -4,6 +4,7 @@ using DevelopmentInProgress.MarketView.Interface.Events;
 using DevelopmentInProgress.MarketView.Interface.Interfaces;
 using DevelopmentInProgress.MarketView.Interface.Model;
 using Kucoin.Net;
+using Kucoin.Net.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +25,22 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
             throw new NotImplementedException();
         }
 
-        public Task<AccountInfo> GetAccountInfoAsync(User user, CancellationToken cancellationToken)
+        public async Task<AccountInfo> GetAccountInfoAsync(User user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var options = new KucoinClientOptions
+            {
+                ApiCredentials = new KucoinApiCredentials(user.ApiKey, user.ApiSecret, user.ApiPassPhrase)
+            };
+
+            var accountInfo = new AccountInfo { User = user, Balances = new List<AccountBalance>() };
+            var kucoinClient = new KucoinClient(options);
+            var accounts = await kucoinClient.GetAccountsAsync(accountType: KucoinAccountType.Trade);
+            foreach (var balance in accounts.Data)
+            {
+                accountInfo.Balances.Add(new AccountBalance { Asset = balance.Currency, Free = balance.Available, Locked = balance.Holds });
+            }
+
+            return accountInfo;
         }
 
         public Task<IEnumerable<AccountTrade>> GetAccountTradesAsync(User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
@@ -71,7 +85,45 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
 
         public void SubscribeAccountInfo(User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var localUser = user;
+
+            var kucoinClient = new KucoinSocketClient(new KucoinSocketClientOptions { ApiCredentials = new KucoinApiCredentials(user.ApiKey, user.ApiSecret, user.ApiPassPhrase) });
+
+            CallResult<UpdateSubscription> result = null;
+
+            try
+            {
+                result = kucoinClient.SubscribeToBalanceChanges(data =>
+                {
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        kucoinClient.Unsubscribe(result.Data).FireAndForget();
+                        return;
+                    }
+
+                    try
+                    {
+                        var accountInfo = GetAccountInfoAsync(localUser, cancellationToken).GetAwaiter().GetResult();
+
+                        callback.Invoke(new AccountInfoEventArgs { AccountInfo = accountInfo });
+                    }
+                    catch (Exception ex)
+                    {
+                        kucoinClient.Unsubscribe(result.Data).FireAndForget();
+                        exception.Invoke(ex);
+                        return;
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                if (result != null)
+                {
+                    kucoinClient.Unsubscribe(result.Data).FireAndForget();
+                }
+
+                exception.Invoke(ex);
+            }
         }
 
         public void SubscribeAggregateTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
