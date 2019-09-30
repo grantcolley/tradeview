@@ -63,9 +63,22 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
             throw new NotImplementedException();
         }
 
-        public Task<OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken)
+        public async Task<OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var kucoinClient = new KucoinClient();
+            var result = await kucoinClient.GetFullOrderBookAsync(symbol).ConfigureAwait(false);
+
+            var orderBook = new OrderBook
+            {
+                Symbol = symbol,
+                FirstUpdateId = result.Data.Sequence,
+                LastUpdateId = result.Data.Sequence
+            };
+
+            orderBook.Asks = (from ask in result.Data.Asks select new OrderBookPriceLevel { Price = ask.Price, Quantity = ask.Quantity }).ToList();
+            orderBook.Bids = (from bid in result.Data.Bids select new OrderBookPriceLevel { Price = bid.Price, Quantity = bid.Quantity }).ToList();
+
+            return orderBook;
         }
 
         public async Task<IEnumerable<Symbol>> GetSymbolsAsync(CancellationToken cancellationToken)
