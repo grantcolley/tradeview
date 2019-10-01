@@ -53,9 +53,30 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
             return GetAggregateTradesAsync(symbol, limit, cancellationToken);
         }
 
-        public Task<IEnumerable<Candlestick>> GetCandlesticksAsync(string symbol, CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = 0, CancellationToken token = default(CancellationToken))
+        public async Task<IEnumerable<Candlestick>> GetCandlesticksAsync(string symbol, CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = 0, CancellationToken token = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            var candlestickInterval = interval.ToKucoinCandlestickInterval();
+            var kucoinClient = new KucoinClient();
+            var result = await kucoinClient.GetKlinesAsync(symbol, candlestickInterval, startTime, endTime);
+
+            Func<KucoinKline, Candlestick> f = k =>
+            {
+                return new Candlestick
+                {
+                    Symbol = symbol,
+                    Interval = interval,
+                    OpenTime = k.StartTime,
+                    Open = k.Open,
+                    High = k.High,
+                    Low = k.Low,
+                    Close = k.Close,
+                    Volume = k.Volume                      
+                };
+            };
+
+            var candlesticks = (from k in result.Data select f(k)).ToList();
+
+            return candlesticks;
         }
 
         public Task<IEnumerable<Order>> GetOpenOrdersAsync(User user, string symbol = null, long recWindow = 0, Action<Exception> exception = null, CancellationToken cancellationToken = default(CancellationToken))
