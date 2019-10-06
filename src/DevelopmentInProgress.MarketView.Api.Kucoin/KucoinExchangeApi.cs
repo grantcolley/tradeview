@@ -15,9 +15,16 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
 {
     public class KucoinExchangeApi : IExchangeApi
     {
-        public Task<string> CancelOrderAsync(User user, string symbol, long orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<string> CancelOrderAsync(User user, string symbol, long orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            var options = new KucoinClientOptions
+            {
+                ApiCredentials = new KucoinApiCredentials(user.ApiKey, user.ApiSecret, user.ApiPassPhrase)
+            };
+
+            var kucoinClient = new KucoinClient(options);
+            var result = await kucoinClient.CancelOrderAsync(newClientOrderId).ConfigureAwait(false);
+            return result.Data.CancelledOrderIds.First();
         }
 
         public Task<IEnumerable<SymbolStats>> Get24HourStatisticsAsync(CancellationToken cancellationToken)
@@ -43,7 +50,7 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
             return accountInfo;
         }
 
-        public async Task<IEnumerable<AccountTrade>> GetAccountTradesAsync(User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<IEnumerable<AccountTrade>> GetAccountTradesAsync(User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
         }
@@ -79,9 +86,42 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
             return candlesticks;
         }
 
-        public Task<IEnumerable<Order>> GetOpenOrdersAsync(User user, string symbol = null, long recWindow = 0, Action<Exception> exception = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IEnumerable<Order>> GetOpenOrdersAsync(User user, string symbol = null, long recWindow = 0, Action<Exception> exception = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            var options = new KucoinClientOptions
+            {
+                ApiCredentials = new KucoinApiCredentials(user.ApiKey, user.ApiSecret, user.ApiPassPhrase)
+            };
+
+            var kucoinClient = new KucoinClient(options);
+            var results = await kucoinClient.GetOrdersAsync(null, null, null, null, null, KucoinOrderStatus.Active).ConfigureAwait(false);
+
+            var orders = (from o in results.Data.Items
+                          select new Order
+                          {
+                              User = user,
+                              Symbol = o.Symbol,
+                              //Id = o.Id,
+                              ClientOrderId = o.Id,
+                              Price = o.Price,
+                              OriginalQuantity = o.Quantity,
+                              TimeInForce = o.TimeInForce.ToMarketViewTimeInForce(),
+                              Type = o.Type.ToMarketViewOrderType(),
+                              Side = o.Side.ToMarketViewOrderSide(),
+                              StopPrice = o.StopPrice,
+                              IcebergQuantity = o.VisibleIcebergSize,
+                              Time = o.CreatedAt,
+                              //Fills = o.Fills?.Select(f => new Interface.Model.Fill
+                              //{
+                              //    Price = f.Price,
+                              //    Quantity = f.Quantity,
+                              //    Commission = f.Commission,
+                              //    CommissionAsset = f.CommissionAsset,
+                              //    TradeId = f.TradeId
+                              //})
+                          }).ToList();
+
+            return orders;
         }
 
         public async Task<OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken)
@@ -151,9 +191,53 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
             return trades;
         }
 
-        public Task<Order> PlaceOrder(User user, ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Order> PlaceOrder(User user, ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            var options = new KucoinClientOptions
+            {
+                ApiCredentials = new KucoinApiCredentials(user.ApiKey, user.ApiSecret, user.ApiPassPhrase)
+            };
+
+            var kucoinClient = new KucoinClient(options);
+            var placeOrderResult = await kucoinClient.PlaceOrderAsync(
+                clientOrder.Symbol,
+                clientOrder.Side.ToKucoinOrderSide(),
+                clientOrder.Type.ToKucoinNewOrderType(),
+                clientOrder.Price,
+                clientOrder.Quantity,
+                null,
+                clientOrder.TimeInForce.ToKucoinTimeInForce(),
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                clientOrder.StopPrice, 
+                null, 
+                null
+                ).ConfigureAwait(false);
+
+            var orderResult = await kucoinClient.GetOrderAsync(placeOrderResult.Data.OrderId).ConfigureAwait(false);
+
+            var order = new Order
+            {
+                User = user,
+                Symbol = orderResult.Data.Symbol,
+                //Id = orderResult.Data.Id,
+                ClientOrderId = orderResult.Data.ClientOrderId,
+                Price = orderResult.Data.Price,
+                OriginalQuantity = orderResult.Data.Quantity,
+                TimeInForce = orderResult.Data.TimeInForce.ToMarketViewTimeInForce(),
+                Type = orderResult.Data.Type.ToMarketViewOrderType(),
+                Side = orderResult.Data.Side.ToMarketViewOrderSide(),
+                StopPrice = orderResult.Data.StopPrice,
+                IcebergQuantity = orderResult.Data.VisibleIcebergSize,
+                Time = orderResult.Data.CreatedAt
+            };
+
+            return order;
         }
 
         public void SubscribeAccountInfo(User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
