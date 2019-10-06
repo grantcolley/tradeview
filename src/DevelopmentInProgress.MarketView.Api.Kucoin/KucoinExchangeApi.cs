@@ -15,7 +15,7 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
 {
     public class KucoinExchangeApi : IExchangeApi
     {
-        public async Task<string> CancelOrderAsync(User user, string symbol, long orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<string> CancelOrderAsync(User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
             var options = new KucoinClientOptions
             {
@@ -23,7 +23,7 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
             };
 
             var kucoinClient = new KucoinClient(options);
-            var result = await kucoinClient.CancelOrderAsync(newClientOrderId).ConfigureAwait(false);
+            var result = await kucoinClient.CancelOrderAsync(orderId).ConfigureAwait(false);
             return result.Data.CancelledOrderIds.First();
         }
 
