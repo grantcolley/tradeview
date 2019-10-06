@@ -101,8 +101,8 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
                           {
                               User = user,
                               Symbol = o.Symbol,
-                              //Id = o.Id,
-                              ClientOrderId = o.Id,
+                              Id = o.Id,
+                              ClientOrderId = o.ClientOrderId,
                               Price = o.Price,
                               OriginalQuantity = o.Quantity,
                               TimeInForce = o.TimeInForce.ToMarketViewTimeInForce(),
