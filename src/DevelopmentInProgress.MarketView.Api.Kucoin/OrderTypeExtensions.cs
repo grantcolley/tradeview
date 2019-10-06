@@ -6,16 +6,14 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
 {
     public static class OrderTypeExtensions
     {
-        public static KucoinOrderType ToKucoinOrderType(this OrderType order)
+        public static KucoinNewOrderType ToKucoinNewOrderType(this OrderType order)
         {
             switch (order)
             {
                 case OrderType.Limit:
-                    return KucoinOrderType.Limit;
-                case OrderType.StopLossLimit:
-                    return KucoinOrderType.LimitStop;
+                    return KucoinNewOrderType.Limit;
                 case OrderType.Market:
-                    return KucoinOrderType.Market;
+                    return KucoinNewOrderType.Market;
                 default:
                     throw new NotImplementedException();
             }
