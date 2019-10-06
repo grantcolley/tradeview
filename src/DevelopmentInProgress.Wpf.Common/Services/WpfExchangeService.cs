@@ -76,7 +76,7 @@ namespace DevelopmentInProgress.Wpf.Common.Services
             return result;
         }
 
-        public async Task<string> CancelOrderAsync(Interface.User user, string symbol, long orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<string> CancelOrderAsync(Interface.User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
             var result = await exchangeService.CancelOrderAsync(user, symbol, orderId, newClientOrderId, recWindow, cancellationToken).ConfigureAwait(false);
             return result;

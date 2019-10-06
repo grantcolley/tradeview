@@ -10,7 +10,7 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 {
     public class ExchangeServiceSubscribeOrderBookAggregateTrades : IExchangeService
     {
-        public Task<string> CancelOrderAsync(User user, string symbol, long orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<string> CancelOrderAsync(User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
         }

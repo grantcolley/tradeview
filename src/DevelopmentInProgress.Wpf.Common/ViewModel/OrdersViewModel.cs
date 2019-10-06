@@ -234,7 +234,7 @@ namespace DevelopmentInProgress.Wpf.Common.ViewModel
             try
             {
                 var orderId = long.Parse(param.ToString());
-                Cancel(orderId).FireAndForget();
+                Cancel(orderId.ToString()).FireAndForget();
             }
             catch (Exception ex)
             {
@@ -242,7 +242,7 @@ namespace DevelopmentInProgress.Wpf.Common.ViewModel
             }
         }
 
-        private async Task Cancel(long orderId)
+        private async Task Cancel(string orderId)
         {
             try
             {

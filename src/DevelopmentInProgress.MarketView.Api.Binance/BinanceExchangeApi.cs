@@ -28,7 +28,7 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
             return NewOrder(user, result);
         }
 
-        public async Task<string> CancelOrderAsync(Interface.Model.User user, string symbol, long orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<string> CancelOrderAsync(Interface.Model.User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
             var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret);
             var result = await binanceApi.CancelOrderAsync(apiUser, symbol, orderId, newClientOrderId, recWindow, cancellationToken).ConfigureAwait(false);
@@ -342,7 +342,7 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
             {
                 User = user,
                 Symbol = o.Symbol,
-                Id = o.Id,
+                Id = o.Id.ToString(),
                 ClientOrderId = o.ClientOrderId,
                 Price = o.Price,
                 OriginalQuantity = o.OriginalQuantity,

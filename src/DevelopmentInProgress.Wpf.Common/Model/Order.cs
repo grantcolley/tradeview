@@ -8,7 +8,7 @@ namespace DevelopmentInProgress.Wpf.Common.Model
         private decimal executedQuantity;
         
         public string Symbol { get; set; }
-        public new long Id { get; set; }
+        public new string Id { get; set; }
         public string ClientOrderId { get; set; }
         public decimal Price { get; set; }
         public decimal OriginalQuantity { get; set; }

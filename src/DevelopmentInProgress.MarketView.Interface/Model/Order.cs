@@ -7,7 +7,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Model
     {
         public User User { get; set; }
         public string Symbol { get; set; }
-        public long Id { get; set; }
+        public string Id { get; set; }
         public string ClientOrderId { get; set; }
         public decimal Price { get; set; }
         public decimal OriginalQuantity { get; set; }
