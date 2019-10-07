@@ -3,6 +3,7 @@
     public enum Exchange
     {
         Binance,
+        Kucoin,
         Test
     }
 }

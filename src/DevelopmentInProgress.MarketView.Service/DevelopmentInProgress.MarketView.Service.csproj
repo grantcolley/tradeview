@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DevelopmentInProgress.MarketView.Api.Binance\DevelopmentInProgress.MarketView.Api.Binance.csproj" />
+    <ProjectReference Include="..\DevelopmentInProgress.MarketView.Api.Kucoin\DevelopmentInProgress.MarketView.Api.Kucoin.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.MarketView.Interface\DevelopmentInProgress.MarketView.Interface.csproj" />
   </ItemGroup>
 
