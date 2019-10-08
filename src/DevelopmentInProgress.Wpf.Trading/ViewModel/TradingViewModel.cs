@@ -193,7 +193,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
             }
             catch (Exception ex)
             {
-                TradeViewModelException(ex.ToString(), ex);
+                TradingViewModelException(ex.ToString(), ex);
             }
 
             if (userAccount != null
@@ -239,7 +239,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
             }
             catch (Exception ex)
             {
-                TradeViewModelException(ex.ToString(), ex);
+                TradingViewModelException(ex.ToString(), ex);
             }
         }
         
@@ -317,7 +317,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
             {
                 if (args.HasException)
                 {
-                    TradeViewModelException(args);
+                    TradingViewModelException(args);
                 }
                 else if (args.Value != null)
                 {
@@ -340,7 +340,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
                         }
                         catch (Exception ex)
                         {
-                            TradeViewModelException(ex.ToString(), ex);
+                            TradingViewModelException(ex.ToString(), ex);
                         }
                     }
                 }
@@ -362,7 +362,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
             {
                 if (args.HasException)
                 {
-                    TradeViewModelException(args);
+                    TradingViewModelException(args);
                 }
                 else if (args.AccountEventType.Equals(AccountEventType.LoggedIn)
                         || args.AccountEventType.Equals(AccountEventType.LoggedOut))
@@ -393,7 +393,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
             {
                 if(args.HasException)
                 {
-                    TradeViewModelException(args);
+                    TradingViewModelException(args);
                 }
             });
 
@@ -411,7 +411,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
             {
                 if (args.HasException)
                 {
-                    TradeViewModelException(args);
+                    TradingViewModelException(args);
                 }
             });
         }
@@ -427,16 +427,16 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
             {
                 if (args.HasException)
                 {
-                    TradeViewModelException(args);
+                    TradingViewModelException(args);
                 }
             });
         }
 
-        private void TradeViewModelException<T>(EventArgsBase<T> eventArgs)
+        private void TradingViewModelException<T>(EventArgsBase<T> eventArgs)
         {
             if (eventArgs.Exception != null)
             {
-                TradeViewModelException(eventArgs.Message, eventArgs.Exception);
+                TradingViewModelException(eventArgs.Message, eventArgs.Exception);
             }
             else
             {
@@ -444,7 +444,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
             }
         }
 
-        private void TradeViewModelException(string message, Exception ex)
+        private void TradingViewModelException(string message, Exception ex)
         {
             Logger.Log(message, Category.Exception, Priority.High);
 
