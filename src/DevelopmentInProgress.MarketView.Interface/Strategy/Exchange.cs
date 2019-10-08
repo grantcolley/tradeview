@@ -2,6 +2,7 @@
 {
     public enum Exchange
     {
+        Unknown,
         Binance,
         Kucoin,
         Test
