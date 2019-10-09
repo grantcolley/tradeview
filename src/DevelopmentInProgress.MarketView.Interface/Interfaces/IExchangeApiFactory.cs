@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.MarketView.Interface.Strategy;
+﻿using DevelopmentInProgress.MarketView.Interface.Enums;
 using System.Collections.Generic;
 
 namespace DevelopmentInProgress.MarketView.Interface.Interfaces

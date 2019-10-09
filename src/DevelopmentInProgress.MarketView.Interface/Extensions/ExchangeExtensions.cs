@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.MarketView.Interface.Strategy;
+﻿using DevelopmentInProgress.MarketView.Interface.Enums;
 using System;
 using System.Text.RegularExpressions;
 

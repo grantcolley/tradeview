@@ -1,5 +1,4 @@
-﻿using DevelopmentInProgress.MarketView.Interface.Model;
-using DevelopmentInProgress.MarketView.Interface.Strategy;
+﻿using DevelopmentInProgress.MarketView.Interface.Enums;
 
 namespace DevelopmentInProgress.Wpf.Common.Model
 {

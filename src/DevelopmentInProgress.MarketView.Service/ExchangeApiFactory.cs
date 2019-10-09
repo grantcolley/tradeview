@@ -1,7 +1,7 @@
 ﻿using DevelopmentInProgress.MarketView.Api.Binance;
 using DevelopmentInProgress.MarketView.Api.Kucoin;
+using DevelopmentInProgress.MarketView.Interface.Enums;
 using DevelopmentInProgress.MarketView.Interface.Interfaces;
-using DevelopmentInProgress.MarketView.Interface.Strategy;
 using System;
 using System.Collections.Generic;
 
