@@ -1,4 +1,4 @@
-﻿namespace DevelopmentInProgress.MarketView.Interface.Strategy
+﻿namespace DevelopmentInProgress.MarketView.Interface.Enums
 {
     public enum Exchange
     {
