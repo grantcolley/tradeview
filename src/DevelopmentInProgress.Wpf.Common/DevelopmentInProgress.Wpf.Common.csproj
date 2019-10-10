@@ -57,6 +57,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cache\ISymbolsCacheFactory.cs" />
+    <Compile Include="Cache\SymbolsCacheFactory.cs" />
     <Compile Include="Chart\ChartHelper.cs" />
     <Compile Include="Chart\IChartHelper.cs" />
     <Compile Include="Command\ViewModelCommand.cs" />
