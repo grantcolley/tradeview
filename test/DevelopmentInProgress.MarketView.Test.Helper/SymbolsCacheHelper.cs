@@ -1,4 +1,5 @@
-﻿using DevelopmentInProgress.Wpf.Common.Cache;
+﻿using DevelopmentInProgress.MarketView.Interface.Enums;
+using DevelopmentInProgress.Wpf.Common.Cache;
 using DevelopmentInProgress.Wpf.Common.Services;
 
 namespace DevelopmentInProgress.MarketView.Test.Helper
@@ -7,7 +8,7 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
     {
         public static ISymbolsCache GetSymbolsCache(IWpfExchangeService wpfExchangeService)
         {
-            return new SymbolsCache(wpfExchangeService);
+            return new SymbolsCache(Exchange.Test, wpfExchangeService);
         }
     }
 }
