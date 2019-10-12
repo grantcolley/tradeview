@@ -10,7 +10,6 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using Interface = DevelopmentInProgress.MarketView.Interface;
 using System.Threading.Tasks;
-using DevelopmentInProgress.Wpf.Common.Extensions;
 using DevelopmentInProgress.Wpf.Common.ViewModel;
 using Prism.Logging;
 using DevelopmentInProgress.Wpf.Common.Cache;
@@ -21,6 +20,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
     {
         private CancellationTokenSource accountCancellationTokenSource;
         private DispatcherTimer dispatcherTimer;
+        private ISymbolsCacheFactory symbolsCacheFactory;
         private ISymbolsCache symbolsCache;
         private Account account;
         private AccountBalance selectedAsset;
@@ -29,14 +29,14 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
         private bool disposed;
         private object balancesLock = new object();
 
-        public AccountViewModel(IWpfExchangeService exchangeService, ISymbolsCache symbolsCache, ILoggerFacade logger)
+        public AccountViewModel(IWpfExchangeService exchangeService, ISymbolsCacheFactory symbolsCacheFactory, ILoggerFacade logger)
             : base(exchangeService, logger)
         {
             accountCancellationTokenSource = new CancellationTokenSource();
 
             LoginCommand = new ViewModelCommand(Login);
 
-            this.symbolsCache = symbolsCache;
+            this.symbolsCacheFactory = symbolsCacheFactory;
         }
 
         public event EventHandler<AccountEventArgs> OnAccountNotification;
@@ -163,11 +163,13 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
 
             try
             {
-                Account = await ExchangeService.GetAccountInfoAsync(Account.AccountInfo.User.ApiKey, Account.AccountInfo.User.ApiSecret, accountCancellationTokenSource.Token);
+                Account = await ExchangeService.GetAccountInfoAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User.ApiKey, Account.AccountInfo.User.ApiSecret, accountCancellationTokenSource.Token);
 
                 OnAccountLoggedIn(Account);
 
-                ExchangeService.SubscribeAccountInfo(Account.AccountInfo.User, e => AccountInfoUpdate(e.AccountInfo), SubscribeAccountInfoException, accountCancellationTokenSource.Token);
+                ExchangeService.SubscribeAccountInfo(Account.AccountInfo.User.Exchange, Account.AccountInfo.User, e => AccountInfoUpdate(e.AccountInfo), SubscribeAccountInfoException, accountCancellationTokenSource.Token);
+
+                symbolsCache = symbolsCacheFactory.GetSymbolsCache(Account.AccountInfo.User.Exchange);
 
                 dispatcherTimer = new DispatcherTimer();
                 dispatcherTimer.Tick += new EventHandler(DispatcherTimerTick);

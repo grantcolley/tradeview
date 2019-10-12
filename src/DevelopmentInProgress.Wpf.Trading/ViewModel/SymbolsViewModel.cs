@@ -14,6 +14,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
 {
     public class SymbolsViewModel : ExchangeViewModel
     {
+        private ISymbolsCacheFactory symbolsCacheFactory;
         private ISymbolsCache symbolsCache;
         private List<Symbol> symbols;
         private Symbol selectedSymbol;
@@ -22,12 +23,10 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
         private bool isLoadingSymbols;
         private bool disposed;
 
-        public SymbolsViewModel(IWpfExchangeService exchangeService, ISymbolsCache symbolsCache, ILoggerFacade logger)
+        public SymbolsViewModel(IWpfExchangeService exchangeService, ISymbolsCacheFactory symbolsCacheFactory, ILoggerFacade logger)
             : base(exchangeService, logger)
         {
-            this.symbolsCache = symbolsCache;
-
-            GetSymbols().FireAndForget();
+            this.symbolsCacheFactory = symbolsCacheFactory;
         }
 
         public event EventHandler<SymbolsEventArgs> OnSymbolsNotification;
@@ -72,7 +71,6 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
                 if (accountPreferences != value)
                 {
                     accountPreferences = value;
-                    SetPreferences();
                 }
             }
         }
@@ -132,6 +130,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
             try
             {
                 AccountPreferences = userAccount;
+                GetSymbols().FireAndForget();
             }
             catch (Exception ex)
             {
@@ -145,6 +144,8 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
 
             try
             {
+                symbolsCache = symbolsCacheFactory.GetSymbolsCache(AccountPreferences.Exchange);
+
                 symbolsCache.OnSymbolsCacheException += SymbolsCacheException;
 
                 var results = await symbolsCache.GetSymbols();
