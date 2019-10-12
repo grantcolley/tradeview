@@ -1,4 +1,5 @@
-﻿using DevelopmentInProgress.MarketView.Test.Helper;
+﻿using DevelopmentInProgress.MarketView.Interface.Enums;
+using DevelopmentInProgress.MarketView.Test.Helper;
 using DevelopmentInProgress.Wpf.Common.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -20,7 +21,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var cxlToken = new CancellationToken();
 
             // Act
-            var symbols =  await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken).ConfigureAwait(false);
+            var symbols =  await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken).ConfigureAwait(false);
 
             // Assert
             var testResults = symbols.Where(s => s.SymbolStatistics.LastPrice.Equals(0.0M)).ToList();
@@ -35,12 +36,12 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var cxlToken = new CancellationToken();
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken).ConfigureAwait(false);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken).ConfigureAwait(false);
 
             Action<Exception> exception = e => { };
 
             // Act
-            exchangeService.SubscribeStatistics(symbols, exception, cxlToken);
+            exchangeService.SubscribeStatistics(Exchange.Test, symbols, exception, cxlToken);
 
             // Assert
             var eth = symbols.Single(s => s.Name.Equals("ETHBTC"));

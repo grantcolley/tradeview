@@ -6,6 +6,7 @@ using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 using DevelopmentInProgress.MarketView.Test.Helper;
 using DevelopmentInProgress.Wpf.Common.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using DevelopmentInProgress.MarketView.Interface.Enums;
 
 namespace DevelopmentInProgress.Wpf.Trading.Test
 {
@@ -19,7 +20,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
 
             var orderTypes = new List<Interface.OrderType>();
             foreach(var symbol in symbols)

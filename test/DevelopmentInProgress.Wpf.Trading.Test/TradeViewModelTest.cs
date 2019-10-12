@@ -14,6 +14,7 @@ using System.Reactive.Linq;
 using DevelopmentInProgress.Wpf.Trading.Events;
 using DevelopmentInProgress.MarketView.Interface.Validation;
 using Prism.Logging;
+using DevelopmentInProgress.MarketView.Interface.Enums;
 
 namespace DevelopmentInProgress.Wpf.Trading.Test
 {
@@ -29,7 +30,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
 
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
 
@@ -41,7 +42,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
             
             // Act
             tradeViewModel.SetAccount(account);
@@ -61,7 +62,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
 
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
 
@@ -73,7 +74,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
             var asset = account.Balances.Single(a => a.Asset.Equals("TRX"));
             tradeViewModel.SetAccount(account);
             
@@ -95,7 +96,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
 
             tradeViewModel.SetSymbols(symbols.ToList());
 
@@ -105,7 +106,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
 
             tradeViewModel.SetAccount(account);
 
@@ -133,7 +134,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             tradeViewModel.SetSymbols(symbols.ToList());
             var trx = tradeViewModel.Symbols.Single(s => s.Name.Equals("TRXBTC"));
             
@@ -164,13 +165,13 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
             var baseBalance = account.Balances.Single(a => a.Asset.Equals("TRX"));
             var quoteAsset = account.Balances.Single(a => a.Asset.Equals("BTC"));
 
             tradeViewModel.SetAccount(account);
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             tradeViewModel.SetSymbols(symbols.ToList());
             var trx = tradeViewModel.Symbols.Single(s => s.Name.Equals("TRXBTC"));
 
@@ -201,11 +202,11 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
 
             tradeViewModel.SetAccount(account);
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             tradeViewModel.SetSymbols(symbols.ToList());
             var trx = tradeViewModel.Symbols.Single(s => s.Name.Equals("TRXBTC"));
 
@@ -232,7 +233,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             tradeViewModel.SetSymbols(symbols.ToList());
             var trx = tradeViewModel.Symbols.Single(s => s.Name.Equals("TRXBTC"));
 
@@ -261,7 +262,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             tradeViewModel.SetSymbols(symbols.ToList());
             var trx = tradeViewModel.Symbols.Single(s => s.Name.Equals("TRXBTC"));
 
@@ -314,7 +315,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             tradeViewModel.SetSymbols(symbols.ToList());
             var trx = tradeViewModel.Symbols.Single(s => s.Name.Equals("TRXBTC"));
 
@@ -338,7 +339,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             tradeViewModel.SetSymbols(symbols.ToList());
             var trx = tradeViewModel.Symbols.Single(s => s.Name.Equals("TRXBTC"));
 
@@ -361,7 +362,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             tradeViewModel.SetSymbols(symbols.ToList());
             var trx = tradeViewModel.Symbols.Single(s => s.Name.Equals("TRXBTC"));
 
@@ -385,7 +386,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             tradeViewModel.SetSymbols(symbols.ToList());
             var trx = tradeViewModel.Symbols.Single(s => s.Name.Equals("TRXBTC"));
 
@@ -408,7 +409,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             tradeViewModel.SetSymbols(symbols.ToList());
             var trx = tradeViewModel.Symbols.Single(s => s.Name.Equals("TRXBTC"));
 
@@ -490,7 +491,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
 
             tradeViewModel.SetSymbols(symbols.ToList());
 
@@ -513,7 +514,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
 
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -545,7 +546,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
 
             var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
@@ -554,7 +555,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -577,7 +578,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
 
             var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
@@ -586,7 +587,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -610,7 +611,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
 
             var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
@@ -619,7 +620,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -642,7 +643,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
 
             var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
@@ -651,7 +652,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -693,7 +694,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
 
             var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
@@ -702,7 +703,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -743,7 +744,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
 
             var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
@@ -752,7 +753,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -794,7 +795,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
 
             var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
@@ -803,7 +804,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -848,7 +849,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
-            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(cxlToken);
+            var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
 
             var account = new Account(new Interface.AccountInfo { User = new Interface.User() })
@@ -857,7 +858,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());

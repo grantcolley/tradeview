@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DevelopmentInProgress.MarketView.Interface.Enums;
 using DevelopmentInProgress.MarketView.Interface.Interfaces;
 using DevelopmentInProgress.MarketView.Interface.Model;
 using DevelopmentInProgress.MarketView.Test.Helper;
@@ -37,7 +38,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
 
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var symbolViewModel = new SymbolViewModel(exchangeService, chartHelper, preferences, new DebugLogger());
+            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, preferences, new DebugLogger());
 
             var trx = TestHelper.Trx.GetViewSymbol();
             
@@ -65,7 +66,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             preferences.OrderBookChartDisplayCount = 8;
             preferences.OrderBookDisplayCount = 5;
             
-            var symbolViewModel = new SymbolViewModel(exchangeService, chartHelper, preferences, new DebugLogger());
+            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, preferences, new DebugLogger());
 
             var trx = TestHelper.Trx.GetViewSymbol();
             symbolViewModel.Symbol = trx;
@@ -90,7 +91,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             preferences.OrderBookChartDisplayCount = 8;
             preferences.OrderBookDisplayCount = 5;
 
-            var symbolViewModel = new SymbolViewModel(exchangeService, chartHelper, preferences, new DebugLogger());
+            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, preferences, new DebugLogger());
 
             var trx = TestHelper.Trx.GetViewSymbol();
             symbolViewModel.Symbol = trx;
@@ -119,7 +120,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
 
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var symbolViewModel = new SymbolViewModel(exchangeService, chartHelper, preferences, new DebugLogger());
+            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, preferences, new DebugLogger());
 
             var trx = TestHelper.BNB.GetViewSymbol();
             symbolViewModel.Symbol = trx;
@@ -145,7 +146,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
 
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var symbolViewModel = new SymbolViewModel(exchangeService, chartHelper, preferences, new DebugLogger());
+            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, preferences, new DebugLogger());
 
             var trx = TestHelper.BNB.GetViewSymbol();
             symbolViewModel.Symbol = trx;
@@ -175,7 +176,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
 
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var symbolViewModel = new SymbolViewModel(exchangeService, chartHelper, preferences, new DebugLogger());
+            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, preferences, new DebugLogger());
 
             var trx = TestHelper.BNB.GetViewSymbol();
             symbolViewModel.Symbol = trx;
@@ -205,7 +206,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
 
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var symbolViewModel = new SymbolViewModel(exchangeService, chartHelper, preferences, new DebugLogger());
+            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, preferences, new DebugLogger());
 
             var trx = TestHelper.BNB.GetViewSymbol();
             symbolViewModel.Symbol = trx;
@@ -254,7 +255,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
 
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var symbolViewModel = new SymbolViewModel(exchangeService, chartHelper, preferences, new DebugLogger());
+            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, preferences, new DebugLogger());
 
             var trx = TestHelper.BNB.GetViewSymbol();
             symbolViewModel.Symbol = trx;
