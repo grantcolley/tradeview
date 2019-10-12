@@ -1,6 +1,7 @@
 ﻿using DevelopmentInProgress.MarketView.Interface.Events;
 using DevelopmentInProgress.MarketView.Interface.Interfaces;
 using DevelopmentInProgress.MarketView.Interface.Model;
+using DevelopmentInProgress.MarketView.Interface.Enums;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -10,103 +11,107 @@ namespace DevelopmentInProgress.MarketView.Service
 {
     public class ExchangeService : IExchangeService
     {
-        private IExchangeApi exchangeApi;
+        private IExchangeApiFactory exchangeApiFactory;
+        private Dictionary<Exchange, IExchangeApi> exchanges;
 
-        public ExchangeService(IExchangeApi exchangeApi)
+        public ExchangeService(IExchangeApiFactory exchangeApiFactory)
         {
-            this.exchangeApi = exchangeApi;
+            this.exchangeApiFactory = exchangeApiFactory;
+            exchanges = this.exchangeApiFactory.GetExchanges();
         }
-
-        public async Task<Order> PlaceOrder(User user, ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        
+        public async Task<Order> PlaceOrder(Exchange exchange, User user, ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var result = await exchangeApi.PlaceOrder(user, clientOrder, recWindow, cancellationToken).ConfigureAwait(false);
+            var result = await exchanges[exchange].PlaceOrder(user, clientOrder, recWindow, cancellationToken).ConfigureAwait(false);
             return result;
         }
 
-        public async Task<string> CancelOrderAsync(User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<string> CancelOrderAsync(Exchange exchange, User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var result = await exchangeApi.CancelOrderAsync(user, symbol, orderId, newClientOrderId, recWindow, cancellationToken).ConfigureAwait(false);
+            var result = await exchanges[exchange].CancelOrderAsync(user, symbol, orderId, newClientOrderId, recWindow, cancellationToken).ConfigureAwait(false);
             return result;
         }
 
-        public async Task<IEnumerable<AccountTrade>> GetAccountTradesAsync(User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IEnumerable<AccountTrade>> GetAccountTradesAsync(Exchange exchange, User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var accountTrades = await exchangeApi.GetAccountTradesAsync(user, symbol, startDate, endDate, recWindow, cancellationToken).ConfigureAwait(false);
+            var accountTrades = await exchanges[exchange].GetAccountTradesAsync(user, symbol, startDate, endDate, recWindow, cancellationToken).ConfigureAwait(false);
             return accountTrades;
         }
 
-        public async Task<IEnumerable<AggregateTrade>> GetAggregateTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
+        public async Task<IEnumerable<AggregateTrade>> GetAggregateTradesAsync(Exchange exchange, string symbol, int limit, CancellationToken cancellationToken)
         {
-            var aggregateTrades = await exchangeApi.GetAggregateTradesAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
+            var aggregateTrades = await exchanges[exchange].GetAggregateTradesAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
             return aggregateTrades;
         }
 
-        public async Task<IEnumerable<Trade>> GetTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Trade>> GetTradesAsync(Exchange exchange, string symbol, int limit, CancellationToken cancellationToken)
         {
-            var trades = await exchangeApi.GetTradesAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
+            var trades = await exchanges[exchange].GetTradesAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
             return trades;
         }
 
-        public async Task<IEnumerable<Candlestick>> GetCandlesticksAsync(string symbol, CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = default(int), CancellationToken token = default(CancellationToken))
+        public async Task<IEnumerable<Candlestick>> GetCandlesticksAsync(Exchange exchange, string symbol, CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = default(int), CancellationToken token = default(CancellationToken))
         {
-            var candlesticks = await exchangeApi.GetCandlesticksAsync(symbol, interval, startTime, endTime, limit, token).ConfigureAwait(false);
+            var candlesticks = await exchanges[exchange].GetCandlesticksAsync(symbol, interval, startTime, endTime, limit, token).ConfigureAwait(false);
             return candlesticks;
         }
 
-        public async Task<OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken)
+        public async Task<OrderBook> GetOrderBookAsync(Exchange exchange, string symbol, int limit, CancellationToken cancellationToken)
         {
-            var orderBook = await exchangeApi.GetOrderBookAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
+            var orderBook = await exchanges[exchange].GetOrderBookAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
             return orderBook;
         }
 
-        public void SubscribeCandlesticks(string symbol, CandlestickInterval candlestickInterval, int limit, Action<CandlestickEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public void SubscribeCandlesticks(Exchange exchange, string symbol, CandlestickInterval candlestickInterval, int limit, Action<CandlestickEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            exchangeApi.SubscribeCandlesticks(symbol, candlestickInterval, limit, callback, exception, cancellationToken);
+            exchanges[exchange].SubscribeCandlesticks(symbol, candlestickInterval, limit, callback, exception, cancellationToken);
         }
 
-        public void SubscribeOrderBook(string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public void SubscribeOrderBook(Exchange exchange, string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            exchangeApi.SubscribeOrderBook(symbol, limit, callback, exception, cancellationToken);
+            exchanges[exchange].SubscribeOrderBook(symbol, limit, callback, exception, cancellationToken);
         }
 
-        public void SubscribeAggregateTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public void SubscribeAggregateTrades(Exchange exchange, string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            exchangeApi.SubscribeAggregateTrades(symbol, limit, callback, exception, cancellationToken);
+            exchanges[exchange].SubscribeAggregateTrades(symbol, limit, callback, exception, cancellationToken);
         }
 
-        public void SubscribeTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public void SubscribeTrades(Exchange exchange, string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            exchangeApi.SubscribeTrades(symbol, limit, callback, exception, cancellationToken);
+            exchanges[exchange].SubscribeTrades(symbol, limit, callback, exception, cancellationToken);
         }
 
-        public void SubscribeAccountInfo(User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public void SubscribeAccountInfo(Exchange exchange, User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            exchangeApi.SubscribeAccountInfo(user, callback, exception, cancellationToken);
+            exchanges[exchange].SubscribeAccountInfo(user, callback, exception, cancellationToken);
         }
 
-        public void SubscribeStatistics(Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public void SubscribeStatistics(Exchange exchange, Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            exchangeApi.SubscribeStatistics(callback, exception, cancellationToken);
+            exchanges[exchange].SubscribeStatistics(callback, exception, cancellationToken);
         }
 
-        public async Task<AccountInfo> GetAccountInfoAsync(User user, CancellationToken cancellationToken)
+        public async Task<AccountInfo> GetAccountInfoAsync(Exchange exchange, User user, CancellationToken cancellationToken)
         {
-            return await exchangeApi.GetAccountInfoAsync(user, cancellationToken).ConfigureAwait(false);
+            var accountInfo = await exchanges[exchange].GetAccountInfoAsync(user, cancellationToken).ConfigureAwait(false);
+            accountInfo.User.Exchange = exchange;
+            return accountInfo;
         }
 
-        public async Task<IEnumerable<Symbol>> GetSymbolsAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerable<Symbol>> GetSymbolsAsync(Exchange exchange, CancellationToken cancellationToken)
         {
-            return await exchangeApi.GetSymbolsAsync(cancellationToken).ConfigureAwait(false);
+            return await exchanges[exchange].GetSymbolsAsync(cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<SymbolStats>> Get24HourStatisticsAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerable<SymbolStats>> Get24HourStatisticsAsync(Exchange exchange, CancellationToken cancellationToken)
         {
-            return await exchangeApi.Get24HourStatisticsAsync(cancellationToken).ConfigureAwait(false);
+            return await exchanges[exchange].Get24HourStatisticsAsync(cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<Order>> GetOpenOrdersAsync(User user, string symbol = null, long recWindow = 0, Action<Exception> exception = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IEnumerable<Order>> GetOpenOrdersAsync(Exchange exchange, User user, string symbol = null, long recWindow = 0, Action<Exception> exception = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await exchangeApi.GetOpenOrdersAsync(user, symbol, recWindow, exception, cancellationToken).ConfigureAwait(false);
+            return await exchanges[exchange].GetOpenOrdersAsync(user, symbol, recWindow, exception, cancellationToken).ConfigureAwait(false);
         }
     }
 }

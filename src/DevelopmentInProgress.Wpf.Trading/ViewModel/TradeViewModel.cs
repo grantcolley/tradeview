@@ -410,7 +410,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
 
                 SelectedSymbol.GetInterfaceSymbol().ValidateClientOrder(clientOrder);
 
-                await ExchangeService.PlaceOrder(Account.AccountInfo.User, clientOrder).ConfigureAwait(false);
+                await ExchangeService.PlaceOrder(Account.AccountInfo.User.Exchange, Account.AccountInfo.User, clientOrder).ConfigureAwait(false);
             }
             catch (Exception e)
             {

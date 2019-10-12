@@ -1,4 +1,5 @@
-﻿using DevelopmentInProgress.MarketView.Interface.Events;
+﻿using DevelopmentInProgress.MarketView.Interface.Enums;
+using DevelopmentInProgress.MarketView.Interface.Events;
 using DevelopmentInProgress.MarketView.Interface.Extensions;
 using DevelopmentInProgress.MarketView.Interface.Interfaces;
 using DevelopmentInProgress.MarketView.Interface.Model;
@@ -75,7 +76,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Strategy
 
             exchangeServices.Add(exchange, exchangeService);
 
-            var symbols = await exchangeService.GetSymbolsAsync(cancellationToken);
+            var symbols = await exchangeService.GetSymbolsAsync(exchange, cancellationToken);
 
             var subscribedSymbols = (from s in symbols
                                      join ss in strategySubscriptions on $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}" equals ss.Symbol

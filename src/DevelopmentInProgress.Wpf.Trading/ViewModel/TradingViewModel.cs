@@ -203,11 +203,13 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
                 {
                     Account.ApiKey = userAccount.ApiKey;
                     Account.ApiSecret = userAccount.ApiSecret;
+                    Account.ApiPassPhrase = userAccount.ApiPassPhrase;
+                    Account.Exchange = userAccount.Exchange;
                 }
             }
 
             SymbolsViewModel.SetAccount(userAccount);
-            AccountViewModel.SetAccount(account);
+            AccountViewModel.SetAccount(Account);
 
             isOpen = true;
 
@@ -328,7 +330,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
                     }
                     else
                     {
-                        symbol = new SymbolViewModel(exchangeService, chartHelper, userAccount.Preferences, Logger);
+                        symbol = new SymbolViewModel(userAccount.Exchange, exchangeService, chartHelper, userAccount.Preferences, Logger);
                         symbol.Dispatcher = ViewModelContext.UiDispatcher;
                         Symbols.Add(symbol);
                         SelectedSymbol = symbol;

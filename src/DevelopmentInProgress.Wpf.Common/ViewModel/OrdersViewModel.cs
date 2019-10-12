@@ -125,7 +125,7 @@ namespace DevelopmentInProgress.Wpf.Common.ViewModel
 
                     if (Account != null)
                     {
-                        var result = await Task.Run(async () => await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User));
+                        var result = await Task.Run(async () => await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User));
 
                         lock(lockOrders)
                         {
@@ -165,7 +165,7 @@ namespace DevelopmentInProgress.Wpf.Common.ViewModel
         {
             try
             {
-                var result = await Task.Run(async () => await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User));
+                var result = await Task.Run(async () => await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User));
 
                 Action<IEnumerable<Order>> action = res =>
                 {
@@ -248,7 +248,7 @@ namespace DevelopmentInProgress.Wpf.Common.ViewModel
             {
                 var order = orders.Single(o => o.Id == orderId);
                 order.IsVisible = false;
-                var result = await ExchangeService.CancelOrderAsync(Account.AccountInfo.User, order.Symbol, order.Id, null, 0, ordersCancellationTokenSource.Token);
+                var result = await ExchangeService.CancelOrderAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User, order.Symbol, order.Id, null, 0, ordersCancellationTokenSource.Token);
                 lock (lockOrders)
                 {
                     Orders.Remove(order);
@@ -265,7 +265,7 @@ namespace DevelopmentInProgress.Wpf.Common.ViewModel
             try
             {
                 IsCancellAllVisible = false;
-                Parallel.ForEach(Orders, async order => { var result = await ExchangeService.CancelOrderAsync(Account.AccountInfo.User, order.Symbol, order.Id, null, 0, ordersCancellationTokenSource.Token); });
+                Parallel.ForEach(Orders, async order => { var result = await ExchangeService.CancelOrderAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User, order.Symbol, order.Id, null, 0, ordersCancellationTokenSource.Token); });
                 lock (lockOrders)
                 {
                     Orders.Clear();

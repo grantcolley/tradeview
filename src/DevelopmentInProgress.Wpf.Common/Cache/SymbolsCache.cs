@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using DevelopmentInProgress.Wpf.Common.Model;
 using DevelopmentInProgress.Wpf.Common.Services;
 using DevelopmentInProgress.MarketView.Interface.Extensions;
+using DevelopmentInProgress.MarketView.Interface.Enums;
 
 namespace DevelopmentInProgress.Wpf.Common.Cache
 {
     public class SymbolsCache : ISymbolsCache, IDisposable
     {
+        private Exchange exchange;
         private IWpfExchangeService wpfExchangeService;
         private List<Symbol> symbols;
         private Symbol btcUsdt;
@@ -18,8 +20,9 @@ namespace DevelopmentInProgress.Wpf.Common.Cache
         private object lockSubscriptions = new object();
         private bool disposed;
 
-        public SymbolsCache(IWpfExchangeService wpfExchangeService)
+        public SymbolsCache(Exchange exchange, IWpfExchangeService wpfExchangeService)
         {
+            this.exchange = exchange;
             this.wpfExchangeService = wpfExchangeService;
 
             symbols = new List<Symbol>();
@@ -31,7 +34,7 @@ namespace DevelopmentInProgress.Wpf.Common.Cache
         {
             if (!symbols.Any())
             {
-                var results = await wpfExchangeService.GetSymbols24HourStatisticsAsync(subscribeSymbolsCxlTokenSrc.Token);
+                var results = await wpfExchangeService.GetSymbols24HourStatisticsAsync(exchange, subscribeSymbolsCxlTokenSrc.Token);
 
                 lock (lockSubscriptions)
                 {
@@ -41,7 +44,7 @@ namespace DevelopmentInProgress.Wpf.Common.Cache
 
                         btcUsdt = symbols.Single(s => s.Name.Equals("BTCUSDT"));
 
-                        wpfExchangeService.SubscribeStatistics(symbols, SubscribeStatisticsException, subscribeSymbolsCxlTokenSrc.Token);
+                        wpfExchangeService.SubscribeStatistics(exchange, symbols, SubscribeStatisticsException, subscribeSymbolsCxlTokenSrc.Token);
                     }
                 }
             }

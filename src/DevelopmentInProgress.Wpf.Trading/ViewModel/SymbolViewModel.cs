@@ -17,6 +17,7 @@ using System.Diagnostics;
 using Prism.Logging;
 using DevelopmentInProgress.MarketView.Interface.Interfaces;
 using DevelopmentInProgress.Wpf.Common.Helpers;
+using DevelopmentInProgress.MarketView.Interface.Enums;
 
 [assembly: InternalsVisibleTo("DevelopmentInProgress.Wpf.Trading.Test")]
 namespace DevelopmentInProgress.Wpf.Trading.ViewModel
@@ -28,6 +29,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
         private OrderBook orderBook;
         private ChartValues<TradeBase> tradesChart;
         private List<TradeBase> trades;
+        private Exchange exchange;
         private object orderBookLock = new object();
         private object tradesLock = new object();
         private bool isLoadingTrades;
@@ -36,9 +38,11 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
         private Stopwatch swTradeUpdate = new Stopwatch();
         private Stopwatch swOrderUpdate = new Stopwatch();
 
-        public SymbolViewModel(IWpfExchangeService exchangeService, IChartHelper chartHelper, Preferences preferences, ILoggerFacade logger)
+        public SymbolViewModel(Exchange exchange, IWpfExchangeService exchangeService, IChartHelper chartHelper, Preferences preferences, ILoggerFacade logger)
             : base(exchangeService, logger)
         {
+            this.exchange = exchange;
+
             TradeLimit = preferences.TradeLimit;
             TradesDisplayCount = preferences.TradesDisplayCount;
             TradesChartDisplayCount = preferences.TradesChartDisplayCount;
@@ -204,12 +208,12 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
 
             try
             {
-                var orderBook = await ExchangeService.GetOrderBookAsync(Symbol.Name, OrderBookLimit, symbolCancellationTokenSource.Token);
+                var orderBook = await ExchangeService.GetOrderBookAsync(exchange, Symbol.Name, OrderBookLimit, symbolCancellationTokenSource.Token);
 
                 UpdateOrderBook(orderBook);
 
                 swOrderUpdate.Start();
-                ExchangeService.SubscribeOrderBook(Symbol.Name, OrderBookLimit, e => UpdateOrderBook(e.OrderBook), SubscribeOrderBookException, symbolCancellationTokenSource.Token);
+                ExchangeService.SubscribeOrderBook(exchange, Symbol.Name, OrderBookLimit, e => UpdateOrderBook(e.OrderBook), SubscribeOrderBookException, symbolCancellationTokenSource.Token);
             }
             catch (Exception ex)
             {
@@ -229,11 +233,11 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
 
                 if (UseAggregateTrades)
                 {
-                    trades = await ExchangeService.GetAggregateTradesAsync(Symbol.Name, TradeLimit, symbolCancellationTokenSource.Token);
+                    trades = await ExchangeService.GetAggregateTradesAsync(exchange, Symbol.Name, TradeLimit, symbolCancellationTokenSource.Token);
                 }
                 else
                 {
-                    trades = await ExchangeService.GetTradesAsync(Symbol.Name, TradeLimit, symbolCancellationTokenSource.Token);
+                    trades = await ExchangeService.GetTradesAsync(exchange, Symbol.Name, TradeLimit, symbolCancellationTokenSource.Token);
                 }
 
                 UpdateTrades(trades);
@@ -241,11 +245,11 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
 
                 if (UseAggregateTrades)
                 {
-                    ExchangeService.SubscribeAggregateTrades(Symbol.Name, TradeLimit, e => UpdateTrades(e.Trades), SubscribeTradesException, symbolCancellationTokenSource.Token);
+                    ExchangeService.SubscribeAggregateTrades(exchange, Symbol.Name, TradeLimit, e => UpdateTrades(e.Trades), SubscribeTradesException, symbolCancellationTokenSource.Token);
                 }
                 else
                 {
-                    ExchangeService.SubscribeTrades(Symbol.Name, TradeLimit, e => UpdateTrades(e.Trades), SubscribeTradesException, symbolCancellationTokenSource.Token);
+                    ExchangeService.SubscribeTrades(exchange, Symbol.Name, TradeLimit, e => UpdateTrades(e.Trades), SubscribeTradesException, symbolCancellationTokenSource.Token);
                 }
             }
             catch (Exception ex)
