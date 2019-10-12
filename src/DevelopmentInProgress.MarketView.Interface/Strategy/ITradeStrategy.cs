@@ -1,4 +1,5 @@
-﻿using DevelopmentInProgress.MarketView.Interface.Events;
+﻿using DevelopmentInProgress.MarketView.Interface.Enums;
+using DevelopmentInProgress.MarketView.Interface.Events;
 using DevelopmentInProgress.MarketView.Interface.Interfaces;
 using System;
 using System.Collections.Generic;

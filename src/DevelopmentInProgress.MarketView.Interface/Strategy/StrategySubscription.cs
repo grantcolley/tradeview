@@ -1,4 +1,5 @@
-﻿using DevelopmentInProgress.MarketView.Interface.Model;
+﻿using DevelopmentInProgress.MarketView.Interface.Enums;
+using DevelopmentInProgress.MarketView.Interface.Model;
 
 namespace DevelopmentInProgress.MarketView.Interface.Strategy
 {
