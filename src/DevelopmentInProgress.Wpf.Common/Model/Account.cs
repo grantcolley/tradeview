@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using DevelopmentInProgress.MarketView.Interface.Enums;
+using DevelopmentInProgress.MarketView.Interface.Interfaces;
+using System.Collections.ObjectModel;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 
 namespace DevelopmentInProgress.Wpf.Common.Model
@@ -60,6 +62,42 @@ namespace DevelopmentInProgress.Wpf.Common.Model
                     AccountInfo.User.ApiSecret = value;
                     apiSecret = string.IsNullOrWhiteSpace(value) ? string.Empty : secretText; 
                     OnPropertyChanged("ApiSecret");
+                }
+            }
+        }
+
+        public string ApiPassPhrase
+        {
+            get { return AccountInfo?.User?.ApiPassPhrase; }
+            set
+            {
+                if (AccountInfo.User.ApiPassPhrase != value)
+                {
+                    AccountInfo.User.ApiPassPhrase = value;
+                    OnPropertyChanged("ApiPassPhrase");
+                }
+            }
+        }
+
+        public Exchange Exchange
+        {
+            get
+            {
+                if (AccountInfo?.User != null)
+                {
+                    return AccountInfo.User.Exchange;
+                }
+                else
+                {
+                    return Exchange.Unknown;
+                }
+            }
+            set
+            {
+                if (AccountInfo.User.Exchange != value)
+                {
+                    AccountInfo.User.Exchange = value;
+                    OnPropertyChanged("Exchange");
                 }
             }
         }
