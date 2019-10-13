@@ -12,5 +12,6 @@ namespace DevelopmentInProgress.MarketView.Interface.Model
         public SymbolStatus Status { get; set; }
         public bool IsIcebergAllowed { get; set; }
         public IEnumerable<OrderType> OrderTypes { get; set; }
+        public SymbolStats SymbolStatistics { get; set; }
     }
 }
