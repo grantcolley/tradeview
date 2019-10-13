@@ -18,7 +18,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
     public class SymbolsViewModelTest
     {
         [TestMethod]
-        public async Task SymbolsViewModel_Initialise()
+        public async Task SymbolsViewModel_SetAccount()
         {
             // Arrange
             var fail = false;
@@ -46,11 +46,13 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 }
             });
 
+            symbolsViewModel.SetAccount(new UserAccount());
+
             await Task.Delay(1000);
 
             // Assert
             Assert.AreEqual(symbolsViewModel.Symbols.Count, TestHelper.Symbols.Count);
-            Assert.IsNull(symbolsViewModel.AccountPreferences);
+            Assert.IsNotNull(symbolsViewModel.AccountPreferences);
             Assert.IsNull(symbolsViewModel.SelectedSymbol);
             Assert.IsFalse(fail);
         }
@@ -87,6 +89,8 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 }
             });
 
+            symbolsViewModel.SetAccount(new UserAccount());
+
             await Task.Delay(1000);
 
             // Act
@@ -112,10 +116,10 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
 
             var account = accounts.Accounts.First();
 
-            await Task.Delay(1000);
-
             // Act
             symbolsViewModel.SetAccount(account);
+
+            await Task.Delay(1000);
 
             // Assert
             var favourites = from s in symbolsViewModel.Symbols
