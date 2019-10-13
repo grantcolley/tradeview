@@ -36,6 +36,7 @@ namespace DevelopmentInProgress.Wpf.Common.Cache
                     {
                         var wpfExchangeService = new WpfExchangeService(new ExchangeService(exchangeApiFactory));
                         var symbolsCache = new SymbolsCache(exchange, wpfExchangeService);
+                        exchangeSymbolsCache.Add(exchange, symbolsCache);
                         return symbolsCache;
                     }
                 }
