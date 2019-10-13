@@ -113,5 +113,10 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
         {
             throw new NotImplementedException();
         }
+
+        public Task<IEnumerable<Symbol>> GetSymbols24HourStatisticsAsync(Exchange exchange, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
