@@ -99,6 +99,11 @@ namespace DevelopmentInProgress.MarketView.Service
             return accountInfo;
         }
 
+        public async Task<IEnumerable<Symbol>> GetSymbols24HourStatisticsAsync(Exchange exchange, CancellationToken cancellationToken)
+        {
+            return await exchanges[exchange].GetSymbols24HourStatisticsAsync(cancellationToken).ConfigureAwait(false);
+        }
+
         public async Task<IEnumerable<Symbol>> GetSymbolsAsync(Exchange exchange, CancellationToken cancellationToken)
         {
             return await exchanges[exchange].GetSymbolsAsync(cancellationToken).ConfigureAwait(false);

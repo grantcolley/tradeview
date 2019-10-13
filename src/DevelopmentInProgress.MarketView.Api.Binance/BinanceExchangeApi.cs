@@ -62,6 +62,24 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
             return candlesticks;
         }
 
+        public async Task<IEnumerable<Interface.Model.Symbol>> GetSymbols24HourStatisticsAsync(CancellationToken cancellationToken)
+        {
+            var symbols = await GetSymbolsAsync(cancellationToken).ConfigureAwait(false);
+            var symbolStatistics = await Get24HourStatisticsAsync(cancellationToken).ConfigureAwait(false);
+
+            Func<Interface.Model.Symbol, Interface.Model.SymbolStats, Interface.Model.Symbol> f = (s, ss) =>
+            {
+                s.SymbolStatistics = ss;
+                return s;
+            };
+
+            var updatedSymbols = (from s in symbols
+                                  join ss in symbolStatistics on $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}" equals ss.Symbol
+                                  select f(s, ss)).ToList();
+
+            return updatedSymbols;
+        }
+
         public async Task<IEnumerable<Interface.Model.Symbol>> GetSymbolsAsync(CancellationToken cancellationToken)
         {
             var result = await binanceApi.GetSymbolsAsync(cancellationToken).ConfigureAwait(false);
@@ -77,6 +95,13 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
                 OrderTypes = (IEnumerable<Interface.Model.OrderType>)s.OrderTypes
             }).ToList();
             return symbols;
+        }
+
+        public async Task<IEnumerable<Interface.Model.SymbolStats>> Get24HourStatisticsAsync(CancellationToken cancellationToken)
+        {
+            var stats = await binanceApi.Get24HourStatisticsAsync(cancellationToken).ConfigureAwait(false);
+            var symbolsStats = stats.Select(s => NewSymbolStats(s)).ToList();
+            return symbolsStats;
         }
 
         public async Task<Interface.Model.OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken)
@@ -106,13 +131,6 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
             var result = await binanceApi.GetOpenOrdersAsync(apiUser, symbol, recWindow, cancellationToken).ConfigureAwait(false);
             var orders = result.Select(o => NewOrder(user, o)).ToList();
             return orders;
-        }
-
-        public async Task<IEnumerable<Interface.Model.SymbolStats>> Get24HourStatisticsAsync(CancellationToken cancellationToken)
-        {
-            var stats = await binanceApi.Get24HourStatisticsAsync(cancellationToken).ConfigureAwait(false);
-            var symbolsStats = stats.Select(s => NewSymbolStats(s)).ToList();
-            return symbolsStats;
         }
 
         public void SubscribeCandlesticks(string symbol, Interface.Model.CandlestickInterval candlestickInterval, int limit, Action<CandlestickEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)

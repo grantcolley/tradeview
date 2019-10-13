@@ -27,11 +27,6 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
             return result.Data.CancelledOrderIds.First();
         }
 
-        public Task<IEnumerable<SymbolStats>> Get24HourStatisticsAsync(CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<AccountInfo> GetAccountInfoAsync(User user, CancellationToken cancellationToken)
         {
             var options = new KucoinClientOptions
@@ -152,7 +147,8 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
                 BaseAsset = new Asset { Symbol = s.BaseCurrency },
                 QuoteAsset = new Asset { Symbol = s.QuoteCurrency },
                 Price = new InclusiveRange { Increment = s.PriceIncrement, Maximum = s.QuoteMaxSize, Minimum = s.PriceIncrement },
-                Quantity = new InclusiveRange { Increment = s.BaseIncrement, Maximum = s.BaseMaxSize, Minimum = s.BaseIncrement }
+                Quantity = new InclusiveRange { Increment = s.BaseIncrement, Maximum = s.BaseMaxSize, Minimum = s.BaseIncrement },
+                SymbolStatistics = new SymbolStats { Symbol = $"{s.BaseCurrency}{s.QuoteCurrency}" }
             }).ToList();
 
             var currencies = await kucoinClient.GetCurrenciesAsync().ConfigureAwait(false);
@@ -172,6 +168,16 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
              select f(s.QuoteAsset, c)).ToList();
 
             return symbols;
+        }
+
+        public async Task<IEnumerable<Symbol>> GetSymbols24HourStatisticsAsync(CancellationToken cancellationToken)
+        {
+            return await GetSymbolsAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        public Task<IEnumerable<SymbolStats>> Get24HourStatisticsAsync(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<Trade>> GetTradesAsync(string symbol, int limit, CancellationToken cancellationToken)

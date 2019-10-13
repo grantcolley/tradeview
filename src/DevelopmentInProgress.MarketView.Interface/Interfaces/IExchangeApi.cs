@@ -13,6 +13,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Interfaces
         Task<string> CancelOrderAsync(User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken));
         Task<AccountInfo> GetAccountInfoAsync(User user, CancellationToken cancellationToken);
         Task<IEnumerable<AccountTrade>> GetAccountTradesAsync(User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken));
+        Task<IEnumerable<Symbol>> GetSymbols24HourStatisticsAsync(CancellationToken cancellationToken);
         Task<IEnumerable<Symbol>> GetSymbolsAsync(CancellationToken cancellationToken);
         Task<IEnumerable<SymbolStats>> Get24HourStatisticsAsync(CancellationToken cancellationToken);
         Task<OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken);

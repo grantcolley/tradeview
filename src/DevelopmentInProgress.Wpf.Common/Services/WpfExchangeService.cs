@@ -20,30 +20,7 @@ namespace DevelopmentInProgress.Wpf.Common.Services
         {
             this.exchangeService = exchangeService;
         }
-        
-        public async Task<IEnumerable<Symbol>> GetSymbols24HourStatisticsAsync(Exchange exchange, CancellationToken cancellationToken)
-        {
-            var symbols = await GetSymbolsAsync(exchange, cancellationToken).ConfigureAwait(false);
-            var stats = await Get24HourStatisticsAsync(exchange, cancellationToken).ConfigureAwait(false);
-
-            var updatedSymbols = (from sy in symbols
-                                 join st in stats on sy.Name equals st.Symbol
-                                 select sy.JoinStatistics(st)).ToList();
-
-            return updatedSymbols;
-        }
-
-        public void SubscribeStatistics(Exchange exchange, IEnumerable<Symbol> symbols, Action<Exception> exception, CancellationToken cancellationToken)
-        {
-            exchangeService.SubscribeStatistics(exchange, e =>
-            {
-                var stats = e.Statistics.ToList();
-
-                (from sy in symbols join st in stats on sy.Name equals st.Symbol select sy.UpdateStatistics(st)).ToList();
-
-            }, exception, cancellationToken);
-        }
-
+       
         public async Task<IEnumerable<Order>> GetOpenOrdersAsync(Exchange exchange, Interface.User user, string symbol = null, long recWindow = 0, Action<Exception> exception = default(Action<Exception>), CancellationToken cancellationToken = default(CancellationToken))
         {
             var result = await exchangeService.GetOpenOrdersAsync(exchange, user, symbol, recWindow, exception, cancellationToken).ConfigureAwait(false);
@@ -55,6 +32,13 @@ namespace DevelopmentInProgress.Wpf.Common.Services
         {
             var accountInfo = await exchangeService.GetAccountInfoAsync(exchange, new Interface.User { ApiKey = apiKey, ApiSecret = apiSecret}, cancellationToken).ConfigureAwait(false);
             return new Account(accountInfo);
+        }
+
+        public async Task<IEnumerable<Symbol>> GetSymbols24HourStatisticsAsync(Exchange exchange, CancellationToken cancellationToken)
+        {
+            var results = await exchangeService.GetSymbols24HourStatisticsAsync(exchange, cancellationToken).ConfigureAwait(false);
+            var symbols = results.Select(s => s.GetViewSymbol()).ToList();
+            return symbols;
         }
 
         private async Task<IEnumerable<Symbol>> GetSymbolsAsync(Exchange exchange, CancellationToken cancellationToken)
@@ -112,6 +96,17 @@ namespace DevelopmentInProgress.Wpf.Common.Services
             var results = await exchangeService.GetCandlesticksAsync(exchange, symbol, interval, startTime, endTime, limit, token).ConfigureAwait(false);
             var candlesticks = results.Select(c => c.ToViewCandlestick()).ToList();
             return candlesticks;
+        }
+
+        public void SubscribeStatistics(Exchange exchange, IEnumerable<Symbol> symbols, Action<Exception> exception, CancellationToken cancellationToken)
+        {
+            exchangeService.SubscribeStatistics(exchange, e =>
+            {
+                var stats = e.Statistics.ToList();
+
+                (from sy in symbols join st in stats on sy.Name equals st.Symbol select sy.UpdateStatistics(st)).ToList();
+
+            }, exception, cancellationToken);
         }
 
         public void SubscribeCandlesticks(Exchange exchange, string symbol, Interface.CandlestickInterval candlestickInterval, int limit, Action<CandlestickEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
