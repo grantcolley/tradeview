@@ -24,7 +24,7 @@ namespace DevelopmentInProgress.Wpf.Common.Extensions
 
         public static Symbol GetViewSymbol(this Interface.Symbol s)
         {
-            return new Symbol
+            var symbol =  new Symbol
             {
                 NotionalMinimumValue = s.NotionalMinimumValue,
                 BaseAsset = s.BaseAsset,
@@ -36,6 +36,10 @@ namespace DevelopmentInProgress.Wpf.Common.Extensions
                 OrderTypes = s.OrderTypes,
                 SymbolStatistics = new SymbolStatistics { Symbol = $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}" }
             };
+
+            symbol.UpdateStatistics(s.SymbolStatistics);
+
+            return symbol;
         }
 
         public static Symbol UpdateStatistics(this Symbol sy, Interface.SymbolStats st)
