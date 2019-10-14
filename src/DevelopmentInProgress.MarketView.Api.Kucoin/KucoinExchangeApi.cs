@@ -50,9 +50,9 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<AggregateTrade>> GetAggregateTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
+        public  Task<IEnumerable<AggregateTrade>> GetAggregateTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
-            return GetAggregateTradesAsync(symbol, limit, cancellationToken);
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<Candlestick>> GetCandlesticksAsync(string symbol, CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = 0, CancellationToken token = default(CancellationToken))
@@ -291,7 +291,7 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
 
         public void SubscribeAggregateTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            SubscribeTrades(symbol, limit, callback, exception, cancellationToken);
+            throw new NotImplementedException();
         }
 
         public void SubscribeCandlesticks(string symbol, CandlestickInterval candlestickInterval, int limit, Action<CandlestickEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
