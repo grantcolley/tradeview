@@ -373,7 +373,7 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
                         {
                             var symbolStats = new SymbolStats
                             {
-                                Symbol = data.Symbol,
+                                Symbol = data.Symbol.Replace("-", string.Empty),
                                 CloseTime = data.Timestamp,
                                 Volume = data.Volume,
                                 LowPrice = data.Low,
