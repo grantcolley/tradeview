@@ -380,7 +380,7 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
                                 HighPrice = data.High,
                                 LastPrice = data.LastPrice,
                                 PriceChange = data.ChangePrice,
-                                PriceChangePercent = data.ChangePercentage
+                                PriceChangePercent = data.ChangePercentage * 100
                             };
 
                             callback.Invoke(new StatisticsEventArgs { Statistics = new[] { symbolStats } });
