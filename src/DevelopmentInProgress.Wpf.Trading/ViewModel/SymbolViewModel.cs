@@ -35,8 +35,6 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
         private bool isLoadingTrades;
         private bool isLoadingOrderBook;
         private bool disposed;
-        private Stopwatch swTradeUpdate = new Stopwatch();
-        private Stopwatch swOrderUpdate = new Stopwatch();
 
         public SymbolViewModel(Exchange exchange, IWpfExchangeService exchangeService, IChartHelper chartHelper, Preferences preferences, ILoggerFacade logger)
             : base(exchangeService, logger)
@@ -212,7 +210,6 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
 
                 UpdateOrderBook(orderBook);
 
-                swOrderUpdate.Start();
                 ExchangeService.SubscribeOrderBook(exchange, Symbol.Name, OrderBookLimit, e => UpdateOrderBook(e.OrderBook), SubscribeOrderBookException, symbolCancellationTokenSource.Token);
             }
             catch (Exception ex)
@@ -241,7 +238,6 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
                 }
 
                 UpdateTrades(trades);
-                swTradeUpdate.Start();
 
                 if (UseAggregateTrades)
                 {
@@ -269,12 +265,6 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
 
             lock (orderBookLock)
             {
-                Logger.Log($"Orders New Update {swOrderUpdate.Elapsed}", Category.Info, Priority.Low);
-
-                var sw = new Stopwatch();
-                sw.Start();
-                Logger.Log($"Start OrderBookUpdate", Category.Info, Priority.Low);
-
                 bool firstOrders = false;
 
                 if (OrderBook == null)
@@ -361,10 +351,6 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
                     OrderBook.UpdateChartAggregateAsks(aggregatedAsks);
                     OrderBook.UpdateChartAggregateBids(aggregatedBids.Reverse<OrderBookPriceLevel>().ToList());
                 }
-
-                sw.Stop();
-                Logger.Log($"End OrderBookUpdate {sw.Elapsed}", Category.Info, Priority.Low);
-                swOrderUpdate.Restart();
             }
         }
 
@@ -372,8 +358,6 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
         {
             lock (tradesLock)
             {
-                Logger.Log($"Trade New Update {swTradeUpdate.Elapsed}", Category.Info, Priority.Low);
-
                 if(Trades == null)
                 {
                     List<TradeBase> newTrades;
@@ -392,8 +376,6 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
 
                     Trades = newTrades;
                 }
-
-                swTradeUpdate.Restart();
             }
         }
 
