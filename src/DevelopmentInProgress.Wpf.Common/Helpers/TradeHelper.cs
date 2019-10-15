@@ -5,7 +5,6 @@ using LiveCharts;
 using Prism.Logging;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace DevelopmentInProgress.Wpf.Common.Helpers
