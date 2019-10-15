@@ -20,10 +20,6 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
         {
             List<T> trades;
 
-            var sw = new Stopwatch();
-            sw.Start();
-            logger.Log($"Start GetTradesList<{typeof(T).Name}>", Category.Info, Priority.Low);
-
             // Order by oldest to newest (as it will appear in the chart).
             var newTrades = (from t in tradesUpdate
                              orderby t.Time, t.Id
@@ -47,9 +43,6 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
                 trades = new List<T>(newTrades.Reverse<T>().ToList());
             }
 
-            sw.Stop();
-            logger.Log($"End GetTradesList<{typeof(T).Name}> {sw.Elapsed}", Category.Info, Priority.Low);
-
             return trades;
         }
 
@@ -60,10 +53,6 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             ILoggerFacade logger) where T : TradeBase, new()
         {
             ChartValues<T> tradesChart;
-
-            var sw = new Stopwatch();
-            sw.Start();
-            logger.Log($"Start GetTradesChart<{typeof(T).Name}>", Category.Info, Priority.Low);
 
             // Order by oldest to newest (as it will appear in the chart).
             var newTrades = (from t in tradesUpdate
@@ -85,9 +74,6 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
                 tradesChart = new ChartValues<T>(newTrades);
             }
 
-            sw.Stop();
-            logger.Log($"End GetTradesChart<{typeof(T).Name}> {sw.Elapsed}", Category.Info, Priority.Low);
-
             return tradesChart;
         }
 
@@ -99,10 +85,6 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             ILoggerFacade logger) where T : TradeBase, new()
         {
             List<T> trades;
-
-            var sw = new Stopwatch();
-            sw.Start();
-            logger.Log($"Start GetUpdatedTradesList<{typeof(T).Name}>", Category.Info, Priority.Low);
 
             // Get the latest available trade - the first trade on the 
             // trade list (which is also the last trade in the chart).
@@ -148,9 +130,6 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
                 trades = tradeBooktrades;
             }
 
-            sw.Stop();
-            logger.Log($"End GetUpdatedTradesList<{typeof(T).Name}> {sw.Elapsed}", Category.Info, Priority.Low);
-
             return trades;
         }
 
@@ -161,10 +140,6 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             ILoggerFacade logger,
             ref ChartValues<T> tradesChart) where T : TradeBase, new()
         {
-            var sw = new Stopwatch();
-            sw.Start();
-            logger.Log($"Start UpdateTradesChart<{typeof(T).Name}>", Category.Info, Priority.Low);
-
             // Get the latest available trade - the last trade on the trade chart.
             var seed = tradesChart.Last();
 
@@ -216,9 +191,6 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
                     tradesChart.AddRange(newTrades);
                 }
             }
-
-            sw.Stop();
-            logger.Log($"End UpdateTradesChart<{typeof(T).Name}> {sw.Elapsed}", Category.Info, Priority.Low);
         }
 
         public static void SetTrades<T>(
@@ -231,10 +203,6 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             out List<T> trades,
             out ChartValues<T> tradesChart) where T : TradeBase, new()
         {
-            var sw = new Stopwatch();
-            sw.Start();
-            logger.Log($"Start SetTrades", Category.Info, Priority.Low);
-
             // Order by oldest to newest (as it will appear in the chart).
             var newTrades = (from t in tradesUpdate
                              orderby t.Time, t.Id
@@ -279,9 +247,6 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
                 // Order by newest to oldest (as it will appear on trade list)
                 trades = new List<T>(newTrades.Reverse<T>().ToList());
             }
-
-            sw.Stop();
-            logger.Log($"End SetTrades {sw.Elapsed}", Category.Info, Priority.Low);
         }
         
         public static void UpdateTrades<T>(
@@ -295,10 +260,6 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             out List<T> trades,
             ref ChartValues<T> tradesChart) where T : TradeBase, new()
         {
-            var sw = new Stopwatch();
-            sw.Start();
-            logger.Log($"Start TradeUpdate", Category.Info, Priority.Low);
-
             // Get the latest available trade - the first trade on the 
             // trade list (which is also the last trade in the chart).
             var seed = currentTrades.First();
@@ -391,9 +352,6 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
 
                 trades = tradeBooktrades;
             }
-
-            sw.Stop();
-            logger.Log($"End TradeUpdate {sw.Elapsed}", Category.Info, Priority.Low);
         }
     }
 }
