@@ -33,7 +33,6 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             var orderBook = new OrderBook();
             orderBook.Symbol = "TRXBTC";
             orderBook.LastUpdateId = DateTime.Now.Ticks;
-            orderBook.Top = new OrderBookTop { Ask = ask0, Bid = bid0 };
             orderBook.Asks = new List<OrderBookPriceLevel>(new[] { ask0, ask1, ask2, ask3, ask4, ask5, ask6, ask7, ask8, ask9 });
             orderBook.Bids = new List<OrderBookPriceLevel>(new[] { bid0, bid1, bid2, bid3, bid4, bid5, bid6, bid7, bid8, bid9 });
 
@@ -67,7 +66,6 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             var orderBook = new OrderBook();
             orderBook.Symbol = "TRXBTC";
             orderBook.LastUpdateId = DateTime.Now.Ticks;
-            orderBook.Top = new OrderBookTop { Ask = ask0, Bid = bid0 };
             orderBook.Asks = new List<OrderBookPriceLevel>(new[] { ask0, ask1, ask2, ask3, ask4, ask5, ask6, ask7, ask8, ask9 });
             orderBook.Bids = new List<OrderBookPriceLevel>(new[] { bid0, bid1, bid2, bid3, bid4, bid5, bid6, bid7, bid8, bid9 });
 

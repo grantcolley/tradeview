@@ -85,6 +85,7 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
             var result = await binanceApi.GetSymbolsAsync(cancellationToken).ConfigureAwait(false);
             var symbols = result.Select(s => new Interface.Model.Symbol
             {
+                ExchangeSymbol = $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}",
                 NotionalMinimumValue = s.NotionalMinimumValue,
                 BaseAsset = new Interface.Model.Asset { Symbol = s.BaseAsset.Symbol, Precision = s.BaseAsset.Precision },
                 Price = new Interface.Model.InclusiveRange { Increment = s.Price.Increment /*, Minimum = s.Price.Minimum, Maximum = s.Price.Maximum*/ }, // HACK : remove Price Min and Max because it realtime calcs hits performance.
@@ -419,21 +420,7 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
             var orderBook = new Interface.Model.OrderBook
             {
                 Symbol = ob.Symbol,
-                LastUpdateId = ob.LastUpdateId,
-                Top = new Interface.Model.OrderBookTop
-                {
-                    Symbol = ob.Top.Symbol,
-                    Ask = new Interface.Model.OrderBookPriceLevel
-                    {
-                        Price = ob.Top.Ask.Price,
-                        Quantity = ob.Top.Ask.Quantity
-                    },
-                    Bid = new Interface.Model.OrderBookPriceLevel
-                    {
-                        Price = ob.Top.Bid.Price,
-                        Quantity = ob.Top.Bid.Quantity
-                    }
-                }
+                LastUpdateId = ob.LastUpdateId
             };
 
             orderBook.Asks = (from ask in ob.Asks select new Interface.Model.OrderBookPriceLevel { Price = ask.Price, Quantity = ask.Quantity }).ToList();

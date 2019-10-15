@@ -9,7 +9,6 @@ namespace DevelopmentInProgress.Wpf.Common.Model
     {
         private string baseSymbol;
         private string quoteSymbol;
-        private OrderBookTop top;
         private List<OrderBookPriceLevel> topAsks;
         private List<OrderBookPriceLevel> topBids;
         private ChartValues<OrderBookPriceLevel> chartAsks;
@@ -59,19 +58,6 @@ namespace DevelopmentInProgress.Wpf.Common.Model
                 {
                     quoteSymbol = value;
                     OnPropertyChanged("QuoteSymbol");
-                }
-            }
-        }
-
-        public OrderBookTop Top
-        {
-            get { return top; }
-            set
-            {
-                if (top != value)
-                {
-                    top = value;
-                    OnPropertyChanged("Top");
                 }
             }
         }

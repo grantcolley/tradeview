@@ -142,7 +142,8 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
             var kucoinClient = new KucoinClient();
             var result = await kucoinClient.GetSymbolsAsync().ConfigureAwait(false);
             var symbols = result.Data.Select(s => new Symbol
-            {
+            {                
+                ExchangeSymbol = s.Symbol,
                 NotionalMinimumValue = s.QuoteMinSize,
                 BaseAsset = new Asset { Symbol = s.BaseCurrency },
                 QuoteAsset = new Asset { Symbol = s.QuoteCurrency },
@@ -426,7 +427,7 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
                         var trade = new Trade
                         {
                             Id = data.Sequence,
-                            Symbol = data.Symbol,
+                            Symbol = data.Symbol.Replace("-", string.Empty),
                             Price = data.Price,
                             Time = data.Timestamp,
                             Quantity = data.Quantity

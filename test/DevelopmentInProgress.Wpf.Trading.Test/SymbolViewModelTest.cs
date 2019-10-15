@@ -49,7 +49,6 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             Assert.AreEqual(symbolViewModel.Symbol, trx);
             Assert.IsNotNull(symbolViewModel.OrderBook);
             Assert.AreEqual(symbolViewModel.OrderBook.LastUpdateId, TestHelper.OrderBook.LastUpdateId);
-            Assert.IsNotNull(symbolViewModel.OrderBook.Top);
             Assert.IsTrue(symbolViewModel.OrderBook.TopAsks.Count > 0);
             Assert.IsTrue(symbolViewModel.OrderBook.TopBids.Count > 0);
             Assert.IsTrue(symbolViewModel.Trades.Count > 0);

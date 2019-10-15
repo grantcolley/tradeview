@@ -78,7 +78,6 @@
     <Compile Include="Model\Candlestick.cs" />
     <Compile Include="Model\OrderBook.cs" />
     <Compile Include="Model\OrderBookPriceLevel.cs" />
-    <Compile Include="Model\OrderBookTop.cs" />
     <Compile Include="Model\Preferences.cs" />
     <Compile Include="Model\StrategyFileType.cs" />
     <Compile Include="Model\TimeValuePoint.cs" />
