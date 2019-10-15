@@ -26,6 +26,7 @@ namespace DevelopmentInProgress.Wpf.Common.Extensions
         {
             var symbol =  new Symbol
             {
+                ExchangeSymbol = s.ExchangeSymbol,
                 NotionalMinimumValue = s.NotionalMinimumValue,
                 BaseAsset = s.BaseAsset,
                 Price = s.Price,

@@ -13,7 +13,6 @@ using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 using System.Runtime.CompilerServices;
 using DevelopmentInProgress.Wpf.Common.ViewModel;
 using DevelopmentInProgress.Wpf.Common.Chart;
-using System.Diagnostics;
 using Prism.Logging;
 using DevelopmentInProgress.MarketView.Interface.Interfaces;
 using DevelopmentInProgress.Wpf.Common.Helpers;
@@ -206,11 +205,11 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
 
             try
             {
-                var orderBook = await ExchangeService.GetOrderBookAsync(exchange, Symbol.Name, OrderBookLimit, symbolCancellationTokenSource.Token);
+                var orderBook = await ExchangeService.GetOrderBookAsync(exchange, Symbol.ExchangeSymbol, OrderBookLimit, symbolCancellationTokenSource.Token);
 
                 UpdateOrderBook(orderBook);
 
-                ExchangeService.SubscribeOrderBook(exchange, Symbol.Name, OrderBookLimit, e => UpdateOrderBook(e.OrderBook), SubscribeOrderBookException, symbolCancellationTokenSource.Token);
+                ExchangeService.SubscribeOrderBook(exchange, Symbol.ExchangeSymbol, OrderBookLimit, e => UpdateOrderBook(e.OrderBook), SubscribeOrderBookException, symbolCancellationTokenSource.Token);
             }
             catch (Exception ex)
             {
@@ -258,7 +257,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
 
         internal void UpdateOrderBook(Interface.OrderBook orderBook)
         {
-            if (!Symbol.Name.Equals(orderBook.Symbol))
+            if (!Symbol.ExchangeSymbol.Equals(orderBook.Symbol))
             {
                 throw new Exception("Orderbook update for wrong symbol");
             }
@@ -286,19 +285,6 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
                 }
 
                 OrderBook.LastUpdateId = orderBook.LastUpdateId;
-                OrderBook.Top = new OrderBookTop
-                {
-                    Ask = new OrderBookPriceLevel
-                    {
-                        Price = orderBook.Top.Ask.Price.Trim(Symbol.PricePrecision),
-                        Quantity = orderBook.Top.Ask.Quantity.Trim(Symbol.QuantityPrecision)
-                    },
-                    Bid = new OrderBookPriceLevel
-                    {
-                        Price = orderBook.Top.Bid.Price.Trim(Symbol.PricePrecision),
-                        Quantity = orderBook.Top.Bid.Quantity.Trim(Symbol.QuantityPrecision)
-                    }
-                };
 
                 // Order by price: bids (DESC) and asks (ASC)
                 var orderedAsks = orderBook.Asks.OrderBy(a => a.Price).ToList();

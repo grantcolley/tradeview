@@ -4,6 +4,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Model
 {
     public class Symbol
     {
+        public string ExchangeSymbol { get; set; }
         public decimal NotionalMinimumValue { get; set; }
         public Asset BaseAsset { get; set; }
         public InclusiveRange Price { get; set; }

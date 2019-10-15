@@ -9,6 +9,7 @@ namespace DevelopmentInProgress.Wpf.Common.Model
         private int lastPriceChangeDirection;
         private int priceChangePercentDirection;
 
+        public string ExchangeSymbol { get; set; }
         public decimal NotionalMinimumValue { get; set; }
         public Interface.Asset BaseAsset { get; set; }
         public Interface.InclusiveRange Price { get; set; }
