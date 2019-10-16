@@ -17,11 +17,13 @@ using DevelopmentInProgress.Wpf.Common.Events;
 using DevelopmentInProgress.Wpf.Common.ViewModel;
 using DevelopmentInProgress.Wpf.Common.Chart;
 using Newtonsoft.Json;
+using DevelopmentInProgress.Wpf.Common.Helpers;
 
 namespace DevelopmentInProgress.Wpf.Trading.ViewModel
 {
     public class TradingViewModel : DocumentViewModel
     {
+        private IOrderBookHelperFactory orderBookHelperFactory;
         private IWpfExchangeService exchangeService;
         private IAccountsService accountsService;
         private IChartHelper chartHelper;
@@ -47,6 +49,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
             AccountViewModel accountViewModel, SymbolsViewModel symbolsViewModel,
             TradeViewModel tradeViewModel, OrdersViewModel ordersViewModel,
             IWpfExchangeService exchangeService, IAccountsService accountsService,
+            IOrderBookHelperFactory orderBookHelperFactory,
             IChartHelper chartHelper)
             : base(viewModelContext)
         {
@@ -60,6 +63,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
 
             this.exchangeService = exchangeService;
             this.accountsService = accountsService;
+            this.orderBookHelperFactory = orderBookHelperFactory;
             this.chartHelper = chartHelper;
 
             ObserveSymbols();
@@ -330,7 +334,8 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
                     }
                     else
                     {
-                        symbol = new SymbolViewModel(userAccount.Exchange, exchangeService, chartHelper, userAccount.Preferences, Logger);
+                        symbol = new SymbolViewModel(userAccount.Exchange, exchangeService, chartHelper,
+                            orderBookHelperFactory.GetOrderBookHelper(userAccount.Exchange), userAccount.Preferences, Logger);
                         symbol.Dispatcher = ViewModelContext.UiDispatcher;
                         Symbols.Add(symbol);
                         SelectedSymbol = symbol;

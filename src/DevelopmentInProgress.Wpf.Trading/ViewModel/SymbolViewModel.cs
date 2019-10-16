@@ -1,22 +1,21 @@
-﻿using DevelopmentInProgress.MarketView.Interface.Extensions;
+﻿using DevelopmentInProgress.MarketView.Interface.Enums;
+using DevelopmentInProgress.MarketView.Interface.Interfaces;
+using DevelopmentInProgress.Wpf.Common.Chart;
 using DevelopmentInProgress.Wpf.Common.Extensions;
+using DevelopmentInProgress.Wpf.Common.Helpers;
 using DevelopmentInProgress.Wpf.Common.Model;
-using DevelopmentInProgress.Wpf.Trading.Events;
 using DevelopmentInProgress.Wpf.Common.Services;
+using DevelopmentInProgress.Wpf.Common.ViewModel;
+using DevelopmentInProgress.Wpf.Trading.Events;
 using LiveCharts;
+using Prism.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
-using System.Runtime.CompilerServices;
-using DevelopmentInProgress.Wpf.Common.ViewModel;
-using DevelopmentInProgress.Wpf.Common.Chart;
-using Prism.Logging;
-using DevelopmentInProgress.MarketView.Interface.Interfaces;
-using DevelopmentInProgress.Wpf.Common.Helpers;
-using DevelopmentInProgress.MarketView.Interface.Enums;
 
 [assembly: InternalsVisibleTo("DevelopmentInProgress.Wpf.Trading.Test")]
 namespace DevelopmentInProgress.Wpf.Trading.ViewModel
@@ -29,16 +28,19 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
         private ChartValues<TradeBase> tradesChart;
         private List<TradeBase> trades;
         private Exchange exchange;
+        private IOrderBookHelper orderBookHelper;
         private object orderBookLock = new object();
         private object tradesLock = new object();
         private bool isLoadingTrades;
         private bool isLoadingOrderBook;
         private bool disposed;
 
-        public SymbolViewModel(Exchange exchange, IWpfExchangeService exchangeService, IChartHelper chartHelper, Preferences preferences, ILoggerFacade logger)
+        public SymbolViewModel(Exchange exchange, IWpfExchangeService exchangeService, IChartHelper chartHelper,
+            IOrderBookHelper orderBookHelper, Preferences preferences, ILoggerFacade logger)
             : base(exchangeService, logger)
         {
             this.exchange = exchange;
+            this.orderBookHelper = orderBookHelper;
 
             TradeLimit = preferences.TradeLimit;
             TradesDisplayCount = preferences.TradesDisplayCount;
@@ -286,36 +288,16 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
 
                 OrderBook.LastUpdateId = orderBook.LastUpdateId;
 
-                // Order by price: bids (DESC) and asks (ASC)
-                var orderedAsks = orderBook.Asks.OrderBy(a => a.Price).ToList();
-                var orderedBids = orderBook.Bids.OrderByDescending(b => b.Price).ToList();
+                List<OrderBookPriceLevel> topAsks;
+                List<OrderBookPriceLevel> topBids;
+                List<OrderBookPriceLevel> chartAsks;
+                List<OrderBookPriceLevel> chartBids;
+                List<OrderBookPriceLevel> aggregatedAsks;
+                List<OrderBookPriceLevel> aggregatedBids;
 
-                // The OrderBookCount is the greater of the OrderBookDisplayCount OrderBookChartDisplayCount.
-                // Take the asks and bids for the OrderBookCount as new instances of type OrderBookPriceLevel 
-                // i.e. discard those that we are not interested in displaying on the screen.
-                var asks = orderedAsks.Take(OrderBookCount).Select(ask => new OrderBookPriceLevel
-                {
-                    Price = ask.Price.Trim(Symbol.PricePrecision),
-                    Quantity = ask.Quantity.Trim(Symbol.QuantityPrecision)
-                }).ToList();
-
-                var bids = orderedBids.Take(OrderBookCount).Select(bid => new OrderBookPriceLevel
-                {
-                    Price = bid.Price.Trim(Symbol.PricePrecision),
-                    Quantity = bid.Quantity.Trim(Symbol.QuantityPrecision)
-                }).ToList();
-
-                // Take the top bids and asks for the order book bid and ask lists and order descending.
-                var topAsks = asks.Take(OrderBookDisplayCount).Reverse().ToList();
-                var topBids = bids.Take(OrderBookDisplayCount).ToList();
-
-                // Take the bid and aks to display in the the order book chart.
-                var chartAsks = asks.Take(OrderBookChartDisplayCount).ToList();
-                var chartBids = bids.Take(OrderBookChartDisplayCount).ToList();
-
-                // Create the aggregated bids and asks for the aggregated bid and ask chart.
-                var aggregatedAsks = chartAsks.GetAggregatedList();
-                var aggregatedBids = chartBids.GetAggregatedList();
+                orderBookHelper.GetBidsAndAsks(orderBook, symbol.PricePrecision, symbol.QuantityPrecision,
+                    OrderBookCount, OrderBookDisplayCount, OrderBookChartDisplayCount,
+                    out topAsks, out topBids, out chartAsks, out chartBids, out aggregatedAsks, out aggregatedBids);
 
                 // Create new instances of the top bids and asks, reversing the asks
                 OrderBook.TopAsks = topAsks;
@@ -325,17 +307,17 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
                 {
                     // Create new instances of the chart bids and asks, reversing the bids.
                     OrderBook.ChartAsks = new ChartValues<OrderBookPriceLevel>(chartAsks);
-                    OrderBook.ChartBids = new ChartValues<OrderBookPriceLevel>(chartBids.Reverse<OrderBookPriceLevel>().ToList());
+                    OrderBook.ChartBids = new ChartValues<OrderBookPriceLevel>(chartBids);
                     OrderBook.ChartAggregatedAsks = new ChartValues<OrderBookPriceLevel>(aggregatedAsks);
-                    OrderBook.ChartAggregatedBids = new ChartValues<OrderBookPriceLevel>(aggregatedBids.Reverse<OrderBookPriceLevel>().ToList());
+                    OrderBook.ChartAggregatedBids = new ChartValues<OrderBookPriceLevel>(aggregatedBids);
                 }
                 else
                 {
                     // Update the existing orderbook chart bids and asks, reversing the bids.
                     OrderBook.UpdateChartAsks(chartAsks);
-                    OrderBook.UpdateChartBids(chartBids.Reverse<OrderBookPriceLevel>().ToList());
+                    OrderBook.UpdateChartBids(chartBids.ToList());
                     OrderBook.UpdateChartAggregateAsks(aggregatedAsks);
-                    OrderBook.UpdateChartAggregateBids(aggregatedBids.Reverse<OrderBookPriceLevel>().ToList());
+                    OrderBook.UpdateChartAggregateBids(aggregatedBids.ToList());
                 }
             }
         }
