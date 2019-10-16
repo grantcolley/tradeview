@@ -74,6 +74,10 @@
     <Compile Include="Extensions\StrategyExtensions.cs" />
     <Compile Include="Extensions\StrategyNotificationExtensions.cs" />
     <Compile Include="Extensions\StrategySubscriptionExtensions.cs" />
+    <Compile Include="Helpers\BinanceOrderBookHelper.cs" />
+    <Compile Include="Helpers\IOrderBookHelper.cs" />
+    <Compile Include="Helpers\IOrderBookHelperFactory.cs" />
+    <Compile Include="Helpers\OrderBookHelperFactory.cs" />
     <Compile Include="Helpers\TradeHelper.cs" />
     <Compile Include="Model\Candlestick.cs" />
     <Compile Include="Model\OrderBook.cs" />
