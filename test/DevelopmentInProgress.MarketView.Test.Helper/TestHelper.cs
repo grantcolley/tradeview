@@ -161,7 +161,9 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
         {
             get
             {
-                return JsonConvert.DeserializeObject<Symbol>(eth);
+                var symbol = JsonConvert.DeserializeObject<Symbol>(eth);
+                symbol.SymbolStatistics = JsonConvert.DeserializeObject<SymbolStats>(ethStats);
+                return symbol;
             }
         }
 
