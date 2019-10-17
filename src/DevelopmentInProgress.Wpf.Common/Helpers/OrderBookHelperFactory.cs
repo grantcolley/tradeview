@@ -1,4 +1,5 @@
 ﻿using DevelopmentInProgress.MarketView.Interface.Enums;
+using DevelopmentInProgress.MarketView.Interface.Interfaces;
 using System.Collections.Generic;
 
 namespace DevelopmentInProgress.Wpf.Common.Helpers
@@ -7,10 +8,11 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
     {
         private Dictionary<Exchange, IOrderBookHelper> orderBookHelpers;
 
-        public OrderBookHelperFactory()
+        public OrderBookHelperFactory(IExchangeApiFactory exchangeApiFactory)
         {
             orderBookHelpers = new Dictionary<Exchange, IOrderBookHelper>();
             orderBookHelpers.Add(Exchange.Binance, new BinanceOrderBookHelper());
+            orderBookHelpers.Add(Exchange.Kucoin, new KucoinOrderBookHelper(exchangeApiFactory.GetExchangeApi(Exchange.Kucoin)));
         }
 
         public IOrderBookHelper GetOrderBookHelper(Exchange exchange)
