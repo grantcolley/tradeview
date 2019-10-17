@@ -57,7 +57,13 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
         {
             get
             {
-                return JsonConvert.DeserializeObject<List<Symbol>>(symbols);
+                var results = JsonConvert.DeserializeObject<List<Symbol>>(symbols);
+                foreach(var s in results)
+                {
+                    s.ExchangeSymbol = $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}";
+                }
+
+                return results;
             }
         }
 
@@ -137,7 +143,9 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
         {
             get
             {
-                return JsonConvert.DeserializeObject<Symbol>(trx);
+                var symbol = JsonConvert.DeserializeObject<Symbol>(trx);
+                symbol.SymbolStatistics = JsonConvert.DeserializeObject<SymbolStats>(trxStats);
+                return symbol;
             }
         }
 
@@ -145,7 +153,9 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
         {
             get
             {
-                return JsonConvert.DeserializeObject<Symbol>(bnb);
+                var symbol = JsonConvert.DeserializeObject<Symbol>(bnb);
+                symbol.SymbolStatistics = new SymbolStats { Symbol = symbol.ExchangeSymbol };
+                return symbol;
             }
         }
 
