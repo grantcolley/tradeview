@@ -191,7 +191,9 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
                 Trades = null;
                 OrderBook = null;
 
-                var tasks = new List<Task>(new[] { GetOrderBook(), GetTrades()}).ToArray();
+                SubscribeOrderBook();
+
+                var tasks = new List<Task>(new[] { GetTrades()}).ToArray();
 
                 await Task.WhenAll(tasks);
             }
@@ -201,24 +203,18 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
             }
         }
 
-        private async Task GetOrderBook()
+        private void SubscribeOrderBook()
         {
             IsLoadingOrderBook = true;
 
             try
             {
-                var orderBook = await ExchangeService.GetOrderBookAsync(exchange, Symbol.ExchangeSymbol, OrderBookLimit, symbolCancellationTokenSource.Token);
-
-                UpdateOrderBook(orderBook);
-
                 ExchangeService.SubscribeOrderBook(exchange, Symbol.ExchangeSymbol, OrderBookLimit, e => UpdateOrderBook(e.OrderBook), SubscribeOrderBookException, symbolCancellationTokenSource.Token);
             }
             catch (Exception ex)
             {
                 OnException("SymbolViewModel.GetOrderBook", ex);
             }
-
-            IsLoadingOrderBook = false;
         }
 
         private async Task GetTrades()
@@ -279,6 +275,11 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
                         BaseSymbol = Symbol.BaseAsset.Symbol,
                         QuoteSymbol = Symbol.QuoteAsset.Symbol
                     };
+
+                    if (IsLoadingOrderBook)
+                    {
+                        IsLoadingOrderBook = false;
+                    }
                 }
                 else if (OrderBook.LastUpdateId >= orderBook.LastUpdateId)
                 {
