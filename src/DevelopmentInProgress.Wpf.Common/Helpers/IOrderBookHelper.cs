@@ -6,6 +6,8 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
 {
     public interface IOrderBookHelper
     {
+        OrderBook CreateLocalOrderBook(Symbol symbol, Interface.OrderBook orderBook);
+
         void GetBidsAndAsks(Interface.OrderBook orderBook, int pricePrecision, int quantityPrecision,
             int orderBookCount, int listDisplayCount, int chartDisplayCount,
             out List<OrderBookPriceLevel> topAsks, out List<OrderBookPriceLevel> topBids,
