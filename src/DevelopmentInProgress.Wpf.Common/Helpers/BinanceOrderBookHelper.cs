@@ -9,6 +9,16 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
 {
     public class BinanceOrderBookHelper : IOrderBookHelper
     {
+        public OrderBook CreateLocalOrderBook(Symbol symbol, Interface.OrderBook orderBook)
+        {
+            return new OrderBook
+            {
+                Symbol = orderBook.Symbol,
+                BaseSymbol = symbol.BaseAsset.Symbol,
+                QuoteSymbol = symbol.QuoteAsset.Symbol
+            };
+        }
+
         public void GetBidsAndAsks(Interface.OrderBook orderBook, int pricePrecision, int quantityPrecision, 
             int orderBookCount, int listDisplayCount, int chartDisplayCount, 
             out List<OrderBookPriceLevel> topAsks, out List<OrderBookPriceLevel> topBids, 
