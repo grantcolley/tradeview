@@ -114,9 +114,22 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Symbol>> GetSymbols24HourStatisticsAsync(Exchange exchange, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Symbol>> GetSymbols24HourStatisticsAsync(Exchange exchange, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var symbols = await GetSymbolsAsync(exchange, cancellationToken).ConfigureAwait(false);
+            var symbolStatistics = await Get24HourStatisticsAsync(exchange, cancellationToken).ConfigureAwait(false);
+
+            Func<Symbol, SymbolStats, Symbol> f = (s, ss) =>
+            {
+                s.SymbolStatistics = ss;
+                return s;
+            };
+
+            var updatedSymbols = (from s in symbols
+                                  join ss in symbolStatistics on $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}" equals ss.Symbol
+                                  select f(s, ss)).ToList();
+
+            return updatedSymbols;
         }
     }
 }
