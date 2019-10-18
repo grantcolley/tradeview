@@ -52,6 +52,7 @@
     <Compile Include="ExchangeServiceSymbolsViewModel.cs" />
     <Compile Include="ExchangeServiceType.cs" />
     <Compile Include="ExchangeServiceUpdateOrders.cs" />
+    <Compile Include="KucoinExchangeTestApi.cs" />
     <Compile Include="SymbolsCacheFactoryTest.cs" />
     <Compile Include="OrderBookUpdateHelper.cs" />
     <Compile Include="SymbolsCacheFactoryHelper.cs" />
