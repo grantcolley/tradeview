@@ -91,6 +91,51 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             }
         }
 
+        public static OrderBook KucoinOrderBook_16
+        {
+            get
+            {
+                return new OrderBook
+                {
+                    LastUpdateId = 16,
+                    Asks = new List<OrderBookPriceLevel>
+                    {
+                        new  OrderBookPriceLevel { Price = 3988.59m, Quantity = 3 },
+                        new  OrderBookPriceLevel { Price = 3988.60m, Quantity = 47 },
+                        new  OrderBookPriceLevel { Price = 3988.61m, Quantity = 32 },
+                        new  OrderBookPriceLevel { Price = 3988.62m, Quantity = 8 }
+                    },
+                    Bids = new List<OrderBookPriceLevel>
+                    {
+                        new  OrderBookPriceLevel { Price = 3988.51m, Quantity = 56 },
+                        new  OrderBookPriceLevel { Price = 3988.50m, Quantity = 15 },
+                        new  OrderBookPriceLevel { Price = 3988.49m, Quantity = 100 },
+                        new  OrderBookPriceLevel { Price = 3988.48m, Quantity = 10 }
+                    }
+                };
+            }
+        }
+
+        public static OrderBook KucoinOrderBook_15_18
+        {
+            get
+            {
+                return new OrderBook
+                {
+                    Asks = new List<OrderBookPriceLevel>
+                    {
+                        new  OrderBookPriceLevel { Price = 3988.62m, Quantity = 8, Id = 15 },
+                        new  OrderBookPriceLevel { Price = 3988.61m, Quantity = 0, Id = 18 },
+                        new  OrderBookPriceLevel { Price = 3988.59m, Quantity = 3, Id = 16 }
+                    },
+                    Bids = new List<OrderBookPriceLevel>
+                    {
+                        new  OrderBookPriceLevel { Price = 3988.50m, Quantity = 44, Id = 17 }
+                    }
+                };
+            }
+        }
+
         public static OrderBook OrderBookUpdated
         {
             get
