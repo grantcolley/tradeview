@@ -59,6 +59,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoExchange.Net", "..\Ku
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.MarketView.Api.Kucoin", "src\DevelopmentInProgress.MarketView.Api.Kucoin\DevelopmentInProgress.MarketView.Api.Kucoin.csproj", "{F668F719-8C61-4505-A5FF-BCBA55852030}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Wpf.Common.Test", "test\DevelopmentInProgress.Wpf.Common.Test\DevelopmentInProgress.Wpf.Common.Test.csproj", "{4A72C96E-E459-4A33-8E21-F348AF8BB503}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -157,6 +159,10 @@ Global
 		{F668F719-8C61-4505-A5FF-BCBA55852030}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F668F719-8C61-4505-A5FF-BCBA55852030}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F668F719-8C61-4505-A5FF-BCBA55852030}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A72C96E-E459-4A33-8E21-F348AF8BB503}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A72C96E-E459-4A33-8E21-F348AF8BB503}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A72C96E-E459-4A33-8E21-F348AF8BB503}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A72C96E-E459-4A33-8E21-F348AF8BB503}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -175,6 +181,7 @@ Global
 		{97D9DEB2-F899-44F0-979A-28460CA75B54} = {3E427B35-E53D-4236-B15A-EF67633AE521}
 		{F4C3B8A3-7305-4C4C-8BE1-58DC13CA265B} = {3E427B35-E53D-4236-B15A-EF67633AE521}
 		{4B117527-36DB-43B3-B780-F5894ECD089B} = {97D9DEB2-F899-44F0-979A-28460CA75B54}
+		{4A72C96E-E459-4A33-8E21-F348AF8BB503} = {7F4ED901-668D-48FB-A172-4C263A3ABC02}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1F3B75F9-BA14-4B1C-9571-174E50EB5C7D}
