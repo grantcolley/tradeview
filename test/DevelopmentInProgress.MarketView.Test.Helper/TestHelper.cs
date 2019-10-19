@@ -91,6 +91,64 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             }
         }
 
+        public static OrderBook KucoinOrderBook_Rest
+        {
+            get
+            {
+                return new OrderBook
+                {
+                    LastUpdateId = 16,
+                    Asks = new List<OrderBookPriceLevel>
+                    {
+                        new  OrderBookPriceLevel { Price = 123.20m, Quantity = 20 },
+                        new  OrderBookPriceLevel { Price = 123.21m, Quantity = 21 },
+                        new  OrderBookPriceLevel { Price = 123.24m, Quantity = 24 },
+                        new  OrderBookPriceLevel { Price = 123.25m, Quantity = 25 },
+                        new  OrderBookPriceLevel { Price = 123.26m, Quantity = 26 },
+                        new  OrderBookPriceLevel { Price = 123.27m, Quantity = 27 }
+                    },
+                    Bids = new List<OrderBookPriceLevel>
+                    {
+                        new  OrderBookPriceLevel { Price = 123.17m, Quantity = 17 },
+                        new  OrderBookPriceLevel { Price = 123.16m, Quantity = 16 },
+                        new  OrderBookPriceLevel { Price = 123.13m, Quantity = 13 },
+                        new  OrderBookPriceLevel { Price = 123.12m, Quantity = 12 },
+                        new  OrderBookPriceLevel { Price = 123.11m, Quantity = 11 },
+                        new  OrderBookPriceLevel { Price = 123.10m, Quantity = 10 }
+                    }
+                };
+            }
+        }
+
+        public static OrderBook KucoinOrderBook_IUIIRA
+        {
+            get
+            {
+                return new OrderBook
+                {
+                    LastUpdateId = 16,
+                    Asks = new List<OrderBookPriceLevel>
+                    {
+                        new  OrderBookPriceLevel { Price = 123.19m, Quantity = 19 },   // INSERT
+                        new  OrderBookPriceLevel { Price = 123.21m, Quantity = 211 },  // UPDATE
+                        new  OrderBookPriceLevel { Price = 123.22m, Quantity = 22 },   // INSERT
+                        new  OrderBookPriceLevel { Price = 123.23m, Quantity = 23 },   // INSERT
+                        new  OrderBookPriceLevel { Price = 123.25m, Quantity = 0 },    // REMOVE
+                        new  OrderBookPriceLevel { Price = 123.28m, Quantity = 28 }    // ADD
+                    },
+                    Bids = new List<OrderBookPriceLevel>
+                    {
+                        new  OrderBookPriceLevel { Price = 123.18m, Quantity = 18 },    // INSERT
+                        new  OrderBookPriceLevel { Price = 123.16m, Quantity = 160 },   // UPDATE
+                        new  OrderBookPriceLevel { Price = 123.15m, Quantity = 15 },    // INSERT
+                        new  OrderBookPriceLevel { Price = 123.14m, Quantity = 14 },    // INSERT
+                        new  OrderBookPriceLevel { Price = 123.12m, Quantity = 0 },     // REMOVE
+                        new  OrderBookPriceLevel { Price = 123.09m, Quantity = 09 }      // REMOVE
+                    }
+                };
+            }
+        }
+
         public static OrderBook KucoinOrderBook_16
         {
             get
@@ -124,9 +182,9 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
                 {
                     Asks = new List<OrderBookPriceLevel>
                     {
-                        new  OrderBookPriceLevel { Price = 3988.62m, Quantity = 8, Id = 15 },
+                        new  OrderBookPriceLevel { Price = 3988.59m, Quantity = 3, Id = 16 },
                         new  OrderBookPriceLevel { Price = 3988.61m, Quantity = 0, Id = 18 },
-                        new  OrderBookPriceLevel { Price = 3988.59m, Quantity = 3, Id = 16 }
+                        new  OrderBookPriceLevel { Price = 3988.62m, Quantity = 8, Id = 15 }
                     },
                     Bids = new List<OrderBookPriceLevel>
                     {
