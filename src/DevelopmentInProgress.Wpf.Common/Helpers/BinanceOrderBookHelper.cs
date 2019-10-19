@@ -9,7 +9,7 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
 {
     public class BinanceOrderBookHelper : IOrderBookHelper
     {
-        public OrderBook CreateLocalOrderBook(Symbol symbol, Interface.OrderBook orderBook, int orderBookCount)
+        public OrderBook CreateLocalOrderBookReplayCache(Symbol symbol, Interface.OrderBook orderBook, int orderBookCount)
         {
             return new OrderBook
             {
