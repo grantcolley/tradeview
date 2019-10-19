@@ -10,6 +10,13 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 {
     public class KucoinExchangeTestApi : IExchangeApi
     {
+        private bool useKucoinApiExample;
+
+        public KucoinExchangeTestApi(bool useKucoinApiExample = false)
+        {
+            this.useKucoinApiExample = useKucoinApiExample;
+        }
+
         public Task<string> CancelOrderAsync(User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
@@ -48,7 +55,16 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
         public Task<OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
             var tcs = new TaskCompletionSource<OrderBook>();
-            tcs.SetResult(TestHelper.KucoinOrderBook_16);
+
+            if (useKucoinApiExample)
+            {
+                tcs.SetResult(TestHelper.KucoinOrderBook_16);
+            }
+            else
+            {
+                tcs.SetResult(TestHelper.KucoinOrderBook_Rest);
+            }
+
             return tcs.Task;
         }
 

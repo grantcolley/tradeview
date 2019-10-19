@@ -97,7 +97,7 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             {
                 return new OrderBook
                 {
-                    LastUpdateId = 16,
+                    LastUpdateId = 100,
                     Asks = new List<OrderBookPriceLevel>
                     {
                         new  OrderBookPriceLevel { Price = 123.20m, Quantity = 20 },
@@ -120,30 +120,57 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             }
         }
 
+        public static OrderBook KucoinOrderBook_RUIRRA
+        {
+            get
+            {
+                return new OrderBook
+                {
+                    Asks = new List<OrderBookPriceLevel>
+                    {
+                        new  OrderBookPriceLevel { Price = 123.20m, Quantity = 0, Id = 101 },    // REMOVE
+                        new  OrderBookPriceLevel { Price = 123.21m, Quantity = 211, Id = 102 },  // UPDATE
+                        new  OrderBookPriceLevel { Price = 123.22m, Quantity = 22, Id = 105 },   // INSERT
+                        new  OrderBookPriceLevel { Price = 123.24m, Quantity = 0, Id = 103 },    // REMOVE
+                        new  OrderBookPriceLevel { Price = 123.25m, Quantity = 0, Id = 104 },    // REMOVE
+                        new  OrderBookPriceLevel { Price = 123.28m, Quantity = 28, Id = 106 }    // ADD
+                    },
+                    Bids = new List<OrderBookPriceLevel>
+                    {
+                        new  OrderBookPriceLevel { Price = 123.17m, Quantity = 0, Id = 107 },    // REMOVE
+                        new  OrderBookPriceLevel { Price = 123.16m, Quantity = 160, Id = 108 },  // UPDATE
+                        new  OrderBookPriceLevel { Price = 123.15m, Quantity = 15, Id = 109 },   // INSERT
+                        new  OrderBookPriceLevel { Price = 123.13m, Quantity = 0, Id = 110 },    // REMOVE
+                        new  OrderBookPriceLevel { Price = 123.12m, Quantity = 0, Id = 111 },    // REMOVE
+                        new  OrderBookPriceLevel { Price = 123.09m, Quantity = 09, Id = 112 }    // ADD
+                    }
+                };
+            }
+        }
+
         public static OrderBook KucoinOrderBook_IUIIRA
         {
             get
             {
                 return new OrderBook
                 {
-                    LastUpdateId = 16,
                     Asks = new List<OrderBookPriceLevel>
                     {
-                        new  OrderBookPriceLevel { Price = 123.19m, Quantity = 19 },   // INSERT
-                        new  OrderBookPriceLevel { Price = 123.21m, Quantity = 211 },  // UPDATE
-                        new  OrderBookPriceLevel { Price = 123.22m, Quantity = 22 },   // INSERT
-                        new  OrderBookPriceLevel { Price = 123.23m, Quantity = 23 },   // INSERT
-                        new  OrderBookPriceLevel { Price = 123.25m, Quantity = 0 },    // REMOVE
-                        new  OrderBookPriceLevel { Price = 123.28m, Quantity = 28 }    // ADD
+                        new  OrderBookPriceLevel { Price = 123.19m, Quantity = 19, Id = 101 },   // INSERT
+                        new  OrderBookPriceLevel { Price = 123.21m, Quantity = 211, Id = 102 },  // UPDATE
+                        new  OrderBookPriceLevel { Price = 123.22m, Quantity = 22, Id = 103 },   // INSERT
+                        new  OrderBookPriceLevel { Price = 123.23m, Quantity = 23, Id = 104 },   // INSERT
+                        new  OrderBookPriceLevel { Price = 123.25m, Quantity = 0, Id = 105 },    // REMOVE
+                        new  OrderBookPriceLevel { Price = 123.28m, Quantity = 28, Id = 106 }    // ADD
                     },
                     Bids = new List<OrderBookPriceLevel>
                     {
-                        new  OrderBookPriceLevel { Price = 123.18m, Quantity = 18 },    // INSERT
-                        new  OrderBookPriceLevel { Price = 123.16m, Quantity = 160 },   // UPDATE
-                        new  OrderBookPriceLevel { Price = 123.15m, Quantity = 15 },    // INSERT
-                        new  OrderBookPriceLevel { Price = 123.14m, Quantity = 14 },    // INSERT
-                        new  OrderBookPriceLevel { Price = 123.12m, Quantity = 0 },     // REMOVE
-                        new  OrderBookPriceLevel { Price = 123.09m, Quantity = 09 }      // REMOVE
+                        new  OrderBookPriceLevel { Price = 123.18m, Quantity = 18, Id = 107 },    // INSERT
+                        new  OrderBookPriceLevel { Price = 123.16m, Quantity = 160, Id = 108 },   // UPDATE
+                        new  OrderBookPriceLevel { Price = 123.15m, Quantity = 15, Id = 109 },    // INSERT
+                        new  OrderBookPriceLevel { Price = 123.14m, Quantity = 14, Id = 110 },    // INSERT
+                        new  OrderBookPriceLevel { Price = 123.12m, Quantity = 0, Id = 111 },     // REMOVE
+                        new  OrderBookPriceLevel { Price = 123.09m, Quantity = 09, Id = 112 }     // ADD
                     }
                 };
             }
