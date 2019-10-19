@@ -95,7 +95,7 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
 
         public void SubscribeOrderBook(Exchange exchange, string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            // INTENTIONALLY EMPTY. LEAVE BLANK.
+            callback(new OrderBookEventArgs { OrderBook = TestHelper.OrderBook });
         }
 
         public void SubscribeStatistics(Exchange exchange, Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
