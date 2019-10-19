@@ -269,7 +269,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
                     // First incoming order book create the local order book.
                     firstOrders = true;
 
-                    OrderBook = orderBookHelper.CreateLocalOrderBook(Symbol, orderBook, OrderBookCount);
+                    OrderBook = orderBookHelper.CreateLocalOrderBookReplayCache(Symbol, orderBook, OrderBookCount);
 
                     if (IsLoadingOrderBook)
                     {
