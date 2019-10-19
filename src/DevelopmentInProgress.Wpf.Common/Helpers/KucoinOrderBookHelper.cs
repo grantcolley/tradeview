@@ -79,17 +79,15 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
 
             var priceLevels = playBackPriceLevels.Where(a => a.Id > snapShotSequence).ToList();
 
-            var maxSequence = priceLevels.Max(p => p.Id);
-
-            if(maxSequence > latestSquence)
-            {
-                latestSquence = maxSequence;
-            }
-
             foreach (var priceLevel in priceLevels)
             {
                 var handled = false;
                 var snapShotCount = snapShotPriceLevels.Count;
+
+                if (priceLevel.Id > latestSquence)
+                {
+                    latestSquence = priceLevel.Id;
+                }
 
                 for (int i = 0; i < snapShotCount; i++)
                 {
