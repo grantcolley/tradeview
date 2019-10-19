@@ -16,7 +16,7 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             this.kucoinExchangeApi = kucoinExchangeApi;
         }
 
-        public OrderBook CreateLocalOrderBook(Symbol symbol, Interface.OrderBook orderBook, int orderBookCount)
+        public OrderBook CreateLocalOrderBookReplayCache(Symbol symbol, Interface.OrderBook orderBook, int orderBookCount)
         {
             var cancellationTokenSource = new CancellationTokenSource();
 
@@ -78,7 +78,6 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             var isBid = !isAsk;
 
             var priceLevels = playBackPriceLevels.Where(a => a.Id > snapShotSequence).ToList();
-            var snapShotCount = snapShotPriceLevels.Count;
 
             var maxSequence = priceLevels.Max(p => p.Id);
 
@@ -90,6 +89,7 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             foreach (var priceLevel in priceLevels)
             {
                 var handled = false;
+                var snapShotCount = snapShotPriceLevels.Count;
 
                 for (int i = 0; i < snapShotCount; i++)
                 {
@@ -115,7 +115,7 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
                         }
                         else
                         {
-                            snapShotPriceLevels[i].Price = priceLevel.Quantity;
+                            snapShotPriceLevels[i].Quantity = priceLevel.Quantity;
                         }
 
                         handled = true;
