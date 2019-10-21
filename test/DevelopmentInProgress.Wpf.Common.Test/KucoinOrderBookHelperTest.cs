@@ -21,7 +21,7 @@ namespace DevelopmentInProgress.Wpf.Common.Test
             var symbol = new Symbol { BaseAsset = new Interface.Asset { Symbol = "BTC" }, QuoteAsset = new Interface.Asset { Symbol = "USDT" } };
 
             // Act
-            var orderBook = kucoinOrderBookHelper.CreateLocalOrderBookReplayCache(symbol, subscribeOrderBookUpdate, 10);
+            var orderBook = kucoinOrderBookHelper.CreateLocalOrderBook(symbol, subscribeOrderBookUpdate, 10, 10, 10);
 
             // Assert
             Assert.AreEqual(orderBook.LastUpdateId, 18);
@@ -55,7 +55,7 @@ namespace DevelopmentInProgress.Wpf.Common.Test
             var symbol = new Symbol { BaseAsset = new Interface.Asset { Symbol = "BTC" }, QuoteAsset = new Interface.Asset { Symbol = "USDT" } };
 
             // Act
-            var orderBook = kucoinOrderBookHelper.CreateLocalOrderBookReplayCache(symbol, subscribeOrderBookUpdate, 10);
+            var orderBook = kucoinOrderBookHelper.CreateLocalOrderBook(symbol, subscribeOrderBookUpdate, 10, 10, 10);
 
             // Assert
             Assert.AreEqual(orderBook.LastUpdateId, 112);
@@ -111,7 +111,7 @@ namespace DevelopmentInProgress.Wpf.Common.Test
             var symbol = new Symbol { BaseAsset = new Interface.Asset { Symbol = "BTC" }, QuoteAsset = new Interface.Asset { Symbol = "USDT" } };
 
             // Act
-            var orderBook = kucoinOrderBookHelper.CreateLocalOrderBookReplayCache(symbol, subscribeOrderBookUpdate, 10);
+            var orderBook = kucoinOrderBookHelper.CreateLocalOrderBook(symbol, subscribeOrderBookUpdate, 10, 10, 10);
 
             // Assert
             Assert.AreEqual(orderBook.LastUpdateId, 112);
