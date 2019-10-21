@@ -1,25 +1,77 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DevelopmentInProgress.MarketView.Interface.Extensions;
 using DevelopmentInProgress.Wpf.Common.Extensions;
 using DevelopmentInProgress.Wpf.Common.Model;
+using LiveCharts;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 
 namespace DevelopmentInProgress.Wpf.Common.Helpers
 {
     public class BinanceOrderBookHelper : IOrderBookHelper
     {
-        public OrderBook CreateLocalOrderBookReplayCache(Symbol symbol, Interface.OrderBook orderBook, int orderBookCount)
+        public OrderBook CreateLocalOrderBook(Symbol symbol, Interface.OrderBook orderBook,
+            int orderBookCount, int listDisplayCount, int chartDisplayCount)
         {
-            return new OrderBook
+            List<OrderBookPriceLevel> topAsks;
+            List<OrderBookPriceLevel> topBids;
+            List<OrderBookPriceLevel> chartAsks;
+            List<OrderBookPriceLevel> chartBids;
+            List<OrderBookPriceLevel> aggregatedAsks;
+            List<OrderBookPriceLevel> aggregatedBids;
+
+            GetBidsAndAsks(orderBook, symbol.PricePrecision, symbol.QuantityPrecision,
+                orderBookCount, listDisplayCount, chartDisplayCount,
+                out topAsks, out topBids, out chartAsks, out chartBids, out aggregatedAsks, out aggregatedBids);
+
+            var newOrderBook = new OrderBook
             {
+                LastUpdateId = orderBook.LastUpdateId,
                 Symbol = orderBook.Symbol,
                 BaseSymbol = symbol.BaseAsset.Symbol,
-                QuoteSymbol = symbol.QuoteAsset.Symbol
+                QuoteSymbol = symbol.QuoteAsset.Symbol,
+                TopAsks = topAsks,
+                TopBids = topBids,
+                ChartAsks = new ChartValues<OrderBookPriceLevel>(chartAsks),
+                ChartBids = new ChartValues<OrderBookPriceLevel>(chartBids),
+                ChartAggregatedAsks = new ChartValues<OrderBookPriceLevel>(aggregatedAsks),
+                ChartAggregatedBids = new ChartValues<OrderBookPriceLevel>(aggregatedBids)
             };
+
+            return newOrderBook;
         }
 
-        public void GetBidsAndAsks(Interface.OrderBook orderBook, int pricePrecision, int quantityPrecision, 
+        public void UpdateLocalOrderBook(OrderBook orderBook, Interface.OrderBook updateOrderBook,
+            int pricePrecision, int quantityPrecision, int orderBookCount, int listDisplayCount, int chartDisplayCount)
+        {
+            orderBook.LastUpdateId = updateOrderBook.LastUpdateId;
+
+            List<OrderBookPriceLevel> topAsks;
+            List<OrderBookPriceLevel> topBids;
+            List<OrderBookPriceLevel> chartAsks;
+            List<OrderBookPriceLevel> chartBids;
+            List<OrderBookPriceLevel> aggregatedAsks;
+            List<OrderBookPriceLevel> aggregatedBids;
+
+            GetBidsAndAsks(updateOrderBook, pricePrecision, quantityPrecision,
+                orderBookCount, listDisplayCount, chartDisplayCount,
+                out topAsks, out topBids, out chartAsks, out chartBids, out aggregatedAsks, out aggregatedBids);
+
+            // Create new instances of the top 
+            // bids and asks, reversing the asks
+            orderBook.TopAsks = topAsks;
+            orderBook.TopBids = topBids;
+
+            // Update the existing orderbook chart
+            // bids and asks, reversing the bids.
+            orderBook.UpdateChartAsks(chartAsks);
+            orderBook.UpdateChartBids(chartBids.ToList());
+            orderBook.UpdateChartAggregateAsks(aggregatedAsks);
+            orderBook.UpdateChartAggregateBids(aggregatedBids.ToList());
+        }
+
+        private void GetBidsAndAsks(Interface.OrderBook orderBook, int pricePrecision, int quantityPrecision, 
             int orderBookCount, int listDisplayCount, int chartDisplayCount, 
             out List<OrderBookPriceLevel> topAsks, out List<OrderBookPriceLevel> topBids, 
             out List<OrderBookPriceLevel> chartAsks, out List<OrderBookPriceLevel> chartBids,

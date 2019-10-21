@@ -6,12 +6,10 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
 {
     public interface IOrderBookHelper
     {
-        OrderBook CreateLocalOrderBookReplayCache(Symbol symbol, Interface.OrderBook orderBook, int OrderBookCount);
+        OrderBook CreateLocalOrderBook(Symbol symbol, Interface.OrderBook orderBook, 
+            int orderBookCount, int listDisplayCount, int chartDisplayCount);
 
-        void GetBidsAndAsks(Interface.OrderBook orderBook, int pricePrecision, int quantityPrecision,
-            int orderBookCount, int listDisplayCount, int chartDisplayCount,
-            out List<OrderBookPriceLevel> topAsks, out List<OrderBookPriceLevel> topBids,
-            out List<OrderBookPriceLevel> chartAsks, out List<OrderBookPriceLevel> chartBids,
-            out List<OrderBookPriceLevel> aggregatedAsks, out List<OrderBookPriceLevel> aggregatedBids);
+        void UpdateLocalOrderBook(OrderBook orderBook, Interface.OrderBook updateOrderBook,
+            int pricePrecision, int quantityPrecision, int orderBookCount, int listDisplayCount, int chartDisplayCount);
     }
 }
