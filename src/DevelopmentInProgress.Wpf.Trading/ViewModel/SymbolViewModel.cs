@@ -262,14 +262,9 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
 
             lock (orderBookLock)
             {
-                bool firstOrders = false;
-
                 if (OrderBook == null)
                 {
-                    // First incoming order book create the local order book.
-                    firstOrders = true;
-
-                    OrderBook = orderBookHelper.CreateLocalOrderBookReplayCache(Symbol, orderBook, OrderBookCount);
+                    OrderBook = orderBookHelper.CreateLocalOrderBook(Symbol, orderBook, OrderBookCount, OrderBookDisplayCount, OrderBookChartDisplayCount);
 
                     if (IsLoadingOrderBook)
                     {
@@ -281,39 +276,11 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
                     // If the incoming order book is older than the local one ignore it.
                     return;
                 }
-
-                OrderBook.LastUpdateId = orderBook.LastUpdateId;
-
-                List<OrderBookPriceLevel> topAsks;
-                List<OrderBookPriceLevel> topBids;
-                List<OrderBookPriceLevel> chartAsks;
-                List<OrderBookPriceLevel> chartBids;
-                List<OrderBookPriceLevel> aggregatedAsks;
-                List<OrderBookPriceLevel> aggregatedBids;
-
-                orderBookHelper.GetBidsAndAsks(orderBook, symbol.PricePrecision, symbol.QuantityPrecision,
-                    OrderBookCount, OrderBookDisplayCount, OrderBookChartDisplayCount,
-                    out topAsks, out topBids, out chartAsks, out chartBids, out aggregatedAsks, out aggregatedBids);
-
-                // Create new instances of the top bids and asks, reversing the asks
-                OrderBook.TopAsks = topAsks;
-                OrderBook.TopBids = topBids;
-
-                if (firstOrders)
-                {
-                    // Create new instances of the chart bids and asks, reversing the bids.
-                    OrderBook.ChartAsks = new ChartValues<OrderBookPriceLevel>(chartAsks);
-                    OrderBook.ChartBids = new ChartValues<OrderBookPriceLevel>(chartBids);
-                    OrderBook.ChartAggregatedAsks = new ChartValues<OrderBookPriceLevel>(aggregatedAsks);
-                    OrderBook.ChartAggregatedBids = new ChartValues<OrderBookPriceLevel>(aggregatedBids);
-                }
                 else
                 {
-                    // Update the existing orderbook chart bids and asks, reversing the bids.
-                    OrderBook.UpdateChartAsks(chartAsks);
-                    OrderBook.UpdateChartBids(chartBids.ToList());
-                    OrderBook.UpdateChartAggregateAsks(aggregatedAsks);
-                    OrderBook.UpdateChartAggregateBids(aggregatedBids.ToList());
+                    orderBookHelper.UpdateLocalOrderBook(OrderBook, orderBook, 
+                        symbol.PricePrecision, symbol.QuantityPrecision,
+                        OrderBookCount, OrderBookDisplayCount, OrderBookChartDisplayCount);
                 }
             }
         }
