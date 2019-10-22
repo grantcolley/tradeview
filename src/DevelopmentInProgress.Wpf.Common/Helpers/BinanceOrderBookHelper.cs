@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using DevelopmentInProgress.MarketView.Interface.Extensions;
-using DevelopmentInProgress.Wpf.Common.Extensions;
 using DevelopmentInProgress.Wpf.Common.Model;
 using LiveCharts;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
@@ -65,10 +64,10 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
 
             // Update the existing orderbook chart
             // bids and asks, reversing the bids.
-            orderBook.UpdateChartAsks(chartAsks);
-            orderBook.UpdateChartBids(chartBids.ToList());
-            orderBook.UpdateChartAggregateAsks(aggregatedAsks);
-            orderBook.UpdateChartAggregateBids(aggregatedBids.ToList());
+            UpdateChartValues(orderBook.ChartAsks, chartAsks);
+            UpdateChartValues(orderBook.ChartBids, chartBids);
+            UpdateChartValues(orderBook.ChartAggregatedAsks, aggregatedAsks);
+            UpdateChartValues(orderBook.ChartAggregatedBids, aggregatedBids);
         }
 
         private void GetBidsAndAsks(Interface.OrderBook orderBook, int pricePrecision, int quantityPrecision, 
@@ -102,13 +101,104 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
 
             // Take the bid and aks to display in the the order book chart.
             chartAsks = asks.Take(chartDisplayCount).ToList();
-            bids = bids.Take(chartDisplayCount).ToList();
-            chartBids = bids.Reverse<OrderBookPriceLevel>().ToList();
+            var tempbids = bids.Take(chartDisplayCount).ToList();
+            chartBids = tempbids.Reverse<OrderBookPriceLevel>().ToList();
 
             // Create the aggregated bids and asks for the aggregated bid and ask chart.
-            aggregatedAsks = chartAsks.GetAggregatedList();
-            var aggBids = bids.GetAggregatedList();
+            aggregatedAsks = GetAggregatedList(asks);
+            var aggBids = GetAggregatedList(bids);
             aggregatedBids = aggBids.Reverse<OrderBookPriceLevel>().ToList();
+        }
+
+        private List<OrderBookPriceLevel> GetAggregatedList(List<OrderBookPriceLevel> orders)
+        {
+            var count = orders.Count();
+
+            var aggregatedList = orders.Select(p => new OrderBookPriceLevel { Price = p.Price, Quantity = p.Quantity }).ToList();
+
+            for (int i = 0; i < count; i++)
+            {
+                if (i > 0)
+                {
+                    aggregatedList[i].Quantity = aggregatedList[i].Quantity + aggregatedList[i - 1].Quantity;
+                }
+            }
+
+            return aggregatedList;
+        }
+
+        private void UpdateChartValues(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
+        {
+            RemoveOldPrices(cv, pl);
+
+            UpdateMatchingPrices(cv, pl);
+
+            AddNewPrices(cv, pl);
+        }
+       
+        private void RemoveOldPrices(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
+        {
+            var removePoints = cv.Where(v => !pl.Any(p => p.Price == v.Price)).ToList();
+            foreach (var point in removePoints)
+            {
+                cv.Remove(point);
+            }
+        }
+
+        private void UpdateMatchingPrices(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
+        {
+            Func<OrderBookPriceLevel, OrderBookPriceLevel, OrderBookPriceLevel> updateQuantity = ((v, p) =>
+            {
+                v.Quantity = p.Quantity;
+                return v;
+            });
+
+            (from v in cv
+             join p in pl
+             on v.Price equals p.Price
+             select updateQuantity(v, p)).ToList();
+        }
+
+        private void AddNewPrices(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
+        {
+            var newPoints = pl.Where(p => !cv.Any(v => v.Price == p.Price)).ToList();
+
+            var newPointsCount = newPoints.Count;
+
+            if (newPointsCount.Equals(0))
+            {
+                return;
+            }
+
+            var chartValueCount = cv.Count;
+
+            int currentNewPoint = 0;
+
+            for (int i = 0; i < chartValueCount; i++)
+            {
+                if (newPoints[currentNewPoint].Price < cv[i].Price)
+                {
+                    cv.Insert(i, newPoints[currentNewPoint]);
+
+                    // Increments
+                    currentNewPoint++;  // position in new points list
+                    chartValueCount++;  // number of items in the cv list after the insert
+                }
+
+                if (currentNewPoint > (newPointsCount - 1))
+                {
+                    break;
+                }
+
+                if (i == chartValueCount - 1)
+                {
+                    if (currentNewPoint < newPointsCount)
+                    {
+                        var appendNewPoints = newPoints.Skip(currentNewPoint).ToList();
+                        cv.AddRange(appendNewPoints);
+                    }
+                }
+            }
         }
     }
 }
