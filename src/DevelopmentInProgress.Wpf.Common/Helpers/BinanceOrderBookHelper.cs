@@ -10,8 +10,7 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
 {
     public class BinanceOrderBookHelper : IOrderBookHelper
     {
-        public OrderBook CreateLocalOrderBook(Symbol symbol, Interface.OrderBook orderBook,
-            int orderBookCount, int listDisplayCount, int chartDisplayCount)
+        public OrderBook CreateLocalOrderBook(Symbol symbol, Interface.OrderBook orderBook, int listDisplayCount, int chartDisplayCount)
         {
             List<OrderBookPriceLevel> topAsks;
             List<OrderBookPriceLevel> topBids;
@@ -20,8 +19,7 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             List<OrderBookPriceLevel> aggregatedAsks;
             List<OrderBookPriceLevel> aggregatedBids;
 
-            GetBidsAndAsks(orderBook, symbol.PricePrecision, symbol.QuantityPrecision,
-                orderBookCount, listDisplayCount, chartDisplayCount,
+            GetBidsAndAsks(orderBook, symbol.PricePrecision, symbol.QuantityPrecision, listDisplayCount, chartDisplayCount,
                 out topAsks, out topBids, out chartAsks, out chartBids, out aggregatedAsks, out aggregatedBids);
 
             var newOrderBook = new OrderBook
@@ -42,7 +40,7 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
         }
 
         public void UpdateLocalOrderBook(OrderBook orderBook, Interface.OrderBook updateOrderBook,
-            int pricePrecision, int quantityPrecision, int orderBookCount, int listDisplayCount, int chartDisplayCount)
+            int pricePrecision, int quantityPrecision, int listDisplayCount, int chartDisplayCount)
         {
             orderBook.LastUpdateId = updateOrderBook.LastUpdateId;
 
@@ -53,8 +51,7 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             List<OrderBookPriceLevel> aggregatedAsks;
             List<OrderBookPriceLevel> aggregatedBids;
 
-            GetBidsAndAsks(updateOrderBook, pricePrecision, quantityPrecision,
-                orderBookCount, listDisplayCount, chartDisplayCount,
+            GetBidsAndAsks(updateOrderBook, pricePrecision, quantityPrecision, listDisplayCount, chartDisplayCount,
                 out topAsks, out topBids, out chartAsks, out chartBids, out aggregatedAsks, out aggregatedBids);
 
             // Create new instances of the top 
@@ -71,11 +68,13 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
         }
 
         private void GetBidsAndAsks(Interface.OrderBook orderBook, int pricePrecision, int quantityPrecision, 
-            int orderBookCount, int listDisplayCount, int chartDisplayCount, 
+            int listDisplayCount, int chartDisplayCount, 
             out List<OrderBookPriceLevel> topAsks, out List<OrderBookPriceLevel> topBids, 
             out List<OrderBookPriceLevel> chartAsks, out List<OrderBookPriceLevel> chartBids,
             out List<OrderBookPriceLevel> aggregatedAsks, out List<OrderBookPriceLevel> aggregatedBids)
         {
+            var orderBookCount = chartDisplayCount > listDisplayCount ? chartDisplayCount : listDisplayCount;
+
             // Order by price: bids (DESC) and asks (ASC)
             var orderedAsks = orderBook.Asks.OrderBy(a => a.Price).ToList();
             var orderedBids = orderBook.Bids.OrderByDescending(b => b.Price).ToList();

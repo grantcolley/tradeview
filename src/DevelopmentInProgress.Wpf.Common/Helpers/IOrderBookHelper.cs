@@ -6,10 +6,9 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
 {
     public interface IOrderBookHelper
     {
-        OrderBook CreateLocalOrderBook(Symbol symbol, Interface.OrderBook orderBook, 
-            int orderBookCount, int listDisplayCount, int chartDisplayCount);
+        OrderBook CreateLocalOrderBook(Symbol symbol, Interface.OrderBook orderBook, int listDisplayCount, int chartDisplayCount);
 
         void UpdateLocalOrderBook(OrderBook orderBook, Interface.OrderBook updateOrderBook,
-            int pricePrecision, int quantityPrecision, int orderBookCount, int listDisplayCount, int chartDisplayCount);
+            int pricePrecision, int quantityPrecision, int listDisplayCount, int chartDisplayCount);
     }
 }

@@ -51,7 +51,6 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
             OrderBookLimit = preferences.OrderBookLimit;
             OrderBookDisplayCount = preferences.OrderBookDisplayCount;
             OrderBookChartDisplayCount = preferences.OrderBookChartDisplayCount;
-            OrderBookCount = OrderBookChartDisplayCount > OrderBookDisplayCount ? OrderBookChartDisplayCount : OrderBookDisplayCount;
 
             TimeFormatter = chartHelper.TimeFormatter;
             PriceFormatter = chartHelper.PriceFormatter;
@@ -68,7 +67,6 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
         internal int OrderBookLimit { get; }
         internal int OrderBookChartDisplayCount { get; }
         internal int OrderBookDisplayCount { get; }
-        internal int OrderBookCount { get; set; }
 
         public bool HasSymbol => Symbol != null ? true : false;
 
@@ -253,9 +251,9 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
             IsLoadingTrades = false;
         }
 
-        internal void UpdateOrderBook(Interface.OrderBook orderBook)
+        internal void UpdateOrderBook(Interface.OrderBook exchangeOrderBook)
         {
-            if (!Symbol.ExchangeSymbol.Equals(orderBook.Symbol))
+            if (!Symbol.ExchangeSymbol.Equals(exchangeOrderBook.Symbol))
             {
                 throw new Exception("Orderbook update for wrong symbol");
             }
@@ -264,23 +262,23 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
             {
                 if (OrderBook == null)
                 {
-                    OrderBook = orderBookHelper.CreateLocalOrderBook(Symbol, orderBook, OrderBookCount, OrderBookDisplayCount, OrderBookChartDisplayCount);
+                    OrderBook = orderBookHelper.CreateLocalOrderBook(Symbol, exchangeOrderBook, OrderBookDisplayCount, OrderBookChartDisplayCount);
 
                     if (IsLoadingOrderBook)
                     {
                         IsLoadingOrderBook = false;
                     }
                 }
-                else if (OrderBook.LastUpdateId >= orderBook.LastUpdateId)
+                else if (OrderBook.LastUpdateId >= exchangeOrderBook.LastUpdateId)
                 {
                     // If the incoming order book is older than the local one ignore it.
                     return;
                 }
                 else
                 {
-                    orderBookHelper.UpdateLocalOrderBook(OrderBook, orderBook, 
+                    orderBookHelper.UpdateLocalOrderBook(OrderBook, exchangeOrderBook, 
                         symbol.PricePrecision, symbol.QuantityPrecision,
-                        OrderBookCount, OrderBookDisplayCount, OrderBookChartDisplayCount);
+                        OrderBookDisplayCount, OrderBookChartDisplayCount);
                 }
             }
         }

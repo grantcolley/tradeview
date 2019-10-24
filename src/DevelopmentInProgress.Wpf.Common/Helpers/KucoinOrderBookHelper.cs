@@ -20,8 +20,7 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             this.kucoinExchangeApi = kucoinExchangeApi;
         }
 
-        public OrderBook CreateLocalOrderBook(Symbol symbol, Interface.OrderBook orderBook,
-            int orderBookCount, int listDisplayCount, int chartDisplayCount)
+        public OrderBook CreateLocalOrderBook(Symbol symbol, Interface.OrderBook orderBook, int listDisplayCount, int chartDisplayCount)
         {
             var cancellationTokenSource = new CancellationTokenSource();
 
@@ -30,7 +29,9 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             List<Interface.OrderBookPriceLevel> snapShotAsks;
             List<Interface.OrderBookPriceLevel> snapShotBids;
 
-            if(snapShot.Asks.Count() > orderBookCount)
+            var orderBookCount = chartDisplayCount > listDisplayCount ? chartDisplayCount : listDisplayCount;
+
+            if (snapShot.Asks.Count() > orderBookCount)
             {
                 snapShotAsks = new List<Interface.OrderBookPriceLevel>(snapShot.Asks);
             }
@@ -81,7 +82,7 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
         }
 
         public void UpdateLocalOrderBook(OrderBook orderBook, Interface.OrderBook updateOrderBook,
-            int pricePrecision, int quantityPrecision, int orderBookCount, int listDisplayCount, int chartDisplayCount)
+            int pricePrecision, int quantityPrecision, int listDisplayCount, int chartDisplayCount)
         {
             throw new NotImplementedException();
         }
