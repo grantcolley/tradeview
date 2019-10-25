@@ -51,9 +51,9 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
 
             long latestSquence = snapShot.LastUpdateId;
 
-            orderBook.Asks = GetPriceLevels(snapShotAsks, orderBook.Asks, snapShot.LastUpdateId, true, orderBookCount, ref latestSquence);
+            orderBook.Asks = ReplayPriceLevels(snapShotAsks, orderBook.Asks, snapShot.LastUpdateId, true, ref latestSquence);
 
-            orderBook.Bids = GetPriceLevels(snapShotBids, orderBook.Bids, snapShot.LastUpdateId, false, orderBookCount, ref latestSquence);
+            orderBook.Bids = ReplayPriceLevels(snapShotBids, orderBook.Bids, snapShot.LastUpdateId, false, ref latestSquence);
 
             List<OrderBookPriceLevel> topAsks;
             List<OrderBookPriceLevel> topBids;
@@ -62,7 +62,7 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             List<OrderBookPriceLevel> aggregatedAsks;
             List<OrderBookPriceLevel> aggregatedBids;
 
-            GetBidsAndAsks(orderBook, symbol.PricePrecision, symbol.QuantityPrecision,
+            GetDisplayBidsAndAsks(orderBook, symbol.PricePrecision, symbol.QuantityPrecision,
                 orderBookCount, listDisplayCount, chartDisplayCount,
                 out topAsks, out topBids, out chartAsks, out chartBids, out aggregatedAsks, out aggregatedBids);
 
@@ -72,6 +72,8 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
                 Symbol = orderBook.Symbol,
                 BaseSymbol = symbol.BaseAsset.Symbol,
                 QuoteSymbol = symbol.QuoteAsset.Symbol,
+                OriginalAsks = orderBook.Asks.ToList(),
+                OriginalBids = orderBook.Bids.ToList(),
                 TopAsks = topAsks,
                 TopBids = topBids,
                 ChartAsks = new ChartValues<OrderBookPriceLevel>(chartAsks),
@@ -84,25 +86,29 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
         public void UpdateLocalOrderBook(OrderBook orderBook, Interface.OrderBook updateOrderBook,
             int pricePrecision, int quantityPrecision, int listDisplayCount, int chartDisplayCount)
         {
-            throw new NotImplementedException();
+            long latestSquence = orderBook.LastUpdateId;
+
+            updateOrderBook.Asks = ReplayPriceLevels(orderBook.OriginalAsks, updateOrderBook.Asks, updateOrderBook.LastUpdateId, true, ref latestSquence);
+            updateOrderBook.Bids = ReplayPriceLevels(orderBook.OriginalBids, updateOrderBook.Bids, updateOrderBook.LastUpdateId, false, ref latestSquence);
+
+            orderBook.LastUpdateId = latestSquence;
         }
 
-        private IEnumerable<Interface.OrderBookPriceLevel> GetPriceLevels(
-            List<Interface.OrderBookPriceLevel> snapShotPriceLevels, 
+        private IEnumerable<Interface.OrderBookPriceLevel> ReplayPriceLevels(
+            List<Interface.OrderBookPriceLevel> orderBookPriceLevels, 
             IEnumerable<Interface.OrderBookPriceLevel> playBackPriceLevels, 
-            long snapShotSequence, 
+            long orderBookSequence, 
             bool isAsk,
-            int orderBookCount, 
             ref long latestSquence)
         {
             var isBid = !isAsk;
 
-            var priceLevels = playBackPriceLevels.Where(a => a.Id > snapShotSequence).ToList();
+            var priceLevels = playBackPriceLevels.Where(a => a.Id > orderBookSequence).ToList();
 
             foreach (var priceLevel in priceLevels)
             {
                 var handled = false;
-                var snapShotCount = snapShotPriceLevels.Count;
+                var snapShotCount = orderBookPriceLevels.Count;
 
                 if (priceLevel.Id > latestSquence)
                 {
@@ -113,27 +119,27 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
                 {
                     var price = priceLevel.Price;
 
-                    if((isAsk && price < snapShotPriceLevels[i].Price)
-                        || (isBid && price > snapShotPriceLevels[i].Price))
+                    if((isAsk && price < orderBookPriceLevels[i].Price)
+                        || (isBid && price > orderBookPriceLevels[i].Price))
                     {
                         if (priceLevel.Quantity > 0m)
                         {
-                            snapShotPriceLevels.Insert(i, priceLevel);
+                            orderBookPriceLevels.Insert(i, priceLevel);
                         }
 
                         handled = true;
                         break;
                     }
 
-                    if (price == snapShotPriceLevels[i].Price)
+                    if (price == orderBookPriceLevels[i].Price)
                     {
                         if (priceLevel.Quantity.Equals(0m))
                         {
-                            snapShotPriceLevels.Remove(snapShotPriceLevels[i]);
+                            orderBookPriceLevels.Remove(orderBookPriceLevels[i]);
                         }
                         else
                         {
-                            snapShotPriceLevels[i].Quantity = priceLevel.Quantity;
+                            orderBookPriceLevels[i].Quantity = priceLevel.Quantity;
                         }
 
                         handled = true;
@@ -143,21 +149,14 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
 
                 if(handled == false)
                 {
-                    snapShotPriceLevels.Add(priceLevel);
+                    orderBookPriceLevels.Add(priceLevel);
                 }
             }
 
-            if (snapShotPriceLevels.Count >= orderBookCount)
-            {
-                return snapShotPriceLevels.Take(orderBookCount).ToList();
-            }
-            else
-            {
-                return snapShotPriceLevels;
-            }
+            return orderBookPriceLevels;
         }
 
-        private void GetBidsAndAsks(Interface.OrderBook orderBook, int pricePrecision, int quantityPrecision,
+        private void GetDisplayBidsAndAsks(Interface.OrderBook orderBook, int pricePrecision, int quantityPrecision,
             int orderBookCount, int listDisplayCount, int chartDisplayCount,
             out List<OrderBookPriceLevel> topAsks, out List<OrderBookPriceLevel> topBids,
             out List<OrderBookPriceLevel> chartAsks, out List<OrderBookPriceLevel> chartBids,
@@ -188,13 +187,11 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
 
             // Take the bid and aks to display in the the order book chart.
             chartAsks = asks.Take(chartDisplayCount).ToList();
-            var tempBids = bids.Take(chartDisplayCount).ToList();
-            chartBids = tempBids.Reverse<OrderBookPriceLevel>().ToList();
+            chartBids = bids.Take(chartDisplayCount).ToList();
 
             // Create the aggregated bids and asks for the aggregated bid and ask chart.
             aggregatedAsks = GetAggregatedList(chartAsks);
-            var aggBids = GetAggregatedList(chartBids);
-            aggregatedBids = aggBids.Reverse<OrderBookPriceLevel>().ToList();
+            aggregatedBids = GetAggregatedList(chartBids);
         }
 
         private List<OrderBookPriceLevel> GetAggregatedList(List<OrderBookPriceLevel> orders)
@@ -212,6 +209,80 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             }
 
             return aggregatedList;
+        }
+
+        private void UpdateChartValues(ChartValues<OrderBookPriceLevel> cv, List<Interface.OrderBookPriceLevel> pl)
+        {
+            RemoveOldPrices(cv, pl);
+
+            UpdateMatchingPrices(cv, pl);
+
+            AddNewPrices(cv, pl);
+        }
+
+        private void RemoveOldPrices(ChartValues<OrderBookPriceLevel> cv, List<Interface.OrderBookPriceLevel> pl)
+        {
+            var removePoints = cv.Where(v => !pl.Any(p => p.Price == v.Price)).ToList();
+            foreach (var point in removePoints)
+            {
+                cv.Remove(point);
+            }
+        }
+
+        private void UpdateMatchingPrices(ChartValues<OrderBookPriceLevel> cv, List<Interface.OrderBookPriceLevel> pl)
+        {
+            Func<OrderBookPriceLevel, Interface.OrderBookPriceLevel, OrderBookPriceLevel> updateQuantity = ((v, p) =>
+            {
+                v.Quantity = p.Quantity;
+                return v;
+            });
+
+            (from v in cv
+             join p in pl
+             on v.Price equals p.Price
+             select updateQuantity(v, p)).ToList();
+        }
+
+        private void AddNewPrices(ChartValues<OrderBookPriceLevel> cv, List<Interface.OrderBookPriceLevel> pl)
+        {
+            var newPoints = pl.Where(p => !cv.Any(v => v.Price == p.Price)).ToList();
+
+            var newPointsCount = newPoints.Count;
+
+            if (newPointsCount.Equals(0))
+            {
+                return;
+            }
+
+            var chartValueCount = cv.Count;
+
+            int currentNewPoint = 0;
+
+            for (int i = 0; i < chartValueCount; i++)
+            {
+                if (newPoints[currentNewPoint].Price < cv[i].Price)
+                {
+                    cv.Insert(i, newPoints[currentNewPoint]);
+
+                    // Increments
+                    currentNewPoint++;  // position in new points list
+                    chartValueCount++;  // number of items in the cv list after the insert
+                }
+
+                if (currentNewPoint > (newPointsCount - 1))
+                {
+                    break;
+                }
+
+                if (i == chartValueCount - 1)
+                {
+                    if (currentNewPoint < newPointsCount)
+                    {
+                        var appendNewPoints = newPoints.Skip(currentNewPoint).ToList();
+                        cv.AddRange(appendNewPoints);
+                    }
+                }
+            }
         }
     }
 }
