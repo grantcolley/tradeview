@@ -2,6 +2,7 @@
 using LiveCharts.Configurations;
 using System;
 using System.Collections.Generic;
+using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 
 namespace DevelopmentInProgress.Wpf.Common.Model
 {
@@ -61,6 +62,9 @@ namespace DevelopmentInProgress.Wpf.Common.Model
                 }
             }
         }
+
+        public List<Interface.OrderBookPriceLevel> OriginalAsks { get; set; }
+        public List<Interface.OrderBookPriceLevel> OriginalBids { get; set; }
 
         public List<OrderBookPriceLevel> TopAsks
         {
