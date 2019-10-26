@@ -63,8 +63,8 @@ namespace DevelopmentInProgress.Wpf.Common.Model
             }
         }
 
-        public List<Interface.OrderBookPriceLevel> OriginalAsks { get; set; }
-        public List<Interface.OrderBookPriceLevel> OriginalBids { get; set; }
+        public List<Interface.OrderBookPriceLevel> Asks { get; set; }
+        public List<Interface.OrderBookPriceLevel> Bids { get; set; }
 
         public List<OrderBookPriceLevel> TopAsks
         {
