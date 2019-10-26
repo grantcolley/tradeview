@@ -160,7 +160,7 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
 
         private void AddNewPrices(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
         {
-            var newPoints = pl.Where(p => !cv.Any(v => v.Price == p.Price)).ToList();
+            var newPoints = pl.Where(p => !cv.Any(v => v.Price == p.Price && !p.Quantity.Equals(0m))).ToList();
 
             var newPointsCount = newPoints.Count;
 
