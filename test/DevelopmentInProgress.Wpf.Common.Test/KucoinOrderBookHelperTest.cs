@@ -18,7 +18,13 @@ namespace DevelopmentInProgress.Wpf.Common.Test
             var kucoinExchangeApi = new KucoinExchangeTestApi(true);
             var kucoinOrderBookHelper = new KucoinOrderBookHelper(kucoinExchangeApi);
             var subscribeOrderBookUpdate = TestHelper.KucoinOrderBook_15_18;
-            var symbol = new Symbol { BaseAsset = new Interface.Asset { Symbol = "BTC" }, QuoteAsset = new Interface.Asset { Symbol = "USDT" } };
+            var symbol = new Symbol
+            {
+                BaseAsset = new Interface.Asset { Symbol = "BTC" },
+                QuoteAsset = new Interface.Asset { Symbol = "USDT" },
+                Price = new Interface.InclusiveRange { Increment = 0.00000001M },
+                Quantity = new Interface.InclusiveRange { Increment = 1m }
+            };
 
             // Act
             var orderBook = kucoinOrderBookHelper.CreateLocalOrderBook(symbol, subscribeOrderBookUpdate, 10, 10);
@@ -52,7 +58,13 @@ namespace DevelopmentInProgress.Wpf.Common.Test
             var kucoinExchangeApi = new KucoinExchangeTestApi();
             var kucoinOrderBookHelper = new KucoinOrderBookHelper(kucoinExchangeApi);
             var subscribeOrderBookUpdate = TestHelper.KucoinOrderBook_IUIIRA;
-            var symbol = new Symbol { BaseAsset = new Interface.Asset { Symbol = "BTC" }, QuoteAsset = new Interface.Asset { Symbol = "USDT" } };
+            var symbol = new Symbol
+            {
+                BaseAsset = new Interface.Asset { Symbol = "BTC" },
+                QuoteAsset = new Interface.Asset { Symbol = "USDT" },
+                Price = new Interface.InclusiveRange { Increment = 0.00000001M },
+                Quantity = new Interface.InclusiveRange { Increment = 1m }
+            };
 
             // Act
             var orderBook = kucoinOrderBookHelper.CreateLocalOrderBook(symbol, subscribeOrderBookUpdate, 10, 10);
@@ -108,7 +120,13 @@ namespace DevelopmentInProgress.Wpf.Common.Test
             var kucoinExchangeApi = new KucoinExchangeTestApi();
             var kucoinOrderBookHelper = new KucoinOrderBookHelper(kucoinExchangeApi);
             var subscribeOrderBookUpdate = TestHelper.KucoinOrderBook_RUIRRA;
-            var symbol = new Symbol { BaseAsset = new Interface.Asset { Symbol = "BTC" }, QuoteAsset = new Interface.Asset { Symbol = "USDT" } };
+            var symbol = new Symbol
+            {
+                BaseAsset = new Interface.Asset { Symbol = "BTC" },
+                QuoteAsset = new Interface.Asset { Symbol = "USDT" },
+                Price = new Interface.InclusiveRange { Increment = 0.00000001M },
+                Quantity = new Interface.InclusiveRange { Increment = 1 }
+            };
 
             // Act
             var orderBook = kucoinOrderBookHelper.CreateLocalOrderBook(symbol, subscribeOrderBookUpdate, 10, 10);
