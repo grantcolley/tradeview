@@ -72,8 +72,8 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
                 Symbol = orderBook.Symbol,
                 BaseSymbol = symbol.BaseAsset.Symbol,
                 QuoteSymbol = symbol.QuoteAsset.Symbol,
-                OriginalAsks = orderBook.Asks.ToList(),
-                OriginalBids = orderBook.Bids.ToList(),
+                Asks = orderBook.Asks.ToList(),
+                Bids = orderBook.Bids.ToList(),
                 TopAsks = topAsks,
                 TopBids = topBids,
                 ChartAsks = new ChartValues<OrderBookPriceLevel>(chartAsks),
@@ -88,13 +88,41 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
         {
             long latestSquence = orderBook.LastUpdateId;
 
-            updateOrderBook.Asks = ReplayPriceLevels(orderBook.OriginalAsks, updateOrderBook.Asks, updateOrderBook.LastUpdateId, true, ref latestSquence);
-            updateOrderBook.Bids = ReplayPriceLevels(orderBook.OriginalBids, updateOrderBook.Bids, updateOrderBook.LastUpdateId, false, ref latestSquence);
+            orderBook.Asks = ReplayPriceLevels(orderBook.Asks, updateOrderBook.Asks, updateOrderBook.LastUpdateId, true, ref latestSquence);
+            orderBook.Bids = ReplayPriceLevels(orderBook.Bids, updateOrderBook.Bids, updateOrderBook.LastUpdateId, false, ref latestSquence);
 
             orderBook.LastUpdateId = latestSquence;
+
+            var orderBookCount = chartDisplayCount > listDisplayCount ? chartDisplayCount : listDisplayCount;
+
+            var asks = orderBook.Asks.Take(orderBookCount).Select(ask => new OrderBookPriceLevel
+            {
+                Price = ask.Price.Trim(pricePrecision),
+                Quantity = ask.Quantity.Trim(quantityPrecision)
+            }).ToList();
+
+            var bids = orderBook.Bids.Take(orderBookCount).Select(bid => new OrderBookPriceLevel
+            {
+                Price = bid.Price.Trim(pricePrecision),
+                Quantity = bid.Quantity.Trim(quantityPrecision)
+            }).ToList();
+
+            orderBook.TopAsks = asks.Take(listDisplayCount).ToList();
+            orderBook.TopBids = bids.Take(listDisplayCount).ToList();
+
+            var chartAsks = asks.Take(chartDisplayCount).ToList();
+            var chartBids = bids.Take(chartDisplayCount).ToList();
+
+            var aggregateAsks = GetAggregatedList(asks).Take(chartDisplayCount).ToList();
+            var aggregateBids = GetAggregatedList(bids).Take(chartDisplayCount).ToList();
+
+            UpdateChartValues(orderBook.ChartAsks, chartAsks);
+            UpdateChartValues(orderBook.ChartBids, chartBids);
+            UpdateChartValues(orderBook.ChartAggregatedAsks, aggregateAsks);
+            UpdateChartValues(orderBook.ChartAggregatedBids, aggregateBids);
         }
 
-        private IEnumerable<Interface.OrderBookPriceLevel> ReplayPriceLevels(
+        private List<Interface.OrderBookPriceLevel> ReplayPriceLevels(
             List<Interface.OrderBookPriceLevel> orderBookPriceLevels, 
             IEnumerable<Interface.OrderBookPriceLevel> playBackPriceLevels, 
             long orderBookSequence, 
@@ -211,7 +239,7 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             return aggregatedList;
         }
 
-        private void UpdateChartValues(ChartValues<OrderBookPriceLevel> cv, List<Interface.OrderBookPriceLevel> pl)
+        private void UpdateChartValues(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
         {
             RemoveOldPrices(cv, pl);
 
@@ -220,7 +248,7 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             AddNewPrices(cv, pl);
         }
 
-        private void RemoveOldPrices(ChartValues<OrderBookPriceLevel> cv, List<Interface.OrderBookPriceLevel> pl)
+        private void RemoveOldPrices(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
         {
             var removePoints = cv.Where(v => !pl.Any(p => p.Price == v.Price)).ToList();
             foreach (var point in removePoints)
@@ -229,9 +257,9 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             }
         }
 
-        private void UpdateMatchingPrices(ChartValues<OrderBookPriceLevel> cv, List<Interface.OrderBookPriceLevel> pl)
+        private void UpdateMatchingPrices(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
         {
-            Func<OrderBookPriceLevel, Interface.OrderBookPriceLevel, OrderBookPriceLevel> updateQuantity = ((v, p) =>
+            Func<OrderBookPriceLevel, OrderBookPriceLevel, OrderBookPriceLevel> updateQuantity = ((v, p) =>
             {
                 v.Quantity = p.Quantity;
                 return v;
@@ -243,9 +271,9 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
              select updateQuantity(v, p)).ToList();
         }
 
-        private void AddNewPrices(ChartValues<OrderBookPriceLevel> cv, List<Interface.OrderBookPriceLevel> pl)
+        private void AddNewPrices(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
         {
-            var newPoints = pl.Where(p => !cv.Any(v => v.Price == p.Price)).ToList();
+            var newPoints = pl.Where(p => !cv.Any(v => v.Price == p.Price && !p.Quantity.Equals(0m))).ToList();
 
             var newPointsCount = newPoints.Count;
 
