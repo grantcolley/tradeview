@@ -91,7 +91,78 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             }
         }
 
-        public static OrderBook KucoinOrderBook_Rest
+        public static OrderBook KucoinOrderBook_Update_RestCreate
+        {
+            get
+            {
+                return new OrderBook
+                {
+                    LastUpdateId = 100,
+                    Asks = new List<OrderBookPriceLevel>
+                    {
+                        new  OrderBookPriceLevel { Price = 0.13m, Quantity = 13 },
+                        new  OrderBookPriceLevel { Price = 0.15m, Quantity = 1 },
+                        new  OrderBookPriceLevel { Price = 0.16m, Quantity = 1 }
+                    },
+                    Bids = new List<OrderBookPriceLevel>
+                    {
+                        new  OrderBookPriceLevel { Price = 0.07m, Quantity = 7 },
+                        new  OrderBookPriceLevel { Price = 0.05m, Quantity = 1 },
+                        new  OrderBookPriceLevel { Price = 0.04m, Quantity = 4 }
+                    }
+                };
+            }
+        }
+
+        public static OrderBook KucoinOrderBook_Update_RestReplay
+        {
+            get
+            {
+                return new OrderBook
+                {
+                    Asks = new List<OrderBookPriceLevel>
+                    {
+                        new  OrderBookPriceLevel { Price = 0.13m, Quantity = 0, Id = 101 },    // REMOVE
+                        new  OrderBookPriceLevel { Price = 0.14m, Quantity = 14, Id = 102 },   // INSERT
+                        new  OrderBookPriceLevel { Price = 0.15m, Quantity = 15, Id = 105 },   // UPDATE
+                        new  OrderBookPriceLevel { Price = 0.18m, Quantity = 18, Id = 106 }    // ADD
+                    },
+                    Bids = new List<OrderBookPriceLevel>
+                    {
+                        new  OrderBookPriceLevel { Price = 0.07m, Quantity = 0, Id = 107 },    // REMOVE
+                        new  OrderBookPriceLevel { Price = 0.06m, Quantity = 1, Id = 108 },    // INSERT
+                        new  OrderBookPriceLevel { Price = 0.05m, Quantity = 5, Id = 109 },    // UPDATE
+                        new  OrderBookPriceLevel { Price = 0.02m, Quantity = 2, Id = 112 }     // ADD
+                    }
+                };
+            }
+        }
+
+        public static OrderBook KucoinOrderBook_Update
+        {
+            get
+            {
+                return new OrderBook
+                {
+                    Asks = new List<OrderBookPriceLevel>
+                    {
+                        new  OrderBookPriceLevel { Price = 0.14m, Quantity = 0, Id = 113 },    // REMOVE
+                        new  OrderBookPriceLevel { Price = 0.16m, Quantity = 16, Id = 114 },   // UPDATE
+                        new  OrderBookPriceLevel { Price = 0.17m, Quantity = 17, Id = 115 },   // INSERT
+                        new  OrderBookPriceLevel { Price = 0.19m, Quantity = 19, Id = 116 }    // ADD
+                    },
+                    Bids = new List<OrderBookPriceLevel>
+                    {
+                        new  OrderBookPriceLevel { Price = 0.06m, Quantity = 6, Id = 117 },    // UPDATE
+                        new  OrderBookPriceLevel { Price = 0.05m, Quantity = 0, Id = 118 },    // REMOVE
+                        new  OrderBookPriceLevel { Price = 0.03m, Quantity = 3, Id = 119 },    // INSERT
+                        new  OrderBookPriceLevel { Price = 0.01m, Quantity = 1, Id = 120 }     // ADD
+                    }
+                };
+            }
+        }
+
+        public static OrderBook KucoinOrderBook_Create_Rest
         {
             get
             {
@@ -120,7 +191,7 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             }
         }
 
-        public static OrderBook KucoinOrderBook_RUIRRA
+        public static OrderBook KucoinOrderBook_Create_RUIRRA
         {
             get
             {
@@ -148,7 +219,7 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             }
         }
 
-        public static OrderBook KucoinOrderBook_IUIIRA
+        public static OrderBook KucoinOrderBook_Create_IUIIRA
         {
             get
             {
