@@ -62,7 +62,7 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             }
             else
             {
-                tcs.SetResult(TestHelper.KucoinOrderBook_Rest);
+                tcs.SetResult(TestHelper.KucoinOrderBook_Create_Rest);
             }
 
             return tcs.Task;

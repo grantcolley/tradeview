@@ -57,7 +57,7 @@ namespace DevelopmentInProgress.Wpf.Common.Test
             // Arrange
             var kucoinExchangeApi = new KucoinExchangeTestApi();
             var kucoinOrderBookHelper = new KucoinOrderBookHelper(kucoinExchangeApi);
-            var subscribeOrderBookUpdate = TestHelper.KucoinOrderBook_IUIIRA;
+            var subscribeOrderBookUpdate = TestHelper.KucoinOrderBook_Create_IUIIRA;
             var symbol = new Symbol
             {
                 BaseAsset = new Interface.Asset { Symbol = "BTC" },
@@ -119,7 +119,7 @@ namespace DevelopmentInProgress.Wpf.Common.Test
             // Arrange
             var kucoinExchangeApi = new KucoinExchangeTestApi();
             var kucoinOrderBookHelper = new KucoinOrderBookHelper(kucoinExchangeApi);
-            var subscribeOrderBookUpdate = TestHelper.KucoinOrderBook_RUIRRA;
+            var subscribeOrderBookUpdate = TestHelper.KucoinOrderBook_Create_RUIRRA;
             var symbol = new Symbol
             {
                 BaseAsset = new Interface.Asset { Symbol = "BTC" },
