@@ -182,6 +182,7 @@ namespace DevelopmentInProgress.Wpf.Common.Test
             // Assert
             Assert.AreEqual(orderBook.LastUpdateId, 120);
             
+            // TopAsks
             Assert.AreEqual(orderBook.TopAsks[0].Price, 0.15m);
             Assert.AreEqual(orderBook.TopAsks[0].Quantity, 15);
             Assert.AreEqual(orderBook.TopAsks[1].Price, 0.16m);
@@ -193,6 +194,7 @@ namespace DevelopmentInProgress.Wpf.Common.Test
             Assert.AreEqual(orderBook.TopAsks[4].Price, 0.19m);
             Assert.AreEqual(orderBook.TopAsks[4].Quantity, 19);
 
+            // TopBids
             Assert.AreEqual(orderBook.TopBids[0].Price, 0.06m);
             Assert.AreEqual(orderBook.TopBids[0].Quantity, 6);
             Assert.AreEqual(orderBook.TopBids[1].Price, 0.04m);
@@ -203,6 +205,54 @@ namespace DevelopmentInProgress.Wpf.Common.Test
             Assert.AreEqual(orderBook.TopBids[3].Quantity, 2);
             Assert.AreEqual(orderBook.TopBids[4].Price, 0.01m);
             Assert.AreEqual(orderBook.TopBids[4].Quantity, 1);
+
+            // ChartAsks
+            Assert.AreEqual(orderBook.ChartAsks[0].Price, 0.15m);
+            Assert.AreEqual(orderBook.ChartAsks[0].Quantity, 15);
+            Assert.AreEqual(orderBook.ChartAsks[1].Price, 0.16m);
+            Assert.AreEqual(orderBook.ChartAsks[1].Quantity, 16);
+            Assert.AreEqual(orderBook.ChartAsks[2].Price, 0.17m);
+            Assert.AreEqual(orderBook.ChartAsks[2].Quantity, 17);
+            Assert.AreEqual(orderBook.ChartAsks[3].Price, 0.18m);
+            Assert.AreEqual(orderBook.ChartAsks[3].Quantity, 18);
+            Assert.AreEqual(orderBook.ChartAsks[4].Price, 0.19m);
+            Assert.AreEqual(orderBook.ChartAsks[4].Quantity, 19);
+
+            // ChartBids
+            Assert.AreEqual(orderBook.ChartBids[0].Price, 0.06m);
+            Assert.AreEqual(orderBook.ChartBids[0].Quantity, 6);
+            Assert.AreEqual(orderBook.ChartBids[1].Price, 0.04m);
+            Assert.AreEqual(orderBook.ChartBids[1].Quantity, 4);
+            Assert.AreEqual(orderBook.ChartBids[2].Price, 0.03m);
+            Assert.AreEqual(orderBook.ChartBids[2].Quantity, 3);
+            Assert.AreEqual(orderBook.ChartBids[3].Price, 0.02m);
+            Assert.AreEqual(orderBook.ChartBids[3].Quantity, 2);
+            Assert.AreEqual(orderBook.ChartBids[4].Price, 0.01m);
+            Assert.AreEqual(orderBook.ChartBids[4].Quantity, 1);
+
+            // ChartAggregatedAsks
+            Assert.AreEqual(orderBook.ChartAggregatedAsks[0].Price, 0.15m);
+            Assert.AreEqual(orderBook.ChartAggregatedAsks[0].Quantity, 15);
+            Assert.AreEqual(orderBook.ChartAggregatedAsks[1].Price, 0.16m);
+            Assert.AreEqual(orderBook.ChartAggregatedAsks[1].Quantity, 31);
+            Assert.AreEqual(orderBook.ChartAggregatedAsks[2].Price, 0.17m);
+            Assert.AreEqual(orderBook.ChartAggregatedAsks[2].Quantity, 48);
+            Assert.AreEqual(orderBook.ChartAggregatedAsks[3].Price, 0.18m);
+            Assert.AreEqual(orderBook.ChartAggregatedAsks[3].Quantity, 66);
+            Assert.AreEqual(orderBook.ChartAggregatedAsks[4].Price, 0.19m);
+            Assert.AreEqual(orderBook.ChartAggregatedAsks[4].Quantity, 85);
+
+            // ChartAggregatedBids
+            Assert.AreEqual(orderBook.ChartAggregatedBids[0].Price, 0.06m);
+            Assert.AreEqual(orderBook.ChartAggregatedBids[0].Quantity, 6);
+            Assert.AreEqual(orderBook.ChartAggregatedBids[1].Price, 0.04m);
+            Assert.AreEqual(orderBook.ChartAggregatedBids[1].Quantity, 10);
+            Assert.AreEqual(orderBook.ChartAggregatedBids[2].Price, 0.03m);
+            Assert.AreEqual(orderBook.ChartAggregatedBids[2].Quantity, 13);
+            Assert.AreEqual(orderBook.ChartAggregatedBids[3].Price, 0.02m);
+            Assert.AreEqual(orderBook.ChartAggregatedBids[3].Quantity, 15);
+            Assert.AreEqual(orderBook.ChartAggregatedBids[4].Price, 0.01m);
+            Assert.AreEqual(orderBook.ChartAggregatedBids[4].Quantity, 16);
         }
     }
 }
