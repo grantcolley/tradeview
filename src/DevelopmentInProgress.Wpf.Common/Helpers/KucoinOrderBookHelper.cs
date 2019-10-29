@@ -35,11 +35,11 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
 
             if (snapShot.Asks.Count() > orderBookCount)
             {
-                snapShotAsks = new List<Interface.OrderBookPriceLevel>(snapShot.Asks.Reverse());
+                snapShotAsks = new List<Interface.OrderBookPriceLevel>(snapShot.Asks);
             }
             else
             {
-                snapShotAsks = new List<Interface.OrderBookPriceLevel>(snapShot.Asks.Reverse());
+                snapShotAsks = new List<Interface.OrderBookPriceLevel>(snapShot.Asks);
             }
 
             if (snapShot.Bids.Count() > orderBookCount)
@@ -90,8 +90,8 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
         {
             long latestSquence = orderBook.LastUpdateId;
 
-            orderBook.Asks = ReplayPriceLevels(orderBook.Asks, updateOrderBook.Asks, updateOrderBook.LastUpdateId, true, ref latestSquence);
-            orderBook.Bids = ReplayPriceLevels(orderBook.Bids, updateOrderBook.Bids, updateOrderBook.LastUpdateId, false, ref latestSquence);
+            orderBook.Asks = ReplayPriceLevels(orderBook.Asks, updateOrderBook.Asks, orderBook.LastUpdateId, true, ref latestSquence);
+            orderBook.Bids = ReplayPriceLevels(orderBook.Bids, updateOrderBook.Bids, orderBook.LastUpdateId, false, ref latestSquence);
 
             orderBook.LastUpdateId = latestSquence;
 
