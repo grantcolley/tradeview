@@ -122,7 +122,7 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
         public async Task<OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
             var kucoinClient = new KucoinClient();
-            var result = await kucoinClient.GetFullOrderBookAsync(symbol).ConfigureAwait(false);
+            var result = await kucoinClient.GetAggregatedPartialOrderBookAsync(symbol, limit).ConfigureAwait(false);
 
             var orderBook = new OrderBook
             {

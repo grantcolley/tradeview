@@ -24,20 +24,22 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
         {
             var cancellationTokenSource = new CancellationTokenSource();
 
-            var snapShot = kucoinExchangeApi.GetOrderBookAsync(symbol.ExchangeSymbol, 0, cancellationTokenSource.Token).GetAwaiter().GetResult();
+            var orderBookCount = chartDisplayCount > listDisplayCount ? chartDisplayCount : listDisplayCount;
 
+            var limit = orderBookCount < 21 ? 20 : 100;
+
+            var snapShot = kucoinExchangeApi.GetOrderBookAsync(symbol.ExchangeSymbol, limit, cancellationTokenSource.Token).GetAwaiter().GetResult();
+            
             List<Interface.OrderBookPriceLevel> snapShotAsks;
             List<Interface.OrderBookPriceLevel> snapShotBids;
 
-            var orderBookCount = chartDisplayCount > listDisplayCount ? chartDisplayCount : listDisplayCount;
-
             if (snapShot.Asks.Count() > orderBookCount)
             {
-                snapShotAsks = new List<Interface.OrderBookPriceLevel>(snapShot.Asks);
+                snapShotAsks = new List<Interface.OrderBookPriceLevel>(snapShot.Asks.Reverse());
             }
             else
             {
-                snapShotAsks = new List<Interface.OrderBookPriceLevel>(snapShot.Asks);
+                snapShotAsks = new List<Interface.OrderBookPriceLevel>(snapShot.Asks.Reverse());
             }
 
             if (snapShot.Bids.Count() > orderBookCount)
@@ -116,8 +118,8 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             var aggregateAsks = GetAggregatedList(asks).Take(chartDisplayCount).ToList();
             var aggregateBids = GetAggregatedList(bids).Take(chartDisplayCount).ToList();
 
-            Func<decimal, decimal, bool> askPredicate = (p1, p2) => { return p1 < p2; };
-            Func<decimal, decimal, bool> bidPredicate = (p1, p2) => { return p1 > p2; };
+            Func<decimal, decimal, bool> askPredicate = (p1, p2) => { return p1 > p2; };
+            Func<decimal, decimal, bool> bidPredicate = (p1, p2) => { return p1 < p2; };
 
             UpdateChartValues(orderBook.ChartAsks, chartAsks, askPredicate);
             UpdateChartValues(orderBook.ChartBids, chartBids, bidPredicate);
