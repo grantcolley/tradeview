@@ -33,23 +33,16 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             List<Interface.OrderBookPriceLevel> snapShotAsks;
             List<Interface.OrderBookPriceLevel> snapShotBids;
 
-            if (snapShot.Asks.Count() > orderBookCount)
+            snapShotAsks = new List<Interface.OrderBookPriceLevel>(snapShot.Asks.Take(orderBookCount));
+
+            int bidsCount = snapShot.Bids.Count();
+            bidsCount = bidsCount - orderBookCount;
+            if(bidsCount < 0)
             {
-                snapShotAsks = new List<Interface.OrderBookPriceLevel>(snapShot.Asks);
-            }
-            else
-            {
-                snapShotAsks = new List<Interface.OrderBookPriceLevel>(snapShot.Asks);
+                bidsCount = 0;
             }
 
-            if (snapShot.Bids.Count() > orderBookCount)
-            {
-                snapShotBids = new List<Interface.OrderBookPriceLevel>(snapShot.Bids);
-            }
-            else
-            {
-                snapShotBids = new List<Interface.OrderBookPriceLevel>(snapShot.Bids);
-            }
+            snapShotBids = new List<Interface.OrderBookPriceLevel>(snapShot.Bids.Skip(bidsCount));
 
             long latestSquence = snapShot.LastUpdateId;
 
