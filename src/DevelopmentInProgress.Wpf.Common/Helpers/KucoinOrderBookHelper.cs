@@ -42,7 +42,7 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
                 bidsCount = 0;
             }
 
-            snapShotBids = new List<Interface.OrderBookPriceLevel>(snapShot.Bids.Skip(bidsCount));
+            snapShotBids = new List<Interface.OrderBookPriceLevel>(snapShot.Bids.Take(orderBookCount));
 
             long latestSquence = snapShot.LastUpdateId;
 
@@ -188,28 +188,28 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             out List<OrderBookPriceLevel> chartAsks, out List<OrderBookPriceLevel> chartBids,
             out List<OrderBookPriceLevel> aggregatedAsks, out List<OrderBookPriceLevel> aggregatedBids)
         {
-            // Order by price: bids (DESC) and asks (ASC)
+            // Order by price: bids (ASC) and asks (ASC)
             var orderedAsks = orderBook.Asks.OrderBy(a => a.Price).ToList();
-            var orderedBids = orderBook.Bids.OrderByDescending(b => b.Price).ToList();
+            var orderedBids = orderBook.Bids.OrderBy(b => b.Price).ToList();
 
             // The OrderBookCount is the greater of the OrderBookDisplayCount OrderBookChartDisplayCount.
             // Take the asks and bids for the OrderBookCount as new instances of type OrderBookPriceLevel 
             // i.e. discard those that we are not interested in displaying on the screen.
-            var asks = orderedAsks.Take(orderBookCount).Select(ask => new OrderBookPriceLevel
+            var asks = orderedAsks.Select(ask => new OrderBookPriceLevel
             {
                 Price = ask.Price.Trim(pricePrecision),
                 Quantity = ask.Quantity.Trim(quantityPrecision)
             }).ToList();
 
-            var bids = orderedBids.Take(orderBookCount).Select(bid => new OrderBookPriceLevel
+            var bids = orderedBids.Select(bid => new OrderBookPriceLevel
             {
                 Price = bid.Price.Trim(pricePrecision),
                 Quantity = bid.Quantity.Trim(quantityPrecision)
             }).ToList();
 
             // Take the top bids and asks for the order book bid and ask lists and order descending.
-            topAsks = asks.Take(listDisplayCount).Reverse().ToList();
-            topBids = bids.Take(listDisplayCount).ToList();
+            topAsks = asks.OrderBy(a => a.Price).Take(listDisplayCount).ToList();
+            topBids = bids.OrderBy(b => b.Price).Take(listDisplayCount).ToList();
 
             // Take the bid and aks to display in the the order book chart.
             chartAsks = asks.Take(chartDisplayCount).ToList();
