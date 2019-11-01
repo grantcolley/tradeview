@@ -34,14 +34,6 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             List<Interface.OrderBookPriceLevel> snapShotBids;
 
             snapShotAsks = new List<Interface.OrderBookPriceLevel>(snapShot.Asks.Take(orderBookCount));
-
-            int bidsCount = snapShot.Bids.Count();
-            bidsCount = bidsCount - orderBookCount;
-            if(bidsCount < 0)
-            {
-                bidsCount = 0;
-            }
-
             snapShotBids = new List<Interface.OrderBookPriceLevel>(snapShot.Bids.Take(orderBookCount));
 
             long latestSquence = snapShot.LastUpdateId;
@@ -208,12 +200,13 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             }).ToList();
 
             // Take the top bids and asks for the order book bid and ask lists and order descending.
-            topAsks = asks.OrderBy(a => a.Price).Take(listDisplayCount).ToList();
-            topBids = bids.OrderBy(b => b.Price).Take(listDisplayCount).ToList();
+            topAsks = asks.Take(listDisplayCount).OrderByDescending(a => a.Price).ToList();
+            topBids = bids.OrderByDescending(b => b.Price).Take(listDisplayCount).ToList();
 
             // Take the bid and aks to display in the the order book chart.
             chartAsks = asks.Take(chartDisplayCount).ToList();
-            chartBids = bids.Take(chartDisplayCount).ToList();
+
+            chartBids = bids.Skip(chartDisplayCount).ToList();
 
             // Create the aggregated bids and asks for the aggregated bid and ask chart.
             aggregatedAsks = GetAggregatedList(chartAsks);
