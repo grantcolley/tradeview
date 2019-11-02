@@ -100,8 +100,8 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             var chartAsks = asks.Take(chartDisplayCount).ToList();
             var chartBids = bids.Take(chartDisplayCount).ToList();
 
-            var aggregateAsks = GetAggregatedList(asks).Take(chartDisplayCount).ToList();
-            var aggregateBids = GetAggregatedList(bids).Take(chartDisplayCount).ToList();
+            var aggregateAsks = GetAggregatedAsks(asks).Take(chartDisplayCount).ToList();
+            var aggregateBids = GetAggregatedBids(bids).Take(chartDisplayCount).ToList();
 
             Func<decimal, decimal, bool> askPredicate = (p1, p2) => { return p1 > p2; };
             Func<decimal, decimal, bool> bidPredicate = (p1, p2) => { return p1 < p2; };
@@ -125,13 +125,18 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
 
             foreach (var priceLevel in priceLevels)
             {
-                var handled = false;
-                var snapShotCount = orderBookPriceLevels.Count;
-
                 if (priceLevel.Id > latestSquence)
                 {
                     latestSquence = priceLevel.Id;
                 }
+
+                if(priceLevel.Price.Equals(0))
+                {
+                    continue;
+                }
+
+                var handled = false;
+                var snapShotCount = orderBookPriceLevels.Count;
 
                 for (int i = 0; i < snapShotCount; i++)
                 {
@@ -203,17 +208,22 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             topAsks = asks.Take(listDisplayCount).OrderByDescending(a => a.Price).ToList();
             topBids = bids.OrderByDescending(b => b.Price).Take(listDisplayCount).ToList();
 
+            var skipExcessBids = 0;
+            if (bids.Count > chartDisplayCount)
+            {
+                skipExcessBids = bids.Count - chartDisplayCount;
+            }
+
             // Take the bid and aks to display in the the order book chart.
             chartAsks = asks.Take(chartDisplayCount).ToList();
-
-            chartBids = bids.Skip(chartDisplayCount).ToList();
+            chartBids = bids.Skip(skipExcessBids).ToList();
 
             // Create the aggregated bids and asks for the aggregated bid and ask chart.
-            aggregatedAsks = GetAggregatedList(chartAsks);
-            aggregatedBids = GetAggregatedList(chartBids);
+            aggregatedAsks = GetAggregatedAsks(chartAsks);
+            aggregatedBids = GetAggregatedBids(chartBids);
         }
 
-        private List<OrderBookPriceLevel> GetAggregatedList(List<OrderBookPriceLevel> orders)
+        private List<OrderBookPriceLevel> GetAggregatedAsks(List<OrderBookPriceLevel> orders)
         {
             var count = orders.Count();
 
@@ -228,6 +238,24 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             }
 
             return aggregatedList;
+        }
+
+        private List<OrderBookPriceLevel> GetAggregatedBids(List<OrderBookPriceLevel> orders)
+        {
+            var index = orders.Count() - 1;
+
+            var aggregatedList = orders.Select(p => new OrderBookPriceLevel { Price = p.Price, Quantity = p.Quantity }).ToList();
+
+            for (int i = index; i >= 0; i--)
+            {
+                if (i < index)
+                {
+                    aggregatedList[i].Quantity = aggregatedList[i].Quantity + aggregatedList[i + 1].Quantity;
+                }
+            }
+
+            return aggregatedList;
+
         }
 
         private void UpdateChartValues(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl, Func<decimal, decimal, bool> predicate)
