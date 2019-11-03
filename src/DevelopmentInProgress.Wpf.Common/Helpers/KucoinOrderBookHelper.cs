@@ -28,8 +28,9 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             var limit = orderBookCount < 21 ? 20 : 100;
 
             var snapShot = kucoinExchangeApi.GetOrderBookAsync(symbol.ExchangeSymbol, limit, cancellationTokenSource.Token).GetAwaiter().GetResult();
-            
+
             // Order by price: bids (ASC) and asks (ASC)
+            // Discard those that we are not interested in displaying on the screen.
             var snapShotAsks = new List<Interface.OrderBookPriceLevel>(snapShot.Asks.Take(orderBookCount).OrderBy(a => a.Price).ToList());
             var snapShotBids = new List<Interface.OrderBookPriceLevel>(snapShot.Bids.Take(orderBookCount).OrderBy(b => b.Price).ToList());
 
@@ -37,16 +38,13 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
 
             bool isUpdated = false;
 
-            var replayedAsks = ReplayPriceLevels(snapShotAsks, orderBook.Asks, snapShot.LastUpdateId, true, ref latestSquence, ref isUpdated);
+            var replayedAsks = ReplayPriceLevels(snapShotAsks, orderBook.Asks, snapShot.LastUpdateId, ref latestSquence, ref isUpdated);
 
-            var replayedBids = ReplayPriceLevels(snapShotBids, orderBook.Bids, snapShot.LastUpdateId, false, ref latestSquence, ref isUpdated);
+            var replayedBids = ReplayPriceLevels(snapShotBids, orderBook.Bids, snapShot.LastUpdateId, ref latestSquence, ref isUpdated);
             
             var pricePrecision = symbol.PricePrecision;
             var quantityPrecision = symbol.QuantityPrecision;
             
-            // The OrderBookCount is the greater of the OrderBookDisplayCount OrderBookChartDisplayCount.
-            // Take the asks and bids for the OrderBookCount as new instances of type OrderBookPriceLevel 
-            // i.e. discard those that we are not interested in displaying on the screen.
             var asks = replayedAsks.Select(ask => new OrderBookPriceLevel
             {
                 Price = ask.Price.Trim(pricePrecision),
@@ -107,8 +105,8 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
 
             bool isUpdated = false;
 
-            orderBook.Asks = ReplayPriceLevels(orderBook.Asks, updateOrderBook.Asks, orderBook.LastUpdateId, true, ref latestSquence, ref isUpdated);
-            orderBook.Bids = ReplayPriceLevels(orderBook.Bids, updateOrderBook.Bids, orderBook.LastUpdateId, false, ref latestSquence, ref isUpdated);
+            orderBook.Asks = ReplayPriceLevels(orderBook.Asks, updateOrderBook.Asks, orderBook.LastUpdateId, ref latestSquence, ref isUpdated);
+            orderBook.Bids = ReplayPriceLevels(orderBook.Bids, updateOrderBook.Bids, orderBook.LastUpdateId, ref latestSquence, ref isUpdated);
 
             orderBook.LastUpdateId = latestSquence;
 
@@ -126,34 +124,40 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
                 Quantity = bid.Quantity.Trim(quantityPrecision)
             }).ToList();
 
-            orderBook.TopAsks = asks.Take(listDisplayCount).ToList();
-            orderBook.TopBids = bids.Take(listDisplayCount).ToList();
+            // Take the top bids and asks for the order book bid and ask lists and order descending.
+            orderBook.TopAsks = asks.Take(listDisplayCount).OrderByDescending(a => a.Price).ToList();
+            orderBook.TopBids = bids.OrderByDescending(b => b.Price).Take(listDisplayCount).ToList();
 
+            var skipExcessBids = 0;
+            if (bids.Count > chartDisplayCount)
+            {
+                skipExcessBids = bids.Count - chartDisplayCount;
+            }
+
+            // Take the bid and aks to display in the the order book chart.
             var chartAsks = asks.Take(chartDisplayCount).ToList();
-            var chartBids = bids.Take(chartDisplayCount).ToList();
+            var chartBids = bids.Skip(skipExcessBids).ToList();
 
-            var aggregateAsks = GetAggregatedAsks(asks).Take(chartDisplayCount).ToList();
-            var aggregateBids = GetAggregatedBids(bids).Take(chartDisplayCount).ToList();
+            // Create the aggregated bids and asks for the aggregated bid and ask chart.
+            var aggregatedAsks = GetAggregatedAsks(chartAsks);
+            var aggregatedBids = GetAggregatedBids(chartBids);
 
             Func<decimal, decimal, bool> askPredicate = (p1, p2) => { return p1 > p2; };
             Func<decimal, decimal, bool> bidPredicate = (p1, p2) => { return p1 < p2; };
 
             UpdateChartValues(orderBook.ChartAsks, chartAsks, askPredicate);
             UpdateChartValues(orderBook.ChartBids, chartBids, bidPredicate);
-            UpdateChartValues(orderBook.ChartAggregatedAsks, aggregateAsks, askPredicate);
-            UpdateChartValues(orderBook.ChartAggregatedBids, aggregateBids, bidPredicate);
+            UpdateChartValues(orderBook.ChartAggregatedAsks, aggregatedAsks, askPredicate);
+            UpdateChartValues(orderBook.ChartAggregatedBids, aggregatedBids, bidPredicate);
         }
 
         private List<Interface.OrderBookPriceLevel> ReplayPriceLevels(
             List<Interface.OrderBookPriceLevel> orderBookPriceLevels, 
             IEnumerable<Interface.OrderBookPriceLevel> playBackPriceLevels, 
             long orderBookSequence, 
-            bool isAsk,
             ref long latestSquence,
             ref bool isUpdated)
         {
-            var isBid = !isAsk;
-
             var priceLevels = playBackPriceLevels.Where(a => a.Id > orderBookSequence).ToList();
 
             foreach (var priceLevel in priceLevels)
