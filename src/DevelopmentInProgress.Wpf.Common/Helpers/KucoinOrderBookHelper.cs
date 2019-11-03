@@ -142,13 +142,10 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
             var aggregatedAsks = GetAggregatedAsks(chartAsks);
             var aggregatedBids = GetAggregatedBids(chartBids);
 
-            Func<decimal, decimal, bool> askPredicate = (p1, p2) => { return p1 > p2; };
-            Func<decimal, decimal, bool> bidPredicate = (p1, p2) => { return p1 < p2; };
-
-            UpdateChartValues(orderBook.ChartAsks, chartAsks, askPredicate);
-            UpdateChartValues(orderBook.ChartBids, chartBids, bidPredicate);
-            UpdateChartValues(orderBook.ChartAggregatedAsks, aggregatedAsks, askPredicate);
-            UpdateChartValues(orderBook.ChartAggregatedBids, aggregatedBids, bidPredicate);
+            UpdateChartValues(orderBook.ChartAsks, chartAsks);
+            UpdateChartValues(orderBook.ChartBids, chartBids);
+            UpdateChartValues(orderBook.ChartAggregatedAsks, aggregatedAsks);
+            UpdateChartValues(orderBook.ChartAggregatedBids, aggregatedBids);
         }
 
         private List<Interface.OrderBookPriceLevel> ReplayPriceLevels(
@@ -257,13 +254,13 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
 
         }
 
-        private void UpdateChartValues(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl, Func<decimal, decimal, bool> predicate)
+        private void UpdateChartValues(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
         {
             RemoveOldPrices(cv, pl);
 
             UpdateMatchingPrices(cv, pl);
 
-            AddNewPrices(cv, pl, predicate);
+            AddNewPrices(cv, pl);
         }
 
         private void RemoveOldPrices(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
@@ -289,9 +286,9 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
              select updateQuantity(v, p)).ToList();
         }
 
-        private void AddNewPrices(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl, Func<decimal, decimal, bool> predicate)
+        private void AddNewPrices(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
         {
-            var newPoints = pl.Where(p => !cv.Any(v => v.Price == p.Price && !p.Quantity.Equals(0m))).ToList();
+            var newPoints = pl.Where(p => !cv.Any(v => v.Price == p.Price)).ToList();
 
             var newPointsCount = newPoints.Count;
 
@@ -306,7 +303,7 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
 
             for (int i = 0; i < chartValueCount; i++)
             {
-                if (predicate(newPoints[currentNewPoint].Price, cv[i].Price))
+                if (newPoints[currentNewPoint].Price < cv[i].Price)
                 {
                     cv.Insert(i, newPoints[currentNewPoint]);
 
@@ -317,13 +314,16 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
 
                 if (currentNewPoint > (newPointsCount - 1))
                 {
+                    // No more new points to add so break out
                     break;
                 }
 
                 if (i == chartValueCount - 1)
                 {
+                    // We have reached the end of the chart values
                     if (currentNewPoint < newPointsCount)
                     {
+                        // Add the remaining new points
                         var appendNewPoints = newPoints.Skip(currentNewPoint).ToList();
                         cv.AddRange(appendNewPoints);
                     }
