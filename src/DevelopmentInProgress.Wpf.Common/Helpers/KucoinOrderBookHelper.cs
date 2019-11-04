@@ -112,13 +112,13 @@ namespace DevelopmentInProgress.Wpf.Common.Helpers
 
             var orderBookCount = chartDisplayCount > listDisplayCount ? chartDisplayCount : listDisplayCount;
 
-            var asks = orderBook.Asks.Take(orderBookCount).Select(ask => new OrderBookPriceLevel
+            var asks = orderBook.Asks.Select(ask => new OrderBookPriceLevel
             {
                 Price = ask.Price.Trim(pricePrecision),
                 Quantity = ask.Quantity.Trim(quantityPrecision)
             }).ToList();
 
-            var bids = orderBook.Bids.Take(orderBookCount).Select(bid => new OrderBookPriceLevel
+            var bids = orderBook.Bids.Select(bid => new OrderBookPriceLevel
             {
                 Price = bid.Price.Trim(pricePrecision),
                 Quantity = bid.Quantity.Trim(quantityPrecision)
