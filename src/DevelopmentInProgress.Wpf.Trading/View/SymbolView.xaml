@@ -18,15 +18,18 @@
         <Grid Visibility="{Binding HasSymbol, Converter={StaticResource boolToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="13*"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="15*"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="72*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50*"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="50*"/>
             </Grid.RowDefinitions>
 
-            <GroupBox Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" BorderThickness="0.5" Margin="2" Header="Order Book">
+            <GroupBox Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" BorderThickness="0.5" Margin="2" Header="Order Book">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="23"/>
@@ -82,7 +85,9 @@
                 </Grid>
             </GroupBox>
 
-            <GroupBox Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" BorderThickness="0.5" Margin="2" Header="Trades">
+            <GridSplitter Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
+            
+            <GroupBox Grid.Row="0" Grid.RowSpan="3" Grid.Column="2" BorderThickness="0.5" Margin="2" Header="Trades">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="23"/>
@@ -130,7 +135,9 @@
                 </Grid>
             </GroupBox>
 
-            <GroupBox Grid.Row="0" Grid.Column="2" BorderThickness="0.5" Margin="2" Header="Trades">
+            <GridSplitter Grid.Row="0" Grid.RowSpan="3" Grid.Column="3" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
+            
+            <GroupBox Grid.Row="0" Grid.Column="4" BorderThickness="0.5" Margin="2" Header="Trades">
                 <DockPanel LastChildFill="True">
                     <Viewbox Height="50" Width="50"
                              Margin="1"
@@ -176,7 +183,9 @@
                 </DockPanel>
             </GroupBox>
 
-            <GroupBox Grid.Row="1" Grid.Column="2" BorderThickness="0.5" Margin="2" Header="Order Book">
+            <GridSplitter Grid.Row="1" Grid.Column="4" Height="2" HorizontalAlignment="Stretch" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext"/>
+
+            <GroupBox Grid.Row="2" Grid.Column="4" BorderThickness="0.5" Margin="2" Header="Order Book">
                 <DockPanel LastChildFill="True">
                     <Viewbox Height="50" Width="50"
                              Margin="1"
