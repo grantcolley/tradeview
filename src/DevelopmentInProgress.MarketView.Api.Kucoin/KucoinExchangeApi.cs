@@ -185,7 +185,7 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
         public async Task<IEnumerable<Trade>> GetTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
             var kucoinClint = new KucoinClient();
-            var result = await kucoinClint.GetTradeHistoryAsync(symbol).ConfigureAwait(false);
+            var result = await kucoinClint.GetSymbolTradesAsync(symbol).ConfigureAwait(false);
             var trades = result.Data.Select(t => new Trade
             {
                 Symbol = symbol,
