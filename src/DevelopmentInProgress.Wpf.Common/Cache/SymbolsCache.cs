@@ -81,12 +81,12 @@ namespace DevelopmentInProgress.Wpf.Common.Cache
                     var symbol = symbols.FirstOrDefault(s => s.Name.Equals($"{balance.Asset}BTC"));
                     if (symbol != null)
                     {
-                        btc += symbol.SymbolStatistics.BidPrice * qty;
+                        btc += symbol.SymbolStatistics.LastPrice * qty;
                     }
                 }
             }
 
-            usdt = btcUsdt.SymbolStatistics.BidPrice * btc;
+            usdt = btcUsdt.SymbolStatistics.LastPrice * btc;
 
             account.BTCValue = Math.Round(btc, 8);
             account.USDTValue = usdt.Trim(btcUsdt.PricePrecision);
