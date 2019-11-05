@@ -163,7 +163,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
 
             try
             {
-                Account = await ExchangeService.GetAccountInfoAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User.ApiKey, Account.AccountInfo.User.ApiSecret, accountCancellationTokenSource.Token);
+                Account = await ExchangeService.GetAccountInfoAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User, accountCancellationTokenSource.Token);
 
                 OnAccountLoggedIn(Account);
 

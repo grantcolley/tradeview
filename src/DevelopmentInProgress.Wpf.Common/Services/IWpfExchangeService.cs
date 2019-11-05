@@ -13,7 +13,7 @@ namespace DevelopmentInProgress.Wpf.Common.Services
     {
         Task<Interface.Order> PlaceOrder(Exchange exchange, Interface.User user, Interface.ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken));
         Task<string> CancelOrderAsync(Exchange exchange, Interface.User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken));
-        Task<Account> GetAccountInfoAsync(Exchange exchange, string apiKey, string apiSecret, CancellationToken cancellationToken);
+        Task<Account> GetAccountInfoAsync(Exchange exchange, Interface.User user, CancellationToken cancellationToken);
         Task<IEnumerable<Interface.AccountTrade>> GetAccountTradesAsync(Exchange exchange, Interface.User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken));
         Task<IEnumerable<Symbol>> GetSymbols24HourStatisticsAsync(Exchange exchange, CancellationToken cancellationToken);
         Task<Interface.OrderBook> GetOrderBookAsync(Exchange exchange, string symbol, int limit, CancellationToken cancellationToken);

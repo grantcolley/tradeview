@@ -28,9 +28,9 @@ namespace DevelopmentInProgress.Wpf.Common.Services
             return orders;
         }
 
-        public async Task<Account> GetAccountInfoAsync(Exchange exchange, string apiKey, string apiSecret, CancellationToken cancellationToken)
+        public async Task<Account> GetAccountInfoAsync(Exchange exchange, Interface.User user, CancellationToken cancellationToken)
         {
-            var accountInfo = await exchangeService.GetAccountInfoAsync(exchange, new Interface.User { ApiKey = apiKey, ApiSecret = apiSecret}, cancellationToken).ConfigureAwait(false);
+            var accountInfo = await exchangeService.GetAccountInfoAsync(exchange, user, cancellationToken).ConfigureAwait(false);
             return new Account(accountInfo);
         }
 
