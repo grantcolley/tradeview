@@ -142,14 +142,15 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
             var kucoinClient = new KucoinClient();
             var result = await kucoinClient.GetSymbolsAsync().ConfigureAwait(false);
             var symbols = result.Data.Select(s => new Symbol
-            {                
+            {
                 ExchangeSymbol = s.Symbol,
                 NotionalMinimumValue = s.QuoteMinSize,
                 BaseAsset = new Asset { Symbol = s.BaseCurrency },
                 QuoteAsset = new Asset { Symbol = s.QuoteCurrency },
                 Price = new InclusiveRange { Increment = s.PriceIncrement, Maximum = s.QuoteMaxSize, Minimum = s.PriceIncrement },
                 Quantity = new InclusiveRange { Increment = s.BaseIncrement, Maximum = s.BaseMaxSize, Minimum = s.BaseIncrement },
-                SymbolStatistics = new SymbolStats { Symbol = $"{s.BaseCurrency}{s.QuoteCurrency}" }
+                SymbolStatistics = new SymbolStats { Symbol = $"{s.BaseCurrency}{s.QuoteCurrency}" },
+                OrderTypes = new[] { OrderType.Limit, OrderType.Market, OrderType.StopLoss, OrderType.StopLossLimit, OrderType.TakeProfit, OrderType.TakeProfitLimit }
             }).ToList();
 
             var currencies = await kucoinClient.GetCurrenciesAsync().ConfigureAwait(false);
