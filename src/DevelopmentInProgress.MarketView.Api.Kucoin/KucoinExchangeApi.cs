@@ -222,30 +222,42 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
                 null,
                 null,
                 null,
-                clientOrder.StopPrice, 
-                null, 
+                clientOrder.StopPrice,
+                null,
                 null
                 ).ConfigureAwait(false);
 
+            if(!placeOrderResult.Success)
+            {
+                throw new Exception($"Error Code : {placeOrderResult.Error.Code} Message : {placeOrderResult.Error.Message}");
+            }
+
             var orderResult = await kucoinClient.GetOrderAsync(placeOrderResult.Data.OrderId).ConfigureAwait(false);
 
-            var order = new Order
+            if (orderResult.Success)
             {
-                User = user,
-                Symbol = orderResult.Data.Symbol,
-                //Id = orderResult.Data.Id,
-                ClientOrderId = orderResult.Data.ClientOrderId,
-                Price = orderResult.Data.Price,
-                OriginalQuantity = orderResult.Data.Quantity,
-                TimeInForce = orderResult.Data.TimeInForce.ToMarketViewTimeInForce(),
-                Type = orderResult.Data.Type.ToMarketViewOrderType(),
-                Side = orderResult.Data.Side.ToMarketViewOrderSide(),
-                StopPrice = orderResult.Data.StopPrice,
-                IcebergQuantity = orderResult.Data.VisibleIcebergSize,
-                Time = orderResult.Data.CreatedAt
-            };
+                var order = new Order
+                {
+                    User = user,
+                    Symbol = orderResult.Data.Symbol,
+                    //Id = orderResult.Data.Id,
+                    ClientOrderId = orderResult.Data.ClientOrderId,
+                    Price = orderResult.Data.Price,
+                    OriginalQuantity = orderResult.Data.Quantity,
+                    TimeInForce = orderResult.Data.TimeInForce.ToMarketViewTimeInForce(),
+                    Type = orderResult.Data.Type.ToMarketViewOrderType(),
+                    Side = orderResult.Data.Side.ToMarketViewOrderSide(),
+                    StopPrice = orderResult.Data.StopPrice,
+                    IcebergQuantity = orderResult.Data.VisibleIcebergSize,
+                    Time = orderResult.Data.CreatedAt
+                };
 
-            return order;
+                return order;
+            }
+            else
+            {
+                throw new Exception($"Error Code : {orderResult.Error.Code} Message : {orderResult.Error.Message}");
+            }
         }
 
         public void SubscribeAccountInfo(User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
