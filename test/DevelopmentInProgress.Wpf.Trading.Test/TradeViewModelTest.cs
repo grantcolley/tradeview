@@ -42,7 +42,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User, cxlToken);
             
             // Act
             tradeViewModel.SetAccount(account);
@@ -74,7 +74,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User, cxlToken);
             var asset = account.Balances.Single(a => a.Asset.Equals("TRX"));
             tradeViewModel.SetAccount(account);
             
@@ -106,7 +106,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User, cxlToken);
 
             tradeViewModel.SetAccount(account);
 
@@ -165,7 +165,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User, cxlToken);
             var baseBalance = account.Balances.Single(a => a.Asset.Equals("TRX"));
             var quoteAsset = account.Balances.Single(a => a.Asset.Equals("BTC"));
 
@@ -202,7 +202,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User, cxlToken);
 
             tradeViewModel.SetAccount(account);
 
@@ -555,7 +555,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User, cxlToken);
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -587,7 +587,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User, cxlToken);
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -620,7 +620,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User, cxlToken);
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -652,7 +652,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User, cxlToken);
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -703,7 +703,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User, cxlToken);
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -753,7 +753,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User, cxlToken);
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -804,7 +804,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User, cxlToken);
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());
@@ -858,7 +858,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 ApiSecret = "apisecret"
             };
 
-            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User.ApiKey, account.AccountInfo.User.ApiSecret, cxlToken);
+            account = await exchangeService.GetAccountInfoAsync(Exchange.Test, account.AccountInfo.User, cxlToken);
             var selectedAsset = account.Balances.Single(ab => ab.Asset.Equals("TRX"));
 
             tradeViewModel.SetSymbols(symbols.ToList());
