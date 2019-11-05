@@ -21,7 +21,7 @@ namespace DevelopmentInProgress.MarketView.Interface.Validation
                 {
                     sb.Append("Order has no symbol;");
                 }
-                else if (!o.Symbol.Equals($"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}"))
+                else if (!o.Symbol.Equals($"{s.ExchangeSymbol}"))
                 {
                     sb.Append($"Order {o.Symbol} validation symbol {s.BaseAsset.Symbol}{s.QuoteAsset.Symbol} mismatch;");
                 }
