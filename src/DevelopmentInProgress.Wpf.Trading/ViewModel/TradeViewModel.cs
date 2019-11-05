@@ -398,7 +398,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
 
                 var clientOrder = new Interface.ClientOrder
                 {
-                    Symbol = SelectedSymbol?.Name,
+                    Symbol = SelectedSymbol?.ExchangeSymbol,
                     Type = SelectedOrderType.GetOrderType(),
                     Side = orderSide,
                     Quantity = Quantity,

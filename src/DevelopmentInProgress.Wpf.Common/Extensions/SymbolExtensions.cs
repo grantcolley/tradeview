@@ -11,6 +11,7 @@ namespace DevelopmentInProgress.Wpf.Common.Extensions
         {
             return new Interface.Symbol
             {
+                ExchangeSymbol = s.ExchangeSymbol,
                 NotionalMinimumValue = s.NotionalMinimumValue,
                 BaseAsset = s.BaseAsset,
                 Price = s.Price,
