@@ -263,6 +263,11 @@ namespace DevelopmentInProgress.MarketView.Api.Binance
             }
         }
 
+        public void SubscribeStatistics(IEnumerable<string> symbols, Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        {
+            SubscribeStatistics(callback, exception, cancellationToken);
+        }
+
         public void SubscribeStatistics(Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             try

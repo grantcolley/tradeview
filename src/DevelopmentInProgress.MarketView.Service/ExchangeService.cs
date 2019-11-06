@@ -92,6 +92,11 @@ namespace DevelopmentInProgress.MarketView.Service
             exchanges[exchange].SubscribeStatistics(callback, exception, cancellationToken);
         }
 
+        public void SubscribeStatistics(Exchange exchange, IEnumerable<string> symbols, Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        {
+            exchanges[exchange].SubscribeStatistics(symbols, callback, exception, cancellationToken);
+        }
+
         public async Task<AccountInfo> GetAccountInfoAsync(Exchange exchange, User user, CancellationToken cancellationToken)
         {
             var accountInfo = await exchanges[exchange].GetAccountInfoAsync(user, cancellationToken).ConfigureAwait(false);

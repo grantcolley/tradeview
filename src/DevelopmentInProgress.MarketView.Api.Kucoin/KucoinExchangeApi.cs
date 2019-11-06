@@ -364,6 +364,11 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
 
         public void SubscribeStatistics(Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
+            throw new NotImplementedException();
+        }
+
+        public void SubscribeStatistics(IEnumerable<string> symbols, Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        {
             var kucoinSocketClient = new KucoinSocketClient();
 
             CallResult<UpdateSubscription> result = null;
@@ -371,11 +376,10 @@ namespace DevelopmentInProgress.MarketView.Api.Kucoin
             try
             {
                 var kucoinClient = new KucoinClient();
-                var markets = kucoinClient.GetMarkets();
 
-                foreach (var market in markets.Data)
+                foreach (var symbol in symbols)
                 {
-                    result = kucoinSocketClient.SubscribeToSnapshotUpdates(market, data =>
+                    result = kucoinSocketClient.SubscribeToSnapshotUpdates(symbol, data =>
                     {
                         if (cancellationToken.IsCancellationRequested)
                         {
