@@ -8,8 +8,7 @@ namespace DevelopmentInProgress.Wpf.Common.Cache
     public interface ISymbolsCache
     {
         event EventHandler<Exception> OnSymbolsCacheException;
-        Task<List<Symbol>> GetSymbols();
-        void SubscribeSymbolUpdates(List<Symbol> symbols);
+        Task<List<Symbol>> GetSymbols(List<string> subscriptions);
         void ValueAccount(Account account);
     }
 }
