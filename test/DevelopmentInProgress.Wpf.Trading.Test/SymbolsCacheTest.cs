@@ -18,7 +18,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.Standard);
             var exchangeService = new WpfExchangeService(exchangeApi);
             var symbolsCache = SymbolsCacheHelper.GetSymbolsCache(exchangeService);
-            var symbols = await symbolsCache.GetSymbols();
+            var symbols = await symbolsCache.GetSymbols(new[] { "BIBBTC" });
 
             var balances = new List<Interface.AccountBalance>();
             balances.Add(new Interface.AccountBalance { Asset = "BTC", Free = 0.00794722m });
@@ -34,7 +34,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             symbolsCache.ValueAccount(account);
 
             // Assert
-            Assert.AreEqual(account.USDTValue, 64.84m);
+            Assert.AreEqual(account.USDTValue, 75.14m);
             Assert.AreEqual(account.BTCValue, 0.00794722m);
         }
 
@@ -45,7 +45,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.Standard);
             var exchangeService = new WpfExchangeService(exchangeApi);
             var symbolsCache = SymbolsCacheHelper.GetSymbolsCache(exchangeService);
-            var symbols = await symbolsCache.GetSymbols();
+            var symbols = await symbolsCache.GetSymbols(new[] { "BNBBTC" });
 
             var balances = new List<Interface.AccountBalance>();
             balances.Add(new Interface.AccountBalance { Asset = "BNB", Free = 1.88373641m });
@@ -61,8 +61,8 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             symbolsCache.ValueAccount(account);
 
             // Assert
-            Assert.AreEqual(account.USDTValue, 64.57m);
-            Assert.AreEqual(account.BTCValue, 0.00791452m);
+            Assert.AreEqual(account.USDTValue, 25.93m);
+            Assert.AreEqual(account.BTCValue, 0.00274272m);
         }
 
         [TestMethod]
@@ -72,7 +72,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.Standard);
             var exchangeService = new WpfExchangeService(exchangeApi);
             var symbolsCache = SymbolsCacheHelper.GetSymbolsCache(exchangeService);
-            var symbols = await symbolsCache.GetSymbols();
+            var symbols = await symbolsCache.GetSymbols(new[] { "BNBBTC" });
 
             var balances = new List<Interface.AccountBalance>();
             balances.Add(new Interface.AccountBalance { Asset = "BTC", Free = 0.00396715m });
@@ -89,8 +89,8 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             symbolsCache.ValueAccount(account);
             
             // Assert
-            Assert.AreEqual(account.USDTValue, 64.74m);
-            Assert.AreEqual(account.BTCValue, 0.00793522m);
+            Assert.AreEqual(account.USDTValue, 50.51m);
+            Assert.AreEqual(account.BTCValue, 0.00534226m);
         }
     }
 }
