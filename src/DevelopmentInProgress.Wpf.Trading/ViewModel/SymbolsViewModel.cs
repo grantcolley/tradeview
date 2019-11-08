@@ -144,11 +144,13 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
 
             try
             {
-                symbolsCache = symbolsCacheFactory.GetSymbolsCache(AccountPreferences.Exchange);
+                if(symbolsCache == null)
+                {
+                    symbolsCache = symbolsCacheFactory.GetSymbolsCache(AccountPreferences.Exchange);
+                    symbolsCache.OnSymbolsCacheException += SymbolsCacheException;
+                }
 
-                symbolsCache.OnSymbolsCacheException += SymbolsCacheException;
-
-                var results = await symbolsCache.GetSymbols();
+                var results = await symbolsCache.GetSymbols(AccountPreferences.Preferences.FavouriteSymbols);
 
                 Symbols = new List<Symbol>(results);
                 
@@ -187,27 +189,19 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
 
         private void SetPreferences()
         {
-            if (accountPreferences != null 
-                && accountPreferences.Preferences != null 
+            if (AccountPreferences != null 
+                && AccountPreferences.Preferences != null 
                 && Symbols != null 
                 && Symbols.Any())
             {
-                if (accountPreferences.Preferences.FavouriteSymbols != null
-                    && accountPreferences.Preferences.FavouriteSymbols.Any())
+                if (AccountPreferences.Preferences.FavouriteSymbols != null
+                    && AccountPreferences.Preferences.FavouriteSymbols.Any())
                 {
-                    Func<Symbol, string, Symbol> f = ((s, p) =>
+                    ShowFavourites = AccountPreferences.Preferences.ShowFavourites;
+
+                    if (!string.IsNullOrWhiteSpace(AccountPreferences.Preferences.SelectedSymbol))
                     {
-                        s.IsFavourite = true;
-                        return s;
-                    });
-
-                    (from s in Symbols join fs in accountPreferences.Preferences.FavouriteSymbols on s.Name equals fs.ToString() select f(s, fs)).ToList();
-
-                    ShowFavourites = accountPreferences.Preferences.ShowFavourites;
-
-                    if (!string.IsNullOrWhiteSpace(accountPreferences.Preferences.SelectedSymbol))
-                    {
-                        var symbol = Symbols.FirstOrDefault(s => s.Name.Equals(accountPreferences.Preferences.SelectedSymbol));
+                        var symbol = Symbols.FirstOrDefault(s => s.Name.Equals(AccountPreferences.Preferences.SelectedSymbol));
                         if (symbol != null)
                         {
                             SelectedSymbol = symbol;
