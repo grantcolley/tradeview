@@ -100,7 +100,9 @@ namespace DevelopmentInProgress.Wpf.Common.Services
 
         public void SubscribeStatistics(Exchange exchange, IEnumerable<Symbol> symbols, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            exchangeService.SubscribeStatistics(exchange, e =>
+            var names = symbols.Select(s => s.ExchangeSymbol).ToList();
+
+            exchangeService.SubscribeStatistics(exchange, names, e =>
             {
                 var stats = e.Statistics.ToList();
 
