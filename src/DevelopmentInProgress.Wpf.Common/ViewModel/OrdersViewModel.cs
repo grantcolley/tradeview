@@ -229,11 +229,10 @@ namespace DevelopmentInProgress.Wpf.Common.ViewModel
             disposed = true;
         }
 
-        private void Cancel(object param)
+        private void Cancel(object orderId)
         {
             try
             {
-                var orderId = long.Parse(param.ToString());
                 Cancel(orderId.ToString()).FireAndForget();
             }
             catch (Exception ex)
