@@ -93,7 +93,7 @@
                                     <Label Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Content="{Binding StopPrice, Converter={StaticResource zeroToHiddenConverter}}"/>
                                     <Label Grid.Row="0" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{Binding FilledPercent}"/>
                                     <StackPanel Grid.Row="1" Grid.Column="5">
-                                        <Button Width="50" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                        <Button Width="55" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center"
                                                 Command="{Binding Path=DataContext.CancelOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                                 CommandParameter="{Binding Id}"
                                                 Visibility="{Binding IsVisible, Converter={StaticResource boolToVisibilityConverter}}">
