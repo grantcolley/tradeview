@@ -91,12 +91,11 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Xceed.Wpf.AvalonDock">
-      <HintPath>..\..\Libs\Xceed\Xceed.Wpf.AvalonDock.dll</HintPath>
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\TradeView.ThirdParty.1.0.0.0\lib\Xceed.Wpf.AvalonDock.dll</HintPath>
     </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2013, Version=2.9.0.1, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\libs\Xceed\Xceed.Wpf.AvalonDock.Themes.VS2013.dll</HintPath>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2013, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\TradeView.ThirdParty.1.0.0.0\lib\Xceed.Wpf.AvalonDock.Themes.VS2013.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
