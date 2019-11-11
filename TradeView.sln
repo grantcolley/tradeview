@@ -25,8 +25,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Strategies", "Strategies", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DipSocket", "..\dipsocket\src\DipSocket\DipSocket.csproj", "{6F832752-DDC0-41BD-BB5A-44BAE71EA42A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exchange", "Exchange", "{3E427B35-E53D-4236-B15A-EF67633AE521}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.SMA", "..\tradeview.strategy\src\Strategies\DevelopmentInProgress.SMA\DevelopmentInProgress.SMA.csproj", "{C9E15298-3202-4C31-8401-CEE16B9662F2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.SMA.Wpf", "..\tradeview.strategy\src\Strategies\DevelopmentInProgress.SMA.Wpf\DevelopmentInProgress.SMA.Wpf.csproj", "{6BE4B419-9382-40F1-A79C-0A78E7C2341C}"
@@ -46,14 +44,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.Demo", "..\tradeview.strategy\src\Strategies\DevelopmentInProgress.Demo\DevelopmentInProgress.Demo.csproj", "{8AC96D9E-BF55-4A28-BEA8-16B01F2343D4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Demo.Wpf", "..\tradeview.strategy\src\Strategies\DevelopmentInProgress.Demo.Wpf\DevelopmentInProgress.Demo.Wpf.csproj", "{0A22E692-5958-41BD-AA1E-245000571604}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kucoin.Net", "..\Kucoin.Net\Kucoin.Net\Kucoin.Net.csproj", "{0C1F406E-FA05-4AE7-BD80-AE7EA8C12380}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kucoin", "Kucoin", "{97D9DEB2-F899-44F0-979A-28460CA75B54}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Binance", "Binance", "{F4C3B8A3-7305-4C4C-8BE1-58DC13CA265B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoExchange.Net", "..\Kucoin.Net\CryptoExchange.Net\CryptoExchange.Net\CryptoExchange.Net.csproj", "{4B117527-36DB-43B3-B780-F5894ECD089B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.MarketView.Api.Kucoin", "src\DevelopmentInProgress.MarketView.Api.Kucoin\DevelopmentInProgress.MarketView.Api.Kucoin.csproj", "{F668F719-8C61-4505-A5FF-BCBA55852030}"
 EndProject
@@ -141,14 +131,6 @@ Global
 		{0A22E692-5958-41BD-AA1E-245000571604}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A22E692-5958-41BD-AA1E-245000571604}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A22E692-5958-41BD-AA1E-245000571604}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0C1F406E-FA05-4AE7-BD80-AE7EA8C12380}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C1F406E-FA05-4AE7-BD80-AE7EA8C12380}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C1F406E-FA05-4AE7-BD80-AE7EA8C12380}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C1F406E-FA05-4AE7-BD80-AE7EA8C12380}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4B117527-36DB-43B3-B780-F5894ECD089B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4B117527-36DB-43B3-B780-F5894ECD089B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4B117527-36DB-43B3-B780-F5894ECD089B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4B117527-36DB-43B3-B780-F5894ECD089B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F668F719-8C61-4505-A5FF-BCBA55852030}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F668F719-8C61-4505-A5FF-BCBA55852030}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F668F719-8C61-4505-A5FF-BCBA55852030}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -170,10 +152,6 @@ Global
 		{BED25B87-79B9-4AFD-A785-8DB7CAFFF8BF} = {7F4ED901-668D-48FB-A172-4C263A3ABC02}
 		{8AC96D9E-BF55-4A28-BEA8-16B01F2343D4} = {782814CA-6F6B-4C17-B374-1AB659CE5C46}
 		{0A22E692-5958-41BD-AA1E-245000571604} = {782814CA-6F6B-4C17-B374-1AB659CE5C46}
-		{0C1F406E-FA05-4AE7-BD80-AE7EA8C12380} = {97D9DEB2-F899-44F0-979A-28460CA75B54}
-		{97D9DEB2-F899-44F0-979A-28460CA75B54} = {3E427B35-E53D-4236-B15A-EF67633AE521}
-		{F4C3B8A3-7305-4C4C-8BE1-58DC13CA265B} = {3E427B35-E53D-4236-B15A-EF67633AE521}
-		{4B117527-36DB-43B3-B780-F5894ECD089B} = {97D9DEB2-F899-44F0-979A-28460CA75B54}
 		{4A72C96E-E459-4A33-8E21-F348AF8BB503} = {7F4ED901-668D-48FB-A172-4C263A3ABC02}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
