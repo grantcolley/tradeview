@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -16,11 +16,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Binance" Version="0.2.0-beta902" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Binance\src\Binance\Binance.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.MarketView.Interface\DevelopmentInProgress.MarketView.Interface.csproj" />
   </ItemGroup>
 

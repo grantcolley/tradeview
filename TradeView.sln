@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29503.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Wpf.Host", "src\DevelopmentInProgress.Wpf.Host\DevelopmentInProgress.Wpf.Host.csproj", "{7BCE5D35-0443-4031-843A-3563356290E1}"
 EndProject
@@ -26,8 +26,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DipSocket", "..\dipsocket\src\DipSocket\DipSocket.csproj", "{6F832752-DDC0-41BD-BB5A-44BAE71EA42A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exchange", "Exchange", "{3E427B35-E53D-4236-B15A-EF67633AE521}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Binance", "..\Binance\src\Binance\Binance.csproj", "{D78CBD85-E767-4690-8F85-6F2D056EF614}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.SMA", "..\tradeview.strategy\src\Strategies\DevelopmentInProgress.SMA\DevelopmentInProgress.SMA.csproj", "{C9E15298-3202-4C31-8401-CEE16B9662F2}"
 EndProject
@@ -59,7 +57,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoExchange.Net", "..\Ku
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.MarketView.Api.Kucoin", "src\DevelopmentInProgress.MarketView.Api.Kucoin\DevelopmentInProgress.MarketView.Api.Kucoin.csproj", "{F668F719-8C61-4505-A5FF-BCBA55852030}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Wpf.Common.Test", "test\DevelopmentInProgress.Wpf.Common.Test\DevelopmentInProgress.Wpf.Common.Test.csproj", "{4A72C96E-E459-4A33-8E21-F348AF8BB503}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.Wpf.Common.Test", "test\DevelopmentInProgress.Wpf.Common.Test\DevelopmentInProgress.Wpf.Common.Test.csproj", "{4A72C96E-E459-4A33-8E21-F348AF8BB503}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -103,10 +101,6 @@ Global
 		{6F832752-DDC0-41BD-BB5A-44BAE71EA42A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F832752-DDC0-41BD-BB5A-44BAE71EA42A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F832752-DDC0-41BD-BB5A-44BAE71EA42A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D78CBD85-E767-4690-8F85-6F2D056EF614}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D78CBD85-E767-4690-8F85-6F2D056EF614}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D78CBD85-E767-4690-8F85-6F2D056EF614}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D78CBD85-E767-4690-8F85-6F2D056EF614}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C9E15298-3202-4C31-8401-CEE16B9662F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C9E15298-3202-4C31-8401-CEE16B9662F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9E15298-3202-4C31-8401-CEE16B9662F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -170,7 +164,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{CF7E490F-2CED-4287-A704-766DE5C90B1B} = {7F4ED901-668D-48FB-A172-4C263A3ABC02}
 		{57648E9E-B953-40C7-85FC-503270B99640} = {7F4ED901-668D-48FB-A172-4C263A3ABC02}
-		{D78CBD85-E767-4690-8F85-6F2D056EF614} = {F4C3B8A3-7305-4C4C-8BE1-58DC13CA265B}
 		{C9E15298-3202-4C31-8401-CEE16B9662F2} = {782814CA-6F6B-4C17-B374-1AB659CE5C46}
 		{6BE4B419-9382-40F1-A79C-0A78E7C2341C} = {782814CA-6F6B-4C17-B374-1AB659CE5C46}
 		{3922C186-7F3C-4173-A3C1-A26207C602A2} = {7F4ED901-668D-48FB-A172-4C263A3ABC02}
