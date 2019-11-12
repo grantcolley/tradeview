@@ -23,25 +23,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Wpf.C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Strategies", "Strategies", "{782814CA-6F6B-4C17-B374-1AB659CE5C46}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.SMA", "..\tradeview.strategy\src\Strategies\DevelopmentInProgress.SMA\DevelopmentInProgress.SMA.csproj", "{C9E15298-3202-4C31-8401-CEE16B9662F2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.SMA.Wpf", "..\tradeview.strategy\src\Strategies\DevelopmentInProgress.SMA.Wpf\DevelopmentInProgress.SMA.Wpf.csproj", "{6BE4B419-9382-40F1-A79C-0A78E7C2341C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.SMA.Test", "test\DevelopmentInProgress.SMA.Test\DevelopmentInProgress.SMA.Test.csproj", "{3922C186-7F3C-4173-A3C1-A26207C602A2}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.Common", "src\DevelopmentInProgress.Common\DevelopmentInProgress.Common.csproj", "{8ADF4563-822F-40B1-9ED2-0C6C629D9EF1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Wpf.Trading", "src\DevelopmentInProgress.Wpf.Trading\DevelopmentInProgress.Wpf.Trading.csproj", "{2183C26D-6932-41D9-BB1E-16FA55ADF983}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Wpf.Trading.Test", "test\DevelopmentInProgress.Wpf.Trading.Test\DevelopmentInProgress.Wpf.Trading.Test.csproj", "{BED25B87-79B9-4AFD-A785-8DB7CAFFF8BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Wpf.Strategies", "..\tradeview.strategy\src\DevelopmentInProgress.Wpf.Strategies\DevelopmentInProgress.Wpf.Strategies.csproj", "{6DA0B118-5B4E-4A0A-BA53-23C18D957006}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Wpf.Configuration", "src\DevelopmentInProgress.Wpf.Configuration\DevelopmentInProgress.Wpf.Configuration.csproj", "{5532918F-2DED-441B-ACA5-4AB94B1C83DE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.Demo", "..\tradeview.strategy\src\Strategies\DevelopmentInProgress.Demo\DevelopmentInProgress.Demo.csproj", "{8AC96D9E-BF55-4A28-BEA8-16B01F2343D4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Demo.Wpf", "..\tradeview.strategy\src\Strategies\DevelopmentInProgress.Demo.Wpf\DevelopmentInProgress.Demo.Wpf.csproj", "{0A22E692-5958-41BD-AA1E-245000571604}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.MarketView.Api.Kucoin", "src\DevelopmentInProgress.MarketView.Api.Kucoin\DevelopmentInProgress.MarketView.Api.Kucoin.csproj", "{F668F719-8C61-4505-A5FF-BCBA55852030}"
 EndProject
@@ -85,18 +73,6 @@ Global
 		{2B523839-EE20-4ED3-A1BA-AC2070C99F4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B523839-EE20-4ED3-A1BA-AC2070C99F4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B523839-EE20-4ED3-A1BA-AC2070C99F4D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C9E15298-3202-4C31-8401-CEE16B9662F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C9E15298-3202-4C31-8401-CEE16B9662F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C9E15298-3202-4C31-8401-CEE16B9662F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C9E15298-3202-4C31-8401-CEE16B9662F2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6BE4B419-9382-40F1-A79C-0A78E7C2341C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6BE4B419-9382-40F1-A79C-0A78E7C2341C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6BE4B419-9382-40F1-A79C-0A78E7C2341C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6BE4B419-9382-40F1-A79C-0A78E7C2341C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3922C186-7F3C-4173-A3C1-A26207C602A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3922C186-7F3C-4173-A3C1-A26207C602A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3922C186-7F3C-4173-A3C1-A26207C602A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3922C186-7F3C-4173-A3C1-A26207C602A2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8ADF4563-822F-40B1-9ED2-0C6C629D9EF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8ADF4563-822F-40B1-9ED2-0C6C629D9EF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8ADF4563-822F-40B1-9ED2-0C6C629D9EF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -109,22 +85,10 @@ Global
 		{BED25B87-79B9-4AFD-A785-8DB7CAFFF8BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BED25B87-79B9-4AFD-A785-8DB7CAFFF8BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BED25B87-79B9-4AFD-A785-8DB7CAFFF8BF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6DA0B118-5B4E-4A0A-BA53-23C18D957006}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6DA0B118-5B4E-4A0A-BA53-23C18D957006}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6DA0B118-5B4E-4A0A-BA53-23C18D957006}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6DA0B118-5B4E-4A0A-BA53-23C18D957006}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5532918F-2DED-441B-ACA5-4AB94B1C83DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5532918F-2DED-441B-ACA5-4AB94B1C83DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5532918F-2DED-441B-ACA5-4AB94B1C83DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5532918F-2DED-441B-ACA5-4AB94B1C83DE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8AC96D9E-BF55-4A28-BEA8-16B01F2343D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8AC96D9E-BF55-4A28-BEA8-16B01F2343D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8AC96D9E-BF55-4A28-BEA8-16B01F2343D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8AC96D9E-BF55-4A28-BEA8-16B01F2343D4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F668F719-8C61-4505-A5FF-BCBA55852030}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F668F719-8C61-4505-A5FF-BCBA55852030}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F668F719-8C61-4505-A5FF-BCBA55852030}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -140,12 +104,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{CF7E490F-2CED-4287-A704-766DE5C90B1B} = {7F4ED901-668D-48FB-A172-4C263A3ABC02}
 		{57648E9E-B953-40C7-85FC-503270B99640} = {7F4ED901-668D-48FB-A172-4C263A3ABC02}
-		{C9E15298-3202-4C31-8401-CEE16B9662F2} = {782814CA-6F6B-4C17-B374-1AB659CE5C46}
-		{6BE4B419-9382-40F1-A79C-0A78E7C2341C} = {782814CA-6F6B-4C17-B374-1AB659CE5C46}
-		{3922C186-7F3C-4173-A3C1-A26207C602A2} = {7F4ED901-668D-48FB-A172-4C263A3ABC02}
 		{BED25B87-79B9-4AFD-A785-8DB7CAFFF8BF} = {7F4ED901-668D-48FB-A172-4C263A3ABC02}
-		{8AC96D9E-BF55-4A28-BEA8-16B01F2343D4} = {782814CA-6F6B-4C17-B374-1AB659CE5C46}
-		{0A22E692-5958-41BD-AA1E-245000571604} = {782814CA-6F6B-4C17-B374-1AB659CE5C46}
 		{4A72C96E-E459-4A33-8E21-F348AF8BB503} = {7F4ED901-668D-48FB-A172-4C263A3ABC02}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

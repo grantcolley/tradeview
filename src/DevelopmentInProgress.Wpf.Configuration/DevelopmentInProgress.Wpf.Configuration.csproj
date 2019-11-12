@@ -126,10 +126,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\tradeview.strategy\src\DevelopmentInProgress.Wpf.Strategies\DevelopmentInProgress.Wpf.Strategies.csproj">
-      <Project>{6da0b118-5b4e-4a0a-ba53-23c18d957006}</Project>
-      <Name>DevelopmentInProgress.Wpf.Strategies</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\tradeview\src\DevelopmentInProgress.MarketView.Interface\DevelopmentInProgress.MarketView.Interface.csproj">
       <Project>{86695062-90cc-419d-b455-d6d8c364a215}</Project>
       <Name>DevelopmentInProgress.MarketView.Interface</Name>
