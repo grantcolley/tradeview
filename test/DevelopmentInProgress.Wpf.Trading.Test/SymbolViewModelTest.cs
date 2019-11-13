@@ -318,6 +318,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var topAsks = orderBook.Asks.Take(preferences.OrderBookDisplayCount).Reverse().ToList();
             for (int i = 0; i < preferences.OrderBookDisplayCount; i++)
             {
+                Debug.WriteLine($"{i} Assert.AreEqual({symbolViewModel.OrderBook.TopAsks[i].Price}, {topAsks[i].Price});");
                 Assert.AreEqual(symbolViewModel.OrderBook.TopAsks[i].Price, topAsks[i].Price);
                 Assert.AreEqual(symbolViewModel.OrderBook.TopAsks[i].Quantity, topAsks[i].Quantity);
             }
