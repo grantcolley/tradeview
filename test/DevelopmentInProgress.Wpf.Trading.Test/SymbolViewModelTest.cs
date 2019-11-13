@@ -98,18 +98,16 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var trx = TestHelper.Trx.GetViewSymbol();
             symbolViewModel.Symbol = trx;
 
-            var orderBook1 = new OrderBookUpdateHelper();
-            var firstOrderBook = orderBook1.OrderBook_Trx_GetFirstUpdate();
+            var orderBook = new OrderBookUpdateHelper();
+            var firstOrderBook = orderBook.OrderBook_Trx_GetFirstUpdate();
+            var secondOrderBook = orderBook.OrderBook_Trx_GetSecondUpdate();
+
+            Debug.WriteLine($"firstOrderBook = {firstOrderBook.LastUpdateId}; secondOrderBook={secondOrderBook.LastUpdateId}");
 
             // Act
             symbolViewModel.UpdateOrderBook(firstOrderBook);
 
-            Task.Delay(2000);
 
-            var orderBook2 = new OrderBookUpdateHelper();
-            var secondOrderBook = orderBook2.OrderBook_Trx_GetSecondUpdate();
-
-            Task.Delay(2000);
 
             symbolViewModel.UpdateOrderBook(secondOrderBook);
 
