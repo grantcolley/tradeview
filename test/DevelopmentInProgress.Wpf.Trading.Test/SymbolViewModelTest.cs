@@ -101,15 +101,11 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var orderBook1 = new OrderBookUpdateHelper();
             var firstOrderBook = orderBook1.OrderBook_Trx_GetFirstUpdate();
 
-            // Act
-            symbolViewModel.UpdateOrderBook(firstOrderBook);
-
-            Task.Delay(1000);
-
             var orderBook2 = new OrderBookUpdateHelper();
             var secondOrderBook = orderBook2.OrderBook_Trx_GetSecondUpdate();
 
-            Task.Delay(1000);
+            // Act
+            symbolViewModel.UpdateOrderBook(firstOrderBook);
 
             symbolViewModel.UpdateOrderBook(secondOrderBook);
 
