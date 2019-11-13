@@ -72,7 +72,8 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var trx = TestHelper.Trx.GetViewSymbol();
             symbolViewModel.Symbol = trx;
 
-            var orderBook = OrderBookUpdateHelper.OrderBook_Trx_GetFirstUpdate();
+            var orderBook1 = new OrderBookUpdateHelper();
+            var orderBook = orderBook1.OrderBook_Trx_GetFirstUpdate();
 
             // Act
             symbolViewModel.UpdateOrderBook(orderBook);
@@ -97,14 +98,16 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var trx = TestHelper.Trx.GetViewSymbol();
             symbolViewModel.Symbol = trx;
 
-            var firstOrderBook = OrderBookUpdateHelper.OrderBook_Trx_GetFirstUpdate();
+            var orderBook1 = new OrderBookUpdateHelper();
+            var firstOrderBook = orderBook1.OrderBook_Trx_GetFirstUpdate();
 
             // Act
             symbolViewModel.UpdateOrderBook(firstOrderBook);
 
             Task.Delay(1000);
 
-            var secondOrderBook = OrderBookUpdateHelper.OrderBook_Trx_GetSecondUpdate();
+            var orderBook2 = new OrderBookUpdateHelper();
+            var secondOrderBook = orderBook2.OrderBook_Trx_GetSecondUpdate();
 
             Task.Delay(1000);
 

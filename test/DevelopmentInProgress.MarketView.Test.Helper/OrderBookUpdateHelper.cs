@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace DevelopmentInProgress.MarketView.Test.Helper
 {
-    public static class OrderBookUpdateHelper
+    public class OrderBookUpdateHelper
     {
-        public static OrderBook OrderBook_Trx_GetFirstUpdate()
+        public OrderBook OrderBook_Trx_GetFirstUpdate()
         {
             var ask0 = new OrderBookPriceLevel { Price = 1.11m, Quantity = 170 };
             var ask1 = new OrderBookPriceLevel { Price = 1.12m, Quantity = 100 };
@@ -39,7 +39,7 @@ namespace DevelopmentInProgress.MarketView.Test.Helper
             return orderBook;
         }
 
-        public static OrderBook OrderBook_Trx_GetSecondUpdate()
+        public OrderBook OrderBook_Trx_GetSecondUpdate()
         {
             var ask0 = new OrderBookPriceLevel { Price = 1.10m, Quantity = 150 };
             var ask1 = new OrderBookPriceLevel { Price = 1.11m, Quantity = 140 };
