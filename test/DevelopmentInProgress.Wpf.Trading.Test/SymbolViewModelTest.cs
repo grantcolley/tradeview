@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using DevelopmentInProgress.MarketView.Interface.Enums;
@@ -55,30 +56,30 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             Assert.IsTrue(symbolViewModel.Trades.Count > 0);
         }
 
-        //[TestMethod]
-        //public void UpdateOrderBook_FirstUpdate()
-        //{
-        //    // Arrange
-        //    var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-        //    var exchangeService = new WpfExchangeService(exchangeApi);
+        [TestMethod]
+        public void UpdateOrderBook_FirstUpdate()
+        {
+            // Arrange
+            var exchangeApi = ExchangeServiceHelper.GetExchangeService();
+            var exchangeService = new WpfExchangeService(exchangeApi);
 
-        //    var preferences = new Model.Preferences();
-        //    preferences.OrderBookChartDisplayCount = 8;
-        //    preferences.OrderBookDisplayCount = 5;
-            
-        //    var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, new BinanceOrderBookHelper(), preferences, new DebugLogger());
+            var preferences = new Model.Preferences();
+            preferences.OrderBookChartDisplayCount = 8;
+            preferences.OrderBookDisplayCount = 5;
 
-        //    var trx = TestHelper.Trx.GetViewSymbol();
-        //    symbolViewModel.Symbol = trx;
+            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, new BinanceOrderBookHelper(), preferences, new DebugLogger());
 
-        //    var orderBook = OrderBookUpdateHelper.OrderBook_Trx_GetFirstUpdate();
-            
-        //    // Act
-        //    symbolViewModel.UpdateOrderBook(orderBook);
+            var trx = TestHelper.Trx.GetViewSymbol();
+            symbolViewModel.Symbol = trx;
 
-        //    // Assert
-        //    AssertOrderBookUpdate(symbolViewModel, orderBook, preferences);
-        //}
+            var orderBook = OrderBookUpdateHelper.OrderBook_Trx_GetFirstUpdate();
+
+            // Act
+            symbolViewModel.UpdateOrderBook(orderBook);
+
+            // Assert
+            AssertOrderBookUpdate(symbolViewModel, orderBook, preferences);
+        }
 
         [TestMethod]
         public void UpdateOrderBook_SecondUpdate()
@@ -312,6 +313,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             Assert.AreEqual(symbolViewModel.OrderBook.LastUpdateId, orderBook.LastUpdateId);
 
             // Assert - TopAsks
+            Debug.WriteLine("Assert - TopAsks");
             Assert.AreEqual(symbolViewModel.OrderBook.TopAsks.Count, preferences.OrderBookDisplayCount);
             var topAsks = orderBook.Asks.Take(preferences.OrderBookDisplayCount).Reverse().ToList();
             for (int i = 0; i < preferences.OrderBookDisplayCount; i++)
@@ -321,6 +323,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             }
 
             // Assert - TopBids
+            Debug.WriteLine("Assert - TopBids");
             Assert.AreEqual(symbolViewModel.OrderBook.TopBids.Count, preferences.OrderBookDisplayCount);
             var topBids = orderBook.Bids.Take(preferences.OrderBookDisplayCount).ToList();
             for (int i = 0; i < preferences.OrderBookDisplayCount; i++)
@@ -330,6 +333,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             }
 
             // Assert - ChartAsks
+            Debug.WriteLine("Assert - ChartAsks");
             Assert.AreEqual(symbolViewModel.OrderBook.ChartAsks.Count, preferences.OrderBookChartDisplayCount);
             var chartAsks = orderBook.Asks.Take(preferences.OrderBookChartDisplayCount).ToList();
             for (int i = 0; i < preferences.OrderBookChartDisplayCount; i++)
@@ -339,6 +343,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             }
 
             // Assert ChartBids
+            Debug.WriteLine("Assert - ChartBids");
             Assert.AreEqual(symbolViewModel.OrderBook.ChartBids.Count, preferences.OrderBookChartDisplayCount);
             var chartBids = orderBook.Bids.Take(preferences.OrderBookChartDisplayCount).Reverse<OrderBookPriceLevel>().ToList();
             for (int i = 0; i < preferences.OrderBookChartDisplayCount; i++)
@@ -348,6 +353,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             }
 
             // Assert ChartAggregateAsks
+            Debug.WriteLine("Assert - ChartAggregateAsks");
             Assert.AreEqual(symbolViewModel.OrderBook.ChartAggregatedAsks.Count, preferences.OrderBookChartDisplayCount);
             var runningTotal = 0m;
             for (int i = 0; i < preferences.OrderBookChartDisplayCount; i++)
@@ -366,6 +372,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             }
 
             // Assert ChartAggregateBids
+            Debug.WriteLine("Assert - ChartAggregateBids");
             Assert.AreEqual(symbolViewModel.OrderBook.ChartAggregatedBids.Count, preferences.OrderBookChartDisplayCount);
 
             var aggregatedBidsList = orderBook.Bids.Take(preferences.OrderBookChartDisplayCount).Select(p => new OrderBookPriceLevel { Price = p.Price, Quantity = p.Quantity }).ToList();
