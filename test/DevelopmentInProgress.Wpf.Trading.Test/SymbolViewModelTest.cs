@@ -99,12 +99,12 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
 
             var firstOrderBook = OrderBookUpdateHelper.OrderBook_Trx_GetFirstUpdate();
 
+            // Act
+            symbolViewModel.UpdateOrderBook(firstOrderBook);
+
             Task.Delay(1000);
 
             var secondOrderBook = OrderBookUpdateHelper.OrderBook_Trx_GetSecondUpdate();
-
-            // Act
-            symbolViewModel.UpdateOrderBook(firstOrderBook);
 
             Task.Delay(1000);
 
