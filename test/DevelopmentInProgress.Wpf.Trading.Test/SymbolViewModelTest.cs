@@ -100,6 +100,9 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
 
             var orderBook = new OrderBookUpdateHelper();
             var firstOrderBook = orderBook.OrderBook_Trx_GetFirstUpdate();
+
+            Task.Delay(1000);
+
             var secondOrderBook = orderBook.OrderBook_Trx_GetSecondUpdate();
 
             Debug.WriteLine($"firstOrderBook = {firstOrderBook.LastUpdateId}; secondOrderBook={secondOrderBook.LastUpdateId}");
