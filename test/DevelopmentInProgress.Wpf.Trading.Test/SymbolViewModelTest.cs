@@ -98,6 +98,9 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             symbolViewModel.Symbol = trx;
 
             var firstOrderBook = OrderBookUpdateHelper.OrderBook_Trx_GetFirstUpdate();
+
+            Task.Delay(100);
+
             var secondOrderBook = OrderBookUpdateHelper.OrderBook_Trx_GetSecondUpdate();
 
             // Act
