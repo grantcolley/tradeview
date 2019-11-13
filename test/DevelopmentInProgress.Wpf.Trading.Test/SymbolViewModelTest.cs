@@ -109,6 +109,8 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             var orderBook2 = new OrderBookUpdateHelper();
             var secondOrderBook = orderBook2.OrderBook_Trx_GetSecondUpdate();
 
+            Task.Delay(1000);
+
             symbolViewModel.UpdateOrderBook(secondOrderBook);
 
             // Assert
