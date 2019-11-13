@@ -55,30 +55,30 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
             Assert.IsTrue(symbolViewModel.Trades.Count > 0);
         }
 
-        [TestMethod]
-        public void UpdateOrderBook_FirstUpdate()
-        {
-            // Arrange
-            var exchangeApi = ExchangeServiceHelper.GetExchangeService();
-            var exchangeService = new WpfExchangeService(exchangeApi);
+        //[TestMethod]
+        //public void UpdateOrderBook_FirstUpdate()
+        //{
+        //    // Arrange
+        //    var exchangeApi = ExchangeServiceHelper.GetExchangeService();
+        //    var exchangeService = new WpfExchangeService(exchangeApi);
 
-            var preferences = new Model.Preferences();
-            preferences.OrderBookChartDisplayCount = 8;
-            preferences.OrderBookDisplayCount = 5;
+        //    var preferences = new Model.Preferences();
+        //    preferences.OrderBookChartDisplayCount = 8;
+        //    preferences.OrderBookDisplayCount = 5;
             
-            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, new BinanceOrderBookHelper(), preferences, new DebugLogger());
+        //    var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, new BinanceOrderBookHelper(), preferences, new DebugLogger());
 
-            var trx = TestHelper.Trx.GetViewSymbol();
-            symbolViewModel.Symbol = trx;
+        //    var trx = TestHelper.Trx.GetViewSymbol();
+        //    symbolViewModel.Symbol = trx;
 
-            var orderBook = OrderBookUpdateHelper.OrderBook_Trx_GetFirstUpdate();
+        //    var orderBook = OrderBookUpdateHelper.OrderBook_Trx_GetFirstUpdate();
             
-            // Act
-            symbolViewModel.UpdateOrderBook(orderBook);
+        //    // Act
+        //    symbolViewModel.UpdateOrderBook(orderBook);
 
-            // Assert
-            AssertOrderBookUpdate(symbolViewModel, orderBook, preferences);
-        }
+        //    // Assert
+        //    AssertOrderBookUpdate(symbolViewModel, orderBook, preferences);
+        //}
 
         [TestMethod]
         public void UpdateOrderBook_SecondUpdate()
