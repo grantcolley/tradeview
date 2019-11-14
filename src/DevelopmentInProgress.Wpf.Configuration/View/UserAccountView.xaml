@@ -7,9 +7,89 @@
              mc:Ignorable="d">
     <Grid>
         <GroupBox Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <TextBox Text="{Binding UserAccountJson}" TextWrapping="Wrap" AcceptsReturn="True" BorderThickness="0" BorderBrush="Transparent"/>
-            </ScrollViewer>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="2"/>
+                    <ColumnDefinition Width="50*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox Grid.Column="2" Text="{Binding UserAccountJson}" TextWrapping="Wrap" AcceptsReturn="True" BorderThickness="0" BorderBrush="Transparent"/>
+
+                <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
+                
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Account Name:" Margin="2"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding UserAccount.AccountName}" Margin="2" Width="300" HorizontalAlignment="Left"/>
+
+                    <Label Grid.Row="1" Grid.Column="0" Content="Exchange:" Margin="2"/>
+                    <ComboBox Grid.Row="1" Grid.Column="1" Margin="2" IsReadOnly="True" Width="150" HorizontalAlignment="Left"
+                              ItemsSource="{Binding Exchanges}"
+                              SelectedItem="{Binding SelectedExchange, Mode=TwoWay}"/>
+
+                    <Label Grid.Row="2" Grid.Column="0" Content="Api Key:" Margin="2"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding UserAccount.ApiKey}" Margin="2" HorizontalAlignment="Stretch"/>
+
+                    <Label Grid.Row="3" Grid.Column="0" Content="Api Secret:" Margin="2"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding UserAccount.ApiSecret}" Margin="2" HorizontalAlignment="Stretch"/>
+
+                    <Label Grid.Row="4" Grid.Column="0" Content="Api Pass Phrase:" Margin="2"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding UserAccount.ApiPassPhrase}" Margin="2" Width="300" HorizontalAlignment="Left"/>
+
+                    <GroupBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" Header="Preferences">
+                        <Grid Grid.Column="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0" Grid.Column="0" Content="Selected Symbol:" Margin="2"/>
+                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding UserAccount.Preferences.SelectedSymbol}" Margin="2" Width="100" HorizontalAlignment="Left"/>
+
+                            <Label Grid.Row="1" Grid.Column="0" Content="Trade Limit:" Margin="2"/>
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding UserAccount.Preferences.TradeLimit}" Margin="2" Width="100" HorizontalAlignment="Left"/>
+
+                            <Label Grid.Row="2" Grid.Column="0" Content="Trades Display Count:" Margin="2"/>
+                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding UserAccount.Preferences.TradesDisplayCount}" Margin="2" Width="100" HorizontalAlignment="Left"/>
+
+                            <Label Grid.Row="3" Grid.Column="0" Content="Trades Chart Display Count:" Margin="2"/>
+                            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding UserAccount.Preferences.TradesChartDisplayCount}" Margin="2" Width="100" HorizontalAlignment="Left"/>
+
+                            <Label Grid.Row="4" Grid.Column="0" Content="Order Book Limit:" Margin="2"/>
+                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding UserAccount.Preferences.OrderBookLimit}" Margin="2" Width="100" HorizontalAlignment="Left"/>
+
+                            <Label Grid.Row="5" Grid.Column="0" Content="Order Book Display Count:" Margin="2"/>
+                            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding UserAccount.Preferences.OrderBookDisplayCount}" Margin="2" Width="100" HorizontalAlignment="Left"/>
+
+                            <Label Grid.Row="6" Grid.Column="0" Content="Order Book Chart Display Count:" Margin="2"/>
+                            <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding UserAccount.Preferences.OrderBookChartDisplayCount}" Margin="2" Width="100" HorizontalAlignment="Left"/>
+                            
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </Grid>
         </GroupBox>
     </Grid>
 </UserControl>
