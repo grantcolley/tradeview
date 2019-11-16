@@ -10,7 +10,6 @@ using System;
 using DevelopmentInProgress.Wpf.Common.Events;
 using Prism.Logging;
 using DevelopmentInProgress.Wpf.Configuration.Utility;
-using DevelopmentInProgress.MarketView.Interface.Model;
 
 namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
 {
