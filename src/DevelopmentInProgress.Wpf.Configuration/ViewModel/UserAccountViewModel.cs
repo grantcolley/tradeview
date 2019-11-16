@@ -1,4 +1,6 @@
-﻿using DevelopmentInProgress.Wpf.Common.Model;
+﻿using DevelopmentInProgress.MarketView.Interface.Enums;
+using DevelopmentInProgress.MarketView.Interface.Extensions;
+using DevelopmentInProgress.Wpf.Common.Model;
 using DevelopmentInProgress.Wpf.Common.ViewModel;
 using Newtonsoft.Json;
 using Prism.Logging;
@@ -15,6 +17,27 @@ namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
             : base(logger)
         {
             UserAccount = userAccount;
+        }
+
+        public string[] Exchanges
+        {
+            get { return ExchangeExtensions.Exchanges(); }
+        }
+
+        public string SelectedExchange 
+        {
+            get { return userAccount.Exchange.ToString(); }
+            set
+            {
+                if(value == null)
+                {
+                    userAccount.Exchange = Exchange.Unknown;
+                }
+                else
+                {
+                    userAccount.Exchange = ExchangeExtensions.GetExchange(value);
+                }
+            }
         }
 
         public UserAccount UserAccount
