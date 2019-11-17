@@ -107,6 +107,7 @@
     <Compile Include="Utility\StrategyFileManager.cs" />
     <Compile Include="ViewModel\StrategyManagerViewModel.cs" />
     <Compile Include="ViewModel\StrategyViewModel.cs" />
+    <Compile Include="ViewModel\SymbolsViewModel.cs" />
     <Compile Include="ViewModel\UserAccountsViewModel.cs" />
     <Compile Include="ViewModel\UserAccountViewModel.cs" />
     <Compile Include="View\ParameterDialogView.xaml.cs">
@@ -145,6 +146,10 @@
     <ProjectReference Include="..\..\..\tradeview\src\DevelopmentInProgress.Wpf.Host\DevelopmentInProgress.Wpf.Host.csproj">
       <Project>{7bce5d35-0443-4031-843a-3563356290e1}</Project>
       <Name>DevelopmentInProgress.Wpf.Host</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DevelopmentInProgress.Common\DevelopmentInProgress.Common.csproj">
+      <Project>{8adf4563-822f-40b1-9ed2-0c6c629d9ef1}</Project>
+      <Name>DevelopmentInProgress.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\DevelopmentInProgress.Wpf.Trading\DevelopmentInProgress.Wpf.Trading.csproj">
       <Project>{2183c26d-6932-41d9-bb1e-16fa55adf983}</Project>
