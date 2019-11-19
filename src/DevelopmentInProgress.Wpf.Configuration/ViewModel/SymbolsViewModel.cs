@@ -9,6 +9,8 @@ using System.Linq;
 using DevelopmentInProgress.Wpf.Controls.Messaging;
 using DevelopmentInProgress.Wpf.Common.ViewModel;
 using Prism.Logging;
+using DevelopmentInProgress.Wpf.Common.Command;
+using System.Windows.Input;
 
 namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
 {
@@ -25,8 +27,12 @@ namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
         {
             this.userAccount = userAccount;
 
+            UpdatePreferencesCommand = new ViewModelCommand(UpdatePreferences);
+
             GetSymbols().FireAndForget();
         }
+
+        public ICommand UpdatePreferencesCommand { get; set; }
 
         public string Exchange
         {
@@ -120,6 +126,28 @@ namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
             }
 
             IsLoadingSymbols = false;
+        }
+
+        private void UpdatePreferences(object arg)
+        {
+            var symbol = arg as Symbol;
+            if(symbol != null)
+            {
+                if(symbol.IsFavourite)
+                {
+                    if(!userAccount.Preferences.FavouriteSymbols.Contains(symbol.Name))
+                    {
+                        userAccount.Preferences.FavouriteSymbols.Add(symbol.Name);
+                    }
+                }
+                else
+                {
+                    if (userAccount.Preferences.FavouriteSymbols.Contains(symbol.Name))
+                    {
+                        userAccount.Preferences.FavouriteSymbols.Remove(symbol.Name);
+                    }
+                }
+            }
         }
     }
 }

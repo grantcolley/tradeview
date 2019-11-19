@@ -107,9 +107,9 @@
                                     </DockPanel>
                                     <ContentControl/>
                                 </DockPanel>
-                                <ListView Background="Transparent" BorderThickness="0">
-                                    
-                                </ListView>
+                                <GroupBox Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
+                                    <ItemsControl Background="Transparent" ItemsSource="{Binding UserAccount.Preferences.FavouriteSymbols}"/>
+                                </GroupBox>
                             </DockPanel>
                         </Grid>
                     </GroupBox>

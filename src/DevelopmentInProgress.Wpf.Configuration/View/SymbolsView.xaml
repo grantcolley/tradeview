@@ -45,8 +45,8 @@
                         <Label Grid.Column="1" VerticalAlignment="Center" Content="Pair" FontWeight="Bold"/>
                     </Grid>
                     <ListView x:Name="SymbolsList" ItemsSource="{Binding Symbols}" 
-                          Visibility="{Binding IsLoadingSymbols, Converter={StaticResource invertBoolToVisibilityConverter}}"
-                          Background="Transparent" BorderThickness="0">
+                              Visibility="{Binding IsLoadingSymbols, Converter={StaticResource invertBoolToVisibilityConverter}}"
+                              Background="Transparent" BorderThickness="0">
                         <ListView.Template>
                             <ControlTemplate>
                                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
@@ -65,7 +65,7 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
-                                    <CheckBox Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" IsChecked="{Binding IsFavourite}"/>
+                                    <CheckBox Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" IsChecked="{Binding IsFavourite}" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged"/>
                                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
                                         <Label Content="{Binding BaseAsset.Symbol}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center"/>
                                         <Label Content="{Binding QuoteAsset.Symbol}" FontSize="12" VerticalAlignment="Center"/>
@@ -77,6 +77,7 @@
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                 <Setter Property="Visibility" Value="{Binding Path=IsVisible, Converter={StaticResource boolToVisibilityConverter}}"/>
+                                <EventSetter Event="PreviewKeyDown" Handler="ListViewItemPreviewKeyDown" />
                             </Style>
                         </ListView.ItemContainerStyle>
                     </ListView>

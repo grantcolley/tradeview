@@ -8,6 +8,7 @@ namespace DevelopmentInProgress.Wpf.Common.Model
     {
         private int lastPriceChangeDirection;
         private int priceChangePercentDirection;
+        private bool isFavourite;
 
         public string ExchangeSymbol { get; set; }
         public decimal NotionalMinimumValue { get; set; }
@@ -19,9 +20,21 @@ namespace DevelopmentInProgress.Wpf.Common.Model
         public bool IsIcebergAllowed { get; set; }
         public IEnumerable<Interface.OrderType> OrderTypes { get; set; }
         public SymbolStatistics SymbolStatistics { get; set; }
-        public bool IsFavourite { get; set; }
 
         public string Name { get { return $"{BaseAsset.Symbol}{QuoteAsset.Symbol}"; } }
+
+        public bool IsFavourite 
+        {
+            get { return isFavourite; }
+            set
+            {
+                if(isFavourite != value)
+                {
+                    isFavourite = value;
+                    OnPropertyChanged("IsFavourite");
+                }
+            }
+        }
 
         public int LastPriceChangeDirection
         {

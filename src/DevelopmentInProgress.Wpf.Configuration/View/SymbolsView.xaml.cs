@@ -1,5 +1,8 @@
-﻿using DevelopmentInProgress.Wpf.Configuration.ViewModel;
+﻿using DevelopmentInProgress.Wpf.Common.Model;
+using DevelopmentInProgress.Wpf.Configuration.ViewModel;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace DevelopmentInProgress.Wpf.Configuration.View
 {
@@ -13,6 +16,33 @@ namespace DevelopmentInProgress.Wpf.Configuration.View
             InitializeComponent();
 
             DataContext = symbolsViewModel;
+        }
+
+        private void ListViewItemPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                var symbol = ((ListViewItem)sender).DataContext as Symbol;
+                if (symbol != null)
+                {
+                    symbol.IsFavourite = !symbol.IsFavourite;
+                }
+            }
+        }
+
+        private void CheckBoxChanged(object sender, RoutedEventArgs e)
+        {
+            var symbol = ((CheckBox)sender).DataContext as Symbol;
+            if(symbol != null)
+            {
+                var viewModel = DataContext as SymbolsViewModel;
+                if(viewModel != null)
+                {
+                    viewModel.UpdatePreferencesCommand.Execute(symbol);
+                }
+            }
+
+            e.Handled = true;
         }
     }
 }
