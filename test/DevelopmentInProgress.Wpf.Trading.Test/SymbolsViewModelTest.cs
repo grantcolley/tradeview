@@ -12,6 +12,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Prism.Logging;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace DevelopmentInProgress.Wpf.Trading.Test
 {
@@ -47,7 +48,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 }
             });
 
-            symbolsViewModel.SetAccount(new UserAccount { Preferences = new Preferences { FavouriteSymbols = new List<string> { "BNBBTC" } } });
+            symbolsViewModel.SetAccount(new UserAccount { Preferences = new Preferences { FavouriteSymbols = new ObservableCollection<string>(new[] { "BNBBTC" }) } });
 
             await Task.Delay(1000);
 
@@ -90,7 +91,7 @@ namespace DevelopmentInProgress.Wpf.Trading.Test
                 }
             });
 
-            symbolsViewModel.SetAccount(new UserAccount { Preferences = new Preferences { FavouriteSymbols = new List<string> { "BNBBTC" } } });
+            symbolsViewModel.SetAccount(new UserAccount { Preferences = new Preferences { FavouriteSymbols = new ObservableCollection<string>(new[] { "BNBBTC" }) } });
 
             await Task.Delay(1000);
 

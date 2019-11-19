@@ -230,7 +230,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
             if(SymbolsViewModel != null)
             {
                 userAccount.Preferences.ShowFavourites = SymbolsViewModel.ShowFavourites;
-                userAccount.Preferences.FavouriteSymbols = (from s in SymbolsViewModel.Symbols where s.IsFavourite select s.Name).ToList();
+                userAccount.Preferences.FavouriteSymbols = new ObservableCollection<string>((from s in SymbolsViewModel.Symbols where s.IsFavourite select s.Name).ToList());
             }
             
             if(SelectedSymbol != null
