@@ -16,6 +16,7 @@ namespace DevelopmentInProgress.Wpf.Common.Services
         Task<Account> GetAccountInfoAsync(Exchange exchange, Interface.User user, CancellationToken cancellationToken);
         Task<IEnumerable<Interface.AccountTrade>> GetAccountTradesAsync(Exchange exchange, Interface.User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken));
         Task<IEnumerable<Symbol>> GetSymbols24HourStatisticsAsync(Exchange exchange, CancellationToken cancellationToken);
+        Task<IEnumerable<Symbol>> GetSymbolsAsync(Exchange exchange, CancellationToken cancellationToken);
         Task<Interface.OrderBook> GetOrderBookAsync(Exchange exchange, string symbol, int limit, CancellationToken cancellationToken);
         Task<IEnumerable<Interface.AggregateTrade>> GetAggregateTradesAsync(Exchange exchange, string symbol, int limit, CancellationToken cancellationToken);
         Task<IEnumerable<Interface.Trade>> GetTradesAsync(Exchange exchange, string symbol, int limit, CancellationToken cancellationToken);

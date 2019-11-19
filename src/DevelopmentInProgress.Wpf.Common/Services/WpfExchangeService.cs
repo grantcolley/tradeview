@@ -41,20 +41,13 @@ namespace DevelopmentInProgress.Wpf.Common.Services
             return symbols;
         }
 
-        private async Task<IEnumerable<Symbol>> GetSymbolsAsync(Exchange exchange, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Symbol>> GetSymbolsAsync(Exchange exchange, CancellationToken cancellationToken)
         {
             var results = await exchangeService.GetSymbolsAsync(exchange, cancellationToken).ConfigureAwait(false);
             var symbols = results.Select(s => s.GetViewSymbol()).ToList();
             return symbols;
         }
 
-        private async Task<IEnumerable<SymbolStatistics>> Get24HourStatisticsAsync(Exchange exchange, CancellationToken cancellationToken)
-        {
-            var results = await exchangeService.Get24HourStatisticsAsync(exchange, cancellationToken).ConfigureAwait(false);
-            var symbols = results.Select(s => s.GetViewSymbolStatistics()).ToList();
-            return symbols;
-        }
-        
         public async Task<Interface.Order> PlaceOrder(Exchange exchange, Interface.User user, Interface.ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
             var result = await exchangeService.PlaceOrder(exchange, user, clientOrder, recWindow, cancellationToken).ConfigureAwait(false);
@@ -134,6 +127,13 @@ namespace DevelopmentInProgress.Wpf.Common.Services
         public void SubscribeAccountInfo(Exchange exchange, Interface.User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             exchangeService.SubscribeAccountInfo(exchange, user, callback, exception, cancellationToken);
+        }
+
+        private async Task<IEnumerable<SymbolStatistics>> Get24HourStatisticsAsync(Exchange exchange, CancellationToken cancellationToken)
+        {
+            var results = await exchangeService.Get24HourStatisticsAsync(exchange, cancellationToken).ConfigureAwait(false);
+            var symbols = results.Select(s => s.GetViewSymbolStatistics()).ToList();
+            return symbols;
         }
     }
 }
