@@ -5,6 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DevelopmentInProgress.Wpf.Configuration.View"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/DevelopmentInProgress.Wpf.Controls;component/themes/MetroDark/MetroDark.MSControls.Core.Implicit.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/DevelopmentInProgress.Wpf.Common;component/Images/ImageResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <GroupBox Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
             <Grid Grid.Row="0">
@@ -32,7 +40,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Content="Account Name:" Margin="2"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding UserAccount.AccountName}" Margin="2" Width="300" HorizontalAlignment="Left"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding UserAccount.AccountName}" Margin="2" Width="300" HorizontalAlignment="Left" IsReadOnly="True"/>
 
                     <Label Grid.Row="1" Grid.Column="0" Content="Exchange:" Margin="2"/>
                     <ComboBox Grid.Row="1" Grid.Column="1" Margin="2" IsReadOnly="True" Width="150" HorizontalAlignment="Left"
@@ -85,7 +93,24 @@
 
                             <Label Grid.Row="6" Grid.Column="0" Content="Order Book Chart Display Count:" Margin="2"/>
                             <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding UserAccount.Preferences.OrderBookChartDisplayCount}" Margin="2" Width="100" HorizontalAlignment="Left"/>
-                            
+
+                            <DockPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" LastChildFill="True">
+                                <DockPanel DockPanel.Dock="Top" LastChildFill="True">
+                                    <Label DockPanel.Dock="Left" Content="Symbols" Margin="2"/>
+                                    <DockPanel Margin="2">
+                                        <Button ToolTip="Add Parameter Schema"
+                                                Style="{StaticResource ButtonImageStyle}"
+                                                Command="{Binding OpenSymbolsWindowCommand}">
+                                            <Control Template="{StaticResource add}"/>
+                                        </Button>
+                                        <ContentControl/>
+                                    </DockPanel>
+                                    <ContentControl/>
+                                </DockPanel>
+                                <ListView Background="Transparent" BorderThickness="0">
+                                    
+                                </ListView>
+                            </DockPanel>
                         </Grid>
                     </GroupBox>
                 </Grid>

@@ -39,7 +39,10 @@ namespace DevelopmentInProgress.Wpf.Common.Extensions
                 SymbolStatistics = new SymbolStatistics { Symbol = $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}" }
             };
 
-            symbol.UpdateStatistics(s.SymbolStatistics);
+            if(s.SymbolStatistics != null)
+            {
+                symbol.UpdateStatistics(s.SymbolStatistics);
+            }
 
             return symbol;
         }

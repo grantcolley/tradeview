@@ -1,9 +1,13 @@
 ﻿using DevelopmentInProgress.MarketView.Interface.Enums;
 using DevelopmentInProgress.MarketView.Interface.Extensions;
+using DevelopmentInProgress.Wpf.Common.Command;
 using DevelopmentInProgress.Wpf.Common.Model;
 using DevelopmentInProgress.Wpf.Common.ViewModel;
+using DevelopmentInProgress.Wpf.Configuration.Events;
 using Newtonsoft.Json;
 using Prism.Logging;
+using System;
+using System.Windows.Input;
 
 namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
 {
@@ -17,7 +21,13 @@ namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
             : base(logger)
         {
             UserAccount = userAccount;
+
+            OpenSymbolsWindowCommand = new ViewModelCommand(OpenSymbolsWindow);
         }
+
+        public event EventHandler<UserAccountEventArgs> OnSymbolsNotification;
+        
+        public ICommand OpenSymbolsWindowCommand { get; set; }
 
         public string[] Exchanges
         {
@@ -89,6 +99,12 @@ namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
             }
 
             disposed = true;
+        }
+
+        private void OpenSymbolsWindow(object param)
+        {
+            var onSymbolsNotification = OnSymbolsNotification;
+            onSymbolsNotification?.Invoke(this, new UserAccountEventArgs { Value = userAccount });
         }
     }
 }

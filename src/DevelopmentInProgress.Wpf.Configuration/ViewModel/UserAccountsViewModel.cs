@@ -8,25 +8,34 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using DevelopmentInProgress.Wpf.Configuration.Events;
+using System.Reactive.Linq;
+using System.Collections.Generic;
+using DevelopmentInProgress.Wpf.Configuration.Utility;
 
 namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
 {
     public class UserAccountsViewModel : DocumentViewModel
     {
         private IAccountsService accountsService;
+        private ISymbolsLoader symbolsLoader;
         private UserAccount selectedUserAccount;
         private UserAccountViewModel selectedUserAccountViewModel;
+        private Dictionary<string, IDisposable> observables;
 
-        public UserAccountsViewModel(ViewModelContext viewModelContext, IAccountsService accountsService)
+        public UserAccountsViewModel(ViewModelContext viewModelContext, IAccountsService accountsService, ISymbolsLoader symbolsLoader)
             : base(viewModelContext)
         {
             this.accountsService = accountsService;
+            this.symbolsLoader = symbolsLoader;
 
             AddAccountCommand = new ViewModelCommand(AddAccount);
             DeleteAccountCommand = new ViewModelCommand(DeleteAccount);
             CloseCommand = new ViewModelCommand(Close);
 
             SelectedUserAccountViewModels = new ObservableCollection<UserAccountViewModel>();
+
+            observables = new Dictionary<string, IDisposable>();
         }
 
         public ICommand AddAccountCommand { get; set; }
@@ -55,6 +64,7 @@ namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
                             var userAccountViewModel = new UserAccountViewModel(selectedUserAccount, Logger);
                             SelectedUserAccountViewModels.Add(userAccountViewModel);
                             SelectedUserAccountViewModel = userAccountViewModel;
+                            ObserveSymbols(userAccountViewModel);
                         }
                     }
 
@@ -83,6 +93,11 @@ namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
             {
                 userAccount.Dispose();
                 SelectedUserAccountViewModels.Remove(userAccount);
+                if(observables.TryGetValue(userAccount.UserAccount.AccountName, out IDisposable value))
+                {
+                    observables.Remove(userAccount.UserAccount.AccountName);
+                    value.Dispose();
+                }
             }
         }
 
@@ -178,6 +193,33 @@ namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
             {
                 ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message });
             }
+        }
+
+        private void ObserveSymbols(UserAccountViewModel userAccountViewModel)
+        {
+            var symbolsObservable = Observable.FromEventPattern<UserAccountEventArgs>(
+                eventHandler => userAccountViewModel.OnSymbolsNotification += eventHandler,
+                eventHandler => userAccountViewModel.OnSymbolsNotification -= eventHandler)
+                .Select(eventPattern => eventPattern.EventArgs);
+            
+            var symbolsObservableSubscription = symbolsObservable.Subscribe(async (args) =>
+            {
+                if (args.HasException)
+                {
+                    ShowMessage(new Message { Text = args.Message, MessageType = MessageType.Error });
+                }
+                else if (args.Value != null)
+                {
+                    var userAccount = args.Value as UserAccount;
+
+                    if (userAccount != null)
+                    {
+                        symbolsLoader.ShowSymbols(userAccount);
+                    }
+                }
+            });
+
+            observables.Add(userAccountViewModel.UserAccount.AccountName, symbolsObservableSubscription);
         }
     }
 }

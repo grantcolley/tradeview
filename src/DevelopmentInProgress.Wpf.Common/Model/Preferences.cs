@@ -1,9 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace DevelopmentInProgress.Wpf.Common.Model
 {
-    public class Preferences
+    public class Preferences : EntityBase
     {
+        public Preferences()
+        {
+            FavouriteSymbols = new ObservableCollection<string>();
+        }
+
         public bool ShowFavourites { get; set; }
         public string SelectedSymbol { get; set; }
         public int TradeLimit { get; set; }
@@ -13,6 +19,6 @@ namespace DevelopmentInProgress.Wpf.Common.Model
         public int OrderBookLimit { get; set; }
         public int OrderBookChartDisplayCount { get; set; }
         public int OrderBookDisplayCount { get; set; }
-        public List<string> FavouriteSymbols { get; set; }
+        public ObservableCollection<string> FavouriteSymbols { get; set; }
     }
 }

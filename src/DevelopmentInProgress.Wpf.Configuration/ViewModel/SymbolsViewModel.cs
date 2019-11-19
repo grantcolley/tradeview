@@ -1,11 +1,12 @@
 ﻿using DevelopmentInProgress.Common.Extensions;
 using DevelopmentInProgress.Wpf.Common.Model;
-using DevelopmentInProgress.Wpf.Trading.Events;
 using DevelopmentInProgress.Wpf.Common.Services;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using System.Threading;
+using System;
+using System.Linq;
+using DevelopmentInProgress.Wpf.Controls.Messaging;
 using DevelopmentInProgress.Wpf.Common.ViewModel;
 using Prism.Logging;
 
@@ -13,8 +14,8 @@ namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
 {
     public class SymbolsViewModel : ExchangeViewModel
     {
-        private List<Symbol> symbols;
         private UserAccount userAccount;
+        private List<Symbol> symbols;
         private bool showFavourites;
         private bool isLoadingSymbols;
         private bool disposed;
@@ -25,6 +26,11 @@ namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
             this.userAccount = userAccount;
 
             GetSymbols().FireAndForget();
+        }
+
+        public string Exchange
+        {
+            get { return userAccount.Exchange.ToString(); }
         }
 
         public List<Symbol> Symbols
@@ -75,24 +81,43 @@ namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
             }
         }
 
+        public override void Dispose(bool disposing)
+        {
+            if (disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                // dispose stuff...
+            }
+
+            disposed = true;
+        }
 
         private async Task GetSymbols()
         {
             IsLoadingSymbols = true;
 
-            //try
-            //{
-                //var results = await symbolsCache.GetSymbols(AccountPreferences.Preferences.FavouriteSymbols);
+            try
+            {
+                var results = await ExchangeService.GetSymbolsAsync(userAccount.Exchange, new CancellationToken());
 
-                //Symbols = new List<Symbol>(results);
+                Func<Symbol, string, Symbol> f = ((s, p) =>
+                {
+                    s.IsFavourite = true;
+                    return s;
+                });
 
-                // set favourite flag to indicate visibility
+                (from s in results join p in userAccount.Preferences.FavouriteSymbols on s.Name equals p select f(s, p)).ToList();
 
-            //}
-            //catch(Exception ex)
-            //{
-            //    OnException("SymbolsViewModel.GetSymbols", ex);
-            //}
+                Symbols = new List<Symbol>(results);
+            }
+            catch (Exception ex)
+            {
+                Dialog.ShowException(ex);
+            }
 
             IsLoadingSymbols = false;
         }
