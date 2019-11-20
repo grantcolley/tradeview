@@ -22,8 +22,6 @@
                     <ColumnDefinition Width="50*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Column="2" Text="{Binding UserAccountJson}" TextWrapping="Wrap" AcceptsReturn="True" BorderThickness="0" BorderBrush="Transparent"/>
-
                 <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
                 
                 <Grid Grid.Column="0">
@@ -98,7 +96,7 @@
                                 <DockPanel DockPanel.Dock="Top" LastChildFill="True">
                                     <Label DockPanel.Dock="Left" Content="Symbols" Margin="2"/>
                                     <DockPanel Margin="2">
-                                        <Button ToolTip="Add Parameter Schema"
+                                        <Button ToolTip="Add Favourite Symbols"
                                                 Style="{StaticResource ButtonImageStyle}"
                                                 Command="{Binding OpenSymbolsWindowCommand}">
                                             <Control Template="{StaticResource add}"/>

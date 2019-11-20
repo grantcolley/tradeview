@@ -122,7 +122,8 @@ namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
             {
                 try
                 {
-                    var userAccount = JsonConvert.DeserializeObject<UserAccount>(userAccountViewModel.UserAccountJson);
+                    var userAccount = userAccountViewModel.UserAccount;
+
                     await accountsService.SaveAccount(userAccount);
 
                     var account = Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName));

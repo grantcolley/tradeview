@@ -14,7 +14,6 @@ namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
     public class UserAccountViewModel : BaseViewModel
     {
         private UserAccount userAccount;
-        private string userAccountJson;
         private bool disposed = false;
 
         public UserAccountViewModel(UserAccount userAccount, ILoggerFacade logger)
@@ -58,32 +57,9 @@ namespace DevelopmentInProgress.Wpf.Configuration.ViewModel
                 if (userAccount != value)
                 {
                     userAccount = value;
-                    if (userAccount == null)
-                    {
-                        UserAccountJson = string.Empty;
-                    }
-                    else
-                    {
-                        UserAccountJson = JsonConvert.SerializeObject(userAccount, Formatting.Indented);
-                    }
-
                     OnPropertyChanged("UserAccount");
                 }
             }
-        }
-
-        public string UserAccountJson
-        {
-            get { return userAccountJson; }
-            set
-            {
-                if (userAccountJson != value)
-                {
-                    userAccountJson = value;
-                    OnPropertyChanged("UserAccountJson");
-                }
-            }
-
         }
 
         public override void Dispose(bool disposing)
