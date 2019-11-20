@@ -9,6 +9,7 @@ namespace DevelopmentInProgress.Wpf.Common.Model
         private const string secretText = "**********";
         private string apiSecret;
         private string btcDisplayValue;
+        private string equalsDisplayValue;
         private string usdtDisplayValue;
         private decimal btcValue;
         private decimal usdtValue;
@@ -135,7 +136,26 @@ namespace DevelopmentInProgress.Wpf.Common.Model
                 if (usdtDisplayValue != value)
                 {
                     usdtDisplayValue = value;
+
+                    if(string.IsNullOrWhiteSpace(EqualsDisplayValue))
+                    {
+                        EqualsDisplayValue = "=";
+                    }
+
                     OnPropertyChanged("USDTDisplayValue");
+                }
+            }
+        }
+
+        public string EqualsDisplayValue
+        {
+            get { return equalsDisplayValue; }
+            set
+            {
+                if (equalsDisplayValue != value)
+                {
+                    equalsDisplayValue = value;
+                    OnPropertyChanged("EqualsDisplayValue");
                 }
             }
         }
