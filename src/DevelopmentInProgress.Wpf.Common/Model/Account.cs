@@ -1,5 +1,4 @@
 ﻿using DevelopmentInProgress.MarketView.Interface.Enums;
-using DevelopmentInProgress.MarketView.Interface.Interfaces;
 using System.Collections.ObjectModel;
 using Interface = DevelopmentInProgress.MarketView.Interface.Model;
 
@@ -13,6 +12,19 @@ namespace DevelopmentInProgress.Wpf.Common.Model
         private string usdtDisplayValue;
         private decimal btcValue;
         private decimal usdtValue;
+
+        public string AccountName
+        {
+            get { return AccountInfo?.User?.AccountName; }
+            set
+            {
+                if (AccountInfo.User.AccountName != value)
+                {
+                    AccountInfo.User.AccountName = value;
+                    OnPropertyChanged("AccountName");
+                }
+            }
+        }
 
         public Account(Interface.AccountInfo accountInfo)
         {

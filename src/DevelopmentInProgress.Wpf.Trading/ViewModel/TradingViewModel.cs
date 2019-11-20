@@ -205,6 +205,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
             {
                 if (!string.IsNullOrWhiteSpace(userAccount.ApiKey))
                 {
+                    Account.AccountName = userAccount.AccountName;
                     Account.ApiKey = userAccount.ApiKey;
                     Account.ApiSecret = userAccount.ApiSecret;
                     Account.ApiPassPhrase = userAccount.ApiPassPhrase;
@@ -218,35 +219,6 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
             isOpen = true;
 
             IsBusy = false;
-        }
-
-        protected async override void SaveDocument()
-        {
-            base.SaveDocument();
-
-            userAccount.ApiKey = Account.ApiKey;
-            userAccount.ApiSecret = Account.AccountInfo.User.ApiSecret;
-            userAccount.Preferences = new Preferences();
-            if(SymbolsViewModel != null)
-            {
-                userAccount.Preferences.ShowFavourites = SymbolsViewModel.ShowFavourites;
-                userAccount.Preferences.FavouriteSymbols = new ObservableCollection<string>((from s in SymbolsViewModel.Symbols where s.IsFavourite select s.Name).ToList());
-            }
-            
-            if(SelectedSymbol != null
-                && SelectedSymbol.Symbol != null)
-            {
-                userAccount.Preferences.SelectedSymbol = SelectedSymbol.Symbol.Name;
-            }
-
-            try
-            {
-                await accountsService.SaveAccount(userAccount);
-            }
-            catch (Exception ex)
-            {
-                TradingViewModelException(ex.ToString(), ex);
-            }
         }
         
         public void Close(object param)

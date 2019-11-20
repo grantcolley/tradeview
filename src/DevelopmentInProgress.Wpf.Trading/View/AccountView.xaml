@@ -27,8 +27,26 @@
     <DockPanel LastChildFill="True">
         <GroupBox Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
             <DockPanel LastChildFill="True">
-                <Label DockPanel.Dock="Top" Content="Account" FontWeight="Bold" FontSize="12"/>
                 <Grid DockPanel.Dock="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Account" FontWeight="Bold" FontSize="14"/>
+                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding Account.AccountName, Mode=TwoWay}" FontSize="14"/>
+                    <Label Grid.Row="1" Grid.Column="0" Content="Assets Value" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left" Visibility="{Binding IsLoggingIn, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding Account.BTCDisplayValue}" FontSize="14" HorizontalAlignment="Left"/>
+                    <Label Grid.Row="1" Grid.Column="2" Content="=" FontSize="14" HorizontalAlignment="Left" Visibility="{Binding IsLoggingIn, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                    <Label Grid.Row="1" Grid.Column="3" Content="{Binding Account.USDTDisplayValue}" FontSize="13" HorizontalAlignment="Left"/>
+                </Grid>
+                <Grid DockPanel.Dock="Top" Visibility="Collapsed">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
@@ -59,20 +77,6 @@
                     </Viewbox>
                 </Grid>
                 <filterbox:XamlFilterBox DockPanel.Dock="Top" ItemsSource="{Binding Account.Balances}" FilterFieldName="Asset" VisibilityFieldName="IsVisible" SupportsDeepTraversal="False"  Margin="2"/>
-                <Grid DockPanel.Dock="Top" Height="30">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50*"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="50*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Column="1" Content="Assets Value" FontSize="14" HorizontalAlignment="Left" Visibility="{Binding IsLoggingIn, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                    <Label Grid.Column="2" Content="{Binding Account.BTCDisplayValue}" FontSize="14" HorizontalAlignment="Left"/>
-                    <Label Grid.Column="3" Content="=" FontSize="13" HorizontalAlignment="Center" Visibility="{Binding IsLoggingIn, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                    <Label Grid.Column="4" Content="{Binding Account.USDTDisplayValue}" FontSize="13" HorizontalAlignment="Right"/>
-                </Grid>
                 <Grid DockPanel.Dock="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100"/>
