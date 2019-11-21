@@ -197,8 +197,6 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
                 if (AccountPreferences.Preferences.FavouriteSymbols != null
                     && AccountPreferences.Preferences.FavouriteSymbols.Any())
                 {
-                    ShowFavourites = AccountPreferences.Preferences.ShowFavourites;
-
                     if (!string.IsNullOrWhiteSpace(AccountPreferences.Preferences.SelectedSymbol))
                     {
                         var symbol = Symbols.FirstOrDefault(s => s.Name.Equals(AccountPreferences.Preferences.SelectedSymbol));

@@ -46,7 +46,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
             TradesDisplayCount = preferences.TradesDisplayCount;
             TradesChartDisplayCount = preferences.TradesChartDisplayCount;
 
-            UseAggregateTrades = preferences.UseAggregateTrades;
+            ShowAggregateTrades = preferences.ShowAggregateTrades;
 
             OrderBookLimit = preferences.OrderBookLimit;
             OrderBookDisplayCount = preferences.OrderBookDisplayCount;
@@ -63,7 +63,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
         internal int TradeLimit { get; }
         internal int TradesChartDisplayCount { get; }
         internal int TradesDisplayCount { get; }
-        internal bool UseAggregateTrades { get; }
+        internal bool ShowAggregateTrades { get; }
         internal int OrderBookLimit { get; }
         internal int OrderBookChartDisplayCount { get; }
         internal int OrderBookDisplayCount { get; }
@@ -223,7 +223,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
             {
                 IEnumerable<ITrade> trades;
 
-                if (UseAggregateTrades)
+                if (ShowAggregateTrades)
                 {
                     trades = await ExchangeService.GetAggregateTradesAsync(exchange, Symbol.ExchangeSymbol, TradeLimit, symbolCancellationTokenSource.Token);
                 }
@@ -234,7 +234,7 @@ namespace DevelopmentInProgress.Wpf.Trading.ViewModel
 
                 UpdateTrades(trades);
 
-                if (UseAggregateTrades)
+                if (ShowAggregateTrades)
                 {
                     ExchangeService.SubscribeAggregateTrades(exchange, Symbol.ExchangeSymbol, TradeLimit, e => UpdateTrades(e.Trades), SubscribeTradesException, symbolCancellationTokenSource.Token);
                 }

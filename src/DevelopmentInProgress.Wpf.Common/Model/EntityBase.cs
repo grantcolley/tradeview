@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace DevelopmentInProgress.Wpf.Common.Model
 {
@@ -21,6 +22,7 @@ namespace DevelopmentInProgress.Wpf.Common.Model
             throw new NotImplementedException($"Clone<{typeof(T).Name}>() not implemnted.");
         }
 
+        [XmlIgnore]
         public virtual int Id
         {
             get { return id; }
@@ -34,6 +36,7 @@ namespace DevelopmentInProgress.Wpf.Common.Model
             }
         }
 
+        [XmlIgnore]
         public bool IsReadOnly
         {
             get { return isReadOnly; }
@@ -48,6 +51,7 @@ namespace DevelopmentInProgress.Wpf.Common.Model
             }
         }
 
+        [XmlIgnore]
         public bool IsVisible
         {
             get { return isVisible; }
@@ -61,6 +65,7 @@ namespace DevelopmentInProgress.Wpf.Common.Model
             }
         }
 
+        [XmlIgnore]
         public bool CanModify
         {
             get { return !IsReadOnly; }

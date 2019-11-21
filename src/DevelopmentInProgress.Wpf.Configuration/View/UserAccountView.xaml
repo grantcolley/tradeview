@@ -38,7 +38,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Content="Account Name:" Margin="2"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding UserAccount.AccountName}" Margin="2" Width="300" HorizontalAlignment="Left" IsReadOnly="True"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding UserAccount.AccountName}" Margin="2" HorizontalAlignment="Left" IsReadOnly="True"/>
 
                     <Label Grid.Row="1" Grid.Column="0" Content="Exchange:" Margin="2"/>
                     <ComboBox Grid.Row="1" Grid.Column="1" Margin="2" IsReadOnly="True" Width="150" HorizontalAlignment="Left"
@@ -68,31 +68,35 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
                             <Label Grid.Row="0" Grid.Column="0" Content="Selected Symbol:" Margin="2"/>
                             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding UserAccount.Preferences.SelectedSymbol}" Margin="2" Width="100" HorizontalAlignment="Left"/>
 
-                            <Label Grid.Row="1" Grid.Column="0" Content="Trade Limit:" Margin="2"/>
-                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding UserAccount.Preferences.TradeLimit}" Margin="2" Width="100" HorizontalAlignment="Left"/>
+                            <Label Grid.Row="1" Grid.Column="0" Content="Show Aggregate Trades:" Margin="2"/>
+                            <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding UserAccount.Preferences.ShowAggregateTrades}" HorizontalAlignment="Left"/>
+                            
+                            <Label Grid.Row="2" Grid.Column="0" Content="Trade Limit:" Margin="2"/>
+                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding UserAccount.Preferences.TradeLimit}" Margin="2" Width="100" HorizontalAlignment="Left"/>
 
-                            <Label Grid.Row="2" Grid.Column="0" Content="Trades Display Count:" Margin="2"/>
-                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding UserAccount.Preferences.TradesDisplayCount}" Margin="2" Width="100" HorizontalAlignment="Left"/>
+                            <Label Grid.Row="3" Grid.Column="0" Content="Trades Display Count:" Margin="2"/>
+                            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding UserAccount.Preferences.TradesDisplayCount}" Margin="2" Width="100" HorizontalAlignment="Left"/>
 
-                            <Label Grid.Row="3" Grid.Column="0" Content="Trades Chart Display Count:" Margin="2"/>
-                            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding UserAccount.Preferences.TradesChartDisplayCount}" Margin="2" Width="100" HorizontalAlignment="Left"/>
+                            <Label Grid.Row="4" Grid.Column="0" Content="Trades Chart Display Count:" Margin="2"/>
+                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding UserAccount.Preferences.TradesChartDisplayCount}" Margin="2" Width="100" HorizontalAlignment="Left"/>
 
-                            <Label Grid.Row="4" Grid.Column="0" Content="Order Book Limit:" Margin="2"/>
-                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding UserAccount.Preferences.OrderBookLimit}" Margin="2" Width="100" HorizontalAlignment="Left"/>
+                            <Label Grid.Row="5" Grid.Column="0" Content="Order Book Limit:" Margin="2"/>
+                            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding UserAccount.Preferences.OrderBookLimit}" Margin="2" Width="100" HorizontalAlignment="Left"/>
 
-                            <Label Grid.Row="5" Grid.Column="0" Content="Order Book Display Count:" Margin="2"/>
-                            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding UserAccount.Preferences.OrderBookDisplayCount}" Margin="2" Width="100" HorizontalAlignment="Left"/>
+                            <Label Grid.Row="6" Grid.Column="0" Content="Order Book Display Count:" Margin="2"/>
+                            <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding UserAccount.Preferences.OrderBookDisplayCount}" Margin="2" Width="100" HorizontalAlignment="Left"/>
 
-                            <Label Grid.Row="6" Grid.Column="0" Content="Order Book Chart Display Count:" Margin="2"/>
-                            <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding UserAccount.Preferences.OrderBookChartDisplayCount}" Margin="2" Width="100" HorizontalAlignment="Left"/>
+                            <Label Grid.Row="7" Grid.Column="0" Content="Order Book Chart Display Count:" Margin="2"/>
+                            <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding UserAccount.Preferences.OrderBookChartDisplayCount}" Margin="2" Width="100" HorizontalAlignment="Left"/>
 
-                            <DockPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" LastChildFill="True">
+                            <DockPanel Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" LastChildFill="True">
                                 <DockPanel DockPanel.Dock="Top" LastChildFill="True">
                                     <Label DockPanel.Dock="Left" Content="Symbols" Margin="2"/>
                                     <DockPanel Margin="2">

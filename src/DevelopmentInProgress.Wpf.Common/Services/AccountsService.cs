@@ -74,7 +74,7 @@ namespace DevelopmentInProgress.Wpf.Common.Services
 
             userAccounts.Accounts.Add(userAccount);
 
-            var wjson = JsonConvert.SerializeObject(userAccounts);
+            var wjson = JsonConvert.SerializeObject(userAccounts, Formatting.Indented);
 
             UnicodeEncoding encoding = new UnicodeEncoding();
             char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
@@ -100,7 +100,7 @@ namespace DevelopmentInProgress.Wpf.Common.Services
                 if (remove != null)
                 {
                     userAccounts.Accounts.Remove(remove);
-                    var wjson = JsonConvert.SerializeObject(userAccounts);
+                    var wjson = JsonConvert.SerializeObject(userAccounts, Formatting.Indented);
 
                     UnicodeEncoding encoding = new UnicodeEncoding();
                     char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
