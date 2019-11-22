@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/DevelopmentInProgress.TradeView.Wpf.Controls;component/FilterTree/FilterTree.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/DevelopmentInProgress.TradeView.Wpf.Controls;component/FilterBox/FilterBox.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/DevelopmentInProgress.TradeView.Wpf.Controls;component/NavigationPanel/NavigationPanelResources.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/DevelopmentInProgress.TradeView.Wpf.Controls;component/Messaging/MessagePanelResources.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

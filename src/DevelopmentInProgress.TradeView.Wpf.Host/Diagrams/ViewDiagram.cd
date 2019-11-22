@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DevelopmentInProgress.TradeView.Wpf.Host.View.DocumentViewBase">
+    <Position X="3.25" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAACAAAAAAEAEAAAIAACACAAAAAAAAA=</HashCode>
+      <FileName>View\DocumentViewBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DevelopmentInProgress.TradeView.Wpf.Host.View.ModalViewBase">
+    <Position X="6.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\ModalViewBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DevelopmentInProgress.TradeView.Wpf.Host.View.ViewBase">
+    <Position X="4.75" Y="0.5" Width="2" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAIAAAAAAEAAAgAABAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>View\ViewBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
