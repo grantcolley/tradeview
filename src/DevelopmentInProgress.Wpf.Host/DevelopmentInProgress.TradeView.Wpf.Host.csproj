@@ -237,9 +237,9 @@
     <Resource Include="Images\GroupListItem.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DevelopmentInProgress.Wpf.Controls\DevelopmentInProgress.Wpf.Controls.csproj">
+    <ProjectReference Include="..\DevelopmentInProgress.Wpf.Controls\DevelopmentInProgress.TradeViiew.Wpf.Controls.csproj">
       <Project>{5acdc574-0f6f-48bc-ad2a-2f29bd7009fe}</Project>
-      <Name>DevelopmentInProgress.Wpf.Controls</Name>
+      <Name>DevelopmentInProgress.TradeViiew.Wpf.Controls</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

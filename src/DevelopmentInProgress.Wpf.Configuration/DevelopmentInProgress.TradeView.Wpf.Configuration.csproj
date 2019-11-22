@@ -133,33 +133,33 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\tradeview\src\DevelopmentInProgress.MarketView.Interface\DevelopmentInProgress.MarketView.Interface.csproj">
+    <ProjectReference Include="..\DevelopmentInProgress.MarketView.Interface\DevelopmentInProgress.TradeView.Interface.csproj">
       <Project>{86695062-90cc-419d-b455-d6d8c364a215}</Project>
-      <Name>DevelopmentInProgress.MarketView.Interface</Name>
+      <Name>DevelopmentInProgress.TradeView.Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\tradeview\src\DevelopmentInProgress.MarketView.Service\DevelopmentInProgress.MarketView.Service.csproj">
+    <ProjectReference Include="..\DevelopmentInProgress.MarketView.Service\DevelopmentInProgress.TradeView.Service.csproj">
       <Project>{97279bbf-8dd0-407c-9655-b38b6dc409a2}</Project>
-      <Name>DevelopmentInProgress.MarketView.Service</Name>
+      <Name>DevelopmentInProgress.TradeView.Service</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\tradeview\src\DevelopmentInProgress.Wpf.Common\DevelopmentInProgress.Wpf.Common.csproj">
+    <ProjectReference Include="..\DevelopmentInProgress.Wpf.Common\DevelopmentInProgress.TradeView.Wpf.Common.csproj">
       <Project>{2b523839-ee20-4ed3-a1ba-ac2070c99f4d}</Project>
-      <Name>DevelopmentInProgress.Wpf.Common</Name>
+      <Name>DevelopmentInProgress.TradeView.Wpf.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\tradeview\src\DevelopmentInProgress.Wpf.Controls\DevelopmentInProgress.Wpf.Controls.csproj">
+    <ProjectReference Include="..\DevelopmentInProgress.Wpf.Controls\DevelopmentInProgress.TradeViiew.Wpf.Controls.csproj">
       <Project>{5acdc574-0f6f-48bc-ad2a-2f29bd7009fe}</Project>
-      <Name>DevelopmentInProgress.Wpf.Controls</Name>
+      <Name>DevelopmentInProgress.TradeViiew.Wpf.Controls</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\tradeview\src\DevelopmentInProgress.Wpf.Host\DevelopmentInProgress.Wpf.Host.csproj">
+    <ProjectReference Include="..\DevelopmentInProgress.Wpf.Host\DevelopmentInProgress.TradeView.Wpf.Host.csproj">
       <Project>{7bce5d35-0443-4031-843a-3563356290e1}</Project>
-      <Name>DevelopmentInProgress.Wpf.Host</Name>
+      <Name>DevelopmentInProgress.TradeView.Wpf.Host</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DevelopmentInProgress.Common\DevelopmentInProgress.Common.csproj">
+    <ProjectReference Include="..\DevelopmentInProgress.Common\DevelopmentInProgress.TradeView.Common.csproj">
       <Project>{8adf4563-822f-40b1-9ed2-0c6c629d9ef1}</Project>
-      <Name>DevelopmentInProgress.Common</Name>
+      <Name>DevelopmentInProgress.TradeView.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DevelopmentInProgress.Wpf.Trading\DevelopmentInProgress.Wpf.Trading.csproj">
+    <ProjectReference Include="..\DevelopmentInProgress.Wpf.Trading\DevelopmentInProgress.TradeView.Wpf.Trading.csproj">
       <Project>{2183c26d-6932-41d9-bb1e-16fa55adf983}</Project>
-      <Name>DevelopmentInProgress.Wpf.Trading</Name>
+      <Name>DevelopmentInProgress.TradeView.Wpf.Trading</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
