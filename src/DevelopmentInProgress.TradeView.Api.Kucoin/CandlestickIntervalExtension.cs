@@ -40,7 +40,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
             }
         }
 
-        public static Interface.Model.CandlestickInterval ToMarketViewCandlestickInterval(this KucoinKlineInterval candlestickInterval)
+        public static Interface.Model.CandlestickInterval ToTradeViewCandlestickInterval(this KucoinKlineInterval candlestickInterval)
         {
             switch (candlestickInterval)
             {

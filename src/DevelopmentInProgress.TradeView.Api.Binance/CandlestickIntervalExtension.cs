@@ -44,7 +44,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             }
         }
 
-        public static Interface.Model.CandlestickInterval ToMarketViewCandlestickInterval(this CandlestickInterval candlestickInterval)
+        public static Interface.Model.CandlestickInterval ToTradeViewCandlestickInterval(this CandlestickInterval candlestickInterval)
         {
             switch (candlestickInterval)
             {

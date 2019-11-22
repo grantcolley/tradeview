@@ -19,7 +19,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
             }
         }
 
-        public static OrderSide ToMarketViewOrderSide(this KucoinOrderSide order)
+        public static OrderSide ToTradeViewOrderSide(this KucoinOrderSide order)
         {
             switch (order)
             {

@@ -468,7 +468,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
         private Interface.Model.Candlestick NewCandlestick(Candlestick c)
         {
-            var interval = c.Interval.ToMarketViewCandlestickInterval();
+            var interval = c.Interval.ToTradeViewCandlestickInterval();
 
             return new Interface.Model.Candlestick
             {

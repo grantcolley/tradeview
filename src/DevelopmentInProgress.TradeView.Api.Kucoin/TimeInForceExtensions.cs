@@ -21,7 +21,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
             }
         }
 
-        public static TimeInForce ToMarketViewTimeInForce(this KucoinTimeInForce tif)
+        public static TimeInForce ToTradeViewTimeInForce(this KucoinTimeInForce tif)
         {
             switch (tif)
             {

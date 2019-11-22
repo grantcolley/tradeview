@@ -19,7 +19,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
             }
         }
 
-        public static OrderType ToMarketViewOrderType(this KucoinOrderType order)
+        public static OrderType ToTradeViewOrderType(this KucoinOrderType order)
         {
             switch (order)
             {
