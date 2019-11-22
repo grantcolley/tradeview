@@ -98,13 +98,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\DevelopmentInProgress.MarketView.Interface\DevelopmentInProgress.MarketView.Interface.csproj">
+    <ProjectReference Include="..\..\src\DevelopmentInProgress.MarketView.Interface\DevelopmentInProgress.TradeView.Interface.csproj">
       <Project>{86695062-90cc-419d-b455-d6d8c364a215}</Project>
-      <Name>DevelopmentInProgress.MarketView.Interface</Name>
+      <Name>DevelopmentInProgress.TradeView.Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\DevelopmentInProgress.Wpf.Common\DevelopmentInProgress.Wpf.Common.csproj">
+    <ProjectReference Include="..\..\src\DevelopmentInProgress.Wpf.Common\DevelopmentInProgress.TradeView.Wpf.Common.csproj">
       <Project>{2b523839-ee20-4ed3-a1ba-ac2070c99f4d}</Project>
-      <Name>DevelopmentInProgress.Wpf.Common</Name>
+      <Name>DevelopmentInProgress.TradeView.Wpf.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
