@@ -190,7 +190,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
             try
             {
-                userAccount = await accountsService.GetAccount(Title);
+                userAccount = await accountsService.GetAccountAsync(Title);
                 var json = JsonConvert.SerializeObject(userAccount, Formatting.Indented);
                 Logger.Log(json, Category.Info, Priority.Medium);
             }

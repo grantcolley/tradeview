@@ -1,7 +1,7 @@
-﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
+﻿using DevelopmentInProgress.TradeView.Interface.Model;
 using System.Threading.Tasks;
 
-namespace DevelopmentInProgress.TradeView.Wpf.Data
+namespace DevelopmentInProgress.TradeView.Data
 {
     public interface ITradeViewConfigurationAccounts
     {

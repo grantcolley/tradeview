@@ -37,7 +37,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading
 
             try
             {
-                var userAccounts = await accountsService.GetAccounts();
+                var userAccounts = await accountsService.GetAccountsAsync();
 
                 foreach (var userAccount in userAccounts.Accounts)
                 {

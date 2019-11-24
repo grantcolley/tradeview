@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DevelopmentInProgress.TradeView.Wpf.Data.File
+namespace DevelopmentInProgress.TradeView.Data.File
 {
     public class TradeViewDataFile : ITradeViewData
     {

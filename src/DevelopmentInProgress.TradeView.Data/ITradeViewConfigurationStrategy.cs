@@ -1,4 +1,4 @@
-﻿namespace DevelopmentInProgress.TradeView.Wpf.Data
+﻿namespace DevelopmentInProgress.TradeView.Data
 {
     public interface ITradeViewConfigurationStrategy
     {
