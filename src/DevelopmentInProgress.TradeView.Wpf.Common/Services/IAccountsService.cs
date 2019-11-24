@@ -5,9 +5,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
 {
     public interface IAccountsService
     {
-        Task<UserAccounts> GetAccounts();
-        Task<UserAccount> GetAccount(string accountName);
-        Task SaveAccount(UserAccount userAccount);
-        Task DeleteAccount(UserAccount userAccount);
+        Task<UserAccounts> GetAccountsAsync();
+        Task<UserAccount> GetAccountAsync(string accountName);
+        Task SaveAccountAsync(UserAccount userAccount);
+        Task DeleteAccountAsync(UserAccount userAccount);
     }
 }

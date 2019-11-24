@@ -107,7 +107,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
             try
             {
-                var accounts = await accountsService.GetAccounts();
+                var accounts = await accountsService.GetAccountsAsync();
                 Accounts = new ObservableCollection<UserAccount>(accounts.Accounts);
             }
             catch (Exception ex)
@@ -124,7 +124,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 {
                     var userAccount = userAccountViewModel.UserAccount;
 
-                    await accountsService.SaveAccount(userAccount);
+                    await accountsService.SaveAccountAsync(userAccount);
 
                     var account = Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName));
                     if (account != null)
@@ -160,7 +160,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             try
             {
                 var userAccount = new UserAccount { AccountName = accountName };
-                await accountsService.SaveAccount(userAccount);
+                await accountsService.SaveAccountAsync(userAccount);
                 Accounts.Add(userAccount);
                 Module.AddAccount(userAccount.AccountName);
             }
@@ -186,7 +186,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
             try
             {
-                await accountsService.DeleteAccount(userAccount);
+                await accountsService.DeleteAccountAsync(userAccount);
                 Accounts.Remove(userAccount);
                 Module.RemoveAccount(userAccount.AccountName);
             }

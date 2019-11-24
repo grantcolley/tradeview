@@ -10,14 +10,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
 {
     public class AccountsService : IAccountsService
     {
-        private string userAccountsFile;
-        
-        public AccountsService()
-        {
-            userAccountsFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{Environment.UserName}.txt");
-        }
-
-        public async Task<UserAccounts> GetAccounts()
+        public async Task<UserAccounts> GetAccountsAsync()
         {
             if (File.Exists(userAccountsFile))
             {
@@ -31,7 +24,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
             return new UserAccounts();
         }
 
-        public async Task<UserAccount> GetAccount(string accountName)
+        public async Task<UserAccount> GetAccountAsync(string accountName)
         {
             if (File.Exists(userAccountsFile))
             {
@@ -49,7 +42,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
             throw new Exception($"Account {accountName} not available.");
         }
 
-        public async Task SaveAccount(UserAccount userAccount)
+        public async Task SaveAccountAsync(UserAccount userAccount)
         {
             UserAccounts userAccounts;
 
@@ -84,7 +77,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
             }
         }
 
-        public async Task DeleteAccount(UserAccount userAccount)
+        public async Task DeleteAccountAsync(UserAccount userAccount)
         {
             if (File.Exists(userAccountsFile))
             {
