@@ -74,6 +74,7 @@
     <Compile Include="Extensions\StrategyExtensions.cs" />
     <Compile Include="Extensions\StrategyNotificationExtensions.cs" />
     <Compile Include="Extensions\StrategySubscriptionExtensions.cs" />
+    <Compile Include="Extensions\UserAccountExtensions.cs" />
     <Compile Include="Helpers\BinanceOrderBookHelper.cs" />
     <Compile Include="Helpers\IOrderBookHelper.cs" />
     <Compile Include="Helpers\IOrderBookHelperFactory.cs" />
@@ -135,6 +136,10 @@
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Common\DevelopmentInProgress.TradeView.Common.csproj">
       <Project>{03680064-ec5b-42a0-9c53-5a0b097458ea}</Project>
       <Name>DevelopmentInProgress.TradeView.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Data\DevelopmentInProgress.TradeView.Data.csproj">
+      <Project>{dac8d225-b833-41eb-a595-25a0c59cc85e}</Project>
+      <Name>DevelopmentInProgress.TradeView.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Interface\DevelopmentInProgress.TradeView.Interface.csproj">
       <Project>{e3236e65-3232-438d-8dc9-5cd6be419b68}</Project>
