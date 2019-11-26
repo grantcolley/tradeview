@@ -10,9 +10,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
     {
         private ITradeViewConfigurationAccounts configurationAccounts;
 
-        public AccountsService(ITradeViewData tradeViewData)
+        public AccountsService(ITradeViewConfigurationAccounts configurationAccounts)
         {
-            configurationAccounts = tradeViewData.ConfigurationData.Accounts;
+            this.configurationAccounts = configurationAccounts;
         }
 
         public async Task<UserAccounts> GetAccountsAsync()
