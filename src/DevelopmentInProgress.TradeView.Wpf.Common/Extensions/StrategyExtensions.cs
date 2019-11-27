@@ -17,7 +17,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 Parameters = strategy.Parameters
             };
 
-            var subscriptions = strategy.StrategySubscriptions.Select(s => s.GetInterfaceStrategySubscription()).ToList();
+            var subscriptions = strategy.StrategySubscriptions.Select(s => s.ToInterfaceStrategySubscription()).ToList();
             interfaceStrategy.StrategySubscriptions.AddRange(subscriptions);
 
             return interfaceStrategy;
@@ -30,10 +30,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 Id = strategy.Id,
                 Name = strategy.Name,
                 Status = strategy.Status,
-                TargetAssembly = strategy.TargetAssembly.File,
+                TargetAssembly = strategy.TargetAssembly?.File,
                 TargetType = strategy.TargetType,
                 Parameters = strategy.Parameters,
-                DisplayAssembly = strategy.DisplayAssembly.File,
+                DisplayAssembly = strategy.DisplayAssembly?.File,
                 DisplayViewType = strategy.DisplayViewType,
                 DisplayViewModelType = strategy.DisplayViewModelType,
                 TradesChartDisplayCount = strategy.TradesChartDisplayCount,
@@ -45,7 +45,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 DisplayDependencies = strategy.DisplayDependencies.Select(f=> f.File).ToList()
             };
             
-            var subscriptions = strategy.StrategySubscriptions.Select(s => s.GetInterfaceStrategySubscription()).ToList();
+            var subscriptions = strategy.StrategySubscriptions.Select(s => s.ToInterfaceStrategySubscription()).ToList();
             strategyConfig.StrategySubscriptions.AddRange(subscriptions);
 
             return strategyConfig;

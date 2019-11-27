@@ -86,9 +86,11 @@
 
                         <DockPanel Grid.Row="1" Grid.Column="0" LastChildFill="True">
                             <Label DockPanel.Dock="Left" Content="API Key:" Margin="2"/>
-                            <TextBox DockPanel.Dock="Left" Text="{Binding Path=ApiKey}" Margin="2" Width="475"/>
+                            <TextBox DockPanel.Dock="Left" Text="{Binding Path=ApiKey}" Margin="2" Width="400"/>
                             <Label DockPanel.Dock="Left" Content="Secret Key:" Margin="2"/>
-                            <TextBox DockPanel.Dock="Left" Text="{Binding Path=SecretKey}" Margin="2" Width="475" HorizontalAlignment="Left"/>
+                            <TextBox DockPanel.Dock="Left" Text="{Binding Path=SecretKey}" Margin="2" Width="400" HorizontalAlignment="Left"/>
+                            <Label DockPanel.Dock="Left" Content="API Pass Phrase:" Margin="2"/>
+                            <TextBox DockPanel.Dock="Left" Text="{Binding Path=ApiPassPhrase}" Margin="2" Width="150" HorizontalAlignment="Left"/>
                             <ContentControl/>
                         </DockPanel>
                     </Grid>

@@ -1,4 +1,5 @@
 ﻿using DevelopmentInProgress.TradeView.Interface.Enums;
+using DevelopmentInProgress.TradeView.Interface.Extensions;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 {
@@ -17,7 +18,22 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         public bool SubscribeTrades { get; set; }
         public bool SubscribeStatistics { get; set; }
         public bool SubscribeCandlesticks { get; set; }
-        public string SelectedExchange { get; set; }
+
+        public string SelectedExchange
+        {
+            get { return Exchange.ToString(); }
+            set
+            {
+                if (value == null)
+                {
+                    Exchange = Exchange.Unknown;
+                }
+                else
+                {
+                    Exchange = ExchangeExtensions.GetExchange(value);
+                }
+            }
+        }
 
         public string CandlestickInterval
         {

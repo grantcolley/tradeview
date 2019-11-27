@@ -5,7 +5,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 {
     public static class StrategySubscriptionExtensions
     {
-        public static Interface.Strategy.StrategySubscription GetInterfaceStrategySubscription(this StrategySubscription strategySubscription)
+        public static Interface.Strategy.StrategySubscription ToInterfaceStrategySubscription(this StrategySubscription strategySubscription)
         {
             int subscribe = 0;
 
