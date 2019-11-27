@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace DevelopmentInProgress.TradeView.Interface.Strategy
 {
@@ -13,15 +11,12 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
             DisplayDependencies = new List<string>();
         }
 
+        public int Id { get; set; }
         public string Name { get; set; }
+        public string TargetType { get; set; }
         public string TargetAssembly { get; set; }
         public string DisplayAssembly { get; set; }
         public string Parameters { get; set; }
-        public StrategyStatus Status { get; set; }
-        public List<StrategySubscription> StrategySubscriptions { get; set; }
-        public List<string> Dependencies { get; set; }
-        public List<string> DisplayDependencies { get; set; }
-        public string TargetType { get; set; }
         public string DisplayViewType { get; set; }
         public string DisplayViewModelType { get; set; }
         public int TradesChartDisplayCount { get; set; }
@@ -29,5 +24,9 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
         public int OrderBookChartDisplayCount { get; set; }
         public int OrderBookDisplayCount { get; set; }
         public string StrategyServerUrl { get; set; }
+        public StrategyStatus Status { get; set; }
+        public List<StrategySubscription> StrategySubscriptions { get; set; }
+        public List<string> Dependencies { get; set; }
+        public List<string> DisplayDependencies { get; set; }
     }
 }

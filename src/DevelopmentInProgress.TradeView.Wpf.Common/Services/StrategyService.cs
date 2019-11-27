@@ -1,4 +1,6 @@
-﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
+﻿using DevelopmentInProgress.TradeView.Data;
+using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;
+using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,111 +13,33 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
 {
     public class StrategyService : IStrategyService
     {
-        private string userStrategiesFile;
+        private readonly ITradeViewConfigurationStrategy configurationStrategy;
 
-        public StrategyService()
+        public StrategyService(ITradeViewConfigurationStrategy configurationStrategy)
         {
-            userStrategiesFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{Environment.UserName}_Strategies.txt");
+            this.configurationStrategy = configurationStrategy;
         }
 
         public async Task<List<Strategy>> GetStrategies()
         {
-            if (File.Exists(userStrategiesFile))
-            {
-                using (var reader = File.OpenText(userStrategiesFile))
-                {
-                    var json = await reader.ReadToEndAsync();
-                    var strategies = JsonConvert.DeserializeObject<List<Strategy>>(json);
-                    return strategies;
-                }
-            }
-
-            return new List<Strategy>();
+            var result = await configurationStrategy.GetStrategiesAsync();
+            return result.Select(s => s.ToWpfStrategy()).ToList();
         }
 
         public async Task<Strategy> GetStrategy(string strategyName)
         {
-            Strategy strategy = null;
-
-            if (File.Exists(userStrategiesFile))
-            {
-                using (var reader = File.OpenText(userStrategiesFile))
-                {
-                    var json = await reader.ReadToEndAsync();
-                    var strategies = JsonConvert.DeserializeObject<List<Strategy>>(json);
-                    strategy = strategies.FirstOrDefault(s => s.Name.Equals(strategyName));
-                }
-            }
-
-            return strategy;
+            var result = await configurationStrategy.GetStrategyAsync(strategyName);
+            return result.ToWpfStrategy();
         }
 
-        public async Task SaveStrategy(Strategy strategy)
+        public Task SaveStrategy(Strategy strategy)
         {
-            if (strategy == null)
-            {
-                return;
-            }
-
-            List<Strategy> strategies;
-
-            if (File.Exists(userStrategiesFile))
-            {
-                using (var reader = File.OpenText(userStrategiesFile))
-                {
-                    var rjson = await reader.ReadToEndAsync();
-                    strategies = JsonConvert.DeserializeObject<List<Strategy>>(rjson);
-                }
-            }
-            else
-            {
-                strategies = new List<Strategy>();
-            }
-
-            var dupe = strategies.FirstOrDefault(s => s.Name.Equals(strategy.Name));
-            if (dupe != null)
-            {
-                strategies.Remove(dupe);
-            }
-
-            strategies.Add(strategy);
-
-            var wjson = JsonConvert.SerializeObject(strategies);
-            
-            UnicodeEncoding encoding = new UnicodeEncoding();
-            char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
-            using (StreamWriter writer = File.CreateText(userStrategiesFile))
-            {
-                await writer.WriteAsync(chars, 0, chars.Length);
-            }
+            return configurationStrategy.SaveStrategyAsync(strategy.ToInterfaceStrategyConfig());
         }
 
-        public async Task DeleteStrategy(Strategy strategy)
+        public Task DeleteStrategy(Strategy strategy)
         {
-            if (File.Exists(userStrategiesFile))
-            {
-                List<Strategy> strategies = null;
-
-                using (var reader = File.OpenText(userStrategiesFile))
-                {
-                    var rjson = await reader.ReadToEndAsync();
-                    strategies = JsonConvert.DeserializeObject<List<Strategy>>(rjson);
-                }
-
-                var remove = strategies.FirstOrDefault(s => s.Name.Equals(strategy.Name));
-                if (remove != null)
-                {
-                    strategies.Remove(remove);
-                    var wjson = JsonConvert.SerializeObject(strategies);
-
-                    UnicodeEncoding encoding = new UnicodeEncoding();
-                    char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
-                    using (StreamWriter writer = File.CreateText(userStrategiesFile))
-                    {
-                        await writer.WriteAsync(chars, 0, chars.Length);
-                    }
-                }
-            }
+            return configurationStrategy.DeleteStrategyAsync(strategy.ToInterfaceStrategyConfig());
         }
 
         public async Task<Interface.Strategy.StrategyPerformance> GetStrategyPerformance(string strategyName)
@@ -150,7 +74,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
 
             var strategyPerformanceFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{Environment.UserName}_{strategyPerformance.Strategy}.txt");
 
-            var json = JsonConvert.SerializeObject(strategyPerformance);
+            var json = JsonConvert.SerializeObject(strategyPerformance, Formatting.Indented);
 
             UnicodeEncoding encoding = new UnicodeEncoding();
             char[] chars = encoding.GetChars(encoding.GetBytes(json));
