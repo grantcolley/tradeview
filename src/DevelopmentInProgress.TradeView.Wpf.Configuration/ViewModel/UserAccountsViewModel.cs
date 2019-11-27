@@ -3,7 +3,6 @@ using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using DevelopmentInProgress.TradeView.Wpf.Host.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
-using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,6 +11,7 @@ using DevelopmentInProgress.TradeView.Wpf.Configuration.Events;
 using System.Reactive.Linq;
 using System.Collections.Generic;
 using DevelopmentInProgress.TradeView.Wpf.Configuration.Utility;
+using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 {
@@ -22,6 +22,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
         private UserAccount selectedUserAccount;
         private UserAccountViewModel selectedUserAccountViewModel;
         private Dictionary<string, IDisposable> observables;
+        private ObservableCollection<UserAccount> accounts;
+        private bool isLoading;
+        private bool disposed;
 
         public UserAccountsViewModel(ViewModelContext viewModelContext, IAccountsService accountsService, ISymbolsLoader symbolsLoader)
             : base(viewModelContext)
@@ -42,9 +45,33 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
         public ICommand DeleteAccountCommand { get; set; }
         public ICommand CloseCommand { get; set; }
 
-        public ObservableCollection<UserAccount> Accounts { get; set; }
+        public ObservableCollection<UserAccount> Accounts 
+        {
+            get { return accounts; }
+            set
+            {
+                if(accounts != value)
+                {
+                    accounts = value;
+                    OnPropertyChanged("Accounts");
+                }
+            }
+        }
 
         public ObservableCollection<UserAccountViewModel> SelectedUserAccountViewModels { get; set; }
+
+        public bool IsLoading
+        {
+            get { return isLoading; }
+            set
+            {
+                if (isLoading != value)
+                {
+                    isLoading = value;
+                    OnPropertyChanged("IsLoading");
+                }
+            }
+        }
 
         public UserAccount SelectedUserAccount
         {
@@ -107,6 +134,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
             try
             {
+                IsLoading = true;
+
                 var accounts = await accountsService.GetAccountsAsync();
                 Accounts = new ObservableCollection<UserAccount>(accounts.Accounts);
             }
@@ -114,13 +143,39 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             {
                 ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message });
             }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
+
+        protected override void OnDisposing()
+        {
+            if (disposed)
+            {
+                return;
+            }
+
+            foreach (var disposable in observables.Values)
+            {
+                disposable.Dispose();
+            }
+
+            foreach (var viewModel in SelectedUserAccountViewModels)
+            {
+                viewModel.Dispose();
+            }
+
+            disposed = true;
         }
 
         protected async override void SaveDocument()
         {
-            foreach(var userAccountViewModel in SelectedUserAccountViewModels)
+            try
             {
-                try
+                IsLoading = true;
+
+                foreach (var userAccountViewModel in SelectedUserAccountViewModels)
                 {
                     var userAccount = userAccountViewModel.UserAccount;
 
@@ -134,10 +189,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                         Accounts.Insert(index, userAccount);
                     }
                 }
-                catch(Exception ex)
-                {
-                    ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message });
-                }
+            }
+            catch (Exception ex)
+            {
+                ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message });
+            }
+            finally
+            {
+                IsLoading = false;
             }
         }
 
@@ -159,6 +218,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
             try
             {
+                IsLoading = true;
+
                 var userAccount = new UserAccount { AccountName = accountName };
                 await accountsService.SaveAccountAsync(userAccount);
                 Accounts.Add(userAccount);
@@ -167,6 +228,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             catch (Exception ex)
             {
                 ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message });
+            }
+            finally
+            {
+                IsLoading = false;
             }
         }
 
@@ -186,6 +251,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
             try
             {
+                IsLoading = true;
+
                 await accountsService.DeleteAccountAsync(userAccount);
                 Accounts.Remove(userAccount);
                 Module.RemoveAccount(userAccount.AccountName);
@@ -193,6 +260,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             catch (Exception ex)
             {
                 ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message });
+            }
+            finally
+            {
+                IsLoading = false;
             }
         }
 

@@ -18,9 +18,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
     {
         private IStrategyService strategyService;
         private IStrategyFileManager strategyFileManager;
+        private ObservableCollection<Strategy> strategies;
         private StrategyViewModel selectedStrategyViewModel;
         private Strategy selectedStrategy;
         private Dictionary<string, IDisposable> strategyObservableSubscriptions;
+        private bool isLoading;
         private bool disposed;
 
         public StrategyManagerViewModel(ViewModelContext viewModelContext, IStrategyService strategyService, IStrategyFileManager strategyFileManager)
@@ -41,9 +43,33 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
         public ICommand DeleteStrategyCommand { get; set; }
         public ICommand CloseCommand { get; set; }
 
-        public ObservableCollection<Strategy> Strategies { get; set; }
+        public ObservableCollection<Strategy> Strategies 
+        {
+            get { return strategies; } 
+            set
+            {
+                if(strategies != value)
+                {
+                    strategies = value;
+                    OnPropertyChanged("Strategies");
+                }
+            }
+        }
 
         public ObservableCollection<StrategyViewModel> SelectedStrategyViewModels { get; set; }
+
+        public bool IsLoading
+        {
+            get { return isLoading; }
+            set
+            {
+                if (isLoading != value)
+                {
+                    isLoading = value;
+                    OnPropertyChanged("IsLoading");
+                }
+            }
+        }
 
         public Strategy SelectedStrategy
         {
@@ -114,12 +140,19 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
             try
             {
+                IsLoading = true;
+
                 var strategies = await strategyService.GetStrategies();
+
                 Strategies = new ObservableCollection<Strategy>(strategies);
             }
             catch (Exception ex)
             {
                 ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message });
+            }
+            finally
+            {
+                IsLoading = false;
             }
         }
 
@@ -147,6 +180,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
         {
             try
             {
+                IsLoading = true;
+
                 foreach (var strategyViewModel in SelectedStrategyViewModels)
                 {
                     await strategyService.SaveStrategy(strategyViewModel.Strategy);
@@ -155,6 +190,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             catch (Exception ex)
             {
                 ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message });
+            }
+            finally
+            {
+                IsLoading = false;
             }
         }
 
@@ -176,6 +215,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
             try
             {
+                IsLoading = true;
+
                 var strategy = new Strategy { Name = strategyName };
                 await strategyService.SaveStrategy(strategy);
                 Strategies.Add(strategy);
@@ -184,6 +225,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             catch (Exception ex)
             {
                 ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message });
+            }
+            finally
+            {
+                IsLoading = false;
             }
         }
 
@@ -203,6 +248,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
             try
             {
+                IsLoading = true;
+
                 await strategyService.DeleteStrategy(strategy);
                 Strategies.Remove(strategy);
                 Module.RemoveStrategy(strategy.Name);
@@ -210,6 +257,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             catch (Exception ex)
             {
                 ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message });
+            }
+            finally
+            {
+                IsLoading = false;
             }
         }
 
