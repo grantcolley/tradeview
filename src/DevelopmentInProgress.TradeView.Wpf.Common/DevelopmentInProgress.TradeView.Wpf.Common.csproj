@@ -96,7 +96,9 @@
     <Compile Include="Model\UserAccounts.cs" />
     <Compile Include="Services\AccountsService.cs" />
     <Compile Include="Services\IAccountsService.cs" />
+    <Compile Include="Services\IStrategyPerformanceService.cs" />
     <Compile Include="Services\IStrategyService.cs" />
+    <Compile Include="Services\StrategyPerformanceService.cs" />
     <Compile Include="Services\StrategyService.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="Extensions\AccountBalanceExtensions.cs" />
