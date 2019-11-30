@@ -4,9 +4,11 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
+using System.Threading;
 using System.Windows.Controls;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
@@ -16,6 +18,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
     /// </summary>
     partial class FilterBox
     {
+        private static int counter;
+        private static Delegate getter;
+        private static Delegate setter;
+
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
             var textBox = sender as TextBox;
@@ -35,7 +41,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
             {
                 return;
             }
-            
+
             var filterFieldName = xamlFilterBox.FilterFieldName;
             if(string.IsNullOrWhiteSpace(filterFieldName))
             {
@@ -48,82 +54,93 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
                 return;
             }
 
-            Contains(items, textBox.Text, filterFieldName, visibilityFieldName, xamlFilterBox.SupportsDeepTraversal);
-        }
+            var text = textBox.Text;
 
-        private bool Contains(IEnumerable items, string text, string filterFieldName, string visibilityFieldName, bool supportsDeepTraversal)
-        {
-            bool result = false;
             foreach (var item in items)
             {
-                var innerResult = false;
-
-                if (supportsDeepTraversal)
+                if (getter == null
+                    && setter == null)
                 {
-                    var properties = item.GetType().GetProperties();
-                    foreach (var property in properties)
-                    {
-                        if (
-                            property.PropertyType.GetInterfaces()
-                                .Any(
-                                    i =>
-                                        i.IsGenericType &&
-                                        i.GetGenericTypeDefinition().Name.Equals(typeof(IEnumerable<>).Name)))
-                        {
-                            foreach (var itemType in property.PropertyType.GetGenericArguments())
-                            {
-                                var textPropertyInfo = itemType.GetProperty(filterFieldName);
-                                var visiblePropertyInfo = itemType.GetProperty(visibilityFieldName);
-
-                                if (textPropertyInfo != null
-                                    && visiblePropertyInfo != null)
-                                {
-                                    if (Contains((IEnumerable)property.GetValue(item, null), text, filterFieldName, visibilityFieldName, supportsDeepTraversal))
-                                    {
-                                        innerResult = true;
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    var t = item.GetType();
+                    CreateTypeHelpers(t, filterFieldName, visibilityFieldName);
                 }
 
-                if (Contains(item, text, innerResult, filterFieldName, visibilityFieldName))
+                if (string.IsNullOrEmpty(text))
                 {
-                    result = true;
-                }
-            }
-
-            return result;
-        }
-
-        private bool Contains<T>(T t, string text, bool hasVisibleChild, string filterFieldName, string visibilityFieldName)
-        {
-            var textPropertyInfo = t.GetType().GetProperty(filterFieldName);
-            var visiblePropertyInfo = t.GetType().GetProperty(visibilityFieldName);
-
-            if (textPropertyInfo != null
-                && visiblePropertyInfo != null)
-            {
-                if (string.IsNullOrEmpty(text)
-                    || hasVisibleChild)
-                {
-                    visiblePropertyInfo.SetValue(t, true, null);
-                    return true;
+                    setter.DynamicInvoke(item, true);
                 }
 
-                var val = textPropertyInfo.GetValue(t, null);
+                var val = getter.DynamicInvoke(item);
                 if (val != null
                     && val.ToString().ToLower().Contains(text.ToLower()))
                 {
-                    visiblePropertyInfo.SetValue(t, true, null);
-                    return true;
+                    setter.DynamicInvoke(item, true);                   
                 }
+                else
+                {
+                    setter.DynamicInvoke(item, false);
+                }
+            }
+        }
+        
+        public static void CreateTypeHelpers(Type t, string getterName, string setterName)
+        {
+            var propertyInfos = t.GetProperties();
+            var getterPropertyInfo = propertyInfos.First(p => p.Name.Equals(getterName));
+            var setterPropertyInfo = propertyInfos.First(p => p.Name.Equals(setterName));
+            getter = GetValue(t, getterPropertyInfo);
+            setter = SetValue(t, setterPropertyInfo);
+        }
 
-                visiblePropertyInfo.SetValue(t, false, null);
+        private static Delegate GetValue(Type t, PropertyInfo propertyInfo)
+        {
+            var getAccessor = propertyInfo.GetGetMethod();
+            var methodName = "GetValue_" + propertyInfo.Name + "_" + GetNextCounterValue();
+            var dynMethod = new DynamicMethod(methodName, t, new Type[] { typeof(object) }, typeof(FilterBox).Module);
+
+            ILGenerator il = dynMethod.GetILGenerator();
+            il.Emit(OpCodes.Ldarg_0);
+            il.EmitCall(OpCodes.Callvirt, getAccessor, null);
+            if (propertyInfo.PropertyType.IsValueType)
+            {
+                il.Emit(OpCodes.Box, propertyInfo.PropertyType);
             }
 
-            return false;
+            il.Emit(OpCodes.Ret);
+
+            var dataType = new Type[] { t, typeof(object) };
+            var genericBase = typeof(Func<,>);
+            var combinedType = genericBase.MakeGenericType(dataType);
+
+            return dynMethod.CreateDelegate(combinedType);
+        }
+
+        private static Delegate SetValue(Type t, PropertyInfo propertyInfo)
+        {
+            var setAccessor = propertyInfo.GetSetMethod();
+            var methodName = "SetValue_" + propertyInfo.Name + "_" + GetNextCounterValue();
+            var dynMethod = new DynamicMethod(methodName, typeof(void), new Type[] { t, typeof(object) }, typeof(FilterBox).Module);
+            ILGenerator il = dynMethod.GetILGenerator();
+            il.Emit(OpCodes.Ldarg_0);
+            il.Emit(OpCodes.Ldarg_1);
+            if (propertyInfo.PropertyType.IsValueType)
+            {
+                il.Emit(OpCodes.Unbox_Any, propertyInfo.PropertyType);
+            }
+
+            il.EmitCall(OpCodes.Callvirt, setAccessor, null);
+            il.Emit(OpCodes.Ret);
+
+            var dataType = new Type[] { t, typeof(object) };
+            var genericBase = typeof(Action<,>);
+            var combinedType = genericBase.MakeGenericType(dataType);
+
+            return dynMethod.CreateDelegate(combinedType);
+        }
+
+        private static int GetNextCounterValue()
+        {
+            return Interlocked.Increment(ref counter);
         }
     }
 }
