@@ -18,7 +18,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
         private static readonly DependencyProperty FilterTextProperty;
         private static readonly DependencyProperty FilterFieldNameProperty;
         private static readonly DependencyProperty VisibilityFieldNameProperty;
-        private static readonly DependencyProperty SupportsDeepTraversalProperty;
         private static readonly DependencyProperty ItemsSourceProperty;
 
         static XamlFilterBox()
@@ -30,8 +29,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
             FilterFieldNameProperty = DependencyProperty.Register("FilterFieldName", typeof(string), typeof(XamlFilterBox));
 
             VisibilityFieldNameProperty = DependencyProperty.Register("VisibilityFieldName", typeof(string), typeof(XamlFilterBox));
-
-            SupportsDeepTraversalProperty = DependencyProperty.Register("SupportsDeepTraversal", typeof(bool), typeof(XamlFilterBox), new FrameworkPropertyMetadata(true));
 
             ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(IEnumerable), typeof(XamlFilterBox));
         }
@@ -61,18 +58,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
         {
             get { return GetValue(VisibilityFieldNameProperty)?.ToString(); }
             set { SetValue(VisibilityFieldNameProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets a flag indicating whether deep nested tranersal is supported.
-        /// Deep nested traversal i.e. travering nested lists for the visibility field 
-        /// name may unecessarily impact performance when searching is only required 
-        /// at the root level. Default is true.
-        /// </summary>
-        public bool SupportsDeepTraversal
-        {
-            get { return (bool)GetValue(SupportsDeepTraversalProperty); }
-            set { SetValue(SupportsDeepTraversalProperty, value); }
         }
 
         /// <summary>
