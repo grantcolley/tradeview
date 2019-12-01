@@ -68,6 +68,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
                 if (string.IsNullOrEmpty(text))
                 {
                     setter.DynamicInvoke(item, true);
+                    continue;
                 }
 
                 var val = getter.DynamicInvoke(item);

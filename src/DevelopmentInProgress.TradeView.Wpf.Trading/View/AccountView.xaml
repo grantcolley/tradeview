@@ -76,7 +76,7 @@
                         <progress:CircularProgress/>
                     </Viewbox>
                 </Grid>
-                <filterbox:XamlFilterBox DockPanel.Dock="Top" ItemsSource="{Binding Account.Balances}" FilterFieldName="Asset" VisibilityFieldName="IsVisible" SupportsDeepTraversal="False"  Margin="2"/>
+                <filterbox:XamlFilterBox DockPanel.Dock="Top" ItemsSource="{Binding Account.Balances}" FilterFieldName="Asset" VisibilityFieldName="IsVisible" Margin="2"/>
                 <Grid DockPanel.Dock="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100"/>
