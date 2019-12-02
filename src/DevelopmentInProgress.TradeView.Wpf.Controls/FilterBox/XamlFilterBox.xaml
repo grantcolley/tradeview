@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:filterBox="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox"
-                    x:Class="DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox.FilterBox">
+                    xmlns:filterBox="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../themes/MetroDark/MetroDark.MSControls.Core.Implicit.xaml" />
@@ -14,9 +13,8 @@
                     <DockPanel LastChildFill="True" Background="{StaticResource TextBoxBackgroundBrush}">
                         <DockPanel DockPanel.Dock="Top" LastChildFill="True" Height="30" Margin="5" Background="{StaticResource TextBoxBackgroundBrush}">
                             <Image DockPanel.Dock="Right" Source="../Images/Filter.png" Height="18" Width="18"/>
-                            <TextBox Text="{Binding Path=FilterText, Delay=500, RelativeSource={RelativeSource TemplatedParent}}"
-                                         Tag="{Binding ., RelativeSource={RelativeSource TemplatedParent}}"
-                                         TextChanged="OnTextChanged" Style="{StaticResource TextBoxStyle}"/>
+                            <TextBox Text="{Binding Path=FilterText, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
+                                         Tag="{Binding ., RelativeSource={RelativeSource TemplatedParent}}"/>
                         </DockPanel>
                     </DockPanel>
                 </ControlTemplate>
