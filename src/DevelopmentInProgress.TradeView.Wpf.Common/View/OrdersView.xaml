@@ -33,7 +33,7 @@
                             <progress:CircularProgress Colour="#69A1BF"/>
                         </Viewbox>
                     </StackPanel>
-                    <filterbox:XamlFilterBox ItemsSource="{Binding Orders}" FilterFieldName="Symbol" VisibilityFieldName="IsVisible" Margin="2"/>
+                    <filterbox:XamlFilterBox ItemsSource="{Binding Orders}" FilterFieldName="Symbol" Margin="2"/>
                 </DockPanel>
                 <Grid DockPanel.Dock="Top">
                     <Grid.ColumnDefinitions>

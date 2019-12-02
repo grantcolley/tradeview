@@ -42,8 +42,7 @@
                                     </Button>
                                     <filterBox:XamlFilterBox DockPanel.Dock="Top"
                                                      ItemsSource="{Binding DataContext.Messages, RelativeSource={RelativeSource FindAncestor, AncestorType=Expander}}"
-                                                     FilterFieldName="Text"
-                                                     VisibilityFieldName="IsVisible"/>
+                                                     FilterFieldName="Text"/>
                                 </DockPanel>
                             </DataTemplate>
                         </Expander.HeaderTemplate>

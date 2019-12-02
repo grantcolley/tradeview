@@ -42,7 +42,7 @@
                         </Button>
                         <TextBox DockPanel.Dock="Left" Name="addAccount"/>
                     </DockPanel>
-                    <filterbox:XamlFilterBox DockPanel.Dock="Top" ItemsSource="{Binding Accounts}" FilterFieldName="Name" VisibilityFieldName="IsVisible" Margin="2"/>
+                    <filterbox:XamlFilterBox DockPanel.Dock="Top" ItemsSource="{Binding Accounts}" FilterFieldName="AccountName" Margin="2"/>
                     <GroupBox Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}" BorderThickness="0.2">
                         <DockPanel LastChildFill="True">
                             <Viewbox DockPanel.Dock="Top" Height="50" Width="50" Margin="2" Visibility="{Binding IsLoading, Converter={StaticResource boolToVisibilityConverter}}">

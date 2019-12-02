@@ -34,7 +34,7 @@
                     <progress:CircularProgress></progress:CircularProgress>
                 </Viewbox>
                 <DockPanel LastChildFill="True">
-                    <filterbox:XamlFilterBox DockPanel.Dock="Top" ItemsSource="{Binding Symbols}" FilterFieldName="Name" VisibilityFieldName="IsVisible" Margin="2"/>
+                    <filterbox:XamlFilterBox DockPanel.Dock="Top" ItemsSource="{Binding Symbols}" FilterFieldName="Name" Margin="2"/>
                     <Grid DockPanel.Dock="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="30"/>
