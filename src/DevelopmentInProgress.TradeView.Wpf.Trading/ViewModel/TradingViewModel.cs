@@ -367,13 +367,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 eventHandler => symbol.OnSymbolNotification -= eventHandler)
                 .Select(eventPattern => eventPattern.EventArgs);
 
-            var symbolObservableSubscription =symbolObservable.Subscribe(args =>
-            {
-                if(args.HasException)
-                {
-                    TradingViewModelException(args);
-                }
-            });
+            var symbolObservableSubscription = symbolObservable.Subscribe(args =>
+             {
+                 if (args.HasException)
+                 {
+                     TradingViewModelException(args);
+                 }
+             });
 
             symbolObservableSubscriptions.Add(symbol.Symbol.Name, symbolObservableSubscription);
         }
