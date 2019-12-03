@@ -19,7 +19,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private List<Symbol> symbols;
         private Symbol selectedSymbol;
         private UserAccount accountPreferences;
-        private bool showFavourites;
         private bool isLoadingSymbols;
         private bool disposed;
 
@@ -71,28 +70,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 if (accountPreferences != value)
                 {
                     accountPreferences = value;
-                }
-            }
-        }
-
-        public bool ShowFavourites
-        {
-            get { return showFavourites; }
-            set
-            {
-                if (showFavourites != value)
-                {
-                    showFavourites = value;
-                    if (showFavourites)
-                    {
-                        Symbols.ForEach(s => s.IsVisible = s.IsFavourite);
-                    }
-                    else
-                    {
-                        Symbols.ForEach(s => s.IsVisible = true);
-                    }
-
-                    OnPropertyChanged("ShowFavourites");
                 }
             }
         }
