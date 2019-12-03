@@ -104,6 +104,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
             if (disposing)
             {
+                dispatcherTimer.Tick -= new EventHandler(DispatcherTimerTick);
+
                 if (accountCancellationTokenSource != null
                     && !accountCancellationTokenSource.IsCancellationRequested)
                 {
