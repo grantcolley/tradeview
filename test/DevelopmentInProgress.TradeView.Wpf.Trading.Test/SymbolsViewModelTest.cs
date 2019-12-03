@@ -1,5 +1,4 @@
-﻿using DevelopmentInProgress.TradeView.Test.Helper;
-using DevelopmentInProgress.TradeView.Wpf.Common.Model;
+﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Trading.Events;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel;
@@ -11,8 +10,8 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Prism.Logging;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using DevelopmentInProgress.TradeView.Test.Helper;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 {
@@ -38,7 +37,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 
             symbolsObservable.Subscribe((args) =>
             {
-                if (args.Symbols != null)
+                if (args.Symbols != null // OnLoadedSymbols
+                    || args.Value.Name.Equals("BNBBTC")) // OnSelectedSymbol
                 {
                     // expected
                 }
@@ -48,14 +48,23 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
                 }
             });
 
-            symbolsViewModel.SetAccount(new UserAccount { Preferences = new Preferences { FavouriteSymbols = new ObservableCollection<string>(new[] { "BNBBTC" }) } });
+            symbolsViewModel.SetAccount(
+                new UserAccount
+                {
+                    Preferences = new Preferences
+                    {
+                        SelectedSymbol = "BNBBTC",
+                        FavouriteSymbols = new ObservableCollection<string>(new[] { "BNBBTC", "TRXBTC" })
+                    }
+                });
 
             await Task.Delay(1000);
 
             // Assert
-            Assert.AreEqual(symbolsViewModel.Symbols.Count, TestHelper.Symbols.Count);
+            Assert.AreEqual(symbolsViewModel.Symbols.Count, 2);
             Assert.IsNotNull(symbolsViewModel.AccountPreferences);
-            Assert.IsNull(symbolsViewModel.SelectedSymbol);
+            Assert.IsNotNull(symbolsViewModel.SelectedSymbol);
+            Assert.AreEqual(symbolsViewModel.SelectedSymbol.Name, "BNBBTC");
             Assert.IsFalse(fail);
         }
 
@@ -91,7 +100,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
                 }
             });
 
-            symbolsViewModel.SetAccount(new UserAccount { Preferences = new Preferences { FavouriteSymbols = new ObservableCollection<string>(new[] { "BNBBTC" }) } });
+            symbolsViewModel.SetAccount(
+                new UserAccount { 
+                    Preferences = new Preferences { 
+                        SelectedSymbol = "BNBBTC", 
+                        FavouriteSymbols = new ObservableCollection<string>(new[] { "BNBBTC", "TRXBTC" }) } });
 
             await Task.Delay(1000);
 
@@ -130,7 +143,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 
             foreach(var favourite in favourites)
             {
-                Assert.IsNotNull(symbolsViewModel.Symbols.First(s => s.Name.Equals(favourite.Name) && s.IsFavourite.Equals(true)));
+                Assert.IsNotNull(symbolsViewModel.Symbols.First(s => s.Name.Equals(favourite.Name)));
             }
 
             Assert.AreEqual(symbolsViewModel.SelectedSymbol.Name, account.Preferences.SelectedSymbol);
