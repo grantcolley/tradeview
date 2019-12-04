@@ -11,7 +11,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 {
     public class KucoinOrderBookHelper : IOrderBookHelper
     {
-        private IExchangeApi kucoinExchangeApi;
+        private readonly IExchangeApi kucoinExchangeApi;
 
         public KucoinOrderBookHelper(IExchangeApi kucoinExchangeApi)
         {
