@@ -23,6 +23,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
     public class TradingViewModel : DocumentViewModel
     {
         private IOrderBookHelperFactory orderBookHelperFactory;
+        private ITradeHelperFactory tradeHelperFactory;
         private IWpfExchangeService exchangeService;
         private IAccountsService accountsService;
         private IChartHelper chartHelper;
@@ -49,6 +50,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             TradeViewModel tradeViewModel, OrdersViewModel ordersViewModel,
             IWpfExchangeService exchangeService, IAccountsService accountsService,
             IOrderBookHelperFactory orderBookHelperFactory,
+            ITradeHelperFactory tradeHelperFactory,
             IChartHelper chartHelper)
             : base(viewModelContext)
         {
@@ -63,6 +65,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             this.exchangeService = exchangeService;
             this.accountsService = accountsService;
             this.orderBookHelperFactory = orderBookHelperFactory;
+            this.tradeHelperFactory = tradeHelperFactory;
             this.chartHelper = chartHelper;
 
             ObserveSymbols();
@@ -306,7 +309,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                     else
                     {
                         symbol = new SymbolViewModel(userAccount.Exchange, exchangeService, chartHelper,
-                            orderBookHelperFactory.GetOrderBookHelper(userAccount.Exchange), userAccount.Preferences, Logger);
+                            orderBookHelperFactory.GetOrderBookHelper(userAccount.Exchange), 
+                            tradeHelperFactory.GetTradeHelper(userAccount.Exchange),
+                            userAccount.Preferences, Logger);
                         symbol.Dispatcher = ViewModelContext.UiDispatcher;
                         Symbols.Add(symbol);
                         SelectedSymbol = symbol;

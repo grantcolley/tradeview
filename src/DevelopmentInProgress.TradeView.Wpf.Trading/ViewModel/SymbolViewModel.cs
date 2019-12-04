@@ -26,6 +26,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private List<TradeBase> trades;
         private Exchange exchange;
         private IOrderBookHelper orderBookHelper;
+        private ITradeHelper tradeHelper;
         private object orderBookLock = new object();
         private object tradesLock = new object();
         private bool isLoadingTrades;
@@ -33,11 +34,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private bool disposed;
 
         public SymbolViewModel(Exchange exchange, IWpfExchangeService exchangeService, IChartHelper chartHelper,
-            IOrderBookHelper orderBookHelper, Preferences preferences, ILoggerFacade logger)
+            IOrderBookHelper orderBookHelper, ITradeHelper tradeHelper, 
+            Preferences preferences, ILoggerFacade logger)
             : base(exchangeService, logger)
         {
             this.exchange = exchange;
             this.orderBookHelper = orderBookHelper;
+            this.tradeHelper = tradeHelper;
 
             TradeLimit = preferences.TradeLimit;
             TradesDisplayCount = preferences.TradesDisplayCount;
@@ -289,7 +292,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                     List<TradeBase> newTrades;
                     ChartValues<TradeBase> newTradesChart;
 
-                    TradeHelper.SetTrades(tradesUpdate, Symbol.PricePrecision, Symbol.QuantityPrecision, TradesDisplayCount, TradesChartDisplayCount, Logger, out newTrades, out newTradesChart);
+                    tradeHelper.CreateLocalTradeList(tradesUpdate, Symbol.PricePrecision, Symbol.QuantityPrecision, TradesDisplayCount, TradesChartDisplayCount, out newTrades, out newTradesChart);
 
                     Trades = newTrades;
                     TradesChart = newTradesChart;
@@ -298,7 +301,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 {
                     List<TradeBase> newTrades;
 
-                    TradeHelper.UpdateTrades(tradesUpdate, Trades, Symbol.PricePrecision, Symbol.QuantityPrecision, TradesDisplayCount, TradesChartDisplayCount, Logger, out newTrades, ref tradesChart);
+                    tradeHelper.UpdateTrades(tradesUpdate, Trades, Symbol.PricePrecision, Symbol.QuantityPrecision, TradesDisplayCount, TradesChartDisplayCount, out newTrades, ref tradesChart);
 
                     Trades = newTrades;
                 }
