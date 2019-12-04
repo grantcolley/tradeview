@@ -6,7 +6,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 {
     public class OrderBookHelperFactory : IOrderBookHelperFactory
     {
-        private Dictionary<Exchange, IOrderBookHelper> orderBookHelpers;
+        private readonly Dictionary<Exchange, IOrderBookHelper> orderBookHelpers;
 
         public OrderBookHelperFactory(IExchangeApiFactory exchangeApiFactory)
         {
