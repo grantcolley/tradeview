@@ -40,7 +40,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, new BinanceOrderBookHelper(), preferences, new DebugLogger());
+            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, 
+                new BinanceOrderBookHelper(), 
+                new BinanceTradeHelper(),
+                preferences, new DebugLogger());
 
             var trx = TestHelper.Trx.GetViewSymbol();
             
@@ -67,7 +70,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             preferences.OrderBookChartDisplayCount = 8;
             preferences.OrderBookDisplayCount = 5;
 
-            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, new BinanceOrderBookHelper(), preferences, new DebugLogger());
+            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, 
+                new BinanceOrderBookHelper(),
+                new BinanceTradeHelper(), 
+                preferences, new DebugLogger());
 
             var trx = TestHelper.Trx.GetViewSymbol();
             symbolViewModel.Symbol = trx;
@@ -93,7 +99,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             preferences.OrderBookChartDisplayCount = 8;
             preferences.OrderBookDisplayCount = 5;
 
-            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, new BinanceOrderBookHelper(), preferences, new DebugLogger());
+            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, 
+                new BinanceOrderBookHelper(),
+                new BinanceTradeHelper(), 
+                preferences, new DebugLogger());
 
             var trx = TestHelper.Trx.GetViewSymbol();
             symbolViewModel.Symbol = trx;
@@ -129,7 +138,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, new BinanceOrderBookHelper(), preferences, new DebugLogger());
+            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, 
+                new BinanceOrderBookHelper(),
+                new BinanceTradeHelper(), 
+                preferences, new DebugLogger());
 
             var trx = TestHelper.BNB.GetViewSymbol();
             symbolViewModel.Symbol = trx;
@@ -155,7 +167,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, new BinanceOrderBookHelper(), preferences, new DebugLogger());
+            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, 
+                new BinanceOrderBookHelper(),
+                new BinanceTradeHelper(), 
+                preferences, new DebugLogger());
 
             var trx = TestHelper.BNB.GetViewSymbol();
             symbolViewModel.Symbol = trx;
@@ -185,7 +200,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, new BinanceOrderBookHelper(), preferences, new DebugLogger());
+            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, 
+                new BinanceOrderBookHelper(),
+                new BinanceTradeHelper(), 
+                preferences, new DebugLogger());
 
             var trx = TestHelper.BNB.GetViewSymbol();
             symbolViewModel.Symbol = trx;
@@ -215,7 +233,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, new BinanceOrderBookHelper(), preferences, new DebugLogger());
+            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, 
+                new BinanceOrderBookHelper(),
+                new BinanceTradeHelper(), 
+                preferences, new DebugLogger());
 
             var trx = TestHelper.BNB.GetViewSymbol();
             symbolViewModel.Symbol = trx;
@@ -264,7 +285,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
             var exchangeService = new WpfExchangeService(exchangeApi);
-            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, new BinanceOrderBookHelper(), preferences, new DebugLogger());
+            var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, 
+                new BinanceOrderBookHelper(),
+                new BinanceTradeHelper(), 
+                preferences, new DebugLogger());
 
             var trx = TestHelper.BNB.GetViewSymbol();
             symbolViewModel.Symbol = trx;
