@@ -293,7 +293,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 eventHandler => SymbolsViewModel.OnSymbolsNotification -= eventHandler)
                 .Select(eventPattern => eventPattern.EventArgs);
 
-            symbolsObservableSubscription = symbolsObservable.Subscribe(async (args) =>
+            symbolsObservableSubscription = symbolsObservable.Subscribe(args =>
             {
                 if (args.HasException)
                 {
@@ -318,7 +318,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
                         try
                         {
-                            await symbol.SetSymbol(args.Value);
+                            symbol.SetSymbol(args.Value);
                             ObserveSymbol(symbol);
                         }
                         catch (Exception ex)

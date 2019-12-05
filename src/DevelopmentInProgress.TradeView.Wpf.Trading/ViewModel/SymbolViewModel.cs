@@ -172,7 +172,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             disposed = true;
         }
 
-        public async Task SetSymbol(Symbol symbol)
+        public void SetSymbol(Symbol symbol)
         {
             try
             {
@@ -191,9 +191,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
                 SubscribeOrderBook();
 
-                var tasks = new List<Task>(new[] { GetTrades()}).ToArray();
-
-                await Task.WhenAll(tasks);
+                SubscribeTrades();
             }
             catch (Exception ex)
             {
@@ -215,25 +213,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
         }
 
-        private async Task GetTrades()
+        private void SubscribeTrades()
         {
             IsLoadingTrades = true;
 
             try
             {
-                IEnumerable<ITrade> trades;
-
-                if (ShowAggregateTrades)
-                {
-                    trades = await ExchangeService.GetAggregateTradesAsync(exchange, Symbol.ExchangeSymbol, TradeLimit, symbolCancellationTokenSource.Token);
-                }
-                else
-                {
-                    trades = await ExchangeService.GetTradesAsync(exchange, Symbol.ExchangeSymbol, TradeLimit, symbolCancellationTokenSource.Token);
-                }
-
-                UpdateTrades(trades);
-
                 if (ShowAggregateTrades)
                 {
                     ExchangeService.SubscribeAggregateTrades(exchange, Symbol.ExchangeSymbol, TradeLimit, e => UpdateTrades(e.Trades), SubscribeTradesException, symbolCancellationTokenSource.Token);
