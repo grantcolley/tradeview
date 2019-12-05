@@ -138,14 +138,18 @@
             <GridSplitter Grid.Row="0" Grid.RowSpan="3" Grid.Column="3" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
             
             <GroupBox Grid.Row="0" Grid.Column="4" BorderThickness="0.5" Margin="2" Header="Trades">
-                <DockPanel LastChildFill="True">
-                    <Viewbox Height="50" Width="50"
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100*"/>
+                    </Grid.RowDefinitions>
+                    <Viewbox Grid.Row="0"
+                             Height="50" Width="50"                             
                              Margin="1"
                              Visibility="{Binding IsLoadingTrades, Converter={StaticResource boolToVisibilityConverter}}">
                         <progress:CircularProgress/>
                     </Viewbox>
 
-                    <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}"
+                    <lc:CartesianChart Grid.Row="0" DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}"
                                        Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}">
                         <lc:CartesianChart.Series>
                             <lc:LineSeries Values="{Binding TradesChart}" 
@@ -180,19 +184,23 @@
                             </lc:Axis>
                         </lc:CartesianChart.AxisY>
                     </lc:CartesianChart>
-                </DockPanel>
+                </Grid>
             </GroupBox>
 
             <GridSplitter Grid.Row="1" Grid.Column="4" Height="2" HorizontalAlignment="Stretch" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext"/>
 
             <GroupBox Grid.Row="2" Grid.Column="4" BorderThickness="0.5" Margin="2" Header="Order Book">
-                <DockPanel LastChildFill="True">
-                    <Viewbox Height="50" Width="50"
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100*"/>
+                    </Grid.RowDefinitions>
+                    <Viewbox Grid.Row="0"
+                             Height="50" Width="50"
                              Margin="1"
                              Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource boolToVisibilityConverter}}">
                         <progress:CircularProgress/>
                     </Viewbox>
-                    <Grid>
+                    <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="50*"/>
                             <ColumnDefinition Width="50*"/>
@@ -295,7 +303,7 @@
                             </lc:CartesianChart>
                         </DockPanel>
                     </Grid>
-                </DockPanel>
+                </Grid>
             </GroupBox >
         </Grid>
     </DockPanel>

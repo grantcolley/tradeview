@@ -232,8 +232,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             {
                 OnException("SymbolViewModel.GetTrades", ex);
             }
-
-            IsLoadingTrades = false;
         }
 
         internal void UpdateOrderBook(Interface.Model.OrderBook exchangeOrderBook)
@@ -281,6 +279,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
                     Trades = newTrades;
                     TradesChart = newTradesChart;
+
+                    if (IsLoadingTrades)
+                    {
+                        IsLoadingTrades = false;
+                    }
                 }
                 else
                 {
