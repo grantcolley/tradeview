@@ -10,14 +10,17 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
     public abstract class TradeHelperBase : ITradeHelper
     {
         public virtual void CreateLocalTradeList<T>(
+            Symbol symbol,
             IEnumerable<ITrade> tradesUpdate, 
-            int pricePrecision, 
-            int quantityPrecision, 
             int tradesDisplayCount, 
-            int tradesChartDisplayCount, 
+            int tradesChartDisplayCount,
+            int tradeLimit,
             out List<T> trades, 
             out ChartValues<T> tradesChart) where T : TradeBase, new()
         {
+            var pricePrecision = symbol.PricePrecision;
+            var quantityPrecision = symbol.QuantityPrecision;
+
             // Order by oldest to newest (as it will appear in the chart).
             var newTrades = (from t in tradesUpdate
                              orderby t.Time, t.Id
@@ -64,8 +67,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             }
         }
 
-        public virtual void UpdateTrades<T>(IEnumerable<ITrade> tradesUpdate, List<T> currentTrades, int pricePrecision, int quantityPrecision, int tradesDisplayCount, int tradesChartDisplayCount, out List<T> trades, ref ChartValues<T> tradesChart) where T : TradeBase, new()
+        public virtual void UpdateTrades<T>(Symbol symbol, IEnumerable<ITrade> tradesUpdate, List<T> currentTrades, int tradesDisplayCount, int tradesChartDisplayCount, out List<T> trades, ref ChartValues<T> tradesChart) where T : TradeBase, new()
         {
+            var pricePrecision = symbol.PricePrecision;
+            var quantityPrecision = symbol.QuantityPrecision;
+
             // Get the latest available trade - the first trade on the 
             // trade list (which is also the last trade in the chart).
             var seed = currentTrades.First();

@@ -8,19 +8,18 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
     public interface ITradeHelper
     {
         void CreateLocalTradeList<T>(
+            Symbol symbol,
             IEnumerable<ITrade> tradesUpdate,
-            int pricePrecision,
-            int quantityPrecision,
             int tradesDisplayCount,
             int tradesChartDisplayCount,
+            int tradeLimit,
             out List<T> trades,
             out ChartValues<T> tradesChart) where T : TradeBase, new();
 
         void UpdateTrades<T>(
+            Symbol symbol,
             IEnumerable<ITrade> tradesUpdate,
             List<T> currentTrades,
-            int pricePrecision,
-            int quantityPrecision,
             int tradesDisplayCount,
             int tradesChartDisplayCount,
             out List<T> trades,

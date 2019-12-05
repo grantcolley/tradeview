@@ -277,7 +277,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                     List<TradeBase> newTrades;
                     ChartValues<TradeBase> newTradesChart;
 
-                    tradeHelper.CreateLocalTradeList(tradesUpdate, Symbol.PricePrecision, Symbol.QuantityPrecision, TradesDisplayCount, TradesChartDisplayCount, out newTrades, out newTradesChart);
+                    tradeHelper.CreateLocalTradeList(Symbol, tradesUpdate, TradesDisplayCount, TradesChartDisplayCount, TradeLimit, out newTrades, out newTradesChart);
 
                     Trades = newTrades;
                     TradesChart = newTradesChart;
@@ -286,7 +286,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 {
                     List<TradeBase> newTrades;
 
-                    tradeHelper.UpdateTrades(tradesUpdate, Trades, Symbol.PricePrecision, Symbol.QuantityPrecision, TradesDisplayCount, TradesChartDisplayCount, out newTrades, ref tradesChart);
+                    tradeHelper.UpdateTrades(Symbol, tradesUpdate, Trades, TradesDisplayCount, TradesChartDisplayCount, out newTrades, ref tradesChart);
 
                     Trades = newTrades;
                 }
