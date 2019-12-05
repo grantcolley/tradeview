@@ -48,7 +48,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var trx = TestHelper.Trx.GetViewSymbol();
             
             // Act
-            await symbolViewModel.SetSymbol(trx);
+            symbolViewModel.SetSymbol(trx);
 
             // Assert
             Assert.AreEqual(symbolViewModel.Symbol, trx);
