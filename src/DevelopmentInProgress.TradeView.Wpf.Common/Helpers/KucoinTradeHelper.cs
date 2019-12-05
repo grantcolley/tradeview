@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using DevelopmentInProgress.TradeView.Interface.Interfaces;
+using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using LiveCharts;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
@@ -13,11 +15,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             this.kucoinExchangeApi = kucoinExchangeApi;
         }
 
-        public override void CreateLocalTradeList<T>(IEnumerable<ITrade> tradesUpdate, int pricePrecision, int quantityPrecision, int tradesDisplayCount, int tradesChartDisplayCount, out List<T> trades, out ChartValues<T> tradesChart)
+        public override void CreateLocalTradeList<T>(Symbol symbol, IEnumerable<ITrade> tradesUpdate, int tradesDisplayCount, int tradesChartDisplayCount, int tradeLimit, out List<T> trades, out ChartValues<T> tradesChart)
         {
-            // Get trades and replay trade update then create local trades list
+            var cancellationTokenSource = new CancellationTokenSource();
 
-            base.CreateLocalTradeList(tradesUpdate, pricePrecision, quantityPrecision, tradesDisplayCount, tradesChartDisplayCount, out trades, out tradesChart);
+            var snapShot = kucoinExchangeApi.GetTradesAsync(symbol.ExchangeSymbol, tradeLimit, cancellationTokenSource.Token).GetAwaiter().GetResult();
+
+            base.CreateLocalTradeList(symbol, snapShot, tradesDisplayCount, tradesChartDisplayCount, tradeLimit, out trades, out tradesChart);
         }
     }
 }
