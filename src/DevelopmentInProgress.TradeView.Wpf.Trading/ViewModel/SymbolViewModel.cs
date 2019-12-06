@@ -162,11 +162,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
             if (disposing)
             {
-                if (symbolCancellationTokenSource != null
-                    && !symbolCancellationTokenSource.IsCancellationRequested)
-                {
-                    symbolCancellationTokenSource.Cancel();
-                }
+                Unsubscribe();
             }
 
             disposed = true;
@@ -176,15 +172,36 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         {
             try
             {
-                if(symbolCancellationTokenSource != null
-                    && !symbolCancellationTokenSource.IsCancellationRequested)
+                if (Symbol == null)
                 {
-                    symbolCancellationTokenSource.Cancel();
+                    Symbol = symbol;
                 }
+                else
+                {
+                    throw new Exception($"Attempting to replace {Symbol.Name} with {symbol.Name}");
+                }
+
+                Subscribe();
+            }
+            catch (Exception ex)
+            {
+                OnException("SymbolViewModel.SetSymbol", ex);
+            }
+        }
+
+        public void Subscribe()
+        {
+            try
+            {
+                if (Symbol == null)
+                {
+                    throw new Exception($"Symbol not set.");
+                }
+
+                Unsubscribe();
 
                 symbolCancellationTokenSource = new CancellationTokenSource();
 
-                Symbol = symbol;
                 TradesChart = null;
                 Trades = null;
                 OrderBook = null;
@@ -195,8 +212,50 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
             catch (Exception ex)
             {
-                OnException("SymbolViewModel.SetSymbol", ex);
+                OnException("SymbolViewModel.Subscribe", ex);
             }
+        }
+
+        public void Unsubscribe()
+        {
+            if (symbolCancellationTokenSource != null
+                && !symbolCancellationTokenSource.IsCancellationRequested)
+            {
+                symbolCancellationTokenSource.Cancel();
+            }
+        }
+
+        public async Task RefreshAsync()
+        {
+            IsLoadingOrderBook = true;
+            IsLoadingTrades = true;
+
+            ChartValues<TradeBase> stageTradesChart;
+
+            lock(tradesLock)
+            {
+                stageTradesChart = TradesChart;
+            }
+
+            lock(orderBookLock)
+            {
+                OrderBook.StageChartValues();
+            }
+
+            await Task.Delay(150);
+
+            lock (tradesLock)
+            {
+                TradesChart = stageTradesChart;
+            }
+
+            lock (orderBookLock)
+            {
+                OrderBook.UnstageChartValues();
+            }
+
+            IsLoadingOrderBook = false;
+            IsLoadingTrades = false;
         }
 
         private void SubscribeOrderBook()
