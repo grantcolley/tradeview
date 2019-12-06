@@ -313,8 +313,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                             tradeHelperFactory.GetTradeHelper(userAccount.Exchange),
                             userAccount.Preferences, Logger);
                         symbol.Dispatcher = ViewModelContext.UiDispatcher;
-                        Symbols.Add(symbol);
                         SelectedSymbol = symbol;
+                        Symbols.Add(symbol);
 
                         try
                         {
