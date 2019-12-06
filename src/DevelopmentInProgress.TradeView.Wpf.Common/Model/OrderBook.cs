@@ -16,6 +16,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         private ChartValues<OrderBookPriceLevel> chartAggregatedAsks;
         private ChartValues<OrderBookPriceLevel> chartAggregatedBids;
 
+        private bool isStaged;
+        private ChartValues<OrderBookPriceLevel> stageChartAsks;
+        private ChartValues<OrderBookPriceLevel> stageChartBids;
+        private ChartValues<OrderBookPriceLevel> stageChartAggregatedAsks;
+        private ChartValues<OrderBookPriceLevel> stageChartAggregatedBids;
+
         static OrderBook()
         {
             var mapper = Mappers.Xy<OrderBookPriceLevel>()
@@ -140,6 +146,27 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                     chartAggregatedBids = value;
                     OnPropertyChanged("ChartAggregatedBids");
                 }
+            }
+        }
+
+        public void StageChartValues()
+        {
+            stageChartAsks = ChartAsks;
+            stageChartBids = ChartBids;
+            stageChartAggregatedAsks = ChartAggregatedAsks;
+            stageChartAggregatedBids = ChartAggregatedBids;
+            isStaged = true;
+        }
+
+        public void UnstageChartValues()
+        {
+            if (isStaged)
+            {
+                ChartAsks = stageChartAsks;
+                ChartBids = stageChartBids;
+                ChartAggregatedAsks = stageChartAggregatedAsks;
+                ChartAggregatedBids = stageChartAggregatedBids;
+                isStaged = false;
             }
         }
     }
