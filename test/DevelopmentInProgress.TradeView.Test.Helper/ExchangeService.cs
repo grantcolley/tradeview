@@ -90,7 +90,7 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
 
         public void SubscribeTrades(Exchange exchange, string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            // INTENTIONALLY EMPTY. LEAVE BLANK.
+            callback(new TradeEventArgs { Trades = TestHelper.Trades });
         }
 
         public void SubscribeOrderBook(Exchange exchange, string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
