@@ -2,6 +2,7 @@
 using LiveCharts.Configurations;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 {
@@ -17,10 +18,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         private ChartValues<OrderBookPriceLevel> chartAggregatedBids;
 
         private bool isStaged;
-        private ChartValues<OrderBookPriceLevel> stageChartAsks;
-        private ChartValues<OrderBookPriceLevel> stageChartBids;
-        private ChartValues<OrderBookPriceLevel> stageChartAggregatedAsks;
-        private ChartValues<OrderBookPriceLevel> stageChartAggregatedBids;
+        private List<OrderBookPriceLevel> stageChartAsks;
+        private List<OrderBookPriceLevel> stageChartBids;
+        private List<OrderBookPriceLevel> stageChartAggregatedAsks;
+        private List<OrderBookPriceLevel> stageChartAggregatedBids;
 
         static OrderBook()
         {
@@ -151,10 +152,15 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 
         public void StageChartValues()
         {
-            stageChartAsks = ChartAsks;
-            stageChartBids = ChartBids;
-            stageChartAggregatedAsks = ChartAggregatedAsks;
-            stageChartAggregatedBids = ChartAggregatedBids;
+            stageChartAsks = ChartAsks.ToList();
+            stageChartBids = ChartBids.ToList();
+            stageChartAggregatedAsks = ChartAggregatedAsks.ToList();
+            stageChartAggregatedBids = ChartAggregatedBids.ToList();
+
+            ChartAsks.Clear();
+            ChartBids.Clear();
+            ChartAggregatedAsks.Clear();
+            ChartAggregatedBids.Clear();
             isStaged = true;
         }
 
@@ -162,10 +168,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         {
             if (isStaged)
             {
-                ChartAsks = stageChartAsks;
-                ChartBids = stageChartBids;
-                ChartAggregatedAsks = stageChartAggregatedAsks;
-                ChartAggregatedBids = stageChartAggregatedBids;
+                ChartAsks.AddRange(stageChartAsks);
+                ChartBids.AddRange(stageChartBids);
+                ChartAggregatedAsks.AddRange(stageChartAggregatedAsks);
+                ChartAggregatedBids.AddRange(stageChartAggregatedBids);
                 isStaged = false;
             }
         }

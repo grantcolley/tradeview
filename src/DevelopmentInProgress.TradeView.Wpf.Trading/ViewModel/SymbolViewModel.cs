@@ -10,6 +10,7 @@ using LiveCharts;
 using Prism.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private Symbol symbol;
         private OrderBook orderBook;
         private ChartValues<TradeBase> tradesChart;
+        private List<TradeBase> stageTradesChart;
         private List<TradeBase> trades;
         private Exchange exchange;
         private IOrderBookHelper orderBookHelper;
@@ -31,6 +33,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private object tradesLock = new object();
         private bool isLoadingTrades;
         private bool isLoadingOrderBook;
+        private bool canStageCharts;
+        private bool isStagingOrderBookCharts;
+        private bool isStagingTradeCharts;
         private bool disposed;
 
         public SymbolViewModel(Exchange exchange, IWpfExchangeService exchangeService, IChartHelper chartHelper,
@@ -153,6 +158,17 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
         }
 
+        public bool CanStageCharts()
+        {
+            if(!canStageCharts)
+            {
+                canStageCharts = true;
+                return false;
+            }
+
+            return true;
+        }
+
         public override void Dispose(bool disposing)
         {
             if (disposed)
@@ -225,37 +241,60 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
         }
 
-        public async Task RefreshAsync()
+        /// <summary>
+        /// A known issue with TabControl behavior where toggling between tabs can result in the chart freezing.
+        /// https://github.com/Live-Charts/Live-Charts/issues/599
+        /// When selected SymbolViewModel changes, use StageCharts and UnstageCharts to 
+        /// clear the chart values and re-add them respectively when a tab regains focus.
+        /// </summary>
+        public void StageCharts()
         {
             IsLoadingOrderBook = true;
             IsLoadingTrades = true;
 
-            ChartValues<TradeBase> stageTradesChart;
-
-            lock(tradesLock)
-            {
-                stageTradesChart = TradesChart;
-            }
-
-            lock(orderBookLock)
-            {
-                OrderBook.StageChartValues();
-            }
-
-            await Task.Delay(150);
-
             lock (tradesLock)
             {
-                TradesChart = stageTradesChart;
+                isStagingTradeCharts = true;
+                stageTradesChart = TradesChart.ToList();
+                TradesChart.Clear();
             }
 
             lock (orderBookLock)
             {
-                OrderBook.UnstageChartValues();
+                isStagingOrderBookCharts = true;
+                OrderBook.StageChartValues();
             }
+        }
 
-            IsLoadingOrderBook = false;
-            IsLoadingTrades = false;
+        /// <summary>
+        /// See <see cref="StageCharts"/>.
+        /// </summary>
+        /// <returns></returns>
+        public async Task UnstageCharts()
+        {
+            if(canStageCharts)
+            {
+                await Task.Delay(150);
+
+                if(stageTradesChart != null)
+                {
+                    lock (tradesLock)
+                    {
+                        TradesChart.AddRange(stageTradesChart);
+                        stageTradesChart = null;
+                        isStagingTradeCharts = false;
+                    }
+                }
+
+                lock (orderBookLock)
+                {
+                    OrderBook.UnstageChartValues();
+                    isStagingOrderBookCharts = false;
+                }
+
+                IsLoadingOrderBook = false;
+                IsLoadingTrades = false;
+            }
         }
 
         private void SubscribeOrderBook()
@@ -302,6 +341,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
             lock (orderBookLock)
             {
+                if(isStagingOrderBookCharts)
+                {
+                    return;
+                }
+
                 if (OrderBook == null)
                 {
                     OrderBook = orderBookHelper.CreateLocalOrderBook(Symbol, exchangeOrderBook, OrderBookDisplayCount, OrderBookChartDisplayCount);
@@ -329,6 +373,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         {
             lock (tradesLock)
             {
+                if(isStagingTradeCharts)
+                {
+                    return;
+                }
+
                 if(Trades == null)
                 {
                     List<TradeBase> newTrades;

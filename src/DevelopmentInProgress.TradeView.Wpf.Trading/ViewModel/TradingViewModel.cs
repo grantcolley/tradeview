@@ -17,6 +17,7 @@ using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Common.Chart;
 using Newtonsoft.Json;
 using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
+using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 {
@@ -158,7 +159,24 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
         public SymbolViewModel SelectedSymbol
         {
-            get { return selectedSymbol; }
+            get 
+            {
+                if (selectedSymbol != null
+                    && selectedSymbol.CanStageCharts())
+                {
+                    // A known issue with TabControl behavior where toggling between tabs can result in the chart freezing.
+                    // https://github.com/Live-Charts/Live-Charts/issues/599
+                    // When selected SymbolViewModel changes, use StageCharts and UnstageCharts to
+                    // clear the chart values and re - add them respectively when a tab regains focus.
+                    ViewModelContext.UiDispatcher.InvokeAsync(async () =>
+                    {
+                        selectedSymbol.StageCharts();
+                        await selectedSymbol.UnstageCharts();
+                    });
+                }
+
+                return selectedSymbol;
+            }
             set
             {
                 if(selectedSymbol != value)
