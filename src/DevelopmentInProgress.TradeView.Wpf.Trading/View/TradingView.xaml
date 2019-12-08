@@ -24,6 +24,10 @@
             <localView:TradeView></localView:TradeView>
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type localViewModel:SymbolViewModel}" x:Shared="False">
+            <localView:SymbolView></localView:SymbolView>
+        </DataTemplate>
+        
         <DataTemplate DataType="{x:Type commonViewModel:OrdersViewModel}">
             <commonView:OrdersView></commonView:OrdersView>
         </DataTemplate>
@@ -53,28 +57,7 @@
             <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
             
             <DockPanel Grid.Column="2" LastChildFill="True">
-                <TabControl ItemsSource="{Binding Symbols}"
-                            SelectedItem="{Binding SelectedSymbol, Mode=TwoWay}">
-                    <TabControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Name="stk"  Orientation="Horizontal" Background="Transparent">
-                                <Label Name="baseSymbol" Content="{Binding Symbol.BaseAsset.Symbol}" FontSize="14" VerticalAlignment="Center"/>
-                                <Label Name="divider" Content="/" VerticalAlignment="Center"/>
-                                <Label Name="quoteSymbol" Content="{Binding Symbol.QuoteAsset.Symbol}" VerticalAlignment="Center"/>
-                                <Button Style="{StaticResource CloseButtonStyle}"                                        
-                                        Command="{Binding Path=DataContext.CloseCommand, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}}"
-                                        CommandParameter="{Binding .}" VerticalContentAlignment="Center">
-                                    <Image Source="/DevelopmentInProgress.TradeView.Wpf.Common;Component/Images/close.png" VerticalAlignment="Center"/>
-                                </Button>
-                            </StackPanel>
-                        </DataTemplate>
-                    </TabControl.ItemTemplate>
-                    <TabControl.ContentTemplate>
-                        <DataTemplate DataType="{x:Type localViewModel:SymbolViewModel}">
-                            <localView:SymbolView></localView:SymbolView>
-                        </DataTemplate>
-                    </TabControl.ContentTemplate>
-                </TabControl>
+                <ContentControl Content="{Binding SymbolViewModel}"/>
             </DockPanel>
 
         </Grid>

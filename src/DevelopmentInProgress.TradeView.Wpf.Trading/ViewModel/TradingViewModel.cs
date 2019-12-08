@@ -17,7 +17,6 @@ using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Common.Chart;
 using Newtonsoft.Json;
 using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
-using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 {
@@ -28,7 +27,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private IWpfExchangeService exchangeService;
         private IAccountsService accountsService;
         private IChartHelper chartHelper;
-        private SymbolViewModel selectedSymbol;
+        private SymbolViewModel symbolViewModel;
         private AccountViewModel accountViewModel;
         private TradeViewModel tradeViewModel;
         private SymbolsViewModel symbolsViewModel;
@@ -38,13 +37,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private bool isOpen;
         private bool disposed;
 
-        private ObservableCollection<SymbolViewModel> symbols;
-
         private IDisposable symbolsObservableSubscription;
+        private IDisposable symbolObservableSubscription;
         private IDisposable accountObservableSubscription;
         private IDisposable tradeObservableSubscription;
         private IDisposable ordersObservableSubscription;
-        private Dictionary<string, IDisposable> symbolObservableSubscriptions;
 
         public TradingViewModel(ViewModelContext viewModelContext, 
             AccountViewModel accountViewModel, SymbolsViewModel symbolsViewModel,
@@ -60,9 +57,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             TradeViewModel = tradeViewModel;
             OrdersViewModel = ordersViewModel;
 
-            Symbols = new ObservableCollection<SymbolViewModel>();
-            symbolObservableSubscriptions = new Dictionary<string, IDisposable>();
-
             this.exchangeService = exchangeService;
             this.accountsService = accountsService;
             this.orderBookHelperFactory = orderBookHelperFactory;
@@ -73,11 +67,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             ObserveAccount();
             ObserveTrade();
             ObserveOrders();
-
-            CloseCommand = new ViewModelCommand(Close);
         }
-
-        public ICommand CloseCommand { get; set; }
 
         public AccountViewModel AccountViewModel
         {
@@ -131,15 +121,15 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
         }
 
-        public ObservableCollection<SymbolViewModel> Symbols
+        public SymbolViewModel SymbolViewModel
         {
-            get { return symbols; }
+            get { return symbolViewModel; }
             private set
             {
-                if (symbols != value)
+                if (symbolViewModel != value)
                 {
-                    symbols = value;
-                    OnPropertyChanged("Symbols");
+                    symbolViewModel = value;
+                    OnPropertyChanged("SymbolViewModel");
                 }
             }
         }
@@ -153,36 +143,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 {
                     account = value;
                     OnPropertyChanged("Account");
-                }
-            }
-        }
-
-        public SymbolViewModel SelectedSymbol
-        {
-            get 
-            {
-                if (selectedSymbol != null
-                    && selectedSymbol.CanStageCharts())
-                {
-                    // A known issue with TabControl behavior where toggling between tabs can result in the chart freezing.
-                    // https://github.com/Live-Charts/Live-Charts/issues/599
-                    // When selected SymbolViewModel changes, use StageCharts and UnstageCharts to
-                    // clear the chart values and re - add them respectively when a tab regains focus.
-                    ViewModelContext.UiDispatcher.InvokeAsync(async () =>
-                    {
-                        selectedSymbol.StageCharts();
-                        await selectedSymbol.UnstageCharts();
-                    });
-                }
-
-                return selectedSymbol;
-            }
-            set
-            {
-                if(selectedSymbol != value)
-                {
-                    selectedSymbol = value;
-                    OnPropertyChanged("SelectedSymbol");
                 }
             }
         }
@@ -237,27 +197,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             AccountViewModel.SetAccount(Account);
 
             isOpen = true;
-
             IsBusy = false;
-        }
-        
-        public void Close(object param)
-        {
-            var symbol = param as SymbolViewModel;
-            if(symbol != null)
-            {
-                Symbols.Remove(symbol);
-
-                IDisposable subscription;
-                if(symbolObservableSubscriptions.TryGetValue(symbol.Symbol.Name, out subscription))
-                {
-                    subscription.Dispose();
-                }
-
-                symbolObservableSubscriptions.Remove(symbol.Symbol.Name);
-
-                symbol.Dispose();
-            }
         }
 
         protected override void OnDisposing()
@@ -267,39 +207,17 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 return;
             }
 
-            if (AccountViewModel != null)
-            {
-                accountObservableSubscription.Dispose();
-                AccountViewModel.Dispose();
-            }
+            symbolsObservableSubscription?.Dispose();
+            tradeObservableSubscription?.Dispose();
+            ordersObservableSubscription?.Dispose();
+            accountObservableSubscription.Dispose();
+            symbolObservableSubscription?.Dispose();
 
-            foreach(var subscription in symbolObservableSubscriptions.Values)
-            {
-                subscription.Dispose();
-            }
-
-            foreach(var symbol in Symbols)
-            {
-                symbol.Dispose();
-            }
-            
-            if (SymbolsViewModel != null)
-            {
-                symbolsObservableSubscription.Dispose();
-                SymbolsViewModel.Dispose();
-            }
-            
-            if(TradeViewModel != null)
-            {
-                tradeObservableSubscription.Dispose();
-                TradeViewModel.Dispose();
-            }
-
-            if(OrdersViewModel != null)
-            {
-                ordersObservableSubscription.Dispose();
-                OrdersViewModel.Dispose();
-            }
+            AccountViewModel.Dispose();
+            SymbolsViewModel?.Dispose();
+            TradeViewModel?.Dispose();
+            OrdersViewModel?.Dispose();
+            SymbolViewModel?.Dispose();
 
             disposed = true;
         }
@@ -319,30 +237,29 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 }
                 else if (args.Value != null)
                 {
-                    var symbol = Symbols.FirstOrDefault(s => s.Symbol.Name.Equals(args.Value.Name));
-                    if (symbol != null)
+                    if(SymbolViewModel != null)
                     {
-                        SelectedSymbol = symbol;
+                        SymbolViewModel.Dispose();
+                        SymbolViewModel = null;
                     }
-                    else
-                    {
-                        symbol = new SymbolViewModel(userAccount.Exchange, exchangeService, chartHelper,
-                            orderBookHelperFactory.GetOrderBookHelper(userAccount.Exchange), 
-                            tradeHelperFactory.GetTradeHelper(userAccount.Exchange),
-                            userAccount.Preferences, Logger);
-                        symbol.Dispatcher = ViewModelContext.UiDispatcher;
-                        SelectedSymbol = symbol;
-                        Symbols.Add(symbol);
 
-                        try
-                        {
-                            symbol.SetSymbol(args.Value);
-                            ObserveSymbol(symbol);
-                        }
-                        catch (Exception ex)
-                        {
-                            TradingViewModelException(ex.ToString(), ex);
-                        }
+                    SymbolViewModel = new SymbolViewModel(
+                        userAccount.Exchange, exchangeService, chartHelper,
+                        orderBookHelperFactory.GetOrderBookHelper(userAccount.Exchange),
+                        tradeHelperFactory.GetTradeHelper(userAccount.Exchange),
+                        userAccount.Preferences, Logger);
+
+                    SymbolViewModel.Dispatcher = ViewModelContext.UiDispatcher;
+
+                    ObserveSymbol(SymbolViewModel);
+
+                    try
+                    {
+                        SymbolViewModel.SetSymbol(args.Value);
+                    }
+                    catch (Exception ex)
+                    {
+                        TradingViewModelException(ex.ToString(), ex);
                     }
                 }
                 else if (args.Symbols != null)
@@ -385,20 +302,24 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
         private void ObserveSymbol(SymbolViewModel symbol)
         {
+            if (symbolObservableSubscription != null)
+            {
+                symbolObservableSubscription.Dispose();
+                symbolObservableSubscription = null;
+            }
+
             var symbolObservable = Observable.FromEventPattern<SymbolEventArgs>(
                 eventHandler => symbol.OnSymbolNotification += eventHandler,
                 eventHandler => symbol.OnSymbolNotification -= eventHandler)
                 .Select(eventPattern => eventPattern.EventArgs);
 
-            var symbolObservableSubscription = symbolObservable.Subscribe(args =>
-             {
-                 if (args.HasException)
-                 {
-                     TradingViewModelException(args);
-                 }
-             });
-
-            symbolObservableSubscriptions.Add(symbol.Symbol.Name, symbolObservableSubscription);
+            symbolObservableSubscription = symbolObservable.Subscribe(args =>
+            {
+                if (args.HasException)
+                {
+                    TradingViewModelException(args);
+                }
+            });
         }
 
         private void ObserveTrade()
