@@ -54,9 +54,22 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.RegionAdapters
         /// </summary>
         protected override void OnAttach()
         {
+            dockingManager.ActiveContentChanged += DockingManagerActiveContentChanged;
             Region.ActiveViews.CollectionChanged += ActiveViewsCollectionChanged;
             Region.Views.CollectionChanged += ViewsCollectionChanged;
             ModulesNavigationView.ModuleSelected += ModuleSelected;
+        }
+
+        /// <summary>
+        /// Handles the changing of the active content.
+        /// Notify the active content that it is now 'active'
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DockingManagerActiveContentChanged(object sender, EventArgs e)
+        {
+            var documentViewHost = dockingManager.ActiveContent as DocumentViewHost;
+            documentViewHost?.View?.OnActive();
         }
 
         /// <summary>

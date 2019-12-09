@@ -95,6 +95,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.View
             }
         }
 
+        public virtual void OnActive()
+        {
+            var documentViewModel = DataContext as DocumentViewModel;
+            documentViewModel?.OnActive();
+        }
+
         /// <summary>
         /// Gets one or more view models based on settings in <see cref="FindDocumentViewModel"/>.
         /// A single view model can be fetched by navigation id, multiple view models can be 

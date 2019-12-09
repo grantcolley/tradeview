@@ -38,7 +38,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.ViewModel
         }
 
         /// <summary>
-        /// Virtual method to be implemented by the sub class.
+        /// Virtual method to be implemented by the sub class notifying the document when it has become active.
+        /// </summary>
+        public virtual void OnActive()
+        {
+        }
+
+        /// <summary>
+        /// Virtual method to be implemented by the sub class when a document is loaded.
         /// </summary>
         /// <param name="data">The parameter passed into the method.</param>
         protected virtual void OnPublished(object data)
@@ -46,7 +53,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.ViewModel
         }
 
         /// <summary>
-        /// Virtual method to be implemented by the sub class.
+        /// Virtual method to be implemented by the sub class when the document is disposing.
         /// </summary>
         protected virtual void OnDisposing()
         {
