@@ -24,7 +24,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private Symbol symbol;
         private OrderBook orderBook;
         private ChartValues<TradeBase> tradesChart;
-        private List<TradeBase> stageTradesChart;
         private List<TradeBase> trades;
         private Exchange exchange;
         private IOrderBookHelper orderBookHelper;
@@ -33,9 +32,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private object tradesLock = new object();
         private bool isLoadingTrades;
         private bool isLoadingOrderBook;
-        private bool canStageCharts;
-        private bool isStagingOrderBookCharts;
-        private bool isStagingTradeCharts;
         private bool disposed;
 
         public SymbolViewModel(Exchange exchange, IWpfExchangeService exchangeService, IChartHelper chartHelper,
@@ -158,17 +154,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
         }
 
-        public bool CanStageCharts()
-        {
-            if(!canStageCharts)
-            {
-                canStageCharts = true;
-                return false;
-            }
-
-            return true;
-        }
-
         public override void Dispose(bool disposing)
         {
             if (disposed)
@@ -241,62 +226,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
         }
 
-        /// <summary>
-        /// A known issue with TabControl behavior where toggling between tabs can result in the chart freezing.
-        /// https://github.com/Live-Charts/Live-Charts/issues/599
-        /// When selected SymbolViewModel changes, use StageCharts and UnstageCharts to 
-        /// clear the chart values and re-add them respectively when a tab regains focus.
-        /// </summary>
-        public void StageCharts()
-        {
-            IsLoadingOrderBook = true;
-            IsLoadingTrades = true;
-
-            lock (tradesLock)
-            {
-                isStagingTradeCharts = true;
-                stageTradesChart = TradesChart.ToList();
-                TradesChart.Clear();
-            }
-
-            lock (orderBookLock)
-            {
-                isStagingOrderBookCharts = true;
-                OrderBook.StageChartValues();
-            }
-        }
-
-        /// <summary>
-        /// See <see cref="StageCharts"/>.
-        /// </summary>
-        /// <returns></returns>
-        public async Task UnstageCharts()
-        {
-            if(canStageCharts)
-            {
-                await Task.Delay(150);
-
-                if(stageTradesChart != null)
-                {
-                    lock (tradesLock)
-                    {
-                        TradesChart.AddRange(stageTradesChart);
-                        stageTradesChart = null;
-                        isStagingTradeCharts = false;
-                    }
-                }
-
-                lock (orderBookLock)
-                {
-                    OrderBook.UnstageChartValues();
-                    isStagingOrderBookCharts = false;
-                }
-
-                IsLoadingOrderBook = false;
-                IsLoadingTrades = false;
-            }
-        }
-
         private void SubscribeOrderBook()
         {
             IsLoadingOrderBook = true;
@@ -341,11 +270,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
             lock (orderBookLock)
             {
-                if(isStagingOrderBookCharts)
-                {
-                    return;
-                }
-
                 if (OrderBook == null)
                 {
                     OrderBook = orderBookHelper.CreateLocalOrderBook(Symbol, exchangeOrderBook, OrderBookDisplayCount, OrderBookChartDisplayCount);
@@ -373,11 +297,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         {
             lock (tradesLock)
             {
-                if(isStagingTradeCharts)
-                {
-                    return;
-                }
-
                 if(Trades == null)
                 {
                     List<TradeBase> newTrades;
