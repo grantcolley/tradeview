@@ -9,8 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using DevelopmentInProgress.TradeView.Wpf.Trading.Events;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
 using Prism.Logging;
 using DevelopmentInProgress.TradeView.Wpf.Common.Events;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
@@ -220,6 +218,23 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             SymbolViewModel?.Dispose();
 
             disposed = true;
+        }
+
+        public override void OnActive()
+        {
+            if (SymbolViewModel == null)
+            {
+                return;
+            }
+
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                TradingViewModelException(ex.ToString(), ex);
+            }
         }
 
         private void ObserveSymbols()
