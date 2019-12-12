@@ -222,6 +222,18 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
         public override void OnActive()
         {
+            var openDocuments = new FindDocumentViewModel { Module = "Trading" };
+            OnGetViewModels(openDocuments);
+            var tradingViewModels = openDocuments.ViewModels.OfType<TradingViewModel>().ToList();
+            foreach (var tradingViewModel in tradingViewModels)
+            {
+                if (tradingViewModel.SymbolViewModel != null
+                    && tradingViewModel.SymbolViewModel.IsActive)
+                {
+                    tradingViewModel.SymbolViewModel.Unsubscribe();
+                }
+            }
+
             if (SymbolViewModel == null)
             {
                 return;
@@ -229,7 +241,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
             try
             {
-
+                SymbolViewModel.Subscribe();
             }
             catch (Exception ex)
             {
@@ -271,6 +283,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                     try
                     {
                         SymbolViewModel.SetSymbol(args.Value);
+
+                        SymbolViewModel.IsActive = true;
                     }
                     catch (Exception ex)
                     {
