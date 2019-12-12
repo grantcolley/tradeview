@@ -10,10 +10,8 @@ using LiveCharts;
 using Prism.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using System.Threading.Tasks;
 
 [assembly: InternalsVisibleTo("DevelopmentInProgress.TradeView.Wpf.Trading.Test")]
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
@@ -68,6 +66,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         internal int OrderBookLimit { get; }
         internal int OrderBookChartDisplayCount { get; }
         internal int OrderBookDisplayCount { get; }
+
+        public bool IsActive { get; set; }
 
         public bool HasSymbol => Symbol != null ? true : false;
 
@@ -210,6 +210,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 SubscribeOrderBook();
 
                 SubscribeTrades();
+
+                IsActive = true;
             }
             catch (Exception ex)
             {
@@ -224,6 +226,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             {
                 symbolCancellationTokenSource.Cancel();
             }
+
+            OrderBook = null;
+            TradesChart = null;
+            Trades = null;
+            IsActive = false;
         }
 
         private void SubscribeOrderBook()
