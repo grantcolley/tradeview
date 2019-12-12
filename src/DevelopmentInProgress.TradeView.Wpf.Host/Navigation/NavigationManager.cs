@@ -183,11 +183,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Navigation
         /// <returns>A list of <see cref="DocumentViewModel"/> for the specified module.</returns>
         public List<DocumentViewModel> GetViewModels(string moduleName)
         {
-            var documentViewModels = from views
+            var documentViewModels = (from views
                                 in navigationSettingsList
-                                where views.Value.DocumentView.ModuleName.Equals(moduleName)
-                                select views.Value.DocumentView.ViewModel;
-            return documentViewModels.ToList();
+                                where views.Value.DocumentView != null
+                                && views.Value.DocumentView.ModuleName.Equals(moduleName)
+                                select views.Value.DocumentView.ViewModel).ToList();
+            return documentViewModels;
         }
 
         /// <summary>
