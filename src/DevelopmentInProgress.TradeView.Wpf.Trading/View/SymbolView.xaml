@@ -162,11 +162,11 @@
                                            Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}">
                             <lc:CartesianChart.Series>
                                 <lc:LineSeries Values="{Binding TradesChart}" 
-                                                        DataLabels="False"
-                                                        Stroke="Orange" 
-                                                        PointForeground="Orange"
-                                                        StrokeThickness="1" 
-                                                        PointGeometrySize="1"/>
+                                               DataLabels="False"
+                                               Stroke="Orange" 
+                                               PointForeground="Orange"
+                                               StrokeThickness="1" 
+                                               PointGeometrySize="1"/>
                             </lc:CartesianChart.Series>
                             <lc:CartesianChart.AxisX>
                                 <lc:Axis LabelFormatter="{Binding TimeFormatter}">
