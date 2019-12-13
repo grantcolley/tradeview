@@ -199,13 +199,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                     throw new Exception($"Symbol not set.");
                 }
 
-                Unsubscribe();
-
                 symbolCancellationTokenSource = new CancellationTokenSource();
-
-                TradesChart = null;
-                Trades = null;
-                OrderBook = null;
 
                 SubscribeOrderBook();
 
@@ -227,9 +221,21 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 symbolCancellationTokenSource.Cancel();
             }
 
+            if (OrderBook != null)
+            {
+                OrderBook.Clear();
+            }
+
             OrderBook = null;
+
+            if (TradesChart != null)
+            {
+                TradesChart.Clear();
+            }
+
             TradesChart = null;
             Trades = null;
+
             IsActive = false;
         }
 

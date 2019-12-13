@@ -32,6 +32,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private OrdersViewModel ordersViewModel;
         private UserAccount userAccount;
         private Account account;
+        private Symbol symbol;
         private bool isOpen;
         private bool disposed;
 
@@ -223,25 +224,66 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         public override void OnActive()
         {
             var openDocuments = new FindDocumentViewModel { Module = "Trading" };
+
             OnGetViewModels(openDocuments);
-            var tradingViewModels = openDocuments.ViewModels.OfType<TradingViewModel>().ToList();
+
+            var tradingViewModels = openDocuments.ViewModels.OfType<TradingViewModel>()
+                .Where(d => d.SymbolViewModel != null && d.SymbolViewModel.IsActive).ToList();
+
             foreach (var tradingViewModel in tradingViewModels)
             {
-                if (tradingViewModel.SymbolViewModel != null
-                    && tradingViewModel.SymbolViewModel.IsActive)
-                {
-                    tradingViewModel.SymbolViewModel.Unsubscribe();
-                }
-            }
-
-            if (SymbolViewModel == null)
-            {
-                return;
+                tradingViewModel.DisposeSymbolViewModel();
             }
 
             try
             {
-                SymbolViewModel.Subscribe();
+                LoadSymbolViewModel();
+            }
+            catch (Exception ex)
+            {
+                TradingViewModelException(ex.ToString(), ex);
+            }
+        }
+
+        private void DisposeSymbolViewModel()
+        {
+            if (SymbolViewModel != null)
+            {
+                SymbolViewModel.Dispose();
+                SymbolViewModel = null;
+            }
+
+            if (symbolObservableSubscription != null)
+            {
+                symbolObservableSubscription.Dispose();
+                symbolObservableSubscription = null;
+            }
+        }
+
+        private void LoadSymbolViewModel()
+        {
+            DisposeSymbolViewModel();
+
+            if (symbol == null)
+            {
+                return;
+            }
+
+            SymbolViewModel = new SymbolViewModel(
+                userAccount.Exchange, exchangeService, chartHelper,
+                orderBookHelperFactory.GetOrderBookHelper(userAccount.Exchange),
+                tradeHelperFactory.GetTradeHelper(userAccount.Exchange),
+                userAccount.Preferences, Logger);
+
+            SymbolViewModel.Dispatcher = ViewModelContext.UiDispatcher;
+
+            ObserveSymbol(SymbolViewModel);
+
+            try
+            {
+                SymbolViewModel.SetSymbol(symbol);
+
+                SymbolViewModel.IsActive = true;
             }
             catch (Exception ex)
             {
@@ -264,32 +306,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 }
                 else if (args.Value != null)
                 {
-                    if(SymbolViewModel != null)
-                    {
-                        SymbolViewModel.Dispose();
-                        SymbolViewModel = null;
-                    }
-
-                    SymbolViewModel = new SymbolViewModel(
-                        userAccount.Exchange, exchangeService, chartHelper,
-                        orderBookHelperFactory.GetOrderBookHelper(userAccount.Exchange),
-                        tradeHelperFactory.GetTradeHelper(userAccount.Exchange),
-                        userAccount.Preferences, Logger);
-
-                    SymbolViewModel.Dispatcher = ViewModelContext.UiDispatcher;
-
-                    ObserveSymbol(SymbolViewModel);
-
-                    try
-                    {
-                        SymbolViewModel.SetSymbol(args.Value);
-
-                        SymbolViewModel.IsActive = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        TradingViewModelException(ex.ToString(), ex);
-                    }
+                    symbol = args.Value;
+                    LoadSymbolViewModel();
                 }
                 else if (args.Symbols != null)
                 {
@@ -331,12 +349,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
         private void ObserveSymbol(SymbolViewModel symbol)
         {
-            if (symbolObservableSubscription != null)
-            {
-                symbolObservableSubscription.Dispose();
-                symbolObservableSubscription = null;
-            }
-
             var symbolObservable = Observable.FromEventPattern<SymbolEventArgs>(
                 eventHandler => symbol.OnSymbolNotification += eventHandler,
                 eventHandler => symbol.OnSymbolNotification -= eventHandler)
