@@ -26,8 +26,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private Exchange exchange;
         private IOrderBookHelper orderBookHelper;
         private ITradeHelper tradeHelper;
-        private object orderBookLock = new object();
-        private object tradesLock = new object();
+        private SemaphoreSlim orderBookSemaphoreSlim = new SemaphoreSlim(1, 1);
+        private SemaphoreSlim tradesSemaphoreSlim = new SemaphoreSlim(1, 1);
         private bool isLoadingTrades;
         private bool isLoadingOrderBook;
         private bool disposed;
@@ -274,18 +274,15 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
         }
 
-        internal void UpdateOrderBook(Interface.Model.OrderBook exchangeOrderBook)
+        internal async void UpdateOrderBook(Interface.Model.OrderBook exchangeOrderBook)
         {
-            if (!Symbol.ExchangeSymbol.Equals(exchangeOrderBook.Symbol))
-            {
-                throw new Exception("Orderbook update for wrong symbol");
-            }
+            await orderBookSemaphoreSlim.WaitAsync(symbolCancellationTokenSource.Token);
 
-            lock (orderBookLock)
+            try
             {
                 if (OrderBook == null)
                 {
-                    OrderBook = orderBookHelper.CreateLocalOrderBook(Symbol, exchangeOrderBook, OrderBookDisplayCount, OrderBookChartDisplayCount);
+                    OrderBook = await orderBookHelper.CreateLocalOrderBook(Symbol, exchangeOrderBook, OrderBookDisplayCount, OrderBookChartDisplayCount);
 
                     if (IsLoadingOrderBook)
                     {
@@ -304,21 +301,24 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                         OrderBookDisplayCount, OrderBookChartDisplayCount);
                 }
             }
+            finally
+            {
+                orderBookSemaphoreSlim.Release();
+            }
         }
 
-        internal void UpdateTrades(IEnumerable<ITrade> tradesUpdate)
+        internal async void UpdateTrades(IEnumerable<ITrade> tradesUpdate)
         {
-            lock (tradesLock)
+            await tradesSemaphoreSlim.WaitAsync(symbolCancellationTokenSource.Token);
+
+            try
             {
-                if(Trades == null)
+                if (Trades == null)
                 {
-                    List<TradeBase> newTrades;
-                    ChartValues<TradeBase> newTradesChart;
+                    var result = await tradeHelper.CreateLocalTradeList<TradeBase>(Symbol, tradesUpdate, TradesDisplayCount, TradesChartDisplayCount, TradeLimit);
 
-                    tradeHelper.CreateLocalTradeList(Symbol, tradesUpdate, TradesDisplayCount, TradesChartDisplayCount, TradeLimit, out newTrades, out newTradesChart);
-
-                    Trades = newTrades;
-                    TradesChart = newTradesChart;
+                    Trades = result.Trades;
+                    TradesChart = result.TradesChart;
 
                     if (IsLoadingTrades)
                     {
@@ -333,6 +333,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
                     Trades = newTrades;
                 }
+            }
+            finally
+            {
+                tradesSemaphoreSlim.Release();
             }
         }
 
