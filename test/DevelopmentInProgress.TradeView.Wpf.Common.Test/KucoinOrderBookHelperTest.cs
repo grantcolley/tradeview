@@ -2,6 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DevelopmentInProgress.TradeView.Test.Helper;
 using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
+using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Test
 {
@@ -9,7 +10,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Test
     public class KucoinOrderBookHelperTest
     {
         [TestMethod]
-        public void CreateLocalOrderBook_ReplayCache()
+        public async Task CreateLocalOrderBook_ReplayCache()
         {
             // Arrange
             var kucoinExchangeApi = new KucoinExchangeTestApi(KucoinExchangeTestApiEnum.KucoinApiExample);
@@ -24,7 +25,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Test
             };
 
             // Act
-            var orderBook = kucoinOrderBookHelper.CreateLocalOrderBook(symbol, subscribeOrderBookUpdate, 10, 10);
+            var orderBook = await kucoinOrderBookHelper.CreateLocalOrderBook(symbol, subscribeOrderBookUpdate, 10, 10);
 
             // Assert
             Assert.AreEqual(orderBook.LastUpdateId, 18);
@@ -111,7 +112,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Test
         }
 
         [TestMethod]
-        public void CreateLocalOrderBook_ReplayCache_IUIIRA()
+        public async Task CreateLocalOrderBook_ReplayCache_IUIIRA()
         {
             // Arrange
             var kucoinExchangeApi = new KucoinExchangeTestApi(KucoinExchangeTestApiEnum.CreateLocalOrderBookExample);
@@ -126,7 +127,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Test
             };
 
             // Act
-            var orderBook = kucoinOrderBookHelper.CreateLocalOrderBook(symbol, subscribeOrderBookUpdate, 10, 10);
+            var orderBook = await kucoinOrderBookHelper.CreateLocalOrderBook(symbol, subscribeOrderBookUpdate, 10, 10);
 
             // Assert
             Assert.AreEqual(orderBook.LastUpdateId, 112);
@@ -301,7 +302,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Test
         }
 
         [TestMethod]
-        public void CreateLocalOrderBook_ReplayCache_RUIRRA()
+        public async Task CreateLocalOrderBook_ReplayCache_RUIRRA()
         {
             // Arrange
             var kucoinExchangeApi = new KucoinExchangeTestApi(KucoinExchangeTestApiEnum.CreateLocalOrderBookExample);
@@ -316,7 +317,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Test
             };
 
             // Act
-            var orderBook = kucoinOrderBookHelper.CreateLocalOrderBook(symbol, subscribeOrderBookUpdate, 10, 10);
+            var orderBook = await kucoinOrderBookHelper.CreateLocalOrderBook(symbol, subscribeOrderBookUpdate, 10, 10);
 
             // Assert
             Assert.AreEqual(orderBook.LastUpdateId, 112);
@@ -427,7 +428,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Test
         }
 
         [TestMethod]
-        public void UpdateLocalOrderBook()
+        public async Task UpdateLocalOrderBook()
         {
             // Arrange
             var kucoinExchangeApi = new KucoinExchangeTestApi(KucoinExchangeTestApiEnum.UpdateLocalOrderBookExample);
@@ -443,7 +444,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Test
             };
 
             // Act
-            var orderBook = kucoinOrderBookHelper.CreateLocalOrderBook(symbol, subscribeOrderBookReplay, 10, 10);
+            var orderBook = await kucoinOrderBookHelper.CreateLocalOrderBook(symbol, subscribeOrderBookReplay, 10, 10);
 
             kucoinOrderBookHelper.UpdateLocalOrderBook(orderBook, subscribeOrderBookUpdate, symbol.PricePrecision, symbol.QuantityPrecision, 10, 10);
 

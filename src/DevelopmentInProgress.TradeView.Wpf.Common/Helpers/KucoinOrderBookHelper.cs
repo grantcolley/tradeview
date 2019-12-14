@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using DevelopmentInProgress.TradeView.Interface.Extensions;
 using DevelopmentInProgress.TradeView.Interface.Interfaces;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
@@ -18,7 +19,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             this.kucoinExchangeApi = kucoinExchangeApi;
         }
 
-        public OrderBook CreateLocalOrderBook(Symbol symbol, Interface.Model.OrderBook orderBook, int listDisplayCount, int chartDisplayCount)
+        public async Task<OrderBook> CreateLocalOrderBook(Symbol symbol, Interface.Model.OrderBook orderBook, int listDisplayCount, int chartDisplayCount)
         {
             var cancellationTokenSource = new CancellationTokenSource();
 
@@ -26,7 +27,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
             var limit = orderBookCount < 21 ? 20 : 100;
 
-            var snapShot = kucoinExchangeApi.GetOrderBookAsync(symbol.ExchangeSymbol, limit, cancellationTokenSource.Token).GetAwaiter().GetResult();
+            var snapShot = await kucoinExchangeApi.GetOrderBookAsync(symbol.ExchangeSymbol, limit, cancellationTokenSource.Token);
 
             // Order by price: bids (ASC) and asks (ASC)
             // Discard those that we are not interested in displaying on the screen.

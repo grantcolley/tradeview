@@ -85,6 +85,7 @@
     <Compile Include="Helpers\TradeHelperBase.cs" />
     <Compile Include="Helpers\TradeHelperFactory.cs" />
     <Compile Include="Model\Candlestick.cs" />
+    <Compile Include="Model\LocalTradeListResult.cs" />
     <Compile Include="Model\OrderBook.cs" />
     <Compile Include="Model\OrderBookPriceLevel.cs" />
     <Compile Include="Model\Preferences.cs" />

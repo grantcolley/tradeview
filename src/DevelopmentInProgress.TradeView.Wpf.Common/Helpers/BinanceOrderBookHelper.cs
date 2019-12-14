@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using DevelopmentInProgress.TradeView.Interface.Extensions;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using LiveCharts;
@@ -9,7 +10,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 {
     public class BinanceOrderBookHelper : IOrderBookHelper
     {
-        public OrderBook CreateLocalOrderBook(Symbol symbol, Interface.Model.OrderBook orderBook, int listDisplayCount, int chartDisplayCount)
+        public Task<OrderBook> CreateLocalOrderBook(Symbol symbol, Interface.Model.OrderBook orderBook, int listDisplayCount, int chartDisplayCount)
         {
             List<OrderBookPriceLevel> topAsks;
             List<OrderBookPriceLevel> topBids;
@@ -35,7 +36,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
                 ChartAggregatedBids = new ChartValues<OrderBookPriceLevel>(aggregatedBids)
             };
 
-            return newOrderBook;
+            var tcs = new TaskCompletionSource<OrderBook>();
+            tcs.SetResult(newOrderBook);
+            return tcs.Task;
         }
 
         public void UpdateLocalOrderBook(OrderBook orderBook, Interface.Model.OrderBook updateOrderBook,
