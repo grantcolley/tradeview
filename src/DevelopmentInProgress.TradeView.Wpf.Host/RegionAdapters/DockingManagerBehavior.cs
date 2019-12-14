@@ -69,7 +69,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.RegionAdapters
         private void DockingManagerActiveContentChanged(object sender, EventArgs e)
         {
             var documentViewHost = dockingManager.ActiveContent as DocumentViewHost;
-            documentViewHost?.View?.OnActive();
+            documentViewHost?.View?.OnActiveChanged(true);
         }
 
         /// <summary>
@@ -192,6 +192,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.RegionAdapters
             for (int i = 0; i < anchorablesHide.Count(); i++)
             {
                 anchorablesHide[i].Hide();
+                var documentViewHost = anchorablesHide[i].Content as DocumentViewHost;
+                documentViewHost.View.OnActiveChanged(false);
             }
 
             for (int i = 0; i < anchorablesShow.Count(); i++)

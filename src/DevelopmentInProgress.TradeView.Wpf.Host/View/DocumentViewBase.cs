@@ -95,10 +95,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.View
             }
         }
 
-        public virtual void OnActive()
+        public virtual void OnActiveChanged(bool isActive)
         {
             var documentViewModel = DataContext as DocumentViewModel;
-            documentViewModel?.OnActive();
+            documentViewModel?.OnActiveChanged(isActive);
         }
 
         /// <summary>

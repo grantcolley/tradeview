@@ -40,7 +40,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.ViewModel
         /// <summary>
         /// Virtual method to be implemented by the sub class notifying the document when it has become active.
         /// </summary>
-        public virtual void OnActive()
+        /// <param name="isActive">Indicates whether the document is the current active document in the docking manager.</param>
+        public virtual void OnActiveChanged(bool isActive)
         {
         }
 
