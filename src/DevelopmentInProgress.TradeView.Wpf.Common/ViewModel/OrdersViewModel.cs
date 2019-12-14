@@ -127,7 +127,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
                     {
                         var result = await Task.Run(async () => await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User));
 
-                        lock(lockOrders)
+                        lock (lockOrders)
                         {
                             Orders.Clear();
                             foreach (var order in result)
