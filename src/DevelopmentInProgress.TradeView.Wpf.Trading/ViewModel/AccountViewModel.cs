@@ -118,6 +118,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
         public void SetAccount(Account account)
         {
+            IsLoggingIn = true;
+
             try
             {
                 if (accountCancellationTokenSource != null
@@ -148,6 +150,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
         public void Login(object param)
         {
+            IsLoggingIn = true;
+
             Login().FireAndForget();
         }
 
@@ -159,8 +163,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 OnException("AccountViewModel.Login", new Exception("Both api key and secret key are required to login to an account."));
                 return;
             }
-
-            IsLoggingIn = true;
 
             try
             {
@@ -186,8 +188,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 OnException("AccountViewModel.Login", ex);
                 IsLoggedIn = false;
             }
-
-            IsLoggingIn = false;
+            finally
+            {
+                IsLoggingIn = false;
+            }
         }
 
         private void DispatcherTimerTick(object sender, EventArgs e)
