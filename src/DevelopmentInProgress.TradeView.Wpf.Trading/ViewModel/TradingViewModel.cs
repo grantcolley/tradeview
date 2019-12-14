@@ -221,23 +221,30 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             disposed = true;
         }
 
-        public override void OnActive()
+        public override void OnActiveChanged(bool isActive)
         {
-            var openDocuments = new FindDocumentViewModel { Module = "Trading" };
-
-            OnGetViewModels(openDocuments);
-
-            var tradingViewModels = openDocuments.ViewModels.OfType<TradingViewModel>()
-                .Where(d => d.SymbolViewModel != null && d.SymbolViewModel.IsActive).ToList();
-
-            foreach (var tradingViewModel in tradingViewModels)
-            {
-                tradingViewModel.DisposeSymbolViewModel();
-            }
-
             try
             {
-                LoadSymbolViewModel();
+                if (isActive)
+                {
+                    var openDocuments = new FindDocumentViewModel { Module = "Trading" };
+
+                    OnGetViewModels(openDocuments);
+
+                    var tradingViewModels = openDocuments.ViewModels.OfType<TradingViewModel>()
+                        .Where(d => d.SymbolViewModel != null && d.SymbolViewModel.IsActive).ToList();
+
+                    foreach (var tradingViewModel in tradingViewModels)
+                    {
+                        tradingViewModel.DisposeSymbolViewModel();
+                    }
+
+                    LoadSymbolViewModel();
+                }
+                else
+                {
+                    DisposeSymbolViewModel();
+                }
             }
             catch (Exception ex)
             {
