@@ -9,6 +9,7 @@ using DevelopmentInProgress.TradeView.Wpf.Common.Cache;
 using System.Threading.Tasks;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using Prism.Logging;
+using System.Diagnostics;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 {
@@ -122,17 +123,29 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         {
             try
             {
-                if(symbolsCache == null)
+                var sw = new Stopwatch();
+                sw.Start();
+                Logger.Log($"1 - {sw.Elapsed}", Category.Info, Priority.High);
+
+                if (symbolsCache == null)
                 {
                     symbolsCache = symbolsCacheFactory.GetSymbolsCache(AccountPreferences.Exchange);
                     symbolsCache.OnSymbolsCacheException += SymbolsCacheException;
                 }
 
+                Logger.Log($"2 - {sw.Elapsed}", Category.Info, Priority.High);
+
                 var results = await symbolsCache.GetSymbols(AccountPreferences.Preferences.FavouriteSymbols);
 
+                Logger.Log($"3 - {sw.Elapsed}", Category.Info, Priority.High);
+
                 Symbols = new List<Symbol>(results);
-                
+
+                Logger.Log($"4 - {sw.Elapsed}", Category.Info, Priority.High);
+
                 SetPreferences();
+
+                Logger.Log($"5 - {sw.Elapsed}", Category.Info, Priority.High);
             }
             catch(Exception ex)
             {
