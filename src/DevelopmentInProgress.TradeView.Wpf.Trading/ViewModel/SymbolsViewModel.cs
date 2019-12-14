@@ -106,7 +106,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         {
             try
             {
+                IsLoadingSymbols = true;
+
                 AccountPreferences = userAccount;
+
                 GetSymbols().FireAndForget();
             }
             catch (Exception ex)
@@ -117,8 +120,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
         private async Task GetSymbols()
         {
-            IsLoadingSymbols = true;
-
             try
             {
                 if(symbolsCache == null)
@@ -137,8 +138,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             {
                 OnException("SymbolsViewModel.GetSymbols", ex);
             }
-
-            IsLoadingSymbols = false;
+            finally
+            {
+                IsLoadingSymbols = false;
+            }
         }
 
         private void SymbolsCacheException(object sender, Exception exception)
