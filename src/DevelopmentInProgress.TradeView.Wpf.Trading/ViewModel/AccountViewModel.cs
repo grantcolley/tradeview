@@ -116,7 +116,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             disposed = true;
         }
 
-        public void SetAccount(Account account)
+        public async Task SetAccount(Account account)
         {
             IsLoggingIn = true;
 
@@ -135,7 +135,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 if (!string.IsNullOrWhiteSpace(Account.ApiKey)
                     && !string.IsNullOrWhiteSpace(Account.ApiSecret))
                 {
-                    Login().FireAndForget();
+                    await Login();
                 }
                 else
                 {

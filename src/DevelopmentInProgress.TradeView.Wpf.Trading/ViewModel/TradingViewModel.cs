@@ -15,6 +15,7 @@ using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Common.Chart;
 using Newtonsoft.Json;
 using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
+using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 {
@@ -192,8 +193,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 }
             }
 
-            SymbolsViewModel.SetAccount(userAccount);
-            AccountViewModel.SetAccount(Account);
+            await Task.WhenAll(SymbolsViewModel.SetAccount(userAccount), AccountViewModel.SetAccount(Account));
 
             isOpen = true;
             IsBusy = false;
