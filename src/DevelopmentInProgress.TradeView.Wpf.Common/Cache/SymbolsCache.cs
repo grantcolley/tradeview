@@ -21,7 +21,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
         private List<Symbol> subscribedSymbols;
         private Symbol btcUsdt;
         private SemaphoreSlim semaphoreSlimGetSymbols = new SemaphoreSlim(1, 1);
-        private object lockSubscriptions = new object();
         private bool disposed;
 
         public SymbolsCache(Exchange exchange, IWpfExchangeService wpfExchangeService)
@@ -37,33 +36,23 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 
         public async Task<List<Symbol>> GetSymbols(IEnumerable<string> subscriptions)
         {
-            // If the cached full symbol list is empty go get them.
-            if (!symbols.Any())
+            await semaphoreSlimGetSymbols.WaitAsync(subscribeSymbolsCxlTokenSrc.Token);
+
+            try
             {
-                await semaphoreSlimGetSymbols.WaitAsync(subscribeSymbolsCxlTokenSrc.Token);
-
-                try
+                // If the cached full symbol list is empty go get them.
+                if (!symbols.Any())
                 {
-                    if (!symbols.Any())
-                    {
-                        var allSymbols = await wpfExchangeService.GetSymbols24HourStatisticsAsync(exchange, subscribeSymbolsCxlTokenSrc.Token);
+                    var allSymbols = await wpfExchangeService.GetSymbols24HourStatisticsAsync(exchange, subscribeSymbolsCxlTokenSrc.Token);
 
-                        symbols.AddRange(allSymbols);
-                        btcUsdt = symbols.Single(s => s.Name.Equals(BTCUSDT));
-                    }
+                    symbols.AddRange(allSymbols);
+                    btcUsdt = symbols.Single(s => s.Name.Equals(BTCUSDT));
                 }
-                finally
-                {
-                    semaphoreSlimGetSymbols.Release();
-                }
-            }
 
-            var newSubs1 = subscriptions.Where(s => !subscribedSymbols.Any(sub => sub.Name.Equals(s))).ToList();
+                var newSubs1 = subscriptions.Where(s => !subscribedSymbols.Any(sub => sub.Name.Equals(s))).ToList();
 
-            // Only subscribe to the symbols that aren't already in the subscribed symbols cache.
-            if (newSubs1.Any())
-            {
-                lock (lockSubscriptions)
+                // Only subscribe to the symbols that aren't already in the subscribed symbols cache.
+                if (newSubs1.Any())
                 {
                     var newSubs2 = subscriptions.Where(s => !subscribedSymbols.Any(sub => sub.Name.Equals(s))).ToList();
 
@@ -78,18 +67,22 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                             newSubSymbols.Add(btcUsdt);
                         }
 
-                        wpfExchangeService.SubscribeStatistics(exchange, newSubSymbols, SubscribeStatisticsException, subscribeSymbolsCxlTokenSrc.Token);
+                        await Task.Run(() => wpfExchangeService.SubscribeStatistics(exchange, newSubSymbols, SubscribeStatisticsException, subscribeSymbolsCxlTokenSrc.Token));
 
                         // Add new subscriptions to the cache
                         subscribedSymbols.AddRange(newSubSymbols);
                     }
                 }
+
+                // Get the subscriptions from the subscribed symbols cache
+                var results = (from s in subscribedSymbols join subs in subscriptions on s.Name equals subs select s).ToList();
+
+                return results;
             }
-
-            // Get the subscriptions from the subscribed symbols cache
-            var results = (from s in subscribedSymbols join subs in subscriptions on s.Name equals subs select s).ToList();
-
-            return results;
+            finally
+            {
+                semaphoreSlimGetSymbols.Release();
+            }
         }
 
         public void ValueAccount(Account account)
