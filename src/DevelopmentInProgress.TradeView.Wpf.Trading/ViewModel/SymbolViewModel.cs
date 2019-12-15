@@ -54,6 +54,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             TimeFormatter = chartHelper.TimeFormatter;
             PriceFormatter = chartHelper.PriceFormatter;
 
+            symbolCancellationTokenSource = new CancellationTokenSource();
+
             OnPropertyChanged(string.Empty);
         }
 
@@ -199,8 +201,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                     throw new Exception($"Symbol not set.");
                 }
 
-                symbolCancellationTokenSource = new CancellationTokenSource();
-
                 SubscribeOrderBook();
 
                 SubscribeTrades();
@@ -215,8 +215,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
         public void Unsubscribe()
         {
-            if (symbolCancellationTokenSource != null
-                && !symbolCancellationTokenSource.IsCancellationRequested)
+            if (!symbolCancellationTokenSource.IsCancellationRequested)
             {
                 symbolCancellationTokenSource.Cancel();
             }
