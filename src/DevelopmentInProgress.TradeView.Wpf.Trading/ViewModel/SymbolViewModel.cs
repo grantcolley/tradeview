@@ -192,7 +192,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
         }
 
-        public void Subscribe()
+        private void Subscribe()
         {
             try
             {
@@ -213,7 +213,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
         }
 
-        public void Unsubscribe()
+        private void Unsubscribe()
         {
             if (!symbolCancellationTokenSource.IsCancellationRequested)
             {
