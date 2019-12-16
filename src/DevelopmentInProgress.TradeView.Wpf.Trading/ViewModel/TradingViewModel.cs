@@ -269,8 +269,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
         private void LoadSymbolViewModel()
         {
-            DisposeSymbolViewModel();
-
             if (symbol == null)
             {
                 return;
