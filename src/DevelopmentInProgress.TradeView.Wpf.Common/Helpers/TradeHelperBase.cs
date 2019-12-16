@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DevelopmentInProgress.TradeView.Interface.Extensions;
@@ -19,57 +20,64 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
         {
             var tcs = new TaskCompletionSource<LocalTradeListResult<T>>();
 
-            var result = new LocalTradeListResult<T>();
-
-            var pricePrecision = symbol.PricePrecision;
-            var quantityPrecision = symbol.QuantityPrecision;
-
-            // Order by oldest to newest (as it will appear in the chart).
-            var newTrades = (from t in tradesUpdate
-                             orderby t.Time, t.Id
-                             select new T
-                             {
-                                 Id = t.Id,
-                                 Time = t.Time.ToLocalTime(),
-                                 Symbol = t.Symbol,
-                                 IsBuyerMaker = t.IsBuyerMaker,
-                                 IsBestPriceMatch = t.IsBestPriceMatch,
-                                 Price = t.Price.Trim(pricePrecision),
-                                 Quantity = t.Quantity.Trim(quantityPrecision)
-                             }).ToList();
-
-            var newTradesCount = newTrades.Count;
-
-            if (newTradesCount > tradesChartDisplayCount)
+            try
             {
-                // More new trades than the chart can take, only takes the newest trades.
-                var chartTrades = newTrades.Skip(newTradesCount - tradesChartDisplayCount).ToList();
-                result.TradesChart = new ChartValues<T>(chartTrades);
-            }
-            else
-            {
-                // New trades less (or equal) the 
-                // total trades to show in the chart.
-                result.TradesChart = new ChartValues<T>(newTrades);
-            }
+                var result = new LocalTradeListResult<T>();
 
-            if (newTradesCount > tradesDisplayCount)
-            {
-                // More new trades than the list can take, only takes the newest trades.
-                var tradeBooktrades = newTrades.Skip(newTradesCount - tradesDisplayCount).ToList();
+                var pricePrecision = symbol.PricePrecision;
+                var quantityPrecision = symbol.QuantityPrecision;
 
-                // Order by newest to oldest (as it will appear on trade list)
-                result.Trades = new List<T>(tradeBooktrades.Reverse<T>().ToList());
-            }
-            else
-            {
-                // New trades less (or equal) the 
-                // total trades to show in the trade list.
-                // Order by newest to oldest (as it will appear on trade list)
-                result.Trades = new List<T>(newTrades.Reverse<T>().ToList());
-            }
+                // Order by oldest to newest (as it will appear in the chart).
+                var newTrades = (from t in tradesUpdate
+                                 orderby t.Time, t.Id
+                                 select new T
+                                 {
+                                     Id = t.Id,
+                                     Time = t.Time.ToLocalTime(),
+                                     Symbol = t.Symbol,
+                                     IsBuyerMaker = t.IsBuyerMaker,
+                                     IsBestPriceMatch = t.IsBestPriceMatch,
+                                     Price = t.Price.Trim(pricePrecision),
+                                     Quantity = t.Quantity.Trim(quantityPrecision)
+                                 }).ToList();
 
-            tcs.SetResult(result);
+                var newTradesCount = newTrades.Count;
+
+                if (newTradesCount > tradesChartDisplayCount)
+                {
+                    // More new trades than the chart can take, only takes the newest trades.
+                    var chartTrades = newTrades.Skip(newTradesCount - tradesChartDisplayCount).ToList();
+                    result.TradesChart = new ChartValues<T>(chartTrades);
+                }
+                else
+                {
+                    // New trades less (or equal) the 
+                    // total trades to show in the chart.
+                    result.TradesChart = new ChartValues<T>(newTrades);
+                }
+
+                if (newTradesCount > tradesDisplayCount)
+                {
+                    // More new trades than the list can take, only takes the newest trades.
+                    var tradeBooktrades = newTrades.Skip(newTradesCount - tradesDisplayCount).ToList();
+
+                    // Order by newest to oldest (as it will appear on trade list)
+                    result.Trades = new List<T>(tradeBooktrades.Reverse<T>().ToList());
+                }
+                else
+                {
+                    // New trades less (or equal) the 
+                    // total trades to show in the trade list.
+                    // Order by newest to oldest (as it will appear on trade list)
+                    result.Trades = new List<T>(newTrades.Reverse<T>().ToList());
+                }
+
+                tcs.SetResult(result);
+            }
+            catch (Exception ex)
+            {
+                tcs.SetException(ex);
+            }
 
             return await tcs.Task;
         }

@@ -12,32 +12,41 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
     {
         public Task<OrderBook> CreateLocalOrderBook(Symbol symbol, Interface.Model.OrderBook orderBook, int listDisplayCount, int chartDisplayCount)
         {
-            List<OrderBookPriceLevel> topAsks;
-            List<OrderBookPriceLevel> topBids;
-            List<OrderBookPriceLevel> chartAsks;
-            List<OrderBookPriceLevel> chartBids;
-            List<OrderBookPriceLevel> aggregatedAsks;
-            List<OrderBookPriceLevel> aggregatedBids;
-
-            GetBidsAndAsks(orderBook, symbol.PricePrecision, symbol.QuantityPrecision, listDisplayCount, chartDisplayCount,
-                out topAsks, out topBids, out chartAsks, out chartBids, out aggregatedAsks, out aggregatedBids);
-
-            var newOrderBook = new OrderBook
-            {
-                LastUpdateId = orderBook.LastUpdateId,
-                Symbol = orderBook.Symbol,
-                BaseSymbol = symbol.BaseAsset.Symbol,
-                QuoteSymbol = symbol.QuoteAsset.Symbol,
-                TopAsks = topAsks,
-                TopBids = topBids,
-                ChartAsks = new ChartValues<OrderBookPriceLevel>(chartAsks),
-                ChartBids = new ChartValues<OrderBookPriceLevel>(chartBids),
-                ChartAggregatedAsks = new ChartValues<OrderBookPriceLevel>(aggregatedAsks),
-                ChartAggregatedBids = new ChartValues<OrderBookPriceLevel>(aggregatedBids)
-            };
-
             var tcs = new TaskCompletionSource<OrderBook>();
-            tcs.SetResult(newOrderBook);
+
+            try
+            {
+                List<OrderBookPriceLevel> topAsks;
+                List<OrderBookPriceLevel> topBids;
+                List<OrderBookPriceLevel> chartAsks;
+                List<OrderBookPriceLevel> chartBids;
+                List<OrderBookPriceLevel> aggregatedAsks;
+                List<OrderBookPriceLevel> aggregatedBids;
+
+                GetBidsAndAsks(orderBook, symbol.PricePrecision, symbol.QuantityPrecision, listDisplayCount, chartDisplayCount,
+                    out topAsks, out topBids, out chartAsks, out chartBids, out aggregatedAsks, out aggregatedBids);
+
+                var newOrderBook = new OrderBook
+                {
+                    LastUpdateId = orderBook.LastUpdateId,
+                    Symbol = orderBook.Symbol,
+                    BaseSymbol = symbol.BaseAsset.Symbol,
+                    QuoteSymbol = symbol.QuoteAsset.Symbol,
+                    TopAsks = topAsks,
+                    TopBids = topBids,
+                    ChartAsks = new ChartValues<OrderBookPriceLevel>(chartAsks),
+                    ChartBids = new ChartValues<OrderBookPriceLevel>(chartBids),
+                    ChartAggregatedAsks = new ChartValues<OrderBookPriceLevel>(aggregatedAsks),
+                    ChartAggregatedBids = new ChartValues<OrderBookPriceLevel>(aggregatedBids)
+                };
+
+                tcs.SetResult(newOrderBook);
+            }
+            catch (Exception ex)
+            {
+                tcs.SetException(ex);
+            }
+
             return tcs.Task;
         }
 

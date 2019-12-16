@@ -87,18 +87,30 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
 
         public virtual Task<bool> TryStopStrategy(string strategyParameters)
         {
+            var tcs = new TaskCompletionSource<bool>();
+            
             suspend = true;
             run = false;
-            var tcs = new TaskCompletionSource<bool>();
-            tcs.SetResult(true);
+
+            tcs.SetResult(suspend);
+
             return tcs.Task;
         }
 
         public virtual Task<bool> TryUpdateStrategy(string strategyParameters)
         {
             var tcs = new TaskCompletionSource<bool>();
-            UpdateParameters(strategyParameters);
-            tcs.SetResult(true);
+
+            try
+            {
+                UpdateParameters(strategyParameters);
+                tcs.SetResult(true);
+            }
+            catch (Exception ex)
+            {
+                tcs.SetException(ex);
+            }
+
             return tcs.Task;
         }
 
