@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
 
 [assembly: InternalsVisibleTo("DevelopmentInProgress.TradeView.Wpf.Trading.Test")]
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
@@ -171,7 +172,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             disposed = true;
         }
 
-        public void SetSymbol(Symbol symbol)
+        public async Task SetSymbol(Symbol symbol)
         {
             try
             {
@@ -183,33 +184,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 {
                     throw new Exception($"Attempting to replace {Symbol.Name} with {symbol.Name}");
                 }
-
-                Subscribe();
-            }
-            catch (Exception ex)
-            {
-                OnException("SymbolViewModel.SetSymbol", ex);
-            }
-        }
-
-        private void Subscribe()
-        {
-            try
-            {
-                if (Symbol == null)
-                {
-                    throw new Exception($"Symbol not set.");
-                }
-
-                SubscribeOrderBook();
-
-                SubscribeTrades();
+               
+                await Task.WhenAll(SubscribeOrderBook(), SubscribeTrades());
 
                 IsActive = true;
             }
             catch (Exception ex)
             {
-                OnException("SymbolViewModel.Subscribe", ex);
+                OnException("SymbolViewModel.SetSymbol", ex);
             }
         }
 
@@ -238,13 +220,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             IsActive = false;
         }
 
-        private void SubscribeOrderBook()
+        private async Task SubscribeOrderBook()
         {
             IsLoadingOrderBook = true;
 
             try
             {
-                ExchangeService.SubscribeOrderBook(exchange, Symbol.ExchangeSymbol, OrderBookLimit, e => UpdateOrderBook(e.OrderBook), SubscribeOrderBookException, symbolCancellationTokenSource.Token);
+                await ExchangeService.SubscribeOrderBook(exchange, Symbol.ExchangeSymbol, OrderBookLimit, e => UpdateOrderBook(e.OrderBook), SubscribeOrderBookException, symbolCancellationTokenSource.Token);
             }
             catch (Exception ex)
             {
@@ -252,7 +234,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
         }
 
-        private void SubscribeTrades()
+        private async Task SubscribeTrades()
         {
             IsLoadingTrades = true;
 
@@ -260,11 +242,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             {
                 if (ShowAggregateTrades)
                 {
-                    ExchangeService.SubscribeAggregateTrades(exchange, Symbol.ExchangeSymbol, TradeLimit, e => UpdateTrades(e.Trades), SubscribeTradesException, symbolCancellationTokenSource.Token);
+                    await ExchangeService.SubscribeAggregateTrades(exchange, Symbol.ExchangeSymbol, TradeLimit, e => UpdateTrades(e.Trades), SubscribeTradesException, symbolCancellationTokenSource.Token);
                 }
                 else
                 {
-                    ExchangeService.SubscribeTrades(exchange, Symbol.ExchangeSymbol, TradeLimit, e => UpdateTrades(e.Trades), SubscribeTradesException, symbolCancellationTokenSource.Token);
+                    await ExchangeService.SubscribeTrades(exchange, Symbol.ExchangeSymbol, TradeLimit, e => UpdateTrades(e.Trades), SubscribeTradesException, symbolCancellationTokenSource.Token);
                 }
             }
             catch (Exception ex)

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using Newtonsoft.Json;
 using Prism.Logging;
+using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 {
@@ -16,7 +17,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
     public class AccountViewModelTest
     {
         [TestMethod]
-        public void SetAccount()
+        public async Task SetAccount()
         {
             // Arrange
             var fail = false;
@@ -50,7 +51,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             });
 
             // Act
-            accountViewModel.SetAccount(account);
+            await accountViewModel.SetAccount(account);
 
             // Assert
             Assert.AreEqual(account.ApiKey, accountViewModel.Account.ApiKey);
@@ -212,7 +213,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
         }
 
         [TestMethod]
-        public void SelectedAsset()
+        public async Task SelectedAsset()
         {
             // Arrange
             var fail = false;
@@ -253,7 +254,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             });
 
             // Act
-            accountViewModel.SetAccount(account);
+            await accountViewModel.SetAccount(account);
             accountViewModel.LoginCommand.Execute(null);
             var trx = accountViewModel.Account.Balances.Single(ab => ab.Asset.Equals("TRX"));
             accountViewModel.SelectedAsset = trx;

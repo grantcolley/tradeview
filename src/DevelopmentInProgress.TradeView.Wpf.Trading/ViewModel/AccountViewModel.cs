@@ -118,8 +118,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
         public async Task SetAccount(Account account)
         {
-            IsLoggingIn = true;
-
             try
             {
                 if (accountCancellationTokenSource != null
@@ -148,15 +146,15 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
         }
 
-        public void Login(object param)
+        public async void Login(object param)
         {
-            IsLoggingIn = true;
-
-            Login().FireAndForget();
+            await Login();
         }
 
         private async Task Login()
         {
+            IsLoggingIn = true;
+
             if (string.IsNullOrWhiteSpace(Account.AccountInfo.User.ApiKey)
                 || string.IsNullOrWhiteSpace(Account.AccountInfo.User.ApiSecret))
             {
@@ -170,7 +168,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
                 OnAccountLoggedIn(Account);
 
-                ExchangeService.SubscribeAccountInfo(Account.AccountInfo.User.Exchange, Account.AccountInfo.User, e => AccountInfoUpdate(e.AccountInfo), SubscribeAccountInfoException, accountCancellationTokenSource.Token);
+                await ExchangeService.SubscribeAccountInfo(Account.AccountInfo.User.Exchange, Account.AccountInfo.User, e => AccountInfoUpdate(e.AccountInfo), SubscribeAccountInfoException, accountCancellationTokenSource.Token);
 
                 symbolsCache = symbolsCacheFactory.GetSymbolsCache(Account.AccountInfo.User.Exchange);
 

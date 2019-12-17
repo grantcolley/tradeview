@@ -221,7 +221,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             disposed = true;
         }
 
-        public override void OnActiveChanged(bool isActive)
+        public async override void OnActiveChanged(bool isActive)
         {
             try
             {
@@ -239,7 +239,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                         tradingViewModel.DisposeSymbolViewModel();
                     }
 
-                    LoadSymbolViewModel();
+                    await LoadSymbolViewModel();
                 }
                 else
                 {
@@ -267,7 +267,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
         }
 
-        private void LoadSymbolViewModel()
+        private async Task LoadSymbolViewModel()
         {
             if (symbol == null)
             {
@@ -286,7 +286,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
             try
             {
-                SymbolViewModel.SetSymbol(symbol);
+                await SymbolViewModel.SetSymbol(symbol);
 
                 SymbolViewModel.IsActive = true;
             }
@@ -303,7 +303,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 eventHandler => SymbolsViewModel.OnSymbolsNotification -= eventHandler)
                 .Select(eventPattern => eventPattern.EventArgs);
 
-            symbolsObservableSubscription = symbolsObservable.Subscribe(args =>
+            symbolsObservableSubscription = symbolsObservable.Subscribe(async args =>
             {
                 if (args.HasException)
                 {
@@ -312,7 +312,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 else if (args.Value != null)
                 {
                     symbol = args.Value;
-                    LoadSymbolViewModel();
+                    await LoadSymbolViewModel();
                 }
                 else if (args.Symbols != null)
                 {
