@@ -67,7 +67,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                             newSubSymbols.Add(btcUsdt);
                         }
 
-                        await Task.Run(() => wpfExchangeService.SubscribeStatistics(exchange, newSubSymbols, SubscribeStatisticsException, subscribeSymbolsCxlTokenSrc.Token));
+                        await wpfExchangeService.SubscribeStatistics(exchange, newSubSymbols, SubscribeStatisticsException, subscribeSymbolsCxlTokenSrc.Token);
 
                         // Add new subscriptions to the cache
                         subscribedSymbols.AddRange(newSubSymbols);
