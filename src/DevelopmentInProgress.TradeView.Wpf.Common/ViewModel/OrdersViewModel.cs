@@ -229,16 +229,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             disposed = true;
         }
 
-        private void Cancel(object orderId)
+        private async void Cancel(object orderId)
         {
-            try
-            {
-                Cancel(orderId.ToString()).FireAndForget();
-            }
-            catch (Exception ex)
-            {
-                OnException("OrdersViewModel.Cancel", ex);
-            }
+            await Cancel(orderId.ToString());
         }
 
         private async Task Cancel(string orderId)

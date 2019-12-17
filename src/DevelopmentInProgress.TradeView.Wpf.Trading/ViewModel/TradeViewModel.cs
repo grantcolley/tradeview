@@ -376,14 +376,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             disposed = true;
         }
 
-        private void Buy(object param)
+        private async void Buy(object param)
         {
-            SendClientOrder(Interface.Model.OrderSide.Buy).FireAndForget();
+            await SendClientOrder(Interface.Model.OrderSide.Buy);
         }
 
-        private void Sell(object param)
+        private async void Sell(object param)
         {
-            SendClientOrder(Interface.Model.OrderSide.Sell).FireAndForget();
+            await SendClientOrder(Interface.Model.OrderSide.Sell);
         }
 
         private async Task SendClientOrder(Interface.Model.OrderSide orderSide)

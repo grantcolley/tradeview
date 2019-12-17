@@ -328,7 +328,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 eventHandler => AccountViewModel.OnAccountNotification -= eventHandler)
                 .Select(eventPattern => eventPattern.EventArgs);
 
-            accountObservableSubscription = accountObservable.Subscribe(args =>
+            accountObservableSubscription = accountObservable.Subscribe(async args =>
             {
                 if (args.HasException)
                 {
@@ -338,12 +338,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                         || args.AccountEventType.Equals(AccountEventType.LoggedOut))
                 {
                     TradeViewModel.SetAccount(args.Value);
-                    OrdersViewModel.SetAccount(args.Value).FireAndForget();
+                    await OrdersViewModel.SetAccount(args.Value);
                 }
                 else if (args.AccountEventType.Equals(AccountEventType.UpdateOrders))
                 {
                     TradeViewModel.Touch();
-                    OrdersViewModel.UpdateOrders(args.Value).FireAndForget();
+                    await OrdersViewModel.UpdateOrders(args.Value);
                 }
                 else if (args.AccountEventType.Equals(AccountEventType.SelectedAsset))
                 {
