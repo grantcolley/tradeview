@@ -41,7 +41,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             Action<Exception> exception = e => { };
 
             // Act
-            exchangeService.SubscribeStatistics(Exchange.Test, symbols, exception, cxlToken);
+            await exchangeService.SubscribeStatistics(Exchange.Test, symbols, exception, cxlToken);
 
             // Assert
             var eth = symbols.Single(s => s.Name.Equals("ETHBTC"));

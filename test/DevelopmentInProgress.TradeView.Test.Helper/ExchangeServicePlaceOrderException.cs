@@ -70,27 +70,29 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
             throw new NotImplementedException();
         }
 
-        public void SubscribeAccountInfo(Exchange exchange, User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public Task SubscribeAccountInfo(Exchange exchange, User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            // INTENTIONALLY EMPTY. LEAVE BLANK.
+            var tcs = new TaskCompletionSource<Order>();
+            tcs.SetResult(null);
+            return tcs.Task;
         }
 
-        public void SubscribeAggregateTrades(Exchange exchange, string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SubscribeTrades(Exchange exchange, string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public Task SubscribeAggregateTrades(Exchange exchange, string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public void SubscribeOrderBook(Exchange exchange, string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public Task SubscribeTrades(Exchange exchange, string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public void SubscribeStatistics(Exchange exchange, Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public Task SubscribeOrderBook(Exchange exchange, string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SubscribeStatistics(Exchange exchange, Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             var ethStats = TestHelper.EthStats;
             var symbolsStats = TestHelper.SymbolsStatistics;
@@ -103,11 +105,15 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
             updatedEthStats.PriceChangePercent = newStats.PriceChangePercent;
 
             callback.Invoke(new StatisticsEventArgs { Statistics = symbolsStats });
+
+            var tcs = new TaskCompletionSource<Order>();
+            tcs.SetResult(null);
+            return tcs.Task;
         }
 
-        public void SubscribeStatistics(Exchange exchange, IEnumerable<string> symbols, Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public Task SubscribeStatistics(Exchange exchange, IEnumerable<string> symbols, Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            SubscribeStatistics(exchange, callback, exception, cancellationToken);
+            return SubscribeStatistics(exchange, callback, exception, cancellationToken);
         }
 
         public Task<IEnumerable<AccountTrade>> GetAccountTradesAsync(Exchange exchange, User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
@@ -115,7 +121,7 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
             throw new NotImplementedException();
         }
 
-        public void SubscribeCandlesticks(Exchange exchange, string symbol, CandlestickInterval candlestickInterval, int limit, Action<CandlestickEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public Task SubscribeCandlesticks(Exchange exchange, string symbol, CandlestickInterval candlestickInterval, int limit, Action<CandlestickEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
