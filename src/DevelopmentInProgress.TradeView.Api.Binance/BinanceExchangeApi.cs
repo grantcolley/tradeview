@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace DevelopmentInProgress.TradeView.Api.Binance
 {
@@ -134,8 +133,10 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             return orders;
         }
 
-        public void SubscribeCandlesticks(string symbol, Interface.Model.CandlestickInterval candlestickInterval, int limit, Action<CandlestickEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public Task SubscribeCandlesticks(string symbol, Interface.Model.CandlestickInterval candlestickInterval, int limit, Action<CandlestickEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
+            var tcs = new TaskCompletionSource<object>();
+
             try
             {
                 var interval = candlestickInterval.ToBinanceCandlestickInterval();
@@ -160,15 +161,21 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
                         return;
                     }
                 });
+
+                tcs.SetResult(null);
             }
             catch (Exception ex)
             {
-                exception.Invoke(ex);
+                tcs.SetException(ex);
             }
+
+            return tcs.Task;
         }
 
-        public void SubscribeOrderBook(string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public Task SubscribeOrderBook(string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
+            var tcs = new TaskCompletionSource<object>();
+
             try
             {
                 var orderBookCache = new OrderBookCache(binanceApi, new DepthWebSocketClient());
@@ -192,15 +199,21 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
                         return;
                     }
                 });
+
+                tcs.SetResult(null);
             }
             catch (Exception ex)
             {
-                exception.Invoke(ex);
+                tcs.SetException(ex);
             }
+
+            return tcs.Task;
         }
 
-        public void SubscribeAggregateTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public Task SubscribeAggregateTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
+            var tcs = new TaskCompletionSource<object>();
+
             try
             {
                 var aggregateTradeCache = new AggregateTradeCache(binanceApi, new AggregateTradeWebSocketClient());
@@ -224,15 +237,21 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
                         return;
                     }
                 });
+
+                tcs.SetResult(null);
             }
             catch (Exception ex)
             {
-                exception.Invoke(ex);
+                tcs.SetException(ex);
             }
+
+            return tcs.Task;
         }
 
-        public void SubscribeTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public Task SubscribeTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
+            var tcs = new TaskCompletionSource<object>();
+
             try
             {
                 var tradeCache = new TradeCache(binanceApi, new TradeWebSocketClient());
@@ -256,20 +275,26 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
                         return;
                     }
                 });
+
+                tcs.SetResult(null);
             }
             catch (Exception ex)
             {
-                exception.Invoke(ex);
+                tcs.SetException(ex);
             }
+
+            return tcs.Task;
         }
 
-        public void SubscribeStatistics(IEnumerable<string> symbols, Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public Task SubscribeStatistics(IEnumerable<string> symbols, Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            SubscribeStatistics(callback, exception, cancellationToken);
+            return SubscribeStatistics(callback, exception, cancellationToken);
         }
 
-        public void SubscribeStatistics(Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public Task SubscribeStatistics(Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
+            var tcs = new TaskCompletionSource<object>();
+
             try
             {
                 var symbolStatisticsCache = new SymbolStatisticsCache(binanceApi, new SymbolStatisticsWebSocketClient());
@@ -293,53 +318,45 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
                         return;
                     }
                 });
+                tcs.SetResult(null);
             }
             catch (Exception ex)
             {
-                exception.Invoke(ex);
+                tcs.SetException(ex);
             }
+
+            return tcs.Task;
         }
 
-        public void SubscribeAccountInfo(Interface.Model.User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public async Task SubscribeAccountInfo(Interface.Model.User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
-            SubscribeAccountInfoAsync(user, callback, exception, cancellationToken).FireAndForget();
-        }
+            var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret);
+            var streamControl = new UserDataWebSocketStreamControl(binanceApi);
+            var listenKey = await streamControl.OpenStreamAsync(apiUser).ConfigureAwait(false);
 
-        private async Task SubscribeAccountInfoAsync(Interface.Model.User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
-        {
-            try
+            var accountInfoCache = new AccountInfoCache(binanceApi, new UserDataWebSocketClient());
+
+            accountInfoCache.Subscribe(listenKey, apiUser, e =>
             {
-                var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret);
-                var streamControl = new UserDataWebSocketStreamControl(binanceApi);
-                var listenKey = await streamControl.OpenStreamAsync(apiUser).ConfigureAwait(false);
-
-                var accountInfoCache = new AccountInfoCache(binanceApi, new UserDataWebSocketClient());
-                accountInfoCache.Subscribe(listenKey, apiUser, e =>
+                if (cancellationToken.IsCancellationRequested)
                 {
-                    if (cancellationToken.IsCancellationRequested)
-                    {
-                        accountInfoCache.Unsubscribe();
-                        return;
-                    }
+                    accountInfoCache.Unsubscribe();
+                    return;
+                }
 
-                    try
-                    {
-                        var accountInfo = GetAccountInfo(e.AccountInfo);
-                        accountInfo.User = user;
-                        callback.Invoke(new AccountInfoEventArgs { AccountInfo = accountInfo });
-                    }
-                    catch (Exception ex)
-                    {
-                        accountInfoCache.Unsubscribe();
-                        exception.Invoke(ex);
-                        return;
-                    }
-                });
-            }
-            catch (Exception ex)
-            {
-                exception.Invoke(ex);
-            }
+                try
+                {
+                    var accountInfo = GetAccountInfo(e.AccountInfo);
+                    accountInfo.User = user;
+                    callback.Invoke(new AccountInfoEventArgs { AccountInfo = accountInfo });
+                }
+                catch (Exception ex)
+                {
+                    accountInfoCache.Unsubscribe();
+                    exception.Invoke(ex);
+                    return;
+                }
+            });
         }
 
         private Interface.Model.AccountInfo GetAccountInfo(AccountInfo a)

@@ -50,7 +50,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
             throw new NotImplementedException();
         }
 
-        public  Task<IEnumerable<AggregateTrade>> GetAggregateTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
+        public Task<IEnumerable<AggregateTrade>> GetAggregateTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
@@ -260,7 +260,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
             }
         }
 
-        public void SubscribeAccountInfo(User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public async Task SubscribeAccountInfo(User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             var localUser = user;
 
@@ -270,50 +270,50 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
 
             try
             {
-                result = kucoinClient.SubscribeToBalanceChanges(data =>
+                result = await kucoinClient.SubscribeToBalanceChangesAsync(async data =>
                 {
                     if (cancellationToken.IsCancellationRequested)
                     {
-                        kucoinClient.Unsubscribe(result.Data).FireAndForget();
+                        await kucoinClient.Unsubscribe(result.Data).ConfigureAwait(false);
                         return;
                     }
 
                     try
                     {
-                        var accountInfo = GetAccountInfoAsync(localUser, cancellationToken).GetAwaiter().GetResult();
+                        var accountInfo = await GetAccountInfoAsync(localUser, cancellationToken);
 
                         callback.Invoke(new AccountInfoEventArgs { AccountInfo = accountInfo });
                     }
                     catch (Exception ex)
                     {
-                        kucoinClient.Unsubscribe(result.Data).FireAndForget();
+                        await kucoinClient.Unsubscribe(result.Data).ConfigureAwait(false);
                         exception.Invoke(ex);
                         return;
                     }
                 });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 if (result != null)
                 {
-                    kucoinClient.Unsubscribe(result.Data).FireAndForget();
+                    await kucoinClient.Unsubscribe(result.Data).ConfigureAwait(false);
                 }
 
-                exception.Invoke(ex);
+                throw;
             }
         }
 
-        public void SubscribeAggregateTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public Task SubscribeAggregateTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public void SubscribeCandlesticks(string symbol, CandlestickInterval candlestickInterval, int limit, Action<CandlestickEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public Task SubscribeCandlesticks(string symbol, CandlestickInterval candlestickInterval, int limit, Action<CandlestickEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public void SubscribeOrderBook(string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public async Task SubscribeOrderBook(string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             var kucoinClient = new KucoinSocketClient();
 
@@ -321,11 +321,11 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
 
             try
             {
-                result = kucoinClient.SubscribeToAggregatedOrderBookUpdates(symbol, data =>
+                result = await kucoinClient.SubscribeToAggregatedOrderBookUpdatesAsync(symbol, async data =>
                 {
                     if (cancellationToken.IsCancellationRequested)
                     {
-                        kucoinClient.Unsubscribe(result.Data).FireAndForget();
+                        await kucoinClient.Unsubscribe(result.Data).ConfigureAwait(false);
                         return;
                     }
 
@@ -345,29 +345,29 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                     }
                     catch (Exception ex)
                     {
-                        kucoinClient.Unsubscribe(result.Data).FireAndForget();
+                        await kucoinClient.Unsubscribe(result.Data).ConfigureAwait(false);
                         exception.Invoke(ex);
                         return;
                     }
                 });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 if (result != null)
                 {
-                    kucoinClient.Unsubscribe(result.Data).FireAndForget();
+                    await kucoinClient.Unsubscribe(result.Data).ConfigureAwait(false);
                 }
 
-                exception.Invoke(ex);
+                throw;
             }
         }
 
-        public void SubscribeStatistics(Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public Task SubscribeStatistics(Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public void SubscribeStatistics(IEnumerable<string> symbols, Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public async Task SubscribeStatistics(IEnumerable<string> symbols, Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             var kucoinSocketClient = new KucoinSocketClient();
 
@@ -379,11 +379,11 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
 
                 foreach (var symbol in symbols)
                 {
-                    result = kucoinSocketClient.SubscribeToSnapshotUpdates(symbol, data =>
+                    result = await kucoinSocketClient.SubscribeToSnapshotUpdatesAsync(symbol, async data =>
                     {
                         if (cancellationToken.IsCancellationRequested)
                         {
-                            kucoinSocketClient.Unsubscribe(result.Data).FireAndForget();
+                            await kucoinSocketClient.Unsubscribe(result.Data).ConfigureAwait(false);
                             return;
                         }
 
@@ -405,25 +405,25 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                         }
                         catch (Exception ex)
                         {
-                            kucoinSocketClient.Unsubscribe(result.Data).FireAndForget();
+                            await kucoinSocketClient.Unsubscribe(result.Data).ConfigureAwait(false);
                             exception.Invoke(ex);
                             return;
                         }
                     });
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 if (result != null)
                 {
-                    kucoinSocketClient.Unsubscribe(result.Data).FireAndForget();
+                    await kucoinSocketClient.Unsubscribe(result.Data).ConfigureAwait(false);
                 }
 
-                exception.Invoke(ex);
+                throw;
             }
         }
 
-        public void SubscribeTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public async Task SubscribeTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             var kucoinClient = new KucoinSocketClient();
 
@@ -431,11 +431,11 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
 
             try
             {
-                result = kucoinClient.SubscribeToTradeUpdates(symbol, data =>
+                result = await kucoinClient.SubscribeToTradeUpdatesAsync(symbol, async data =>
                 {
                     if (cancellationToken.IsCancellationRequested)
                     {
-                        kucoinClient.Unsubscribe(result.Data).FireAndForget();
+                        await kucoinClient.Unsubscribe(result.Data).ConfigureAwait(false);
                         return;
                     }
 
@@ -454,20 +454,20 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                     }
                     catch (Exception ex)
                     {
-                        kucoinClient.Unsubscribe(result.Data).FireAndForget();
+                        await kucoinClient.Unsubscribe(result.Data).ConfigureAwait(false);
                         exception.Invoke(ex);
                         return;
                     }
                 });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 if (result != null)
                 {
-                    kucoinClient.Unsubscribe(result.Data).FireAndForget();
+                    await kucoinClient.Unsubscribe(result.Data).ConfigureAwait(false);
                 }
 
-                exception.Invoke(ex);
+                throw;
             }
         }
     }
