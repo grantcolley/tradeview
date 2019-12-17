@@ -29,6 +29,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
             UpdatePreferencesCommand = new ViewModelCommand(UpdatePreferences);
 
+            // necessary to get symbols on fire and forget 
+            // show doesnt block the dialog from showing.
             GetSymbols().FireAndForget();
         }
 
@@ -124,8 +126,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             {
                 Dialog.ShowException(ex);
             }
-
-            IsLoadingSymbols = false;
+            finally
+            {
+                IsLoadingSymbols = false;
+            }
         }
 
         private void UpdatePreferences(object arg)
