@@ -125,7 +125,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
 
                     if (Account != null)
                     {
-                        var result = await Task.Run(async () => await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User));
+                        var result =  await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User);
 
                         lock (lockOrders)
                         {
@@ -165,7 +165,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
         {
             try
             {
-                var result = await Task.Run(async () => await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User));
+                var result = await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User);
 
                 Action<IEnumerable<Order>> action = res =>
                 {
