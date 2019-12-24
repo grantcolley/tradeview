@@ -11,15 +11,20 @@ namespace DevelopmentInProgress.TradeView.Service
 {
     public class ExchangeService : IExchangeService
     {
-        private IExchangeApiFactory exchangeApiFactory;
-        private Dictionary<Exchange, IExchangeApi> exchanges;
+        private readonly IExchangeApiFactory exchangeApiFactory;
+        private readonly Dictionary<Exchange, IExchangeApi> exchanges;
 
         public ExchangeService(IExchangeApiFactory exchangeApiFactory)
         {
             this.exchangeApiFactory = exchangeApiFactory;
             exchanges = this.exchangeApiFactory.GetExchanges();
         }
-        
+
+        public IExchangeApi GetExchangeApi(Exchange exchange)
+        {
+            return exchangeApiFactory.GetExchangeApi(exchange);
+        }
+
         public Task<Order> PlaceOrder(Exchange exchange, User user, ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
             return exchanges[exchange].PlaceOrder(user, clientOrder, recWindow, cancellationToken);

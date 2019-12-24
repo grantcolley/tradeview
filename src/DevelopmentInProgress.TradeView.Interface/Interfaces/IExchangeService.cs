@@ -10,6 +10,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Interfaces
 {
     public interface IExchangeService
     {
+        IExchangeApi GetExchangeApi(Exchange exchange);
         Task<Order> PlaceOrder(Exchange exchange, User user, ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken));
         Task<string> CancelOrderAsync(Exchange exchange, User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken));
         Task<AccountInfo> GetAccountInfoAsync(Exchange exchange, User user, CancellationToken cancellationToken);
