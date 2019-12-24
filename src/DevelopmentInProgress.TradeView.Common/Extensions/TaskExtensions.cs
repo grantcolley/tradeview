@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace DevelopmentInProgress.Common.Extensions
+namespace DevelopmentInProgress.TradeView.Common.Extensions
 {
     public static class TaskExtensions
     {
