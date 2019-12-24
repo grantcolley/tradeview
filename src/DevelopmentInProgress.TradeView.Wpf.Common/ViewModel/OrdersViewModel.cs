@@ -1,5 +1,4 @@
-﻿using DevelopmentInProgress.Common.Extensions;
-using DevelopmentInProgress.TradeView.Wpf.Common.Command;
+﻿using DevelopmentInProgress.TradeView.Wpf.Common.Command;
 using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
