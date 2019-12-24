@@ -159,5 +159,10 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
 
             return updatedSymbols;
         }
+
+        public IExchangeApi GetExchangeApi(Exchange exchange)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

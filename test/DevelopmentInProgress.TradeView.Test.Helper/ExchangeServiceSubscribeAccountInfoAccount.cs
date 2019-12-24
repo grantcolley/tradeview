@@ -119,5 +119,10 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
         {
             throw new NotImplementedException();
         }
+
+        public IExchangeApi GetExchangeApi(Exchange exchange)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
