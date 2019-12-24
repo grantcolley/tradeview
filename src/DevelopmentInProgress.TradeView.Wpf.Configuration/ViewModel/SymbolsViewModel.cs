@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.Common.Extensions;
+﻿using DevelopmentInProgress.TradeView.Common.Extensions;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using System.Collections.Generic;
