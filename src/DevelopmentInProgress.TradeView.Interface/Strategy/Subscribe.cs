@@ -9,7 +9,6 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
         AccountInfo = 1,
         Trades = 2,
         OrderBook = 4,
-        Statistics = 8,
-        Candlesticks = 16
+        Candlesticks = 8
     }
 }
