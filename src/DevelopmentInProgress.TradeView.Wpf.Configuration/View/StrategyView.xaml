@@ -63,10 +63,6 @@
                                     <CheckBox VerticalAlignment="Center" IsChecked="{Binding Path=SubscribeTrades}"/>
                                 </WrapPanel>
                                 <WrapPanel>
-                                    <Label Content="Statistics"/>
-                                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding Path=SubscribeStatistics}"/>
-                                </WrapPanel>
-                                <WrapPanel>
                                     <Label Content="Candlesticks"/>
                                     <CheckBox VerticalAlignment="Center" IsChecked="{Binding Path=SubscribeCandlesticks}"/>
                                 </WrapPanel>

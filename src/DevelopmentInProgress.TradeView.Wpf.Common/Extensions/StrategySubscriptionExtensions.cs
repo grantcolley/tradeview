@@ -24,14 +24,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 subscribe += 4;
             }
 
-            if (strategySubscription.SubscribeStatistics)
-            {
-                subscribe += 8;
-            }
-
             if (strategySubscription.SubscribeCandlesticks)
             {
-                subscribe += 16;
+                subscribe += 8;
             }
 
             var interfaceStrategySubscription = new Interface.Strategy.StrategySubscription
@@ -75,11 +70,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
             if ((interfaceStrategySubscription.Subscribe & Interface.Strategy.Subscribe.OrderBook) == Interface.Strategy.Subscribe.OrderBook)
             {
                 strategySubScription.SubscribeOrderBook = true;
-            }
-
-            if ((interfaceStrategySubscription.Subscribe & Interface.Strategy.Subscribe.Statistics) == Interface.Strategy.Subscribe.Statistics)
-            {
-                strategySubScription.SubscribeStatistics = true;
             }
 
             if ((interfaceStrategySubscription.Subscribe & Interface.Strategy.Subscribe.Candlesticks) == Interface.Strategy.Subscribe.Candlesticks)

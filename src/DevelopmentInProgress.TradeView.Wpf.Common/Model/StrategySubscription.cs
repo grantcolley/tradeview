@@ -16,7 +16,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         public bool SubscribeAccount { get; set; }
         public bool SubscribeOrderBook { get; set; }
         public bool SubscribeTrades { get; set; }
-        public bool SubscribeStatistics { get; set; }
         public bool SubscribeCandlesticks { get; set; }
 
         public string SelectedExchange
