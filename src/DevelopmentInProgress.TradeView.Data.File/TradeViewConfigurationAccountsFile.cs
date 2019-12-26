@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DevelopmentInProgress.TradeView.Interface.Enums;
 using DevelopmentInProgress.TradeView.Interface.Model;
 using Newtonsoft.Json;
 
@@ -60,7 +62,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
                 return userAccount;
             }
 
-            throw new Exception($"Account {accountName} not available.");
+            return GetDemoAccount();
         }
 
         public async Task<UserAccounts> GetAccountsAsync()
@@ -74,7 +76,13 @@ namespace DevelopmentInProgress.TradeView.Data.File
                 }
             }
 
-            return new UserAccounts();
+            return new UserAccounts
+            {
+                Accounts = new List<UserAccount>
+                { 
+                    GetDemoAccount() 
+                }
+            };
         }
 
         public async Task SaveAccountAsync(UserAccount userAccount)
@@ -110,6 +118,25 @@ namespace DevelopmentInProgress.TradeView.Data.File
             {
                 await writer.WriteAsync(chars, 0, chars.Length);
             }
+        }
+
+        private UserAccount GetDemoAccount()
+        {
+            return new UserAccount
+            {
+                AccountName = "Demo Account",
+                Exchange = Exchange.Binance,
+                Preferences = new Preferences
+                {
+                    SelectedSymbol = "ETHBTC",
+                    TradeLimit = 500,
+                    TradesChartDisplayCount = 500,
+                    TradesDisplayCount = 18,
+                    OrderBookDisplayCount = 9,
+                    OrderBookChartDisplayCount = 15,
+                    FavouriteSymbols = new List<string> { "BTCUSDT", "ETHBTC", "ETHUSDT" }
+                }
+            };
         }
     }
 }
