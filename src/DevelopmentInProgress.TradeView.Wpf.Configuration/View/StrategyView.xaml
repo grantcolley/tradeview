@@ -24,7 +24,7 @@
                                 CommandParameter="{Binding .}">
                             <Control Template="{StaticResource delete}"/>
                         </Button>
-                        <TextBox Text="{Binding Path=DisplayName, Mode=OneWay}" ToolTip="{Binding Path=File, Mode=OneWay}"/>
+                        <TextBox Text="{Binding Path=DisplayName, Mode=OneWay}" VerticalContentAlignment="Center" ToolTip="{Binding Path=File, Mode=OneWay}"/>
                     </DockPanel>
                 </Border>
             </DataTemplate>
@@ -48,7 +48,7 @@
                                       ItemsSource="{Binding DataContext.Exchanges, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                       SelectedItem="{Binding SelectedExchange, Mode=TwoWay}"/>
                             <Label DockPanel.Dock="Left" Content="Limit:" Margin="2" HorizontalAlignment="Left"/>
-                            <TextBox DockPanel.Dock="Left" Text="{Binding Path=Limit}" Margin="2" Width="50" HorizontalAlignment="Left"/>
+                            <TextBox DockPanel.Dock="Left" Text="{Binding Path=Limit}" VerticalContentAlignment="Center" Margin="2" Width="50" HorizontalAlignment="Left"/>
                             <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" Margin="2" HorizontalAlignment="Left">
                                 <WrapPanel>
                                     <Label Content="Account"/>
@@ -67,7 +67,7 @@
                                     <CheckBox VerticalAlignment="Center" IsChecked="{Binding Path=SubscribeCandlesticks}"/>
                                 </WrapPanel>
                             </StackPanel>
-                            <Label DockPanel.Dock="Left" Content="Interval:" Margin="2"/>
+                            <Label DockPanel.Dock="Left" Content="Candlestick Interval:" Margin="2"/>
                             <ComboBox DockPanel.Dock="Left" Margin="2" IsReadOnly="True" Width="150" HorizontalAlignment="Left" ToolTip="Interval when subscribing to candlesticks"
                                       ItemsSource="{Binding DataContext.CandlestickIntervals, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                       SelectedItem="{Binding CandlestickInterval, Mode=TwoWay}"/>
@@ -82,11 +82,11 @@
 
                         <DockPanel Grid.Row="1" Grid.Column="0" LastChildFill="True">
                             <Label DockPanel.Dock="Left" Content="API Key:" Margin="2"/>
-                            <TextBox DockPanel.Dock="Left" Text="{Binding Path=ApiKey}" Margin="2" Width="400"/>
+                            <TextBox DockPanel.Dock="Left" Text="{Binding Path=ApiKey}" VerticalContentAlignment="Center" Margin="2" Width="400"/>
                             <Label DockPanel.Dock="Left" Content="Secret Key:" Margin="2"/>
-                            <TextBox DockPanel.Dock="Left" Text="{Binding Path=SecretKey}" Margin="2" Width="400" HorizontalAlignment="Left"/>
+                            <TextBox DockPanel.Dock="Left" Text="{Binding Path=SecretKey}" VerticalContentAlignment="Center" Margin="2" Width="400" HorizontalAlignment="Left"/>
                             <Label DockPanel.Dock="Left" Content="API Pass Phrase:" Margin="2"/>
-                            <TextBox DockPanel.Dock="Left" Text="{Binding Path=ApiPassPhrase}" Margin="2" Width="150" HorizontalAlignment="Left"/>
+                            <TextBox DockPanel.Dock="Left" Text="{Binding Path=ApiPassPhrase}" VerticalContentAlignment="Center" Margin="2" Width="150" HorizontalAlignment="Left"/>
                             <ContentControl/>
                         </DockPanel>
                     </Grid>
@@ -130,18 +130,18 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Label Grid.Row="0" Grid.Column="0" Content="Id:" Margin="2"/>
-                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Strategy.Id}" Margin="2" Width="100" HorizontalAlignment="Left"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Strategy.Id}" VerticalContentAlignment="Center" Margin="2" Width="100" HorizontalAlignment="Left"/>
                         <Label Grid.Row="1" Grid.Column="0" Content="Name:" Margin="2"/>
-                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Strategy.Name}" IsReadOnly="true"  Margin="2" Width="300" HorizontalAlignment="Left"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Strategy.Name}" VerticalContentAlignment="Center" IsReadOnly="true"  Margin="2" Width="300" HorizontalAlignment="Left"/>
                         <Label Grid.Row="2" Grid.Column="0" Content="Target Assembly:" Margin="2"/>
                         <DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="True" Margin="2">
                             <controls:FileDialog DockPanel.Dock="Right" Files="{Binding TargetAssembly, Mode=OneWayToSource}" ToolTip="Attach target assembly containing strategy."/>
-                            <TextBox Name="targetAssembly" Text="{Binding Strategy.TargetAssembly.DisplayName, Mode=OneWay}" ToolTip="{Binding Strategy.TargetAssembly.File, Mode=OneWay}"/>
+                            <TextBox Name="targetAssembly" Text="{Binding Strategy.TargetAssembly.DisplayName, Mode=OneWay}" VerticalContentAlignment="Center" ToolTip="{Binding Strategy.TargetAssembly.File, Mode=OneWay}"/>
                         </DockPanel>
                         <Label Grid.Row="3" Grid.Column="0" Content="Target Type:" Margin="2"/>
-                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Strategy.TargetType}" Margin="2"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Strategy.TargetType}" VerticalContentAlignment="Center" Margin="2"/>
                         <Label Grid.Row="4" Grid.Column="0" Content="Strategy Server URL:" Margin="2"/>
-                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Strategy.StrategyServerUrl}" Margin="2"/>
+                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Strategy.StrategyServerUrl}" VerticalContentAlignment="Center" Margin="2"/>
                         <DockPanel Grid.Row="5" Grid.Column="0" LastChildFill="True">
                             <Label DockPanel.Dock="Left" Content="Parameters:" Margin="2"/>
                             <DockPanel DockPanel.Dock="Top" Margin="2">
@@ -221,17 +221,17 @@
                         <TextBox Text="{Binding Strategy.DisplayAssembly.DisplayName, Mode=OneWay}" ToolTip="{Binding Strategy.DisplayAssembly.File, Mode=OneWay}"/>
                     </DockPanel>
                     <Label Grid.Row="1" Grid.Column="0" Content="Display View Type:" Margin="2"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Strategy.DisplayViewType}" Margin="2"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Strategy.DisplayViewType}" VerticalContentAlignment="Center" Margin="2"/>
                     <Label Grid.Row="2" Grid.Column="0" Content="Display View Model Type:" Margin="2"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Strategy.DisplayViewModelType}" Margin="2"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Strategy.DisplayViewModelType}" VerticalContentAlignment="Center" Margin="2"/>
                     <Label Grid.Row="3" Grid.Column="0" Content="Trade Display Count:" Margin="2"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Strategy.TradesDisplayCount}" Margin="2" Width="100" HorizontalAlignment="Left"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Strategy.TradesDisplayCount}" VerticalContentAlignment="Center" Margin="2" Width="100" HorizontalAlignment="Left"/>
                     <Label Grid.Row="4" Grid.Column="0" Content="Trade Chart Display Count:" Margin="2"/>
-                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Strategy.TradesChartDisplayCount}" Margin="2" Width="100" HorizontalAlignment="Left"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Strategy.TradesChartDisplayCount}" VerticalContentAlignment="Center" Margin="2" Width="100" HorizontalAlignment="Left"/>
                     <Label Grid.Row="5" Grid.Column="0" Content="Order Book Display Count:" Margin="2"/>
-                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Strategy.OrderBookDisplayCount}" Margin="2" Width="100" HorizontalAlignment="Left"/>
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Strategy.OrderBookDisplayCount}" VerticalContentAlignment="Center" Margin="2" Width="100" HorizontalAlignment="Left"/>
                     <Label Grid.Row="6" Grid.Column="0" Content="Order Book Chart Display Count:" Margin="2"/>
-                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Strategy.OrderBookChartDisplayCount}" Margin="2" Width="100" HorizontalAlignment="Left"/>
+                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Strategy.OrderBookChartDisplayCount}" VerticalContentAlignment="Center" Margin="2" Width="100" HorizontalAlignment="Left"/>
                 </Grid>
 
                 <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
