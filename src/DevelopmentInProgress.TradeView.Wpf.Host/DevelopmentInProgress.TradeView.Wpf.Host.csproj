@@ -154,7 +154,7 @@
       <DependentUpon>ModulesNavigationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ViewBase.cs" />
-    <None Include="Configuration\DevelopmentInProgress.Wpf.Host.Unity.config">
+    <None Include="Configuration\DevelopmentInProgress.TradeView.Wpf.Host.Unity.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
