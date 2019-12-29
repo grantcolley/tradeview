@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29503.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7F4ED901-668D-48FB-A172-4C263A3ABC02}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Strategies", "Strategies", "{782814CA-6F6B-4C17-B374-1AB659CE5C46}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.TradeView.Api.Binance", "src\DevelopmentInProgress.TradeView.Api.Binance\DevelopmentInProgress.TradeView.Api.Binance.csproj", "{9D1A16D6-8A60-4C46-A1F1-A933039DC9B6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.TradeView.Api.Kucoin", "src\DevelopmentInProgress.TradeView.Api.Kucoin\DevelopmentInProgress.TradeView.Api.Kucoin.csproj", "{22647979-0DEB-4F06-9CE3-97F7EDF0875F}"
@@ -39,7 +37,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.Trade
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.TradeView.Data.File", "src\DevelopmentInProgress.TradeView.Data.File\DevelopmentInProgress.TradeView.Data.File.csproj", "{F86736D0-104F-4158-A2A5-26CE80DC56BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.TradeView.Wpf.Strategies", "..\tradeview.strategy\src\DevelopmentInProgress.TradeView.Wpf.Strategies\DevelopmentInProgress.TradeView.Wpf.Strategies.csproj", "{6DA0B118-5B4E-4A0A-BA53-23C18D957006}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.TradeView.Wpf.Strategies", "src\DevelopmentInProgress.TradeView.Wpf.Strategies\DevelopmentInProgress.TradeView.Wpf.Strategies.csproj", "{6DA0B118-5B4E-4A0A-BA53-23C18D957006}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.Strategy.Demo", "src\DevelopmentInProgress.Strategy.Demo\DevelopmentInProgress.Strategy.Demo.csproj", "{28E274D1-2BAB-41F5-A92A-0C73B2265BE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Strategy.Demo.Wpf", "src\DevelopmentInProgress.Strategy.Demo.Wpf\DevelopmentInProgress.Strategy.Demo.Wpf.csproj", "{0A22E692-5958-41BD-AA1E-245000571604}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -395,6 +397,46 @@ Global
 		{6DA0B118-5B4E-4A0A-BA53-23C18D957006}.Release|x64.Build.0 = Release|Any CPU
 		{6DA0B118-5B4E-4A0A-BA53-23C18D957006}.Release|x86.ActiveCfg = Release|Any CPU
 		{6DA0B118-5B4E-4A0A-BA53-23C18D957006}.Release|x86.Build.0 = Release|Any CPU
+		{28E274D1-2BAB-41F5-A92A-0C73B2265BE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28E274D1-2BAB-41F5-A92A-0C73B2265BE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28E274D1-2BAB-41F5-A92A-0C73B2265BE8}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{28E274D1-2BAB-41F5-A92A-0C73B2265BE8}.Debug|ARM.Build.0 = Debug|Any CPU
+		{28E274D1-2BAB-41F5-A92A-0C73B2265BE8}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{28E274D1-2BAB-41F5-A92A-0C73B2265BE8}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{28E274D1-2BAB-41F5-A92A-0C73B2265BE8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{28E274D1-2BAB-41F5-A92A-0C73B2265BE8}.Debug|x64.Build.0 = Debug|Any CPU
+		{28E274D1-2BAB-41F5-A92A-0C73B2265BE8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{28E274D1-2BAB-41F5-A92A-0C73B2265BE8}.Debug|x86.Build.0 = Debug|Any CPU
+		{28E274D1-2BAB-41F5-A92A-0C73B2265BE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28E274D1-2BAB-41F5-A92A-0C73B2265BE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28E274D1-2BAB-41F5-A92A-0C73B2265BE8}.Release|ARM.ActiveCfg = Release|Any CPU
+		{28E274D1-2BAB-41F5-A92A-0C73B2265BE8}.Release|ARM.Build.0 = Release|Any CPU
+		{28E274D1-2BAB-41F5-A92A-0C73B2265BE8}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{28E274D1-2BAB-41F5-A92A-0C73B2265BE8}.Release|ARM64.Build.0 = Release|Any CPU
+		{28E274D1-2BAB-41F5-A92A-0C73B2265BE8}.Release|x64.ActiveCfg = Release|Any CPU
+		{28E274D1-2BAB-41F5-A92A-0C73B2265BE8}.Release|x64.Build.0 = Release|Any CPU
+		{28E274D1-2BAB-41F5-A92A-0C73B2265BE8}.Release|x86.ActiveCfg = Release|Any CPU
+		{28E274D1-2BAB-41F5-A92A-0C73B2265BE8}.Release|x86.Build.0 = Release|Any CPU
+		{0A22E692-5958-41BD-AA1E-245000571604}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A22E692-5958-41BD-AA1E-245000571604}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A22E692-5958-41BD-AA1E-245000571604}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{0A22E692-5958-41BD-AA1E-245000571604}.Debug|ARM.Build.0 = Debug|Any CPU
+		{0A22E692-5958-41BD-AA1E-245000571604}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{0A22E692-5958-41BD-AA1E-245000571604}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{0A22E692-5958-41BD-AA1E-245000571604}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0A22E692-5958-41BD-AA1E-245000571604}.Debug|x64.Build.0 = Debug|Any CPU
+		{0A22E692-5958-41BD-AA1E-245000571604}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0A22E692-5958-41BD-AA1E-245000571604}.Debug|x86.Build.0 = Debug|Any CPU
+		{0A22E692-5958-41BD-AA1E-245000571604}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A22E692-5958-41BD-AA1E-245000571604}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A22E692-5958-41BD-AA1E-245000571604}.Release|ARM.ActiveCfg = Release|Any CPU
+		{0A22E692-5958-41BD-AA1E-245000571604}.Release|ARM.Build.0 = Release|Any CPU
+		{0A22E692-5958-41BD-AA1E-245000571604}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{0A22E692-5958-41BD-AA1E-245000571604}.Release|ARM64.Build.0 = Release|Any CPU
+		{0A22E692-5958-41BD-AA1E-245000571604}.Release|x64.ActiveCfg = Release|Any CPU
+		{0A22E692-5958-41BD-AA1E-245000571604}.Release|x64.Build.0 = Release|Any CPU
+		{0A22E692-5958-41BD-AA1E-245000571604}.Release|x86.ActiveCfg = Release|Any CPU
+		{0A22E692-5958-41BD-AA1E-245000571604}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
