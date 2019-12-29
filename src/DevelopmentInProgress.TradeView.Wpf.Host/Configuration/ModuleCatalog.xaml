@@ -3,25 +3,23 @@
                      xmlns:sys="clr-namespace:System;assembly=mscorlib"
                      xmlns:prism="clr-namespace:Prism.Modularity;assembly=Prism.Wpf">
 
-    <!--<prism:ModuleInfo Ref="Strategies"
-                      ModuleName="Strategies"
-                      ModuleType="DevelopmentInProgress.TradeView.Wpf.Strategies.Module,DevelopmentInProgress.TradeView.Wpf.Strategies"
-                      InitializationMode="WhenAvailable">
-    </prism:ModuleInfo>-->
-    
-    <prism:ModuleInfo Ref="Trading"
-                      ModuleName="Trading"
-                      ModuleType="DevelopmentInProgress.TradeView.Wpf.Trading.Module,DevelopmentInProgress.TradeView.Wpf.Trading"
-                      InitializationMode="WhenAvailable">
-        <prism:ModuleInfo.DependsOn>
-            <!--<sys:String>Strategies</sys:String>-->
-        </prism:ModuleInfo.DependsOn>
-    </prism:ModuleInfo>
-
     <prism:ModuleInfo Ref="Configuration"
                       ModuleName="Configuration"
                       ModuleType="DevelopmentInProgress.TradeView.Wpf.Configuration.Module,DevelopmentInProgress.TradeView.Wpf.Configuration"
                       InitializationMode="WhenAvailable">
+    </prism:ModuleInfo>
+    
+    <prism:ModuleInfo Ref="Trading"
+                      ModuleName="Trading"
+                      ModuleType="DevelopmentInProgress.TradeView.Wpf.Trading.Module,DevelopmentInProgress.TradeView.Wpf.Trading">
+        <prism:ModuleInfo.DependsOn>
+            <sys:String>Configuration</sys:String>
+        </prism:ModuleInfo.DependsOn>
+    </prism:ModuleInfo>
+
+    <prism:ModuleInfo Ref="Strategies"
+                      ModuleName="Strategies"
+                      ModuleType="DevelopmentInProgress.TradeView.Wpf.Strategies.Module,DevelopmentInProgress.TradeView.Wpf.Strategies">
         <prism:ModuleInfo.DependsOn>
             <sys:String>Trading</sys:String>
         </prism:ModuleInfo.DependsOn>
