@@ -93,6 +93,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="UserAccounts.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\src\DevelopmentInProgress.TradeView.Interface\DevelopmentInProgress.TradeView.Interface.csproj">
       <Project>{e3236e65-3232-438d-8dc9-5cd6be419b68}</Project>
       <Name>DevelopmentInProgress.TradeView.Interface</Name>
@@ -106,18 +111,13 @@
       <Name>DevelopmentInProgress.TradeView.Wpf.Trading</Name>
     </ProjectReference>
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Interface.Test\DevelopmentInProgress.TradeView.Interface.Test.csproj">
-      <Project>{CF7E490F-2CED-4287-A704-766DE5C90B1B}</Project>
+      <Project>{cf7e490f-2ced-4287-a704-766de5c90b1b}</Project>
       <Name>DevelopmentInProgress.TradeView.Interface.Test</Name>
     </ProjectReference>
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Test.Helper\DevelopmentInProgress.TradeView.Test.Helper.csproj">
       <Project>{57648e9e-b953-40c7-85fc-503270b99640}</Project>
       <Name>DevelopmentInProgress.TradeView.Test.Helper</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="UserAccounts.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
