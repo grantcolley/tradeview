@@ -83,7 +83,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 strategy.Dependencies.Add(new StrategyFile { File = f, FileType = StrategyFileType.StrategyFile });
             }
 
-            foreach (var f in strategyConfig.Dependencies)
+            foreach (var f in strategyConfig.DisplayDependencies)
             {
                 strategy.DisplayDependencies.Add(new StrategyFile { File = f, FileType = StrategyFileType.DisplayFile });
             }
