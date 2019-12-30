@@ -157,6 +157,10 @@
       <Project>{7bce5d35-0443-4031-843a-3563356290e1}</Project>
       <Name>DevelopmentInProgress.TradeView.Wpf.Host</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Strategies\DevelopmentInProgress.TradeView.Wpf.Strategies.csproj">
+      <Project>{6da0b118-5b4e-4a0a-ba53-23c18d957006}</Project>
+      <Name>DevelopmentInProgress.TradeView.Wpf.Strategies</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Trading\DevelopmentInProgress.TradeView.Wpf.Trading.csproj">
       <Project>{2183c26d-6932-41d9-bb1e-16fa55adf983}</Project>
       <Name>DevelopmentInProgress.TradeView.Wpf.Trading</Name>

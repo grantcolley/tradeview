@@ -6,7 +6,7 @@ using Microsoft.Practices.Unity;
 using Prism.Logging;
 using System;
 using DevelopmentInProgress.TradeView.Wpf.Host.View;
-//using DevelopmentInProgress.TradeView.Wpf.Strategies.View;
+using DevelopmentInProgress.TradeView.Wpf.Strategies.View;
 using DevelopmentInProgress.TradeView.Wpf.Trading.View;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Configuration
@@ -104,7 +104,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration
         {
             var strategyDocument = new ModuleGroupItem();
             strategyDocument.ModuleGroupItemName = name;
-            //strategyDocument.TargetView = typeof(StrategyRunnerView).Name;
+            strategyDocument.TargetView = typeof(StrategyRunnerView).Name;
             strategyDocument.TargetViewTitle = title;
             strategyDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Strategies;component/Images/strategy.png";
             return strategyDocument;
