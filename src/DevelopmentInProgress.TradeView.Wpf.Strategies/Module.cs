@@ -63,7 +63,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies
             strategyDocument.ModuleGroupItemName = name;
             strategyDocument.TargetView = typeof(StrategyRunnerView).Name;
             strategyDocument.TargetViewTitle = title;
-            strategyDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.Wpf.Strategies;component/Images/strategy.png";
+            strategyDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Strategies;component/Images/strategy.png";
             return strategyDocument;
         }
     }
