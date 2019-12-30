@@ -15,8 +15,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
         public static List<T> GetNewTradesList<T>(
             IEnumerable<ITrade> tradesUpdate,
             Func<ITrade, T> create,
-            int tradesDisplayCount,
-            ILoggerFacade logger) where T : TradeBase, new()
+            int tradesDisplayCount) where T : TradeBase, new()
         {
             List<T> trades;
 
@@ -49,8 +48,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
         public static ChartValues<T> GetNewTradesChart<T>(
             IEnumerable<ITrade> tradesUpdate,
             Func<ITrade, T> create,
-            int tradesChartDisplayCount,
-            ILoggerFacade logger) where T : TradeBase, new()
+            int tradesChartDisplayCount) where T : TradeBase, new()
         {
             ChartValues<T> tradesChart;
 
@@ -81,8 +79,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             IEnumerable<ITrade> tradesUpdate,
             List<T> currentTrades,
             Func<ITrade, T> create,
-            int tradesDisplayCount,
-            ILoggerFacade logger) where T : TradeBase, new()
+            int tradesDisplayCount) where T : TradeBase, new()
         {
             List<T> trades;
 
@@ -137,7 +134,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             IEnumerable<ITrade> tradesUpdate,
             Func<ITrade, T> create,
             int tradesChartDisplayCount,
-            ILoggerFacade logger,
             ref ChartValues<T> tradesChart) where T : TradeBase, new()
         {
             // Get the latest available trade - the last trade on the trade chart.
@@ -199,7 +195,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             int quantityPrecision,
             int tradesDisplayCount,
             int tradesChartDisplayCount,
-            ILoggerFacade logger,
             out List<T> trades,
             out ChartValues<T> tradesChart) where T : TradeBase, new()
         {
@@ -256,7 +251,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             int quantityPrecision,
             int tradesDisplayCount,
             int tradesChartDisplayCount,
-            ILoggerFacade logger,
             out List<T> trades,
             ref ChartValues<T> tradesChart) where T : TradeBase, new()
         {

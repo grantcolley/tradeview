@@ -242,27 +242,27 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
 
                     if (TradesChart == null)
                     {
-                        Trades = TradeHelper.GetNewTradesList(tradesUpdate, createTrade, Strategy.TradesDisplayCount, Logger);
+                        Trades = TradeHelper.GetNewTradesList(tradesUpdate, createTrade, Strategy.TradesDisplayCount);
 
-                        TradesChart = TradeHelper.GetNewTradesChart(tradesUpdate, createTrade, tradesChartDisplayCount, Logger);
+                        TradesChart = TradeHelper.GetNewTradesChart(tradesUpdate, createTrade, tradesChartDisplayCount);
 
-                        SmaTradesChart = TradeHelper.GetNewTradesChart(tradesUpdate, createSmaTrade, tradesChartDisplayCount, Logger);
+                        SmaTradesChart = TradeHelper.GetNewTradesChart(tradesUpdate, createSmaTrade, tradesChartDisplayCount);
 
-                        BuyIndicatorChart = TradeHelper.GetNewTradesChart(tradesUpdate, createBuyIndicator, tradesChartDisplayCount, Logger);
+                        BuyIndicatorChart = TradeHelper.GetNewTradesChart(tradesUpdate, createBuyIndicator, tradesChartDisplayCount);
 
-                        SellIndicatorChart = TradeHelper.GetNewTradesChart(tradesUpdate, createSellIndicator, tradesChartDisplayCount, Logger);
+                        SellIndicatorChart = TradeHelper.GetNewTradesChart(tradesUpdate, createSellIndicator, tradesChartDisplayCount);
                     }
                     else
                     {
-                        Trades = TradeHelper.GetUpdatedTradesList(tradesUpdate, Trades, createTrade, Strategy.TradesDisplayCount, Logger);
+                        Trades = TradeHelper.GetUpdatedTradesList(tradesUpdate, Trades, createTrade, Strategy.TradesDisplayCount);
 
-                        TradeHelper.UpdateTradesChart(tradesUpdate, createTrade, tradesChartDisplayCount, Logger, ref tradesChart);
+                        TradeHelper.UpdateTradesChart(tradesUpdate, createTrade, tradesChartDisplayCount, ref tradesChart);
 
-                        TradeHelper.UpdateTradesChart(tradesUpdate, createSmaTrade, tradesChartDisplayCount, Logger, ref smaTradesChart);
+                        TradeHelper.UpdateTradesChart(tradesUpdate, createSmaTrade, tradesChartDisplayCount, ref smaTradesChart);
 
-                        TradeHelper.UpdateTradesChart(tradesUpdate, createBuyIndicator, tradesChartDisplayCount, Logger, ref buyIndicatorChart);
+                        TradeHelper.UpdateTradesChart(tradesUpdate, createBuyIndicator, tradesChartDisplayCount, ref buyIndicatorChart);
 
-                        TradeHelper.UpdateTradesChart(tradesUpdate, createSellIndicator, tradesChartDisplayCount, Logger, ref sellIndicatorChart);
+                        TradeHelper.UpdateTradesChart(tradesUpdate, createSellIndicator, tradesChartDisplayCount, ref sellIndicatorChart);
                     }
                 }
             }
