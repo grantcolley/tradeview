@@ -240,6 +240,19 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 return;
             }
 
+            var result = Dialog.ShowMessage(new MessageBoxSettings
+            {
+                Title = "Delete Strategy",
+                Text = $"Are you sure you want to delete {strategy.Name}?",
+                MessageType = MessageType.Question,
+                MessageBoxButtons = MessageBoxButtons.OkCancel
+            });
+
+            if (result.Equals(MessageBoxResult.Cancel))
+            {
+                return;
+            }
+
             var strategyViewModel = SelectedStrategyViewModels.FirstOrDefault(s => s.Strategy.Name.Equals(strategy.Name));
             if(strategyViewModel != null)
             {

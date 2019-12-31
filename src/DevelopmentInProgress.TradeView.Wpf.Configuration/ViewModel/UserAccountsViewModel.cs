@@ -243,6 +243,19 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 return;
             }
 
+            var result = Dialog.ShowMessage(new MessageBoxSettings
+            {
+                Title = "Delete User Account",
+                Text = $"Are you sure you want to delete {userAccount.AccountName}?",
+                MessageType = MessageType.Question,
+                MessageBoxButtons = MessageBoxButtons.OkCancel
+            });
+
+            if(result.Equals(MessageBoxResult.Cancel))
+            {
+                return;
+            }
+
             var userAccountViewModel = SelectedUserAccountViewModels.FirstOrDefault(a => a.UserAccount.AccountName.Equals(userAccount.AccountName));
             if(userAccountViewModel != null)
             {
