@@ -19,8 +19,4 @@
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Interface\DevelopmentInProgress.TradeView.Interface.csproj" />
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy &quot;$(SolutionDir)output\UI\Strategies\netstandard2.0\*&quot; &quot;$(SolutionDir)output\UI\&quot; /Y /I" />
-  </Target>
-
 </Project>
