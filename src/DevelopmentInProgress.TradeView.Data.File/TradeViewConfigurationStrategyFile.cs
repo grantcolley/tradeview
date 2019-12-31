@@ -1,7 +1,10 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Strategy;
+﻿using DevelopmentInProgress.TradeView.Interface.Enums;
+using DevelopmentInProgress.TradeView.Interface.Model;
+using DevelopmentInProgress.TradeView.Interface.Strategy;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +32,10 @@ namespace DevelopmentInProgress.TradeView.Data.File
                 }
             }
 
-            return new List<StrategyConfig>();
+            return new List<StrategyConfig> 
+            {
+                GetDemoStrategyConfig()
+            };
         }
 
         public async Task<StrategyConfig> GetStrategyAsync(string strategyName)
@@ -43,10 +49,11 @@ namespace DevelopmentInProgress.TradeView.Data.File
                     var json = await reader.ReadToEndAsync();
                     var strategies = JsonConvert.DeserializeObject<List<StrategyConfig>>(json);
                     strategy = strategies.FirstOrDefault(s => s.Name.Equals(strategyName));
+                    return strategy;
                 }
             }
 
-            return strategy;
+            return GetDemoStrategyConfig();
         }
 
         public async Task SaveStrategyAsync(StrategyConfig strategyConfig)
@@ -115,6 +122,46 @@ namespace DevelopmentInProgress.TradeView.Data.File
                     }
                 }
             }
+        }
+
+        private StrategyConfig GetDemoStrategyConfig()
+        {
+            return new StrategyConfig
+            {
+                Name = "Demo - ETHBTC",
+                TargetType = "DevelopmentInProgress.Strategy.Demo.DemoTradeStrategy",
+                TargetAssembly = Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.Demo.dll"),
+                DisplayViewType = "DevelopmentInProgress.Strategy.Demo.Wpf.View.DemoView",
+                DisplayViewModelType = "DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel.DemoViewModel",
+                DisplayAssembly = Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.Demo.Wpf.dll"),
+                Parameters = "{\r\n  \"BuyIndicator\": 0.00015,\r\n  \"SellIndicator\": 0.00015,\r\n  \"TradeMovingAvarageSetLength\": 0,\r\n  \"Suspend\": true,\r\n  \"StrategyName\": \"Demo - ETHBTC\",\r\n  \"Value\": null\r\n}",
+                TradesChartDisplayCount = 1000,
+                TradesDisplayCount = 14,
+                OrderBookChartDisplayCount = 20,
+                OrderBookDisplayCount = 9,
+                StrategyServerUrl = "http://localhost:5500",
+                StrategySubscriptions = new List<StrategySubscription>
+                {
+                    new StrategySubscription
+                    {
+                        Symbol = "ETHBTC",
+                        Limit = 0,
+                        Exchange = Exchange.Binance,
+                        Subscribe = Subscribe.Trades | Subscribe.OrderBook | Subscribe.Candlesticks,
+                        CandlestickInterval = CandlestickInterval.Minute
+                    }
+                },
+                Dependencies = new List<string> 
+                {
+                    Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.TradeView.Interface.dll"),
+                    Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.Demo.dll")
+                },
+                DisplayDependencies = new List<string>
+                {
+                    Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.TradeView.Interface.dll"),
+                    Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.Demo.dll")
+                }
+            };
         }
     }
 }
