@@ -16,7 +16,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
         public TradeViewConfigurationAccountsFile()
         {
-            userAccountsFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{Environment.UserName}.txt");
+            userAccountsFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{Environment.UserName}_Accounts.txt");
         }
 
         public async Task DeleteAccountAsync(UserAccount userAccount)
