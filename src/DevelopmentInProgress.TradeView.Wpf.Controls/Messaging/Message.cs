@@ -22,6 +22,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Messaging
         public Message()
         {
             IsVisible = true;
+            Timestamp = DateTime.Now;
         }
 
         /// <summary>
@@ -49,7 +50,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Messaging
         /// </summary>
         public string Title { get; set; }
 
-        public DateTimeOffset Timestamp { get;set;}
+        public DateTimeOffset Timestamp { get; set; }
 
         /// <summary>
         /// Gets a text representation of the message to be 
