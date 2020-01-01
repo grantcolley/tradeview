@@ -83,8 +83,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             if (string.IsNullOrWhiteSpace(accountLogin.AccountInfo.User.ApiKey)
                 || string.IsNullOrWhiteSpace(accountLogin.AccountInfo.User.ApiSecret))
             {
-                var exmsg = "Both api key and secret key are required to login to an account.";
-                OnException($"AccountViewModel.Login {exmsg}", new Exception(exmsg));
                 return;
             }
 
