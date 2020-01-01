@@ -100,16 +100,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
 
         public async Task Login(Account account)
         {
-            if (string.IsNullOrWhiteSpace(account.AccountInfo.User.ApiKey)
-                || string.IsNullOrWhiteSpace(account.AccountInfo.User.ApiSecret))
-            {
-                return;
-            }
-
-            IsLoggingIn = true;
-
             try
             {
+                if (string.IsNullOrWhiteSpace(account.AccountInfo.User.ApiKey)
+                    || string.IsNullOrWhiteSpace(account.AccountInfo.User.ApiSecret))
+                {
+                    return;
+                }
+
+                IsLoggingIn = true;
+
                 Account = await ExchangeService.GetAccountInfoAsync(account.AccountInfo.User.Exchange, account.AccountInfo.User, accountCancellationTokenSource.Token);
 
                 OnAccountLoggedIn();
