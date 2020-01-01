@@ -393,7 +393,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             {
                 Logger.Log($"IsStrategyRunningAsync {ex.ToString()}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
-                NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Unable to connect to strategy service.", TextVerbose = ex.ToString() });
+                NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Unable to connect to the remote server.", TextVerbose = ex.ToString() });
             }
 
             return false;
