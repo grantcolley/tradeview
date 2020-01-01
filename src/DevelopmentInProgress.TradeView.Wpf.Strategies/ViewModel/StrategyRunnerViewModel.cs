@@ -391,9 +391,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Log($"IsStrategyRunningAsync {ex.Message}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log($"IsStrategyRunningAsync {ex.ToString()}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
-                NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"IsStrategyRunningAsync - {ex.Message}", TextVerbose = ex.ToString() });
+                NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Unable to connect to strategy service.", TextVerbose = ex.ToString() });
             }
 
             return false;
