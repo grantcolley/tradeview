@@ -17,7 +17,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
         public TradeViewConfigurationStrategyFile()
         {
-            userStrategiesFile = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{Environment.UserName}_Strategies.txt");
+            userStrategiesFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{Environment.UserName}_Strategies.txt");
         }
 
         public async Task<List<StrategyConfig>> GetStrategiesAsync()
@@ -90,7 +90,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
             UnicodeEncoding encoding = new UnicodeEncoding();
             char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
-            using (System.IO.StreamWriter writer = System.IO.File.CreateText(userStrategiesFile))
+            using (StreamWriter writer = System.IO.File.CreateText(userStrategiesFile))
             {
                 await writer.WriteAsync(chars, 0, chars.Length);
             }
@@ -116,7 +116,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
                     UnicodeEncoding encoding = new UnicodeEncoding();
                     char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
-                    using (System.IO.StreamWriter writer = System.IO.File.CreateText(userStrategiesFile))
+                    using (StreamWriter writer = System.IO.File.CreateText(userStrategiesFile))
                     {
                         await writer.WriteAsync(chars, 0, chars.Length);
                     }
@@ -159,6 +159,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
                 DisplayDependencies = new List<string>
                 {
                     Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.TradeView.Interface.dll"),
+                    Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.Demo.Wpf.dll"),
                     Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.Demo.dll")
                 }
             };
