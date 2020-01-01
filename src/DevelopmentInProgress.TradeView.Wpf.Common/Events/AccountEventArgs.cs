@@ -1,7 +1,6 @@
-﻿using DevelopmentInProgress.TradeView.Wpf.Common.Events;
-using DevelopmentInProgress.TradeView.Wpf.Common.Model;
+﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 
-namespace DevelopmentInProgress.TradeView.Wpf.Trading.Events
+namespace DevelopmentInProgress.TradeView.Wpf.Common.Events
 {
     public class AccountEventArgs : EventArgsBase<Account>
     {

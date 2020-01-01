@@ -817,7 +817,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 {
                     NotificationsAdd(new Message { MessageType = MessageType.Error, Text = args.Message, TextVerbose = args.Exception.ToString() });
                 }
-                else if(args.AccountEventType.Equals(AccountEventType.SetAccount))
+                else if(args.AccountEventType.Equals(AccountEventType.LoggedIn))
                 {
                     await OrdersViewModel.SetAccount(args.Value);
                 }

@@ -24,8 +24,8 @@
                 <localView:SymbolsView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type localViewModel:AccountViewModel}">
-                <localView:AccountView></localView:AccountView>
+            <DataTemplate DataType="{x:Type commonViewModel:AccountViewModel}">
+                <commonView:AccountView></commonView:AccountView>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type commonViewModel:OrdersViewModel}">

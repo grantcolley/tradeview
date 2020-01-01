@@ -1,13 +1,13 @@
 ﻿using DevelopmentInProgress.TradeView.Test.Helper;
+using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;
+using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DevelopmentInProgress.TradeView.Wpf.Common.Model;
+using Prism.Logging;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;
-using System;
-using Prism.Logging;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 {

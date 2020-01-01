@@ -1,9 +1,8 @@
-﻿namespace DevelopmentInProgress.TradeView.Wpf.Trading.Events
+﻿namespace DevelopmentInProgress.TradeView.Wpf.Common.Events
 {
     public enum AccountEventType
     {
         LoggedIn,
-        LoggedOut,
         SelectedAsset,
         UpdateOrders
     }

@@ -1,18 +1,15 @@
-﻿using DevelopmentInProgress.TradeView.Wpf.Host.ViewModel;
-using DevelopmentInProgress.TradeView.Wpf.Trading.Events;
-using DevelopmentInProgress.TradeView.Wpf.Common.Model;
+﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using System;
 using System.Linq;
 using System.Threading;
-using System.Windows.Input;
 using System.Windows.Threading;
 using System.Threading.Tasks;
-using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using Prism.Logging;
 using DevelopmentInProgress.TradeView.Wpf.Common.Cache;
+using DevelopmentInProgress.TradeView.Wpf.Common.Events;
 
-namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
+namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
 {
     public class AccountViewModel : ExchangeViewModel
     {
@@ -32,14 +29,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         {
             accountCancellationTokenSource = new CancellationTokenSource();
 
-            LoginCommand = new ViewModelCommand(Login);
-
             this.symbolsCacheFactory = symbolsCacheFactory;
         }
 
         public event EventHandler<AccountEventArgs> OnAccountNotification;
-
-        public ICommand LoginCommand { get; set; }
 
         public Account Account
         {
@@ -81,19 +74,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
         }
 
-        public bool IsLoggedIn
-        {
-            get { return isLoggedIn; }
-            set
-            {
-                if (isLoggedIn != value)
-                {
-                    isLoggedIn = value;
-                    OnPropertyChanged("IsLoggedIn");
-                }
-            }
-        }
-
         public override void Dispose(bool disposing)
         {
             if (disposed)
@@ -118,57 +98,21 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             disposed = true;
         }
 
-        public async Task SetAccount(Account account)
+        public async Task Login(Account account)
         {
-            try
+            if (string.IsNullOrWhiteSpace(account.AccountInfo.User.ApiKey)
+                || string.IsNullOrWhiteSpace(account.AccountInfo.User.ApiSecret))
             {
-                if (accountCancellationTokenSource != null
-                    && !accountCancellationTokenSource.IsCancellationRequested)
-                {
-                    accountCancellationTokenSource.Cancel();
-                }
-
-                accountCancellationTokenSource = new CancellationTokenSource();
-
-                Account = account;
-
-                if (!string.IsNullOrWhiteSpace(Account.ApiKey)
-                    && !string.IsNullOrWhiteSpace(Account.ApiSecret))
-                {
-                    await Login();
-                }
-                else
-                {
-                    OnAccountLoggedOut();
-                }
-            }
-            catch (Exception ex)
-            {
-                OnException("AccountViewModel.SetAccount", ex);
-            }
-        }
-
-        public async void Login(object param)
-        {
-            await Login();
-        }
-
-        private async Task Login()
-        {
-            IsLoggingIn = true;
-
-            if (string.IsNullOrWhiteSpace(Account.AccountInfo.User.ApiKey)
-                || string.IsNullOrWhiteSpace(Account.AccountInfo.User.ApiSecret))
-            {
-                OnException("AccountViewModel.Login", new Exception("Both api key and secret key are required to login to an account."));
                 return;
             }
 
+            IsLoggingIn = true;
+
             try
             {
-                Account = await ExchangeService.GetAccountInfoAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User, accountCancellationTokenSource.Token);
+                Account = await ExchangeService.GetAccountInfoAsync(account.AccountInfo.User.Exchange, account.AccountInfo.User, accountCancellationTokenSource.Token);
 
-                OnAccountLoggedIn(Account);
+                OnAccountLoggedIn();
 
                 await ExchangeService.SubscribeAccountInfo(Account.AccountInfo.User.Exchange, Account.AccountInfo.User, e => AccountInfoUpdate(e.AccountInfo), SubscribeAccountInfoException, accountCancellationTokenSource.Token);
 
@@ -180,13 +124,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 dispatcherTimer.Start();
 
                 DispatcherTimerTick(this, EventArgs.Empty);
-
-                IsLoggedIn = true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 OnException("AccountViewModel.Login", ex);
-                IsLoggedIn = false;
             }
             finally
             {
@@ -220,14 +161,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             onAccountNotification?.Invoke(this, new AccountEventArgs { Message = message, Exception = exception });
         }
 
-        private void OnAccountLoggedIn(Account account)
+        private void OnAccountLoggedIn()
         {
             AccountNotification(new AccountEventArgs { Value = Account, AccountEventType = AccountEventType.LoggedIn });
-        }
-        
-        private void OnAccountLoggedOut()
-        {
-            AccountNotification(new AccountEventArgs { Value = null, AccountEventType = AccountEventType.LoggedOut });
         }
 
         private void OnSelectedAsset(AccountBalance selectedAsset)

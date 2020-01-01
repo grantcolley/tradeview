@@ -192,7 +192,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 }
             }
 
-            await Task.WhenAll(SymbolsViewModel.SetAccount(userAccount), AccountViewModel.SetAccount(Account));
+            await Task.WhenAll(SymbolsViewModel.SetAccount(userAccount), AccountViewModel.Login(Account));
 
             isOpen = true;
             IsBusy = false;
@@ -333,8 +333,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 {
                     TradingViewModelException(args);
                 }
-                else if (args.AccountEventType.Equals(AccountEventType.LoggedIn)
-                        || args.AccountEventType.Equals(AccountEventType.LoggedOut))
+                else if (args.AccountEventType.Equals(AccountEventType.LoggedIn))
                 {
                     TradeViewModel.SetAccount(args.Value);
                     await OrdersViewModel.SetAccount(args.Value);

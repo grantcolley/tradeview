@@ -64,6 +64,8 @@
     <Compile Include="Converters\PercentageChangeConverter.cs" />
     <Compile Include="Converters\PriceChangePercentConverter.cs" />
     <Compile Include="Converters\ZeroToHiddenConverter.cs" />
+    <Compile Include="Events\AccountEventArgs.cs" />
+    <Compile Include="Events\AccountEventType.cs" />
     <Compile Include="Events\EventArgsBase.cs" />
     <Compile Include="Events\OrdersEventArgs.cs" />
     <Compile Include="Events\StrategyEventArgs.cs" />
@@ -104,6 +106,7 @@
     <Compile Include="Services\IStrategyService.cs" />
     <Compile Include="Services\StrategyPerformanceService.cs" />
     <Compile Include="Services\StrategyService.cs" />
+    <Compile Include="ViewModel\AccountViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="Extensions\AccountBalanceExtensions.cs" />
     <Compile Include="Extensions\OrderExtensions.cs" />
@@ -124,12 +127,19 @@
     <Compile Include="ViewModel\ExchangeViewModel.cs" />
     <Compile Include="ViewModel\OrdersViewModel.cs" />
     <Compile Include="ViewModel\StrategyDisplayViewModelBase.cs" />
+    <Compile Include="View\AccountView.xaml.cs">
+      <DependentUpon>AccountView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\OrdersView.xaml.cs">
       <DependentUpon>OrdersView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Images\ImageResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\AccountView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

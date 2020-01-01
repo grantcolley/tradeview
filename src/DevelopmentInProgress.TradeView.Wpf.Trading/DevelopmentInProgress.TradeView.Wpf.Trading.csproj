@@ -53,21 +53,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\BoolToLoginConverter.cs" />
-    <Compile Include="Events\AccountEventArgs.cs" />
-    <Compile Include="Events\AccountEventType.cs" />
     <Compile Include="Events\SymbolEventArgs.cs" />
     <Compile Include="Events\SymbolsEventArgs.cs" />
     <Compile Include="Events\TradeEventArgs.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\AccountViewModel.cs" />
     <Compile Include="ViewModel\SymbolsViewModel.cs" />
     <Compile Include="ViewModel\SymbolViewModel.cs" />
     <Compile Include="ViewModel\TradeViewModel.cs" />
     <Compile Include="ViewModel\TradingViewModel.cs" />
-    <Compile Include="View\AccountView.xaml.cs">
-      <DependentUpon>AccountView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\SymbolsView.xaml.cs">
       <DependentUpon>SymbolsView.xaml</DependentUpon>
     </Compile>
@@ -115,10 +109,6 @@
     <Page Include="Images\ImageResources.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\AccountView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\SymbolsView.xaml">
       <SubType>Designer</SubType>

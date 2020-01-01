@@ -15,10 +15,6 @@
         <DataTemplate DataType="{x:Type localViewModel:SymbolsViewModel}">
             <localView:SymbolsView/>
         </DataTemplate>
-        
-        <DataTemplate DataType="{x:Type localViewModel:AccountViewModel}">
-            <localView:AccountView></localView:AccountView>
-        </DataTemplate>
 
         <DataTemplate DataType="{x:Type localViewModel:TradeViewModel}">
             <localView:TradeView></localView:TradeView>
@@ -26,6 +22,10 @@
 
         <DataTemplate DataType="{x:Type localViewModel:SymbolViewModel}" x:Shared="False">
             <localView:SymbolView></localView:SymbolView>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type commonViewModel:AccountViewModel}">
+            <commonView:AccountView></commonView:AccountView>
         </DataTemplate>
         
         <DataTemplate DataType="{x:Type commonViewModel:OrdersViewModel}">
