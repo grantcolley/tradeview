@@ -87,7 +87,7 @@
                         </Button>
 
                         <Label Grid.Row="1" Grid.Column="0" Content="Account Name:" Margin="2"/>
-                        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Path=AccountName}" VerticalContentAlignment="Center" Margin="2"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Path=AccountName}" ToolTip="{Binding Path=AccountName}" VerticalContentAlignment="Center" Margin="2"/>
                         <Label Grid.Row="1" Grid.Column="4" Content="API Key:" Margin="2"/>
                         <StackPanel Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="2" Orientation="Horizontal">
                             <TextBox Text="{Binding Path=ApiKey}" ToolTip="{Binding Path=ApiKey}"  Width="170" VerticalContentAlignment="Center" Margin="2"/>
@@ -148,9 +148,9 @@
                                 <TextBox Name="targetAssembly" Text="{Binding Strategy.TargetAssembly.DisplayName, Mode=OneWay}" VerticalContentAlignment="Center" ToolTip="{Binding Strategy.TargetAssembly.File, Mode=OneWay}"/>
                             </DockPanel>
                             <Label Grid.Row="3" Grid.Column="0" Content="Target Type:" Margin="2"/>
-                            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Strategy.TargetType}" VerticalContentAlignment="Center" Margin="2"/>
+                            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Strategy.TargetType}" ToolTip="{Binding Strategy.TargetType}" VerticalContentAlignment="Center" Margin="2"/>
                             <Label Grid.Row="4" Grid.Column="0" Content="Strategy Server URL:" Margin="2"/>
-                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Strategy.StrategyServerUrl}" VerticalContentAlignment="Center" Margin="2"/>
+                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Strategy.StrategyServerUrl}" ToolTip="{Binding Strategy.StrategyServerUrl}" VerticalContentAlignment="Center" Margin="2"/>
                             <DockPanel Grid.Row="5" Grid.Column="0" LastChildFill="True">
                                 <Label DockPanel.Dock="Left" Content="Parameters:" Margin="2"/>
                                 <DockPanel DockPanel.Dock="Top" Margin="2">
@@ -233,9 +233,9 @@
                             <TextBox Text="{Binding Strategy.DisplayAssembly.DisplayName, Mode=OneWay}" ToolTip="{Binding Strategy.DisplayAssembly.File, Mode=OneWay}"/>
                         </DockPanel>
                         <Label Grid.Row="1" Grid.Column="0" Content="Display View Type:" Margin="2"/>
-                        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" Text="{Binding Strategy.DisplayViewType}" VerticalContentAlignment="Center" Margin="2"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" Text="{Binding Strategy.DisplayViewType}" ToolTip="{Binding Strategy.DisplayViewType}" VerticalContentAlignment="Center" Margin="2"/>
                         <Label Grid.Row="2" Grid.Column="0" Content="Display View Model Type:" Margin="2"/>
-                        <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" Text="{Binding Strategy.DisplayViewModelType}" VerticalContentAlignment="Center" Margin="2"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" Text="{Binding Strategy.DisplayViewModelType}" ToolTip="{Binding Strategy.DisplayViewModelType}" VerticalContentAlignment="Center" Margin="2"/>
                         <Label Grid.Row="3" Grid.Column="0" Content="Trade Display Count:" Margin="2"/>
                         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Strategy.TradesDisplayCount}" VerticalContentAlignment="Center" Margin="2" Width="100" HorizontalAlignment="Left"/>
                         <Label Grid.Row="4" Grid.Column="0" Content="Trade Chart Display Count:" Margin="2"/>
