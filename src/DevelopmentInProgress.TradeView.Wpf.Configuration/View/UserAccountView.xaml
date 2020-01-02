@@ -46,13 +46,13 @@
                               SelectedItem="{Binding SelectedExchange, Mode=TwoWay}"/>
 
                     <Label Grid.Row="2" Grid.Column="0" Content="Api Key:" Margin="2"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding UserAccount.ApiKey}" VerticalContentAlignment="Center" Margin="2" HorizontalAlignment="Stretch"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding UserAccount.ApiKey}" ToolTip="{Binding UserAccount.ApiKey}" VerticalContentAlignment="Center" Margin="2" HorizontalAlignment="Stretch"/>
 
                     <Label Grid.Row="3" Grid.Column="0" Content="Api Secret:" Margin="2"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding UserAccount.ApiSecret}" VerticalContentAlignment="Center" Margin="2" HorizontalAlignment="Stretch"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding UserAccount.ApiSecret}" ToolTip="{Binding UserAccount.ApiSecret}" VerticalContentAlignment="Center" Margin="2" HorizontalAlignment="Stretch"/>
 
                     <Label Grid.Row="4" Grid.Column="0" Content="Api Pass Phrase:" Margin="2"/>
-                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding UserAccount.ApiPassPhrase}" VerticalContentAlignment="Center" Margin="2" Width="300" HorizontalAlignment="Left"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding UserAccount.ApiPassPhrase}" ToolTip="{Binding UserAccount.ApiPassPhrase}" VerticalContentAlignment="Center" Margin="2" Width="300" HorizontalAlignment="Left"/>
 
                     <GroupBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" Header="Preferences">
                         <Grid Grid.Column="0">
