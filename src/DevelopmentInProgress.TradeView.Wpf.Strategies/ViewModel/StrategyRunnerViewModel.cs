@@ -242,8 +242,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 {
                     var strategySubscription = Strategy.StrategySubscriptions.First();
 
+                    account.AccountName = strategySubscription.AccountName;
                     account.ApiKey = strategySubscription.ApiKey;
                     account.ApiSecret = strategySubscription.SecretKey;
+                    account.Exchange = strategySubscription.Exchange;
                 }
 
                 await Task.WhenAll(SymbolsViewModel.GetSymbols(Strategy), AccountViewModel.Login(account));

@@ -5,6 +5,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
 {
     public class StrategySubscription
     {
+        public string AccountName { get; set; }
         public string Symbol { get; set; }
         public int Limit { get; set; }
         public string ApiKey { get; set; }

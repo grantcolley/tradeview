@@ -9,6 +9,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 
         public string Symbol { get; set; }
         public int Limit { get; set; }
+        public string AccountName { get; set; }
         public string ApiKey { get; set; }
         public string SecretKey { get; set; }
         public string ApiPassPhrase { get; set; }

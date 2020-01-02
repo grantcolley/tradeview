@@ -144,6 +144,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
                 {
                     new StrategySubscription
                     {
+                        AccountName = "Binance - Investment",
                         Symbol = "ETHBTC",
                         Limit = 0,
                         Exchange = Exchange.Binance,

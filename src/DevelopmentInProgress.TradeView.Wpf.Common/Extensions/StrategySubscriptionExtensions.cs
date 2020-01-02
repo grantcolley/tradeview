@@ -31,6 +31,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 
             var interfaceStrategySubscription = new Interface.Strategy.StrategySubscription
             {
+                AccountName = strategySubscription.AccountName,
                 Symbol = strategySubscription.Symbol,
                 Limit = strategySubscription.Limit,
                 ApiKey = strategySubscription.ApiKey,
@@ -48,6 +49,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
         {
             var strategySubScription = new StrategySubscription
             {
+                AccountName = interfaceStrategySubscription.AccountName,
                 Symbol = interfaceStrategySubscription.Symbol,
                 Limit = interfaceStrategySubscription.Limit,
                 ApiKey = interfaceStrategySubscription.ApiKey,
