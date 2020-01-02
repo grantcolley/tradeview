@@ -1,14 +1,12 @@
-﻿
-using DevelopmentInProgress.TradeView.Interface.Extensions;
+﻿using DevelopmentInProgress.TradeView.Interface.Extensions;
 using DevelopmentInProgress.TradeView.Interface.Interfaces;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using LiveCharts;
-using Prism.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
+namespace DevelopmentInProgress.Strategy.Demo.Wpf.Helpers
 {
     public static class TradeHelper
     {

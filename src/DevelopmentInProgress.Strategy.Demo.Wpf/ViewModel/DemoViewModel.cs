@@ -1,8 +1,8 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Extensions;
+﻿using DevelopmentInProgress.Strategy.Demo.Wpf.Helpers;
+using DevelopmentInProgress.TradeView.Interface.Extensions;
 using DevelopmentInProgress.TradeView.Interface.Interfaces;
 using DevelopmentInProgress.TradeView.Wpf.Common.Chart;
 using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;
-using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using DevelopmentInProgress.TradeView.Interface.Strategy;
