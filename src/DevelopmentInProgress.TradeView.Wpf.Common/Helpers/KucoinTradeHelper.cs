@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using DevelopmentInProgress.TradeView.Interface.Interfaces;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
-using LiveCharts;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 {
