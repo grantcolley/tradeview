@@ -43,18 +43,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
                 var newTradesCount = newTrades.Count;
 
-                if (newTradesCount > tradesChartDisplayCount)
-                {
-                    // More new trades than the chart can take, only takes the newest trades.
-                    var chartTrades = newTrades.Skip(newTradesCount - tradesChartDisplayCount).ToList();
-                    result.TradesChart = new ChartValues<T>(chartTrades);
-                }
-                else
-                {
-                    // New trades less (or equal) the 
-                    // total trades to show in the chart.
-                    result.TradesChart = new ChartValues<T>(newTrades);
-                }
+                result.TradesChart = GetNewChartTrades(newTrades, newTradesCount, tradesChartDisplayCount);
 
                 if (newTradesCount > tradesDisplayCount)
                 {
@@ -82,7 +71,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             return await tcs.Task;
         }
 
-        public virtual void UpdateTrades<T>(Symbol symbol, IEnumerable<ITrade> tradesUpdate, List<T> currentTrades, int tradesDisplayCount, int tradesChartDisplayCount, out List<T> trades, ref ChartValues<T> tradesChart) where T : TradeBase, new()
+        public virtual void UpdateTrades<T>(
+            Symbol symbol, 
+            IEnumerable<ITrade> tradesUpdate, 
+            List<T> currentTrades, 
+            int tradesDisplayCount, 
+            int tradesChartDisplayCount, 
+            out List<T> trades, 
+            ref ChartValues<T> tradesChart) where T : TradeBase, new()
         {
             var pricePrecision = symbol.PricePrecision;
             var quantityPrecision = symbol.QuantityPrecision;
@@ -108,6 +104,59 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
                              }).ToList();
 
             var newTradesCount = newTrades.Count;
+
+            UpdateChartTrades(newTrades, newTradesCount, tradesChartDisplayCount, ref tradesChart);
+
+            if (newTradesCount >= tradesDisplayCount)
+            {
+                // More new trades than the list can take, only take the newest
+                // trades and create a new instance of the trades list.
+                var tradeBooktrades = newTrades.Skip(newTradesCount - tradesDisplayCount).ToList();
+
+                // Order by newest to oldest (as it will appear on trade list)
+                trades = new List<T>(tradeBooktrades.Reverse<T>().ToList());
+            }
+            else
+            {
+                var tradesCount = currentTrades.Count;
+
+                // Order the new trades by newest first and oldest last
+                var tradeBooktrades = newTrades.Reverse<T>().ToList();
+
+                if ((newTradesCount + tradesCount) > tradesDisplayCount)
+                {
+                    // Append to the new trades the balance from the existing trades to make up the trade list limit
+                    var balanceTrades = currentTrades.Take(tradesDisplayCount - newTradesCount).ToList();
+                    tradeBooktrades.AddRange(balanceTrades);
+                }
+                else
+                {
+                    // Simply append the existing trades to the new trades as it will fit in the trade list limit.
+                    tradeBooktrades.AddRange(currentTrades);
+                }
+
+                trades = tradeBooktrades;
+            }
+        }
+
+        protected virtual ChartValues<T> GetNewChartTrades<T>(List<T> newTrades, int newTradesCount, int tradesChartDisplayCount)
+        {
+            if (newTradesCount > tradesChartDisplayCount)
+            {
+                // More new trades than the chart can take, only takes the newest trades.
+                var chartTrades = newTrades.Skip(newTradesCount - tradesChartDisplayCount).ToList();
+                return new ChartValues<T>(chartTrades);
+            }
+            else
+            {
+                // New trades less (or equal) the 
+                // total trades to show in the chart.
+                return new ChartValues<T>(newTrades);
+            }
+        }
+
+        protected virtual void UpdateChartTrades<T>(List<T> newTrades, int newTradesCount, int tradesChartDisplayCount, ref ChartValues<T> tradesChart)
+        {
             var tradesChartCount = tradesChart.Count;
 
             if (tradesChartCount >= tradesChartDisplayCount)
@@ -147,37 +196,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
                     // Simply add new trades to current list as it wont be more than the total the chart can take.
                     tradesChart.AddRange(newTrades);
                 }
-            }
-
-            if (newTradesCount >= tradesDisplayCount)
-            {
-                // More new trades than the list can take, only take the newest
-                // trades and create a new instance of the trades list.
-                var tradeBooktrades = newTrades.Skip(newTradesCount - tradesDisplayCount).ToList();
-
-                // Order by newest to oldest (as it will appear on trade list)
-                trades = new List<T>(tradeBooktrades.Reverse<T>().ToList());
-            }
-            else
-            {
-                var tradesCount = currentTrades.Count;
-
-                // Order the new trades by newest first and oldest last
-                var tradeBooktrades = newTrades.Reverse<T>().ToList();
-
-                if ((newTradesCount + tradesCount) > tradesDisplayCount)
-                {
-                    // Append to the new trades the balance from the existing trades to make up the trade list limit
-                    var balanceTrades = currentTrades.Take(tradesDisplayCount - newTradesCount).ToList();
-                    tradeBooktrades.AddRange(balanceTrades);
-                }
-                else
-                {
-                    // Simply append the existing trades to the new trades as it will fit in the trade list limit.
-                    tradeBooktrades.AddRange(currentTrades);
-                }
-
-                trades = tradeBooktrades;
             }
         }
     }
