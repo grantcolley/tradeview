@@ -19,5 +19,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
         {
             return tradeHelpers[exchange];
         }
+
+        public ITradeHelper GetTradeHelper()
+        {
+            return new TradeHelper();
+        }
     }
 }
