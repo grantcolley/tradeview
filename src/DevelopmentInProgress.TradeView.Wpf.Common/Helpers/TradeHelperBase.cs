@@ -71,6 +71,23 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             return await tcs.Task;
         }
 
+        public virtual ChartValues<T> CreateLocalChartTrades<T>(
+            IEnumerable<ITrade> tradesUpdate,
+            Func<ITrade, int, int, T> createNewTrade,
+            int tradesChartDisplayCount,
+            int pricePrecision,
+            int quantityPrecision) where T : TradeBase, new()
+        {
+            // Order by oldest to newest (as it will appear in the chart).
+            var newTrades = (from t in tradesUpdate
+                             orderby t.Time, t.Id
+                             select createNewTrade(t, pricePrecision, quantityPrecision)).ToList();
+
+            var newTradesCount = newTrades.Count;
+
+            return GetNewChartTrades(newTrades, newTradesCount, tradesChartDisplayCount);
+        }
+
         public virtual void UpdateTrades<T>(
             Symbol symbol, 
             IEnumerable<ITrade> tradesUpdate, 
@@ -137,6 +154,28 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
                 trades = tradeBooktrades;
             }
+        }
+
+        public virtual void UpdateLocalChartTrades<T>(
+            IEnumerable<ITrade> tradesUpdate,
+            Func<ITrade, int, int, T> createNewTrade,
+            DateTime seedTime,
+            long seedId,
+            int tradesChartDisplayCount,
+            int pricePrecision,
+            int quantityPrecision,
+            ref ChartValues<T> tradesChart) where T : TradeBase, new()
+        {
+            // Extract new trades where time and id is greater than latest available trade (seed). 
+            // Order by oldest to newest (as it will appear in chart).
+            var newTrades = (from t in tradesUpdate
+                             where t.Time.ToLocalTime() > seedTime && t.Id > seedId
+                             orderby t.Time, t.Id
+                             select createNewTrade(t, pricePrecision, quantityPrecision)).ToList();
+
+            var newTradesCount = newTrades.Count;
+
+            UpdateChartTrades(newTrades, newTradesCount, tradesChartDisplayCount, ref tradesChart);
         }
 
         protected virtual ChartValues<T> GetNewChartTrades<T>(List<T> newTrades, int newTradesCount, int tradesChartDisplayCount)

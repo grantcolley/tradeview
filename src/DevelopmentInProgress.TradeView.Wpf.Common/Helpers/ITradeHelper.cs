@@ -1,6 +1,7 @@
 ﻿using DevelopmentInProgress.TradeView.Interface.Interfaces;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using LiveCharts;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,6 +16,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             int tradesChartDisplayCount,
             int tradeLimit) where T : TradeBase, new();
 
+        ChartValues<T> CreateLocalChartTrades<T>(
+            IEnumerable<ITrade> tradesUpdate,
+            Func<ITrade, int, int, T> createNewTrade,
+            int tradesChartDisplayCount,
+            int pricePrecision,
+            int quantityPrecision) where T : TradeBase, new();
+
         void UpdateTrades<T>(
             Symbol symbol,
             IEnumerable<ITrade> tradesUpdate,
@@ -22,6 +30,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             int tradesDisplayCount,
             int tradesChartDisplayCount,
             out List<T> trades,
+            ref ChartValues<T> tradesChart) where T : TradeBase, new();
+
+        void UpdateLocalChartTrades<T>(
+            IEnumerable<ITrade> tradesUpdate,
+            Func<ITrade, int, int, T> createNewTrade,
+            DateTime seedTime,
+            long seedId,
+            int tradesChartDisplayCount,
+            int pricePrecision,
+            int quantityPrecision,
             ref ChartValues<T> tradesChart) where T : TradeBase, new();
     }
 }
