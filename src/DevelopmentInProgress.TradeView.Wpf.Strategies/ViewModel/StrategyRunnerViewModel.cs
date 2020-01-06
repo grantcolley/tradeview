@@ -599,43 +599,44 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 });
             });
 
+
             socketClient.On("Notification", async (message) =>
             {
                 await ViewModelContext.UiDispatcher.Invoke(async () =>
                 {
-                    await OnStrategyNotification(message);
+                    await OnStrategyNotificationAsync(message);
                 });
             });
 
             socketClient.On("Trade", (message) =>
             {
-                ViewModelContext.UiDispatcher.Invoke(() =>
+                ViewModelContext.UiDispatcher.Invoke(async () =>
                 {
-                    OnTradeNotification(message);
+                    await OnTradeNotificationAsync(message);
                 });
             });
 
             socketClient.On("OrderBook", (message) =>
             {
-                ViewModelContext.UiDispatcher.Invoke(() =>
+                ViewModelContext.UiDispatcher.Invoke(async () =>
                 {
-                    OnOrderBookNotification(message);
+                    await OnOrderBookNotificationAsync(message);
                 });
             });
 
             socketClient.On("AccountInfo", (message) =>
             {
-                ViewModelContext.UiDispatcher.Invoke(() =>
+                ViewModelContext.UiDispatcher.Invoke(async () =>
                 {
-                    OnAccountNotification(message);
+                    await OnAccountNotificationAsync(message);
                 });
             });
 
             socketClient.On("Candlesticks", (message) =>
             {
-                ViewModelContext.UiDispatcher.Invoke(() =>
+                ViewModelContext.UiDispatcher.Invoke(async () =>
                 {
-                    OnCandlesticksNotification(message);
+                    await OnCandlesticksNotificationAsync(message);
                 });
             });
 
@@ -689,7 +690,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
         }
 
-        private async Task OnStrategyNotification(DipSocket.Messages.Message message)
+        private async Task OnStrategyNotificationAsync(DipSocket.Messages.Message message)
         {
             try
             {
@@ -713,7 +714,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
         }
 
-        private void OnTradeNotification(DipSocket.Messages.Message message)
+        private async Task OnTradeNotificationAsync(DipSocket.Messages.Message message)
         {
             try
             {
@@ -721,7 +722,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                 var orderedStrategyNotifications = strategyNotifications.OrderBy(n => n.Timestamp).ToList();
 
-                StrategyDisplayViewModel.TradeNotifications(orderedStrategyNotifications);
+                await StrategyDisplayViewModel.TradeNotificationsAsync(orderedStrategyNotifications);
             }
             catch (Exception ex)
             {
@@ -731,7 +732,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
         }
 
-        private void OnCandlesticksNotification(DipSocket.Messages.Message message)
+        private async Task OnCandlesticksNotificationAsync(DipSocket.Messages.Message message)
         {
             try
             {
@@ -739,7 +740,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                 var orderedStrategyNotifications = strategyNotifications.OrderBy(n => n.Timestamp).ToList();
 
-                StrategyDisplayViewModel.CandlestickNotifications(orderedStrategyNotifications);
+                await StrategyDisplayViewModel.CandlestickNotificationsAsync(orderedStrategyNotifications);
             }
             catch(Exception ex)
             {
@@ -749,7 +750,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
         }
 
-        private void OnOrderBookNotification(DipSocket.Messages.Message message)
+        private async Task OnOrderBookNotificationAsync(DipSocket.Messages.Message message)
         {
             try
             {
@@ -757,7 +758,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                 var orderedStrategyNotifications = strategyNotifications.OrderBy(n => n.Timestamp).ToList();
 
-                StrategyDisplayViewModel.OrderNotifications(orderedStrategyNotifications);
+                await StrategyDisplayViewModel.OrderNotificationsAsync(orderedStrategyNotifications);
             }
             catch (Exception ex)
             {
@@ -767,7 +768,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
         }
 
-        private void OnAccountNotification(DipSocket.Messages.Message message)
+        private async Task OnAccountNotificationAsync(DipSocket.Messages.Message message)
         {
             try
             {
