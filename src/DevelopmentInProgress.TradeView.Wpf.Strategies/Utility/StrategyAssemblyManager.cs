@@ -1,4 +1,5 @@
-﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
+﻿using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
+using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using Prism.Logging;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Utility
 {
     public class StrategyAssemblyManager : IStrategyAssemblyManager
     {
+        private readonly ITradeHelperFactory tradeHelperFactory;
         private bool disposed;
 
-        public StrategyAssemblyManager()
+        public StrategyAssemblyManager(ITradeHelperFactory tradeHelperFactory)
         {
+            this.tradeHelperFactory = tradeHelperFactory;
+
             Files = new List<string>();
         }
 
@@ -35,7 +39,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Utility
             var asm = Assembly.LoadFile(Path.Combine(StrategyDirectory, strategy.DisplayAssembly.DisplayName));
 
             var viewModel = asm.GetType(strategy.DisplayViewModelType);
-            StrategyDisplayViewModel = Activator.CreateInstance(viewModel, new object[] { strategy, UiDispatcher, Logger });
+            StrategyDisplayViewModel = Activator.CreateInstance(viewModel, new object[] { strategy, tradeHelperFactory.GetTradeHelper(), UiDispatcher, Logger });
 
             var view = asm.GetType(strategy.DisplayViewType);
             StrategyDisplayView = Activator.CreateInstance(view, new object[] { StrategyDisplayViewModel });
