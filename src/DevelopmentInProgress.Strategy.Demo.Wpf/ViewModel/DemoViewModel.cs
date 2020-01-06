@@ -1,5 +1,4 @@
-﻿using DevelopmentInProgress.Strategy.Demo.Wpf.Helpers;
-using DevelopmentInProgress.TradeView.Interface.Extensions;
+﻿using DevelopmentInProgress.TradeView.Interface.Extensions;
 using DevelopmentInProgress.TradeView.Interface.Interfaces;
 using DevelopmentInProgress.TradeView.Wpf.Common.Chart;
 using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;
@@ -16,6 +15,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Threading;
+using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
 {
@@ -29,15 +31,16 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
         private ObservableCollection<string> candlestickLabels;
         private List<Trade> trades;
         private OrderBook orderBook;
-        private object tradesLock = new object();
+        private SemaphoreSlim tradesSemaphoreSlim = new SemaphoreSlim(1, 1);
+        private CancellationTokenSource cancellationTokenSource;
         private object orderBookLock = new object();
         private object candlestickLock = new object();
         private bool isLoadingTrades;
         private bool isLoadingOrderBook;
         private bool disposed;
 
-        public DemoViewModel(WpfStrategy strategy, Dispatcher UiDispatcher, ILoggerFacade logger)
-            : base(strategy, UiDispatcher, logger)
+        public DemoViewModel(WpfStrategy strategy, ITradeHelper tradeHelper, Dispatcher UiDispatcher, ILoggerFacade logger)
+            : base(strategy, tradeHelper, UiDispatcher, logger)
         {
             var chartHelper = ServiceLocator.Current.GetInstance<IChartHelper>();
             TimeFormatter = chartHelper.TimeFormatter;
@@ -46,6 +49,8 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
             IsActive = false;
             IsLoadingTrades = true;
             IsLoadingOrderBook = true;
+
+            cancellationTokenSource = new CancellationTokenSource();
         }
 
         public Func<double, string> TimeFormatter { get; set; }
@@ -187,32 +192,34 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
 
             if (disposing)
             {
-                // do stuff...
+                cancellationTokenSource.Cancel();
             }
 
             disposed = true;
         }
 
-        public override void TradeNotifications(List<StrategyNotification> tradeNotifications)
+        public override async Task TradeNotificationsAsync(List<StrategyNotification> tradeNotifications)
         {
-            List<DemoTrade> tradesUpdate = null;
+            await tradesSemaphoreSlim.WaitAsync(cancellationTokenSource.Token);
 
-            foreach (var notification in tradeNotifications)
+            try
             {
-                if (tradesUpdate == null)
+                List<DemoTrade> tradesUpdate = null;
+
+                foreach (var notification in tradeNotifications)
                 {
-                    tradesUpdate = JsonConvert.DeserializeObject<List<DemoTrade>>(notification.Message);
-                    continue;
+                    if (tradesUpdate == null)
+                    {
+                        tradesUpdate = JsonConvert.DeserializeObject<List<DemoTrade>>(notification.Message);
+                        continue;
+                    }
+
+                    var updateTrades = JsonConvert.DeserializeObject<List<DemoTrade>>(notification.Message);
+                    var newTrades = updateTrades.Except(tradesUpdate).ToList();
+                    tradesUpdate.AddRange(newTrades);
                 }
 
-                var updateTrades = JsonConvert.DeserializeObject<List<DemoTrade>>(notification.Message);
-                var newTrades = updateTrades.Except(tradesUpdate).ToList();
-                tradesUpdate.AddRange(newTrades);
-            }
-
-            if (Symbols != null)
-            {
-                lock (tradesLock)
+                if (Symbols != null)
                 {
                     IsLoadingTrades = false;
 
@@ -221,10 +228,11 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
                     var symbol = Symbols.First(s => s.Name.Equals(trade.Symbol));
 
                     var pricePrecision = symbol.PricePrecision;
+                    var quantityPrecision = symbol.QuantityPrecision;
 
                     List<DemoTrade> smaTradesUpdate;
 
-                    if(tradesUpdate.Count > Strategy.TradesChartDisplayCount)
+                    if (tradesUpdate.Count > Strategy.TradesChartDisplayCount)
                     {
                         smaTradesUpdate = tradesUpdate.Skip(tradesUpdate.Count - Strategy.TradesChartDisplayCount).ToList();
                     }
@@ -233,42 +241,55 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
                         smaTradesUpdate = tradesUpdate;
                     }
 
-                    Func<ITrade, Trade> createTrade = t => new Trade { Price = t.Price.Trim(symbol.PricePrecision), Quantity = t.Quantity.Trim(symbol.QuantityPrecision), Time = t.Time.ToLocalTime() };
-                    Func<ITrade, Trade> createSmaTrade = t => new Trade { Price = ((DemoTrade)t).SmaPrice.Trim(symbol.PricePrecision), Time = t.Time.ToLocalTime() };
-                    Func<ITrade, Trade> createBuyIndicator = t => new Trade { Price = ((DemoTrade)t).BuyIndicatorPrice.Trim(symbol.PricePrecision), Time = t.Time.ToLocalTime() };
-                    Func<ITrade, Trade> createSellIndicator = t => new Trade { Price = ((DemoTrade)t).SellIndicatorPrice.Trim(symbol.PricePrecision), Time = t.Time.ToLocalTime() };
+                    Func<ITrade, int, int, Trade> createSmaTrade = (t, p, q) => new Trade { Price = ((DemoTrade)t).SmaPrice.Trim(p), Time = t.Time.ToLocalTime() };
+                    Func<ITrade, int, int, Trade> createBuyIndicator = (t, p, q) => new Trade { Price = ((DemoTrade)t).BuyIndicatorPrice.Trim(p), Time = t.Time.ToLocalTime() };
+                    Func<ITrade, int, int, Trade> createSellIndicator = (t, p, q) => new Trade { Price = ((DemoTrade)t).SellIndicatorPrice.Trim(p), Time = t.Time.ToLocalTime() };
 
+                    var tradesDisplayCount = Strategy.TradesDisplayCount;
                     var tradesChartDisplayCount = Strategy.TradesChartDisplayCount;
 
                     if (TradesChart == null)
                     {
-                        Trades = TradeHelper.GetNewTradesList(tradesUpdate, createTrade, Strategy.TradesDisplayCount);
+                        var result = await TradeHelper.CreateLocalTradeList<Trade>(symbol, tradesUpdate, tradesDisplayCount, tradesChartDisplayCount, 0);
 
-                        TradesChart = TradeHelper.GetNewTradesChart(tradesUpdate, createTrade, tradesChartDisplayCount);
+                        Trades = result.Trades;
+                        TradesChart = result.TradesChart;
 
-                        SmaTradesChart = TradeHelper.GetNewTradesChart(tradesUpdate, createSmaTrade, tradesChartDisplayCount);
+                        SmaTradesChart = TradeHelper.CreateLocalChartTrades(tradesUpdate, createSmaTrade, tradesChartDisplayCount, pricePrecision, quantityPrecision);
 
-                        BuyIndicatorChart = TradeHelper.GetNewTradesChart(tradesUpdate, createBuyIndicator, tradesChartDisplayCount);
+                        BuyIndicatorChart = TradeHelper.CreateLocalChartTrades(tradesUpdate, createBuyIndicator, tradesChartDisplayCount, pricePrecision, quantityPrecision);
 
-                        SellIndicatorChart = TradeHelper.GetNewTradesChart(tradesUpdate, createSellIndicator, tradesChartDisplayCount);
+                        SellIndicatorChart = TradeHelper.CreateLocalChartTrades(tradesUpdate, createSellIndicator, tradesChartDisplayCount, pricePrecision, quantityPrecision);
                     }
                     else
                     {
-                        Trades = TradeHelper.GetUpdatedTradesList(tradesUpdate, Trades, createTrade, Strategy.TradesDisplayCount);
+                        List<Trade> newTrades;
 
-                        TradeHelper.UpdateTradesChart(tradesUpdate, createTrade, tradesChartDisplayCount, ref tradesChart);
+                        // Get the latest available trade - the first trade on the 
+                        // trade list (which is also the last trade in the chart).
+                        var seed = Trades.First();
+                        var seedTime = seed.Time;
+                        var seedId = seed.Id;
 
-                        TradeHelper.UpdateTradesChart(tradesUpdate, createSmaTrade, tradesChartDisplayCount, ref smaTradesChart);
+                        TradeHelper.UpdateTrades(symbol, tradesUpdate, Trades, tradesDisplayCount, tradesChartDisplayCount, out newTrades, ref tradesChart);
 
-                        TradeHelper.UpdateTradesChart(tradesUpdate, createBuyIndicator, tradesChartDisplayCount, ref buyIndicatorChart);
+                        Trades = newTrades;
 
-                        TradeHelper.UpdateTradesChart(tradesUpdate, createSellIndicator, tradesChartDisplayCount, ref sellIndicatorChart);
+                        TradeHelper.UpdateLocalChartTrades(tradesUpdate, createSmaTrade, seedTime, seedId, tradesChartDisplayCount, pricePrecision, quantityPrecision, ref smaTradesChart);
+
+                        TradeHelper.UpdateLocalChartTrades(tradesUpdate, createBuyIndicator, seedTime, seedId, tradesChartDisplayCount, pricePrecision, quantityPrecision, ref buyIndicatorChart);
+
+                        TradeHelper.UpdateLocalChartTrades(tradesUpdate, createSellIndicator, seedTime, seedId, tradesChartDisplayCount, pricePrecision, quantityPrecision, ref sellIndicatorChart);
                     }
                 }
             }
+            finally
+            {
+                tradesSemaphoreSlim.Release();
+            }
         }
 
-        public override void CandlestickNotifications(List<StrategyNotification> candlestickNotifications)
+        public override async Task CandlestickNotificationsAsync(List<StrategyNotification> candlestickNotifications)
         {
             if (TradesChart == null
                 || !TradesChart.Any())
@@ -337,7 +358,7 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
             }
         }
 
-        public override void OrderNotifications(List<StrategyNotification> orderNotifications)
+        public override async Task OrderNotificationsAsync(List<StrategyNotification> orderNotifications)
         {
             var orderBookNotification = orderNotifications.Last();
 
