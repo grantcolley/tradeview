@@ -245,6 +245,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                     account.AccountName = strategySubscription.AccountName;
                     account.ApiKey = strategySubscription.ApiKey;
                     account.ApiSecret = strategySubscription.SecretKey;
+                    account.ApiPassPhrase = strategySubscription.ApiPassPhrase;
                     account.Exchange = strategySubscription.Exchange;
                 }
 
