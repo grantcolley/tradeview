@@ -143,13 +143,14 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
             var result = await kucoinClient.GetSymbolsAsync().ConfigureAwait(false);
             var symbols = result.Data.Select(s => new Symbol
             {
+                Name = $"{s.BaseCurrency}{s.QuoteCurrency}",
                 ExchangeSymbol = s.Symbol,
                 NotionalMinimumValue = s.QuoteMinSize,
                 BaseAsset = new Asset { Symbol = s.BaseCurrency },
                 QuoteAsset = new Asset { Symbol = s.QuoteCurrency },
                 Price = new InclusiveRange { Increment = s.PriceIncrement, Maximum = s.QuoteMaxSize, Minimum = s.PriceIncrement },
                 Quantity = new InclusiveRange { Increment = s.BaseIncrement, Maximum = s.BaseMaxSize, Minimum = s.BaseIncrement },
-                SymbolStatistics = new SymbolStats { Symbol = $"{s.BaseCurrency}{s.QuoteCurrency}" },
+                SymbolStatistics = new SymbolStats { Symbol = s.Symbol },
                 OrderTypes = new[] { OrderType.Limit, OrderType.Market, OrderType.StopLoss, OrderType.StopLossLimit, OrderType.TakeProfit, OrderType.TakeProfitLimit }
             }).ToList();
 
@@ -391,7 +392,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                         {
                             var symbolStats = new SymbolStats
                             {
-                                Symbol = data.Symbol.Replace("-", string.Empty),
+                                Symbol = data.Symbol,
                                 CloseTime = data.Timestamp,
                                 Volume = data.Volume,
                                 LowPrice = data.Low,
@@ -444,7 +445,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                         var trade = new Trade
                         {
                             Id = data.Sequence,
-                            Symbol = data.Symbol.Replace("-", string.Empty),
+                            Symbol = data.Symbol,
                             Price = data.Price,
                             Time = data.Timestamp,
                             Quantity = data.Quantity
@@ -460,7 +461,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                     }
                 });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 if (result != null)
                 {
