@@ -30,7 +30,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             UpdatePreferencesCommand = new ViewModelCommand(UpdatePreferences);
 
             // necessary to get symbols on fire and forget 
-            // show doesnt block the dialog from showing.
+            // so it doesn't block the dialog from showing.
             GetSymbols().FireAndForget();
         }
 
@@ -139,16 +139,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             {
                 if(symbol.IsFavourite)
                 {
-                    if(!userAccount.Preferences.FavouriteSymbols.Contains(symbol.Name))
+                    if(!userAccount.Preferences.FavouriteSymbols.Contains(symbol.ExchangeSymbol))
                     {
-                        userAccount.Preferences.FavouriteSymbols.Add(symbol.Name);
+                        userAccount.Preferences.FavouriteSymbols.Add(symbol.ExchangeSymbol);
                     }
                 }
                 else
                 {
-                    if (userAccount.Preferences.FavouriteSymbols.Contains(symbol.Name))
+                    if (userAccount.Preferences.FavouriteSymbols.Contains(symbol.ExchangeSymbol))
                     {
-                        userAccount.Preferences.FavouriteSymbols.Remove(symbol.Name);
+                        userAccount.Preferences.FavouriteSymbols.Remove(symbol.ExchangeSymbol);
                     }
                 }
             }

@@ -10,6 +10,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
         {
             return new Interface.Model.Symbol
             {
+                Name = s.Name,
                 ExchangeSymbol = s.ExchangeSymbol,
                 NotionalMinimumValue = s.NotionalMinimumValue,
                 BaseAsset = s.BaseAsset,
@@ -26,6 +27,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
         {
             var symbol =  new Symbol
             {
+                Name = s.Name,
                 ExchangeSymbol = s.ExchangeSymbol,
                 NotionalMinimumValue = s.NotionalMinimumValue,
                 BaseAsset = s.BaseAsset,
@@ -35,7 +37,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 Status = s.Status,
                 IsIcebergAllowed = s.IsIcebergAllowed,
                 OrderTypes = s.OrderTypes,
-                SymbolStatistics = new SymbolStatistics { Symbol = $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}" }
+                SymbolStatistics = new SymbolStatistics { Symbol = s.ExchangeSymbol }
             };
 
             if(s.SymbolStatistics != null)

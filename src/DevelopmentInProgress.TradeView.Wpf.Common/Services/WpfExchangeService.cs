@@ -92,7 +92,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
             {
                 var stats = e.Statistics.ToList();
 
-                (from sy in symbols join st in stats on sy.Name equals st.Symbol select sy.UpdateStatistics(st)).ToList();
+                (from sy in symbols join st in stats on sy.ExchangeSymbol equals st.Symbol select sy.UpdateStatistics(st)).ToList();
 
             }, exception, cancellationToken);
         }

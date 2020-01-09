@@ -225,7 +225,7 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
 
                     var trade = tradesUpdate.First();
 
-                    var symbol = Symbols.First(s => s.Name.Equals(trade.Symbol));
+                    var symbol = Symbols.First(s => s.ExchangeSymbol.Equals(trade.Symbol));
 
                     var pricePrecision = symbol.PricePrecision;
                     var quantityPrecision = symbol.QuantityPrecision;

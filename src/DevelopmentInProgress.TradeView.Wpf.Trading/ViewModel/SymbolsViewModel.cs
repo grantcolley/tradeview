@@ -179,7 +179,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 {
                     if (!string.IsNullOrWhiteSpace(AccountPreferences.Preferences.SelectedSymbol))
                     {
-                        var symbol = Symbols.FirstOrDefault(s => s.Name.Equals(AccountPreferences.Preferences.SelectedSymbol));
+                        var symbol = Symbols.FirstOrDefault(s => s.ExchangeSymbol.Equals(AccountPreferences.Preferences.SelectedSymbol));
                         if (symbol != null)
                         {
                             SelectedSymbol = symbol;

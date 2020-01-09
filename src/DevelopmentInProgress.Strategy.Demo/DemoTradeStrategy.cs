@@ -107,7 +107,7 @@ namespace DevelopmentInProgress.Strategy.Demo
             {
                 try
                 {                    
-                    var symbol = exchangeSymbols[Exchange.Binance].Single(s => $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}".Equals(trade.Symbol));
+                    var symbol = exchangeSymbols[Exchange.Binance].Single(s => s.ExchangeSymbol.Equals(trade.Symbol));
 
                     OrderSide orderSide;
                     decimal stopPrice = 0m;

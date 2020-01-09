@@ -49,16 +49,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                     btcUsdt = symbols.Single(s => s.Name.Equals(BTCUSDT));
                 }
 
-                var newSubs1 = subscriptions.Where(s => !subscribedSymbols.Any(sub => sub.Name.Equals(s))).ToList();
+                var newSubs1 = subscriptions.Where(s => !subscribedSymbols.Any(sub => sub.ExchangeSymbol.Equals(s))).ToList();
 
                 // Only subscribe to the symbols that aren't already in the subscribed symbols cache.
                 if (newSubs1.Any())
                 {
-                    var newSubs2 = subscriptions.Where(s => !subscribedSymbols.Any(sub => sub.Name.Equals(s))).ToList();
+                    var newSubs2 = subscriptions.Where(s => !subscribedSymbols.Any(sub => sub.ExchangeSymbol.Equals(s))).ToList();
 
                     if (newSubs2.Any())
                     {
-                        var newSubSymbols = (from s in symbols join subs in newSubs2 on s.Name equals subs select s).ToList();
+                        var newSubSymbols = (from s in symbols join subs in newSubs2 on s.ExchangeSymbol equals subs select s).ToList();
 
                         // If we haven't already subscribed to BTCUSDT then do so now.
                         if (!subscribedSymbols.Contains(btcUsdt)
@@ -75,7 +75,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                 }
 
                 // Get the subscriptions from the subscribed symbols cache
-                var results = (from s in subscribedSymbols join subs in subscriptions on s.Name equals subs select s).ToList();
+                var results = (from s in subscribedSymbols join subs in subscriptions on s.ExchangeSymbol equals subs select s).ToList();
 
                 return results;
             }

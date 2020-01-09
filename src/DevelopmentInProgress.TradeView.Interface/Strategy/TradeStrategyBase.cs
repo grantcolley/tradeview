@@ -79,7 +79,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
             var symbols = await exchangeService.GetSymbolsAsync(exchange, cancellationToken);
 
             var subscribedSymbols = (from s in symbols
-                                     join ss in strategySubscriptions on $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}" equals ss.Symbol
+                                     join ss in strategySubscriptions on s.ExchangeSymbol equals ss.Symbol
                                      select s).ToList();
 
             exchangeSymbols.Add(exchange, subscribedSymbols);
