@@ -102,7 +102,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                 var results = await symbolsCache.GetSymbols(strategySymbols);
 
-                Symbols = new List<Symbol>(results.Where(r => strategySymbols.Contains($"{r.BaseAsset.Symbol}{r.QuoteAsset.Symbol}")));
+                Symbols = new List<Symbol>(results.Where(r => strategySymbols.Contains($"{r.ExchangeSymbol}")));
 
                 SymbolsNotification();
             }
