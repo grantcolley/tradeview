@@ -60,6 +60,7 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
                 var results = JsonConvert.DeserializeObject<List<Symbol>>(symbols);
                 foreach(var s in results)
                 {
+                    s.Name = $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}";
                     s.ExchangeSymbol = $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}";
                 }
 
