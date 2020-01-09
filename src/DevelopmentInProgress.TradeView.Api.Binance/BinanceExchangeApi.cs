@@ -84,6 +84,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             var result = await binanceApi.GetSymbolsAsync(cancellationToken).ConfigureAwait(false);
             var symbols = result.Select(s => new Interface.Model.Symbol
             {
+                Name = $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}",
                 ExchangeSymbol = $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}",
                 NotionalMinimumValue = s.NotionalMinimumValue,
                 BaseAsset = new Interface.Model.Asset { Symbol = s.BaseAsset.Symbol, Precision = s.BaseAsset.Precision },
