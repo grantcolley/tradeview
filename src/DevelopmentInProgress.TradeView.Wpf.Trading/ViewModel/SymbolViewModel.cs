@@ -182,7 +182,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 }
                 else
                 {
-                    throw new Exception($"Attempting to replace {Symbol.Name} with {symbol.Name}");
+                    throw new Exception($"Attempting to replace {Symbol.ExchangeSymbol} with {symbol.ExchangeSymbol}");
                 }
                
                 await Task.WhenAll(SubscribeOrderBook(), SubscribeTrades());
