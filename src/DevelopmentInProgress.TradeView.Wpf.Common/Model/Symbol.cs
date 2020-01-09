@@ -9,6 +9,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         private int priceChangePercentDirection;
         private bool isFavourite;
 
+        public string Name { get; set; }
         public string ExchangeSymbol { get; set; }
         public decimal NotionalMinimumValue { get; set; }
         public Interface.Model.Asset BaseAsset { get; set; }
@@ -19,8 +20,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         public bool IsIcebergAllowed { get; set; }
         public IEnumerable<Interface.Model.OrderType> OrderTypes { get; set; }
         public SymbolStatistics SymbolStatistics { get; set; }
-
-        public string Name { get { return $"{BaseAsset.Symbol}{QuoteAsset.Symbol}"; } }
 
         public bool IsFavourite 
         {
