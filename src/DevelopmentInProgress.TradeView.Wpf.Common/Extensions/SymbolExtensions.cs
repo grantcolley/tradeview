@@ -11,6 +11,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
             return new Interface.Model.Symbol
             {
                 Name = s.Name,
+                NameDelimiter = s.NameDelimiter,
                 ExchangeSymbol = s.ExchangeSymbol,
                 NotionalMinimumValue = s.NotionalMinimumValue,
                 BaseAsset = s.BaseAsset,
@@ -28,6 +29,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
             var symbol =  new Symbol
             {
                 Name = s.Name,
+                NameDelimiter = s.NameDelimiter,
                 ExchangeSymbol = s.ExchangeSymbol,
                 NotionalMinimumValue = s.NotionalMinimumValue,
                 BaseAsset = s.BaseAsset,

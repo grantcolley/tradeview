@@ -144,6 +144,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
             var symbols = result.Data.Select(s => new Symbol
             {
                 Name = $"{s.BaseCurrency}{s.QuoteCurrency}",
+                NameDelimiter = "-",
                 ExchangeSymbol = s.Symbol,
                 NotionalMinimumValue = s.QuoteMinSize,
                 BaseAsset = new Asset { Symbol = s.BaseCurrency },

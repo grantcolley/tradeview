@@ -5,6 +5,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Model
     public class Symbol
     {
         public string Name { get; set; }
+        public string NameDelimiter { get; set; }
         public string ExchangeSymbol { get; set; }
         public decimal NotionalMinimumValue { get; set; }
         public Asset BaseAsset { get; set; }

@@ -10,6 +10,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         private bool isFavourite;
 
         public string Name { get; set; }
+        public string NameDelimiter { get; set; }
         public string ExchangeSymbol { get; set; }
         public decimal NotionalMinimumValue { get; set; }
         public Interface.Model.Asset BaseAsset { get; set; }

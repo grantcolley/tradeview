@@ -34,7 +34,7 @@
                     <progress:CircularProgress></progress:CircularProgress>
                 </Viewbox>
                 <DockPanel LastChildFill="True">
-                    <filterbox:XamlFilterBox DockPanel.Dock="Top" ItemsSource="{Binding Symbols}" FilterFieldName="Name" Margin="2"/>
+                    <filterbox:XamlFilterBox DockPanel.Dock="Top" ItemsSource="{Binding Symbols}" FilterFieldName="ExchangeSymbol" Margin="2"/>
                     <Grid DockPanel.Dock="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="30"/>
@@ -42,7 +42,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <CheckBox Grid.Column="0" VerticalAlignment="Center" IsChecked="{Binding ShowFavourites}"/>
-                        <Label Grid.Column="1" VerticalAlignment="Center" Content="Pair" FontWeight="Bold"/>
+                        <Label Grid.Column="1" VerticalAlignment="Center" Content="Currency Pair" FontWeight="Bold"/>
                     </Grid>
                     <ListView x:Name="SymbolsList" ItemsSource="{Binding Symbols}" 
                               Visibility="{Binding IsLoadingSymbols, Converter={StaticResource invertBoolToVisibilityConverter}}"
@@ -60,6 +60,7 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="30"/>
                                         <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
@@ -68,6 +69,7 @@
                                     <CheckBox Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" IsChecked="{Binding IsFavourite}" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged"/>
                                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
                                         <Label Content="{Binding BaseAsset.Symbol}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center"/>
+                                        <Label Content="{Binding NameDelimiter}" FontSize="12" VerticalAlignment="Center"/>
                                         <Label Content="{Binding QuoteAsset.Symbol}" FontSize="12" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </Grid>
