@@ -43,6 +43,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         private StrategyParametersViewModel strategyParametersViewModel;
         private StrategyDisplayViewModelBase StrategyDisplayViewModel;
 
+        private IDisposable symbolsSubscription;
+        private IDisposable accountSubscription;
+        private IDisposable ordersSubscription;
+        private IDisposable parametersSubscription;
+
         public StrategyRunnerViewModel(
             ViewModelContext viewModelContext, 
             AccountViewModel accountViewModel, 
@@ -79,7 +84,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             ObserveOrders();
             ObserveParameters();
         }
-        
+
         public event EventHandler<StrategyDisplayEventArgs> OnStrategyDisplay;
 
         public ICommand RunCommand { get; set; }
@@ -311,6 +316,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
 
             await DisconnectSocketAsync(false);
+
+            symbolsSubscription.Dispose();
+            accountSubscription.Dispose();
+            ordersSubscription.Dispose();
+            parametersSubscription.Dispose();
 
             AccountViewModel.Dispose();
             SymbolsViewModel.Dispose();
@@ -790,7 +800,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 eventHandler => SymbolsViewModel.OnSymbolsNotification -= eventHandler)
                 .Select(eventPattern => eventPattern.EventArgs);
 
-            symbolsObservable.Subscribe(args =>
+            symbolsSubscription = symbolsObservable.Subscribe(args =>
             {
                 if (args.HasException)
                 {
@@ -815,7 +825,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 eventHandler => AccountViewModel.OnAccountNotification -= eventHandler)
                 .Select(eventPattern => eventPattern.EventArgs);
 
-            accountObservable.Subscribe(async args =>
+            accountSubscription = accountObservable.Subscribe(async args =>
             {
                 if (args.HasException)
                 {
@@ -843,7 +853,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 eventHandler => OrdersViewModel.OnOrdersNotification -= eventHandler)
                 .Select(eventPattern => eventPattern.EventArgs);
 
-            ordersObservable.Subscribe(args =>
+            ordersSubscription = ordersObservable.Subscribe(args =>
             {
                 if (args.HasException)
                 {
@@ -863,7 +873,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 eventHandler => StrategyParametersViewModel.OnStrategyParametersNotification -= eventHandler)
                 .Select(eventPattern => eventPattern.EventArgs);
 
-            parametersObservable.Subscribe(async args =>
+            parametersSubscription = parametersObservable.Subscribe(async args =>
             {
                 if (args.HasException)
                 {
