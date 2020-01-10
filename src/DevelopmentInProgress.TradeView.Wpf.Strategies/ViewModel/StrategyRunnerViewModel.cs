@@ -639,7 +639,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             {
                 ViewModelContext.UiDispatcher.Invoke(async () =>
                 {
-                    await OnAccountNotificationAsync(message);
+                    OnAccountNotification(message);
                 });
             });
 
@@ -779,7 +779,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
         }
 
-        private async Task OnAccountNotificationAsync(DipSocket.Messages.Message message)
+        private void OnAccountNotification(DipSocket.Messages.Message message)
         {
             try
             {
