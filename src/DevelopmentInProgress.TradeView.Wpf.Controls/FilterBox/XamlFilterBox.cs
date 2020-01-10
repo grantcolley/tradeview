@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections;
+using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -29,17 +30,19 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
         private int counter;
         private Delegate getter;
 
+        private IDisposable filterTextDescription;
+
         /// <summary>
         /// Uses System.Reactive.Subjects.
         /// </summary>
-        public Subject<bool> FilterTextSubject = new Subject<bool>();
+        public Subject<string> FilterTextSubject = new Subject<string>();
 
         static XamlFilterBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(XamlFilterBox), new FrameworkPropertyMetadata(typeof(XamlFilterBox)));
 
             FilterTextProperty = DependencyProperty.Register("FilterText", typeof(string), typeof(XamlFilterBox),
-                new PropertyMetadata("", (o, e) => (o as XamlFilterBox).FilterTextSubject.OnNext(true)));
+                new PropertyMetadata("", (o, e) => (o as XamlFilterBox).FilterTextSubject.OnNext(e.NewValue.ToString())));
 
             FilterFieldNameProperty = DependencyProperty.Register("FilterFieldName", typeof(string), typeof(XamlFilterBox));
 
@@ -48,9 +51,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
 
         public XamlFilterBox()
         {
-            // https://www.codeproject.com/Articles/1268558/A-WPF-ListView-Custom-Control-with-Search-Filter-T
+            base.Unloaded += XamlFilterBoxUnloaded;
 
-            FilterTextSubject.Throttle(TimeSpan.FromMilliseconds(500))
+            filterTextDescription = FilterTextSubject.Throttle(TimeSpan.FromMilliseconds(500))
                 .ObserveOnDispatcher()
                 .Subscribe(HandleFilterThrottle);
         }
@@ -82,7 +85,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
             set { SetValue(ItemsSourceProperty, value); }
         }
 
-        private void HandleFilterThrottle(bool b)
+        private void XamlFilterBoxUnloaded(object sender, RoutedEventArgs e)
+        {
+            filterTextDescription.Dispose();
+
+            base.Unloaded -= XamlFilterBoxUnloaded;
+        }
+
+        private void HandleFilterThrottle(string text)
         {
             System.ComponentModel.ICollectionView collectionView 
                 = System.Windows.Data.CollectionViewSource.GetDefaultView(ItemsSource);
@@ -92,7 +102,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
                 return;
             }
 
-            collectionView.Filter = (item) => FilterPredicate(item, FilterText);
+            collectionView.Filter = (item) => FilterPredicate(item, text);
         }
 
         private bool FilterPredicate(object item, string text)
@@ -110,7 +120,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
 
             var val = getter.DynamicInvoke(item);
             if (val != null
-                && val.ToString().ToLower().Contains(text.ToLower()))
+                && val.ToString().ToLower().StartsWith(text, StringComparison.OrdinalIgnoreCase))
             {
                 return true;
             }
