@@ -118,7 +118,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                     return s;
                 });
 
-                (from s in results join p in userAccount.Preferences.FavouriteSymbols on s.Name equals p select f(s, p)).ToList();
+                (from s in results join p in userAccount.Preferences.FavouriteSymbols on s.ExchangeSymbol equals p select f(s, p)).ToList();
 
                 Symbols = new List<Symbol>(results);
             }
