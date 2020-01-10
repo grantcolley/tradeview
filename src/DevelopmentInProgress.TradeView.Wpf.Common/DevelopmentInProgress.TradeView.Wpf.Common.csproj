@@ -75,13 +75,11 @@
     <Compile Include="Extensions\StrategySubscriptionExtensions.cs" />
     <Compile Include="Extensions\UserAccountExtensions.cs" />
     <Compile Include="Helpers\BinanceOrderBookHelper.cs" />
-    <Compile Include="Helpers\BinanceTradeHelper.cs" />
     <Compile Include="Helpers\IOrderBookHelper.cs" />
     <Compile Include="Helpers\IOrderBookHelperFactory.cs" />
     <Compile Include="Helpers\ITradeHelper.cs" />
     <Compile Include="Helpers\ITradeHelperFactory.cs" />
     <Compile Include="Helpers\KucoinOrderBookHelper.cs" />
-    <Compile Include="Helpers\KucoinTradeHelper.cs" />
     <Compile Include="Helpers\OrderBookHelperFactory.cs" />
     <Compile Include="Helpers\TradeHelper.cs" />
     <Compile Include="Helpers\TradeHelperBase.cs" />

@@ -11,8 +11,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
         public TradeHelperFactory(IExchangeApiFactory exchangeApiFactory)
         {
             tradeHelpers = new Dictionary<Exchange, ITradeHelper>();
-            tradeHelpers.Add(Exchange.Binance, new BinanceTradeHelper());
-            tradeHelpers.Add(Exchange.Kucoin, new KucoinTradeHelper(exchangeApiFactory.GetExchangeApi(Exchange.Kucoin)));
+            tradeHelpers.Add(Exchange.Binance, new TradeHelper());
+            tradeHelpers.Add(Exchange.Kucoin, new TradeHelper());
         }
 
         public ITradeHelper GetTradeHelper(Exchange exchange)
