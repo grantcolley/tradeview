@@ -432,6 +432,8 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
 
             try
             {
+                bool initialising = true; 
+
                 result = await kucoinClient.SubscribeToTradeUpdatesAsync(symbol, async data =>
                 {
                     if (cancellationToken.IsCancellationRequested)
@@ -442,16 +444,25 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
 
                     try
                     {
-                        var trade = new Trade
+                        if (initialising)
                         {
-                            Id = data.Sequence,
-                            Symbol = data.Symbol,
-                            Price = data.Price,
-                            Time = data.Timestamp,
-                            Quantity = data.Quantity
-                        };
+                            var initialiTrades = await GetTradesAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
+                            callback.Invoke(new TradeEventArgs { Trades = initialiTrades });
+                            initialising = false;
+                        }
+                        else
+                        {
+                            var trade = new Trade
+                            {
+                                Id = data.Sequence,
+                                Symbol = data.Symbol,
+                                Price = data.Price,
+                                Time = data.Timestamp,
+                                Quantity = data.Quantity
+                            };
 
-                        callback.Invoke(new TradeEventArgs { Trades = new[] { trade } });
+                            callback.Invoke(new TradeEventArgs { Trades = new[] { trade } });
+                        }
                     }
                     catch (Exception ex)
                     {
