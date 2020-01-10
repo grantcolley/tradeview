@@ -204,24 +204,24 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
 
             try
             {
-                List<DemoTrade> tradesUpdate = null;
-
-                foreach (var notification in tradeNotifications)
-                {
-                    if (tradesUpdate == null)
-                    {
-                        tradesUpdate = JsonConvert.DeserializeObject<List<DemoTrade>>(notification.Message);
-                        continue;
-                    }
-
-                    var updateTrades = JsonConvert.DeserializeObject<List<DemoTrade>>(notification.Message);
-                    var newTrades = updateTrades.Except(tradesUpdate).ToList();
-                    tradesUpdate.AddRange(newTrades);
-                }
-
                 if (Symbols != null)
                 {
                     IsLoadingTrades = false;
+
+                    List<DemoTrade> tradesUpdate = null;
+
+                    foreach (var notification in tradeNotifications)
+                    {
+                        if (tradesUpdate == null)
+                        {
+                            tradesUpdate = JsonConvert.DeserializeObject<List<DemoTrade>>(notification.Message);
+                            continue;
+                        }
+
+                        var updateTrades = JsonConvert.DeserializeObject<List<DemoTrade>>(notification.Message);
+                        var newTrades = updateTrades.Except(tradesUpdate).ToList();
+                        tradesUpdate.AddRange(newTrades.OrderBy(t => t.Time));
+                    }
 
                     var trade = tradesUpdate.First();
 
@@ -229,17 +229,6 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
 
                     var pricePrecision = symbol.PricePrecision;
                     var quantityPrecision = symbol.QuantityPrecision;
-
-                    List<DemoTrade> smaTradesUpdate;
-
-                    if (tradesUpdate.Count > Strategy.TradesChartDisplayCount)
-                    {
-                        smaTradesUpdate = tradesUpdate.Skip(tradesUpdate.Count - Strategy.TradesChartDisplayCount).ToList();
-                    }
-                    else
-                    {
-                        smaTradesUpdate = tradesUpdate;
-                    }
 
                     Func<ITrade, int, int, Trade> createSmaTrade = (t, p, q) => new Trade { Price = ((DemoTrade)t).SmaPrice.Trim(p), Time = t.Time.ToLocalTime() };
                     Func<ITrade, int, int, Trade> createBuyIndicator = (t, p, q) => new Trade { Price = ((DemoTrade)t).BuyIndicatorPrice.Trim(p), Time = t.Time.ToLocalTime() };
@@ -370,7 +359,7 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
 
                 bool firstOrders = false;
 
-                var symbol = Symbols.Single(s => s.Name.Equals(ob.Symbol));
+                var symbol = Symbols.Single(s => s.ExchangeSymbol.Equals(ob.Symbol));
 
                 if (OrderBook == null)
                 {
