@@ -1,4 +1,5 @@
-﻿using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
+﻿using DevelopmentInProgress.TradeView.Wpf.Common.Events;
+using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using Prism.Logging;
 using System;
@@ -20,6 +21,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             Dispatcher = UiDispatcher;
             Strategy = strategy;
         }
+
+        public event EventHandler<StrategyEventArgs> OnStrategyNotification;
 
         public Strategy Strategy { get; set; }
 
@@ -64,6 +67,18 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
         public virtual Task CandlestickNotificationsAsync(List<Interface.Strategy.StrategyNotification> candlestickNotifications)
         {
             throw new NotImplementedException("StrategyDisplayViewModelBase.CandlestickNotifications(List<Interface.Strategy.StrategyNotification> candlestickNotifications)");
+        }
+
+        protected void OnException(string message, Exception exception)
+        {
+            var onStrategyNotification = OnStrategyNotification;
+            onStrategyNotification?.Invoke(this, new StrategyEventArgs { Value = Strategy, Message = message, Exception = exception });
+        }
+
+        protected void OnNotify(string message)
+        {
+            var onStrategyNotification = OnStrategyNotification;
+            onStrategyNotification?.Invoke(this, new StrategyEventArgs { Value = Strategy, Message = message });
         }
     }
 }
