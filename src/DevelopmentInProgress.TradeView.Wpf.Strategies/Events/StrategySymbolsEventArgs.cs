@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Events
 {
-    public class StrategyListEventArgs : EventArgsBase<List<Symbol>>
+    public class StrategySymbolsEventArgs : EventArgsBase<List<Symbol>>
     {
     }
 }

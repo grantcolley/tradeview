@@ -103,7 +103,7 @@
     <Compile Include="Converters\IsBuyerBackgroundConverter.cs" />
     <Compile Include="Converters\IsBuyerTextConverter.cs" />
     <Compile Include="Events\StrategyDisplayEventArgs.cs" />
-    <Compile Include="Events\StrategyListEventArgs.cs" />
+    <Compile Include="Events\StrategySymbolsEventArgs.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\IStrategyAssemblyManager.cs" />
