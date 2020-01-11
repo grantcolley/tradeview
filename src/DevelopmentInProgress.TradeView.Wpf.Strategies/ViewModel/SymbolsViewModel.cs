@@ -25,7 +25,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             this.symbolsCacheFactory = symbolsCacheFactory;
         }
 
-        public event EventHandler<StrategyListEventArgs> OnSymbolsNotification;
+        public event EventHandler<StrategySymbolsEventArgs> OnSymbolsNotification;
 
         public Strategy Strategy
         {
@@ -122,13 +122,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         private void OnException(string message, Exception exception)
         {
             var onSymbolsNotification = OnSymbolsNotification;
-            onSymbolsNotification?.Invoke(this, new StrategyListEventArgs { Message = message, Exception = exception });
+            onSymbolsNotification?.Invoke(this, new StrategySymbolsEventArgs { Message = message, Exception = exception });
         }
 
         private void SymbolsNotification()
         {
             var onSymbolsNotification = OnSymbolsNotification;
-            onSymbolsNotification?.Invoke(this, new StrategyListEventArgs { Value = Symbols });
+            onSymbolsNotification?.Invoke(this, new StrategySymbolsEventArgs { Value = Symbols });
         }
     }
 }
