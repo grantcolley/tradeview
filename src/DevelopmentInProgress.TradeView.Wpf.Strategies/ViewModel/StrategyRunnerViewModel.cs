@@ -47,6 +47,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         private IDisposable accountSubscription;
         private IDisposable ordersSubscription;
         private IDisposable parametersSubscription;
+        private IDisposable strategySubscription;
 
         public StrategyRunnerViewModel(
             ViewModelContext viewModelContext, 
@@ -83,6 +84,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             ObserveAccount();
             ObserveOrders();
             ObserveParameters();
+            ObserveStrategy();
         }
 
         public event EventHandler<StrategyDisplayEventArgs> OnStrategyDisplay;
@@ -321,11 +323,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             accountSubscription.Dispose();
             ordersSubscription.Dispose();
             parametersSubscription.Dispose();
+            strategySubscription.Dispose();
 
             AccountViewModel.Dispose();
             SymbolsViewModel.Dispose();
             OrdersViewModel.Dispose();
             StrategyParametersViewModel.Dispose();
+            StrategyDisplayViewModel.Dispose();
             strategyAssemblyManager.Dispose();
 
             if(StrategyDisplayViewModel != null)
@@ -795,7 +799,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
         private void ObserveSymbols()
         {
-            var symbolsObservable = Observable.FromEventPattern<StrategyListEventArgs>(
+            var symbolsObservable = Observable.FromEventPattern<StrategySymbolsEventArgs>(
                 eventHandler => SymbolsViewModel.OnSymbolsNotification += eventHandler,
                 eventHandler => SymbolsViewModel.OnSymbolsNotification -= eventHandler)
                 .Select(eventPattern => eventPattern.EventArgs);
@@ -887,6 +891,26 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                     }
 
                     await Update(args.Value.Parameters);
+                }
+            });
+        }
+
+        private void ObserveStrategy()
+        {
+            var strategyObservable = Observable.FromEventPattern<StrategyEventArgs>(
+                eventHandler => StrategyDisplayViewModel.OnStrategyNotification += eventHandler,
+                eventHandler => StrategyDisplayViewModel.OnStrategyNotification -= eventHandler)
+                .Select(eventPattern => eventPattern.EventArgs);
+
+            strategySubscription = strategyObservable.Subscribe(args =>
+            {
+                if (args.HasException)
+                {
+                    NotificationsAdd(new Message { MessageType = MessageType.Error, Text = args.Message, TextVerbose = args.Exception.ToString() });
+                }
+                else if (!string.IsNullOrWhiteSpace(args.Message))
+                {
+                    NotificationsAdd(new Message { MessageType = MessageType.Info, Text = args.Message });
                 }
             });
         }
