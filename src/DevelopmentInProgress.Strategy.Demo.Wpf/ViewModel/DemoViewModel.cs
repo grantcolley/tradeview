@@ -277,6 +277,10 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
                     }
                 }
             }
+            catch(Exception ex)
+            {
+                OnException($"{Strategy.Name} : TradeNotificationsAsync - {ex.Message}", ex);
+            }
             finally
             {
                 tradesSemaphoreSlim.Release();
@@ -348,6 +352,10 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
                         CandlestickLabels.AddRange(labels);
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                OnException($"{Strategy.Name} : CandlestickNotificationsAsync - {ex.Message}", ex);
             }
             finally
             {
@@ -436,6 +444,10 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
                 //    OrderBook.UpdateChartAggregateAsks(aggregatedAsks);
                 //    OrderBook.UpdateChartAggregateBids(aggregatedBids.Reverse<OrderBookPriceLevel>().ToList());
                 //}
+            }
+            catch (Exception ex)
+            {
+                OnException($"{Strategy.Name} : OrderNotificationsAsync - {ex.Message}", ex);
             }
             finally
             {
