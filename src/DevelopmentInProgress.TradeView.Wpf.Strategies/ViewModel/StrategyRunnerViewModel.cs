@@ -83,8 +83,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             ObserveSymbols();
             ObserveAccount();
             ObserveOrders();
-            ObserveParameters();
-            ObserveStrategy();
+            ObserveParameters();            
         }
 
         public event EventHandler<StrategyDisplayEventArgs> OnStrategyDisplay;
@@ -234,6 +233,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 strategyAssemblyManager.Activate(Strategy, ViewModelContext.UiDispatcher, Logger);
                 StrategyDisplayViewModel = (StrategyDisplayViewModelBase)strategyAssemblyManager.StrategyDisplayViewModel;
 
+                ObserveStrategy();
+
                 RaiseStrategyDisplayEvent();
 
                 AccountViewModel.Dispatcher = ViewModelContext.UiDispatcher;
@@ -323,17 +324,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             accountSubscription.Dispose();
             ordersSubscription.Dispose();
             parametersSubscription.Dispose();
-            strategySubscription.Dispose();
 
             AccountViewModel.Dispose();
             SymbolsViewModel.Dispose();
             OrdersViewModel.Dispose();
             StrategyParametersViewModel.Dispose();
-            StrategyDisplayViewModel.Dispose();
             strategyAssemblyManager.Dispose();
 
             if(StrategyDisplayViewModel != null)
             {
+                strategySubscription.Dispose();
                 StrategyDisplayViewModel.Dispose();
             }
 
