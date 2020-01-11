@@ -32,9 +32,9 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
         private List<Trade> trades;
         private OrderBook orderBook;
         private SemaphoreSlim tradesSemaphoreSlim = new SemaphoreSlim(1, 1);
+        private SemaphoreSlim candlestickSemaphoreSlim = new SemaphoreSlim(1, 1);
+        private SemaphoreSlim orderBookSemaphoreSlim = new SemaphoreSlim(1, 1);
         private CancellationTokenSource cancellationTokenSource;
-        private object orderBookLock = new object();
-        private object candlestickLock = new object();
         private bool isLoadingTrades;
         private bool isLoadingOrderBook;
         private bool disposed;
@@ -204,6 +204,11 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
 
             try
             {
+                if(cancellationTokenSource.IsCancellationRequested)
+                {
+                    return;
+                }
+
                 if (Symbols != null)
                 {
                     IsLoadingTrades = false;
@@ -280,17 +285,18 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
 
         public override async Task CandlestickNotificationsAsync(List<StrategyNotification> candlestickNotifications)
         {
-            if (TradesChart == null
-                || !TradesChart.Any())
-            {
-                return;
-            }
+            await candlestickSemaphoreSlim.WaitAsync(cancellationTokenSource.Token);
 
-            var candlestickNotification = candlestickNotifications.Last();
-
-            lock(candlestickLock)
+            try
             {
-                var csjson = JsonConvert.DeserializeObject<List<TradeView.Interface.Model.Candlestick>>(candlestickNotification.Message);
+                if (cancellationTokenSource.IsCancellationRequested)
+                {
+                    return;
+                }
+
+                var candlestickNotification = candlestickNotifications.Last();
+
+                var cs = JsonConvert.DeserializeObject<List<TradeView.Interface.Model.Candlestick>>(candlestickNotification.Message);
 
                 Candlestick last = null;
 
@@ -299,13 +305,11 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
                     last = CandlesticksChart.LastOrDefault();
                 }
 
-                if(last == null)
+                if (last == null)
                 {
                     var firstTrade = TradesChart.First();
 
-                    var cs = csjson.Where(c => c.OpenTime.ToLocalTime() > firstTrade.Time).OrderBy(c => c.OpenTime).ToList();
-
-                    var candlesticks = cs.Select(c => c.ToViewCandlestick()).ToList();
+                    var candlesticks = cs.OrderBy(c => c.OpenTime).Select(c => c.ToViewCandlestick()).ToList();
 
                     CandlesticksChart = new ChartValues<Candlestick>(candlesticks);
 
@@ -314,8 +318,8 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
                 }
                 else
                 {
-                    var candlesticks = csjson.Where(c => c.OpenTime.ToLocalTime() >= last.OpenTime)
-                        .OrderBy(c => c.OpenTime)
+                    var candlesticks = cs.Where(c => c.OpenTime.ToLocalTime() >= last.OpenTime)
+                        .OrderBy(c => c.OpenTime)                        
                         .ToList();
 
                     var first = candlesticks.FirstOrDefault();
@@ -345,14 +349,27 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
                     }
                 }
             }
+            finally
+            {
+                candlestickSemaphoreSlim.Release();
+            }
+
+            await Task.FromResult<object>(null);
         }
 
         public override async Task OrderNotificationsAsync(List<StrategyNotification> orderNotifications)
         {
-            var orderBookNotification = orderNotifications.Last();
+            await orderBookSemaphoreSlim.WaitAsync(cancellationTokenSource.Token);
 
-            lock (orderBookLock)
+            try
             {
+                if (cancellationTokenSource.IsCancellationRequested)
+                {
+                    return;
+                }
+
+                var orderBookNotification = orderNotifications.Last();
+
                 IsLoadingOrderBook = false;
 
                 var ob = JsonConvert.DeserializeObject<TradeView.Interface.Model.OrderBook>(orderBookNotification.Message);
@@ -420,6 +437,12 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
                 //    OrderBook.UpdateChartAggregateBids(aggregatedBids.Reverse<OrderBookPriceLevel>().ToList());
                 //}
             }
+            finally
+            {
+                orderBookSemaphoreSlim.Release();
+            }
+
+            await Task.FromResult<object>(null);
         }
     }
 }
