@@ -2,6 +2,6 @@
 {
     public interface IHelperFactoryContainer
     {
-        IHelperFactory GetFactory<T>() where T : IHelperFactory;
+        T GetFactory<T>() where T : IHelperFactory;
     }
 }

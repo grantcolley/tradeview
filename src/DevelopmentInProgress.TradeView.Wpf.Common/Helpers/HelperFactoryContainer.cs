@@ -14,9 +14,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             factories.Add(typeof(IOrderBookHelperFactory), orderBookHelperFactory);
         }
 
-        public IHelperFactory GetFactory<T>() where T : IHelperFactory
+        public T GetFactory<T>() where T : IHelperFactory
         {
-            return factories[typeof(T)];
+            return (T)factories[typeof(T)];
         }
     }
 }
