@@ -14,10 +14,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
         private List<Symbol> symbols;
         private bool isActive;
 
-        public StrategyDisplayViewModelBase(Strategy strategy, ITradeHelper tradeHelper, Dispatcher UiDispatcher, ILoggerFacade logger)
+        public StrategyDisplayViewModelBase(Strategy strategy,
+            IHelperFactoryContainer iHelperFactoryContainer, 
+            Dispatcher UiDispatcher, ILoggerFacade logger)
             : base(logger)
         {
-            TradeHelper = tradeHelper;
+            HelperFactoryContainer = iHelperFactoryContainer;
             Dispatcher = UiDispatcher;
             Strategy = strategy;
         }
@@ -26,7 +28,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
 
         public Strategy Strategy { get; set; }
 
-        public ITradeHelper TradeHelper { get; private set; }
+        public IHelperFactoryContainer HelperFactoryContainer { get; private set; }
 
         public bool IsActive
         {
