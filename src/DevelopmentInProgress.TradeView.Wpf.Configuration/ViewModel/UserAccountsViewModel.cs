@@ -287,7 +287,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 eventHandler => userAccountViewModel.OnSymbolsNotification -= eventHandler)
                 .Select(eventPattern => eventPattern.EventArgs);
             
-            var symbolsObservableSubscription = symbolsObservable.Subscribe(async (args) =>
+            var symbolsObservableSubscription = symbolsObservable.Subscribe((args) =>
             {
                 if (args.HasException)
                 {
