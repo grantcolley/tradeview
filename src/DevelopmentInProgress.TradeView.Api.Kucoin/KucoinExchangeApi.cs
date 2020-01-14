@@ -1,5 +1,6 @@
 ﻿using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.Sockets;
+using DevelopmentInProgress.TradeView.Interface.Enums;
 using DevelopmentInProgress.TradeView.Interface.Events;
 using DevelopmentInProgress.TradeView.Interface.Interfaces;
 using DevelopmentInProgress.TradeView.Interface.Model;
@@ -34,7 +35,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                 ApiCredentials = new KucoinApiCredentials(user.ApiKey, user.ApiSecret, user.ApiPassPhrase)
             };
 
-            var accountInfo = new AccountInfo { User = user, Balances = new List<AccountBalance>() };
+            var accountInfo = new AccountInfo { User = user, Exchange = Exchange.Kucoin, Balances = new List<AccountBalance>() };
             var kucoinClient = new KucoinClient(options);
             var accounts = await kucoinClient.GetAccountsAsync(accountType: KucoinAccountType.Trade).ConfigureAwait(false);
             foreach (var balance in accounts.Data)
@@ -66,6 +67,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                 return new Candlestick
                 {
                     Symbol = symbol,
+                    Exchange = Exchange.Kucoin,
                     Interval = interval,
                     OpenTime = k.StartTime,
                     Open = k.Open,
@@ -96,6 +98,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                           {
                               User = user,
                               Symbol = o.Symbol,
+                              Exchange = Exchange.Kucoin,
                               Id = o.Id,
                               ClientOrderId = o.ClientOrderId,
                               Price = o.Price,
@@ -127,6 +130,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
             var orderBook = new OrderBook
             {
                 Symbol = symbol,
+                Exchange = Exchange.Kucoin,
                 FirstUpdateId = result.Data.Sequence,
                 LastUpdateId = result.Data.Sequence
             };
@@ -144,6 +148,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
             var symbols = result.Data.Select(s => new Symbol
             {
                 Name = $"{s.BaseCurrency}{s.QuoteCurrency}",
+                Exchange = Exchange.Kucoin,
                 NameDelimiter = "-",
                 ExchangeSymbol = s.Symbol,
                 NotionalMinimumValue = s.QuoteMinSize,
@@ -191,6 +196,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
             var trades = result.Data.Select(t => new Trade
             {
                 Symbol = symbol,
+                Exchange = Exchange.Kucoin,
                 Id = t.Sequence,
                 Price = t.Price,
                 Quantity = t.Quantity,
@@ -241,6 +247,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                 var order = new Order
                 {
                     User = user,
+                    Exchange = Exchange.Kucoin,
                     Symbol = orderResult.Data.Symbol,
                     //Id = orderResult.Data.Id,
                     ClientOrderId = orderResult.Data.ClientOrderId,
@@ -336,6 +343,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                         var orderBook = new OrderBook
                         {
                             Symbol = data.Symbol,
+                            Exchange = Exchange.Kucoin,
                             FirstUpdateId = data.SequenceStart,
                             LastUpdateId = data.SequenceEnd
                         };
@@ -394,6 +402,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                             var symbolStats = new SymbolStats
                             {
                                 Symbol = data.Symbol,
+                                Exchange = Exchange.Kucoin,
                                 CloseTime = data.Timestamp,
                                 Volume = data.Volume,
                                 LowPrice = data.Low,
@@ -456,6 +465,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                             var trade = new Trade
                             {
                                 Id = data.Sequence,
+                                Exchange = Exchange.Kucoin,
                                 Symbol = data.Symbol,
                                 Price = data.Price,
                                 Time = data.Timestamp,
