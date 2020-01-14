@@ -641,7 +641,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
             socketClient.On("AccountInfo", (message) =>
             {
-                ViewModelContext.UiDispatcher.Invoke(async () =>
+                ViewModelContext.UiDispatcher.Invoke(() =>
                 {
                     OnAccountNotification(message);
                 });
