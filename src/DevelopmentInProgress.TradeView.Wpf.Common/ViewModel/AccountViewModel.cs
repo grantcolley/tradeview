@@ -20,7 +20,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
         private Account account;
         private AccountBalance selectedAsset;
         private bool isLoggingIn;
-        private bool isLoggedIn;
         private bool disposed;
         private object balancesLock = new object();
 
