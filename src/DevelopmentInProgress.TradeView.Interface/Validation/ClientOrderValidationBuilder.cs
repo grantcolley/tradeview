@@ -141,40 +141,40 @@ namespace DevelopmentInProgress.TradeView.Interface.Validation
         {
             throw new NotImplementedException("Iceberg validation not implemented yet.");
 
-            validations.Add((s, o, sb) =>
-            {
-                if (s.IsIcebergAllowed
-                    && o.IcebergQuantity != 0)
-                {
-                    if(!(o.Type == OrderType.Limit
-                        || o.Type == OrderType.LimitMaker))
-                    {
-                        sb.Append($"Order type must be Limit or Limit Maker to be an iceberg");
-                    }
+            //validations.Add((s, o, sb) =>
+            //{
+            //    if (s.IsIcebergAllowed
+            //        && o.IcebergQuantity != 0)
+            //    {
+            //        if(!(o.Type == OrderType.Limit
+            //            || o.Type == OrderType.LimitMaker))
+            //        {
+            //            sb.Append($"Order type must be Limit or Limit Maker to be an iceberg");
+            //        }
 
-                    if(o.TimeInForce != TimeInForce.GTC)
-                    {
-                        sb.Append($"Iceberg order time in force must be GTC");
-                    }
+            //        if(o.TimeInForce != TimeInForce.GTC)
+            //        {
+            //            sb.Append($"Iceberg order time in force must be GTC");
+            //        }
 
-                    if (o.IcebergQuantity < s.Quantity.Minimum)
-                    {
-                        sb.Append($"Iceberg Quantity {o.IcebergQuantity} cannot be below minimum {s.Quantity.Minimum};");
-                    }
+            //        if (o.IcebergQuantity < s.Quantity.Minimum)
+            //        {
+            //            sb.Append($"Iceberg Quantity {o.IcebergQuantity} cannot be below minimum {s.Quantity.Minimum};");
+            //        }
 
-                    if (o.IcebergQuantity > s.Quantity.Maximum)
-                    {
-                        sb.Append($"Iceberg Quantity {o.IcebergQuantity} cannot be above maximum {s.Quantity.Maximum};");
-                    }
+            //        if (o.IcebergQuantity > s.Quantity.Maximum)
+            //        {
+            //            sb.Append($"Iceberg Quantity {o.IcebergQuantity} cannot be above maximum {s.Quantity.Maximum};");
+            //        }
 
-                    if ((o.IcebergQuantity - s.Quantity.Minimum) % s.Quantity.Increment != 0)
-                    {
-                        sb.Append($"Iceberg Quantity {o.IcebergQuantity} doesn't meet step size {s.Quantity.Increment};");
-                    }
-                }
-            });
+            //        if ((o.IcebergQuantity - s.Quantity.Minimum) % s.Quantity.Increment != 0)
+            //        {
+            //            sb.Append($"Iceberg Quantity {o.IcebergQuantity} doesn't meet step size {s.Quantity.Increment};");
+            //        }
+            //    }
+            //});
 
-            return this;
+            //return this;
         }
     }
 }

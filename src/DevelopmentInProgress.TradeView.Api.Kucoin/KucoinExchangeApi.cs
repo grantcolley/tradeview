@@ -483,7 +483,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                     }
                 });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 if (result != null)
                 {
