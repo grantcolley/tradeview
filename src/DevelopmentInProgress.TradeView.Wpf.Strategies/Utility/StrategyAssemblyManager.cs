@@ -12,12 +12,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Utility
 {
     public class StrategyAssemblyManager : IStrategyAssemblyManager
     {
-        private readonly ITradeHelperFactory tradeHelperFactory;
+        private readonly IHelperFactoryContainer iHelperFactoryContainer;
         private bool disposed;
 
-        public StrategyAssemblyManager(ITradeHelperFactory tradeHelperFactory)
+        public StrategyAssemblyManager(IHelperFactoryContainer iHelperFactoryContainer)
         {
-            this.tradeHelperFactory = tradeHelperFactory;
+            this.iHelperFactoryContainer = iHelperFactoryContainer;
 
             Files = new List<string>();
         }
@@ -39,7 +39,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Utility
             var asm = Assembly.LoadFile(Path.Combine(StrategyDirectory, strategy.DisplayAssembly.DisplayName));
 
             var viewModel = asm.GetType(strategy.DisplayViewModelType);
-            StrategyDisplayViewModel = Activator.CreateInstance(viewModel, new object[] { strategy, tradeHelperFactory.GetTradeHelper(), UiDispatcher, Logger });
+
+            StrategyDisplayViewModel = Activator.CreateInstance(viewModel, 
+                new object[] { strategy, iHelperFactoryContainer, UiDispatcher, Logger });
 
             var view = asm.GetType(strategy.DisplayViewType);
             StrategyDisplayView = Activator.CreateInstance(view, new object[] { StrategyDisplayViewModel });

@@ -39,8 +39,12 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
         private bool isLoadingOrderBook;
         private bool disposed;
 
-        public DemoViewModel(WpfStrategy strategy, ITradeHelper tradeHelper, Dispatcher UiDispatcher, ILoggerFacade logger)
-            : base(strategy, tradeHelper, UiDispatcher, logger)
+        private ITradeHelper tradeHelper;
+        private IOrderBookHelperFactory orderBookHelperFactory;
+
+        public DemoViewModel(WpfStrategy strategy, IHelperFactoryContainer iHelperFactoryContainer, 
+            Dispatcher UiDispatcher, ILoggerFacade logger)
+            : base(strategy, iHelperFactoryContainer, UiDispatcher, logger)
         {
             var chartHelper = ServiceLocator.Current.GetInstance<IChartHelper>();
             TimeFormatter = chartHelper.TimeFormatter;
@@ -51,6 +55,11 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
             IsLoadingOrderBook = true;
 
             cancellationTokenSource = new CancellationTokenSource();
+
+            var tradeHelperFactory = HelperFactoryContainer.GetFactory<ITradeHelperFactory>();
+            tradeHelper = tradeHelperFactory.GetTradeHelper();
+
+            orderBookHelperFactory = HelperFactoryContainer.GetFactory<IOrderBookHelperFactory>();
         }
 
         public Func<double, string> TimeFormatter { get; set; }
@@ -244,16 +253,16 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
 
                     if (TradesChart == null)
                     {
-                        var result = await TradeHelper.CreateLocalTradeList<Trade>(symbol, tradesUpdate, tradesDisplayCount, tradesChartDisplayCount, 0);
+                        var result = await tradeHelper.CreateLocalTradeList<Trade>(symbol, tradesUpdate, tradesDisplayCount, tradesChartDisplayCount, 0);
 
                         Trades = result.Trades;
                         TradesChart = result.TradesChart;
 
-                        SmaTradesChart = TradeHelper.CreateLocalChartTrades(tradesUpdate, createSmaTrade, tradesChartDisplayCount, pricePrecision, quantityPrecision);
+                        SmaTradesChart = tradeHelper.CreateLocalChartTrades(tradesUpdate, createSmaTrade, tradesChartDisplayCount, pricePrecision, quantityPrecision);
 
-                        BuyIndicatorChart = TradeHelper.CreateLocalChartTrades(tradesUpdate, createBuyIndicator, tradesChartDisplayCount, pricePrecision, quantityPrecision);
+                        BuyIndicatorChart = tradeHelper.CreateLocalChartTrades(tradesUpdate, createBuyIndicator, tradesChartDisplayCount, pricePrecision, quantityPrecision);
 
-                        SellIndicatorChart = TradeHelper.CreateLocalChartTrades(tradesUpdate, createSellIndicator, tradesChartDisplayCount, pricePrecision, quantityPrecision);
+                        SellIndicatorChart = tradeHelper.CreateLocalChartTrades(tradesUpdate, createSellIndicator, tradesChartDisplayCount, pricePrecision, quantityPrecision);
                     }
                     else
                     {
@@ -265,15 +274,15 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
                         var seedTime = seed.Time;
                         var seedId = seed.Id;
 
-                        TradeHelper.UpdateTrades(symbol, tradesUpdate, Trades, tradesDisplayCount, tradesChartDisplayCount, out newTrades, ref tradesChart);
+                        tradeHelper.UpdateTrades(symbol, tradesUpdate, Trades, tradesDisplayCount, tradesChartDisplayCount, out newTrades, ref tradesChart);
 
                         Trades = newTrades;
 
-                        TradeHelper.UpdateLocalChartTrades(tradesUpdate, createSmaTrade, seedTime, seedId, tradesChartDisplayCount, pricePrecision, quantityPrecision, ref smaTradesChart);
+                        tradeHelper.UpdateLocalChartTrades(tradesUpdate, createSmaTrade, seedTime, seedId, tradesChartDisplayCount, pricePrecision, quantityPrecision, ref smaTradesChart);
 
-                        TradeHelper.UpdateLocalChartTrades(tradesUpdate, createBuyIndicator, seedTime, seedId, tradesChartDisplayCount, pricePrecision, quantityPrecision, ref buyIndicatorChart);
+                        tradeHelper.UpdateLocalChartTrades(tradesUpdate, createBuyIndicator, seedTime, seedId, tradesChartDisplayCount, pricePrecision, quantityPrecision, ref buyIndicatorChart);
 
-                        TradeHelper.UpdateLocalChartTrades(tradesUpdate, createSellIndicator, seedTime, seedId, tradesChartDisplayCount, pricePrecision, quantityPrecision, ref sellIndicatorChart);
+                        tradeHelper.UpdateLocalChartTrades(tradesUpdate, createSellIndicator, seedTime, seedId, tradesChartDisplayCount, pricePrecision, quantityPrecision, ref sellIndicatorChart);
                     }
                 }
             }
@@ -376,74 +385,47 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
                     return;
                 }
 
-                var orderBookNotification = orderNotifications.Last();
-
-                IsLoadingOrderBook = false;
-
-                var ob = JsonConvert.DeserializeObject<TradeView.Interface.Model.OrderBook>(orderBookNotification.Message);
-
-                bool firstOrders = false;
-
-                var symbol = Symbols.Single(s => s.ExchangeSymbol.Equals(ob.Symbol));
-
-                if (OrderBook == null)
+                if (Symbols != null)
                 {
-                    // First incoming order book create the local order book.
-                    firstOrders = true;
+                    var orderBookNotification = orderNotifications.Last();
 
-                    OrderBook = new OrderBook
+                    IsLoadingOrderBook = false;
+
+                    var ob = JsonConvert.DeserializeObject<TradeView.Interface.Model.OrderBook>(orderBookNotification.Message);
+
+                    var symbol = Symbols.First(s => s.ExchangeSymbol.Equals(ob.Symbol));
+
+                    var strategySymbol = Strategy.StrategySubscriptions.First(s => s.Symbol.Equals(ob.Symbol));
+
+                    var orderBookHelper = orderBookHelperFactory.GetOrderBookHelper(ob.Exchange);
+
+                    var pricePrecision = symbol.PricePrecision;
+                    var quantityPrecision = symbol.QuantityPrecision;
+
+                    var orderBookDisplayCount = Strategy.OrderBookDisplayCount;
+                    var orderBookChartDisplayCount = Strategy.OrderBookChartDisplayCount;
+
+                    if (OrderBook == null)
                     {
-                        Symbol = ob.Symbol,
-                        BaseSymbol = symbol.BaseAsset.Symbol,
-                        QuoteSymbol = symbol.QuoteAsset.Symbol
-                    };
+                        OrderBook = await orderBookHelper.CreateLocalOrderBook(symbol, ob, orderBookDisplayCount, orderBookChartDisplayCount);
+
+                        if (IsLoadingOrderBook)
+                        {
+                            IsLoadingOrderBook = false;
+                        }
+                    }
+                    else if (OrderBook.LastUpdateId >= ob.LastUpdateId)
+                    {
+                        // If the incoming order book is older than the local one ignore it.
+                        return;
+                    }
+                    else
+                    {
+                        orderBookHelper.UpdateLocalOrderBook(OrderBook, ob,
+                            symbol.PricePrecision, symbol.QuantityPrecision,
+                            orderBookDisplayCount, orderBookChartDisplayCount);
+                    }
                 }
-                else if (OrderBook.LastUpdateId >= ob.LastUpdateId)
-                {
-                    // If the incoming order book is older than the local one ignore it.
-                    return;
-                }
-
-                OrderBook.LastUpdateId = ob.LastUpdateId;
-
-                // Order by price: bids (DESC) and asks (ASC)
-                var orderedAsks = ob.Asks.OrderBy(a => a.Price).ToList();
-                var orderedBids = ob.Bids.OrderByDescending(b => b.Price).ToList();
-
-                // Take the asks and bids for the OrderBookChartDisplayCount as new instances of type OrderBookPriceLevel 
-                // i.e. discard those that we are not interested in displaying on the screen.
-                var asks = orderedAsks.Take(Strategy.OrderBookChartDisplayCount).Select(ask => new OrderBookPriceLevel
-                {
-                    Price = ask.Price.Trim(symbol.PricePrecision),
-                    Quantity = ask.Quantity.Trim(symbol.QuantityPrecision)
-                }).ToList();
-
-                var bids = orderedBids.Take(Strategy.OrderBookChartDisplayCount).Select(bid => new OrderBookPriceLevel
-                {
-                    Price = bid.Price.Trim(symbol.PricePrecision),
-                    Quantity = bid.Quantity.Trim(symbol.QuantityPrecision)
-                }).ToList();
-
-                // Take the bid and aks to display in the the order book chart.
-                var chartAsks = asks.Take(Strategy.OrderBookChartDisplayCount).ToList();
-                var chartBids = bids.Take(Strategy.OrderBookChartDisplayCount).ToList();
-
-                // Create the aggregated bids and asks for the aggregated bid and ask chart.
-                //var aggregatedAsks = chartAsks.GetAggregatedList();
-                //var aggregatedBids = chartBids.GetAggregatedList();
-
-                //if (firstOrders)
-                //{
-                //    // Create new instances of the chart bids and asks, reversing the bids.
-                //    OrderBook.ChartAggregatedAsks = new ChartValues<OrderBookPriceLevel>(aggregatedAsks);
-                //    OrderBook.ChartAggregatedBids = new ChartValues<OrderBookPriceLevel>(aggregatedBids.Reverse<OrderBookPriceLevel>().ToList());
-                //}
-                //else
-                //{
-                //    // Update the existing orderbook chart bids and asks, reversing the bids.
-                //    OrderBook.UpdateChartAggregateAsks(aggregatedAsks);
-                //    OrderBook.UpdateChartAggregateBids(aggregatedBids.Reverse<OrderBookPriceLevel>().ToList());
-                //}
             }
             catch (Exception ex)
             {
