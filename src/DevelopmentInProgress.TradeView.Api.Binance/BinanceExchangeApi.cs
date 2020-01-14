@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DevelopmentInProgress.TradeView.Interface.Enums;
 
 namespace DevelopmentInProgress.TradeView.Api.Binance
 {
@@ -86,6 +87,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             {
                 Name = $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}",
                 ExchangeSymbol = $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}",
+                Exchange = Exchange.Binance,
                 NotionalMinimumValue = s.NotionalMinimumValue,
                 BaseAsset = new Interface.Model.Asset { Symbol = s.BaseAsset.Symbol, Precision = s.BaseAsset.Precision },
                 Price = new Interface.Model.InclusiveRange { Increment = s.Price.Increment /*, Minimum = s.Price.Minimum, Maximum = s.Price.Maximum*/ }, // HACK : remove Price Min and Max because it realtime calcs hits performance.
@@ -364,6 +366,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
         {
             var accountInfo = new Interface.Model.AccountInfo
             {
+                Exchange = Exchange.Binance,
                 Commissions = new Interface.Model.AccountCommissions { Buyer = a.Commissions.Buyer, Maker = a.Commissions.Maker, Seller = a.Commissions.Seller, Taker = a.Commissions.Taker },
                 Status = new Interface.Model.AccountStatus { CanDeposit = a.Status.CanDeposit, CanTrade = a.Status.CanTrade, CanWithdraw = a.Status.CanWithdraw },
                 Time = a.Time,
@@ -385,6 +388,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             {
                 User = user,
                 Symbol = o.Symbol,
+                Exchange = Exchange.Binance,
                 Id = o.Id.ToString(),
                 ClientOrderId = o.ClientOrderId,
                 Price = o.Price,
@@ -413,6 +417,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
         {
             return new Interface.Model.SymbolStats
             {
+                Exchange = Exchange.Binance,
                 FirstTradeId = s.FirstTradeId,
                 CloseTime = s.CloseTime,
                 OpenTime = s.OpenTime,
@@ -443,6 +448,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             var orderBook = new Interface.Model.OrderBook
             {
                 Symbol = ob.Symbol,
+                Exchange = Exchange.Binance,
                 LastUpdateId = ob.LastUpdateId
             };
 
@@ -457,6 +463,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             return new Interface.Model.AggregateTrade
             {
                 Symbol = at.Symbol,
+                Exchange = Exchange.Binance,
                 Id = at.Id,
                 Price = at.Price,
                 Quantity = at.Quantity,
@@ -473,6 +480,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             return new Interface.Model.Trade
             {
                 Symbol = t.Symbol,
+                Exchange = Exchange.Binance,
                 Id = t.Id,
                 Price = t.Price,
                 Quantity = t.Quantity,
@@ -491,6 +499,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             return new Interface.Model.Candlestick
             {
                 Symbol = c.Symbol,
+                Exchange = Exchange.Binance,
                 Interval = interval,
                 OpenTime = c.OpenTime,
                 Open = c.Open,
@@ -511,6 +520,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             return new Interface.Model.AccountTrade
             {
                 Symbol = t.Symbol,
+                Exchange = Exchange.Binance,
                 Id = t.Id,
                 Price = t.Price,
                 Quantity = t.Quantity,
