@@ -1,4 +1,5 @@
 ﻿using System;
+using DevelopmentInProgress.TradeView.Interface.Enums;
 using DevelopmentInProgress.TradeView.Interface.Interfaces;
 
 namespace DevelopmentInProgress.TradeView.Interface.Model
@@ -6,6 +7,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Model
     public class AccountTrade : ITrade
     {
         public string Symbol { get; set; }
+        public Exchange Exchange { get; set; }
         public long Id { get; set; }
         public decimal Price { get; set; }
         public decimal Quantity { get; set; }

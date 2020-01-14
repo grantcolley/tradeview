@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevelopmentInProgress.TradeView.Interface.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace DevelopmentInProgress.TradeView.Interface.Model
@@ -6,6 +7,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Model
     public class Order
     {
         public User User { get; set; }
+        public Exchange Exchange { get; set; }
         public string Symbol { get; set; }
         public string Id { get; set; }
         public string ClientOrderId { get; set; }

@@ -9,6 +9,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
             return new Candlestick
             {
                 Symbol = c.Symbol,
+                Exchange = c.Exchange,
                 Interval = c.Interval,
                 OpenTime = c.OpenTime.ToLocalTime(),
                 Open = c.Open,

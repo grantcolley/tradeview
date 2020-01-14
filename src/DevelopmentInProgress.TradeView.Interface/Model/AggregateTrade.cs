@@ -1,4 +1,5 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Interfaces;
+﻿using DevelopmentInProgress.TradeView.Interface.Enums;
+using DevelopmentInProgress.TradeView.Interface.Interfaces;
 using System;
 
 namespace DevelopmentInProgress.TradeView.Interface.Model
@@ -6,6 +7,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Model
     public class AggregateTrade : ITrade
     {
         public string Symbol { get; set; }
+        public Exchange Exchange { get; set; }
         public long Id { get; set; }
         public decimal Price { get; set; }
         public decimal Quantity { get; set; }

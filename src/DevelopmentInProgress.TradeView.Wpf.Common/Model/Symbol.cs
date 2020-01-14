@@ -1,4 +1,5 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Extensions;
+﻿using DevelopmentInProgress.TradeView.Interface.Enums;
+using DevelopmentInProgress.TradeView.Interface.Extensions;
 using System.Collections.Generic;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
@@ -10,6 +11,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         private bool isFavourite;
 
         public string Name { get; set; }
+        public Exchange Exchange { get; set; }
         public string NameDelimiter { get; set; }
         public string ExchangeSymbol { get; set; }
         public decimal NotionalMinimumValue { get; set; }

@@ -11,6 +11,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
             return new Order
             {
                 Symbol = o.Symbol,
+                Exchange = o.Exchange,
                 Id = o.Id,
                 ClientOrderId = o.ClientOrderId,
                 Price = o.Price,
@@ -37,6 +38,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
             }
 
             o.Symbol = order.Symbol;
+            o.Exchange = order.Exchange;
             o.Id = order.Id;
             o.ClientOrderId = order.ClientOrderId;
             o.Price = order.Price;

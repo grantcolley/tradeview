@@ -9,6 +9,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
         {
             return new SymbolStatistics
             {
+                Exchange = s.Exchange,
                 FirstTradeId = s.FirstTradeId,
                 CloseTime = s.CloseTime,
                 OpenTime = s.OpenTime,

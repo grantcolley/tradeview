@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevelopmentInProgress.TradeView.Interface.Enums;
+using System;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 {
@@ -8,6 +9,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         private decimal executedQuantity;
         
         public string Symbol { get; set; }
+        public Exchange Exchange { get; set; }
         public new string Id { get; set; }
         public string ClientOrderId { get; set; }
         public decimal Price { get; set; }

@@ -1,4 +1,5 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Model;
+﻿using DevelopmentInProgress.TradeView.Interface.Enums;
+using DevelopmentInProgress.TradeView.Interface.Model;
 using System;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
@@ -13,6 +14,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         private DateTime closeTime;
 
         public string Symbol { get; set; }
+        public Exchange Exchange { get; set; }
         public CandlestickInterval Interval { get; set; }
         public decimal Volume { get; set; }
         public decimal QuoteAssetVolume { get; set; }

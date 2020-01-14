@@ -9,7 +9,15 @@ namespace DevelopmentInProgress.TradeView.Interface.Extensions
         {
             var accountInfo = new AccountInfo
             {
-                User = new User { ApiKey = ai.User.ApiKey, ApiSecret = ai.User.ApiSecret },
+                User = new User 
+                {
+                    ApiKey = ai.User.ApiKey, 
+                    ApiSecret = ai.User.ApiSecret, 
+                    ApiPassPhrase = ai.User.ApiPassPhrase, 
+                    AccountName = ai.User.AccountName, 
+                    Exchange = ai.User.Exchange 
+                },
+                Exchange = ai.Exchange,
                 Status = new AccountStatus { CanDeposit = ai.Status.CanDeposit, CanTrade = ai.Status.CanTrade, CanWithdraw = ai.Status.CanWithdraw },
                 Commissions = new AccountCommissions { Buyer = ai.Commissions.Buyer, Maker = ai.Commissions.Maker, Seller = ai.Commissions.Seller, Taker = ai.Commissions.Taker },
                 Time = ai.Time,

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevelopmentInProgress.TradeView.Interface.Enums;
+using System;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 {
@@ -26,7 +27,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         private string symbol;
         private long lastTradeId;
         private long tradeCount;
-        
+
+        public Exchange Exchange { get; set; }
+
         public long FirstTradeId
         {
             get { return firstTradeId; }

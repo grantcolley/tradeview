@@ -1,10 +1,12 @@
-﻿using System;
+﻿using DevelopmentInProgress.TradeView.Interface.Enums;
+using System;
 
 namespace DevelopmentInProgress.TradeView.Interface.Model
 {
     public class Candlestick
     {
         public string Symbol { get; set; }
+        public Exchange Exchange { get; set; }
         public CandlestickInterval Interval { get; set; }
         public DateTime OpenTime { get; set; }
         public decimal Open { get; set; }

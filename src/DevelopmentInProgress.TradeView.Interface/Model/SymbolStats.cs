@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevelopmentInProgress.TradeView.Interface.Enums;
+using System;
 
 namespace DevelopmentInProgress.TradeView.Interface.Model
 {
@@ -24,6 +25,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Model
         public decimal PriceChange { get; set; }
         public TimeSpan Period { get; set; }
         public string Symbol { get; set; }
+        public Exchange Exchange { get; set; }
         public long LastTradeId { get; set; }
         public long TradeCount { get; set; }
     }

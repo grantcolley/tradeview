@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using DevelopmentInProgress.TradeView.Interface.Enums;
+using System.Collections.Generic;
 
 namespace DevelopmentInProgress.TradeView.Interface.Model
 {
     public class Symbol
     {
         public string Name { get; set; }
+        public Exchange Exchange { get; set; }
         public string NameDelimiter { get; set; }
         public string ExchangeSymbol { get; set; }
         public decimal NotionalMinimumValue { get; set; }
