@@ -48,7 +48,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
                 }
             });
 
-            symbolsViewModel.SetAccount(
+            await symbolsViewModel.SetAccount(
                 new UserAccount
                 {
                     Preferences = new Preferences
@@ -100,7 +100,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
                 }
             });
 
-            symbolsViewModel.SetAccount(
+            await symbolsViewModel.SetAccount(
                 new UserAccount { 
                     Preferences = new Preferences { 
                         SelectedSymbol = "BNBBTC", 
@@ -132,7 +132,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var account = accounts.Accounts.First();
 
             // Act
-            symbolsViewModel.SetAccount(account);
+            await symbolsViewModel.SetAccount(account);
 
             await Task.Delay(1000);
 

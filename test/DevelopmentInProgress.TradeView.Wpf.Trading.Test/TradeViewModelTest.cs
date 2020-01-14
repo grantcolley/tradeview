@@ -286,7 +286,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
         public void Quantity_and_Price_and_StopPrice_NoSelectedSymbol()
         {
             // Arrange
-            var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
@@ -427,7 +426,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
         public void HasQuoteBaseBalance_Null()
         {
             // Arrange
-            var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
@@ -443,7 +441,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
         public void HasQuoteBaseBalance_Zero()
         {
             // Arrange
-            var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
@@ -464,7 +461,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
         public void HasQuoteBaseBalance()
         {
             // Arrange
-            var cxlToken = new CancellationToken();
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
