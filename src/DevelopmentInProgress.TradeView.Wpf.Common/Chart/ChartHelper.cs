@@ -9,12 +9,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Chart
     {
         public ChartHelper()
         {
-            var tradeBaseMapper = Mappers.Xy<TradeBase>()
-                .X(model => model.Time.Ticks)
-                .Y(model => Convert.ToDouble(model.Price));
-
-            Charting.For<TradeBase>(tradeBaseMapper);
-
             var tradeMapper = Mappers.Xy<Trade>()
                 .X(model => model.Time.Ticks)
                 .Y(model => Convert.ToDouble(model.Price));

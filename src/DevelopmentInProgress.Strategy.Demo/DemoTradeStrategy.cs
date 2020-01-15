@@ -62,7 +62,8 @@ namespace DevelopmentInProgress.Strategy.Demo
                     
                     var demoTrade = new DemoTrade
                     {
-                        Symbol = trades[i].Symbol,
+                        Symbol = trades[i].Symbol,                        
+                        Exchange = trades[i].Exchange,
                         Id = trades[i].Id,
                         Price = trades[i].Price,
                         Quantity = trades[i].Quantity,

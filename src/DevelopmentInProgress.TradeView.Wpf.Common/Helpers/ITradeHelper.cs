@@ -14,14 +14,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             IEnumerable<ITrade> tradesUpdate,
             int tradesDisplayCount,
             int tradesChartDisplayCount,
-            int tradeLimit) where T : TradeBase, new();
+            int tradeLimit) where T : Trade, new();
 
         ChartValues<T> CreateLocalChartTrades<T>(
             IEnumerable<ITrade> tradesUpdate,
             Func<ITrade, int, int, T> createNewTrade,
             int tradesChartDisplayCount,
             int pricePrecision,
-            int quantityPrecision) where T : TradeBase, new();
+            int quantityPrecision) where T : Trade, new();
 
         void UpdateTrades<T>(
             Symbol symbol,
@@ -30,7 +30,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             int tradesDisplayCount,
             int tradesChartDisplayCount,
             out List<T> trades,
-            ref ChartValues<T> tradesChart) where T : TradeBase, new();
+            ref ChartValues<T> tradesChart) where T : Trade, new();
 
         void UpdateLocalChartTrades<T>(
             IEnumerable<ITrade> tradesUpdate,
@@ -40,6 +40,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             int tradesChartDisplayCount,
             int pricePrecision,
             int quantityPrecision,
-            ref ChartValues<T> tradesChart) where T : TradeBase, new();
+            ref ChartValues<T> tradesChart) where T : Trade, new();
     }
 }

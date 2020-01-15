@@ -22,8 +22,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private CancellationTokenSource symbolCancellationTokenSource;
         private Symbol symbol;
         private OrderBook orderBook;
-        private ChartValues<TradeBase> tradesChart;
-        private List<TradeBase> trades;
+        private ChartValues<Trade> tradesChart;
+        private List<Trade> trades;
         private Exchange exchange;
         private IOrderBookHelper orderBookHelper;
         private ITradeHelper tradeHelper;
@@ -118,7 +118,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
         }
 
-        public List<TradeBase> Trades
+        public List<Trade> Trades
         {
             get { return trades; }
             set
@@ -131,7 +131,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
         }
 
-        public ChartValues<TradeBase> TradesChart
+        public ChartValues<Trade> TradesChart
         {
             get { return tradesChart; }
             set
@@ -296,7 +296,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             {
                 if (Trades == null)
                 {
-                    var result = await tradeHelper.CreateLocalTradeList<TradeBase>(Symbol, tradesUpdate, TradesDisplayCount, TradesChartDisplayCount, TradeLimit);
+                    var result = await tradeHelper.CreateLocalTradeList<Trade>(Symbol, tradesUpdate, TradesDisplayCount, TradesChartDisplayCount, TradeLimit);
 
                     Trades = result.Trades;
                     TradesChart = result.TradesChart;
@@ -308,7 +308,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 }
                 else
                 {
-                    List<TradeBase> newTrades;
+                    List<Trade> newTrades;
 
                     tradeHelper.UpdateTrades(Symbol, tradesUpdate, Trades, TradesDisplayCount, TradesChartDisplayCount, out newTrades, ref tradesChart);
 

@@ -244,9 +244,9 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
                     var pricePrecision = symbol.PricePrecision;
                     var quantityPrecision = symbol.QuantityPrecision;
 
-                    Func<ITrade, int, int, Trade> createSmaTrade = (t, p, q) => new Trade { Price = ((DemoTrade)t).SmaPrice.Trim(p), Time = t.Time.ToLocalTime() };
-                    Func<ITrade, int, int, Trade> createBuyIndicator = (t, p, q) => new Trade { Price = ((DemoTrade)t).BuyIndicatorPrice.Trim(p), Time = t.Time.ToLocalTime() };
-                    Func<ITrade, int, int, Trade> createSellIndicator = (t, p, q) => new Trade { Price = ((DemoTrade)t).SellIndicatorPrice.Trim(p), Time = t.Time.ToLocalTime() };
+                    Func<ITrade, int, int, Trade> createSmaTrade = (t, p, q) => new Trade { Price = ((DemoTrade)t).SmaPrice.Trim(p), Time = t.Time.ToLocalTime(), Exchange = t.Exchange };
+                    Func<ITrade, int, int, Trade> createBuyIndicator = (t, p, q) => new Trade { Price = ((DemoTrade)t).BuyIndicatorPrice.Trim(p), Time = t.Time.ToLocalTime(), Exchange = t.Exchange };
+                    Func<ITrade, int, int, Trade> createSellIndicator = (t, p, q) => new Trade { Price = ((DemoTrade)t).SellIndicatorPrice.Trim(p), Time = t.Time.ToLocalTime(), Exchange = t.Exchange };
 
                     var tradesDisplayCount = Strategy.TradesDisplayCount;
                     var tradesChartDisplayCount = Strategy.TradesChartDisplayCount;

@@ -16,7 +16,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             IEnumerable<ITrade> tradesUpdate, 
             int tradesDisplayCount, 
             int tradesChartDisplayCount,
-            int tradeLimit) where T : TradeBase, new()
+            int tradeLimit) where T : Trade, new()
         {
             var tcs = new TaskCompletionSource<LocalTradeListResult<T>>();
 
@@ -76,7 +76,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             Func<ITrade, int, int, T> createNewTrade,
             int tradesChartDisplayCount,
             int pricePrecision,
-            int quantityPrecision) where T : TradeBase, new()
+            int quantityPrecision) where T : Trade, new()
         {
             // Order by oldest to newest (as it will appear in the chart).
             var newTrades = (from t in tradesUpdate
@@ -95,7 +95,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             int tradesDisplayCount, 
             int tradesChartDisplayCount, 
             out List<T> trades, 
-            ref ChartValues<T> tradesChart) where T : TradeBase, new()
+            ref ChartValues<T> tradesChart) where T : Trade, new()
         {
             var pricePrecision = symbol.PricePrecision;
             var quantityPrecision = symbol.QuantityPrecision;
@@ -164,7 +164,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             int tradesChartDisplayCount,
             int pricePrecision,
             int quantityPrecision,
-            ref ChartValues<T> tradesChart) where T : TradeBase, new()
+            ref ChartValues<T> tradesChart) where T : Trade, new()
         {
             // Extract new trades where time and id is greater than latest available trade (seed). 
             // Order by oldest to newest (as it will appear in chart).
