@@ -614,7 +614,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 });
             });
 
-
             socketClient.On("Notification", async (message) =>
             {
                 await ViewModelContext.UiDispatcher.Invoke(async () =>
