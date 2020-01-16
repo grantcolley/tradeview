@@ -1,4 +1,5 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Enums;
+﻿using DevelopmentInProgress.Strategy.Common;
+using DevelopmentInProgress.TradeView.Interface.Enums;
 using DevelopmentInProgress.TradeView.Interface.Events;
 using DevelopmentInProgress.TradeView.Interface.Extensions;
 using DevelopmentInProgress.TradeView.Interface.Model;
@@ -55,7 +56,7 @@ namespace DevelopmentInProgress.Strategy.Demo
                 {
                     tradePrices[i] = trades[i].Price;
 
-                    var priceMovingAverage = DemoTradeHelper.CalculateMovingAverage(i, tradePrices, tradeSetLength);
+                    var priceMovingAverage = StrategyHelper.CalculateMovingAverage(i, tradePrices, tradeSetLength);
 
                     var buyIndicatorPrice = priceMovingAverage - (priceMovingAverage * buyIndicator);
                     var sellIndicatorPrice = priceMovingAverage + (priceMovingAverage * sellIndicator);

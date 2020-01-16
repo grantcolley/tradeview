@@ -12,10 +12,10 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-    <PackageReference Include="System.Memory" Version="4.5.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DevelopmentInProgress.Strategy.Common\DevelopmentInProgress.Strategy.Common.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Interface\DevelopmentInProgress.TradeView.Interface.csproj" />
   </ItemGroup>
 
