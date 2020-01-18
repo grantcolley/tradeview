@@ -1,20 +1,9 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Enums;
-using DevelopmentInProgress.TradeView.Interface.Interfaces;
-using System;
+﻿using DevelopmentInProgress.TradeView.Interface.Model;
 
 namespace DevelopmentInProgress.Strategy.Demo
 {
-    public class DemoTrade : ITrade
-    {
-        public string Symbol { get; set; }
-        public Exchange Exchange { get; set; }
-        public long Id { get; set; }
-        public decimal Price { get; set; }
-        public decimal Quantity { get; set; }
-        public DateTime Time { get; set; }
-        public bool IsBuyerMaker { get; set; }
-        public bool IsBestPriceMatch { get; set; }
-        
+    public class DemoTrade : Trade
+    {        
         public decimal SmaPrice { get; set; }
         public decimal BuyIndicatorPrice { get; set; }
         public decimal SellIndicatorPrice { get; set; }
