@@ -53,16 +53,16 @@ namespace DevelopmentInProgress.Strategy.Common.Test
             Assert.AreEqual(tradeCache.IncrementalSize, 5);
             Assert.AreEqual(trades.Length, 3);
 
-            Assert.AreSame(lastTrade, trade3);
+            Assert.AreEqual(lastTrade, trade3);
 
             Assert.AreEqual(lastTradesOver.Length, 3);
-            Assert.AreSame(lastTradesOver[0], trade1);
-            Assert.AreSame(lastTradesOver[1], trade2);
-            Assert.AreSame(lastTradesOver[2], trade3);
+            Assert.AreEqual(lastTradesOver[0], trade1);
+            Assert.AreEqual(lastTradesOver[1], trade2);
+            Assert.AreEqual(lastTradesOver[2], trade3);
 
             Assert.AreEqual(lastTradesUnder.Length, 2);
-            Assert.AreSame(lastTradesUnder[0], trade1);
-            Assert.AreSame(lastTradesUnder[1], trade2);
+            Assert.AreEqual(lastTradesUnder[0], trade2);
+            Assert.AreEqual(lastTradesUnder[1], trade3);
         }
     }
 }
