@@ -10,7 +10,9 @@ namespace DevelopmentInProgress.Strategy.Common
         public TradeCache(int incrementalSize)
         {
             IncrementalSize = incrementalSize;
+
             trades = new T[0];
+            Position = -1;
         }
 
         public int CacheSize { get { return trades.Length; } }
@@ -24,7 +26,8 @@ namespace DevelopmentInProgress.Strategy.Common
 
         public T GetLastTrade()
         {
-            if(trades.Length.Equals(0))
+            if(Position > -1
+                && trades.Length.Equals(0))
             {
                 return default(T);
             }
@@ -32,14 +35,15 @@ namespace DevelopmentInProgress.Strategy.Common
             return trades[Position];
         }
 
-        public T[] GetLastTrades(int maxLength)
+        public T[] GetLastTrades(int length)
         {
-            if (trades.Length.Equals(0))
+            if (Position > -1
+                && trades.Length.Equals(0))
             {
                 return trades;
             }
 
-            if (maxLength > Position)
+            if (length > Position)
             {
                 T[] lastTrades = new T[Position];
                 Array.Copy(trades, lastTrades, Position);
@@ -47,8 +51,8 @@ namespace DevelopmentInProgress.Strategy.Common
             }
             else
             {
-                T[] lastTrades = new T[maxLength];
-                Array.Copy(trades, Position - maxLength, lastTrades, 0, maxLength);
+                T[] lastTrades = new T[length];
+                Array.Copy(trades, Position - length, lastTrades, 0, length);
                 return lastTrades;
             }
         }
@@ -61,7 +65,7 @@ namespace DevelopmentInProgress.Strategy.Common
 
             trades[Position] = t;
 
-            if (Position == trades.Length)
+            if (Position == trades.Length - 1)
             {
                 Array.Resize(ref trades, IncrementalSize);
             }
