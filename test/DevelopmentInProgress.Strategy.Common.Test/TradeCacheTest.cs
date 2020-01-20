@@ -18,7 +18,7 @@ namespace DevelopmentInProgress.Strategy.Common.Test
             tradeCache = new TradeCache<Trade>(incrementalSize);
 
             // Assert
-            Assert.AreEqual(tradeCache.Position, 0);
+            Assert.AreEqual(tradeCache.Position, -1);
             Assert.AreEqual(tradeCache.CacheSize, 0);
             Assert.AreEqual(tradeCache.IncrementalSize, 5);
             Assert.IsNull(tradeCache.GetLastTrade());
