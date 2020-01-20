@@ -12,7 +12,7 @@ namespace DevelopmentInProgress.Strategy.Common
         {
             IncrementalSize = incrementalSize;
 
-            trades = new T[1];
+            trades = new T[incrementalSize];
             Position = -1;
         }
 
@@ -24,7 +24,7 @@ namespace DevelopmentInProgress.Strategy.Common
         {
             if(Position.Equals(-1))
             {
-                return trades;
+                return default;
             }
 
             return trades.Take(Position + 1).ToArray();
@@ -34,7 +34,7 @@ namespace DevelopmentInProgress.Strategy.Common
         {
             if(Position.Equals(-1))
             {
-                return default(T);
+                return default;
             }
 
             return trades[Position];
@@ -44,7 +44,7 @@ namespace DevelopmentInProgress.Strategy.Common
         {
             if (Position.Equals(-1))
             {
-                return trades;
+                return default;
             }
 
             var pos = Position + 1;
@@ -73,7 +73,7 @@ namespace DevelopmentInProgress.Strategy.Common
 
             if (Position == trades.Length - 1)
             {
-                Array.Resize(ref trades, IncrementalSize);
+                Array.Resize(ref trades, trades.Length + IncrementalSize);
             }
 
             return t;
