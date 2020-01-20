@@ -26,8 +26,7 @@ namespace DevelopmentInProgress.Strategy.Common
 
         public T GetLastTrade()
         {
-            if(Position > -1
-                && trades.Length.Equals(0))
+            if(Position.Equals(-1))
             {
                 return default(T);
             }
@@ -37,8 +36,7 @@ namespace DevelopmentInProgress.Strategy.Common
 
         public T[] GetLastTrades(int length)
         {
-            if (Position > -1
-                && trades.Length.Equals(0))
+            if (Position.Equals(-1))
             {
                 return trades;
             }
