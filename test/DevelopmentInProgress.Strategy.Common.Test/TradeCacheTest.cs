@@ -21,9 +21,9 @@ namespace DevelopmentInProgress.Strategy.Common.Test
             Assert.AreEqual(tradeCache.CacheSize, 1);
             Assert.AreEqual(tradeCache.IncrementalSize, 5);
             Assert.IsNull(tradeCache.GetLastTrade());
-            Assert.AreEqual(tradeCache.GetTrades().Length, 1);
-            Assert.AreEqual(tradeCache.GetLastTrades(1).Length, 1);
-            Assert.AreEqual(tradeCache.GetLastTrades(5).Length, 1);
+            Assert.AreEqual(tradeCache.GetTrades().Length, 0);
+            Assert.AreEqual(tradeCache.GetLastTrades(1).Length, 0);
+            Assert.AreEqual(tradeCache.GetLastTrades(5).Length, 0);
         }
     }
 }
