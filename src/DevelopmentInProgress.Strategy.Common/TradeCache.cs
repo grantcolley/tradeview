@@ -1,5 +1,6 @@
 ﻿using DevelopmentInProgress.TradeView.Interface.Interfaces;
 using System;
+using System.Linq;
 
 namespace DevelopmentInProgress.Strategy.Common
 {
@@ -11,7 +12,7 @@ namespace DevelopmentInProgress.Strategy.Common
         {
             IncrementalSize = incrementalSize;
 
-            trades = new T[0];
+            trades = new T[1];
             Position = -1;
         }
 
@@ -21,7 +22,12 @@ namespace DevelopmentInProgress.Strategy.Common
 
         public T[] GetTrades()
         {
-            return trades;
+            if(Position.Equals(-1))
+            {
+                return trades;
+            }
+
+            return trades.Take(Position + 1).ToArray();
         }
 
         public T GetLastTrade()
@@ -41,16 +47,18 @@ namespace DevelopmentInProgress.Strategy.Common
                 return trades;
             }
 
+            var pos = Position + 1;
+
             if (length > Position)
             {
-                T[] lastTrades = new T[Position];
-                Array.Copy(trades, lastTrades, Position);
+                T[] lastTrades = new T[pos];
+                Array.Copy(trades, lastTrades, pos);
                 return lastTrades;
             }
             else
             {
                 T[] lastTrades = new T[length];
-                Array.Copy(trades, Position - length, lastTrades, 0, length);
+                Array.Copy(trades, pos - length, lastTrades, 0, length);
                 return lastTrades;
             }
         }
