@@ -18,7 +18,7 @@ namespace DevelopmentInProgress.Strategy.Common.Test
 
             // Assert
             Assert.AreEqual(tradeCache.Position, 0);
-            Assert.AreEqual(tradeCache.CacheSize, 1);
+            Assert.AreEqual(tradeCache.CacheSize, 0);
             Assert.AreEqual(tradeCache.IncrementalSize, 5);
             Assert.IsNull(tradeCache.GetLastTrade());
             Assert.AreEqual(tradeCache.GetTrades().Length, 0);
