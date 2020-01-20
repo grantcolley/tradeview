@@ -24,11 +24,21 @@ namespace DevelopmentInProgress.Strategy.Common
 
         public T GetLastTrade()
         {
+            if(trades.Length.Equals(0))
+            {
+                return default(T);
+            }
+
             return trades[Position];
         }
 
         public T[] GetLastTrades(int maxLength)
         {
+            if (trades.Length.Equals(0))
+            {
+                return trades;
+            }
+
             if (maxLength > Position)
             {
                 T[] lastTrades = new T[Position];
