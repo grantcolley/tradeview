@@ -8,7 +8,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Test
     public class HelperFactoryContainerTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void HelperFactoryContainer_Test()
         {
             // Arrange
             var helperFactoryContainer = new HelperFactoryContainer(
