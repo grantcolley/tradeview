@@ -4,15 +4,17 @@ using System.Linq;
 
 namespace DevelopmentInProgress.Strategy.Common
 {
-    public class TradeCache<T> where T : ITrade
+    public class TradeCache<TC, T>  where TC : ITradeCreator<T>, new()
+                                    where T : ITrade, new()
     {
         private T[] trades;
         private ITradeCreator<T> tradeCreator;
 
-        public TradeCache(ITradeCreator<T> tradeCreator, int incrementalSize)
+        public TradeCache(int incrementalSize)
         {
             IncrementalSize = incrementalSize;
-            this.tradeCreator = tradeCreator;
+
+            tradeCreator = new TC();
 
             trades = new T[incrementalSize];
             Position = -1;
@@ -69,7 +71,7 @@ namespace DevelopmentInProgress.Strategy.Common
         {
             Position += 1;
 
-            var t = Create(trade);
+            var t = tradeCreator.CreateTrade(trade);
 
             trades[Position] = t;
 
@@ -93,11 +95,6 @@ namespace DevelopmentInProgress.Strategy.Common
             }
 
             return range;
-        }
-
-        private T Create(ITrade trade)
-        {
-            return tradeCreator.CreateTrade(trade);
         }
     }
 }
