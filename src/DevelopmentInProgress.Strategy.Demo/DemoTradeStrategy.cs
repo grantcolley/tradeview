@@ -15,7 +15,8 @@ namespace DevelopmentInProgress.Strategy.Demo
         private decimal buyIndicator;
         private decimal sellIndicator;
         private int tradeMovingAvarageSetLength;
- 
+        private TradeCache<DemoTradeCreator, DemoTrade> tradeCache;
+
         public override void UpdateParameters(string parameters)
         {
             var demoTradeStrategyParameters = JsonConvert.DeserializeObject<DemoTradeStrategyParameters>(parameters);
