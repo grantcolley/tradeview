@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace DevelopmentInProgress.Strategy.Common
 {
-    public class TradeCache<TC, T>  where TC : ITradeCreator<T>, new()
-                                    where T : ITrade, new()
+    public class TradeCache<TC, T, P>  where TC : ITradeCreator<T,P>, new()
+                                       where T : ITrade, new()
     {
         private T[] trades;
-        private ITradeCreator<T> tradeCreator;
+        private ITradeCreator<T,P> tradeCreator;
 
         public TradeCache(int incrementalSize)
         {
