@@ -7,6 +7,7 @@ using DevelopmentInProgress.TradeView.Interface.Strategy;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.Strategy.Demo
 {
@@ -15,9 +16,9 @@ namespace DevelopmentInProgress.Strategy.Demo
         private decimal buyIndicator;
         private decimal sellIndicator;
         private int tradeMovingAvarageSetLength;
-        private TradeCache<DemoTradeCreator, DemoTrade> tradeCache;
+        private TradeCache<DemoTradeCreator, DemoTrade, object> tradeCache;
 
-        public override void UpdateParameters(string parameters)
+        public override async Task UpdateParametersAsync(string parameters)
         {
             var demoTradeStrategyParameters = JsonConvert.DeserializeObject<DemoTradeStrategyParameters>(parameters);
 
