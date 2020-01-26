@@ -27,6 +27,50 @@ namespace DevelopmentInProgress.Strategy.Common.Test
         }
 
         [TestMethod]
+        public void TradeCache_AddTrades_GetLastTrades()
+        {
+            // Arrange
+            int incrementalSize = 5;
+            var tradeCache = new TradeCache<TestTradeCreator, TestTrade, object>(incrementalSize);
+            var trade1 = new TestTrade { Id = 1, Price = 0123m, Quantity = 1000m, Time = new DateTime(2000, 1, 1, 1, 0, 1) };
+            var trade2 = new TestTrade { Id = 2, Price = 0121m, Quantity = 500m, Time = new DateTime(2000, 1, 1, 1, 0, 2) };
+            var trade3 = new TestTrade { Id = 3, Price = 0124m, Quantity = 750m, Time = new DateTime(2000, 1, 1, 1, 0, 3) };
+
+            // Act
+            tradeCache.Add(trade1);
+            tradeCache.Add(trade2);
+            tradeCache.Add(trade3);
+
+            var trades = tradeCache.GetTrades();
+            var lastTrade = tradeCache.GetLastTrade();
+            var lastTrades = tradeCache.GetLastTrades(3);
+            var lastTradesOver = tradeCache.GetLastTrades(4);
+            var lastTradesUnder = tradeCache.GetLastTrades(2);
+
+            // Assert
+            Assert.AreEqual(tradeCache.Position, 2);
+            Assert.AreEqual(tradeCache.CacheSize, 5);
+            Assert.AreEqual(tradeCache.IncrementalSize, 5);
+            Assert.AreEqual(trades.Length, 3);
+
+            Assert.AreEqual(lastTrade, trade3);
+
+            Assert.AreEqual(lastTrades.Length, 3);
+            Assert.AreEqual(lastTrades[0], trade1);
+            Assert.AreEqual(lastTrades[1], trade2);
+            Assert.AreEqual(lastTrades[2], trade3);
+
+            Assert.AreEqual(lastTradesOver.Length, 3);
+            Assert.AreEqual(lastTradesOver[0], trade1);
+            Assert.AreEqual(lastTradesOver[1], trade2);
+            Assert.AreEqual(lastTradesOver[2], trade3);
+
+            Assert.AreEqual(lastTradesUnder.Length, 2);
+            Assert.AreEqual(lastTradesUnder[0], trade2);
+            Assert.AreEqual(lastTradesUnder[1], trade3);
+        }
+
+        [TestMethod]
         public void TradeCache_AddTrades_NoResize()
         {
             // Arrange
