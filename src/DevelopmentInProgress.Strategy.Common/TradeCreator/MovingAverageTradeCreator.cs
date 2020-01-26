@@ -10,7 +10,7 @@ namespace DevelopmentInProgress.Strategy.Common.TradeCreator
     public class MovingAverageTradeCreator : ITradeCreator<MovingAverageTrade, MovingAverageTradeParameters>
     {
         private decimal[] range;
-        private int currentPeriod;
+        private int position;
         private int movingAvarageRange;
         private decimal buyIndicator;
         private decimal sellIndicator;
@@ -19,13 +19,20 @@ namespace DevelopmentInProgress.Strategy.Common.TradeCreator
 
         public MovingAverageTradeCreator()
         {
+            position = -1;
             Reset(new MovingAverageTradeParameters());
         }
 
         public MovingAverageTrade CreateTrade(ITrade trade)
         {
             lock(tradeLock)
-            { 
+            {
+                Reshuffle();
+
+                range[position] = trade.Price;
+
+                var movingAverage = GetMovingAverage();
+
                 return new MovingAverageTrade
                 {
                     Symbol = trade.Symbol,
@@ -35,7 +42,10 @@ namespace DevelopmentInProgress.Strategy.Common.TradeCreator
                     Quantity = trade.Quantity,
                     Time = trade.Time,
                     IsBuyerMaker = trade.IsBuyerMaker,
-                    IsBestPriceMatch = trade.IsBestPriceMatch
+                    IsBestPriceMatch = trade.IsBestPriceMatch,
+                    MovingAveragePrice = movingAverage,
+                    BuyPrice = movingAverage - (movingAverage * buyIndicator),
+                    SellPrice = movingAverage + (movingAverage * sellIndicator)
                 };
             }
         }
@@ -48,9 +58,9 @@ namespace DevelopmentInProgress.Strategy.Common.TradeCreator
                 sellIndicator = parameters.SellIndicator;
                 var newMovingAvarageRange = parameters.MovingAvarageRange;
 
-                if (range == null)
+                if (range == null
+                    || position == -1)
                 {
-                    currentPeriod = 0;
                     range = new decimal[newMovingAvarageRange];
                 }
                 else if (movingAvarageRange > newMovingAvarageRange)
@@ -60,20 +70,60 @@ namespace DevelopmentInProgress.Strategy.Common.TradeCreator
                     var sourceIndex = (movingAvarageRange - newMovingAvarageRange) - 1;
                     Array.Copy(range, sourceIndex, newRange, 0, newMovingAvarageRange);
 
-                    currentPeriod = newMovingAvarageRange -1;
+                    position = newMovingAvarageRange -1;
                     range = newRange;
                 }
                 else if (movingAvarageRange < newMovingAvarageRange)
                 {
                     var newRange = new decimal[newMovingAvarageRange];
 
-                    Array.Copy(range, newRange, movingAvarageRange);
+                    Array.Copy(range, newRange, position + 1);
 
-                    currentPeriod = newMovingAvarageRange - 1;
                     range = newRange;
                 }
 
                 movingAvarageRange = newMovingAvarageRange;
+            }
+        }
+
+        internal void Reshuffle()
+        {
+            position += 1;
+
+            if (position >= movingAvarageRange)
+            {
+                position = movingAvarageRange - 1;
+
+                for (int i = 0; i < position; i++)
+                {
+                    range[i] = range[i + 1];
+                }
+
+                range[position] = 0m;
+            }
+        }
+
+        internal decimal GetMovingAverage()
+        {
+            decimal sum = 0m;
+
+            if (position == movingAvarageRange)
+            {
+                for (int i = 0; i < movingAvarageRange; i++)
+                {
+                    sum += range[i];
+                }
+
+                return (movingAvarageRange == 0) ? range[0] : sum / movingAvarageRange;
+            }
+            else
+            {
+                for (int i = 0; i < position; i++)
+                {
+                    sum += range[i];
+                }
+
+                return (position == 0) ? range[0] : sum / position;
             }
         }
 
@@ -85,9 +135,9 @@ namespace DevelopmentInProgress.Strategy.Common.TradeCreator
             return copy;
         }
 
-        internal int GetCurrentPeriod()
+        internal int GetCurrentPosition()
         {
-            return currentPeriod;
+            return position;
         }
 
         internal int GetMovingAvarageRange()
