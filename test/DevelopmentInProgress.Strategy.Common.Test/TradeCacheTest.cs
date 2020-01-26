@@ -11,10 +11,10 @@ namespace DevelopmentInProgress.Strategy.Common.Test
         {
             // Arrange
             int incrementalSize = 5;
-            TradeCache<TestTradeCreator, TestTrade> tradeCache;
+            TradeCache<TestTradeCreator, TestTrade, object> tradeCache;
 
             // Act
-            tradeCache = new TradeCache<TestTradeCreator, TestTrade>(incrementalSize);
+            tradeCache = new TradeCache<TestTradeCreator, TestTrade, object>(incrementalSize);
 
             // Assert
             Assert.AreEqual(tradeCache.Position, -1);
@@ -31,7 +31,7 @@ namespace DevelopmentInProgress.Strategy.Common.Test
         {
             // Arrange
             int incrementalSize = 5;
-            var tradeCache = new TradeCache<TestTradeCreator, TestTrade>(incrementalSize);
+            var tradeCache = new TradeCache<TestTradeCreator, TestTrade, object>(incrementalSize);
             var trade1 = new TestTrade { Id = 1, Price = 0123m, Quantity = 1000m, Time = new DateTime(2000, 1, 1, 1, 0, 1)};
             var trade2 = new TestTrade { Id = 2, Price = 0121m, Quantity = 500m, Time = new DateTime(2000, 1, 1, 1, 0, 2) };
             var trade3 = new TestTrade { Id = 3, Price = 0124m, Quantity = 750m, Time = new DateTime(2000, 1, 1, 1, 0, 3) };
@@ -69,7 +69,7 @@ namespace DevelopmentInProgress.Strategy.Common.Test
         {
             // Arrange
             int incrementalSize = 5;
-            var tradeCache = new TradeCache<TestTradeCreator, TestTrade>(incrementalSize);
+            var tradeCache = new TradeCache<TestTradeCreator, TestTrade, object>(incrementalSize);
             var trade1 = new TestTrade { Id = 1, Price = 0123m, Quantity = 1000m, Time = new DateTime(2000, 1, 1, 1, 0, 1) };
             var trade2 = new TestTrade { Id = 2, Price = 0121m, Quantity = 500m, Time = new DateTime(2000, 1, 1, 1, 0, 2) };
             var trade3 = new TestTrade { Id = 3, Price = 0124m, Quantity = 750m, Time = new DateTime(2000, 1, 1, 1, 0, 3) };
@@ -107,7 +107,7 @@ namespace DevelopmentInProgress.Strategy.Common.Test
         {
             // Arrange
             int incrementalSize = 5;
-            var tradeCache = new TradeCache<TestTradeCreator, TestTrade>(incrementalSize);
+            var tradeCache = new TradeCache<TestTradeCreator, TestTrade, object>(incrementalSize);
             var trade1 = new TestTrade { Id = 1, Price = 0123m, Quantity = 1000m, Time = new DateTime(2000, 1, 1, 1, 0, 1) };
             var trade2 = new TestTrade { Id = 2, Price = 0121m, Quantity = 500m, Time = new DateTime(2000, 1, 1, 1, 0, 2) };
             var trade3 = new TestTrade { Id = 3, Price = 0124m, Quantity = 750m, Time = new DateTime(2000, 1, 1, 1, 0, 3) };
@@ -154,7 +154,7 @@ namespace DevelopmentInProgress.Strategy.Common.Test
         {
             // Arrange
             int incrementalSize = 5;
-            var tradeCache = new TradeCache<TestTradeCreator, TestTrade>(incrementalSize);
+            var tradeCache = new TradeCache<TestTradeCreator, TestTrade, object>(incrementalSize);
             var trade1 = new TestTrade { Id = 1, Price = 0123m, Quantity = 1000m, Time = new DateTime(2000, 1, 1, 1, 0, 1) };
             var trade2 = new TestTrade { Id = 2, Price = 0121m, Quantity = 500m, Time = new DateTime(2000, 1, 1, 1, 0, 2) };
             var trade3 = new TestTrade { Id = 3, Price = 0124m, Quantity = 750m, Time = new DateTime(2000, 1, 1, 1, 0, 3) };

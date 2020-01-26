@@ -1,8 +1,9 @@
 ﻿using DevelopmentInProgress.TradeView.Interface.Interfaces;
+using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.Strategy.Common.Test
 {
-    public class TestTradeCreator : ITradeCreator<TestTrade>
+    public class TestTradeCreator : ITradeCreator<TestTrade, object>
     {
         public TestTrade CreateTrade(ITrade trade)
         {
@@ -17,6 +18,11 @@ namespace DevelopmentInProgress.Strategy.Common.Test
                 IsBuyerMaker = trade.IsBuyerMaker,
                 IsBestPriceMatch = trade.IsBestPriceMatch
             };
+        }
+
+        public void Reset(object parameters)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

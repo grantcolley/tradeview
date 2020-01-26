@@ -54,6 +54,7 @@
     <Compile Include="TestTrade.cs" />
     <Compile Include="TradeCacheTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MovingAverageTradeCreatorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
