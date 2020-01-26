@@ -32,7 +32,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
 
         Task<bool> TryUpdateStrategy(string strategyParameters);
 
-        void UpdateParameters(string parameters);
+        Task UpdateParametersAsync(string parameters);
 
         void SubscribeAccountInfo(AccountInfoEventArgs accountInfoEventArgs);
 

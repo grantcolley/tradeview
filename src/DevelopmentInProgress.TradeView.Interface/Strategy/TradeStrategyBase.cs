@@ -97,13 +97,13 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
             return tcs.Task;
         }
 
-        public virtual Task<bool> TryUpdateStrategy(string strategyParameters)
+        public virtual async Task<bool> TryUpdateStrategy(string strategyParameters)
         {
             var tcs = new TaskCompletionSource<bool>();
 
             try
             {
-                UpdateParameters(strategyParameters);
+                await UpdateParametersAsync(strategyParameters);
                 tcs.SetResult(true);
             }
             catch (Exception ex)
@@ -111,16 +111,28 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
                 tcs.SetException(ex);
             }
 
-            return tcs.Task;
+            return await tcs.Task;
         }
 
-        public virtual void UpdateParameters(string parameters)
+        public virtual async Task UpdateParametersAsync(string parameters)
         {
-            var strategyParameters = JsonConvert.DeserializeObject<StrategyParameters>(parameters);
+            var tcs = new TaskCompletionSource<object>();
 
-            suspend = strategyParameters.Suspend;
+            try
+            {
+                var strategyParameters = JsonConvert.DeserializeObject<StrategyParameters>(parameters);
 
-            StrategyNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = strategy.Name, Message = $"Parameter update : {parameters}", NotificationLevel = NotificationLevel.Information } });
+                suspend = strategyParameters.Suspend;
+
+                StrategyNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = strategy.Name, Message = $"Parameter update : {parameters}", NotificationLevel = NotificationLevel.Information } });
+                tcs.SetResult(null);
+            }
+            catch (Exception ex)
+            {
+                tcs.SetException(ex);
+            }
+
+            await tcs.Task;
         }
 
         public virtual void SubscribeAccountInfo(AccountInfoEventArgs accountInfoEventArgs)
