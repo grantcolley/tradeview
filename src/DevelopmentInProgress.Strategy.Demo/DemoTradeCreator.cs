@@ -1,9 +1,10 @@
 ﻿using DevelopmentInProgress.Strategy.Common;
 using DevelopmentInProgress.TradeView.Interface.Interfaces;
+using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.Strategy.Demo
 {
-    public class DemoTradeCreator : ITradeCreator<DemoTrade>
+    public class DemoTradeCreator : ITradeCreator<DemoTrade, object>
     {
         public DemoTrade CreateTrade(ITrade trade)
         {
@@ -18,6 +19,11 @@ namespace DevelopmentInProgress.Strategy.Demo
                 IsBuyerMaker = trade.IsBuyerMaker,
                 IsBestPriceMatch = trade.IsBestPriceMatch
             };
+        }
+
+        public void Reset(object parameters)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
