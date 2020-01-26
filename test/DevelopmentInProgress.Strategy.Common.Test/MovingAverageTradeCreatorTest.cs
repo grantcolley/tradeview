@@ -155,15 +155,13 @@ namespace DevelopmentInProgress.Strategy.Common.Test
             };
 
             movingAverageTradeCreator.Reset(movingAverageTradeParameters);
+
+            // Act
             var trade1 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 25.40m });
             var trade2 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 25.90m });
             var trade3 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 26.50m });
 
-            // Act
-            var movingAverage = movingAverageTradeCreator.GetMovingAverage();
-
             // Assert
-            Assert.AreEqual(Math.Truncate(100 * movingAverage) / 100, 25.93m); //truncate to 2 decimal places
             Assert.AreEqual(trade1.MovingAveragePrice, 25.40m);
             Assert.AreEqual(trade2.MovingAveragePrice, 25.65m);
             Assert.AreEqual(Math.Truncate(100 * trade3.MovingAveragePrice) / 100, 25.93m); //truncate to 2 decimal places
@@ -182,17 +180,15 @@ namespace DevelopmentInProgress.Strategy.Common.Test
             };
 
             movingAverageTradeCreator.Reset(movingAverageTradeParameters);
+
+            // Act
             var trade1 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 25.40m });
             var trade2 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 25.90m });
             var trade3 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 26.50m });
             var trade4 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 26.30m });
             var trade5 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 27.90m });
 
-            // Act
-            var movingAverage = movingAverageTradeCreator.GetMovingAverage();
-
             // Assert
-            Assert.AreEqual(movingAverage, 26.40m);
             Assert.AreEqual(trade1.MovingAveragePrice, 25.40m);
             Assert.AreEqual(trade2.MovingAveragePrice, 25.65m);
             Assert.AreEqual(Math.Truncate(100 * trade3.MovingAveragePrice) / 100, 25.93m); //truncate to 2 decimal places
@@ -213,6 +209,8 @@ namespace DevelopmentInProgress.Strategy.Common.Test
             };
 
             movingAverageTradeCreator.Reset(movingAverageTradeParameters);
+
+            // Act
             var trade1 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 25.40m });
             var trade2 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 25.90m });
             var trade3 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 26.50m });
@@ -221,11 +219,7 @@ namespace DevelopmentInProgress.Strategy.Common.Test
             var trade6 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 27.40m });
             var trade7 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 28.20m });
 
-            // Act
-            var movingAverage = movingAverageTradeCreator.GetMovingAverage();
-
             // Assert
-            Assert.AreEqual(movingAverage, 27.26m);
             Assert.AreEqual(trade1.MovingAveragePrice, 25.40m);
             Assert.AreEqual(trade2.MovingAveragePrice, 25.65m);
             Assert.AreEqual(Math.Truncate(100 * trade3.MovingAveragePrice) / 100, 25.93m); //truncate to 2 decimal places
@@ -248,6 +242,8 @@ namespace DevelopmentInProgress.Strategy.Common.Test
             };
 
             movingAverageTradeCreator.Reset(movingAverageTradeParameters);
+
+            // Act
             var trade1 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 25.40m });
             var trade2 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 25.90m });
             var trade3 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 26.50m });
@@ -256,12 +252,7 @@ namespace DevelopmentInProgress.Strategy.Common.Test
             var trade6 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 27.40m });
             var trade7 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 28.20m });
 
-            // Act
-            var movingAverage = movingAverageTradeCreator.GetMovingAverage();
-
             // Assert
-            Assert.AreEqual(movingAverage, 27.26m);
-
             Assert.AreEqual(trade1.MovingAveragePrice, 25.40m);
             Assert.AreEqual(trade1.BuyPrice, trade1.MovingAveragePrice - (trade1.MovingAveragePrice * movingAverageTradeParameters.BuyIndicator));
             Assert.AreEqual(trade1.SellPrice, trade1.MovingAveragePrice + (trade1.MovingAveragePrice * movingAverageTradeParameters.SellIndicator));
