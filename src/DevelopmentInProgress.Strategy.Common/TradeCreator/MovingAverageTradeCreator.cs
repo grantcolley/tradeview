@@ -107,24 +107,12 @@ namespace DevelopmentInProgress.Strategy.Common.TradeCreator
         {
             decimal sum = 0m;
 
-            if (position == movingAvarageRange)
+            for (int i = 0; i <= position; i++)
             {
-                for (int i = 0; i < movingAvarageRange; i++)
-                {
-                    sum += range[i];
-                }
-
-                return (movingAvarageRange == 0) ? range[0] : sum / movingAvarageRange;
+                sum += range[i];
             }
-            else
-            {
-                for (int i = 0; i < position; i++)
-                {
-                    sum += range[i];
-                }
 
-                return (position == 0) ? range[0] : sum / position;
-            }
+            return (position == 0) ? range[0] : sum / (position + 1);
         }
 
         internal decimal[] GetRange()
