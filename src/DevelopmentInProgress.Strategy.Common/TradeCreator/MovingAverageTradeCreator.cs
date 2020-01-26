@@ -27,11 +27,34 @@ namespace DevelopmentInProgress.Strategy.Common.TradeCreator
         {
             lock(tradeLock)
             {
-                Reshuffle();
+                position += 1;
+
+                if (position == movingAvarageRange)
+                {
+                    // Reshuffle range i.e. remove oldest price and shuffle 
+                    // the prices down. The new position is the last price
+                    // in the range and will be replaced by the current trade price
+
+                    position = movingAvarageRange - 1;
+
+                    for (int i = 0; i < position; i++)
+                    {
+                        range[i] = range[i + 1];
+                    }
+                }
 
                 range[position] = trade.Price;
 
-                var movingAverage = GetMovingAverage();
+                decimal sum = 0m;
+
+                for (int i = 0; i <= position; i++)
+                {
+                    sum += range[i];
+                }
+
+                // The moving average is the sum of all the prices in the range divided 
+                // by the number of prices in the range i.e. the position in the range
+                var movingAverage = (position == 0) ? range[0] : sum / (position + 1);
 
                 return new MovingAverageTrade
                 {
@@ -84,35 +107,6 @@ namespace DevelopmentInProgress.Strategy.Common.TradeCreator
 
                 movingAvarageRange = newMovingAvarageRange;
             }
-        }
-
-        internal void Reshuffle()
-        {
-            position += 1;
-
-            if (position >= movingAvarageRange)
-            {
-                position = movingAvarageRange - 1;
-
-                for (int i = 0; i < position; i++)
-                {
-                    range[i] = range[i + 1];
-                }
-
-                range[position] = 0m;
-            }
-        }
-
-        internal decimal GetMovingAverage()
-        {
-            decimal sum = 0m;
-
-            for (int i = 0; i <= position; i++)
-            {
-                sum += range[i];
-            }
-
-            return (position == 0) ? range[0] : sum / (position + 1);
         }
 
         internal decimal[] GetRange()
