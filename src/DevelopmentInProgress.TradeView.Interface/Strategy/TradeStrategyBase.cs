@@ -46,7 +46,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
             this.strategy = strategy;
             this.cancellationToken = cancellationToken;
 
-            await TryUpdateStrategy(strategy.Parameters);
+            await TryUpdateStrategyAsync(strategy.Parameters);
 
             while (run)
             {
@@ -97,13 +97,18 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
             return tcs.Task;
         }
 
-        public virtual async Task<bool> TryUpdateStrategy(string strategyParameters)
+        public virtual async Task<bool> TryUpdateStrategyAsync(string strategyParameters)
         {
             var tcs = new TaskCompletionSource<bool>();
 
             try
             {
-                await UpdateParametersAsync(strategyParameters);
+                var parameters = JsonConvert.DeserializeObject<StrategyParameters>(strategyParameters);
+
+                suspend = parameters.Suspend;
+
+                StrategyNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = strategy.Name, Message = $"Parameter update : {parameters}", NotificationLevel = NotificationLevel.Information } });
+
                 tcs.SetResult(true);
             }
             catch (Exception ex)
@@ -112,27 +117,6 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
             }
 
             return await tcs.Task;
-        }
-
-        public virtual async Task UpdateParametersAsync(string parameters)
-        {
-            var tcs = new TaskCompletionSource<object>();
-
-            try
-            {
-                var strategyParameters = JsonConvert.DeserializeObject<StrategyParameters>(parameters);
-
-                suspend = strategyParameters.Suspend;
-
-                StrategyNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = strategy.Name, Message = $"Parameter update : {parameters}", NotificationLevel = NotificationLevel.Information } });
-                tcs.SetResult(null);
-            }
-            catch (Exception ex)
-            {
-                tcs.SetException(ex);
-            }
-
-            await tcs.Task;
         }
 
         public virtual void SubscribeAccountInfo(AccountInfoEventArgs accountInfoEventArgs)
