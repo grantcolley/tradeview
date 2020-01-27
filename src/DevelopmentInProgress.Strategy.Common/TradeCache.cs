@@ -1,4 +1,5 @@
 ﻿using DevelopmentInProgress.TradeView.Interface.Interfaces;
+using DevelopmentInProgress.TradeView.Interface.Strategy;
 using System;
 using System.Linq;
 
@@ -6,23 +7,24 @@ namespace DevelopmentInProgress.Strategy.Common
 {
     public class TradeCache<TC, T, P>  where TC : ITradeCreator<T,P>, new()
                                        where T : ITrade, new()
+                                       where P : StrategyParameters
     {
         private T[] trades;
-        private ITradeCreator<T,P> tradeCreator;
 
-        public TradeCache(int incrementalSize)
+        public TradeCache(int tradeRange)
         {
-            IncrementalSize = incrementalSize;
+            TradeRange = tradeRange;
 
-            tradeCreator = new TC();
+            TradeCreator = new TC();
 
-            trades = new T[incrementalSize];
+            trades = new T[tradeRange];
             Position = -1;
         }
 
         public int CacheSize { get { return trades.Length; } }
-        public int IncrementalSize { get; private set; }
+        public int TradeRange { get; private set; }
         public int Position { get; private set; }
+        public ITradeCreator<T, P> TradeCreator { get; private set; }
 
         public T[] GetTrades()
         {
@@ -71,13 +73,13 @@ namespace DevelopmentInProgress.Strategy.Common
         {
             Position += 1;
 
-            var t = tradeCreator.CreateTrade(trade);
+            var t = TradeCreator.CreateTrade(trade);
 
             trades[Position] = t;
 
             if (Position == trades.Length - 1)
             {
-                Array.Resize(ref trades, trades.Length + IncrementalSize);
+                Array.Resize(ref trades, trades.Length + TradeRange);
             }
 
             return t;
