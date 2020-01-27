@@ -18,7 +18,7 @@ namespace DevelopmentInProgress.Strategy.Common.Test
 
             // Assert
             Assert.AreEqual(tradeCache.Position, -1);
-            Assert.AreEqual(tradeCache.IncrementalSize, 5);
+            Assert.AreEqual(tradeCache.TradeRange, 5);
             Assert.AreEqual(tradeCache.CacheSize, incrementalSize);
             Assert.IsNull(tradeCache.GetLastTrade());
             Assert.IsNull(tradeCache.GetTrades());
@@ -50,7 +50,7 @@ namespace DevelopmentInProgress.Strategy.Common.Test
             // Assert
             Assert.AreEqual(tradeCache.Position, 2);
             Assert.AreEqual(tradeCache.CacheSize, 5);
-            Assert.AreEqual(tradeCache.IncrementalSize, 5);
+            Assert.AreEqual(tradeCache.TradeRange, 5);
             Assert.AreEqual(trades.Length, 3);
 
             Assert.AreEqual(lastTrade, trade3);
@@ -93,7 +93,7 @@ namespace DevelopmentInProgress.Strategy.Common.Test
             // Assert
             Assert.AreEqual(tradeCache.Position, 2);
             Assert.AreEqual(tradeCache.CacheSize, 5);
-            Assert.AreEqual(tradeCache.IncrementalSize, 5);
+            Assert.AreEqual(tradeCache.TradeRange, 5);
             Assert.AreEqual(trades.Length, 3);
 
             Assert.AreEqual(lastTrade, trade3);
@@ -131,7 +131,7 @@ namespace DevelopmentInProgress.Strategy.Common.Test
             // Assert
             Assert.AreEqual(tradeCache.Position, 2);
             Assert.AreEqual(tradeCache.CacheSize, 5);
-            Assert.AreEqual(tradeCache.IncrementalSize, 5);
+            Assert.AreEqual(tradeCache.TradeRange, 5);
             Assert.AreEqual(trades.Length, 3);
 
             Assert.AreEqual(lastTrade, trade3);
@@ -175,7 +175,7 @@ namespace DevelopmentInProgress.Strategy.Common.Test
             // Assert
             Assert.AreEqual(tradeCache.Position, 5);
             Assert.AreEqual(tradeCache.CacheSize, 10);
-            Assert.AreEqual(tradeCache.IncrementalSize, 5);
+            Assert.AreEqual(tradeCache.TradeRange, 5);
             Assert.AreEqual(trades.Length, 6);
 
             Assert.AreEqual(lastTrade, trade6);
@@ -219,7 +219,7 @@ namespace DevelopmentInProgress.Strategy.Common.Test
             // Assert
             Assert.AreEqual(tradeCache.Position, 5);
             Assert.AreEqual(tradeCache.CacheSize, 10);
-            Assert.AreEqual(tradeCache.IncrementalSize, 5);
+            Assert.AreEqual(tradeCache.TradeRange, 5);
             Assert.AreEqual(trades.Length, 6);
 
             Assert.AreEqual(lastTrade, trade6);
