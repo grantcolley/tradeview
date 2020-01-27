@@ -1,7 +1,11 @@
 ﻿using DevelopmentInProgress.Strategy.Common;
+using DevelopmentInProgress.Strategy.Common.Parameter;
+using DevelopmentInProgress.Strategy.Common.StrategyTrade;
+using DevelopmentInProgress.Strategy.Common.TradeCreator;
 using DevelopmentInProgress.TradeView.Interface.Enums;
 using DevelopmentInProgress.TradeView.Interface.Events;
 using DevelopmentInProgress.TradeView.Interface.Extensions;
+using DevelopmentInProgress.TradeView.Interface.Interfaces;
 using DevelopmentInProgress.TradeView.Interface.Model;
 using DevelopmentInProgress.TradeView.Interface.Strategy;
 using Newtonsoft.Json;
@@ -13,21 +17,43 @@ namespace DevelopmentInProgress.Strategy.Demo
 {
     public class DemoTradeStrategy : TradeStrategyBase
     {
-        private decimal buyIndicator;
-        private decimal sellIndicator;
-        private int tradeMovingAvarageSetLength;
-        private TradeCache<DemoTradeCreator, DemoTrade, object> tradeCache;
+        private MovingAverageTradeParameters movingAverageTradeParameters;
+        private TradeCache<MovingAverageTradeCreator, MovingAverageTrade, MovingAverageTradeParameters> tradeCache;
 
-        public override async Task UpdateParametersAsync(string parameters)
+        public override async Task<bool> TryUpdateStrategyAsync(string parameters)
         {
-            var demoTradeStrategyParameters = JsonConvert.DeserializeObject<DemoTradeStrategyParameters>(parameters);
+            var tcs = new TaskCompletionSource<bool>();
 
-            buyIndicator = demoTradeStrategyParameters.BuyIndicator;
-            sellIndicator = demoTradeStrategyParameters.SellIndicator;
-            tradeMovingAvarageSetLength = demoTradeStrategyParameters.TradeMovingAvarageSetLength;
-            suspend = demoTradeStrategyParameters.Suspend;
+            try
+            {
+                var strategyParameters = JsonConvert.DeserializeObject<MovingAverageTradeParameters>(parameters);
 
-            StrategyNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = strategy.Name, Message = $"Parameter update : {parameters}", NotificationLevel = NotificationLevel.Information } });
+                if(tradeCache == null)
+                {
+                    tradeCache = new TradeCache<MovingAverageTradeCreator, MovingAverageTrade, MovingAverageTradeParameters>(strategyParameters.TradeRange);
+                }
+
+                if(movingAverageTradeParameters == null 
+                   || !strategyParameters.MovingAvarageRange.Equals(movingAverageTradeParameters.MovingAvarageRange)
+                   || !strategyParameters.SellIndicator.Equals(movingAverageTradeParameters.SellIndicator)
+                   || !strategyParameters.BuyIndicator.Equals(movingAverageTradeParameters.BuyIndicator))
+                {
+                    movingAverageTradeParameters = strategyParameters;
+                    tradeCache.TradeCreator.Reset(movingAverageTradeParameters);
+                }
+
+                suspend = movingAverageTradeParameters.Suspend;
+
+                StrategyNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = strategy.Name, Message = $"Parameter update : {parameters}", NotificationLevel = NotificationLevel.Information } });
+
+                tcs.SetResult(true);
+            }
+            catch (Exception ex)
+            {
+                tcs.SetException(ex);
+            }
+
+            return await tcs.Task;
         }
 
         public override void SubscribeTrades(TradeEventArgs tradeEventArgs)
@@ -42,53 +68,34 @@ namespace DevelopmentInProgress.Strategy.Demo
 
             try
             {
+                var previousLastTrade = tradeCache.GetLastTrade();
 
-                var trades = (from t in tradeEventArgs.Trades
-                              orderby t.Time, t.Id
-                              select t).ToList();
+                ITrade[] trades;
 
-                var tradesCount = trades.Count();
-
-                var demoTrades = new DemoTrade[tradesCount];
-                var tradePrices = new decimal[tradesCount];
-
-                var tradeSetLength = tradeMovingAvarageSetLength == 0 ? tradesCount : tradeMovingAvarageSetLength;
-
-                for (int i = 0; i < tradesCount; i++)
+                if (previousLastTrade == null)
                 {
-                    tradePrices[i] = trades[i].Price;
-
-                    var priceMovingAverage = StrategyHelper.CalculateMovingAverage(i, tradePrices, tradeSetLength);
-
-                    var buyIndicatorPrice = priceMovingAverage - (priceMovingAverage * buyIndicator);
-                    var sellIndicatorPrice = priceMovingAverage + (priceMovingAverage * sellIndicator);
-                    
-                    var demoTrade = new DemoTrade
-                    {
-                        Symbol = trades[i].Symbol,                        
-                        Exchange = trades[i].Exchange,
-                        Id = trades[i].Id,
-                        Price = trades[i].Price,
-                        Quantity = trades[i].Quantity,
-                        Time = trades[i].Time,
-                        IsBuyerMaker = trades[i].IsBuyerMaker,
-                        IsBestPriceMatch = trades[i].IsBestPriceMatch,
-                        SmaPrice = priceMovingAverage,
-                        BuyIndicatorPrice = buyIndicatorPrice,
-                        SellIndicatorPrice = sellIndicatorPrice
-                    };
-
-                    demoTrades[i] = demoTrade;
+                    trades = (from t in tradeEventArgs.Trades
+                                  orderby t.Time, t.Id
+                                  select t).ToArray();
+                    tradeCache.AddRange(trades);
+                }
+                else
+                {
+                    trades = (from t in tradeEventArgs.Trades
+                                  where t.Time > previousLastTrade.Time && t.Id > previousLastTrade.Id
+                                  orderby t.Time, t.Id
+                                  select t).ToArray();
+                    tradeCache.AddRange(trades);
                 }
 
-                var lastTrade = demoTrades[tradesCount - 1];
+                var lastTrade = tradeCache.GetLastTrade();
 
                 if (!suspend)
                 {
                     PlaceOrder(lastTrade);
                 }
 
-                message = JsonConvert.SerializeObject(demoTrades.ToList());
+                message = JsonConvert.SerializeObject(trades);
             }
             catch (Exception ex)
             {
@@ -99,7 +106,7 @@ namespace DevelopmentInProgress.Strategy.Demo
             StrategyTradeNotification(new StrategyNotificationEventArgs { StrategyNotification = strategyNotification });
         }
 
-        private void PlaceOrder(DemoTrade trade)
+        private void PlaceOrder(MovingAverageTrade trade)
         {
             if (accountInfo == null
                 || placingOrder)
@@ -116,15 +123,15 @@ namespace DevelopmentInProgress.Strategy.Demo
                     OrderSide orderSide;
                     decimal stopPrice = 0m;
 
-                    if (trade.Price > trade.SellIndicatorPrice)
+                    if (trade.Price > trade.SellPrice)
                     {
                         orderSide = OrderSide.Sell;
-                        stopPrice = trade.SellIndicatorPrice.HasRemainder() ? trade.SellIndicatorPrice.Trim(symbol.Price.Increment.GetPrecision()) : trade.SellIndicatorPrice;
+                        stopPrice = trade.SellPrice.HasRemainder() ? trade.SellPrice.Trim(symbol.Price.Increment.GetPrecision()) : trade.SellPrice;
                     }
-                    else if (trade.Price < trade.BuyIndicatorPrice)
+                    else if (trade.Price < trade.BuyPrice)
                     {
                         orderSide = OrderSide.Buy;
-                        stopPrice = trade.BuyIndicatorPrice.HasRemainder() ? trade.BuyIndicatorPrice.Trim(symbol.Price.Increment.GetPrecision()) : trade.BuyIndicatorPrice;
+                        stopPrice = trade.BuyPrice.HasRemainder() ? trade.BuyPrice.Trim(symbol.Price.Increment.GetPrecision()) : trade.BuyPrice;
                     }
                     else
                     {
