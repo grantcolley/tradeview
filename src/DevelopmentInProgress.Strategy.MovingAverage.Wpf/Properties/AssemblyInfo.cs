@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DevelopmentInProgress.Demo.Wpf")]
-[assembly: AssemblyDescription("DevelopmentInProgress.Demo.Wpf")]
+[assembly: AssemblyTitle("DevelopmentInProgress.Strategy.MovingAverage.Wpf")]
+[assembly: AssemblyDescription("DevelopmentInProgress.Strategy.MovingAverage.Wpf")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Development In Progress Ltd")]
-[assembly: AssemblyProduct("DevelopmentInProgress.Demo.Wpf")]
+[assembly: AssemblyProduct("DevelopmentInProgress.Strategy.MovingAverage.Wpf")]
 [assembly: AssemblyCopyright("Copyright © Development In Progress Ltd 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

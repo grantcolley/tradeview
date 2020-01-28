@@ -20,9 +20,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using DevelopmentInProgress.Strategy.Common.StrategyTrade;
 
-namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
+namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
 {
-    public class DemoViewModel : StrategyDisplayViewModelBase
+    public class MovingAverageViewModel : StrategyDisplayViewModelBase
     {
         private ChartValues<Trade> tradesChart;
         private ChartValues<Trade> smaTradesChart;
@@ -43,7 +43,7 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
         private ITradeHelper tradeHelper;
         private IOrderBookHelperFactory orderBookHelperFactory;
 
-        public DemoViewModel(WpfStrategy strategy, IHelperFactoryContainer iHelperFactoryContainer, 
+        public MovingAverageViewModel(WpfStrategy strategy, IHelperFactoryContainer iHelperFactoryContainer, 
             Dispatcher UiDispatcher, ILoggerFacade logger)
             : base(strategy, iHelperFactoryContainer, UiDispatcher, logger)
         {

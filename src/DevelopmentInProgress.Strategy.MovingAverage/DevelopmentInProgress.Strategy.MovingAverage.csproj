@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>DevelopmentInProgress.Strategy.Demo</AssemblyName>
-    <RootNamespace>DevelopmentInProgress.Strategy.Demo</RootNamespace>
+    <AssemblyName>DevelopmentInProgress.Strategy.MovingAverage</AssemblyName>
+    <RootNamespace>DevelopmentInProgress.Strategy.MovingAverage</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

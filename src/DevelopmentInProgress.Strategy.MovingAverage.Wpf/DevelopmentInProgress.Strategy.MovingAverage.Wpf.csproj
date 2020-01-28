@@ -7,8 +7,8 @@
     <ProjectGuid>{0A22E692-5958-41BD-AA1E-245000571604}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DevelopmentInProgress.Strategy.Demo.Wpf</RootNamespace>
-    <AssemblyName>DevelopmentInProgress.Strategy.Demo.Wpf</AssemblyName>
+    <RootNamespace>DevelopmentInProgress.Strategy.MovingAverage.Wpf</RootNamespace>
+    <AssemblyName>DevelopmentInProgress.Strategy.MovingAverage.Wpf</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -79,9 +79,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\DemoViewModel.cs" />
-    <Compile Include="View\DemoView.xaml.cs">
-      <DependentUpon>DemoView.xaml</DependentUpon>
+    <Compile Include="ViewModel\MovingAverageViewModel.cs" />
+    <Compile Include="View\MovingAverageView.xaml.cs">
+      <DependentUpon>MovingAverageView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -89,9 +89,9 @@
       <Project>{3a4f5ad9-5af4-4a65-9b0a-98037a4c6743}</Project>
       <Name>DevelopmentInProgress.Strategy.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DevelopmentInProgress.Strategy.Demo\DevelopmentInProgress.Strategy.Demo.csproj">
+    <ProjectReference Include="..\DevelopmentInProgress.Strategy.Demo\DevelopmentInProgress.Strategy.MovingAverage.csproj">
       <Project>{28e274d1-2bab-41f5-a92a-0c73b2265be8}</Project>
-      <Name>DevelopmentInProgress.Strategy.Demo</Name>
+      <Name>DevelopmentInProgress.Strategy.MovingAverage</Name>
     </ProjectReference>
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Interface\DevelopmentInProgress.TradeView.Interface.csproj">
       <Project>{e3236e65-3232-438d-8dc9-5cd6be419b68}</Project>
@@ -110,7 +110,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="View\DemoView.xaml">
+    <Page Include="View\MovingAverageView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

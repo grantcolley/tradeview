@@ -13,9 +13,9 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DevelopmentInProgress.Strategy.Demo
+namespace DevelopmentInProgress.Strategy.MovingAverage
 {
-    public class DemoTradeStrategy : TradeStrategyBase
+    public class MovingAverageStrategy : TradeStrategyBase
     {
         private MovingAverageTradeParameters movingAverageTradeParameters;
         private TradeCache<MovingAverageTradeCreator, MovingAverageTrade, MovingAverageTradeParameters> tradeCache;
