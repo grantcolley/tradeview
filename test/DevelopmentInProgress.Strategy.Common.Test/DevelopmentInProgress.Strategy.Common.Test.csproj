@@ -52,6 +52,7 @@
     <Compile Include="TestTradeCreator.cs" />
     <Compile Include="StrategyHelperTest.cs" />
     <Compile Include="TestTrade.cs" />
+    <Compile Include="TestTradeParameters.cs" />
     <Compile Include="TradeCacheTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MovingAverageTradeCreatorTest.cs" />

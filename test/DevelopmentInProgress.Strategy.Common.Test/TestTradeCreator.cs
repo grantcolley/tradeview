@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.Strategy.Common.Test
 {
-    public class TestTradeCreator : ITradeCreator<TestTrade, object>
+    public class TestTradeCreator : ITradeCreator<TestTrade, TestTradeParameters>
     {
         public TestTrade CreateTrade(ITrade trade)
         {
@@ -20,7 +20,7 @@ namespace DevelopmentInProgress.Strategy.Common.Test
             };
         }
 
-        public void Reset(object parameters)
+        public void Reset(TestTradeParameters parameters)
         {
             throw new System.NotImplementedException();
         }
