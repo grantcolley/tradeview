@@ -18,6 +18,7 @@ using System.Windows.Threading;
 using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
 using System.Threading;
 using System.Threading.Tasks;
+using DevelopmentInProgress.Strategy.Common.StrategyTrade;
 
 namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
 {
@@ -222,17 +223,17 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
                 {
                     IsLoadingTrades = false;
 
-                    List<DemoTrade> tradesUpdate = null;
+                    List<MovingAverageTrade> tradesUpdate = null;
 
                     foreach (var notification in tradeNotifications)
                     {
                         if (tradesUpdate == null)
                         {
-                            tradesUpdate = JsonConvert.DeserializeObject<List<DemoTrade>>(notification.Message);
+                            tradesUpdate = JsonConvert.DeserializeObject<List<MovingAverageTrade>>(notification.Message);
                             continue;
                         }
 
-                        var updateTrades = JsonConvert.DeserializeObject<List<DemoTrade>>(notification.Message);
+                        var updateTrades = JsonConvert.DeserializeObject<List<MovingAverageTrade>>(notification.Message);
                         var newTrades = updateTrades.Except(tradesUpdate).ToList();
                         tradesUpdate.AddRange(newTrades.OrderBy(t => t.Time));
                     }
@@ -244,9 +245,9 @@ namespace DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel
                     var pricePrecision = symbol.PricePrecision;
                     var quantityPrecision = symbol.QuantityPrecision;
 
-                    Func<ITrade, int, int, Trade> createSmaTrade = (t, p, q) => new Trade { Price = ((DemoTrade)t).SmaPrice.Trim(p), Time = t.Time.ToLocalTime(), Exchange = t.Exchange };
-                    Func<ITrade, int, int, Trade> createBuyIndicator = (t, p, q) => new Trade { Price = ((DemoTrade)t).BuyIndicatorPrice.Trim(p), Time = t.Time.ToLocalTime(), Exchange = t.Exchange };
-                    Func<ITrade, int, int, Trade> createSellIndicator = (t, p, q) => new Trade { Price = ((DemoTrade)t).SellIndicatorPrice.Trim(p), Time = t.Time.ToLocalTime(), Exchange = t.Exchange };
+                    Func<ITrade, int, int, Trade> createSmaTrade = (t, p, q) => new Trade { Price = ((MovingAverageTrade)t).MovingAveragePrice.Trim(p), Time = t.Time.ToLocalTime(), Exchange = t.Exchange };
+                    Func<ITrade, int, int, Trade> createBuyIndicator = (t, p, q) => new Trade { Price = ((MovingAverageTrade)t).BuyPrice.Trim(p), Time = t.Time.ToLocalTime(), Exchange = t.Exchange };
+                    Func<ITrade, int, int, Trade> createSellIndicator = (t, p, q) => new Trade { Price = ((MovingAverageTrade)t).SellPrice.Trim(p), Time = t.Time.ToLocalTime(), Exchange = t.Exchange };
 
                     var tradesDisplayCount = Strategy.TradesDisplayCount;
                     var tradesChartDisplayCount = Strategy.TradesChartDisplayCount;

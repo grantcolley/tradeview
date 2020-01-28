@@ -85,6 +85,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DevelopmentInProgress.Strategy.Common\DevelopmentInProgress.Strategy.Common.csproj">
+      <Project>{3a4f5ad9-5af4-4a65-9b0a-98037a4c6743}</Project>
+      <Name>DevelopmentInProgress.Strategy.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DevelopmentInProgress.Strategy.Demo\DevelopmentInProgress.Strategy.Demo.csproj">
       <Project>{28e274d1-2bab-41f5-a92a-0c73b2265be8}</Project>
       <Name>DevelopmentInProgress.Strategy.Demo</Name>
