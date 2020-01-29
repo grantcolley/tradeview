@@ -40,7 +40,7 @@
             
             <DataTemplate DataType="{x:Type model:Strategy}">
                 <DockPanel LastChildFill="True">
-                    <Label DockPanel.Dock="Left" Content="{Binding Name}" Height="30" Margin="2" FontWeight="Bold"/>
+                    <Label DockPanel.Dock="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" Content="{Binding Name}" Height="30" Margin="2" FontWeight="Bold"/>
                     <Button DockPanel.Dock="Right" Margin="2" Height="18" Width="18" Padding="0,0.5,1,0"
                             Style="{StaticResource ButtonImageStyle}"
                             ToolTip="Run Strategy"
