@@ -70,7 +70,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             CanRun = false;
             CanMonitor = false;
             IsConnected = false;
-            IsConnecting = false;
+            IsConnecting = true;
 
             Notifications = new ObservableCollection<Message>();
 
