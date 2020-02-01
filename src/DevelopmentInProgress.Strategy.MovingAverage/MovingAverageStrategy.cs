@@ -71,13 +71,14 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
                 var previousLastTrade = tradeCache.GetLastTrade();
 
                 ITrade[] trades;
+                MovingAverageTrade[] movingAverageTrades;
 
                 if (previousLastTrade == null)
                 {
                     trades = (from t in tradeEventArgs.Trades
                                   orderby t.Time, t.Id
                                   select t).ToArray();
-                    tradeCache.AddRange(trades);
+                    movingAverageTrades = tradeCache.AddRange(trades);
                 }
                 else
                 {
@@ -85,7 +86,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
                                   where t.Time > previousLastTrade.Time && t.Id > previousLastTrade.Id
                                   orderby t.Time, t.Id
                                   select t).ToArray();
-                    tradeCache.AddRange(trades);
+                    movingAverageTrades = tradeCache.AddRange(trades);
                 }
 
                 var lastTrade = tradeCache.GetLastTrade();
@@ -95,7 +96,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
                     PlaceOrder(lastTrade);
                 }
 
-                message = JsonConvert.SerializeObject(trades);
+                message = JsonConvert.SerializeObject(movingAverageTrades);
             }
             catch (Exception ex)
             {
