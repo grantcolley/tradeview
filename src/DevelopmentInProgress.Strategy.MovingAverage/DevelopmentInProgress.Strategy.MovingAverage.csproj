@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="IF EXIST $(SolutionDir)output\ copy $(SolutionDir)output\UI\netstandard2.0\$(TargetFileName) $(SolutionDir)output\UI\$(TargetFileName)" />
+    <Exec Command="IF $(ConfigurationName) == Debug (&#xD;&#xA;IF EXIST $(SolutionDir)output\ copy $(SolutionDir)output\UI\netstandard2.0\$(TargetFileName) $(SolutionDir)output\UI\$(TargetFileName)&#xD;&#xA;IF EXIST $(SolutionDir)output\ copy $(SolutionDir)output\UI\netstandard2.0\DevelopmentInProgress.Strategy.MovingAverage.dll $(SolutionDir)output\UI\DevelopmentInProgress.Strategy.MovingAverage.dll)" />
   </Target>
 
 </Project>
