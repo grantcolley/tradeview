@@ -8,10 +8,10 @@
                       ModuleType="DevelopmentInProgress.TradeView.Wpf.Configuration.Module,DevelopmentInProgress.TradeView.Wpf.Configuration"
                       InitializationMode="WhenAvailable">
     </prism:ModuleInfo>
-    
-    <prism:ModuleInfo Ref="Trading"
-                      ModuleName="Trading"
-                      ModuleType="DevelopmentInProgress.TradeView.Wpf.Trading.Module,DevelopmentInProgress.TradeView.Wpf.Trading">
+
+    <prism:ModuleInfo Ref="Dashboard"
+                      ModuleName="Dashboard"
+                      ModuleType="DevelopmentInProgress.TradeView.Wpf.Dashboard.Module,DevelopmentInProgress.TradeView.Wpf.Dashboard">
         <prism:ModuleInfo.DependsOn>
             <sys:String>Configuration</sys:String>
         </prism:ModuleInfo.DependsOn>
@@ -21,8 +21,16 @@
                       ModuleName="Strategies"
                       ModuleType="DevelopmentInProgress.TradeView.Wpf.Strategies.Module,DevelopmentInProgress.TradeView.Wpf.Strategies">
         <prism:ModuleInfo.DependsOn>
-            <sys:String>Trading</sys:String>
+            <sys:String>Dashboard</sys:String>
         </prism:ModuleInfo.DependsOn>
     </prism:ModuleInfo>
     
+    <prism:ModuleInfo Ref="Trading"
+                      ModuleName="Trading"
+                      ModuleType="DevelopmentInProgress.TradeView.Wpf.Trading.Module,DevelopmentInProgress.TradeView.Wpf.Trading">
+        <prism:ModuleInfo.DependsOn>
+            <sys:String>Strategies</sys:String>
+        </prism:ModuleInfo.DependsOn>
+    </prism:ModuleInfo>
+
 </prism:ModuleCatalog>
