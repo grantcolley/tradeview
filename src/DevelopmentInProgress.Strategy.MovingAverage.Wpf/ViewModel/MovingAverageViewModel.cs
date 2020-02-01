@@ -39,7 +39,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
         private bool isLoadingTrades;
         private bool isLoadingOrderBook;
         private bool disposed;
-
+        private bool showCandlesticks;
         private ITradeHelper tradeHelper;
         private IOrderBookHelperFactory orderBookHelperFactory;
 
@@ -61,6 +61,8 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
             tradeHelper = tradeHelperFactory.GetTradeHelper();
 
             orderBookHelperFactory = HelperFactoryContainer.GetFactory<IOrderBookHelperFactory>();
+
+            ShowCandlesticks = Strategy.StrategySubscriptions.Any(s => s.SubscribeCandlesticks);
         }
 
         public Func<double, string> TimeFormatter { get; set; }
@@ -92,6 +94,18 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
             }
         }
 
+        public bool ShowCandlesticks
+        {
+            get { return showCandlesticks; }
+            set
+            {
+                if (showCandlesticks != value)
+                {
+                    showCandlesticks = value;
+                    OnPropertyChanged("ShowCandlesticks");
+                }
+            }
+        }
         public ChartValues<Trade> TradesChart
         {
             get { return tradesChart; }

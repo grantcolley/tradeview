@@ -6,9 +6,12 @@
              xmlns:lc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:converters="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.Converters;assembly=DevelopmentInProgress.TradeView.Wpf.Controls"
              xmlns:progress="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.Progress;assembly=DevelopmentInProgress.TradeView.Wpf.Controls"
+             xmlns:localConverters="clr-namespace:DevelopmentInProgress.Strategy.MovingAverage.Wpf.Converter"
              mc:Ignorable="d" >
     <UserControl.Resources>
         <ResourceDictionary>
+            <localConverters:GridRowColumnSpanConverter x:Key="gridRowColumnSpanConverter"/>
+            <localConverters:InvertedGridRowColumnSpanConverter x:Key="invertedGridRowColumnSpanConverter"/>
             <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
             <converters:InvertBoolToVisibilityConverter x:Key="invertBoolToVisibilityConverter"/>
         </ResourceDictionary>
@@ -72,13 +75,17 @@
                     </ItemsControl>
                 </Grid>
 
-                <Viewbox Grid.Row="0" Grid.Column="1" Height="50" Width="50"
-                                Margin="5,1,1,1"
-                                Visibility="{Binding IsLoadingTrades, Converter={StaticResource boolToVisibilityConverter}}">
+                <GridSplitter Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="{Binding ShowCandlesticks, Converter={StaticResource invertedGridRowColumnSpanConverter}}" Height="2" HorizontalAlignment="Stretch" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext"/>
+
+                <Viewbox Grid.Row="0" Grid.Column="1" 
+                         Height="50" Width="50" Margin="5,1,1,1"
+                         Grid.RowSpan="{Binding ShowCandlesticks, Converter={StaticResource gridRowColumnSpanConverter}}"
+                         Visibility="{Binding IsLoadingTrades, Converter={StaticResource boolToVisibilityConverter}}">
                     <progress:CircularProgress/>
                 </Viewbox>
 
-                <DockPanel Grid.Row="0" Grid.Column="1" LastChildFill="True" Margin="5,1,1,1">
+                <DockPanel Grid.Row="0" Grid.Column="1" LastChildFill="True" Margin="5,1,1,1"
+                           Grid.RowSpan="{Binding ShowCandlesticks, Converter={StaticResource gridRowColumnSpanConverter}}">
                     <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}"
                                        Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}">
                         <lc:CartesianChart.Series>
@@ -135,8 +142,6 @@
                     </lc:CartesianChart>
                 </DockPanel>
 
-                <GridSplitter Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Height="2" HorizontalAlignment="Stretch" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext"/>
-                
                 <DockPanel Grid.Row="2" Grid.Column="0" LastChildFill="True">
                     <Label DockPanel.Dock="Top" Content="Order Book (Cumulative)" HorizontalAlignment="Center" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                     <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}"
@@ -186,7 +191,7 @@
                     </lc:CartesianChart>
                 </DockPanel>
 
-                <DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="True">
+                <DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="True" Visibility="{Binding ShowCandlesticks, Converter={StaticResource boolToVisibilityConverter}}">
                     <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}"
                                        Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}">
                         <lc:CartesianChart.Series>
