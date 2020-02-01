@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy $(SolutionDir)output\UI\netstandard2.0\$(TargetFileName) $(SolutionDir)output\UI\$(TargetFileName)" />
+    <Exec Command="IF EXIST $(SolutionDir)output\ copy $(SolutionDir)output\UI\netstandard2.0\$(TargetFileName) $(SolutionDir)output\UI\$(TargetFileName)" />
   </Target>
 
 </Project>
