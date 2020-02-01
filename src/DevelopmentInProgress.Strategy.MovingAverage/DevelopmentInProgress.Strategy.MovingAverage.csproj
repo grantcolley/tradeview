@@ -8,6 +8,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>C:\GitHub\tradeview\output\UI\</OutputPath>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,5 +19,9 @@
     <ProjectReference Include="..\DevelopmentInProgress.Strategy.Common\DevelopmentInProgress.Strategy.Common.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Interface\DevelopmentInProgress.TradeView.Interface.csproj" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy $(SolutionDir)output\UI\netstandard2.0\$(TargetFileName) $(SolutionDir)output\UI\$(TargetFileName)" />
+  </Target>
 
 </Project>
