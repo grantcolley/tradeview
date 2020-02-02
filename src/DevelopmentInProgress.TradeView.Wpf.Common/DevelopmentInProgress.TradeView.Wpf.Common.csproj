@@ -72,6 +72,7 @@
     <Compile Include="Extensions\CandlestickExtensions.cs" />
     <Compile Include="Extensions\StrategyExtensions.cs" />
     <Compile Include="Extensions\StrategyNotificationExtensions.cs" />
+    <Compile Include="Extensions\StrategyServerExtensions.cs" />
     <Compile Include="Extensions\StrategySubscriptionExtensions.cs" />
     <Compile Include="Extensions\UserAccountExtensions.cs" />
     <Compile Include="Helpers\BinanceOrderBookHelper.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Model\OrderBookPriceLevel.cs" />
     <Compile Include="Model\Preferences.cs" />
     <Compile Include="Model\StrategyFileType.cs" />
+    <Compile Include="Model\StrategyServer.cs" />
     <Compile Include="Model\TimeValuePoint.cs" />
     <Compile Include="Model\Strategy.cs" />
     <Compile Include="Model\StrategyFile.cs" />
@@ -103,8 +105,10 @@
     <Compile Include="Services\AccountsService.cs" />
     <Compile Include="Services\IAccountsService.cs" />
     <Compile Include="Services\IStrategyPerformanceService.cs" />
+    <Compile Include="Services\IStrategyServerService.cs" />
     <Compile Include="Services\IStrategyService.cs" />
     <Compile Include="Services\StrategyPerformanceService.cs" />
+    <Compile Include="Services\StrategyServerService.cs" />
     <Compile Include="Services\StrategyService.cs" />
     <Compile Include="ViewModel\AccountViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
