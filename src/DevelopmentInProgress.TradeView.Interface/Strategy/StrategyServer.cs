@@ -1,6 +1,6 @@
 ﻿namespace DevelopmentInProgress.TradeView.Interface.Strategy
 {
-    public class StrategyService
+    public class StrategyServer
     {
         public string Name { get; set; }
         public string Url { get; set; }
