@@ -68,6 +68,7 @@
     <Compile Include="Events\AccountEventType.cs" />
     <Compile Include="Events\EventArgsBase.cs" />
     <Compile Include="Events\OrdersEventArgs.cs" />
+    <Compile Include="Events\StrategyServerEventArgs.cs" />
     <Compile Include="Events\StrategyEventArgs.cs" />
     <Compile Include="Extensions\CandlestickExtensions.cs" />
     <Compile Include="Extensions\StrategyExtensions.cs" />

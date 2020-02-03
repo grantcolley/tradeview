@@ -108,7 +108,9 @@
     <Compile Include="Utility\ISymbolsLoader.cs" />
     <Compile Include="Utility\StrategyFileManager.cs" />
     <Compile Include="Utility\SymbolsLoader.cs" />
+    <Compile Include="ViewModel\StrategyServerManagerViewModel.cs" />
     <Compile Include="ViewModel\StrategyManagerViewModel.cs" />
+    <Compile Include="ViewModel\StrategyServerViewModel.cs" />
     <Compile Include="ViewModel\StrategyViewModel.cs" />
     <Compile Include="ViewModel\SymbolsViewModel.cs" />
     <Compile Include="ViewModel\UserAccountsViewModel.cs" />
@@ -116,8 +118,14 @@
     <Compile Include="View\ParameterDialogView.xaml.cs">
       <DependentUpon>ParameterDialogView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\StrategyServerView.xaml.cs">
+      <DependentUpon>StrategyServerView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\StrategyManagerView.xaml.cs">
       <DependentUpon>StrategyManagerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StrategyServerManagerView.xaml.cs">
+      <DependentUpon>StrategyServerManagerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\StrategyView.xaml.cs">
       <DependentUpon>StrategyView.xaml</DependentUpon>
@@ -170,7 +178,9 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\manageServers.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\manageStrategies.png" />
   </ItemGroup>
@@ -183,9 +193,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\StrategyServerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\StrategyManagerView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\StrategyServerManagerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\StrategyView.xaml">
       <Generator>MSBuild:Compile</Generator>
