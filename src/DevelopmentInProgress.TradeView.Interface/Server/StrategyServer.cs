@@ -7,7 +7,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Server
     {
         public StrategyServer()
         {
-            Strategies = new List<StrategyStatus>();
+            Strategies = new List<StrategyManager>();
         }
 
         public string Name { get; set; }
@@ -16,6 +16,6 @@ namespace DevelopmentInProgress.TradeView.Interface.Server
         public string StoppedBy { get; set; }
         public DateTime Started { get; set; }
         public DateTime Stopped { get; set; }
-        public List<StrategyStatus> Strategies { get; set; }
+        public List<StrategyManager> Strategies { get; set; }
     }
 }
