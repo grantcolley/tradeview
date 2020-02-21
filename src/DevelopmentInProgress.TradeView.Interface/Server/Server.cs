@@ -3,15 +3,16 @@ using System.Collections.Generic;
 
 namespace DevelopmentInProgress.TradeView.Interface.Server
 {
-    public class StrategyServer
+    public class Server : IServer
     {
-        public StrategyServer()
+        public Server()
         {
             Strategies = new List<StrategyManager>();
         }
 
         public string Name { get; set; }
         public string Url { get; set; }
+        public int MaxDegreeOfParallelism { get; set; } = 5;
         public string StartedBy { get; set; }
         public string StoppedBy { get; set; }
         public DateTime Started { get; set; }
