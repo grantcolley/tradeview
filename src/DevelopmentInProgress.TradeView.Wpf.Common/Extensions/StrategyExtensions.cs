@@ -12,7 +12,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 Id = strategy.Id,
                 Name = strategy.Name,
                 Status = strategy.Status,
-                TargetAssembly = strategy.TargetAssembly.File,
+                TargetAssembly = strategy.TargetAssembly.DisplayName,
                 TargetType = strategy.TargetType,
                 Parameters = strategy.Parameters
             };
