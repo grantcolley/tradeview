@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace DevelopmentInProgress.TradeView.Interface.Server
 {
-    public class StrategyManager
+    public class ServerStrategy
     {
-        public StrategyManager()
+        public ServerStrategy()
         {
             Connections = new List<StrategyConnection>();
         }

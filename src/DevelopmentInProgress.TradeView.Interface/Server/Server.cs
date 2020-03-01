@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace DevelopmentInProgress.TradeView.Interface.Server
 {
-    public class Server : IServer
+    public class Server
     {
         public Server()
         {
-            Strategies = new List<StrategyManager>();
+            Strategies = new List<ServerStrategy>();
         }
 
         public string Name { get; set; }
@@ -17,6 +17,6 @@ namespace DevelopmentInProgress.TradeView.Interface.Server
         public string StoppedBy { get; set; }
         public DateTime Started { get; set; }
         public DateTime Stopped { get; set; }
-        public List<StrategyManager> Strategies { get; set; }
+        public List<ServerStrategy> Strategies { get; set; }
     }
 }
