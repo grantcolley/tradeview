@@ -14,7 +14,6 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
 {
     public abstract class TradeStrategyBase : ITradeStrategy
     {
-        protected Strategy strategy;
         protected Dictionary<Exchange, IExchangeService> exchangeServices;
         protected Dictionary<Exchange, List<Symbol>> exchangeSymbols;
         protected bool run;
@@ -41,9 +40,11 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
         public event EventHandler<StrategyNotificationEventArgs> StrategyStatisticsEvent;
         public event EventHandler<StrategyNotificationEventArgs> StrategyCustomNotificationEvent;
 
+        public Strategy Strategy { get; set; }
+
         public async virtual Task<Strategy> RunAsync(Strategy strategy, CancellationToken cancellationToken)
         {
-            this.strategy = strategy;
+            Strategy = strategy;
             this.cancellationToken = cancellationToken;
 
             await TryUpdateStrategyAsync(strategy.Parameters);
@@ -64,7 +65,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
 
             StrategyNotification(new StrategyNotificationEventArgs { StrategyNotification = strategyNotification });
 
-            return this.strategy;
+            return Strategy;
         }
 
         public async virtual Task AddExchangeService(IEnumerable<StrategySubscription> strategySubscriptions, Exchange exchange, IExchangeService exchangeService)
@@ -107,7 +108,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
 
                 suspend = parameters.Suspend;
 
-                StrategyNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = strategy.Name, Message = $"Parameter update : {parameters}", NotificationLevel = NotificationLevel.Information } });
+                StrategyNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = Strategy.Name, Message = $"Parameter update : {parameters}", NotificationLevel = NotificationLevel.Information } });
 
                 tcs.SetResult(true);
             }
@@ -126,12 +127,12 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
                 accountInfo = accountInfoEventArgs.AccountInfo.Clone();
                 placingOrder = false;
 
-                if (strategy == null)
+                if (Strategy == null)
                 {
                     return;
                 }
 
-                var strategyNotification = new StrategyNotification { Name = strategy.Name, Message = "Update strategy performance.", NotificationLevel = NotificationLevel.Account };
+                var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = "Update strategy performance.", NotificationLevel = NotificationLevel.Account };
 
                 StrategyAccountInfoNotification(new StrategyNotificationEventArgs { StrategyNotification = strategyNotification });
             }
@@ -141,7 +142,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
         {
             var message = JsonConvert.SerializeObject(exception);
 
-            var strategyNotification = new StrategyNotification { Name = strategy.Name, Message = message, NotificationLevel = NotificationLevel.AccountError };
+            var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.AccountError };
 
             StrategyAccountInfoNotification(new StrategyNotificationEventArgs { StrategyNotification = strategyNotification });
         }
@@ -150,7 +151,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
         {
             var message = JsonConvert.SerializeObject(tradeEventArgs.Trades);
 
-            var strategyNotification = new StrategyNotification { Name = strategy.Name, Message = message, NotificationLevel = NotificationLevel.Trade };
+            var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.Trade };
 
             StrategyTradeNotification(new StrategyNotificationEventArgs { StrategyNotification = strategyNotification });
         }
@@ -159,7 +160,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
         {
             var message = JsonConvert.SerializeObject(exception);
 
-            var strategyNotification = new StrategyNotification { Name = strategy.Name, Message = message, NotificationLevel = NotificationLevel.TradeError };
+            var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.TradeError };
 
             StrategyTradeNotification(new StrategyNotificationEventArgs { StrategyNotification = strategyNotification });
         }
@@ -168,7 +169,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
         {
             var message = JsonConvert.SerializeObject(orderBookEventArgs.OrderBook);
 
-            var strategyNotification = new StrategyNotification { Name = strategy.Name, Message = message, NotificationLevel = NotificationLevel.OrderBook };
+            var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.OrderBook };
 
             StrategyOrderBookNotification(new StrategyNotificationEventArgs { StrategyNotification = strategyNotification });
         }
@@ -177,7 +178,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
         {
             var message = JsonConvert.SerializeObject(exception);
 
-            var strategyNotification = new StrategyNotification { Name = strategy.Name, Message = message, NotificationLevel = NotificationLevel.OrderBookError };
+            var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.OrderBookError };
 
             StrategyOrderBookNotification(new StrategyNotificationEventArgs { StrategyNotification = strategyNotification });
         }
@@ -186,7 +187,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
         {
             var message = JsonConvert.SerializeObject(candlestickEventArgs.Candlesticks);
 
-            var strategyNotification = new StrategyNotification { Name = strategy.Name, Message = message, NotificationLevel = NotificationLevel.Candlesticks };
+            var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.Candlesticks };
 
             StrategyCandlesticksNotification(new StrategyNotificationEventArgs { StrategyNotification = strategyNotification });
         }
@@ -195,7 +196,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
         {
             var message = JsonConvert.SerializeObject(exception);
 
-            var strategyNotification = new StrategyNotification { Name = strategy.Name, Message = message, NotificationLevel = NotificationLevel.CandlesticksError };
+            var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.CandlesticksError };
 
             StrategyCandlesticksNotification(new StrategyNotificationEventArgs { StrategyNotification = strategyNotification });
         }
@@ -204,7 +205,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
         {
             var message = JsonConvert.SerializeObject(statisticsEventArgs.Statistics);
 
-            var strategyNotification = new StrategyNotification { Name = strategy.Name, Message = message, NotificationLevel = NotificationLevel.Statistics };
+            var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.Statistics };
 
             StrategyStatisticsNotification(new StrategyNotificationEventArgs { StrategyNotification = strategyNotification });
         }
@@ -213,7 +214,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
         {
             var message = JsonConvert.SerializeObject(exception);
 
-            var strategyNotification = new StrategyNotification { Name = strategy.Name, Message = message, NotificationLevel = NotificationLevel.StatisticsError };
+            var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.StatisticsError };
 
             StrategyStatisticsNotification(new StrategyNotificationEventArgs { StrategyNotification = strategyNotification });
         }

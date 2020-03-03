@@ -44,7 +44,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
 
                 suspend = movingAverageTradeParameters.Suspend;
 
-                StrategyNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = strategy.Name, Message = $"Parameter update : {parameters}", NotificationLevel = NotificationLevel.Information } });
+                StrategyNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = Strategy.Name, Message = $"Parameter update : {parameters}", NotificationLevel = NotificationLevel.Information } });
 
                 tcs.SetResult(true);
             }
@@ -58,12 +58,12 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
 
         public override void SubscribeTrades(TradeEventArgs tradeEventArgs)
         {
-            if (strategy == null)
+            if (Strategy == null)
             {
                 return;
             }
 
-            var strategyNotification = new StrategyNotification { Name = strategy.Name, NotificationLevel = NotificationLevel.Trade };
+            var strategyNotification = new StrategyNotification { Name = Strategy.Name, NotificationLevel = NotificationLevel.Trade };
             string message;
 
             try
@@ -176,13 +176,13 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
 
                         symbol.ValidateClientOrder(clientOrder);
 
-                        var strategySymbol = strategy.StrategySubscriptions.SingleOrDefault(ss => ss.Symbol.Equals(trade.Symbol));
+                        var strategySymbol = Strategy.StrategySubscriptions.SingleOrDefault(ss => ss.Symbol.Equals(trade.Symbol));
                         var user = new User { ApiKey = strategySymbol.ApiKey, ApiSecret = strategySymbol.SecretKey, Exchange = Exchange.Binance };
                         var order = exchangeServices[Exchange.Binance].PlaceOrder(user.Exchange, user, clientOrder).Result;
 
                         var message = $"{clientOrder.Symbol} {order.Price} {clientOrder.Quantity} {clientOrder.Side} {clientOrder.Type}";
 
-                        StrategyNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = strategy.Name, Message = message, NotificationLevel = NotificationLevel.Information } });
+                        StrategyNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.Information } });
                     }
                     else
                     {
@@ -192,7 +192,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
                 catch (Exception ex)
                 {
                     placingOrder = false;
-                    StrategyNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = strategy.Name, Message = ex.Message, NotificationLevel = NotificationLevel.Information } });
+                    StrategyNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = Strategy.Name, Message = ex.Message, NotificationLevel = NotificationLevel.Information } });
                 }
             }
         }

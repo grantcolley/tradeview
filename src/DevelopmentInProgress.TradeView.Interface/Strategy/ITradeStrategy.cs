@@ -10,6 +10,8 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
 {
     public interface ITradeStrategy
     {
+        Strategy Strategy { get; set; }
+
         event EventHandler<StrategyNotificationEventArgs> StrategyNotificationEvent;
 
         event EventHandler<StrategyNotificationEventArgs> StrategyAccountInfoEvent;
