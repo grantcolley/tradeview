@@ -7,9 +7,21 @@ namespace DevelopmentInProgress.TradeView.Interface.Extensions
     {
         public static ServerNotification GetNotification(this Server.Server server)
         {
+            var clone = new Server.Server
+            {
+                Name = server.Name,
+                Url = server.Url,
+                MaxDegreeOfParallelism = server.MaxDegreeOfParallelism,
+                StartedBy = server.StartedBy,
+                Started = server.Started,
+                StoppedBy = server.StoppedBy,
+                Stopped = server.Stopped
+            };
+
             return new ServerNotification
             {
-                 Machine = Environment.MachineName
+                Machine = Environment.MachineName,
+                Message = clone.ToString()
             };
         }
     }
