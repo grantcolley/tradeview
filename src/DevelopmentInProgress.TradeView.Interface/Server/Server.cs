@@ -18,5 +18,10 @@ namespace DevelopmentInProgress.TradeView.Interface.Server
         public DateTime Started { get; set; } = DateTime.Now;
         public DateTime Stopped { get; set; }
         public List<ServerStrategy> Strategies { get; set; }
+
+        public ServerNotification GetNotification()
+        {
+            return this.GetNotification();
+        }
     }
 }
