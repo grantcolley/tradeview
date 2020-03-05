@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace DevelopmentInProgress.TradeView.Interface.Server
@@ -22,6 +23,11 @@ namespace DevelopmentInProgress.TradeView.Interface.Server
         public ServerNotification GetNotification()
         {
             return this.GetNotification();
+        }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this, new JsonSerializerSettings { Formatting = Formatting.Indented });
         }
     }
 }
