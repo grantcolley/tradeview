@@ -1,11 +1,12 @@
 ﻿using DevelopmentInProgress.TradeView.Interface.Server;
 using System;
+using System.Collections.Generic;
 
 namespace DevelopmentInProgress.TradeView.Interface.Extensions
 {
     public static class ServerExtensions
     {
-        public static ServerNotification GetNotification(this Server.Server server)
+        public static ServerNotification GetNotification(this Server.Server server, List<ServerStrategy> serverStrategies)
         {
             var clone = new Server.Server
             {
@@ -15,7 +16,8 @@ namespace DevelopmentInProgress.TradeView.Interface.Extensions
                 StartedBy = server.StartedBy,
                 Started = server.Started,
                 StoppedBy = server.StoppedBy,
-                Stopped = server.Stopped
+                Stopped = server.Stopped,
+                Strategies = serverStrategies
             };
 
             return new ServerNotification

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DevelopmentInProgress.TradeView.Interface.Extensions;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -20,9 +21,9 @@ namespace DevelopmentInProgress.TradeView.Interface.Server
         public DateTime Stopped { get; set; }
         public List<ServerStrategy> Strategies { get; set; }
 
-        public ServerNotification GetNotification()
+        public ServerNotification GetServerNotification(List<ServerStrategy> strategies)
         {
-            return this.GetNotification();
+            return this.GetNotification(strategies);
         }
 
         public override string ToString()

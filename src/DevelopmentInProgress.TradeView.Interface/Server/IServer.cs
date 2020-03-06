@@ -13,6 +13,6 @@ namespace DevelopmentInProgress.TradeView.Interface.Server
         DateTime Started { get; set; }
         DateTime Stopped { get; set; }
         List<ServerStrategy> Strategies { get; set; }
-        ServerNotification GetNotification();
+        ServerNotification GetServerNotification(List<ServerStrategy> strategies);
     }
 }
