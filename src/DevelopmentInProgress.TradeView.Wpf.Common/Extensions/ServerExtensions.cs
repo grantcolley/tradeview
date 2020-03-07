@@ -9,7 +9,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
             return new Server
             {
                 Name = server.Name,
-                Url = server.Url
+                Url = server.Url,
+                MaxDegreeOfParallelism = server.MaxDegreeOfParallelism
             };
         }
 
@@ -18,7 +19,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
             return new Interface.Server.Server
             {
                 Name = server.Name,
-                Url = server.Url
+                Url = server.Url,
+                MaxDegreeOfParallelism = server.MaxDegreeOfParallelism
             };
         }
     }

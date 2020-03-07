@@ -4,6 +4,7 @@
     {
         private string name;
         private string url;
+        private int maxDegreeOfParallelism;
 
         public string Name 
         {
@@ -27,6 +28,19 @@
                 {
                     url = value;
                     OnPropertyChanged("Url");
+                }
+            }
+        }
+
+        public int MaxDegreeOfParallelism
+        {
+            get { return maxDegreeOfParallelism; }
+            set
+            {
+                if (maxDegreeOfParallelism != value)
+                {
+                    maxDegreeOfParallelism = value;
+                    OnPropertyChanged("MaxDegreeOfParallelism");
                 }
             }
         }
