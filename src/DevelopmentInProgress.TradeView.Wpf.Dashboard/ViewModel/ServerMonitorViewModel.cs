@@ -3,9 +3,9 @@ using DevelopmentInProgress.TradeView.Wpf.Host.ViewModel;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
 {
-    public class StrategiesViewModel : DocumentViewModel
+    public class ServerMonitorViewModel : DocumentViewModel
     {
-        public StrategiesViewModel(ViewModelContext viewModelContext)
+        public ServerMonitorViewModel(ViewModelContext viewModelContext)
             : base(viewModelContext)
         {
         }

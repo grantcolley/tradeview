@@ -5,16 +5,16 @@ using DevelopmentInProgress.TradeView.Wpf.Host.View;
 namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.View
 {
     /// <summary>
-    /// Interaction logic for StrategiesView.xaml
+    /// Interaction logic for ServerMonitorView.xaml
     /// </summary>
-    public partial class StrategiesView : DocumentViewBase
+    public partial class ServerMonitorView : DocumentViewBase
     {
-        public StrategiesView(IViewContext viewContext, StrategiesViewModel strategiesViewModel)
-            : base(viewContext, strategiesViewModel, Module.ModuleName)
+        public ServerMonitorView(IViewContext viewContext, ServerMonitorViewModel serverMonitorViewModel)
+            : base(viewContext, serverMonitorViewModel, Module.ModuleName)
         {
             InitializeComponent();
 
-            DataContext = strategiesViewModel;
+            DataContext = serverMonitorViewModel;
         }
     }
 }

@@ -1,0 +1,32 @@
+﻿<view:DocumentViewBase x:Class="DevelopmentInProgress.TradeView.Wpf.Dashboard.View.ServerMonitorView"
+                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                       xmlns:view="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.View;assembly=DevelopmentInProgress.TradeView.Wpf.Host"
+                       xmlns:converters="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Converters;assembly=DevelopmentInProgress.TradeView.Wpf.Host"
+                       xmlns:progress="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controls.Progress;assembly=DevelopmentInProgress.TradeView.Wpf.Host"
+                       xmlns:messaging="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;assembly=DevelopmentInProgress.TradeView.Wpf.Controls"
+                       mc:Ignorable="d" >
+    <view:DocumentViewBase.Resources>
+        <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
+        <converters:InvertBoolToVisibilityConverter x:Key="invertBoolToVisibilityConverter"/>
+    </view:DocumentViewBase.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="2"/>
+            <RowDefinition Height="50*"/>
+        </Grid.RowDefinitions>
+
+        <GroupBox Grid.Row="0" Style="{StaticResource GroupBoxNoHeaderStyle}">
+
+        </GroupBox>
+        
+        <GridSplitter Grid.Row="1" Height="2" HorizontalAlignment="Stretch" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext"/>
+
+        <GroupBox Grid.Row="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
+            
+        </GroupBox>
+    </Grid>
+</view:DocumentViewBase>

@@ -19,8 +19,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard
 
         public override void Initialize()
         {
-            Container.RegisterType<Object, StrategiesView>(typeof(StrategiesView).Name);
-            Container.RegisterType<StrategiesViewModel>(typeof(StrategiesViewModel).Name);
+            Container.RegisterType<Object, ServerMonitorView>(typeof(ServerMonitorView).Name);
+            Container.RegisterType<ServerMonitorViewModel>(typeof(ServerMonitorViewModel).Name);
 
             var moduleSettings = new ModuleSettings();
             moduleSettings.ModuleName = ModuleName;
@@ -30,10 +30,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard
             moduleGroup.ModuleGroupName = "Dashboard";
 
             var newDocument = new ModuleGroupItem();
-            newDocument.ModuleGroupItemName = "Strategies";
-            newDocument.TargetView = typeof(StrategiesView).Name;
-            newDocument.TargetViewTitle = "Strategies";
-            newDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Dashboard;component/Images/Strategies.png";
+            newDocument.ModuleGroupItemName = "Server Monitor";
+            newDocument.TargetView = typeof(ServerMonitorView).Name;
+            newDocument.TargetViewTitle = "Server Monitor";
+            newDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Dashboard;component/Images/ServerMonitor.png";
 
             moduleGroup.ModuleGroupItems.Add(newDocument);
             moduleSettings.ModuleGroups.Add(moduleGroup);

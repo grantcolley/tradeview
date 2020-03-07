@@ -77,9 +77,9 @@
   <ItemGroup>
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\StrategiesViewModel.cs" />
-    <Compile Include="View\StrategiesView.xaml.cs">
-      <DependentUpon>StrategiesView.xaml</DependentUpon>
+    <Compile Include="ViewModel\ServerMonitorViewModel.cs" />
+    <Compile Include="View\ServerMonitorView.xaml.cs">
+      <DependentUpon>ServerMonitorView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -104,10 +104,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Strategies.png" />
+    <Resource Include="Images\ServerMonitor.png" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="View\StrategiesView.xaml">
+    <Page Include="View\ServerMonitorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
