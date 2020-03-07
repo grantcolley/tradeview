@@ -40,7 +40,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 TradesDisplayCount = strategy.TradesDisplayCount,
                 OrderBookChartDisplayCount = strategy.OrderBookChartDisplayCount,
                 OrderBookDisplayCount = strategy.OrderBookDisplayCount,
-                StrategyServerUrl = strategy.StrategyServerUrl,
+                ServerUrl = strategy.ServerUrl,
                 Dependencies = strategy.Dependencies.Select(f => f.File).ToList(),
                 DisplayDependencies = strategy.DisplayDependencies.Select(f=> f.File).ToList()
             };
@@ -68,7 +68,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 TradesDisplayCount = strategyConfig.TradesDisplayCount,
                 OrderBookChartDisplayCount = strategyConfig.OrderBookChartDisplayCount,
                 OrderBookDisplayCount = strategyConfig.OrderBookDisplayCount,
-                StrategyServerUrl = strategyConfig.StrategyServerUrl,
+                ServerUrl = strategyConfig.ServerUrl,
             };
 
             var subscriptions = strategyConfig.StrategySubscriptions.Select(s => s.ToWpfStrategySubscription()).ToList();

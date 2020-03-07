@@ -7,7 +7,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Server
     {
         public ServerStrategy()
         {
-            Connections = new List<StrategyConnection>();
+            Connections = new List<ServerStrategyConnection>();
         }
 
         public Strategy.Strategy Strategy { get; set; }
@@ -15,6 +15,6 @@ namespace DevelopmentInProgress.TradeView.Interface.Server
         public string StoppedBy { get; set; }
         public DateTime Started { get; set; }
         public DateTime Stopped { get; set; }
-        public List<StrategyConnection> Connections { get; set; }
+        public List<ServerStrategyConnection> Connections { get; set; }
     }
 }

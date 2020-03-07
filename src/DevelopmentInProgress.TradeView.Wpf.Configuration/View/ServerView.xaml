@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="DevelopmentInProgress.TradeView.Wpf.Configuration.View.StrategyServerView"
+﻿<UserControl x:Class="DevelopmentInProgress.TradeView.Wpf.Configuration.View.ServerView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -29,10 +29,10 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Content="Server Name:" Margin="2"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding StrategyServer.Name}" VerticalContentAlignment="Center" Margin="2" HorizontalAlignment="Left" IsReadOnly="True"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Server.Name}" VerticalContentAlignment="Center" Margin="2" HorizontalAlignment="Left" IsReadOnly="True"/>
 
                     <Label Grid.Row="1" Grid.Column="0" Content="Url:" Margin="2"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding StrategyServer.Url}" ToolTip="{Binding StrategyServer.Url}" VerticalContentAlignment="Center" Margin="2" HorizontalAlignment="Stretch"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Server.Url}" ToolTip="{Binding Server.Url}" VerticalContentAlignment="Center" Margin="2" HorizontalAlignment="Stretch"/>
 
                 </Grid>
             </Grid>

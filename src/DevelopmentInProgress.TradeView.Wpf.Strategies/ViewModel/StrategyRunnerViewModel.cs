@@ -384,7 +384,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                 var strategyRunnerClient = new InterfaceStrategy.StrategyRunnerClient();
 
-                var response = await strategyRunnerClient.PostAsync($"{Strategy.StrategyServerUrl}/isstrategyrunning", strategyParametersJson);
+                var response = await strategyRunnerClient.PostAsync($"{Strategy.ServerUrl}/isstrategyrunning", strategyParametersJson);
 
                 var content = await response.Content.ReadAsStringAsync();
 
@@ -461,7 +461,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                     var strategyRunnerClient = new InterfaceStrategy.StrategyRunnerClient();
 
-                    var response = await strategyRunnerClient.PostAsync($"{Strategy.StrategyServerUrl}/runstrategy", jsonContent, dependencies);
+                    var response = await strategyRunnerClient.PostAsync($"{Strategy.ServerUrl}/runstrategy", jsonContent, dependencies);
 
                     if(response.StatusCode != System.Net.HttpStatusCode.OK)
                     {
@@ -512,7 +512,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                 var strategyRunnerClient = new TradeView.Interface.Strategy.StrategyRunnerClient();
 
-                var response = await strategyRunnerClient.PostAsync($"{Strategy.StrategyServerUrl}/updatestrategy", strategyParameters);
+                var response = await strategyRunnerClient.PostAsync($"{Strategy.ServerUrl}/updatestrategy", strategyParameters);
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
@@ -553,7 +553,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             {
                 var strategyRunnerClient = new TradeView.Interface.Strategy.StrategyRunnerClient();
 
-                var response = await strategyRunnerClient.PostAsync($"{Strategy.StrategyServerUrl}/stopstrategy", strategyParameters);
+                var response = await strategyRunnerClient.PostAsync($"{Strategy.ServerUrl}/stopstrategy", strategyParameters);
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
@@ -604,7 +604,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 throw new Exception("StrategyAssemblyManager has not loaded the strategy assemblies.");
             }
 
-            socketClient = new DipSocketClient($"{Strategy.StrategyServerUrl}/notificationhub", strategyAssemblyManager.Id);
+            socketClient = new DipSocketClient($"{Strategy.ServerUrl}/notificationhub", strategyAssemblyManager.Id);
 
             socketClient.On("Connected", message =>
             {

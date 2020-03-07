@@ -3,11 +3,11 @@
 namespace DevelopmentInProgress.TradeView.Wpf.Configuration.View
 {
     /// <summary>
-    /// Interaction logic for StrategyServerView.xaml
+    /// Interaction logic for ServerView.xaml
     /// </summary>
-    public partial class StrategyServerView : UserControl
+    public partial class ServerView : UserControl
     {
-        public StrategyServerView()
+        public ServerView()
         {
             InitializeComponent();
         }

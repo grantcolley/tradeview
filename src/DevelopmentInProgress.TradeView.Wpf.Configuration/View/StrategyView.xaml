@@ -149,8 +149,8 @@
                             </DockPanel>
                             <Label Grid.Row="3" Grid.Column="0" Content="Target Type:" Margin="2"/>
                             <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Strategy.TargetType}" ToolTip="{Binding Strategy.TargetType}" VerticalContentAlignment="Center" Margin="2"/>
-                            <Label Grid.Row="4" Grid.Column="0" Content="Strategy Server URL:" Margin="2"/>
-                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Strategy.StrategyServerUrl}" ToolTip="{Binding Strategy.StrategyServerUrl}" VerticalContentAlignment="Center" Margin="2"/>
+                            <Label Grid.Row="4" Grid.Column="0" Content="Server URL:" Margin="2"/>
+                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Strategy.ServerUrl}" ToolTip="{Binding Strategy.ServerUrl}" VerticalContentAlignment="Center" Margin="2"/>
                             <DockPanel Grid.Row="5" Grid.Column="0" LastChildFill="True">
                                 <Label DockPanel.Dock="Left" Content="Parameters:" Margin="2"/>
                                 <DockPanel DockPanel.Dock="Top" Margin="2">

@@ -36,8 +36,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration
             Container.RegisterType<StrategyManagerViewModel>(typeof(StrategyManagerViewModel).Name);
             Container.RegisterType<object, UserAccountsView>(typeof(UserAccountsView).Name);
             Container.RegisterType<UserAccountsViewModel>(typeof(UserAccountsViewModel).Name);
-            Container.RegisterType<object, StrategyServerManagerView>(typeof(StrategyServerManagerView).Name);
-            Container.RegisterType<StrategyServerManagerViewModel>(typeof(StrategyServerManagerViewModel).Name);
+            Container.RegisterType<object, ServerManagerView>(typeof(ServerManagerView).Name);
+            Container.RegisterType<ServerManagerViewModel>(typeof(ServerManagerViewModel).Name);
 
             var moduleSettings = new ModuleSettings();
             moduleSettings.ModuleName = ModuleName;
@@ -62,7 +62,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration
 
             var manageServersDocument = new ModuleGroupItem();
             manageServersDocument.ModuleGroupItemName = "Manage Servers";
-            manageServersDocument.TargetView = typeof(StrategyServerManagerView).Name;
+            manageServersDocument.TargetView = typeof(ServerManagerView).Name;
             manageServersDocument.TargetViewTitle = "Manage Servers";
             manageServersDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Configuration;component/Images/manageServers.png";
             moduleGroup.ModuleGroupItems.Add(manageServersDocument);

@@ -2,7 +2,7 @@
 
 namespace DevelopmentInProgress.TradeView.Interface.Server
 {
-    public class StrategyConnection
+    public class ServerStrategyConnection
     {
         public string Connection { get; set; }
         public DateTime Connected { get; set; }

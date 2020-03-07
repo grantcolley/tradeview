@@ -1,6 +1,6 @@
 ﻿namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 {
-    public class StrategyServer : EntityBase
+    public class Server : EntityBase
     {
         private string name;
         private string url;

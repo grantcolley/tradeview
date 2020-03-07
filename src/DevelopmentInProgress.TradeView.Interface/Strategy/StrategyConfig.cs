@@ -23,7 +23,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
         public int TradesDisplayCount { get; set; }
         public int OrderBookChartDisplayCount { get; set; }
         public int OrderBookDisplayCount { get; set; }
-        public string StrategyServerUrl { get; set; }
+        public string ServerUrl { get; set; }
         public StrategyStatus Status { get; set; }
         public List<StrategySubscription> StrategySubscriptions { get; set; }
         public List<string> Dependencies { get; set; }
