@@ -75,8 +75,14 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\ServerMonitorExtensions.cs" />
+    <Compile Include="Model\Connection.cs" />
+    <Compile Include="Model\ServerStrategy.cs" />
+    <Compile Include="Model\ServerMonitor.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DashboardService.cs" />
+    <Compile Include="Services\IDashboardService.cs" />
     <Compile Include="ViewModel\ServerMonitorViewModel.cs" />
     <Compile Include="View\ServerMonitorView.xaml.cs">
       <DependentUpon>ServerMonitorView.xaml</DependentUpon>
@@ -86,6 +92,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Data\DevelopmentInProgress.TradeView.Data.csproj">
+      <Project>{dac8d225-b833-41eb-a595-25a0c59cc85e}</Project>
+      <Name>DevelopmentInProgress.TradeView.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Interface\DevelopmentInProgress.TradeView.Interface.csproj">
       <Project>{e3236e65-3232-438d-8dc9-5cd6be419b68}</Project>
       <Name>DevelopmentInProgress.TradeView.Interface</Name>
@@ -115,8 +125,11 @@
   <ItemGroup>
     <Resource Include="Images\Dashboard.png" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Model\" />
+    <Resource Include="Images\Connection.png" />
+    <Resource Include="Images\Server.png" />
+    <Resource Include="Images\Strategy.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
