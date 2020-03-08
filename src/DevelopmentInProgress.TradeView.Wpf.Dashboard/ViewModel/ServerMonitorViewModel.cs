@@ -1,29 +1,35 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
-using DevelopmentInProgress.TradeView.Wpf.Common.Services;
+using DevelopmentInProgress.TradeView.Wpf.Controls.Command;
+using DevelopmentInProgress.TradeView.Wpf.Dashboard.Model;
+using DevelopmentInProgress.TradeView.Wpf.Dashboard.Services;
 using DevelopmentInProgress.TradeView.Wpf.Host.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.ViewModel;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
 {
     public class ServerMonitorViewModel : DocumentViewModel
     {
-        private Server server;
-        private List<Server> servers;
-        private readonly IServerService serverService;
+        private ObservableCollection<ServerMonitor> servers;
+        private readonly IDashboardService dashboardService;
 
-        public ServerMonitorViewModel(ViewModelContext viewModelContext, IServerService serverService)
+        public ServerMonitorViewModel(ViewModelContext viewModelContext, IDashboardService dashboardService)
             : base(viewModelContext)
         {
-            this.serverService = serverService;
+            this.dashboardService = dashboardService;
+
+            SelectItemCommand = new WpfCommand(OnSelectItem);
         }
 
-        public List<Server> Servers
+        public ICommand SelectItemCommand { get; set; }
+
+        public ObservableCollection<ServerMonitor> Servers
         {
             get { return servers; }
             set
             {
-                if(servers != value)
+                if (servers != value)
                 {
                     servers = value;
                     OnPropertyChanged("Servers");
@@ -31,23 +37,15 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
             }
         }
 
-        public Server Server
-        {
-            get { return server; }
-            set
-            {
-                if (server != value)
-                {
-                    server = value;
-                    OnPropertyChanged("Server");
-                }
-            }
-
-        }
-
         protected async override void OnPublished(object data)
         {
-            Servers = await serverService.GetServers();
+            var serverMonitors = await dashboardService.GetServers();
+            Servers = new ObservableCollection<ServerMonitor>(serverMonitors);
+        }
+
+        private void OnSelectItem(object param)
+        {
+            var selectedItem = param as EntityBase;
         }
     }
 }
