@@ -7,10 +7,39 @@
                        xmlns:converters="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Converters;assembly=DevelopmentInProgress.TradeView.Wpf.Host"
                        xmlns:progress="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controls.Progress;assembly=DevelopmentInProgress.TradeView.Wpf.Host"
                        xmlns:messaging="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;assembly=DevelopmentInProgress.TradeView.Wpf.Controls"
+                       xmlns:tree="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.FilterTree;assembly=DevelopmentInProgress.TradeView.Wpf.Controls"
+                       xmlns:localModel="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Dashboard.Model"
                        mc:Ignorable="d" >
     <view:DocumentViewBase.Resources>
         <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
         <converters:InvertBoolToVisibilityConverter x:Key="invertBoolToVisibilityConverter"/>
+
+        <HierarchicalDataTemplate DataType="{x:Type localModel:ServerMonitor}" 
+                                  ItemsSource="{Binding Strategies}">
+            <StackPanel Orientation="Horizontal" Visibility="{Binding IsVisible, Converter={StaticResource boolToVisibilityConverter}}">
+                <Image Source="../Images/Server.png" 
+                       ToolTip="{Binding Name}" Margin="2" MaxHeight="20" MaxWidth="20" VerticalAlignment="Center"/>
+                <Label Content="{Binding Name}" Margin="2" VerticalAlignment="Center" Background="Transparent"/>
+            </StackPanel>
+        </HierarchicalDataTemplate>
+
+        <HierarchicalDataTemplate DataType="{x:Type localModel:ServerStrategy}" 
+                                  ItemsSource="{Binding Connections}">
+            <StackPanel Orientation="Horizontal" Visibility="{Binding IsVisible, Converter={StaticResource boolToVisibilityConverter}}">
+                <Image Source="../Images/Strategy.png"
+                       ToolTip="{Binding Name}" Margin="2" MaxHeight="20" MaxWidth="20" VerticalAlignment="Center"/>
+                <Label Content="{Binding Name}" Margin="2" VerticalAlignment="Center" Background="Transparent"/>
+            </StackPanel>
+        </HierarchicalDataTemplate>
+
+        <DataTemplate DataType="{x:Type localModel:Connection}">
+            <StackPanel Orientation="Horizontal" Visibility="{Binding IsVisible, Converter={StaticResource boolToVisibilityConverter}}">
+                <Image Source="../Images/Connection.png" 
+                       ToolTip="{Binding Name}" Margin="2" MaxHeight="20" MaxWidth="20" VerticalAlignment="Center"/>
+                <Label Content="{Binding Name}" Margin="2" VerticalAlignment="Center" Background="Transparent"/>
+            </StackPanel>
+        </DataTemplate>
+        
     </view:DocumentViewBase.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -30,7 +59,13 @@
             </Grid.RowDefinitions>
 
             <GroupBox Grid.Row="0" Grid.Column="0" Style="{StaticResource GroupBoxNoHeaderStyle}">
-
+                <DockPanel LastChildFill="True">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <tree:XamlFilterTree ItemsSource="{Binding Servers}" 
+                                             SelectItemCommand="{Binding SelectItemCommand}"
+                                             IsEditable="False"/>
+                    </ScrollViewer>
+                </DockPanel>
             </GroupBox>
             
             <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
