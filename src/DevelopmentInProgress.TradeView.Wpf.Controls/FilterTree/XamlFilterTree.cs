@@ -18,7 +18,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterTree
     /// </summary>
     public class XamlFilterTree : Control
     {
-        private static readonly DependencyProperty HeaderProperty;
         private static readonly DependencyProperty FilterTextProperty;
         private static readonly DependencyProperty ItemsSourceProperty;
         private static readonly DependencyProperty AddItemCommandProperty;
@@ -34,8 +33,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterTree
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof (XamlFilterTree),
                 new FrameworkPropertyMetadata(typeof (XamlFilterTree)));
-
-            HeaderProperty = DependencyProperty.Register("Header", typeof (string), typeof (XamlFilterTree));
             
             FilterTextProperty = DependencyProperty.Register("FilterText", typeof (string), typeof (XamlFilterTree));
 
@@ -56,15 +53,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterTree
 
             IsEditableProperty = DependencyProperty.Register("IsEditable", typeof(bool),
                 typeof (XamlFilterTree), new PropertyMetadata(true));
-        }
-
-        /// <summary>
-        /// Gets or sets the header.
-        /// </summary>
-        public string Header
-        {
-            get { return (string)GetValue(HeaderProperty); }
-            set { SetValue(HeaderProperty, value); }
         }
 
         /// <summary>
