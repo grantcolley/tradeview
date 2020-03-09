@@ -12,6 +12,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
     public class ServerMonitorViewModel : DocumentViewModel
     {
         private ObservableCollection<ServerMonitor> servers;
+        private ServerMonitor selectedServer;
         private readonly IDashboardService dashboardService;
 
         public ServerMonitorViewModel(ViewModelContext viewModelContext, IDashboardService dashboardService)
@@ -33,6 +34,19 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
                 {
                     servers = value;
                     OnPropertyChanged("Servers");
+                }
+            }
+        }
+
+        public ServerMonitor SelectedServer
+        {
+            get { return selectedServer; }
+            set
+            {
+                if (selectedServer != value)
+                {
+                    selectedServer = value;
+                    OnPropertyChanged("SelectedServer");
                 }
             }
         }
