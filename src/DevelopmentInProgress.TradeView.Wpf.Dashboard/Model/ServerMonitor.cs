@@ -13,11 +13,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
         private string stoppedBy;
         private DateTime started;
         private DateTime stopped;
-        private ObservableCollection<Strategy> strategies;
+        private ObservableCollection<ServerStrategy> strategies;
 
         public ServerMonitor()
         {
-            Strategies = new ObservableCollection<Strategy>();
+            Strategies = new ObservableCollection<ServerStrategy>();
         }
 
         public string Name 
@@ -111,7 +111,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
             }
         }
 
-        public ObservableCollection<Strategy> Strategies
+        public ObservableCollection<ServerStrategy> Strategies
         {
             get { return strategies; }
             set
