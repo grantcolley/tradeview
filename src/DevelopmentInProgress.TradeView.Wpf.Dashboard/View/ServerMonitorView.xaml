@@ -33,7 +33,7 @@
                             <Label DockPanel.Dock="Left" Content="Started:" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                             <Label Content="{Binding Started}" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                         </DockPanel>
-                        <Expander Header="{Binding Strategies, Converter={StaticResource strategiesCountToTextConverter}}">
+                        <Expander Header="{Binding Strategies, Converter={StaticResource strategiesCountToTextConverter}}" Background="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}">
                             <ItemsControl ItemsSource="{Binding Strategies}">
                                 <ItemsControl.Template>
                                     <ControlTemplate>
@@ -64,7 +64,7 @@
                         <Label DockPanel.Dock="Left" Content="Started:" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                         <Label Content="{Binding Started}" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                     </DockPanel>
-                    <Expander Header="{Binding Connections, Converter={StaticResource connectionsCountToTextConverter}}">
+                    <Expander Header="{Binding Connections, Converter={StaticResource connectionsCountToTextConverter}}" Background="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}">
                         <ItemsControl ItemsSource="{Binding Connections}">
                             <ItemsControl.Template>
                                 <ControlTemplate>
