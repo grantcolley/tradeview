@@ -75,6 +75,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\ConnectionsCountToTextConverter.cs" />
+    <Compile Include="Converters\StrategiesCountToTextConverter.cs" />
     <Compile Include="Extensions\ServerMonitorExtensions.cs" />
     <Compile Include="Model\Connection.cs" />
     <Compile Include="Model\ServerStrategy.cs" />
