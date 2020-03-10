@@ -109,11 +109,11 @@
                     </DockPanel>
                     <DockPanel LastChildFill="True" Margin="50,0,0,0">
                         <DockPanel DockPanel.Dock="Top" LastChildFill="True">
-                            <Label DockPanel.Dock="Left" Content="Started By:" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                            <Label DockPanel.Dock="Left" Content="Started By" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                             <Label Content="{Binding StartedBy}" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                         </DockPanel>
                         <DockPanel DockPanel.Dock="Top" LastChildFill="True">
-                            <Label DockPanel.Dock="Left" Content="Started:" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                            <Label DockPanel.Dock="Left" Content="Started     " Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                             <Label Content="{Binding Started}" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                         </DockPanel>
                         <Expander Header="{Binding Strategies, Converter={StaticResource strategiesCountToTextConverter}}" 
@@ -141,11 +141,11 @@
                 </DockPanel>
                 <DockPanel LastChildFill="True" Margin="50,0,0,0">
                     <DockPanel DockPanel.Dock="Top" LastChildFill="True">
-                        <Label DockPanel.Dock="Left" Content="Started By:" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                        <Label DockPanel.Dock="Left" Content="Started By" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                         <Label Content="{Binding StartedBy}" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                     </DockPanel>
                     <DockPanel DockPanel.Dock="Top" LastChildFill="True">
-                        <Label DockPanel.Dock="Left" Content="Started:" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                        <Label DockPanel.Dock="Left" Content="Started     " Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                         <Label Content="{Binding Started}" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                     </DockPanel>
                     <Expander Header="{Binding Connections, Converter={StaticResource connectionsCountToTextConverter}}" 
