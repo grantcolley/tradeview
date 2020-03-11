@@ -17,7 +17,6 @@
         <localConverters:ConnectionsCountToTextConverter x:Key="connectionsCountToTextConverter"/>
         <localConverters:StrategiesCountToTextConverter x:Key="strategiesCountToTextConverter"/>
 
-        <!-- *********************************  Expander Down Style  ********************************* -->
         <Style x:Key="DashboardExpanderDownHeaderStyle" TargetType="{x:Type ToggleButton}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -53,7 +52,6 @@
             </Setter>
         </Style>
         
-        <!-- *********************************  Expander Style  ********************************* -->
         <Style x:Key="DashboardExpanderStyle" TargetType="{x:Type Expander}">
             <Setter Property="FontFamily" Value="Segoe UI" />
             <Setter Property="FontSize" Value="14.667" />
