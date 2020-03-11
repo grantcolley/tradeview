@@ -11,6 +11,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
         private string stoppedBy;
         private DateTime started;
         private DateTime stopped;
+        public string parameters;
         private ObservableCollection<Connection> connections;
 
         public ServerStrategy()
@@ -79,6 +80,19 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
                 {
                     stopped = value;
                     OnPropertyChanged("Stopped");
+                }
+            }
+        }
+
+        public string Parameters
+        {
+            get { return parameters; }
+            set
+            {
+                if (parameters != value)
+                {
+                    parameters = value;
+                    OnPropertyChanged("Parameters");
                 }
             }
         }

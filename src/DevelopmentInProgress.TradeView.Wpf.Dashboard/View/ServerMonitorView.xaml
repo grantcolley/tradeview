@@ -146,6 +146,12 @@
                         <Label DockPanel.Dock="Left" Content="Started     " Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                         <Label Content="{Binding Started}" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                     </DockPanel>
+                    <Expander Header="Parameters" DockPanel.Dock="Top"
+                              Style="{StaticResource DashboardExpanderStyle}">
+                        <Grid>
+                            <TextBlock Text="{Binding Parameters}" TextWrapping="Wrap"/>
+                        </Grid>
+                    </Expander>
                     <Expander Header="{Binding Connections, Converter={StaticResource connectionsCountToTextConverter}}" 
                               Style="{StaticResource DashboardExpanderStyle}">
                         <ItemsControl ItemsSource="{Binding Connections}">
