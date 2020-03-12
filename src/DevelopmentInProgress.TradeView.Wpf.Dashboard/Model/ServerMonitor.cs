@@ -13,6 +13,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
         private string stoppedBy;
         private DateTime started;
         private DateTime stopped;
+        private bool isConnecting;
+        private bool isConnected;
         private ObservableCollection<ServerStrategy> strategies;
 
         public ServerMonitor()
@@ -107,6 +109,32 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
                 {
                     stopped = value;
                     OnPropertyChanged("Stopped");
+                }
+            }
+        }
+
+        public bool IsConnecting
+        {
+            get { return isConnecting; }
+            set
+            {
+                if (isConnecting != value)
+                {
+                    isConnecting = value;
+                    OnPropertyChanged("IsConnecting");
+                }
+            }
+        }
+
+        public bool IsConnected
+        {
+            get { return (isConnected && !isConnecting); }
+            set
+            {
+                if (isConnected != value)
+                {
+                    isConnected = value;
+                    OnPropertyChanged("IsConnected");
                 }
             }
         }
