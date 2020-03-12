@@ -104,6 +104,10 @@
                     <DockPanel DockPanel.Dock="Top" LastChildFill="True">
                         <Image DockPanel.Dock="Left" Source="../Images/Server.png" ToolTip="{Binding Name}" Margin="2" MaxHeight="20" MaxWidth="20" VerticalAlignment="Center"/>
                         <Label Content="{Binding Name}" FontWeight="Bold" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                        <Viewbox Height="20" Width="20" Margin="2" HorizontalAlignment="Center"
+                             Visibility="{Binding IsConnecting, Converter={StaticResource boolToVisibilityConverter}}">
+                            <progress:CircularProgress />
+                        </Viewbox>
                     </DockPanel>
                     <DockPanel LastChildFill="True" Margin="50,0,0,0">
                         <DockPanel DockPanel.Dock="Top" LastChildFill="True">
@@ -149,7 +153,7 @@
                     <Expander Header="Parameters" DockPanel.Dock="Top"
                               Style="{StaticResource DashboardExpanderStyle}">
                         <Grid>
-                            <TextBlock Text="{Binding Parameters}" TextWrapping="Wrap"/>
+                            <TextBlock Text="{Binding Parameters}" Margin="50,0,0,0" TextWrapping="Wrap"/>
                         </Grid>
                     </Expander>
                     <Expander Header="{Binding Connections, Converter={StaticResource connectionsCountToTextConverter}}" 
@@ -188,27 +192,30 @@
                 <DockPanel LastChildFill="True">
                     <Label DockPanel.Dock="Top" Content="Servers" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left"/>
                     <filterbox:XamlFilterBox DockPanel.Dock="Top" ItemsSource="{Binding Servers}" FilterFieldName="Name" Margin="2"/>
-                    <Viewbox DockPanel.Dock="Top" Height="50" Width="50" Margin="2" Visibility="{Binding IsLoadingServers, Converter={StaticResource boolToVisibilityConverter}}">
-                        <progress:CircularProgress />
-                    </Viewbox>
-                    <ListView ItemsSource="{Binding Servers}" 
+                    <Grid>
+                        <Viewbox Height="50" Width="50" Margin="2" HorizontalAlignment="Center"
+                             Visibility="{Binding IsLoadingServers, Converter={StaticResource boolToVisibilityConverter}}">
+                            <progress:CircularProgress />
+                        </Viewbox>
+                        <ListView ItemsSource="{Binding Servers}" 
                                       SelectionMode="Single" BorderThickness="0" Background="Transparent"
                                       SelectedItem="{Binding SelectedServer}"
                                       Visibility="{Binding IsLoadingServers, Converter={StaticResource invertBoolToVisibilityConverter}}">
-                        <ListView.Template>
-                            <ControlTemplate>
-                                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                                    <ItemsPresenter></ItemsPresenter>
-                                </ScrollViewer>
-                            </ControlTemplate>
-                        </ListView.Template>
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                <Setter Property="Visibility" Value="{Binding Path=IsVisible, Converter={StaticResource boolToVisibilityConverter}}"/>
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                    </ListView>
+                            <ListView.Template>
+                                <ControlTemplate>
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                        <ItemsPresenter></ItemsPresenter>
+                                    </ScrollViewer>
+                                </ControlTemplate>
+                            </ListView.Template>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    <Setter Property="Visibility" Value="{Binding Path=IsVisible, Converter={StaticResource boolToVisibilityConverter}}"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
+                    </Grid>
                 </DockPanel>
             </GroupBox>
         </Grid>
