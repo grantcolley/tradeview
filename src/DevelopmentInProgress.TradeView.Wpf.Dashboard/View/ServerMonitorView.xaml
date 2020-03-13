@@ -104,15 +104,15 @@
                     <DockPanel DockPanel.Dock="Top" LastChildFill="True">
                         <Image DockPanel.Dock="Left" Source="../Images/Server.png" ToolTip="{Binding Name}" Margin="2" MaxHeight="20" MaxWidth="20" VerticalAlignment="Center"/>
                         <Label DockPanel.Dock="Left" Content="{Binding Name}" FontWeight="Bold" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-                        <Viewbox DockPanel.Dock="Left" Height="20" Width="20" Margin="2" HorizontalAlignment="Center"
+                        <Viewbox DockPanel.Dock="Left" Height="10" Width="10" Margin="2" HorizontalAlignment="Center"
                              Visibility="{Binding IsConnecting, Converter={StaticResource boolToVisibilityConverter}}">
                             <progress:CircularProgress />
                         </Viewbox>
                         <Image DockPanel.Dock="Left" Source="../Images/Running.png" ToolTip="Running" 
-                               Margin="2" MaxHeight="20" MaxWidth="20" VerticalAlignment="Center"
+                               Margin="2" MaxHeight="10" MaxWidth="10" VerticalAlignment="Center"
                                Visibility="{Binding IsConnected, Converter={StaticResource boolToVisibilityConverter}}"/>
                         <Image DockPanel.Dock="Left" Source="../Images/NotRunning.png" ToolTip="Not Running" 
-                               Margin="2" MaxHeight="20" MaxWidth="20" VerticalAlignment="Center"
+                               Margin="2" MaxHeight="10" MaxWidth="10" VerticalAlignment="Center"
                                Visibility="{Binding IsConnected, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                         <ContentControl/>
                     </DockPanel>
