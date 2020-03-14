@@ -128,7 +128,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
 
         public bool IsConnected
         {
-            get { return (isConnected && !isConnecting); }
+            get { return isConnected; }
             set
             {
                 if (isConnected != value)
