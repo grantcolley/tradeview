@@ -108,12 +108,16 @@
                              Visibility="{Binding IsConnecting, Converter={StaticResource boolToVisibilityConverter}}">
                             <progress:CircularProgress />
                         </Viewbox>
-                        <Image DockPanel.Dock="Left" Source="../Images/Running.png" ToolTip="Running" 
+                        <Grid DockPanel.Dock="Left" Visibility="{Binding IsConnecting, Converter={StaticResource invertBoolToVisibilityConverter}}">
+                            <DockPanel>
+                                <Image DockPanel.Dock="Left" Source="../Images/Running.png" ToolTip="Running" 
                                Margin="2" MaxHeight="10" MaxWidth="10" VerticalAlignment="Center"
                                Visibility="{Binding IsConnected, Converter={StaticResource boolToVisibilityConverter}}"/>
-                        <Image DockPanel.Dock="Left" Source="../Images/NotRunning.png" ToolTip="Not Running" 
+                                <Image DockPanel.Dock="Left" Source="../Images/NotRunning.png" ToolTip="Not Running" 
                                Margin="2" MaxHeight="10" MaxWidth="10" VerticalAlignment="Center"
                                Visibility="{Binding IsConnected, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                            </DockPanel>
+                        </Grid>
                         <ContentControl/>
                     </DockPanel>
                     <DockPanel LastChildFill="True" Margin="50,0,0,0">
