@@ -5,7 +5,7 @@
         Title="Exception" 
         WindowStyle="ToolWindow" Width="600" Height="400"
         WindowStartupLocation="CenterScreen"
-        Background="FF181818"
+        Background="#FF181818"
         BorderThickness="1"
         BorderBrush="#FF747474">
     <Window.Resources>
