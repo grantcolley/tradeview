@@ -91,7 +91,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
 
                 IsLoadingServers = false;
 
-                await Task.WhenAll(serverMonitors.Select(s => s.ConnectAsync()));
+                await Task.WhenAll(serverMonitors.Select(s => s.ConnectAsync(ViewModelContext.UiDispatcher)));
             }
             catch(Exception ex)
             {
