@@ -1,11 +1,16 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
+using DevelopmentInProgress.TradeView.Wpf.Dashboard.Events;
+using DipSocket.Client;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
 {
     public class ServerMonitor : EntityBase
     {
+        private DipSocketClient socketClient;
+
         private string name;
         private string url;
         private int maxDegreeOfParallelism;
@@ -15,12 +20,15 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
         private DateTime stopped;
         private bool isConnecting;
         private bool isConnected;
+        private bool disposed;
         private ObservableCollection<ServerStrategy> strategies;
 
         public ServerMonitor()
         {
             Strategies = new ObservableCollection<ServerStrategy>();
         }
+
+        public event EventHandler<ServerMonitorEventArgs> OnServerMonitorNotification;
 
         public string Name 
         {
@@ -150,6 +158,47 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
                     OnPropertyChanged("Strategies");
                 }
             }
+        }
+
+        public async Task DisposeAsync()
+        {
+            if(disposed)
+            {
+                return;
+            }
+
+            try
+            {
+                if (socketClient != null)
+                {
+                    await socketClient.DisposeAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                OnException(ex.Message, ex);
+            }
+            finally
+            {
+                socketClient = null;
+            }
+        }
+
+        public async Task ConnectAsync()
+        {
+
+        }
+
+        private void OnException(string message, Exception exception)
+        {
+            var onServerMonitorNotification = OnServerMonitorNotification;
+            onServerMonitorNotification?.Invoke(this, new ServerMonitorEventArgs { Message = message, Exception = exception });
+        }
+
+        private void OrdersNotification(ServerMonitor serverMonitor)
+        {
+            var onServerMonitorNotification = OnServerMonitorNotification;
+            onServerMonitorNotification?.Invoke(this, new ServerMonitorEventArgs { Value = serverMonitor });
         }
     }
 }
