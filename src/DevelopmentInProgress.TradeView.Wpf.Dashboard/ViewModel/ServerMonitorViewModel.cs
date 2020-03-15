@@ -23,6 +23,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
         private ObservableCollection<ServerMonitor> servers;
         private List<IDisposable> serverMonitorSubscriptions;
         private ServerMonitor selectedServer;
+        private ServerStrategy selectedServerStrategy;
         private bool isLoadingServers;
         private bool disposed;
 
@@ -31,14 +32,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
         {
             this.dashboardService = dashboardService;
 
-            SelectItemCommand = new WpfCommand(OnSelectItem);
-
             IsLoadingServers = true;
 
             serverMonitorSubscriptions = new List<IDisposable>();
         }
-        
-        public ICommand SelectItemCommand { get; set; }
 
         public bool IsLoadingServers
         {
@@ -61,6 +58,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
                 if (servers != value)
                 {
                     servers = value;
+
+                    if(servers.Any())
+                    {
+                        SelectedServer = servers.First();
+                    }
+
                     OnPropertyChanged("Servers");
                 }
             }
@@ -74,7 +77,26 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
                 if (selectedServer != value)
                 {
                     selectedServer = value;
+                    if(selectedServer != null
+                        && selectedServer.Strategies.Any())
+                    {
+                        SelectedServerStrategy = selectedServer.Strategies.First();
+                    }
+
                     OnPropertyChanged("SelectedServer");
+                }
+            }
+        }
+
+        public ServerStrategy SelectedServerStrategy
+        {
+            get { return selectedServerStrategy; }
+            set
+            {
+                if(selectedServerStrategy != value)
+                {
+                    selectedServerStrategy = value;
+                    OnPropertyChanged("SelectedServerStrategy");
                 }
             }
         }
@@ -123,12 +145,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
 
             disposed = true;
         }
-
-        private void OnSelectItem(object param)
-        {
-            var selectedItem = param as EntityBase;
-        }
-
+        
         private void ObserveServerMonitor(ServerMonitor serverMonitor)
         {
             var serverMonitorObservable = Observable.FromEventPattern<ServerMonitorEventArgs>(
