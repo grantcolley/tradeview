@@ -109,5 +109,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
                 }
             }
         }
+
+        public int ConnectionCount
+        {
+            get { return Connections.Count; }
+            set { OnPropertyChanged("ConnectionCount"); }
+        }
     }
 }
