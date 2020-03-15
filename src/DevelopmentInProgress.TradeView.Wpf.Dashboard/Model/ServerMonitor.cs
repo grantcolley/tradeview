@@ -1,15 +1,24 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Dashboard.Events;
 using DipSocket.Client;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
 {
     public class ServerMonitor : EntityBase
     {
+        private Dispatcher dispatcher;
         private DipSocketClient socketClient;
+        private bool isConnecting;
+        private bool isConnected;
+        private bool disposed;
 
         private string name;
         private string url;
@@ -18,9 +27,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
         private string stoppedBy;
         private DateTime started;
         private DateTime stopped;
-        private bool isConnecting;
-        private bool isConnected;
-        private bool disposed;
         private ObservableCollection<ServerStrategy> strategies;
 
         public ServerMonitor()
@@ -156,23 +162,28 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
                 {
                     strategies = value;
                     OnPropertyChanged("Strategies");
+                    OnPropertyChanged("StrategyCount");
                 }
             }
         }
 
-        public async Task DisposeAsync()
+        public int StrategyCount
         {
-            if(disposed)
-            {
-                return;
-            }
+            get { return strategies.Count; }
+            set { OnPropertyChanged("StrategyCount"); }
+        }
 
+        public async Task DisposeSocketAsync()
+        {
             try
             {
                 if (socketClient != null)
                 {
                     await socketClient.DisposeAsync();
                 }
+
+                IsConnecting = false;
+                IsConnected = false;
             }
             catch (Exception ex)
             {
@@ -184,9 +195,88 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
             }
         }
 
-        public async Task ConnectAsync()
+        public async Task ConnectAsync(Dispatcher dispatcher)
         {
+            this.dispatcher = dispatcher;
 
+            IsConnecting = true;
+
+            try
+            {
+                socketClient = new DipSocketClient($"{Url}/serverhub", Environment.UserName);
+
+                socketClient.On("Connected", message =>
+                {
+                    dispatcher.Invoke(() =>
+                    {
+                        IsConnecting = false;
+                        IsConnected = true;
+                    });
+                });
+
+                socketClient.On("Notification", async (message) =>
+                {
+                    await dispatcher.Invoke(async () =>
+                    {
+                        await OnServerMonitorNotificationAsync(message);
+                    });
+                });
+
+                socketClient.Closed += async (sender, args) =>
+                {
+                    await dispatcher.Invoke(async () =>
+                    {
+                        await DisposeSocketAsync();
+                    });
+                };
+
+                socketClient.Error += async (sender, args) =>
+                {
+                    var ex = args as Exception;
+                    if (ex.InnerException is TaskCanceledException)
+                    {
+                        await DisposeSocketAsync();
+                        return;
+                    }
+
+                    await dispatcher.Invoke(async () =>
+                    {
+                        OnException(args.Message, new Exception(args.Message));
+
+                        await DisposeSocketAsync();
+                    });
+                };
+
+                await socketClient.StartAsync();
+            }
+            catch(Exception ex)
+            {
+                OnException(ex.Message, ex);
+            }
+        }
+
+        private async Task OnServerMonitorNotificationAsync(DipSocket.Messages.Message message)
+        {
+            try
+            {
+                var serverMonitorNotifications = JsonConvert.DeserializeObject<List<Interface.Server.ServerNotification>>(message.Data);
+
+                if (serverMonitorNotifications.Any(smn => smn.Equals(Interface.Server.ServerNotificationLevel.DisconnectClient)))
+                {
+                    await DisposeSocketAsync();
+
+                    return;
+                }
+
+                var serverMonitorNotification = serverMonitorNotifications.OrderByDescending(smn => smn.Timestamp).First();
+
+                // do update here...
+
+            }
+            catch (Exception ex)
+            {
+                OnException(ex.Message, ex);
+            }
         }
 
         private void OnException(string message, Exception exception)
@@ -195,7 +285,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
             onServerMonitorNotification?.Invoke(this, new ServerMonitorEventArgs { Message = message, Exception = exception });
         }
 
-        private void OrdersNotification(ServerMonitor serverMonitor)
+        private void ServerNotification(ServerMonitor serverMonitor)
         {
             var onServerMonitorNotification = OnServerMonitorNotification;
             onServerMonitorNotification?.Invoke(this, new ServerMonitorEventArgs { Value = serverMonitor });
