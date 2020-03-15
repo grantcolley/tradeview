@@ -13,10 +13,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Converters
             var connections = value as ObservableCollection<Connection>;
             if (value == null)
             {
-                return "Connections (0)";
+                return "(0)";
             }
 
-            return $"Connections ({connections.Count})";
+            return $"({connections.Count})";
         }
 
         public object ConvertBack(object value, Type targetType,

@@ -13,10 +13,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Converters
             var serverStrategies = value as ObservableCollection<ServerStrategy>;
             if (value == null)
             {
-                return "Strategies (0)";
+                return "(0)";
             }
 
-            return $"Strategies ({serverStrategies.Count})";
+            return $"({serverStrategies.Count})";
         }
 
         public object ConvertBack(object value, Type targetType,
