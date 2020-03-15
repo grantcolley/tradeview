@@ -20,11 +20,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
         private readonly IDashboardService dashboardService;
         private ObservableCollection<ServerMonitor> servers;
         private List<IDisposable> serverMonitorSubscriptions;
+        private IDisposable observableInterval;
         private ServerMonitor selectedServer;
         private ServerStrategy selectedServerStrategy;
         private bool isLoadingServers;
         private bool disposed;
-        private System.Timers.Timer timer;
 
         public ServerMonitorViewModel(ViewModelContext viewModelContext, IDashboardService dashboardService)
             : base(viewModelContext)
@@ -34,9 +34,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
             IsLoadingServers = true;
 
             serverMonitorSubscriptions = new List<IDisposable>();
-
-            timer = new System.Timers.Timer(5000d);
-            timer.Elapsed += OnTimedEvent;
         }
 
         public bool IsLoadingServers
@@ -107,6 +104,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
         {
             try
             {
+                if(observableInterval != null)
+                {
+                    observableInterval.Dispose();
+                }
+
                 var serverMonitors = await dashboardService.GetServers();
 
                 serverMonitors.ForEach(ObserveServerMonitor);
@@ -117,7 +119,19 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
 
                 await TryConnectServersAsync(serverMonitors);
 
-                timer.Enabled = true;
+                observableInterval = Observable.Interval(TimeSpan.FromSeconds(5))
+                    .Subscribe(async i =>
+                    {
+                        try
+                        {
+                            await TryConnectServersAsync(Servers.ToList());
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Log(ex.ToString(), Category.Exception, Priority.High);
+                            ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message, TextVerbose = ex.StackTrace });
+                        }
+                    });
             }
             catch(Exception ex)
             {
@@ -137,19 +151,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
                 .Select(s => s.ConnectAsync(ViewModelContext.UiDispatcher)).ToList());
         }
 
-        private async void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
-        {
-            try
-            {
-                await TryConnectServersAsync(Servers.ToList());
-            }
-            catch (Exception ex)
-            {
-                Logger.Log(ex.ToString(), Category.Exception, Priority.High);
-                ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message, TextVerbose = ex.StackTrace });
-            }
-        }
-
         protected async override void OnDisposing()
         {
             if (disposed)
@@ -157,7 +158,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
                 return;
             }
 
-            timer.Elapsed -= OnTimedEvent;
+            observableInterval.Dispose();
 
             foreach (var server in servers)
             {
