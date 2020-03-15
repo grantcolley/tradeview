@@ -129,18 +129,10 @@
                             <Label DockPanel.Dock="Left" Content="Started     " Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                             <Label Content="{Binding Started}" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                         </DockPanel>
-                        <Expander Header="{Binding Strategies, Converter={StaticResource strategiesCountToTextConverter}}" 
-                                  Style="{StaticResource DashboardExpanderStyle}">
-                            <ItemsControl ItemsSource="{Binding Strategies}">
-                                <ItemsControl.Template>
-                                    <ControlTemplate>
-                                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                                            <ItemsPresenter></ItemsPresenter>
-                                        </ScrollViewer>
-                                    </ControlTemplate>
-                                </ItemsControl.Template>
-                            </ItemsControl>
-                        </Expander>
+                        <DockPanel DockPanel.Dock="Top" LastChildFill="True">
+                            <Label DockPanel.Dock="Left" Content="Strategies  " Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                            <Label Content="{Binding Strategies, Converter={StaticResource strategiesCountToTextConverter}}" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                        </DockPanel>
                     </DockPanel>
                 </DockPanel>
             </Border>
@@ -161,23 +153,15 @@
                         <Label DockPanel.Dock="Left" Content="Started     " Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                         <Label Content="{Binding Started}" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                     </DockPanel>
-                    <Expander Header="Parameters" DockPanel.Dock="Top"
+                    <DockPanel DockPanel.Dock="Top" LastChildFill="True">
+                        <Label DockPanel.Dock="Left" Content="Connections " Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                        <Label Content="{Binding Connections, Converter={StaticResource connectionsCountToTextConverter}}" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    </DockPanel>
+                    <Expander Header="Parameters" DockPanel.Dock="Top" IsExpanded="True"
                               Style="{StaticResource DashboardExpanderStyle}">
                         <Grid>
                             <TextBlock Text="{Binding Parameters}" Margin="50,0,0,0" TextWrapping="Wrap"/>
                         </Grid>
-                    </Expander>
-                    <Expander Header="{Binding Connections, Converter={StaticResource connectionsCountToTextConverter}}" 
-                              Style="{StaticResource DashboardExpanderStyle}">
-                        <ItemsControl ItemsSource="{Binding Connections}">
-                            <ItemsControl.Template>
-                                <ControlTemplate>
-                                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                                        <ItemsPresenter></ItemsPresenter>
-                                    </ScrollViewer>
-                                </ControlTemplate>
-                            </ItemsControl.Template>
-                        </ItemsControl>
                     </Expander>
                 </DockPanel>
             </DockPanel>
@@ -193,15 +177,17 @@
     </view:DocumentViewBase.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="33*"/>
             <ColumnDefinition Width="2"/>
-            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="33*"/>
+            <ColumnDefinition Width="2"/>
+            <ColumnDefinition Width="34*"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0">
             <GroupBox Style="{StaticResource GroupBoxNoHeaderStyle}">
                 <DockPanel LastChildFill="True">
-                    <Label DockPanel.Dock="Top" Content="Servers" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left"/>
+                    <Label DockPanel.Dock="Top" Content="Servers" Height="30" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left"/>
                     <filterbox:XamlFilterBox DockPanel.Dock="Top" ItemsSource="{Binding Servers}" FilterFieldName="Name" Margin="2"/>
                     <Grid>
                         <Viewbox Height="50" Width="50" Margin="2" HorizontalAlignment="Center"
@@ -234,21 +220,65 @@
         <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
 
         <Grid Grid.Column="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50*"/>
-                <RowDefinition Height="2"/>
-                <RowDefinition Height="50*"/>
-            </Grid.RowDefinitions>
-
-            <GroupBox Grid.Row="0" Style="{StaticResource GroupBoxNoHeaderStyle}">
-
-            </GroupBox>
-
-            <GridSplitter Grid.Row="1" Height="2" HorizontalAlignment="Stretch" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext"/>
-
-            <GroupBox Grid.Row="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
-
+            <GroupBox Style="{StaticResource GroupBoxNoHeaderStyle}">
+                <DockPanel LastChildFill="True">
+                    <Label DockPanel.Dock="Top" Height="30" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left"
+                           Content="{Binding SelectedServer.Name}"/>
+                    <filterbox:XamlFilterBox DockPanel.Dock="Top" ItemsSource="{Binding SelectedServer.Strategies}" FilterFieldName="Name" Margin="2"/>
+                    <Grid>
+                        <ListView ItemsSource="{Binding SelectedServer.Strategies}" 
+                                      SelectionMode="Single" BorderThickness="0" Background="Transparent"
+                                      SelectedItem="{Binding SelectedServerStrategy}"
+                                      Visibility="{Binding IsLoadingServers, Converter={StaticResource invertBoolToVisibilityConverter}}">
+                            <ListView.Template>
+                                <ControlTemplate>
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                        <ItemsPresenter></ItemsPresenter>
+                                    </ScrollViewer>
+                                </ControlTemplate>
+                            </ListView.Template>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    <Setter Property="Visibility" Value="{Binding Path=IsVisible, Converter={StaticResource boolToVisibilityConverter}}"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
+                    </Grid>
+                </DockPanel>
             </GroupBox>
         </Grid>
+
+        <GridSplitter Grid.Column="3" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
+
+        <Grid Grid.Column="4">
+            <GroupBox Style="{StaticResource GroupBoxNoHeaderStyle}">
+                <DockPanel LastChildFill="True">
+                    <Label DockPanel.Dock="Top" Height="30" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left"
+                           Content="{Binding SelectedServerStrategy.Name}"/>
+                    <filterbox:XamlFilterBox DockPanel.Dock="Top" ItemsSource="{Binding SelectedServerStrategy.Connections}" FilterFieldName="Name" Margin="2"/>
+                    <Grid>
+                        <ListView ItemsSource="{Binding SelectedServerStrategy.Connections}" 
+                                      SelectionMode="Single" BorderThickness="0" Background="Transparent"
+                                      Visibility="{Binding IsLoadingServers, Converter={StaticResource invertBoolToVisibilityConverter}}">
+                            <ListView.Template>
+                                <ControlTemplate>
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                        <ItemsPresenter></ItemsPresenter>
+                                    </ScrollViewer>
+                                </ControlTemplate>
+                            </ListView.Template>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    <Setter Property="Visibility" Value="{Binding Path=IsVisible, Converter={StaticResource boolToVisibilityConverter}}"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
+                    </Grid>
+                </DockPanel>
+            </GroupBox>
+        </Grid>
+
     </Grid>
 </view:DocumentViewBase>
