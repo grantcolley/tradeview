@@ -19,7 +19,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Services
         public async Task<List<ServerMonitor>> GetServers()
         {
             var result = await configurationServer.GetServersAsync();
-            return result.Select(s => s.ToServerMonitor()).ToList();
+           return result.Select(s => s.ToServerMonitor()).ToList();
         }
     }
 }
