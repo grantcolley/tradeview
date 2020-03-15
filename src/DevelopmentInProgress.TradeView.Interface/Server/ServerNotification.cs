@@ -8,6 +8,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Server
         public string Machine { get; set; }
         public string Message { get; set; }
         public DateTime Timestamp { get; set; } = DateTime.Now;
+        public ServerNotificationLevel NotificationLevel { get; set; }
 
         public override string ToString()
         {
