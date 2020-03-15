@@ -14,8 +14,7 @@
 
         <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
         <converters:InvertBoolToVisibilityConverter x:Key="invertBoolToVisibilityConverter"/>
-        <localConverters:ConnectionsCountToTextConverter x:Key="connectionsCountToTextConverter"/>
-        <localConverters:StrategiesCountToTextConverter x:Key="strategiesCountToTextConverter"/>
+        <localConverters:ItemsCountToTextConverter x:Key="itemsCountToTextConverter"/>
 
         <Style x:Key="DashboardExpanderDownHeaderStyle" TargetType="{x:Type ToggleButton}">
             <Setter Property="Template">
@@ -105,22 +104,26 @@
                         <Image DockPanel.Dock="Left" Source="../Images/Server.png" ToolTip="{Binding Name}" Margin="2" MaxHeight="20" MaxWidth="20" VerticalAlignment="Center"/>
                         <Label DockPanel.Dock="Left" Content="{Binding Name}" FontWeight="Bold" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                         <Viewbox DockPanel.Dock="Left" Height="10" Width="10" Margin="2" HorizontalAlignment="Center"
-                             Visibility="{Binding IsConnecting, Converter={StaticResource boolToVisibilityConverter}}">
+                                 Visibility="{Binding IsConnecting, Converter={StaticResource boolToVisibilityConverter}}">
                             <progress:CircularProgress />
                         </Viewbox>
                         <Grid DockPanel.Dock="Left" Visibility="{Binding IsConnecting, Converter={StaticResource invertBoolToVisibilityConverter}}">
                             <DockPanel>
                                 <Image DockPanel.Dock="Left" Source="../Images/Running.png" ToolTip="Running" 
-                               Margin="2" MaxHeight="10" MaxWidth="10" VerticalAlignment="Center"
-                               Visibility="{Binding IsConnected, Converter={StaticResource boolToVisibilityConverter}}"/>
+                                       Margin="2" MaxHeight="10" MaxWidth="10" VerticalAlignment="Center"
+                                       Visibility="{Binding IsConnected, Converter={StaticResource boolToVisibilityConverter}}"/>
                                 <Image DockPanel.Dock="Left" Source="../Images/NotRunning.png" ToolTip="Not Running" 
-                               Margin="2" MaxHeight="10" MaxWidth="10" VerticalAlignment="Center"
-                               Visibility="{Binding IsConnected, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                                       Margin="2" MaxHeight="10" MaxWidth="10" VerticalAlignment="Center"
+                                       Visibility="{Binding IsConnected, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
                             </DockPanel>
                         </Grid>
                         <ContentControl/>
                     </DockPanel>
                     <DockPanel LastChildFill="True" Margin="50,0,0,0">
+                        <DockPanel DockPanel.Dock="Top" LastChildFill="True">
+                            <Label DockPanel.Dock="Left" Content="Url       " Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                            <Label Content="{Binding Url}" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                        </DockPanel>
                         <DockPanel DockPanel.Dock="Top" LastChildFill="True">
                             <Label DockPanel.Dock="Left" Content="Started By" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                             <Label Content="{Binding StartedBy}" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
@@ -131,7 +134,7 @@
                         </DockPanel>
                         <DockPanel DockPanel.Dock="Top" LastChildFill="True">
                             <Label DockPanel.Dock="Left" Content="Strategies  " Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-                            <Label Content="{Binding Strategies, Converter={StaticResource strategiesCountToTextConverter}}" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                            <Label Content="{Binding StrategyCount, Converter={StaticResource itemsCountToTextConverter}}" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                         </DockPanel>
                     </DockPanel>
                 </DockPanel>
@@ -155,9 +158,9 @@
                     </DockPanel>
                     <DockPanel DockPanel.Dock="Top" LastChildFill="True">
                         <Label DockPanel.Dock="Left" Content="Connections " Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-                        <Label Content="{Binding Connections, Converter={StaticResource connectionsCountToTextConverter}}" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                        <Label Content="{Binding ConnectionCount, Converter={StaticResource itemsCountToTextConverter}}" Margin="2" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                     </DockPanel>
-                    <Expander Header="Parameters" DockPanel.Dock="Top" IsExpanded="True"
+                    <Expander Header="Parameters" DockPanel.Dock="Top"
                               Style="{StaticResource DashboardExpanderStyle}">
                         <Grid>
                             <TextBlock Text="{Binding Parameters}" Margin="50,0,0,0" TextWrapping="Wrap"/>
