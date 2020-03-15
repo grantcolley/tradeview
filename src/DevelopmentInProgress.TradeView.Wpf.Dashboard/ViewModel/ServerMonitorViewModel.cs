@@ -1,6 +1,4 @@
-﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
-using DevelopmentInProgress.TradeView.Wpf.Controls.Command;
-using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
+﻿using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using DevelopmentInProgress.TradeView.Wpf.Dashboard.Events;
 using DevelopmentInProgress.TradeView.Wpf.Dashboard.Model;
 using DevelopmentInProgress.TradeView.Wpf.Dashboard.Services;
@@ -12,8 +10,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
 {
@@ -26,6 +24,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
         private ServerStrategy selectedServerStrategy;
         private bool isLoadingServers;
         private bool disposed;
+        private System.Timers.Timer timer;
 
         public ServerMonitorViewModel(ViewModelContext viewModelContext, IDashboardService dashboardService)
             : base(viewModelContext)
@@ -35,6 +34,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
             IsLoadingServers = true;
 
             serverMonitorSubscriptions = new List<IDisposable>();
+
+            timer = new System.Timers.Timer(5000d);
+            timer.Elapsed += OnTimedEvent;
         }
 
         public bool IsLoadingServers
@@ -113,7 +115,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
 
                 IsLoadingServers = false;
 
-                await Task.WhenAll(serverMonitors.Select(s => s.ConnectAsync(ViewModelContext.UiDispatcher)));
+                await TryConnectServersAsync(serverMonitors);
+
+                timer.Enabled = true;
             }
             catch(Exception ex)
             {
@@ -126,6 +130,26 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
             }
         }
 
+        private async Task TryConnectServersAsync(IEnumerable<ServerMonitor> servers)
+        {
+            await Task.WhenAll(servers
+                .Where(s => !s.IsConnected && !s.IsConnecting)
+                .Select(s => s.ConnectAsync(ViewModelContext.UiDispatcher)).ToList());
+        }
+
+        private async void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
+        {
+            try
+            {
+                await TryConnectServersAsync(Servers.ToList());
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(ex.ToString(), Category.Exception, Priority.High);
+                ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message, TextVerbose = ex.StackTrace });
+            }
+        }
+
         protected async override void OnDisposing()
         {
             if (disposed)
@@ -133,7 +157,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
                 return;
             }
 
-            foreach(var server in servers)
+            timer.Elapsed -= OnTimedEvent;
+
+            foreach (var server in servers)
             {
                 await server.DisposeAsync();
             }
