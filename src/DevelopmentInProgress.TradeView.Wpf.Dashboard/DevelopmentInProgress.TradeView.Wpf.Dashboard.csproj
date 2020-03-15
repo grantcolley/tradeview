@@ -91,8 +91,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\ConnectionsCountToTextConverter.cs" />
-    <Compile Include="Converters\StrategiesCountToTextConverter.cs" />
+    <Compile Include="Converters\ItemsCountToTextConverter.cs" />
     <Compile Include="Events\ServerMonitorEventArgs.cs" />
     <Compile Include="Extensions\ServerMonitorExtensions.cs" />
     <Compile Include="Model\Connection.cs" />

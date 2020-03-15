@@ -1,22 +1,19 @@
-﻿using DevelopmentInProgress.TradeView.Wpf.Dashboard.Model;
-using System;
-using System.Collections.ObjectModel;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Converters
 {
-    public class ConnectionsCountToTextConverter : IValueConverter
+    public class ItemsCountToTextConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var connections = value as ObservableCollection<Connection>;
-            if (value == null)
+            if (value is int)
             {
-                return "(0)";
+                return $"({(int)value})";
             }
 
-            return $"({connections.Count})";
+            return "(0)";
         }
 
         public object ConvertBack(object value, Type targetType,
