@@ -252,7 +252,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
                     });
                 };
 
-                await socketClient.StartAsync();
+                await socketClient.StartAsync(Name);
             }
             catch(Exception ex)
             {
