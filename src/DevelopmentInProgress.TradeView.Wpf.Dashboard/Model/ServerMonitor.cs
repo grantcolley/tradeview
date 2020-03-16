@@ -173,6 +173,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
             set { OnPropertyChanged("StrategyCount"); }
         }
 
+        public Task DisposeAsync()
+        {
+            return DisposeSocketAsync();
+        }
+
         public async Task DisposeSocketAsync()
         {
             try
