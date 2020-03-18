@@ -210,7 +210,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
             {
                 socketClient = new DipSocketClient($"{Url}/serverhub", Environment.UserName);
 
-                socketClient.On("Connected", message =>
+                socketClient.On("OnConnected", message =>
                 {
                     dispatcher.Invoke(() =>
                     {
