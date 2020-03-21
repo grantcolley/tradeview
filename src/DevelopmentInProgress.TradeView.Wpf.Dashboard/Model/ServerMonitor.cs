@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Threading;
@@ -14,11 +13,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
 {
     public class ServerMonitor : EntityBase
     {
-        private Dispatcher dispatcher;
         private DipSocketClient socketClient;
         private bool isConnecting;
         private bool isConnected;
-        private bool disposed;
 
         private string name;
         private string url;
@@ -202,8 +199,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
 
         public async Task ConnectAsync(Dispatcher dispatcher)
         {
-            this.dispatcher = dispatcher;
-
             IsConnecting = true;
 
             try
