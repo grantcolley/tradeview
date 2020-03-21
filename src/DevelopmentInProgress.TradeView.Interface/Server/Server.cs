@@ -4,6 +4,6 @@
     {
         public string Name { get; set; }
         public string Url { get; set; }
-        public int MaxDegreeOfParallelism { get; set; } = 5;
+        public int MaxDegreeOfParallelism { get; set; }
     }
 }
