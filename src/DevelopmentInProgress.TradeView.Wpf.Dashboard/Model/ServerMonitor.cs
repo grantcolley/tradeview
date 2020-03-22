@@ -286,11 +286,5 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
             var onServerMonitorNotification = OnServerMonitorNotification;
             onServerMonitorNotification?.Invoke(this, new ServerMonitorEventArgs { Message = message, Exception = exception });
         }
-
-        private void ServerNotification(ServerMonitor serverMonitor)
-        {
-            var onServerMonitorNotification = OnServerMonitorNotification;
-            onServerMonitorNotification?.Invoke(this, new ServerMonitorEventArgs { Value = serverMonitor });
-        }
     }
 }
