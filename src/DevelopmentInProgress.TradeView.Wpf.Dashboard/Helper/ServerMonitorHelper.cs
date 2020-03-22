@@ -18,6 +18,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Helper
             UpdateStrategies(serverMonitor.Strategies, ism.Strategies);
 
             AddStrategies(serverMonitor.Strategies, ism.Strategies);
+
+            serverMonitor.StrategyCount = serverMonitor.Strategies.Count;
         }
 
         private static void RemoveOldStrategies(ObservableCollection<ServerStrategy> strategies, List<Interface.Server.ServerStrategy> serverStrategies)
