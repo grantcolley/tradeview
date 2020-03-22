@@ -1,5 +1,6 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Dashboard.Events;
+using DevelopmentInProgress.TradeView.Wpf.Dashboard.Helper;
 using DipSocket.Client;
 using Newtonsoft.Json;
 using System;
@@ -214,7 +215,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
                     });
                 });
 
-                socketClient.On("Notification", async (message) =>
+                socketClient.On("OnNotification", async (message) =>
                 {
                     await dispatcher.Invoke(async () =>
                     {
@@ -270,8 +271,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Model
 
                 var serverMonitorNotification = serverMonitorNotifications.OrderByDescending(smn => smn.Timestamp).First();
 
-                // do update here...
+                var serverMonitor = JsonConvert.DeserializeObject<Interface.Server.ServerMonitor>(serverMonitorNotification.Message);
 
+                ServerMonitorHelper.UpdateServerMonitor(this, serverMonitor);
             }
             catch (Exception ex)
             {
