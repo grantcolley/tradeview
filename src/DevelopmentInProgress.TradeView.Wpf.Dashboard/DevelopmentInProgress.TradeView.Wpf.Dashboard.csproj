@@ -94,6 +94,7 @@
     <Compile Include="Converters\ItemsCountToTextConverter.cs" />
     <Compile Include="Events\ServerMonitorEventArgs.cs" />
     <Compile Include="Extensions\ServerMonitorExtensions.cs" />
+    <Compile Include="Helper\ServerMonitorHelper.cs" />
     <Compile Include="Model\Connection.cs" />
     <Compile Include="Model\ServerStrategy.cs" />
     <Compile Include="Model\ServerMonitor.cs" />
