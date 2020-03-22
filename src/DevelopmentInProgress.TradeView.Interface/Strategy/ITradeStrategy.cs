@@ -10,7 +10,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
 {
     public interface ITradeStrategy
     {
-        Strategy Strategy { get; set; }
+        Strategy Strategy { get; }
 
         event EventHandler<StrategyNotificationEventArgs> StrategyNotificationEvent;
 
@@ -26,7 +26,9 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
 
         event EventHandler<StrategyNotificationEventArgs> StrategyCustomNotificationEvent;
 
-        Task<Strategy> RunAsync(Strategy strategy, CancellationToken cancellationToken);
+        void SetStrategy(Strategy strategy);
+
+        Task<Strategy> RunAsync(CancellationToken cancellationToken);
 
         Task AddExchangeService(IEnumerable<StrategySubscription> strategySubscriptions, Exchange exchange, IExchangeService exchangeService);
 
