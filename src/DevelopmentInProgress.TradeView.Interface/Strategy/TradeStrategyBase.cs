@@ -40,14 +40,24 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
         public event EventHandler<StrategyNotificationEventArgs> StrategyStatisticsEvent;
         public event EventHandler<StrategyNotificationEventArgs> StrategyCustomNotificationEvent;
 
-        public Strategy Strategy { get; set; }
+        public Strategy Strategy { get; private set; }
 
-        public async virtual Task<Strategy> RunAsync(Strategy strategy, CancellationToken cancellationToken)
+        public virtual void SetStrategy(Strategy strategy)
         {
-            Strategy = strategy;
+            var strategyXml = JsonConvert.SerializeObject(strategy);
+            Strategy = JsonConvert.DeserializeObject<Strategy>(strategyXml);
+        }
+
+        public async virtual Task<Strategy> RunAsync(CancellationToken cancellationToken)
+        {
+            if(Strategy == null)
+            {
+                throw new Exception("Strategy not set.");
+            }
+
             this.cancellationToken = cancellationToken;
 
-            await TryUpdateStrategyAsync(strategy.Parameters);
+            await TryUpdateStrategyAsync(Strategy.Parameters);
 
             while (run)
             {
@@ -61,7 +71,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
                 }
             }
 
-            var strategyNotification = new StrategyNotification { Name = strategy.Name, Message = $"Stopping {strategy.Name}", NotificationLevel = NotificationLevel.DisconnectClient };
+            var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = $"Stopping {Strategy.Name}", NotificationLevel = NotificationLevel.DisconnectClient };
 
             StrategyNotification(new StrategyNotificationEventArgs { StrategyNotification = strategyNotification });
 
