@@ -144,8 +144,8 @@
         <DataTemplate DataType="{x:Type localModel:ServerStrategy}">
             <DockPanel LastChildFill="True" Margin="30,0,0,0">
                 <DockPanel DockPanel.Dock="Top" LastChildFill="True">
-                    <Image Source="../Images/Strategy.png" ToolTip="{Binding Name}" Margin="2" MaxHeight="20" MaxWidth="20" VerticalAlignment="Center"/>
-                    <Label Content="{Binding Name}" FontWeight="Bold" Margin="2" VerticalAlignment="Center" Background="Transparent"/>
+                    <Image DockPanel.Dock="Left" Source="../Images/Strategy.png" ToolTip="{Binding Name}" Margin="2" MaxHeight="20" MaxWidth="20" VerticalAlignment="Center"/>
+                    <Label DockPanel.Dock="Left" Content="{Binding Name}" FontWeight="Bold" Margin="2" VerticalAlignment="Center" Background="Transparent"/>
                 </DockPanel>
                 <DockPanel LastChildFill="True" Margin="50,0,0,0">
                     <DockPanel DockPanel.Dock="Top" LastChildFill="True">
@@ -225,8 +225,10 @@
         <Grid Grid.Column="2">
             <GroupBox Style="{StaticResource GroupBoxNoHeaderStyle}">
                 <DockPanel LastChildFill="True">
-                    <Label DockPanel.Dock="Top" Height="30" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left"
-                           Content="{Binding SelectedServer.Name}"/>
+                    <DockPanel DockPanel.Dock="Top" LastChildFill="True">
+                        <Label DockPanel.Dock="Left" Height="30" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left" Content="Strategies : "/>
+                        <Label Height="30" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left" Content="{Binding SelectedServer.Name}"/>
+                    </DockPanel>
                     <filterbox:XamlFilterBox DockPanel.Dock="Top" ItemsSource="{Binding SelectedServer.Strategies}" FilterFieldName="Name" Margin="2"/>
                     <Grid>
                         <ListView ItemsSource="{Binding SelectedServer.Strategies}" 
@@ -257,8 +259,10 @@
         <Grid Grid.Column="4">
             <GroupBox Style="{StaticResource GroupBoxNoHeaderStyle}">
                 <DockPanel LastChildFill="True">
-                    <Label DockPanel.Dock="Top" Height="30" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left"
-                           Content="{Binding SelectedServerStrategy.Name}"/>
+                    <DockPanel DockPanel.Dock="Top" LastChildFill="True">
+                        <Label DockPanel.Dock="Left" Height="30" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left" Content="Connections : "/>
+                        <Label Height="30" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left" Content="{Binding SelectedServerStrategy.Name}"/>
+                    </DockPanel>
                     <filterbox:XamlFilterBox DockPanel.Dock="Top" ItemsSource="{Binding SelectedServerStrategy.Connections}" FilterFieldName="Name" Margin="2"/>
                     <Grid>
                         <ListView ItemsSource="{Binding SelectedServerStrategy.Connections}" 
