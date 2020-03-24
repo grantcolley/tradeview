@@ -96,7 +96,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
             if (disposing)
             {
-                symbolsCache.OnSymbolsCacheException -= SymbolsCacheException;
+                if (symbolsCache != null)
+                {
+                    symbolsCache.OnSymbolsCacheException -= SymbolsCacheException;
+                }
             }
 
             disposed = true;
