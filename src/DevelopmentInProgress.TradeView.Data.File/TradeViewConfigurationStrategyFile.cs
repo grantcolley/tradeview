@@ -139,7 +139,6 @@ namespace DevelopmentInProgress.TradeView.Data.File
                 TradesDisplayCount = 14,
                 OrderBookChartDisplayCount = 20,
                 OrderBookDisplayCount = 9,
-                ServerUrl = "http://localhost:5500",
                 StrategySubscriptions = new List<StrategySubscription>
                 {
                     new StrategySubscription
