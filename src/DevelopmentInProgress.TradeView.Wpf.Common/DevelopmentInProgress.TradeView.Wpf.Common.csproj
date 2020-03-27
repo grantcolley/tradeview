@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DipSocket, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DipSocket.1.1.0\lib\netstandard2.0\DipSocket.dll</HintPath>
+    </Reference>
     <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
       <HintPath>..\..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
     </Reference>
@@ -44,7 +47,23 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Reactive.Core, Version=3.0.3000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Reactive.Core.3.1.1\lib\net46\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Reactive.Interfaces.3.1.1\lib\net45\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=3.0.3000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Reactive.Linq.3.1.1\lib\net46\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices, Version=3.0.3000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Reactive.PlatformServices.3.1.1\lib\net46\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Windows.Threading, Version=3.0.1000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Reactive.Windows.Threading.3.1.1\lib\net45\System.Reactive.Windows.Threading.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -69,8 +88,10 @@
     <Compile Include="Events\EventArgsBase.cs" />
     <Compile Include="Events\OrdersEventArgs.cs" />
     <Compile Include="Events\ServerEventArgs.cs" />
+    <Compile Include="Events\ServerMonitorEventArgs.cs" />
     <Compile Include="Events\StrategyEventArgs.cs" />
     <Compile Include="Extensions\CandlestickExtensions.cs" />
+    <Compile Include="Extensions\ServerMonitorExtensions.cs" />
     <Compile Include="Extensions\StrategyExtensions.cs" />
     <Compile Include="Extensions\StrategyNotificationExtensions.cs" />
     <Compile Include="Extensions\ServerExtensions.cs" />
@@ -86,14 +107,18 @@
     <Compile Include="Helpers\ITradeHelperFactory.cs" />
     <Compile Include="Helpers\KucoinOrderBookHelper.cs" />
     <Compile Include="Helpers\OrderBookHelperFactory.cs" />
+    <Compile Include="Helpers\ServerMonitorHelper.cs" />
     <Compile Include="Helpers\TradeHelper.cs" />
     <Compile Include="Helpers\TradeHelperBase.cs" />
     <Compile Include="Helpers\TradeHelperFactory.cs" />
     <Compile Include="Model\Candlestick.cs" />
+    <Compile Include="Model\Connection.cs" />
     <Compile Include="Model\LocalTradeListResult.cs" />
     <Compile Include="Model\OrderBook.cs" />
     <Compile Include="Model\OrderBookPriceLevel.cs" />
     <Compile Include="Model\Preferences.cs" />
+    <Compile Include="Model\ServerMonitor.cs" />
+    <Compile Include="Model\ServerStrategy.cs" />
     <Compile Include="Model\StrategyFileType.cs" />
     <Compile Include="Model\Server.cs" />
     <Compile Include="Model\TimeValuePoint.cs" />
