@@ -1,4 +1,5 @@
 ﻿using DevelopmentInProgress.TradeView.Data;
+using DevelopmentInProgress.TradeView.Wpf.Common.Cache;
 using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using System.Collections.Generic;
@@ -10,10 +11,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
     public class ServerService : IServerService
     {
         private readonly ITradeViewConfigurationServer configurationServer;
+        private readonly IServerMonitorCache serverMonitorCache;
 
-        public ServerService(ITradeViewConfigurationServer configurationServer)
+        public ServerService(ITradeViewConfigurationServer configurationServer, IServerMonitorCache serverMonitorCache)
         {
             this.configurationServer = configurationServer;
+            this.serverMonitorCache = serverMonitorCache;
         }
 
         public async Task<List<Server>> GetServers()
@@ -28,14 +31,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
             return result.ToWpfServer();
         }
 
-        public Task SaveServer(Server server)
+        public async Task SaveServer(Server server)
         {
-            return configurationServer.SaveServerAsync(server.ToInterfaceServer());
+            await configurationServer.SaveServerAsync(server.ToInterfaceServer());
+            await serverMonitorCache.RefreshServerMonitorsAsync();
         }
 
-        public Task DeleteServer(Server server)
+        public async Task DeleteServer(Server server)
         {
-            return configurationServer.DeleteServerAsync(server.ToInterfaceServer());
+            await configurationServer.DeleteServerAsync(server.ToInterfaceServer());
+            await serverMonitorCache.RefreshServerMonitorsAsync();
         }
     }
 }
