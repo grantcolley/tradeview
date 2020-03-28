@@ -65,7 +65,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                         }
                     }
 
-                    var newServers = servers.Where(s => !serverMonitors.Any(sm => sm.Name == s.Name)).ToList();
+                    var newServers = servers.Where(s => !serverMonitors.Any(sm => sm.Name == s.Name && !string.IsNullOrWhiteSpace(s.Url))).ToList();
 
                     var newServerMonitors = newServers.Select(s => s.ToServerMonitor()).ToList();
 
@@ -134,7 +134,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
         private async Task TryConnectServersAsync(IEnumerable<ServerMonitor> servers)
         {
             await Task.WhenAll(servers
-                .Where(s => !s.IsConnected)
+                .Where(s => !s.IsConnected && !string.IsNullOrWhiteSpace(s.Url))
                 .Select(s => s.ConnectAsync(dispatcher)).ToList());
         }
 
