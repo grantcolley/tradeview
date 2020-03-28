@@ -283,7 +283,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         private void OnException(string message, Exception exception)
         {
             var onServerMonitorNotification = OnServerMonitorNotification;
-            onServerMonitorNotification?.Invoke(this, new ServerMonitorEventArgs { Message = message, Exception = exception });
+            onServerMonitorNotification?.Invoke(this, new ServerMonitorEventArgs { Value = this,  Message = message, Exception = exception });
         }
     }
 }
