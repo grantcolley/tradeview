@@ -5,6 +5,7 @@
         private string name;
         private string url;
         private int maxDegreeOfParallelism;
+        private bool enabled;
 
         public string Name 
         {
@@ -41,6 +42,19 @@
                 {
                     maxDegreeOfParallelism = value;
                     OnPropertyChanged("MaxDegreeOfParallelism");
+                }
+            }
+        }
+
+        public bool Enabled
+        {
+            get { return enabled; }
+            set
+            {
+                if (enabled != value)
+                {
+                    enabled = value;
+                    OnPropertyChanged("Enabled");
                 }
             }
         }

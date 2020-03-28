@@ -10,7 +10,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
             {
                 Name = server.Name,
                 Url = server.Url,
-                MaxDegreeOfParallelism = server.MaxDegreeOfParallelism
+                MaxDegreeOfParallelism = server.MaxDegreeOfParallelism,
+                Enabled = server.Enabled
             };
         }
     }

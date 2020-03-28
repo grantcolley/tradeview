@@ -21,6 +21,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         private string name;
         private string url;
         private int maxDegreeOfParallelism;
+        private bool enabled;
         private string startedBy;
         private string stoppedBy;
         private DateTime started;
@@ -69,6 +70,19 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 {
                     maxDegreeOfParallelism = value;
                     OnPropertyChanged("MaxDegreeOfParallelism");
+                }
+            }
+        }
+
+        public bool Enabled
+        {
+            get { return enabled; }
+            set
+            {
+                if (enabled != value)
+                {
+                    enabled = value;
+                    OnPropertyChanged("Enabled");
                 }
             }
         }
