@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
@@ -14,7 +15,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
     public class ServerMonitor : EntityBase
     {
         private DipSocketClient socketClient;
-        private bool isConnecting;
+        private bool isConnecting = true;
         private bool isConnected;
 
         private string name;
@@ -199,8 +200,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 
         public async Task ConnectAsync(Dispatcher dispatcher)
         {
-            IsConnecting = true;
-
             try
             {
                 socketClient = new DipSocketClient($"{Url}/serverhub", Environment.UserName);
@@ -249,8 +248,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 
                 await socketClient.StartAsync(Name);
             }
+            catch(WebSocketException)
+            {
+                await DisposeSocketAsync();
+            }
             catch(Exception ex)
             {
+                await DisposeSocketAsync();
+
                 OnException(ex.Message, ex);
             }
         }
@@ -283,7 +288,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         private void OnException(string message, Exception exception)
         {
             var onServerMonitorNotification = OnServerMonitorNotification;
-            onServerMonitorNotification?.Invoke(this, new ServerMonitorEventArgs { Value = this,  Message = message, Exception = exception });
+            onServerMonitorNotification?.Invoke(this, new ServerMonitorEventArgs { Value = this,  Message = $"{Name} : {message}", Exception = exception });
         }
     }
 }
