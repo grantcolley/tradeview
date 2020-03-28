@@ -19,7 +19,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
         private readonly ITradeViewConfigurationServer configurationServer;
         private readonly ObservableCollection<ServerMonitor> serverMonitors;
         private readonly SemaphoreSlim serverMonitorSemaphoreSlim = new SemaphoreSlim(1, 1);
-        private readonly List<IDisposable> serverMonitorSubscriptions;
+        private readonly Dictionary<string, IDisposable> serverMonitorSubscriptions;
         private IDisposable observableInterval;
         private Dispatcher dispatcher;
         private bool disposed;
@@ -28,7 +28,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
         {
             this.configurationServer = configurationServer;
             serverMonitors = new ObservableCollection<ServerMonitor>();
-            serverMonitorSubscriptions = new List<IDisposable>();
+            serverMonitorSubscriptions = new Dictionary<string, IDisposable>();
 
             dispatcher = Application.Current.Dispatcher;
         }
@@ -49,12 +49,20 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
             {
                 var servers = await configurationServer.GetServersAsync();
 
-                dispatcher.Invoke(() =>
+                await dispatcher.InvokeAsync(async () =>
                 {
                     var removeServers = serverMonitors.Where(sm => !servers.Any(s => s.Name == sm.Name)).ToList();
-                    foreach (var server in removeServers)
+
+                    if (removeServers.Any())
                     {
-                        serverMonitors.Remove(server);
+                        await Task.WhenAll(removeServers.Select(s => s.DisposeAsync()).ToList());
+
+                        foreach (var server in removeServers)
+                        {
+                            serverMonitorSubscriptions[server.Name].Dispose();
+                            serverMonitorSubscriptions.Remove(server.Name);
+                            serverMonitors.Remove(server);
+                        }
                     }
 
                     var newServers = servers.Where(s => !serverMonitors.Any(sm => sm.Name == s.Name)).ToList();
@@ -92,7 +100,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                 observableInterval.Dispose();
             }
 
-            foreach(var serverMonitorSubscription in serverMonitorSubscriptions)
+            foreach(var serverMonitorSubscription in serverMonitorSubscriptions.Values)
             {
                 serverMonitorSubscription.Dispose();
             }
@@ -151,7 +159,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                 }
             });
 
-            serverMonitorSubscriptions.Add(serverMonitorSubscription);
+            serverMonitorSubscriptions.Add(serverMonitor.Name, serverMonitorSubscription);
         }
     }
 }
