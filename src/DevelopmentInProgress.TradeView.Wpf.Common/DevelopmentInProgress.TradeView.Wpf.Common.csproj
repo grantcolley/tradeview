@@ -74,7 +74,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cache\IServerMonitorCache.cs" />
     <Compile Include="Cache\ISymbolsCacheFactory.cs" />
+    <Compile Include="Cache\ServerMonitorCache.cs" />
     <Compile Include="Cache\SymbolsCacheFactory.cs" />
     <Compile Include="Chart\ChartHelper.cs" />
     <Compile Include="Chart\IChartHelper.cs" />
@@ -88,6 +90,7 @@
     <Compile Include="Events\EventArgsBase.cs" />
     <Compile Include="Events\OrdersEventArgs.cs" />
     <Compile Include="Events\ServerEventArgs.cs" />
+    <Compile Include="Events\ServerMonitorCacheEventArgs.cs" />
     <Compile Include="Events\ServerMonitorEventArgs.cs" />
     <Compile Include="Events\StrategyEventArgs.cs" />
     <Compile Include="Extensions\CandlestickExtensions.cs" />
