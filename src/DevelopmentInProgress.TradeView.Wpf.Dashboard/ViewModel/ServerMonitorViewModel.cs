@@ -1,38 +1,32 @@
-﻿using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
-using DevelopmentInProgress.TradeView.Wpf.Dashboard.Events;
-using DevelopmentInProgress.TradeView.Wpf.Dashboard.Model;
-using DevelopmentInProgress.TradeView.Wpf.Dashboard.Services;
+﻿using DevelopmentInProgress.TradeView.Wpf.Common.Cache;
+using DevelopmentInProgress.TradeView.Wpf.Common.Events;
+using DevelopmentInProgress.TradeView.Wpf.Common.Model;
+using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using DevelopmentInProgress.TradeView.Wpf.Host.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.ViewModel;
 using Prism.Logging;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
 {
     public class ServerMonitorViewModel : DocumentViewModel
     {
-        private readonly IDashboardService dashboardService;
+        private readonly IServerMonitorCache serverMonitorCache;
+        private IDisposable serverMonitorCacheSubscription;
         private ObservableCollection<ServerMonitor> servers;
-        private List<IDisposable> serverMonitorSubscriptions;
-        private IDisposable observableInterval;
         private ServerMonitor selectedServer;
         private ServerStrategy selectedServerStrategy;
         private bool isLoadingServers;
         private bool disposed;
 
-        public ServerMonitorViewModel(ViewModelContext viewModelContext, IDashboardService dashboardService)
+        public ServerMonitorViewModel(ViewModelContext viewModelContext, IServerMonitorCache serverMonitorCache)
             : base(viewModelContext)
         {
-            this.dashboardService = dashboardService;
-
+            this.serverMonitorCache = serverMonitorCache;
             IsLoadingServers = true;
-
-            serverMonitorSubscriptions = new List<IDisposable>();
         }
 
         public bool IsLoadingServers
@@ -103,34 +97,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
         {
             try
             {
-                if(observableInterval != null)
-                {
-                    observableInterval.Dispose();
-                }
+                ObserveServerMonitorCache();
 
-                var serverMonitors = await dashboardService.GetServers();
-
-                serverMonitors.ForEach(ObserveServerMonitor);
-
-                Servers = new ObservableCollection<ServerMonitor>(serverMonitors);
-
-                IsLoadingServers = false;
-
-                await TryConnectServersAsync(serverMonitors);
-
-                observableInterval = Observable.Interval(TimeSpan.FromSeconds(5))
-                    .Subscribe(async i =>
-                    {
-                        try
-                        {
-                            await TryConnectServersAsync(Servers.ToList());
-                        }
-                        catch (Exception ex)
-                        {
-                            Logger.Log(ex.ToString(), Category.Exception, Priority.High);
-                            ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message, TextVerbose = ex.StackTrace });
-                        }
-                    });
+                Servers = await serverMonitorCache.GetServerMonitorsAsync();
             }
             catch(Exception ex)
             {
@@ -143,43 +112,29 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
             }
         }
 
-        private async Task TryConnectServersAsync(IEnumerable<ServerMonitor> servers)
-        {
-            await Task.WhenAll(servers
-                .Where(s => !s.IsConnected && !s.IsConnecting)
-                .Select(s => s.ConnectAsync(ViewModelContext.UiDispatcher)).ToList());
-        }
-
-        protected async override void OnDisposing()
+        protected override void OnDisposing()
         {
             if (disposed)
             {
                 return;
             }
 
-            observableInterval.Dispose();
-
-            foreach (var server in servers)
+            if(serverMonitorCacheSubscription != null)
             {
-                await server.DisposeAsync();
-            }
-
-            foreach(var serverMonitorSubscription in serverMonitorSubscriptions)
-            {
-                serverMonitorSubscription.Dispose();
+                serverMonitorCacheSubscription.Dispose();
             }
 
             disposed = true;
         }
         
-        private void ObserveServerMonitor(ServerMonitor serverMonitor)
+        private void ObserveServerMonitorCache()
         {
-            var serverMonitorObservable = Observable.FromEventPattern<ServerMonitorEventArgs>(
-                eventHandler => serverMonitor.OnServerMonitorNotification += eventHandler,
-                eventHandler => serverMonitor.OnServerMonitorNotification -= eventHandler)
+            var serverMonitorCacheObservable = Observable.FromEventPattern<ServerMonitorCacheEventArgs>(
+                eventHandler => serverMonitorCache.ServerMonitorCacheNotification += eventHandler,
+                eventHandler => serverMonitorCache.ServerMonitorCacheNotification -= eventHandler)
                 .Select(eventPattern => eventPattern.EventArgs);
 
-            var serverMonitorSubscription = serverMonitorObservable.Subscribe(args =>
+            serverMonitorCacheSubscription = serverMonitorCacheObservable.Subscribe(args =>
             {
                 if (args.HasException)
                 {
@@ -190,8 +145,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
                     NotificationsAdd(new Message { MessageType = MessageType.Info, Text = args.Message });
                 }
             });
-
-            serverMonitorSubscriptions.Add(serverMonitorSubscription);
         }
 
         private void NotificationsAdd(Message message)
