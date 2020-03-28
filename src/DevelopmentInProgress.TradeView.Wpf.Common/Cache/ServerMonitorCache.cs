@@ -72,7 +72,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
             }
             catch (Exception ex)
             {
-
+                OnServerMonitorCacheNotification($"Refreshing Servers : {ex.Message}", ex);
             }
             finally
             {
@@ -126,7 +126,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
         private async Task TryConnectServersAsync(IEnumerable<ServerMonitor> servers)
         {
             await Task.WhenAll(servers
-                .Where(s => !s.IsConnected && !s.IsConnecting)
+                .Where(s => !s.IsConnected)
                 .Select(s => s.ConnectAsync(dispatcher)).ToList());
         }
 
