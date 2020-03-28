@@ -6,7 +6,7 @@
                        xmlns:view="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.View;assembly=DevelopmentInProgress.TradeView.Wpf.Host"
                        xmlns:converters="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Converters;assembly=DevelopmentInProgress.TradeView.Wpf.Host"
                        xmlns:progress="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controls.Progress;assembly=DevelopmentInProgress.TradeView.Wpf.Host"
-                       xmlns:localModel="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Dashboard.Model"
+                       xmlns:model="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Common.Model;assembly=DevelopmentInProgress.TradeView.Common"
                        xmlns:localConverters="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Dashboard.Converters"
                        xmlns:filterbox="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox;assembly=DevelopmentInProgress.TradeView.Wpf.Controls"
                        mc:Ignorable="d">
@@ -97,7 +97,7 @@
             </Setter>
         </Style>
         
-        <DataTemplate DataType="{x:Type localModel:ServerMonitor}">
+        <DataTemplate DataType="{x:Type model:ServerMonitor}">
             <Border BorderThickness="1" BorderBrush="#FF454545" Margin="2">
                 <DockPanel LastChildFill="True">
                     <DockPanel DockPanel.Dock="Top" LastChildFill="True">
@@ -141,7 +141,7 @@
             </Border>
         </DataTemplate>
         
-        <DataTemplate DataType="{x:Type localModel:ServerStrategy}">
+        <DataTemplate DataType="{x:Type model:ServerStrategy}">
             <DockPanel LastChildFill="True" Margin="30,0,0,0">
                 <DockPanel DockPanel.Dock="Top" LastChildFill="True">
                     <Image DockPanel.Dock="Left" Source="../Images/Strategy.png" ToolTip="{Binding Name}" Margin="2" MaxHeight="20" MaxWidth="20" VerticalAlignment="Center"/>
@@ -170,7 +170,7 @@
             </DockPanel>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type localModel:Connection}">
+        <DataTemplate DataType="{x:Type model:Connection}">
             <DockPanel LastChildFill="True" Margin="50,0,0,0">
                 <Image Source="../Images/Connection.png" ToolTip="{Binding Name}" Margin="2" MaxHeight="20" MaxWidth="20" VerticalAlignment="Center"/>
                 <Label Content="{Binding Name}" Margin="2" VerticalAlignment="Center" Background="Transparent"/>
