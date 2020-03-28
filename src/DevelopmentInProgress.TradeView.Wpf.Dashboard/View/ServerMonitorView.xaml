@@ -6,7 +6,7 @@
                        xmlns:view="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.View;assembly=DevelopmentInProgress.TradeView.Wpf.Host"
                        xmlns:converters="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Converters;assembly=DevelopmentInProgress.TradeView.Wpf.Host"
                        xmlns:progress="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controls.Progress;assembly=DevelopmentInProgress.TradeView.Wpf.Host"
-                       xmlns:model="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Common.Model;assembly=DevelopmentInProgress.TradeView.Common"
+                       xmlns:model="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Common.Model;assembly=DevelopmentInProgress.TradeView.Wpf.Common"
                        xmlns:localConverters="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Dashboard.Converters"
                        xmlns:filterbox="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox;assembly=DevelopmentInProgress.TradeView.Wpf.Controls"
                        mc:Ignorable="d">
