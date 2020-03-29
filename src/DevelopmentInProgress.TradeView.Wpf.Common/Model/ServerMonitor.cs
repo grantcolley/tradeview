@@ -216,6 +216,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         {
             try
             {
+                if(socketClient != null)
+                {
+                    return;
+                }
+
                 IsConnecting = true;
 
                 socketClient = new DipSocketClient($"{Url}/serverhub", Environment.UserName);
