@@ -27,6 +27,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Content="Server Name:" Margin="2"/>
@@ -37,6 +38,9 @@
 
                     <Label Grid.Row="2" Grid.Column="0" Content="Max Degree of Parallesim:" Margin="2"/>
                     <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Server.MaxDegreeOfParallelism}" ToolTip="{Binding Server.MaxDegreeOfParallelism}" VerticalContentAlignment="Center" Margin="2" HorizontalAlignment="Stretch"/>
+
+                    <Label Grid.Row="3" Grid.Column="0" Content="Enabled:" Margin="2"/>
+                    <CheckBox Grid.Row="3" Grid.Column="1" IsChecked="{Binding Server.Enabled}" VerticalContentAlignment="Center" Margin="2" HorizontalAlignment="Stretch"/>
                 </Grid>
             </Grid>
         </GroupBox>
