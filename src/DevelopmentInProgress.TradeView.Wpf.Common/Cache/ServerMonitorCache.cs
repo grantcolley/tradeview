@@ -135,7 +135,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 
                     try
                     {
-                        var connectServers = serverMonitors.Where(s => !s.IsConnected && !string.IsNullOrWhiteSpace(s.Url) && s.Enabled).ToList();
+                        var connectServers = serverMonitors.Where(
+                            s => !s.IsConnected
+                            && !s.IsConnecting 
+                            && !string.IsNullOrWhiteSpace(s.Url) 
+                            && s.Enabled).ToList();
 
                         if(connectServers.Any())
                         {
