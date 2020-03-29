@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
 using System.Windows.Threading;
@@ -221,6 +222,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                     return;
                 }
 
+                var serverIsRunning = await IsServerRunningAsync();
+
+                if(!serverIsRunning)
+                {
+                    return;
+                }
+
                 IsConnecting = true;
 
                 socketClient = new DipSocketClient($"{Url}/serverhub", Environment.UserName);
@@ -279,6 +287,31 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 
                 OnException(ex.Message, ex);
             }
+        }
+
+        private async Task<bool> IsServerRunningAsync()
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    using (var response = await client.GetAsync($"{Url}/ping"))
+                    {
+                        var content = await response.Content.ReadAsStringAsync();
+
+                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+                            return content.Contains("Alive");
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // intentionally swallow
+            }
+
+            return false;
         }
 
         private async Task OnServerMonitorNotificationAsync(DipSocket.Messages.Message message)
