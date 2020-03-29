@@ -64,6 +64,18 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                         }
                     }
 
+                    Func<ServerMonitor, Interface.Server.Server, ServerMonitor> updateServerMonitor = (sm, s) =>
+                    {
+                        sm.Url = s.Url;
+                        sm.MaxDegreeOfParallelism = s.MaxDegreeOfParallelism;
+                        sm.Enabled = s.Enabled;
+                        return sm;
+                    };
+
+                    (from sm in serverMonitors
+                     join s in servers on sm.Name equals s.Name
+                     select updateServerMonitor(sm, s)).ToList();
+
                     var newServers = servers.Where(s => !serverMonitors.Any(sm => sm.Name == s.Name)).ToList();
 
                     var newServerMonitors = newServers.Select(s => s.ToServerMonitor()).ToList();
@@ -116,7 +128,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                 return;
             }
 
-            observableInterval = Observable.Interval(TimeSpan.FromSeconds(5))
+            observableInterval = Observable.Interval(TimeSpan.FromSeconds(10))
                 .Subscribe(async i =>
                 {
                     await serverMonitorSemaphoreSlim.WaitAsync();
@@ -124,7 +136,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                     try
                     {
                         var connectServers = serverMonitors.Where(s => !s.IsConnected && !string.IsNullOrWhiteSpace(s.Url) && s.Enabled).ToList();
-                        await TryConnectServersAsync(connectServers);
+
+                        if(connectServers.Any())
+                        {
+                            await Task.WhenAll(connectServers.Select(s => s.ConnectAsync(dispatcher)).ToList());
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -135,11 +151,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                         serverMonitorSemaphoreSlim.Release();
                     }
                 });
-        }
-
-        private async Task TryConnectServersAsync(IEnumerable<ServerMonitor> servers)
-        {
-            await Task.WhenAll(servers.Select(s => s.ConnectAsync(dispatcher)).ToList());
         }
 
         private void OnServerMonitorCacheNotification(string message, Exception exception = null)
