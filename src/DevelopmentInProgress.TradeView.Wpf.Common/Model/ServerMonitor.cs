@@ -15,7 +15,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
     public class ServerMonitor : EntityBase
     {
         private DipSocketClient socketClient;
-        private bool isConnecting = true;
+        private bool isConnecting;
         private bool isConnected;
 
         private string name;
@@ -216,6 +216,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         {
             try
             {
+                IsConnecting = true;
+
                 socketClient = new DipSocketClient($"{Url}/serverhub", Environment.UserName);
 
                 socketClient.On("OnConnected", message =>
