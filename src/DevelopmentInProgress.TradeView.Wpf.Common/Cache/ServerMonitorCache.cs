@@ -52,7 +52,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                 await dispatcher.InvokeAsync(async () =>
                 {
                     var removeServers = serverMonitors.Where(sm => !servers.Any(s => s.Name == sm.Name)).ToList();
-
                     if (removeServers.Any())
                     {
                         await Task.WhenAll(removeServers.Select(s => s.DisposeAsync()).ToList());
@@ -65,7 +64,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                         }
                     }
 
-                    var newServers = servers.Where(s => !serverMonitors.Any(sm => sm.Name == s.Name && !string.IsNullOrWhiteSpace(s.Url))).ToList();
+                    var newServers = servers.Where(s => !serverMonitors.Any(sm => sm.Name == s.Name)).ToList();
 
                     var newServerMonitors = newServers.Select(s => s.ToServerMonitor()).ToList();
 
@@ -120,22 +119,27 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
             observableInterval = Observable.Interval(TimeSpan.FromSeconds(5))
                 .Subscribe(async i =>
                 {
+                    await serverMonitorSemaphoreSlim.WaitAsync();
+
                     try
                     {
-                        await TryConnectServersAsync(serverMonitors.ToList());
+                        var connectServers = serverMonitors.Where(s => !s.IsConnected && !string.IsNullOrWhiteSpace(s.Url) && s.Enabled).ToList();
+                        await TryConnectServersAsync(connectServers);
                     }
                     catch (Exception ex)
                     {
                         OnServerMonitorCacheNotification($"Observing Servers : {ex.Message}", ex);
+                    }
+                    finally
+                    {
+                        serverMonitorSemaphoreSlim.Release();
                     }
                 });
         }
 
         private async Task TryConnectServersAsync(IEnumerable<ServerMonitor> servers)
         {
-            await Task.WhenAll(servers
-                .Where(s => !s.IsConnected && !string.IsNullOrWhiteSpace(s.Url))
-                .Select(s => s.ConnectAsync(dispatcher)).ToList());
+            await Task.WhenAll(servers.Select(s => s.ConnectAsync(dispatcher)).ToList());
         }
 
         private void OnServerMonitorCacheNotification(string message, Exception exception = null)
