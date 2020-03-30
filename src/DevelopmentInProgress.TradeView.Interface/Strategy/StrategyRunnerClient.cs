@@ -10,31 +10,43 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
     {
         public Task<HttpResponseMessage> PostAsync(string requestUri, string jsonSerializedStrategy, IEnumerable<string> libraries)
         {
-            var client = new HttpClient();
-            var multipartFormDataContent = new MultipartFormDataContent();
-
-            multipartFormDataContent.Add(new StringContent(jsonSerializedStrategy, Encoding.UTF8, "application/json"), "strategy");
-
-            foreach (var file in libraries)
+            using (var client = new HttpClient())
             {
-                var fileInfo = new FileInfo(file);
-                var fileStream = File.OpenRead(file);
-                using (var br = new BinaryReader(fileStream))
+                using (var multipartFormDataContent = new MultipartFormDataContent())
                 {
-                    var byteArrayContent = new ByteArrayContent(br.ReadBytes((int)fileStream.Length));
-                    multipartFormDataContent.Add(byteArrayContent, fileInfo.Name, fileInfo.FullName);
+
+                    multipartFormDataContent.Add(new StringContent(jsonSerializedStrategy, Encoding.UTF8, "application/json"), "strategy");
+
+                    foreach (var file in libraries)
+                    {
+                        var fileInfo = new FileInfo(file);
+                        using (var fileStream = File.OpenRead(file))
+                        {
+                            using (var br = new BinaryReader(fileStream))
+                            {
+                                using (var byteArrayContent = new ByteArrayContent(br.ReadBytes((int)fileStream.Length)))
+                                {
+                                    multipartFormDataContent.Add(byteArrayContent, fileInfo.Name, fileInfo.FullName);
+                                }
+                            }
+                        }
+                    }
+
+                    return client.PostAsync(requestUri, multipartFormDataContent);
                 }
             }
-
-            return client.PostAsync(requestUri, multipartFormDataContent);
         }
 
         public Task<HttpResponseMessage> PostAsync(string requestUri, string jsonSerializedStrategyParameters)
         {
-            var client = new HttpClient();
-            var multipartFormDataContent = new MultipartFormDataContent();
-            multipartFormDataContent.Add(new StringContent(jsonSerializedStrategyParameters, Encoding.UTF8, "application/json"), "strategyparameters");
-            return client.PostAsync(requestUri, multipartFormDataContent);
+            using (var client = new HttpClient())
+            {
+                using (var multipartFormDataContent = new MultipartFormDataContent())
+                {
+                    multipartFormDataContent.Add(new StringContent(jsonSerializedStrategyParameters, Encoding.UTF8, "application/json"), "strategyparameters");
+                    return client.PostAsync(requestUri, multipartFormDataContent);
+                }
+            }
         }
     }
 }
