@@ -126,7 +126,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
         {
             return new Server
             {
-                Name = "TradeServer #1",
+                Name = "TradeServer",
                 Url = "http://localhost:5500",
                 MaxDegreeOfParallelism = 5,
                 Enabled = true
