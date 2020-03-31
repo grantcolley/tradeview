@@ -37,10 +37,40 @@
             </DataTemplate>
 
             <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
+            <converters:InvertBoolToVisibilityConverter x:Key="invertBoolToVisibilityConverter"/>
             
             <DataTemplate DataType="{x:Type model:Strategy}">
                 <DockPanel LastChildFill="True">
-                    <Label DockPanel.Dock="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" Content="{Binding Name}" Height="30" Margin="2" FontWeight="Bold"/>
+                    <Label DockPanel.Dock="Top" VerticalAlignment="Center" VerticalContentAlignment="Center" Content="{Binding Name}" Height="30" Margin="2" FontWeight="Bold"/>
+                    <ComboBox DockPanel.Dock="Left" Width="250"
+                              IsReadOnly="True"
+                              IsEditable="False"
+                              IsSynchronizedWithCurrentItem="True"
+                              ItemsSource="{Binding Path=DataContext.Servers, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}}"
+                              SelectedItem="{Binding Path=DataContext.SelectedServer, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type model:ServerMonitor}">
+                                <DockPanel LastChildFill="true">
+                                    <Grid DockPanel.Dock="Left" Margin="2,0,10,0">
+                                        <DockPanel>
+                                            <Image DockPanel.Dock="Left" Source="../Images/Running.png" ToolTip="Running" 
+                                                   MaxHeight="10" MaxWidth="10" VerticalAlignment="Center"
+                                                   Visibility="{Binding IsConnected, Converter={StaticResource boolToVisibilityConverter}}"/>
+                                            <Image DockPanel.Dock="Left" Source="../Images/NotRunning.png" ToolTip="Not Running" 
+                                                   MaxHeight="10" MaxWidth="10" VerticalAlignment="Center"
+                                                   Visibility="{Binding IsConnected, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                                        </DockPanel>
+                                    </Grid>
+                                    <TextBlock DockPanel.Dock="Left" Text="{Binding Name}"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ComboBoxItem}">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+                    </ComboBox>
                     <Button DockPanel.Dock="Right" Margin="2" Height="18" Width="18" Padding="0,0.5,1,0"
                             Style="{StaticResource ButtonImageStyle}"
                             ToolTip="Run Strategy"

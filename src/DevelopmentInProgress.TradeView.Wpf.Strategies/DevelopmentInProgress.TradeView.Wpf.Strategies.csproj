@@ -141,7 +141,9 @@
   <ItemGroup>
     <Resource Include="Images\strategyManager.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\Running.png" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\tradeview\src\DevelopmentInProgress.TradeView.Interface\DevelopmentInProgress.TradeView.Interface.csproj">
       <Project>{e3236e65-3232-438d-8dc9-5cd6be419b68}</Project>
@@ -159,10 +161,17 @@
       <Project>{7bce5d35-0443-4031-843a-3563356290e1}</Project>
       <Name>DevelopmentInProgress.TradeView.Wpf.Host</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Common\DevelopmentInProgress.TradeView.Common.csproj">
+      <Project>{03680064-ec5b-42a0-9c53-5a0b097458ea}</Project>
+      <Name>DevelopmentInProgress.TradeView.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\NotRunning.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

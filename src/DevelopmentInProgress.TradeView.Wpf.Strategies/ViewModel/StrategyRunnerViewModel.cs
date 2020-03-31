@@ -1,5 +1,6 @@
 ﻿using InterfaceModel = DevelopmentInProgress.TradeView.Interface.Model;
 using InterfaceStrategy = DevelopmentInProgress.TradeView.Interface.Strategy;
+using DevelopmentInProgress.TradeView.Common.Extensions;
 using DevelopmentInProgress.TradeView.Wpf.Common.Events;
 using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
@@ -20,14 +21,18 @@ using System.Windows.Input;
 using System.Reactive.Linq;
 using DipSocket.Client;
 using System.Net.WebSockets;
+using DevelopmentInProgress.TradeView.Wpf.Common.Cache;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 {
     public class StrategyRunnerViewModel : DocumentViewModel
     {
         private IStrategyService strategyService;
+        private IServerMonitorCache serverMonitorCache;
         private IStrategyAssemblyManager strategyAssemblyManager;
+
         private Strategy strategy;
+        private ServerMonitor selectedServer;
         private List<Symbol> symbols;
         private bool canRun;
         private bool canMonitor;
@@ -36,6 +41,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         private bool disposed;
         private DipSocketClient socketClient;
         private ObservableCollection<Message> notifications;
+        private ObservableCollection<ServerMonitor> servers;
 
         private AccountViewModel accountViewModel;
         private SymbolsViewModel symbolsViewModel;
@@ -48,6 +54,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         private IDisposable ordersSubscription;
         private IDisposable parametersSubscription;
         private IDisposable strategySubscription;
+        private IDisposable serverMonitorCacheSubscription;
 
         public StrategyRunnerViewModel(
             ViewModelContext viewModelContext, 
@@ -55,11 +62,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             SymbolsViewModel symbolsViewModel, 
             OrdersViewModel ordersViewModel, 
             StrategyParametersViewModel strategyParametersViewModel,
-            IStrategyService strategyService, 
+            IStrategyService strategyService,
+            IServerMonitorCache serverMonitorCache,
             IStrategyAssemblyManager strategyAssemblyManager)
             : base(viewModelContext)
         {
             this.strategyService = strategyService;
+            this.serverMonitorCache = serverMonitorCache;
             this.strategyAssemblyManager = strategyAssemblyManager;
 
             AccountViewModel = accountViewModel;
@@ -70,7 +79,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             CanRun = false;
             CanMonitor = false;
             IsConnected = false;
-            IsConnecting = true;
+            IsConnecting = false;
 
             Notifications = new ObservableCollection<Message>();
 
@@ -80,10 +89,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             StopCommand = new ViewModelCommand(StopStrategy);
             ClearNotificationsCommand = new ViewModelCommand(ClearNotifications);
 
+            ObserveOrders();
             ObserveSymbols();
             ObserveAccount();
-            ObserveOrders();
-            ObserveParameters();            
+            ObserveParameters();
+            ObserveServerMonitorCache();
         }
 
         public event EventHandler<StrategyDisplayEventArgs> OnStrategyDisplay;
@@ -93,6 +103,33 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         public ICommand DisconnectCommand { get; set; }
         public ICommand StopCommand { get; set; }
         public ICommand ClearNotificationsCommand { get; set; }
+
+        public ObservableCollection<ServerMonitor> Servers
+        {
+            get { return servers; }
+            set
+            {
+                if (servers != value)
+                {
+                    servers = value;
+                    OnPropertyChanged("Servers");
+                }
+            }
+        }
+
+        public ServerMonitor SelectedServer
+        {
+            get { return selectedServer; }
+            set
+            {
+                if (selectedServer != value)
+                {
+                    selectedServer = value;
+                    ResetCommandVisibility();
+                    OnPropertyChanged("SelectedServer");
+                }
+            }
+        }
 
         public AccountViewModel AccountViewModel
         {
@@ -257,21 +294,26 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                     account.Exchange = strategySubscription.Exchange;
                 }
 
-                await Task.WhenAll(SymbolsViewModel.GetSymbols(Strategy), AccountViewModel.Login(account));
-
-                if (Strategy.StrategySubscriptions.Any())
-                {
-                    if (!IsConnected)
-                    {
-                        await SetCommandVisibility(true, false, false);
-                    }
-                }
+                await Task.WhenAll(SymbolsViewModel.GetSymbols(Strategy), AccountViewModel.Login(account), GetServerMonitors());
             }
             catch (Exception ex)
             {
                 Logger.Log($"OnPublished {ex.Message}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 ShowMessage(new Message { MessageType = MessageType.Error, Text = $"Strategy load error. Check configuration. {ex.Message}" });
+            }
+        }
+
+        private async Task GetServerMonitors()
+        {
+            try
+            {
+                Servers = await serverMonitorCache.GetServerMonitorsAsync();
+            }
+            catch (Exception ex)
+            {
+                Logger.Log($"GetServerMonitors {ex.Message}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                ShowMessage(new Message { MessageType = MessageType.Error, Text = $"Server load error. {ex.Message}" });
             }
         }
 
@@ -330,8 +372,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             OrdersViewModel.Dispose();
             StrategyParametersViewModel.Dispose();
             strategyAssemblyManager.Dispose();
+            serverMonitorCacheSubscription.Dispose();
 
-            if(StrategyDisplayViewModel != null)
+            if (StrategyDisplayViewModel != null)
             {
                 strategySubscription.Dispose();
                 StrategyDisplayViewModel.Dispose();
@@ -914,6 +957,26 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             });
         }
 
+        private void ObserveServerMonitorCache()
+        {
+            var serverMonitorCacheObservable = Observable.FromEventPattern<ServerMonitorCacheEventArgs>(
+                eventHandler => serverMonitorCache.ServerMonitorCacheNotification += eventHandler,
+                eventHandler => serverMonitorCache.ServerMonitorCacheNotification -= eventHandler)
+                .Select(eventPattern => eventPattern.EventArgs);
+
+            serverMonitorCacheSubscription = serverMonitorCacheObservable.Subscribe(args =>
+            {
+                if (args.HasException)
+                {
+                    NotificationsAdd(new Message { MessageType = MessageType.Error, Text = args.Message, TextVerbose = args.Exception.ToString() });
+                }
+                else if (!string.IsNullOrWhiteSpace(args.Message))
+                {
+                    NotificationsAdd(new Message { MessageType = MessageType.Info, Text = args.Message });
+                }
+            });
+        }
+
         private void NotificationsAdd(Message message)
         {
             Prism.Logging.Category category;
@@ -937,12 +1000,29 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             Notifications.Insert(0, message);
         }
 
+        private void ResetCommandVisibility()
+        {
+            if (SelectedServer != null
+                && Strategy.StrategySubscriptions.Any())
+            {
+                if (!IsConnected)
+                {
+                    SetCommandVisibility(true, false, false).FireAndForget();
+                    return;
+                }
+            }
+
+            SetCommandVisibility(false, false, false).FireAndForget();
+        }
+
         private async Task SetCommandVisibility(bool canconnect, bool connecting, bool connected)
         {
             try
             {
                 if (canconnect)
                 {
+                    IsConnecting = true;
+
                     var isRunning = await IsStrategyRunningAsync();
 
                     CanRun = !isRunning;
