@@ -27,6 +27,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
         {
             this.serverMonitorCache = serverMonitorCache;
             IsLoadingServers = true;
+
+            ObserveServerMonitorCache();
         }
 
         public bool IsLoadingServers
@@ -97,8 +99,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
         {
             try
             {
-                ObserveServerMonitorCache();
-
                 Servers = await serverMonitorCache.GetServerMonitorsAsync();
             }
             catch(Exception ex)
@@ -119,14 +119,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
                 return;
             }
 
-            if(serverMonitorCacheSubscription != null)
-            {
-                serverMonitorCacheSubscription.Dispose();
-            }
+            serverMonitorCacheSubscription.Dispose();
 
             disposed = true;
         }
-        
+
         private void ObserveServerMonitorCache()
         {
             var serverMonitorCacheObservable = Observable.FromEventPattern<ServerMonitorCacheEventArgs>(
