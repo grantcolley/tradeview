@@ -5,6 +5,7 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
+using System;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
@@ -60,6 +61,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
             ShellToolBar.Visibility = isShellToolBarVisible.ToUpper().Equals("TRUE")
                 ? Visibility.Visible
                 : Visibility.Collapsed;
+
+            this.Title = $"Trade View : {Environment.UserName}";
 
             logger = ServiceLocator.Current.GetInstance<ILoggerFacade>();
         }
