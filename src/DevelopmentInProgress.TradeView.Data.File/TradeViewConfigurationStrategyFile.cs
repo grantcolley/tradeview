@@ -128,15 +128,15 @@ namespace DevelopmentInProgress.TradeView.Data.File
         {
             return new StrategyConfig
             {
-                Name = "Demo - ETHBTC",
-                TargetType = "DevelopmentInProgress.Strategy.Demo.DemoTradeStrategy",
-                TargetAssembly = Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.Demo.dll"),
-                DisplayViewType = "DevelopmentInProgress.Strategy.Demo.Wpf.View.DemoView",
-                DisplayViewModelType = "DevelopmentInProgress.Strategy.Demo.Wpf.ViewModel.DemoViewModel",
-                DisplayAssembly = Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.Demo.Wpf.dll"),
-                Parameters = "{\r\n  \"BuyIndicator\": 0.00015,\r\n  \"SellIndicator\": 0.00015,\r\n  \"TradeMovingAvarageSetLength\": 0,\r\n  \"Suspend\": true,\r\n  \"StrategyName\": \"Demo - ETHBTC\",\r\n  \"Value\": null\r\n}",
+                Name = "Binance Moving Average - ETHBTC",
+                TargetType = "DevelopmentInProgress.Strategy.MovingAverage.MovingAverageStrategy",
+                TargetAssembly = Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.MovingAverage.dll"),
+                DisplayViewType = "DevelopmentInProgress.Strategy.MovingAverage.Wpf.View.MovingAverageView",
+                DisplayViewModelType = "DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel.MovingAverageViewModel",
+                DisplayAssembly = Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.MovingAverage.Wpf.dll"),
+                Parameters = "{\r\n  \"TradeRange\": 10000,\r\n  \"BuyIndicator\": 0.00015,\r\n  \"SellIndicator\": 0.00015,\r\n  \"MovingAvarageRange\": 10000,\r\n  \"Suspend\": true,\r\n  \"StrategyName\": \"Binance Moving Average - ETHBTC\",\r\n  \"Value\": null\r\n}",
                 TradesChartDisplayCount = 1000,
-                TradesDisplayCount = 14,
+                TradesDisplayCount = 13,
                 OrderBookChartDisplayCount = 20,
                 OrderBookDisplayCount = 9,
                 StrategySubscriptions = new List<StrategySubscription>
@@ -153,14 +153,15 @@ namespace DevelopmentInProgress.TradeView.Data.File
                 },
                 Dependencies = new List<string> 
                 {
+                    Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.Common.dll"),
                     Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.TradeView.Interface.dll"),
-                    Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.Demo.dll")
+                    Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.MovingAverage.dll"),
                 },
                 DisplayDependencies = new List<string>
                 {
                     Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.TradeView.Interface.dll"),
-                    Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.Demo.Wpf.dll"),
-                    Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.Demo.dll")
+                    Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.MovingAverage.dll"),
+                    Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.MovingAverage.Wpf.dll")
                 }
             };
         }
