@@ -28,7 +28,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         public int TradesDisplayCount { get; set; }
         public int OrderBookChartDisplayCount { get; set; }
         public int OrderBookDisplayCount { get; set; }
-        public string ServerUrl { get; set; }
 
         public string Name
         {

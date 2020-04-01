@@ -418,16 +418,44 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
         }
 
+        private bool IsValidSelectServer()
+        {
+            if(SelectedServer != null)
+            {
+                if(string.IsNullOrWhiteSpace(SelectedServer.Url))
+                {
+                    var msg = "SelectedServer.Url is null";
+                    Logger.Log(msg, Prism.Logging.Category.Warn, Prism.Logging.Priority.High);
+                    NotificationsAdd(new Message { MessageType = MessageType.Warn, Text = msg });
+                    return false;
+                }
+            }
+            else
+            {
+                var msg = "SelectedServer is null";
+                Logger.Log(msg, Prism.Logging.Category.Warn, Prism.Logging.Priority.High);
+                NotificationsAdd(new Message { MessageType = MessageType.Warn, Text = msg });
+                return false;
+            }
+
+            return true;
+        }
+
         private async Task<bool> IsStrategyRunningAsync()
         {
             try
             {
+                if (!IsValidSelectServer())
+                {
+                    return false;
+                }
+
                 var strategyParameters = new InterfaceStrategy.StrategyParameters { StrategyName = Strategy.Name };
                 var strategyParametersJson = JsonConvert.SerializeObject(strategyParameters);
 
                 var strategyRunnerClient = new InterfaceStrategy.StrategyRunnerClient();
 
-                var response = await strategyRunnerClient.PostAsync($"{Strategy.ServerUrl}/isstrategyrunning", strategyParametersJson);
+                var response = await strategyRunnerClient.PostAsync($"{SelectedServer.Url}/isstrategyrunning", strategyParametersJson);
 
                 var content = await response.Content.ReadAsStringAsync();
 
@@ -491,6 +519,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
+                if (!IsValidSelectServer())
+                {
+                    return;
+                }
+
                 var result = await MonitorAsync(true);
 
                 if (result)
@@ -504,7 +537,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                     var strategyRunnerClient = new InterfaceStrategy.StrategyRunnerClient();
 
-                    var response = await strategyRunnerClient.PostAsync($"{Strategy.ServerUrl}/runstrategy", jsonContent, dependencies);
+                    var response = await strategyRunnerClient.PostAsync($"{SelectedServer.Url}/runstrategy", jsonContent, dependencies);
 
                     if(response.StatusCode != System.Net.HttpStatusCode.OK)
                     {
@@ -547,6 +580,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
+                if (!IsValidSelectServer())
+                {
+                    return;
+                }
+
                 if (!IsConnected)
                 {
                     NotificationsAdd(new Message { MessageType = MessageType.Warn, Text = $"Not connected to running strategy"});
@@ -555,7 +593,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                 var strategyRunnerClient = new TradeView.Interface.Strategy.StrategyRunnerClient();
 
-                var response = await strategyRunnerClient.PostAsync($"{Strategy.ServerUrl}/updatestrategy", strategyParameters);
+                var response = await strategyRunnerClient.PostAsync($"{SelectedServer.Url}/updatestrategy", strategyParameters);
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
@@ -594,9 +632,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
+                if (!IsValidSelectServer())
+                {
+                    return;
+                }
+
                 var strategyRunnerClient = new TradeView.Interface.Strategy.StrategyRunnerClient();
 
-                var response = await strategyRunnerClient.PostAsync($"{Strategy.ServerUrl}/stopstrategy", strategyParameters);
+                var response = await strategyRunnerClient.PostAsync($"{SelectedServer.Url}/stopstrategy", strategyParameters);
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
@@ -637,7 +680,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 NotificationsAdd(new Message { MessageType = MessageType.Info, Text = $"Already connected to strategy", Timestamp = DateTime.Now });
                 return IsConnected;
             }
-            
+
+            if (!IsValidSelectServer())
+            {
+                return false;
+            }
+
             await SetCommandVisibility(false, true, false);
 
             Notifications.Clear();
@@ -647,7 +695,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 throw new Exception("StrategyAssemblyManager has not loaded the strategy assemblies.");
             }
 
-            socketClient = new DipSocketClient($"{Strategy.ServerUrl}/notificationhub", strategyAssemblyManager.Id);
+            socketClient = new DipSocketClient($"{SelectedServer.Url}/notificationhub", strategyAssemblyManager.Id);
 
             socketClient.On("Connected", message =>
             {
