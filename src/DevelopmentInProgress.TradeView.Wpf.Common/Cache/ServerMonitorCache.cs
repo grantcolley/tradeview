@@ -176,6 +176,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                 {
                     OnServerMonitorCacheNotification($"{args.Value.Name} : {args.Exception.Message}", args.Exception);
                 }
+                else
+                {
+                    OnServerMonitorCacheNotification($"{args.Value.Name}");
+                }
             });
 
             serverMonitorSubscriptions.Add(serverMonitor.Name, serverMonitorSubscription);
