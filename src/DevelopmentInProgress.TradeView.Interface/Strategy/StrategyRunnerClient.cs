@@ -8,7 +8,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
 {
     public class StrategyRunnerClient
     {
-        public Task<HttpResponseMessage> PostAsync(string requestUri, string jsonSerializedStrategy, IEnumerable<string> libraries)
+        public async Task<HttpResponseMessage> PostAsync(string requestUri, string jsonSerializedStrategy, IEnumerable<string> libraries)
         {
             using (var client = new HttpClient())
             {
@@ -32,19 +32,19 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
                         }
                     }
 
-                    return client.PostAsync(requestUri, multipartFormDataContent);
+                    return await client.PostAsync(requestUri, multipartFormDataContent);
                 }
             }
         }
 
-        public Task<HttpResponseMessage> PostAsync(string requestUri, string jsonSerializedStrategyParameters)
+        public async Task<HttpResponseMessage> PostAsync(string requestUri, string jsonSerializedStrategyParameters)
         {
             using (var client = new HttpClient())
             {
                 using (var multipartFormDataContent = new MultipartFormDataContent())
                 {
                     multipartFormDataContent.Add(new StringContent(jsonSerializedStrategyParameters, Encoding.UTF8, "application/json"), "strategyparameters");
-                    return client.PostAsync(requestUri, multipartFormDataContent);
+                    return await client.PostAsync(requestUri, multipartFormDataContent);
                 }
             }
         }
