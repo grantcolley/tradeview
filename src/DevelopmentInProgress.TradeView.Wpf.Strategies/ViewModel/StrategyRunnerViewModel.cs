@@ -1020,7 +1020,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 }
                 else if (!string.IsNullOrWhiteSpace(args.Message))
                 {
-                    NotificationsAdd(new Message { MessageType = MessageType.Info, Text = args.Message });
+                    if(SelectedServer != null
+                        && SelectedServer.Name.Equals(args.Message))
+                    {
+                        ResetCommandVisibility();
+                    }
                 }
             });
         }
@@ -1051,7 +1055,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         private void ResetCommandVisibility()
         {
             if (SelectedServer != null
-                && Strategy.StrategySubscriptions.Any())
+                && SelectedServer.IsConnected)
             {
                 if (!IsConnected)
                 {
@@ -1071,10 +1075,18 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 {
                     IsConnecting = true;
 
-                    var isRunning = await IsStrategyRunningAsync();
+                    if (IsValidSelectServer())
+                    {
+                        var isRunning = await IsStrategyRunningAsync();
 
-                    CanRun = !isRunning;
-                    CanMonitor = isRunning;
+                        CanRun = !isRunning;
+                        CanMonitor = isRunning;
+                    }
+                    else
+                    {
+                        CanRun = false;
+                        CanMonitor = false;
+                    }
                 }
                 else
                 {
