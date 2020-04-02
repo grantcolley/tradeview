@@ -200,8 +200,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                     await socketClient.DisposeAsync();
                 }
 
-                IsConnecting = false;
-                IsConnected = false;
+                OnNotification();
             }
             catch (Exception ex)
             {
@@ -210,6 +209,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
             finally
             {
                 socketClient = null;
+                IsConnecting = false;
+                IsConnected = false;
             }
         }
 
@@ -239,6 +240,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                     {
                         IsConnecting = false;
                         IsConnected = true;
+
+                        OnNotification();
                     });
                 });
 
@@ -264,15 +267,17 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                     if (ex.InnerException is TaskCanceledException)
                     {
                         await DisposeSocketAsync();
-                        return;
+
                     }
-
-                    await dispatcher.Invoke(async () =>
+                    else
                     {
-                        OnException(args.Message, new Exception(args.Message));
+                        await dispatcher.Invoke(async () =>
+                        {
+                            OnException(args.Message, new Exception(args.Message));
 
-                        await DisposeSocketAsync();
-                    });
+                            await DisposeSocketAsync();
+                        });
+                    }
                 };
 
                 await socketClient.StartAsync(Name);
@@ -323,15 +328,17 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (serverMonitorNotifications.Any(smn => smn.Equals(Interface.Server.ServerNotificationLevel.DisconnectClient)))
                 {
                     await DisposeSocketAsync();
-
-                    return;
                 }
+                else
+                {
+                    var serverMonitorNotification = serverMonitorNotifications.OrderByDescending(smn => smn.Timestamp).First();
 
-                var serverMonitorNotification = serverMonitorNotifications.OrderByDescending(smn => smn.Timestamp).First();
+                    var serverMonitor = JsonConvert.DeserializeObject<Interface.Server.ServerMonitor>(serverMonitorNotification.Message);
 
-                var serverMonitor = JsonConvert.DeserializeObject<Interface.Server.ServerMonitor>(serverMonitorNotification.Message);
+                    ServerMonitorHelper.UpdateServerMonitor(this, serverMonitor);
 
-                ServerMonitorHelper.UpdateServerMonitor(this, serverMonitor);
+                    OnNotification();
+                }
             }
             catch (Exception ex)
             {
@@ -343,6 +350,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         {
             var onServerMonitorNotification = OnServerMonitorNotification;
             onServerMonitorNotification?.Invoke(this, new ServerMonitorEventArgs { Value = this,  Message = $"{Name} : {message}", Exception = exception });
+        }
+
+        private void OnNotification(string message = null)
+        {
+            var onServerMonitorNotification = OnServerMonitorNotification;
+            onServerMonitorNotification?.Invoke(this, new ServerMonitorEventArgs { Value = this, Message = message });
         }
     }
 }
