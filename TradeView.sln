@@ -51,6 +51,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Trade
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.Socket", "src\DevelopmentInProgress.Socket\DevelopmentInProgress.Socket.csproj", "{F74255BE-5A48-41AB-A175-8BBBFBE64265}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.Socket.Tests", "test\DevelopmentInProgress.Socket.Tests\DevelopmentInProgress.Socket.Tests.csproj", "{6768A09F-507D-4926-B1D5-959F39061476}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -525,6 +527,26 @@ Global
 		{F74255BE-5A48-41AB-A175-8BBBFBE64265}.Release|x64.Build.0 = Release|Any CPU
 		{F74255BE-5A48-41AB-A175-8BBBFBE64265}.Release|x86.ActiveCfg = Release|Any CPU
 		{F74255BE-5A48-41AB-A175-8BBBFBE64265}.Release|x86.Build.0 = Release|Any CPU
+		{6768A09F-507D-4926-B1D5-959F39061476}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6768A09F-507D-4926-B1D5-959F39061476}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6768A09F-507D-4926-B1D5-959F39061476}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{6768A09F-507D-4926-B1D5-959F39061476}.Debug|ARM.Build.0 = Debug|Any CPU
+		{6768A09F-507D-4926-B1D5-959F39061476}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{6768A09F-507D-4926-B1D5-959F39061476}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{6768A09F-507D-4926-B1D5-959F39061476}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6768A09F-507D-4926-B1D5-959F39061476}.Debug|x64.Build.0 = Debug|Any CPU
+		{6768A09F-507D-4926-B1D5-959F39061476}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6768A09F-507D-4926-B1D5-959F39061476}.Debug|x86.Build.0 = Debug|Any CPU
+		{6768A09F-507D-4926-B1D5-959F39061476}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6768A09F-507D-4926-B1D5-959F39061476}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6768A09F-507D-4926-B1D5-959F39061476}.Release|ARM.ActiveCfg = Release|Any CPU
+		{6768A09F-507D-4926-B1D5-959F39061476}.Release|ARM.Build.0 = Release|Any CPU
+		{6768A09F-507D-4926-B1D5-959F39061476}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{6768A09F-507D-4926-B1D5-959F39061476}.Release|ARM64.Build.0 = Release|Any CPU
+		{6768A09F-507D-4926-B1D5-959F39061476}.Release|x64.ActiveCfg = Release|Any CPU
+		{6768A09F-507D-4926-B1D5-959F39061476}.Release|x64.Build.0 = Release|Any CPU
+		{6768A09F-507D-4926-B1D5-959F39061476}.Release|x86.ActiveCfg = Release|Any CPU
+		{6768A09F-507D-4926-B1D5-959F39061476}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -535,6 +557,7 @@ Global
 		{786AC582-C333-43FB-8643-53FFE36D8D2A} = {7F4ED901-668D-48FB-A172-4C263A3ABC02}
 		{BED25B87-79B9-4AFD-A785-8DB7CAFFF8BF} = {7F4ED901-668D-48FB-A172-4C263A3ABC02}
 		{8DE2FF1C-BE18-4B76-A4C7-FEB7E5EAAD4D} = {7F4ED901-668D-48FB-A172-4C263A3ABC02}
+		{6768A09F-507D-4926-B1D5-959F39061476} = {7F4ED901-668D-48FB-A172-4C263A3ABC02}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1F3B75F9-BA14-4B1C-9571-174E50EB5C7D}
