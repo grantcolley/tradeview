@@ -3,7 +3,7 @@
 namespace DevelopmentInProgress.Socket.Messages
 {
     /// <summary>
-    /// Represents information about an active <see cref="Connection"/> <see cref="DipSocketServer"/>.
+    /// Represents information about an active <see cref="Connection"/> <see cref="SocketServer"/>.
     /// </summary>
     public class ConnectionInfo : IInfo
     {

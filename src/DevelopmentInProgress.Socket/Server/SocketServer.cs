@@ -11,30 +11,30 @@ using System.Collections.Generic;
 namespace DevelopmentInProgress.Socket.Server
 {
     /// <summary>
-    /// The abstract <see cref="DipSocketServer"/> base class.
+    /// The abstract <see cref="SocketServer"/> base class.
     /// </summary>
-    public abstract class DipSocketServer
+    public abstract class SocketServer
     {
         private ConnectionManager connectionManager;
         private ChannelManager channelManager;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="DipSocketServer"/> base class.
+        /// Creates a new instance of the <see cref="SocketServer"/> base class.
         /// </summary>
-        protected DipSocketServer()
+        protected SocketServer()
         {
             connectionManager = new ConnectionManager();
             channelManager = new ChannelManager();
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="DipSocketServer"/>.
+        /// Creates a new instance of the <see cref="SocketServer"/>.
         /// Use when injecting singleton <see cref="ConnectionManager"/> 
         /// and <see cref="ChannelManager"/> is preferred.
         /// </summary>
         /// <param name="connectionManager">An instance of the <see cref="ConnectionManager"/>.</param>
         /// <param name="channelManager">An instance of the <see cref="ChannelManager"/>.</param>
-        protected DipSocketServer(ConnectionManager connectionManager, ChannelManager channelManager)
+        protected SocketServer(ConnectionManager connectionManager, ChannelManager channelManager)
         {
             this.connectionManager = connectionManager;
             this.channelManager = channelManager;
@@ -70,7 +70,7 @@ namespace DevelopmentInProgress.Socket.Server
                 connection.Channels.All(c => c.Value.Connections.TryRemove(connection.ConnectionId, out Connection removedConnection));
 
                 await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, 
-                    $"WebSocket {connection.ConnectionId} closed by {typeof(DipSocketServer).Name}", 
+                    $"WebSocket {connection.ConnectionId} closed by {typeof(SocketServer).Name}", 
                     CancellationToken.None).ConfigureAwait(false);
 
                 webSocket.Dispose();
@@ -259,7 +259,7 @@ namespace DevelopmentInProgress.Socket.Server
         }
 
         /// <summary>
-        /// Get information about active <see cref="DipSocketServer"/> connections and channels.
+        /// Get information about active <see cref="SocketServer"/> connections and channels.
         /// </summary>
         /// <returns></returns>
         public ServerInfo GetServerInfo()

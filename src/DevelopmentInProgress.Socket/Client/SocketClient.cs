@@ -12,9 +12,9 @@ using System.Web;
 namespace DevelopmentInProgress.Socket.Client
 {
     /// <summary>
-    /// Send and receives <see cref="WebSocket"/> requests to a <see cref="DipSocketServer"/>
+    /// Send and receives <see cref="WebSocket"/> requests to a <see cref="SocketServer"/>
     /// </summary>
-    public class DipSocketClient
+    public class SocketClient
     {
         private ClientWebSocket clientWebSocket;
         private Dictionary<string, Action<Message>> registeredMethods;
@@ -36,7 +36,7 @@ namespace DevelopmentInProgress.Socket.Client
         public string ConnectionId { get; private set; }
 
         /// <summary>
-        /// Gets the url of the <see cref="DipSocketServer"/>.
+        /// Gets the url of the <see cref="SocketServer"/>.
         /// </summary>
         public string Url { get; private set; }
 
@@ -51,11 +51,11 @@ namespace DevelopmentInProgress.Socket.Client
         public WebSocketState State { get { return clientWebSocket.State; } }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="DipSocketClient"/>.
+        /// Creates a new instance of the <see cref="SocketClient"/>.
         /// </summary>
-        /// <param name="url">The url of the <see cref="DipSocketServer"/>. Http and Https will be converted to ws.</param>
+        /// <param name="url">The url of the <see cref="SocketServer"/>. Http and Https will be converted to ws.</param>
         /// <param name="clientId">The client side identifier.</param>
-        public DipSocketClient(string url, string clientId)
+        public SocketClient(string url, string clientId)
         {
             if (url.ToLower().StartsWith("https"))
             {
@@ -98,7 +98,7 @@ namespace DevelopmentInProgress.Socket.Client
         }
 
         /// <summary>
-        /// Register a <see cref="Action"/> to be invoked when receiving a message from the <see cref="DipSocketServer"/>.
+        /// Register a <see cref="Action"/> to be invoked when receiving a message from the <see cref="SocketServer"/>.
         /// </summary>
         /// <param name="methodName"></param>
         /// <param name="handler"></param>
@@ -108,7 +108,7 @@ namespace DevelopmentInProgress.Socket.Client
         }
 
         /// <summary>
-        /// Open a <see cref="WebSocket"/> connection with the <see cref="DipSocketServer"/>.
+        /// Open a <see cref="WebSocket"/> connection with the <see cref="SocketServer"/>.
         /// </summary>
         /// <returns>A <see cref="Task"/>.</returns>
         public async Task StartAsync()
@@ -117,7 +117,7 @@ namespace DevelopmentInProgress.Socket.Client
         }
 
         /// <summary>
-        /// Open a <see cref="WebSocket"/> connection with the <see cref="DipSocketServer"/>.
+        /// Open a <see cref="WebSocket"/> connection with the <see cref="SocketServer"/>.
         /// </summary>
         /// <param name="data"></param>
         /// <returns>A <see cref="Task"/>.</returns>
@@ -135,7 +135,7 @@ namespace DevelopmentInProgress.Socket.Client
         }
 
         /// <summary>
-        /// Send a mesage from to the <see cref="DipSocketServer"/> to be routed to the receipient.
+        /// Send a mesage from to the <see cref="SocketServer"/> to be routed to the receipient.
         /// </summary>
         /// <param name="message">The <see cref="Message"/> to send.</param>
         /// <returns>A <see cref="Task"/>.</returns>

@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using DevelopmentInProgress.Socket.Server;
+using System.Collections.Generic;
 
 namespace DevelopmentInProgress.Socket.Messages
 {
     /// <summary>
-    /// Information about an active <see cref="Channel"/> managed by the <see cref="DipSocketServer"/>.
+    /// Information about an active <see cref="Channel"/> managed by the <see cref="SocketServer"/>.
     /// </summary>
     public class ChannelInfo : IInfo
     {

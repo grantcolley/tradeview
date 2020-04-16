@@ -33,7 +33,7 @@ namespace DevelopmentInProgress.Socket.Messages
         public string RecipientConnectionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of message sent from the <see cref="DipSocketClient"/> to the <see cref="DipSocketServer"/>.
+        /// Gets or sets the type of message sent from the <see cref="SocketClient"/> to the <see cref="SocketServer"/>.
         /// </summary>
         public MessageType MessageType { get; set; }
 
