@@ -1,6 +1,6 @@
-﻿using DevelopmentInProgress.TradeView.Wpf.Common.Events;
+﻿using DevelopmentInProgress.Socket.Client;
+using DevelopmentInProgress.TradeView.Wpf.Common.Events;
 using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
-using DipSocket.Client;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 {
     public class ServerMonitor : EntityBase
     {
-        private DipSocketClient socketClient;
+        private SocketClient socketClient;
         private bool isConnecting;
         private bool isConnected;
 
@@ -232,7 +232,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 
                 IsConnecting = true;
 
-                socketClient = new DipSocketClient($"{Url}/serverhub", Environment.UserName);
+                socketClient = new SocketClient($"{Url}/serverhub", Environment.UserName);
 
                 socketClient.On("OnConnected", message =>
                 {
@@ -319,7 +319,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
             return false;
         }
 
-        private async Task OnServerMonitorNotificationAsync(DipSocket.Messages.Message message)
+        private async Task OnServerMonitorNotificationAsync(Socket.Messages.Message message)
         {
             try
             {

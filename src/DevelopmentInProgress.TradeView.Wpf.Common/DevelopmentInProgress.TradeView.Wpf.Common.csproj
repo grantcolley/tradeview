@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DipSocket, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\DipSocket.1.1.0\lib\netstandard2.0\DipSocket.dll</HintPath>
-    </Reference>
     <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
       <HintPath>..\..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
     </Reference>
@@ -182,6 +179,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DevelopmentInProgress.Socket\DevelopmentInProgress.Socket.csproj">
+      <Project>{f74255be-5a48-41ab-a175-8bbbfbe64265}</Project>
+      <Name>DevelopmentInProgress.Socket</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Common\DevelopmentInProgress.TradeView.Common.csproj">
       <Project>{03680064-ec5b-42a0-9c53-5a0b097458ea}</Project>
       <Name>DevelopmentInProgress.TradeView.Common</Name>
