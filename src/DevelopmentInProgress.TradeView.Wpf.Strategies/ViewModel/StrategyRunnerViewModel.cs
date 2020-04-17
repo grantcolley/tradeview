@@ -1,6 +1,8 @@
 ﻿using InterfaceModel = DevelopmentInProgress.TradeView.Interface.Model;
 using InterfaceStrategy = DevelopmentInProgress.TradeView.Interface.Strategy;
+using DevelopmentInProgress.Socket.Client;
 using DevelopmentInProgress.TradeView.Common.Extensions;
+using DevelopmentInProgress.TradeView.Wpf.Common.Cache;
 using DevelopmentInProgress.TradeView.Wpf.Common.Events;
 using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
@@ -19,9 +21,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Reactive.Linq;
-using DipSocket.Client;
 using System.Net.WebSockets;
-using DevelopmentInProgress.TradeView.Wpf.Common.Cache;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 {
@@ -39,7 +39,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         private bool isConnected;
         private bool isConnecting;
         private bool disposed;
-        private DipSocketClient socketClient;
+        private SocketClient socketClient;
         private ObservableCollection<Message> notifications;
         private ObservableCollection<ServerMonitor> servers;
 
@@ -391,11 +391,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 {
                     if (socketClient.State.Equals(WebSocketState.Open))
                     {
-                        var clientMessage = new DipSocket.Messages.Message
+                        var clientMessage = new Socket.Messages.Message
                         {
                             SenderConnectionId = strategyAssemblyManager.Id,
                             Data = strategy.Name,
-                            MessageType = DipSocket.Messages.MessageType.UnsubscribeFromChannel
+                            MessageType = Socket.Messages.MessageType.UnsubscribeFromChannel
                         };
 
                         await socketClient.SendMessageAsync(clientMessage);
@@ -695,7 +695,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 throw new Exception("StrategyAssemblyManager has not loaded the strategy assemblies.");
             }
 
-            socketClient = new DipSocketClient($"{SelectedServer.Url}/notificationhub", strategyAssemblyManager.Id);
+            socketClient = new SocketClient($"{SelectedServer.Url}/notificationhub", strategyAssemblyManager.Id);
 
             socketClient.On("Connected", message =>
             {
@@ -795,7 +795,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
         }
 
-        private async Task OnStrategyNotificationAsync(DipSocket.Messages.Message message)
+        private async Task OnStrategyNotificationAsync(Socket.Messages.Message message)
         {
             try
             {
@@ -819,7 +819,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
         }
 
-        private async Task OnTradeNotificationAsync(DipSocket.Messages.Message message)
+        private async Task OnTradeNotificationAsync(Socket.Messages.Message message)
         {
             try
             {
@@ -837,7 +837,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
         }
 
-        private async Task OnCandlesticksNotificationAsync(DipSocket.Messages.Message message)
+        private async Task OnCandlesticksNotificationAsync(Socket.Messages.Message message)
         {
             try
             {
@@ -855,7 +855,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
         }
 
-        private async Task OnOrderBookNotificationAsync(DipSocket.Messages.Message message)
+        private async Task OnOrderBookNotificationAsync(Socket.Messages.Message message)
         {
             try
             {
@@ -873,7 +873,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
         }
 
-        private void OnAccountNotification(DipSocket.Messages.Message message)
+        private void OnAccountNotification(Socket.Messages.Message message)
         {
             try
             {
