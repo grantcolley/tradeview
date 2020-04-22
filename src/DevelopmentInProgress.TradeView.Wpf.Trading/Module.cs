@@ -12,7 +12,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading
     public class Module : ModuleBase
     {
         public const string ModuleName = "Trading";
-        private static string AccountUser = $"Accounts : {Environment.UserName}";
+        private static string AccountUser = $"Accounts";
         private static IUnityContainer StaticContainer;
 
         public Module(IUnityContainer container, ModuleNavigator moduleNavigator, ILoggerFacade logger)

@@ -14,13 +14,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration
     public class Module : ModuleBase
     {
         public const string ModuleName = "Configuration";
-        private static string ConfigurationUser = $"Configuration : {Environment.UserName}";
+        private static string ConfigurationUser = $"Configuration";
 
         private const string StrategyModuleName = "Strategies";
-        private static string StrategyUser = $"Strategies : {Environment.UserName}";
+        private static string StrategyUser = $"Strategies";
 
         private const string TradingModuleName = "Trading";
-        private static string AccountUser = $"Accounts : {Environment.UserName}";
+        private static string AccountUser = $"Accounts";
 
         private static IUnityContainer StaticContainer;
 

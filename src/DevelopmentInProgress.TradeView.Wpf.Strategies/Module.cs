@@ -14,7 +14,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies
         public const string ModuleName = "Strategies";
         private static IUnityContainer StaticContainer;
 
-        private static string StrategyUser = $"Strategies : {Environment.UserName}";
+        private static string StrategyUser = $"Strategies";
 
         public Module(IUnityContainer container, ModuleNavigator moduleNavigator, ILoggerFacade logger)
             : base(container, moduleNavigator, logger)
