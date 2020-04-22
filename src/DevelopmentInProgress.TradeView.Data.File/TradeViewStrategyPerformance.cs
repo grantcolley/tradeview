@@ -12,7 +12,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
         {
             StrategyPerformance strategyPerformance = null;
 
-            var strategyPerformanceFile = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{Environment.UserName}_{strategyName}.txt");
+            var strategyPerformanceFile = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{Environment.MachineName}_{strategyName}.txt");
 
             if (System.IO.File.Exists(strategyPerformanceFile))
             {
@@ -38,7 +38,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
                 return;
             }
 
-            var strategyPerformanceFile = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{Environment.UserName}_{strategyPerformance.Strategy}.txt");
+            var strategyPerformanceFile = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{Environment.MachineName}_{strategyPerformance.Strategy}.txt");
 
             var json = JsonConvert.SerializeObject(strategyPerformance, Formatting.Indented);
 
