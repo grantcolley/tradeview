@@ -37,7 +37,7 @@
                     <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Server.Url}" ToolTip="{Binding Server.Url}" VerticalContentAlignment="Center" Margin="2" HorizontalAlignment="Stretch"/>
 
                     <Label Grid.Row="2" Grid.Column="0" Content="Max Degree of Parallesim:" Margin="2"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Server.MaxDegreeOfParallelism}" ToolTip="{Binding Server.MaxDegreeOfParallelism}" VerticalContentAlignment="Center" Margin="2" HorizontalAlignment="Stretch"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Server.MaxDegreeOfParallelism}" ToolTip="{Binding Server.MaxDegreeOfParallelism}" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="2" Width="50"/>
 
                     <Label Grid.Row="3" Grid.Column="0" Content="Enabled:" Margin="2"/>
                     <CheckBox Grid.Row="3" Grid.Column="1" IsChecked="{Binding Server.Enabled}" VerticalContentAlignment="Center" Margin="2" HorizontalAlignment="Stretch"/>
