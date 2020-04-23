@@ -31,7 +31,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Content="Server Name:" Margin="2"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Server.Name}" VerticalContentAlignment="Center" Margin="2" HorizontalAlignment="Left" IsReadOnly="True"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Server.Name}" VerticalContentAlignment="Center" Margin="2" HorizontalAlignment="Stretch" IsReadOnly="True"/>
 
                     <Label Grid.Row="1" Grid.Column="0" Content="Url:" Margin="2"/>
                     <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Server.Url}" ToolTip="{Binding Server.Url}" VerticalContentAlignment="Center" Margin="2" HorizontalAlignment="Stretch"/>
