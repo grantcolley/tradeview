@@ -114,6 +114,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
         protected override void InitializeShell()
         {
             App.Current.MainWindow = (Window)this.Shell;
+            App.Current.MainWindow.WindowState = WindowState.Maximized;
             App.Current.MainWindow.Show();
         }
     }
