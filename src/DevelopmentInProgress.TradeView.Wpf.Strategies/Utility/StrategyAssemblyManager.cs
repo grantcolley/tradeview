@@ -30,7 +30,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Utility
 
         public void Activate(Strategy strategy, Dispatcher UiDispatcher, ILoggerFacade Logger)
         {
-            Id = Guid.NewGuid().ToString();
+            Id = Environment.UserName;
 
             var displayAssemblies = strategy.DisplayDependencies.Select(a => a.File).ToList();
 
