@@ -57,6 +57,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
                     s.Connections.Add(connection);
                 }
 
+                s.ConnectionCount = s.Connections.Count;
+
                 return s;
             });
 
@@ -80,7 +82,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
                 {
                     Name = c.Connection,
                     Connected = c.Connected
-                }))
+                })),
+                ConnectionCount = ism.Connections.Count
             });
 
             foreach(var strategy in newStrategies)
