@@ -559,8 +559,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                 if (result)
                 {
-                    await SetCommandVisibility(false, false, true);
-
                     var interfaceStrategy = Strategy.ToInterfaceStrategy();
                     var jsonContent = JsonConvert.SerializeObject(interfaceStrategy);
 
