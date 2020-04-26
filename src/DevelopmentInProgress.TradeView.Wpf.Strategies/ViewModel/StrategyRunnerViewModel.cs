@@ -1086,11 +1086,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             if (SelectedServer != null
                 && SelectedServer.IsConnected)
             {
-                if (!IsConnected)
+                if (!IsConnected
+                    && !IsConnecting)
                 {
                     SetCommandVisibility(true, false, false).FireAndForget();
                     return;
                 }
+
+                return;
             }
 
             SetCommandVisibility(false, false, false).FireAndForget();
