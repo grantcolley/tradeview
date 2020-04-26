@@ -335,8 +335,6 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
 
                 if (last == null)
                 {
-                    var firstTrade = TradesChart.First();
-
                     var candlesticks = cs.OrderBy(c => c.OpenTime).Select(c => c.ToViewCandlestick()).ToList();
 
                     CandlesticksChart = new ChartValues<Candlestick>(candlesticks);
