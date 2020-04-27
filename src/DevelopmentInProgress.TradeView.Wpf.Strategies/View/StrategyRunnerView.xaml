@@ -62,7 +62,7 @@
                               IsReadOnly="True"
                               IsEditable="False"
                               IsSynchronizedWithCurrentItem="True"
-                              Visibility="{Binding Path=DataContext.CanSelectServer, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}, Converter={StaticResource boolToVisibilityConverter}}"
+                              Visibility="{Binding Path=DataContext.IsConnected, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}, Converter={StaticResource invertBoolToVisibilityConverter}}"
                               ItemsSource="{Binding Path=DataContext.Servers, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}}"
                               SelectedItem="{Binding Path=DataContext.SelectedServer, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}}">
                         <ComboBox.ItemContainerStyle>
@@ -73,7 +73,7 @@
                     </ComboBox>
                     <ContentControl DockPanel.Dock="Left" Margin="6,2,2,2" Width="250" Height="30" VerticalAlignment="Center"
                                     Content="{Binding Path=DataContext.SelectedServer, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}}"
-                                    Visibility="{Binding Path=DataContext.CanSelectServer, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
+                                    Visibility="{Binding Path=DataContext.IsConnected, RelativeSource={RelativeSource AncestorType={x:Type view:DocumentViewBase}}, Converter={StaticResource boolToVisibilityConverter}}"/>
                     <Button DockPanel.Dock="Right" Margin="2" Height="18" Width="18" Padding="0,0.5,1,0"
                             Style="{StaticResource ButtonImageStyle}"
                             ToolTip="Run Strategy"

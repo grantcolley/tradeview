@@ -99,6 +99,7 @@
   <ItemGroup>
     <Compile Include="Converters\IsBuyerBackgroundConverter.cs" />
     <Compile Include="Converters\IsBuyerTextConverter.cs" />
+    <Compile Include="Enums\StrategyRunnerCommandVisibility.cs" />
     <Compile Include="Events\StrategyDisplayEventArgs.cs" />
     <Compile Include="Events\StrategySymbolsEventArgs.cs" />
     <Compile Include="Module.cs" />

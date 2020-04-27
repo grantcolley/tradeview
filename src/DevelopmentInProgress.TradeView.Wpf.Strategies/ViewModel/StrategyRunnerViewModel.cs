@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Reactive.Linq;
 using System.Net.WebSockets;
+using DevelopmentInProgress.TradeView.Wpf.Strategies.Enums;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 {
@@ -251,16 +252,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 }
             }
         }
-        
-        public bool CanSelectServer
-        {
-            get
-            {
-                return !(SelectedServer != null
-                  && (IsConnecting || IsConnected));
-            }
-        }
-
+       
         public Strategy Strategy
         {
             get { return strategy; }
@@ -373,23 +365,23 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
         private async void Disconnect(object param)
         {
-            await SetCommandVisibility(false, true, false);
+            await SetCommandVisibility(StrategyRunnerCommandVisibility.Connecting);
 
             await DisconnectSocketAsync();
 
-            await SetCommandVisibility(true, false, false);
+            await SetCommandVisibility(StrategyRunnerCommandVisibility.CanConnect);
         }
 
         private async void StopStrategy(object param)
         {
-            await SetCommandVisibility(false, true, false);
+            await SetCommandVisibility(StrategyRunnerCommandVisibility.Connecting);
 
             var strategyParameters = new InterfaceStrategy.StrategyParameters { StrategyName = Strategy.Name };
             var strategyParametersJson = JsonConvert.SerializeObject(strategyParameters);
 
             await StopAsync(strategyParametersJson);
             
-            await SetCommandVisibility(true, false, false);
+            await SetCommandVisibility(StrategyRunnerCommandVisibility.CanConnect);
         }
 
         private void ClearNotifications(object param)
@@ -583,7 +575,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                     if(response.StatusCode != System.Net.HttpStatusCode.OK)
                     {
-                        await SetCommandVisibility(false, false, false);
+                        await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect);
 
                         await DisconnectSocketAsync();
                     }
@@ -591,7 +583,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                     {
                         var accountBalances = AccountViewModel.Account.AccountInfo.Balances.ToList();
 
-                        await SetCommandVisibility(false, false, true);
+                        await SetCommandVisibility(StrategyRunnerCommandVisibility.Connected);
                     }
 
                     var content = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
@@ -613,7 +605,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 Logger.Log($"RunAsync {ex.Message}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Run - {ex.Message}", TextVerbose = ex.ToString() });
-                await SetCommandVisibility(false, false, false);
+                await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect);
                 await DisconnectSocketAsync();
             }
         }
@@ -639,7 +631,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    await SetCommandVisibility(false, false, false);
+                    await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect);
 
                     await DisconnectSocketAsync();
                 }
@@ -665,7 +657,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 Logger.Log($"RunAsync {ex.Message}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Update - {ex.Message}", TextVerbose = ex.ToString() });
-                await SetCommandVisibility(false, false, false);
+                await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect);
                 await DisconnectSocketAsync();
             }
         }
@@ -710,7 +702,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 Logger.Log($"StopAsync {ex.Message}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Stop - {ex.Message}", TextVerbose = ex.ToString() });
-                await SetCommandVisibility(false, false, false);
+                await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect);
                 await DisconnectSocketAsync();
             }
         }
@@ -728,7 +720,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 return false;
             }
 
-            await SetCommandVisibility(false, true, false);
+            await SetCommandVisibility(StrategyRunnerCommandVisibility.Connecting);
 
             Notifications.Clear();
 
@@ -821,7 +813,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                 if (!isForRun)
                 {
-                    await SetCommandVisibility(false, false, true);
+                    await SetCommandVisibility(StrategyRunnerCommandVisibility.Connected);
                 }
 
                 return true;
@@ -831,7 +823,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 Logger.Log($"MonitorAsync {ex.ToString()}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Monitor - {ex.Message}", TextVerbose=ex.ToString(), Timestamp = DateTime.Now });
-                await SetCommandVisibility(false, false, false);
+                await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect);
                 await DisconnectSocketAsync();
                 return false;
             }
@@ -1102,21 +1094,21 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 if (!IsConnected
                     && !IsConnecting)
                 {
-                    SetCommandVisibility(true, false, false).FireAndForget();
+                    SetCommandVisibility(StrategyRunnerCommandVisibility.CanConnect).FireAndForget();
                     return;
                 }
 
                 return;
             }
 
-            SetCommandVisibility(false, false, false).FireAndForget();
+            SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect).FireAndForget();
         }
 
-        private async Task SetCommandVisibility(bool canconnect, bool connecting, bool connected)
+        private async Task SetCommandVisibility(StrategyRunnerCommandVisibility strategyRunnerCommandVisibility)
         {
             try
             {
-                if (canconnect)
+                if (strategyRunnerCommandVisibility.Equals(StrategyRunnerCommandVisibility.CanConnect))
                 {
                     IsConnecting = true;
 
@@ -1139,8 +1131,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                     CanMonitor = false;
                 }
 
-                IsConnecting = connecting;
-                IsConnected = connected;
+                IsConnecting = strategyRunnerCommandVisibility.Equals(StrategyRunnerCommandVisibility.Connecting);
+                IsConnected = strategyRunnerCommandVisibility.Equals(StrategyRunnerCommandVisibility.Connected);
 
                 return;
             }
@@ -1151,7 +1143,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"SetCommandVisibility - {ex.Message}", TextVerbose = ex.ToString() });
             }
 
-            await SetCommandVisibility(false, false, false);
+            await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect);
         }
 
         private void RaiseStrategyDisplayEvent()
