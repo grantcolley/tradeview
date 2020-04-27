@@ -205,6 +205,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 {
                     canRun = value;
                     OnPropertyChanged("CanRun");
+                    OnPropertyChanged("CanSelectServer");
                 }
             }
         }
@@ -218,6 +219,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 {
                     canMonitor = value;
                     OnPropertyChanged("CanMonitor");
+                    OnPropertyChanged("CanSelectServer");
                 }
             }
         }
@@ -231,6 +233,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 {
                     isConnected = value;
                     OnPropertyChanged("IsConnected");
+                    OnPropertyChanged("CanSelectServer");
                 }
             }
         }
@@ -244,7 +247,17 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 {
                     isConnecting = value;
                     OnPropertyChanged("IsConnecting");
+                    OnPropertyChanged("CanSelectServer");
                 }
+            }
+        }
+        
+        public bool CanSelectServer
+        {
+            get
+            {
+                return !(SelectedServer != null
+                  && (IsConnecting || IsConnected));
             }
         }
 
