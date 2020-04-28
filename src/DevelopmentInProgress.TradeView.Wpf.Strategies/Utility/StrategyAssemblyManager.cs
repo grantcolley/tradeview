@@ -63,6 +63,24 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Utility
 
             if (isDisposing)
             {
+                if (StrategyDisplayViewModel != null)
+                {
+                    var disposeableViewModel = StrategyDisplayViewModel as IDisposable;
+                    if (disposeableViewModel != null)
+                    {
+                        disposeableViewModel.Dispose();
+                    }
+                }
+
+                if (StrategyDisplayView != null)
+                {
+                    var disposeableView = StrategyDisplayView as IDisposable;
+                    if (disposeableView != null)
+                    {
+                        disposeableView.Dispose();
+                    }
+                }
+
                 foreach (var file in Files)
                 {
                     //File.Delete(file);
@@ -74,7 +92,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Utility
 
         private void Download(IEnumerable<string> files)
         {
-            StrategyDirectory = Path.Combine(Directory.GetCurrentDirectory(), "strategies", Id);
+            StrategyDirectory = Path.Combine(Directory.GetCurrentDirectory(), "strategies", $"{Id}_{Guid.NewGuid()}");
 
             if (!Directory.Exists(StrategyDirectory))
             {

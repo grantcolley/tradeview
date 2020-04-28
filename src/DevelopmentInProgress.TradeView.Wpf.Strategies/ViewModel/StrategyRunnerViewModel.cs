@@ -407,7 +407,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             SymbolsViewModel.Dispose();
             OrdersViewModel.Dispose();
             StrategyParametersViewModel.Dispose();
-            strategyAssemblyManager.Dispose();
             serverMonitorCacheSubscription.Dispose();
 
             if (StrategyDisplayViewModel != null)
@@ -415,6 +414,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 strategySubscription.Dispose();
                 StrategyDisplayViewModel.Dispose();
             }
+
+            strategyAssemblyManager.Dispose();
 
             disposed = true;
         }
