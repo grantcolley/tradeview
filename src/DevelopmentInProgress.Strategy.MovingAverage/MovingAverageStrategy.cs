@@ -39,6 +39,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
                    || !strategyParameters.BuyIndicator.Equals(movingAverageTradeParameters.BuyIndicator))
                 {
                     movingAverageTradeParameters = strategyParameters;
+                    Strategy.Parameters = parameters;
                     tradeCache.TradeCreator.Reset(movingAverageTradeParameters);
                 }
 
