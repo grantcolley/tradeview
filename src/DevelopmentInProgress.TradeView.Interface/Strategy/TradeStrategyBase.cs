@@ -38,6 +38,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
         public event EventHandler<StrategyNotificationEventArgs> StrategyTradeEvent;
         public event EventHandler<StrategyNotificationEventArgs> StrategyCandlesticksEvent;
         public event EventHandler<StrategyNotificationEventArgs> StrategyStatisticsEvent;
+        public event EventHandler<StrategyNotificationEventArgs> StrategyParameterUpdateEvent;
         public event EventHandler<StrategyNotificationEventArgs> StrategyCustomNotificationEvent;
 
         public Strategy Strategy { get; private set; }
@@ -72,8 +73,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
             }
 
             var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = $"Stopping {Strategy.Name}", NotificationLevel = NotificationLevel.DisconnectClient };
-
-            StrategyNotification(new StrategyNotificationEventArgs { StrategyNotification = strategyNotification });
+            StrategyParameterUpdateNotification(new StrategyNotificationEventArgs { StrategyNotification = strategyNotification });
 
             return Strategy;
         }
@@ -118,7 +118,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
 
                 suspend = parameters.Suspend;
 
-                StrategyNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = Strategy.Name, Message = $"Parameter update : {parameters}", NotificationLevel = NotificationLevel.Information } });
+                StrategyParameterUpdateNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = Strategy.Name, Message = $"Parameter update : {parameters}", NotificationLevel = NotificationLevel.Information } });
 
                 tcs.SetResult(true);
             }
@@ -232,6 +232,11 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
         protected void StrategyNotification(StrategyNotificationEventArgs e)
         {
             StrategyNotificationEvent?.Invoke(this, e);
+        }
+
+        protected void StrategyParameterUpdateNotification(StrategyNotificationEventArgs e)
+        {
+            StrategyParameterUpdateEvent?.Invoke(this, e);
         }
 
         protected void StrategyAccountInfoNotification(StrategyNotificationEventArgs e)
