@@ -26,6 +26,8 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
 
         event EventHandler<StrategyNotificationEventArgs> StrategyCustomNotificationEvent;
 
+        event EventHandler<StrategyNotificationEventArgs> StrategyParameterUpdateEvent;
+
         void SetStrategy(Strategy strategy);
 
         Task<Strategy> RunAsync(CancellationToken cancellationToken);
