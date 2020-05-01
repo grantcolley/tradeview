@@ -45,7 +45,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
 
                 suspend = movingAverageTradeParameters.Suspend;
 
-                StrategyNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = Strategy.Name, Message = $"Parameter update : {parameters}", NotificationLevel = NotificationLevel.Information } });
+                StrategyParameterUpdateNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = Strategy.Name, Message = parameters, NotificationLevel = NotificationLevel.ParameterUpdate } });
 
                 tcs.SetResult(true);
             }
