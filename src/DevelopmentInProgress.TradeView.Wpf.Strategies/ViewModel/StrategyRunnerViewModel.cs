@@ -780,6 +780,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 });
             });
 
+            socketClient.On("ParameterUpdate", (message) =>
+            {
+                ViewModelContext.UiDispatcher.Invoke(async () =>
+                {
+                    await OnParameterUpdateNotificationAsync(message);
+                });
+            });
+
             socketClient.Closed += async (sender, args) =>
             {
                 await ViewModelContext.UiDispatcher.Invoke(async () =>
@@ -888,6 +896,26 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"OnCandlesticksNotification - {ex.Message}", TextVerbose = ex.ToString() });
             }
+        }
+
+        private async Task OnParameterUpdateNotificationAsync(Socket.Messages.Message message)
+        {
+            try
+            {
+                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Interface.Strategy.StrategyNotification>>(message.Data);
+
+                var latestStrategyNotification = strategyNotifications.OrderBy(n => n.Timestamp).Last();
+
+                Strategy.Parameters = latestStrategyNotification.Message;
+            }
+            catch (Exception ex)
+            {
+                Logger.Log($"OnParameterUpdateNotificationAsync {ex.ToString()}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+
+                NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"OnParameterUpdateNotificationAsync - {ex.Message}", TextVerbose = ex.ToString() });
+            }
+
+            await Task.FromResult<object>(null);
         }
 
         private async Task OnOrderBookNotificationAsync(Socket.Messages.Message message)
