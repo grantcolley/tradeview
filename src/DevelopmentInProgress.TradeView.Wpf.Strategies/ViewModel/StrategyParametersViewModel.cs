@@ -12,16 +12,31 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
     {
         private bool disposed;
         private Strategy strategy;
+        private bool canPushParameters;
 
         public StrategyParametersViewModel(ILoggerFacade logger)
             : base(logger)
         {
+            canPushParameters = false;
             PushStrategyParametersCommand = new ViewModelCommand(PushStrategyParameters);
         }
 
         public event EventHandler<StrategyEventArgs> OnStrategyParametersNotification;
 
         public ICommand PushStrategyParametersCommand { get; set; }
+
+        public bool CanPushParameters
+        {
+            get { return canPushParameters; }
+            set
+            {
+                if(canPushParameters != value)
+                {
+                    canPushParameters = value;
+                    OnPropertyChanged("CanPushParameters");
+                }
+            }
+        }
 
         public Strategy Strategy
         {

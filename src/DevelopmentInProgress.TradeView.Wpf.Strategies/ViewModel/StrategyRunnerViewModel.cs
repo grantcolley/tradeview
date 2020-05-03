@@ -233,6 +233,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 if (isConnected != value)
                 {
                     isConnected = value;
+
+                    if(StrategyParametersViewModel != null)
+                    {
+                        StrategyParametersViewModel.CanPushParameters = isConnected;
+                    }
+
                     OnPropertyChanged("IsConnected");
                     OnPropertyChanged("CanSelectServer");
                 }
