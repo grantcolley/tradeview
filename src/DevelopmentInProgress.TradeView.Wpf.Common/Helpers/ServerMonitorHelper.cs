@@ -37,7 +37,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             {
                 s.Started = ism.Started;
                 s.StartedBy = ism.StartedBy;
-                s.parameters = ism.Strategy.Parameters;
+                s.Parameters = ism.Strategy.Parameters;
 
                 var removeConnections = s.Connections.Where(c => !ism.Connections.Any(ismc => ismc.Connection == c.Name)).ToList();
                 foreach (var connection in removeConnections)
