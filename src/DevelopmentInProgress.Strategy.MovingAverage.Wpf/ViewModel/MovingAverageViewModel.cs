@@ -401,36 +401,62 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
 
                 if (Symbols != null)
                 {
-                    var orderBookNotification = orderNotifications.Last();
-
                     IsLoadingOrderBook = false;
-
-                    var ob = JsonConvert.DeserializeObject<TradeView.Interface.Model.OrderBook>(orderBookNotification.Message);
-
-                    var symbol = Symbols.First(s => s.ExchangeSymbol.Equals(ob.Symbol));
-
-                    var orderBookHelper = orderBookHelperFactory.GetOrderBookHelper(ob.Exchange);
-
-                    var pricePrecision = symbol.PricePrecision;
-                    var quantityPrecision = symbol.QuantityPrecision;
 
                     var orderBookDisplayCount = Strategy.OrderBookDisplayCount;
                     var orderBookChartDisplayCount = Strategy.OrderBookChartDisplayCount;
 
                     if (OrderBook == null)
                     {
+                        var orderBookNotification = orderNotifications.Last();
+                        
+                        var ob = JsonConvert.DeserializeObject<TradeView.Interface.Model.OrderBook>(orderBookNotification.Message);
+
+                        var orderBookHelper = orderBookHelperFactory.GetOrderBookHelper(ob.Exchange);
+
+                        var symbol = Symbols.First(s => s.ExchangeSymbol.Equals(ob.Symbol));
+                        var pricePrecision = symbol.PricePrecision;
+                        var quantityPrecision = symbol.QuantityPrecision;
+
                         OrderBook = await orderBookHelper.CreateLocalOrderBook(symbol, ob, orderBookDisplayCount, orderBookChartDisplayCount);
-                    }
-                    else if (OrderBook.LastUpdateId >= ob.LastUpdateId)
-                    {
-                        // If the incoming order book is older than the local one ignore it.
-                        return;
                     }
                     else
                     {
-                        orderBookHelper.UpdateLocalOrderBook(OrderBook, ob,
-                            symbol.PricePrecision, symbol.QuantityPrecision,
-                            orderBookDisplayCount, orderBookChartDisplayCount);
+                        bool first = true;
+                        IOrderBookHelper orderBookHelper = null;
+                        Symbol symbol = null;
+                        int quantityPrecision;
+                        int pricePrecision;
+
+                        var orderBookUpdates = new List<TradeView.Interface.Model.OrderBook>();
+
+                        foreach (var notification in orderNotifications)
+                        {
+                            var ob = JsonConvert.DeserializeObject<TradeView.Interface.Model.OrderBook>(notification.Message);
+
+                            if (first)
+                            {
+                                orderBookHelper = orderBookHelperFactory.GetOrderBookHelper(ob.Exchange);
+
+                                symbol = Symbols.First(s => s.ExchangeSymbol.Equals(ob.Symbol));
+                                quantityPrecision = symbol.QuantityPrecision;
+                                pricePrecision = symbol.PricePrecision;
+                            }
+
+                            orderBookUpdates.Add(ob);
+                        }
+
+                        var newOrderBookUpdates 
+                            = orderBookUpdates
+                            .OrderBy(ob => ob.LastUpdateId)
+                            .Where(ob => ob.LastUpdateId > OrderBook.LastUpdateId).ToList();
+
+                        foreach(var ob in newOrderBookUpdates)
+                        {
+                            orderBookHelper.UpdateLocalOrderBook(OrderBook, ob,
+                                symbol.PricePrecision, symbol.QuantityPrecision,
+                                orderBookDisplayCount, orderBookChartDisplayCount);
+                        }
                     }
                 }
             }
