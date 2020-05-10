@@ -40,7 +40,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
         private bool isLoadingOrderBook;
         private bool disposed;
         private bool showCandlesticks;
-        private ITradeHelper tradeHelper;
+        private ITradeHelperFactory tradeHelperFactory;
         private IOrderBookHelperFactory orderBookHelperFactory;
 
         public MovingAverageViewModel(WpfStrategy strategy, IHelperFactoryContainer iHelperFactoryContainer, 
@@ -57,8 +57,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
 
             cancellationTokenSource = new CancellationTokenSource();
 
-            var tradeHelperFactory = HelperFactoryContainer.GetFactory<ITradeHelperFactory>();
-            tradeHelper = tradeHelperFactory.GetTradeHelper();
+            tradeHelperFactory = HelperFactoryContainer.GetFactory<ITradeHelperFactory>();
 
             orderBookHelperFactory = HelperFactoryContainer.GetFactory<IOrderBookHelperFactory>();
 
@@ -259,6 +258,8 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                     var pricePrecision = symbol.PricePrecision;
                     var quantityPrecision = symbol.QuantityPrecision;
 
+                    var tradeHelper = tradeHelperFactory.GetTradeHelper(trade.Exchange);
+
                     Func<ITrade, int, int, Trade> createSmaTrade = (t, p, q) => new Trade { Price = ((MovingAverageTrade)t).MovingAveragePrice.Trim(p), Time = t.Time.ToLocalTime(), Exchange = t.Exchange };
                     Func<ITrade, int, int, Trade> createBuyIndicator = (t, p, q) => new Trade { Price = ((MovingAverageTrade)t).BuyPrice.Trim(p), Time = t.Time.ToLocalTime(), Exchange = t.Exchange };
                     Func<ITrade, int, int, Trade> createSellIndicator = (t, p, q) => new Trade { Price = ((MovingAverageTrade)t).SellPrice.Trim(p), Time = t.Time.ToLocalTime(), Exchange = t.Exchange };
@@ -408,8 +409,6 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
 
                     var symbol = Symbols.First(s => s.ExchangeSymbol.Equals(ob.Symbol));
 
-                    var strategySymbol = Strategy.StrategySubscriptions.First(s => s.Symbol.Equals(ob.Symbol));
-
                     var orderBookHelper = orderBookHelperFactory.GetOrderBookHelper(ob.Exchange);
 
                     var pricePrecision = symbol.PricePrecision;
@@ -421,11 +420,6 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                     if (OrderBook == null)
                     {
                         OrderBook = await orderBookHelper.CreateLocalOrderBook(symbol, ob, orderBookDisplayCount, orderBookChartDisplayCount);
-
-                        if (IsLoadingOrderBook)
-                        {
-                            IsLoadingOrderBook = false;
-                        }
                     }
                     else if (OrderBook.LastUpdateId >= ob.LastUpdateId)
                     {
