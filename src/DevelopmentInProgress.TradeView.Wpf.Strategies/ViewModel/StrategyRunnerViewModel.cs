@@ -315,37 +315,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
         }
 
-        public async override void OnActiveChanged(bool isActive)
-        {
-            try
-            {
-                if (isActive)
-                {
-                    var openDocuments = new FindDocumentViewModel { Module = "Strategies" };
-
-                    OnGetViewModels(openDocuments);
-
-                    //var tradingViewModels = openDocuments.ViewModels.OfType<StrategyRunnerViewModel>()
-                    //    .Where(d => d.SymbolViewModel != null && d.SymbolViewModel.IsActive).ToList();
-
-                    //foreach (var tradingViewModel in tradingViewModels)
-                    //{
-                    //    tradingViewModel.DisposeSymbolViewModel();
-                    //}
-
-                    //await LoadSymbolViewModel();
-                }
-                else
-                {
-                    //DisposeSymbolViewModel();
-                }
-            }
-            catch (Exception ex)
-            {
-                //TradingViewModelException(ex.ToString(), ex);
-            }
-        }
-
         private async Task GetServerMonitors()
         {
             try
