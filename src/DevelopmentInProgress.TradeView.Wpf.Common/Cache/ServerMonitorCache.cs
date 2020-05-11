@@ -20,6 +20,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
         private readonly ObservableCollection<ServerMonitor> serverMonitors;
         private readonly SemaphoreSlim serverMonitorSemaphoreSlim = new SemaphoreSlim(1, 1);
         private readonly Dictionary<string, IDisposable> serverMonitorSubscriptions;
+        private Interface.Server.ServerConfiguration serverConfiguraion;
         private IDisposable observableInterval;
         private Dispatcher dispatcher;
         private bool disposed;
@@ -87,6 +88,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                     }
                 });
 
+                if (serverConfiguraion == null)
+                {
+                    serverConfiguraion = await configurationServer.GetServerConfiguration();
+                }
+
                 StartObserveringServers();
             }
             catch (Exception ex)
@@ -128,7 +134,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                 return;
             }
 
-            observableInterval = Observable.Interval(TimeSpan.FromSeconds(10))
+            double observeServerInterval = 0;
+
+            observableInterval = Observable.Interval(TimeSpan.FromSeconds(observeServerInterval))
                 .Subscribe(async i =>
                 {
                     await serverMonitorSemaphoreSlim.WaitAsync();
@@ -154,6 +162,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                     {
                         serverMonitorSemaphoreSlim.Release();
                     }
+
+                    observeServerInterval = serverConfiguraion.ObserveServerInterval;
                 });
         }
 

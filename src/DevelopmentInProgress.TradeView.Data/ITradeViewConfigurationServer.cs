@@ -6,6 +6,7 @@ namespace DevelopmentInProgress.TradeView.Data
 {
     public interface ITradeViewConfigurationServer
     {
+        Task<ServerConfiguration> GetServerConfiguration();
         Task<List<Server>> GetServersAsync();
         Task<Server> GetServerAsync(string serverName);
         Task SaveServerAsync(Server server);

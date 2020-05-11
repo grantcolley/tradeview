@@ -18,6 +18,11 @@ namespace DevelopmentInProgress.TradeView.Data.File
             userServersFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{Environment.MachineName}_Servers.txt");
         }
 
+        public Task<ServerConfiguration> GetServerConfiguration()
+        {
+            return Task.FromResult(new ServerConfiguration { ObserveServerInterval = 10 });
+        }
+
         public async Task<List<Server>> GetServersAsync()
         {
             if (System.IO.File.Exists(userServersFile))
