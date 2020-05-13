@@ -139,13 +139,26 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
         private void UpdateChartValues(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
         {
-            RemoveOldPrices(cv, pl);
+            var count = cv.Count;
 
-            UpdateMatchingPrices(cv, pl);
+            if (count != pl.Count)
+            {
+                throw new Exception("Order Book count difference...");
+            }
 
-            AddNewPrices(cv, pl);
+            for(int i = 0; i <  count; i++)
+            {
+                cv[i].Price = pl[i].Price;
+                cv[i].Quantity = pl[i].Quantity;
+            }
+
+            //RemoveOldPrices(cv, pl);
+
+            //UpdateMatchingPrices(cv, pl);
+
+            //AddNewPrices(cv, pl);
         }
-       
+
         private void RemoveOldPrices(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
         {
             var removePoints = cv.Where(v => !pl.Any(p => p.Price == v.Price)).ToList();
