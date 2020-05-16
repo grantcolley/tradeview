@@ -23,24 +23,18 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
         {
             var cancellationTokenSource = new CancellationTokenSource();
 
-            var orderBookCount = chartDisplayCount > listDisplayCount ? chartDisplayCount : listDisplayCount;
-
-            var limit = orderBookCount < 21 ? 20 : 100;
-
-            var snapShot = await kucoinExchangeApi.GetOrderBookAsync(symbol.ExchangeSymbol, limit, cancellationTokenSource.Token);
+            var snapShot = await kucoinExchangeApi.GetOrderBookAsync(symbol.ExchangeSymbol, 100, cancellationTokenSource.Token);
 
             // Order by price: bids (ASC) and asks (ASC)
             // Discard those that we are not interested in displaying on the screen.
-            var snapShotAsks = new List<Interface.Model.OrderBookPriceLevel>(snapShot.Asks.Take(orderBookCount).OrderBy(a => a.Price).ToList());
-            var snapShotBids = new List<Interface.Model.OrderBookPriceLevel>(snapShot.Bids.Take(orderBookCount).OrderBy(b => b.Price).ToList());
+            var snapShotAsks = new List<Interface.Model.OrderBookPriceLevel>(snapShot.Asks.OrderBy(a => a.Price).ToList());
+            var snapShotBids = new List<Interface.Model.OrderBookPriceLevel>(snapShot.Bids.OrderBy(b => b.Price).ToList());
 
             long latestSquence = snapShot.LastUpdateId;
 
-            bool isUpdated = false;
+            var replayedAsks = ReplayPriceLevels(snapShotAsks, orderBook.Asks, snapShot.LastUpdateId, ref latestSquence);
 
-            var replayedAsks = ReplayPriceLevels(snapShotAsks, orderBook.Asks, snapShot.LastUpdateId, ref latestSquence, ref isUpdated);
-
-            var replayedBids = ReplayPriceLevels(snapShotBids, orderBook.Bids, snapShot.LastUpdateId, ref latestSquence, ref isUpdated);
+            var replayedBids = ReplayPriceLevels(snapShotBids, orderBook.Bids, snapShot.LastUpdateId, ref latestSquence);
             
             var pricePrecision = symbol.PricePrecision;
             var quantityPrecision = symbol.QuantityPrecision;
@@ -97,20 +91,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
         {
             long latestSquence = orderBook.LastUpdateId;
 
-            if (updateOrderBook.Asks.Any(a => a.Price > 0)
-                || updateOrderBook.Bids.Any(b => b.Price > 0))
-            {
-                var x = string.Empty;
-            }
-
-            bool isUpdated = false;
-
-            orderBook.Asks = ReplayPriceLevels(orderBook.Asks, updateOrderBook.Asks, orderBook.LastUpdateId, ref latestSquence, ref isUpdated);
-            orderBook.Bids = ReplayPriceLevels(orderBook.Bids, updateOrderBook.Bids, orderBook.LastUpdateId, ref latestSquence, ref isUpdated);
+            orderBook.Asks = ReplayPriceLevels(orderBook.Asks, updateOrderBook.Asks, orderBook.LastUpdateId, ref latestSquence);
+            orderBook.Bids = ReplayPriceLevels(orderBook.Bids, updateOrderBook.Bids, orderBook.LastUpdateId, ref latestSquence);
 
             orderBook.LastUpdateId = latestSquence;
-
-            var orderBookCount = chartDisplayCount > listDisplayCount ? chartDisplayCount : listDisplayCount;
 
             var asks = orderBook.Asks.Select(ask => new OrderBookPriceLevel
             {
@@ -152,8 +136,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             List<Interface.Model.OrderBookPriceLevel> orderBookPriceLevels, 
             IEnumerable<Interface.Model.OrderBookPriceLevel> playBackPriceLevels, 
             long orderBookSequence, 
-            ref long latestSquence,
-            ref bool isUpdated)
+            ref long latestSquence)
         {
             var priceLevels = playBackPriceLevels.Where(a => a.Id > orderBookSequence).ToList();
 
@@ -206,13 +189,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
                 if(handled == false)
                 {
                     orderBookPriceLevels.Add(priceLevel);
-                    handled = true;
-                }
-
-                if(isUpdated.Equals(false)
-                    && handled)
-                {
-                    isUpdated = true;
                 }
             }
 
@@ -256,78 +232,17 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
         private void UpdateChartValues(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
         {
-            RemoveOldPrices(cv, pl);
+            var count = cv.Count;
 
-            UpdateMatchingPrices(cv, pl);
-
-            AddNewPrices(cv, pl);
-        }
-
-        private void RemoveOldPrices(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
-        {
-            var removePoints = cv.Where(v => !pl.Any(p => p.Price == v.Price)).ToList();
-            foreach (var point in removePoints)
+            if (count != pl.Count)
             {
-                cv.Remove(point);
-            }
-        }
-
-        private void UpdateMatchingPrices(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
-        {
-            Func<OrderBookPriceLevel, OrderBookPriceLevel, OrderBookPriceLevel> updateQuantity = ((v, p) =>
-            {
-                v.Quantity = p.Quantity;
-                return v;
-            });
-
-            (from v in cv
-             join p in pl
-             on v.Price equals p.Price
-             select updateQuantity(v, p)).ToList();
-        }
-
-        private void AddNewPrices(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
-        {
-            var newPoints = pl.Where(p => !cv.Any(v => v.Price == p.Price)).ToList();
-
-            var newPointsCount = newPoints.Count;
-
-            if (newPointsCount.Equals(0))
-            {
-                return;
+                throw new Exception("Order Book count difference...");
             }
 
-            var chartValueCount = cv.Count;
-
-            int currentNewPoint = 0;
-
-            for (int i = 0; i < chartValueCount; i++)
+            for (int i = 0; i < count; i++)
             {
-                if (newPoints[currentNewPoint].Price < cv[i].Price)
-                {
-                    cv.Insert(i, newPoints[currentNewPoint]);
-
-                    // Increments
-                    currentNewPoint++;  // position in new points list
-                    chartValueCount++;  // number of items in the cv list after the insert
-                }
-
-                if (currentNewPoint > (newPointsCount - 1))
-                {
-                    // No more new points to add so break out
-                    break;
-                }
-
-                if (i == chartValueCount - 1)
-                {
-                    // We have reached the end of the chart values
-                    if (currentNewPoint < newPointsCount)
-                    {
-                        // Add the remaining new points
-                        var appendNewPoints = newPoints.Skip(currentNewPoint).ToList();
-                        cv.AddRange(appendNewPoints);
-                    }
-                }
+                cv[i].Price = pl[i].Price;
+                cv[i].Quantity = pl[i].Quantity;
             }
         }
     }
