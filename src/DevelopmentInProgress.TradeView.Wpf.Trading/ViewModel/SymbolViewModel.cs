@@ -257,6 +257,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
         internal async void UpdateOrderBook(Interface.Model.OrderBook exchangeOrderBook)
         {
+            if(symbolCancellationTokenSource.IsCancellationRequested)
+            {
+                return;
+            }
+
             await orderBookSemaphoreSlim.WaitAsync(symbolCancellationTokenSource.Token);
 
             try
@@ -290,6 +295,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
         internal async void UpdateTrades(IEnumerable<ITrade> tradesUpdate)
         {
+            if (symbolCancellationTokenSource.IsCancellationRequested)
+            {
+                return;
+            }
+
             await tradesSemaphoreSlim.WaitAsync(symbolCancellationTokenSource.Token);
 
             try

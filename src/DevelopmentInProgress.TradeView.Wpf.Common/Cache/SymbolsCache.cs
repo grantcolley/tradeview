@@ -36,6 +36,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 
         public async Task<List<Symbol>> GetSymbols(IEnumerable<string> subscriptions)
         {
+            if(subscribeSymbolsCxlTokenSrc.IsCancellationRequested)
+            {
+                return null;
+            }
+
             await semaphoreSlimGetSymbols.WaitAsync(subscribeSymbolsCxlTokenSrc.Token);
 
             try

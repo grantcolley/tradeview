@@ -223,6 +223,11 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
 
         public override async Task TradeNotificationsAsync(List<StrategyNotification> tradeNotifications)
         {
+            if (cancellationTokenSource.IsCancellationRequested)
+            {
+                return;
+            }
+
             await tradesSemaphoreSlim.WaitAsync(cancellationTokenSource.Token);
 
             try
@@ -314,6 +319,11 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
 
         public override async Task CandlestickNotificationsAsync(List<StrategyNotification> candlestickNotifications)
         {
+            if(cancellationTokenSource.IsCancellationRequested)
+            {
+                return;
+            }
+
             await candlestickSemaphoreSlim.WaitAsync(cancellationTokenSource.Token);
 
             try
@@ -390,6 +400,11 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
 
         public override async Task OrderNotificationsAsync(List<StrategyNotification> orderNotifications)
         {
+            if (cancellationTokenSource.IsCancellationRequested)
+            {
+                return;
+            }
+
             await orderBookSemaphoreSlim.WaitAsync(cancellationTokenSource.Token);
 
             try
