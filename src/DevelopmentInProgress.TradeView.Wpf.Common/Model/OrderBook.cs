@@ -2,7 +2,6 @@
 using LiveCharts.Configurations;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 {
@@ -10,6 +9,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
     {
         private string baseSymbol;
         private string quoteSymbol;
+        public decimal bidAskSpread;
         private List<OrderBookPriceLevel> topAsks;
         private List<OrderBookPriceLevel> topBids;
         private ChartValues<OrderBookPriceLevel> chartAsks;
@@ -59,6 +59,19 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 {
                     quoteSymbol = value;
                     OnPropertyChanged("QuoteSymbol");
+                }
+            }
+        }
+
+        public decimal BidAskSpread
+        {
+            get { return bidAskSpread; }
+            set
+            {
+                if (bidAskSpread != value)
+                {
+                    bidAskSpread = value;
+                    OnPropertyChanged("BidAskSpread");
                 }
             }
         }

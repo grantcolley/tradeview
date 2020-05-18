@@ -22,9 +22,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
                 List<OrderBookPriceLevel> chartBids;
                 List<OrderBookPriceLevel> aggregatedAsks;
                 List<OrderBookPriceLevel> aggregatedBids;
+                decimal bidAskSpread;
 
                 GetBidsAndAsks(orderBook, symbol.PricePrecision, symbol.QuantityPrecision, listDisplayCount, chartDisplayCount,
-                    out topAsks, out topBids, out chartAsks, out chartBids, out aggregatedAsks, out aggregatedBids);
+                    out topAsks, out topBids, out chartAsks, out chartBids, out aggregatedAsks, out aggregatedBids, out bidAskSpread);
 
                 var newOrderBook = new OrderBook
                 {
@@ -32,6 +33,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
                     Symbol = orderBook.Symbol,
                     BaseSymbol = symbol.BaseAsset.Symbol,
                     QuoteSymbol = symbol.QuoteAsset.Symbol,
+                    BidAskSpread = bidAskSpread,
                     TopAsks = topAsks,
                     TopBids = topBids,
                     ChartAsks = new ChartValues<OrderBookPriceLevel>(chartAsks),
@@ -61,14 +63,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             List<OrderBookPriceLevel> chartBids;
             List<OrderBookPriceLevel> aggregatedAsks;
             List<OrderBookPriceLevel> aggregatedBids;
+            decimal bidAskSpread;
 
             GetBidsAndAsks(updateOrderBook, pricePrecision, quantityPrecision, listDisplayCount, chartDisplayCount,
-                out topAsks, out topBids, out chartAsks, out chartBids, out aggregatedAsks, out aggregatedBids);
+                out topAsks, out topBids, out chartAsks, out chartBids, out aggregatedAsks, out aggregatedBids, out bidAskSpread);
 
             // Create new instances of the top 
             // bids and asks, reversing the asks
             orderBook.TopAsks = topAsks;
             orderBook.TopBids = topBids;
+            orderBook.BidAskSpread = bidAskSpread;
 
             // Update the existing orderbook chart
             // bids and asks, reversing the bids.
@@ -82,7 +86,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             int listDisplayCount, int chartDisplayCount, 
             out List<OrderBookPriceLevel> topAsks, out List<OrderBookPriceLevel> topBids, 
             out List<OrderBookPriceLevel> chartAsks, out List<OrderBookPriceLevel> chartBids,
-            out List<OrderBookPriceLevel> aggregatedAsks, out List<OrderBookPriceLevel> aggregatedBids)
+            out List<OrderBookPriceLevel> aggregatedAsks, out List<OrderBookPriceLevel> aggregatedBids,
+            out decimal bidAskSpread)
         {
             var orderBookCount = chartDisplayCount > listDisplayCount ? chartDisplayCount : listDisplayCount;
 
@@ -104,6 +109,18 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
                 Price = bid.Price.Trim(pricePrecision),
                 Quantity = bid.Quantity.Trim(quantityPrecision)
             }).ToList();
+
+            var topAsk = asks.First();
+            var topBid = bids.First();
+            
+            if (topAsk.Price != 0)
+            {
+                bidAskSpread = Math.Round(((topAsk.Price - topBid.Price) / topAsk.Price)*100, 2, MidpointRounding.AwayFromZero);
+            }
+            else
+            {
+                bidAskSpread = 0.00m;
+            }
 
             // Take the top bids and asks for the order book bid and ask lists and order descending.
             topAsks = asks.Take(listDisplayCount).Reverse().ToList();

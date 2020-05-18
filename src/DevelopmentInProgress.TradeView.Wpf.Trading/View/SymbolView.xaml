@@ -214,8 +214,12 @@
                                 <ColumnDefinition Width="50*"/>
                                 <ColumnDefinition Width="50*"/>
                             </Grid.ColumnDefinitions>
-                            <DockPanel LastChildFill="True">
-                                <Label Grid.Column="0" DockPanel.Dock="Top" HorizontalAlignment="Center" Content="Orders"/>
+                            <DockPanel LastChildFill="True" Grid.Column="0">
+                                <Label DockPanel.Dock="Top" HorizontalAlignment="Center" Content="Orders"/>
+                                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center" ToolTip="Bid/Ask Spread">
+                                    <Label HorizontalAlignment="Center" Content="{Binding OrderBook.BidAskSpread}"/>
+                                    <Label HorizontalAlignment="Center" Content="%"/>
+                                </StackPanel>
                                 <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}"
                                                    Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}">
                                     <lc:CartesianChart.Series>
@@ -264,7 +268,11 @@
                             </DockPanel>
 
                             <DockPanel Grid.Column="1" LastChildFill="True">
-                                <Label DockPanel.Dock="Top" Content="Cumulative" HorizontalAlignment="Center"/>
+                                <Label DockPanel.Dock="Top" HorizontalAlignment="Center" Content="Cumulative"/>
+                                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center" ToolTip="Bid/Ask Spread">
+                                    <Label HorizontalAlignment="Center" Content="{Binding OrderBook.BidAskSpread}"/>
+                                    <Label HorizontalAlignment="Center" Content="%"/>
+                                </StackPanel>
                                 <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}"
                                                    Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}">
                                     <lc:CartesianChart.Series>

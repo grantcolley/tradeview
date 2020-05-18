@@ -51,6 +51,20 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
                 Quantity = bid.Quantity.Trim(quantityPrecision)
             }).ToList();
 
+            var topAsk = asks.First();
+            var topBid = bids.First();
+
+            decimal bidAskSpread;
+
+            if (topAsk.Price != 0)
+            {
+                bidAskSpread = Math.Round(((topAsk.Price - topBid.Price) / topAsk.Price) * 100, 2, MidpointRounding.AwayFromZero);
+            }
+            else
+            {
+                bidAskSpread = 0.00m;
+            }
+
             // Take the top bids and asks for the order book bid and ask lists and order descending.
             var topAsks = asks.Take(listDisplayCount).OrderByDescending(a => a.Price).ToList();
             var topBids = bids.OrderByDescending(b => b.Price).Take(listDisplayCount).ToList();
@@ -75,6 +89,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
                 Symbol = orderBook.Symbol,
                 BaseSymbol = symbol.BaseAsset.Symbol,
                 QuoteSymbol = symbol.QuoteAsset.Symbol,
+                BidAskSpread = bidAskSpread,
                 Asks = replayedAsks,
                 Bids = replayedBids,
                 TopAsks = topAsks,
@@ -107,6 +122,18 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
                 Price = bid.Price.Trim(pricePrecision),
                 Quantity = bid.Quantity.Trim(quantityPrecision)
             }).ToList();
+
+            var topAsk = asks.First();
+            var topBid = bids.First();
+
+            if (topAsk.Price != 0)
+            {
+                orderBook.BidAskSpread = Math.Round(((topAsk.Price - topBid.Price) / topAsk.Price), 2, MidpointRounding.AwayFromZero);
+            }
+            else
+            {
+                orderBook.BidAskSpread = 0.00m;
+            }
 
             // Take the top bids and asks for the order book bid and ask lists and order descending.
             orderBook.TopAsks = asks.Take(listDisplayCount).OrderByDescending(a => a.Price).ToList();
