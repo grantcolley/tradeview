@@ -22,6 +22,7 @@ Alt currency trading application built on the [Origin](https://github.com/grantc
 ![Alt text](/README-images/navigationpanel.PNG?raw=true "Navigation Panel")
 
 #### Trading
+![Alt text](/README-images/trading.PNG?raw=true "Trading")
 
 ##### Favourite Symbols
 ![Alt text](/README-images/symbols.PNG?raw=true "Favourite Symbols")
