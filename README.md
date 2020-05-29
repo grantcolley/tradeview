@@ -20,7 +20,7 @@ Alt currency trading application built on the [Origin](https://github.com/grantc
 
 #### Trading
 
-#### Live Symbol Feeds
+##### Live Symbol Feeds
 
 #### Favourite Symbols
 
