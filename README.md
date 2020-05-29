@@ -16,7 +16,8 @@ Alt currency trading application built on the [Origin](https://github.com/grantc
     * [Live Orders](#live-orders)
   * [Configuration](#configuration)  
   * [Strategies](#strategies)
-  * [Dashboard](#trading)  
+  * [Dashboard](#dashboard)
+  
 ## Overview
 ![Alt text](/README-images/navigationpanel.PNG?raw=true "Navigation Panel")
 
