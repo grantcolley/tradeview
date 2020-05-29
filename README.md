@@ -14,7 +14,6 @@ Alt currency trading application built on the [Origin](https://github.com/grantc
     * [Account Updates](#account)
     * [Place a Trade](#place-a-trade)
     * [Live Orders](#live-orders)
-* [Other stuff here](#other-stuff-here)
 
 ## Overview
 
@@ -22,10 +21,10 @@ Alt currency trading application built on the [Origin](https://github.com/grantc
 
 ##### Live Symbol Feeds
 
-#### Favourite Symbols
+##### Favourite Symbols
 
-#### Account Updates
+##### Account Updates
 
-#### Place a Trade
+##### Place a Trade
 
-#### Live Orders
+##### Live Orders
