@@ -4,26 +4,15 @@
 
 Alt currency trading application built on the [Origin](https://github.com/grantcolley/origin) framework.
 
-![Alt text](/README-images/tradeview.PNG?raw=true "Trade View")
-
 #### Table of Contents
 * [Overview](#overview)
   * [Configuration](#configuration)
-  * [Trading](#trading)  
-    * [Favourite Symbols](#favourite-symbols)
-    * [Live Symbol Feeds](#live-symbol-feeds)
-    * [Realtime Account Updates](#realtime-account-updates)
-    * [Place a Trade](#place-a-trade)
-    * [Live Orders](#live-orders)  
+  * [Trading](#trading)    
   * [Strategies](#strategies)
   * [Dashboard](#dashboard)
   
 ## Overview
-TradeView consists of modules, accessible from the navigation panel on the left, including:
-  * [Configuration](#configuration)
-  * [Trading](#trading)  
-  * [Strategies](#strategies)
-  * [Dashboard](#dashboard)
+TradeView consists of modules, accessible from the navigation panel on the left, including [Configuration](#configuration), [Trading](#trading), [Strategies](#strategies) and [Dashboard](#dashboard).
   
 ![Alt text](/README-images/navigationpanel.PNG?raw=true "Navigation Panel")
 
@@ -41,22 +30,7 @@ Selecting the Trading module in the navigation panel will list the trading accou
 
 A trading document consists of several panels including favourite symbols list, selected symbol panel showing live order book and trade feeds, account assets with real-time updates, a control for placing trades and an open order monitoring panel.
 
-![Alt text](/README-images/trading.PNG?raw=true "Trading")
-
-##### Favourite Symbols
-![Alt text](/README-images/symbols.PNG?raw=true "Favourite Symbols")
-
-##### Live Symbol Feeds
-![Alt text](/README-images/symbol.PNG?raw=true "Live Symbol Feeds")
-
-##### Realtime Account Updates
-![Alt text](/README-images/account.PNG?raw=true "Realtime Account Updates")
-
-##### Place a Trade
-![Alt text](/README-images/tradecontrol.PNG?raw=true "Place a Trade")
-
-##### Live Orders
-![Alt text](/README-images/orders.PNG?raw=true "Live Orders")
+![Alt text](/README-images/tradeview.PNG?raw=true "Trade View")
 
 #### Strategies
 ![Alt text](/README-images/strategies.PNG?raw=true "Strategies")
