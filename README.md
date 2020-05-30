@@ -19,6 +19,12 @@ Alt currency trading application built on the [Origin](https://github.com/grantc
   * [Dashboard](#dashboard)
   
 ## Overview
+TradeView consists of modules, accessible from the navigation panel on the left, including:
+  * [Configuration](#configuration)
+  * [Trading](#trading)  
+  * [Strategies](#strategies)
+  * [Dashboard](#dashboard)
+  
 ![Alt text](/README-images/navigationpanel.PNG?raw=true "Navigation Panel")
 
 #### Configuration
