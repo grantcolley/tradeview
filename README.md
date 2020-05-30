@@ -39,6 +39,8 @@ The Configuration module is where configuration for trading accounts, running st
 #### Trading
 Selecting the Trading module in the navigation panel will list the trading accounts in the main panel. Clicking an account will open a trading document for that account in the main window.
 
+A trading document consists of several panels including favourite symbols list, selected symbol panel showing live order book and trade feeds, account assets with real-time updates, a control for placing trades and an open order monitoring panel.
+
 ![Alt text](/README-images/trading.PNG?raw=true "Trading")
 
 ##### Favourite Symbols
