@@ -8,18 +8,21 @@ Alt currency trading application built on the [Origin](https://github.com/grantc
 
 #### Table of Contents
 * [Overview](#overview)
+  * [Configuration](#configuration)
   * [Trading](#trading)  
     * [Favourite Symbols](#favourite-symbols)
     * [Live Symbol Feeds](#live-symbol-feeds)
     * [Realtime Account Updates](#realtime-account-updates)
     * [Place a Trade](#place-a-trade)
-    * [Live Orders](#live-orders)
-  * [Configuration](#configuration)  
+    * [Live Orders](#live-orders)  
   * [Strategies](#strategies)
   * [Dashboard](#dashboard)
   
 ## Overview
 ![Alt text](/README-images/navigationpanel.PNG?raw=true "Navigation Panel")
+
+#### Configuration
+![Alt text](/README-images/configuration.PNG?raw=true "Configuration")
 
 #### Trading
 ![Alt text](/README-images/trading.PNG?raw=true "Trading")
@@ -39,8 +42,8 @@ Alt currency trading application built on the [Origin](https://github.com/grantc
 ##### Live Orders
 ![Alt text](/README-images/orders.PNG?raw=true "Live Orders")
 
-#### Configuration
-
 #### Strategies
+![Alt text](/README-images/strategies.PNG?raw=true "Strategies")
 
 #### Dashboard
+![Alt text](/README-images/dashboard.PNG?raw=true "Dashboard")
