@@ -28,7 +28,7 @@ TradeView consists of modules, accessible from the navigation panel on the left,
 ![Alt text](/README-images/navigationpanel.PNG?raw=true "Navigation Panel")
 
 #### Configuration
-The Configuration modules is where configuration for trading accounts, running strategies and strategy servers are managed.
+The Configuration module is where configuration for trading accounts, running strategies and strategy servers are managed.
 
 * **Manage Accounts** allows you to create and persist trading accounts including account name, exchange, api key and secret key. It also persists display preferences for the trading screen such as favourite symbols, and default selected symbol.
 * **Manage Strategies** persists strategy configuration
