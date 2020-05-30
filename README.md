@@ -37,6 +37,8 @@ The Configuration module is where configuration for trading accounts, running st
 ![Alt text](/README-images/configuration.PNG?raw=true "Configuration")
 
 #### Trading
+Selecting the Trading module in the navigation panel will list the trading accounts in the main panel. Clicking an account will open a trading document for that account in the main window.
+
 ![Alt text](/README-images/trading.PNG?raw=true "Trading")
 
 ##### Favourite Symbols
