@@ -10,6 +10,7 @@ Alt currency trading application built on the [Origin](https://github.com/grantc
   * [Trading](#trading)    
   * [Strategies](#strategies)
   * [Dashboard](#dashboard)
+* [Running a Strategy](#running-a-strategy)
 
 ## Overview
 **tradeview** consists of modules, accessible from the navigation panel on the left, including [Configuration](#configuration), [Trading](#trading), [Strategies](#strategies) and the [Dashboard](#dashboard).
@@ -26,7 +27,7 @@ The Configuration module is where configuration for trading accounts, running st
 ![Alt text](/README-images/configuration.PNG?raw=true "Configuration")
 
 #### Trading
-The Trading module shows a list of trading accounts in the navigation panel. Clicking an account will open a trading document in the main window for that account. From the trading document you can:
+The Trading module shows a list of trading accounts in the navigation panel. Selecting an account will open a trading document in the main window for that account. From the trading document you can:
 * see the account's balances
 * view realtime pricing of favourite symbols
 * select a symbol to subscribe to live orderbook and trade feed
@@ -36,12 +37,14 @@ The Trading module shows a list of trading accounts in the navigation panel. Cli
 ![Alt text](/README-images/tradeview.PNG?raw=true "Trade View")
 
 #### Strategies
-Strategies are run on the [tradeserver](https://github.com/grantcolley/tradeserver) and can be monitored by one or more users. It is possible to update a running strategies parameters in realtime e.g. buy and sell triggers or suspend trading.
+Strategies are run on an instance of [tradeserver](https://github.com/grantcolley/tradeserver) and can be monitored by one or more users. It is possible to update a running strategy's parameters in realtime e.g. buy and sell triggers or suspend trading. See [Running a Strategy](#running-a-strategy).
 
 ![Alt text](/README-images/strategies.PNG?raw=true "Strategies")
 
 #### Dashboard
-The dashboard shows all configured [tradeservers](https://github.com/grantcolley/tradeserver) and whether they are active. Active tradeservers will show the strategies currently running on them including each strategy's parameters and its active connections i.e. which users are monitoring the strategy.
+The dashboard shows all configured [tradeservers](https://github.com/grantcolley/tradeserver) and whether they are active. An active [tradeserver](https://github.com/grantcolley/tradeserver) will show the strategies currently running on it, including each strategy's parameters and its active connections i.e. which users are monitoring the strategy. See [Running a Strategy](#running-a-strategy).
 
 ![Alt text](/README-images/dashboard.PNG?raw=true "Dashboard")
 
+## Running a Strategy
+Strategies are run on an instance of [tradeserver](https://github.com/grantcolley/tradeserver), currently on a private repository.
