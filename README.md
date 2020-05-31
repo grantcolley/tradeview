@@ -36,7 +36,7 @@ The Trading module shows a list of trading accounts in the navigation panel. Cli
 ![Alt text](/README-images/tradeview.PNG?raw=true "Trade View")
 
 #### Strategies
-Strategies are run on the [tradeserver](https://github.com/grantcolley/tradeserver) and can be monitored by one or more users. It is possible to update a running strategies parameters in realtime e.g. buy and sell triggers.
+Strategies are run on the [tradeserver](https://github.com/grantcolley/tradeserver) and can be monitored by one or more users. It is possible to update a running strategies parameters in realtime e.g. buy and sell triggers or suspend trading.
 
 ![Alt text](/README-images/strategies.PNG?raw=true "Strategies")
 
