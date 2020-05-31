@@ -41,5 +41,7 @@ Strategies are run on the [tradeserver](https://github.com/grantcolley/tradeserv
 ![Alt text](/README-images/strategies.PNG?raw=true "Strategies")
 
 #### Dashboard
+The dashboard shows all configured [tradeservers](https://github.com/grantcolley/tradeserver) and whether they are active. Active tradesers will show strategies currently running on them including a strategies parameters and its active connections i.e. users monitoring the strategy.
+
 ![Alt text](/README-images/dashboard.PNG?raw=true "Dashboard")
 
