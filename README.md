@@ -13,7 +13,7 @@ Alt currency trading application built on the [Origin](https://github.com/grantc
 * [Running a Strategy](#running-a-strategy)
 * [Extending tradeview](#extending-tradeview)
   * [Adding a new Exchange](#adding-a-new-exchange)
-  * [Persisting Configuration Data](#persisting configuration data)
+  * [Persisting Configuration Data](#persisting-configuration-data)
 
 ## Overview
 **tradeview** consists of modules, accessible from the navigation panel on the left, including [Configuration](#configuration), [Trading](#trading), [Strategies](#strategies) and the [Dashboard](#dashboard).
