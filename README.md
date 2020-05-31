@@ -10,9 +10,9 @@ Alt currency trading application built on the [Origin](https://github.com/grantc
   * [Trading](#trading)    
   * [Strategies](#strategies)
   * [Dashboard](#dashboard)
-  
+
 ## Overview
-TradeView consists of modules, accessible from the navigation panel on the left, including [Configuration](#configuration), [Trading](#trading), [Strategies](#strategies) and the [Dashboard](#dashboard).
+**tradeview** consists of modules, accessible from the navigation panel on the left, including [Configuration](#configuration), [Trading](#trading), [Strategies](#strategies) and the [Dashboard](#dashboard).
   
 ![Alt text](/README-images/navigationpanel.PNG?raw=true "Navigation Panel")
 
@@ -36,7 +36,10 @@ The Trading module shows a list of trading accounts in the navigation panel. Cli
 ![Alt text](/README-images/tradeview.PNG?raw=true "Trade View")
 
 #### Strategies
+Strategies are run on the [tradeserver](https://github.com/grantcolley/tradeserver). A running strategy can be monitored by one or more users and it is possible to update strategy parameters in realtime e.g. buy and sell triggers.
+
 ![Alt text](/README-images/strategies.PNG?raw=true "Strategies")
 
 #### Dashboard
 ![Alt text](/README-images/dashboard.PNG?raw=true "Dashboard")
+
