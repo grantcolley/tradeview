@@ -31,7 +31,7 @@ The Trading module shows a list of trading accounts in the navigation panel. Cli
 * view realtime pricing of favourite symbols
 * select a symbol to subscribe to live orderbook and trade feed
 * place buy and sell orders
-* monitor open orders in realtime
+* monitor and manage open orders in realtime 
 
 ![Alt text](/README-images/tradeview.PNG?raw=true "Trade View")
 
