@@ -47,4 +47,4 @@ The dashboard shows all configured [tradeservers](https://github.com/grantcolley
 ![Alt text](/README-images/dashboard.PNG?raw=true "Dashboard")
 
 ## Running a Strategy
-Strategies are run on an instance of [tradeserver](https://github.com/grantcolley/tradeserver), currently on a private repository.
+Strategies are run on an instance of [tradeserver](https://github.com/grantcolley/tradeserver), currently a private repository.
