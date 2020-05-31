@@ -12,23 +12,26 @@ Alt currency trading application built on the [Origin](https://github.com/grantc
   * [Dashboard](#dashboard)
   
 ## Overview
-TradeView consists of modules, accessible from the navigation panel on the left, including [Configuration](#configuration), [Trading](#trading), [Strategies](#strategies) and [Dashboard](#dashboard).
+TradeView consists of modules, accessible from the navigation panel on the left, including [Configuration](#configuration), [Trading](#trading), [Strategies](#strategies) and the [Dashboard](#dashboard).
   
 ![Alt text](/README-images/navigationpanel.PNG?raw=true "Navigation Panel")
 
 #### Configuration
-The Configuration module is where configuration for trading accounts, running strategies and strategy servers are managed.
+The Configuration module is where configuration for trading accounts, running strategies and strategy servers is managed.
 
-* **Manage Accounts** allows you to create and persist trading accounts including account name, exchange, api key and secret key. It also persists display preferences for the trading screen such as favourite symbols, and default selected symbol.
-* **Manage Strategies** persists strategy configuration
-* **Manage Servers** persists trade server details for servers running strategies 
+* **Manage Accounts** allows you to create and persist trading accounts including account name, exchange, api key and secret key. It also persists display preferences for the trading screen, such as favourite symbols, and default selected symbol.
+* **Manage Strategies** persists configuration for running a trading strategy and displaying a running strategy in realtime.
+* **Manage Servers** persists trade server details for servers that run trading strategies 
 
 ![Alt text](/README-images/configuration.PNG?raw=true "Configuration")
 
 #### Trading
-Selecting the Trading module in the navigation panel will list the trading accounts in the main panel. Clicking an account will open a trading document for that account in the main window.
-
-A trading document consists of several panels including favourite symbols list, selected symbol panel showing live order book and trade feeds, account assets with real-time updates, a control for placing trades and an open order monitoring panel.
+The Trading module shows a list of trading accounts in the navigation panel. Clicking an account will open a trading document in the main window for that account. From the trading document you can:
+* see the account's balances
+* view realtime pricing of favourite symbols
+* select a symbol to subscribe to live orderbook and trade feed
+* place buy and sell orders
+* monitor open orders in realtime
 
 ![Alt text](/README-images/tradeview.PNG?raw=true "Trade View")
 
