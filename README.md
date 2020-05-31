@@ -11,6 +11,9 @@ Alt currency trading application built on the [Origin](https://github.com/grantc
   * [Strategies](#strategies)
   * [Dashboard](#dashboard)
 * [Running a Strategy](#running-a-strategy)
+* [Extending tradeview](#extending-tradeview)
+  * [Adding a new Exchange](#adding-a-new-exchange)
+  * [Persisting Configuration Data](#persisting configuration data)
 
 ## Overview
 **tradeview** consists of modules, accessible from the navigation panel on the left, including [Configuration](#configuration), [Trading](#trading), [Strategies](#strategies) and the [Dashboard](#dashboard).
@@ -48,3 +51,9 @@ The dashboard shows all configured [tradeservers](https://github.com/grantcolley
 
 ## Running a Strategy
 Strategies are run on an instance of [tradeserver](https://github.com/grantcolley/tradeserver), currently a private repository.
+
+## Extending tradeview
+
+#### Adding a new Exchange
+
+#### Persisting Configuration Data
