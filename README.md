@@ -12,7 +12,7 @@ Alt currency trading application built on the [Origin](https://github.com/grantc
   * [Dashboard](#dashboard)
 * [Running a Strategy](#running-a-strategy)
 * [Extending tradeview](#extending-tradeview)
-  * [Adding a new Exchange](#adding-a-new-exchange)
+  * [Adding a new Exchange API](#adding-a-new-exchange-api)
   * [Persisting Configuration Data](#persisting-configuration-data)
 
 ## Overview
@@ -54,6 +54,25 @@ Strategies are run on an instance of [tradeserver](https://github.com/grantcolle
 
 ## Extending tradeview
 
-#### Adding a new Exchange
+#### Adding a new Exchange API
+**tradeview** is intended to trade against multiple exchanges and the following api's are currently supported 
+* [Binance](https://github.com/sonvister/Binance)
+* [Kucoin.Net](https://github.com/JKorf/Kucoin.Net)
+
+To add a new api create a new .NET Standard project for the API wrapper and create a class that implements [IExchangeApi](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Interface/Interfaces/IExchangeApi.cs).
+For example [](). 
+
+Add the exchange to the [Exchange](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Interface/Enums/Exchange.cs) enum.
+
+```C#
+    public enum Exchange
+    {
+        Unknown,
+        Binance,
+        Kucoin,
+        Test
+        // Append your exchange here...
+    }
+```
 
 #### Persisting Configuration Data
