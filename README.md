@@ -55,7 +55,7 @@ Strategies are run on an instance of [tradeserver](https://github.com/grantcolle
 ## Extending tradeview
 
 #### Adding a new Exchange API
-**tradeview** is intended to trade against multiple exchanges and the following api's are currently supported 
+**tradeview** is intended to trade against multiple exchanges and the following api's are currently supported:
 * [Binance](https://github.com/sonvister/Binance)
 * [Kucoin.Net](https://github.com/JKorf/Kucoin.Net)
 
