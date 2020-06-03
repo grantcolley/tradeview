@@ -76,9 +76,12 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
         public async Task<Order> PlaceOrder(User user, ClientOrder clientOrder)
         {
-            var order = OrderHelper.GetOrder(user, clientOrder);
-            var result = await binanceApi.PlaceAsync(order).ConfigureAwait(false);
-            return NewOrder(user, result);
+            using (var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret))
+            {
+                var order = OrderHelper.GetOrder(apiUser, clientOrder);
+                var result = await binanceApi.PlaceAsync(order).ConfigureAwait(false);
+                return NewOrder(user, result);
+            }
         }
 
         public async Task<string> CancelOrderAsync(User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
