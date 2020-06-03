@@ -67,15 +67,9 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 {
     public class BinanceExchangeApi : IExchangeApi
     {
-        private IBinanceApi binanceApi;
-
-        public BinanceExchangeApi()
-        {
-            binanceApi = new BinanceApi();
-        }
-
         public async Task<Order> PlaceOrder(User user, ClientOrder clientOrder)
         {
+            var binanceApi = new BinanceApi();
             using (var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret))
             {
                 var order = OrderHelper.GetOrder(apiUser, clientOrder);
@@ -86,6 +80,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
         public async Task<string> CancelOrderAsync(User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
+            var binanceApi = new BinanceApi();
             var id = Convert.ToInt64(orderId);
             using (var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret))
             {
