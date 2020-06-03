@@ -142,7 +142,7 @@ And map the classes in the [DevelopmentInProgress.TradeView.Wpf.Host.Unity.confi
     <alias alias="TradeViewConfigurationStrategyFile" type="DevelopmentInProgress.TradeView.Data.File.TradeViewConfigurationStrategyFile, DevelopmentInProgress.TradeView.Data.File" />
     <alias alias="TradeViewConfigurationServerFile" type="DevelopmentInProgress.TradeView.Data.File.TradeViewConfigurationServerFile, DevelopmentInProgress.TradeView.Data.File" />
     
-     <register type="ITradeViewConfigurationAccounts" mapTo="TradeViewConfigurationAccountsFile"/>
-     <register type="ITradeViewConfigurationStrategy" mapTo="TradeViewConfigurationStrategyFile"/>
-     <register type="ITradeViewConfigurationServer" mapTo="TradeViewConfigurationServerFile"/>
+    <register type="ITradeViewConfigurationAccounts" mapTo="TradeViewConfigurationAccountsFile"/>
+    <register type="ITradeViewConfigurationStrategy" mapTo="TradeViewConfigurationStrategyFile"/>
+    <register type="ITradeViewConfigurationServer" mapTo="TradeViewConfigurationServerFile"/>
 ```
