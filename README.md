@@ -131,7 +131,18 @@ Finally, return an instance of the new exchange from the [ExchangeApiFactory](ht
 ```
 
 #### Persisting Configuration Data
-Configuration data can be persisted to any data source by implementing the interfaces in [DevelopmentInProgress.TradeView.Data](https://github.com/grantcolley/tradeview/tree/master/src/DevelopmentInProgress.TradeView.Data).
+Data can be persisted to any data source by creating a library with classes that implement the interfaces in [DevelopmentInProgress.TradeView.Data](https://github.com/grantcolley/tradeview/tree/master/src/DevelopmentInProgress.TradeView.Data).
 * [ITradeViewConfigurationAccounts](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Data/ITradeViewConfigurationAccounts.cs)
 * [ITradeViewConfigurationServer](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Data/ITradeViewConfigurationServer.cs)
 * [ITradeViewConfigurationStrategy](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Data/ITradeViewConfigurationStrategy.cs)
+
+And map the classes in the [DevelopmentInProgress.TradeView.Wpf.Host.Unity.config](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Wpf.Host/Configuration/DevelopmentInProgress.TradeView.Wpf.Host.Unity.config) file.
+```C#
+    <alias alias="TradeViewConfigurationAccountsFile" type="DevelopmentInProgress.TradeView.Data.File.TradeViewConfigurationAccountsFile, DevelopmentInProgress.TradeView.Data.File" />
+    <alias alias="TradeViewConfigurationStrategyFile" type="DevelopmentInProgress.TradeView.Data.File.TradeViewConfigurationStrategyFile, DevelopmentInProgress.TradeView.Data.File" />
+    <alias alias="TradeViewConfigurationServerFile" type="DevelopmentInProgress.TradeView.Data.File.TradeViewConfigurationServerFile, DevelopmentInProgress.TradeView.Data.File" />
+    
+     <register type="ITradeViewConfigurationAccounts" mapTo="TradeViewConfigurationAccountsFile"/>
+     <register type="ITradeViewConfigurationStrategy" mapTo="TradeViewConfigurationStrategyFile"/>
+     <register type="ITradeViewConfigurationServer" mapTo="TradeViewConfigurationServerFile"/>
+```
