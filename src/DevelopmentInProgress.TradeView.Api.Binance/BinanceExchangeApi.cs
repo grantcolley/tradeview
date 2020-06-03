@@ -14,15 +14,9 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 {
     public class BinanceExchangeApi : IExchangeApi
     {
-        private IBinanceApi binanceApi;
-
-        public BinanceExchangeApi()
-        {
-            binanceApi = new BinanceApi();
-        }
-
         public async Task<Interface.Model.Order> PlaceOrder(Interface.Model.User user, Interface.Model.ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
+            var binanceApi = new BinanceApi();
             using (var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret))
             {
                 var order = OrderHelper.GetOrder(apiUser, clientOrder);
@@ -33,6 +27,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
         public async Task<string> CancelOrderAsync(Interface.Model.User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
+            var binanceApi = new BinanceApi();
             var id = Convert.ToInt64(orderId);
             using (var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret))
             {
@@ -43,6 +38,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
         public async Task<Interface.Model.AccountInfo> GetAccountInfoAsync(Interface.Model.User user, CancellationToken cancellationToken)
         {
+            var binanceApi = new BinanceApi();
             using (var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret))
             {
                 var result = await binanceApi.GetAccountInfoAsync(apiUser, 0, cancellationToken).ConfigureAwait(false);
@@ -55,6 +51,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
         public async Task<IEnumerable<Interface.Model.AccountTrade>> GetAccountTradesAsync(Interface.Model.User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
+            var binanceApi = new BinanceApi();
             using (var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret))
             {
                 var result = await binanceApi.GetAccountTradesAsync(apiUser, symbol, startDate, endDate, recWindow, cancellationToken).ConfigureAwait(false);
@@ -65,6 +62,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
         public async Task<IEnumerable<Interface.Model.Candlestick>> GetCandlesticksAsync(string symbol, Interface.Model.CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = 0, CancellationToken token = default(CancellationToken))
         {
+            var binanceApi = new BinanceApi();
             var candlestickInterval = interval.ToBinanceCandlestickInterval();
             var results = await binanceApi.GetCandlesticksAsync(symbol, candlestickInterval, startTime, endTime, limit, token).ConfigureAwait(false);
             var candlesticks = results.Select(cs => NewCandlestick(cs)).ToList();
@@ -91,6 +89,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
         public async Task<IEnumerable<Interface.Model.Symbol>> GetSymbolsAsync(CancellationToken cancellationToken)
         {
+            var binanceApi = new BinanceApi();
             var result = await binanceApi.GetSymbolsAsync(cancellationToken).ConfigureAwait(false);
             var symbols = result.Select(s => new Interface.Model.Symbol
             {
@@ -111,6 +110,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
         public async Task<IEnumerable<Interface.Model.SymbolStats>> Get24HourStatisticsAsync(CancellationToken cancellationToken)
         {
+            var binanceApi = new BinanceApi();
             var stats = await binanceApi.Get24HourStatisticsAsync(cancellationToken).ConfigureAwait(false);
             var symbolsStats = stats.Select(s => NewSymbolStats(s)).ToList();
             return symbolsStats;
@@ -118,6 +118,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
         public async Task<Interface.Model.OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
+            var binanceApi = new BinanceApi();
             var result = await binanceApi.GetOrderBookAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
             var orderBook = NewOrderBook(result);
             return orderBook;
@@ -125,6 +126,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
         public async Task<IEnumerable<Interface.Model.AggregateTrade>> GetAggregateTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
+            var binanceApi = new BinanceApi();
             var trades = await binanceApi.GetAggregateTradesAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
             var aggregateTrades = trades.Select(at => NewAggregateTrade(at)).ToList();
             return aggregateTrades;
@@ -132,6 +134,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
         public async Task<IEnumerable<Interface.Model.Trade>> GetTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
+            var binanceApi = new BinanceApi();
             var result = await binanceApi.GetTradesAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
             var trades = result.Select(t => NewTrade(t)).ToList();
             return trades;
@@ -139,6 +142,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
         public async Task<IEnumerable<Interface.Model.Order>> GetOpenOrdersAsync(Interface.Model.User user, string symbol = null, long recWindow = 0, Action<Exception> exception = default(Action<Exception>), CancellationToken cancellationToken = default(CancellationToken))
         {
+            var binanceApi = new BinanceApi();
             using (var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret))
             {
                 var result = await binanceApi.GetOpenOrdersAsync(apiUser, symbol, recWindow, cancellationToken).ConfigureAwait(false);
@@ -153,6 +157,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
             try
             {
+                var binanceApi = new BinanceApi();
                 var interval = candlestickInterval.ToBinanceCandlestickInterval();
                 var canclestickCache = new CandlestickCache(binanceApi, new CandlestickWebSocketClient());
                 canclestickCache.Subscribe(symbol, interval, limit, e =>
@@ -192,6 +197,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
             try
             {
+                var binanceApi = new BinanceApi();
                 var orderBookCache = new OrderBookCache(binanceApi, new DepthWebSocketClient());
                 orderBookCache.Subscribe(symbol, limit, e =>
                 {
@@ -230,6 +236,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
             try
             {
+                var binanceApi = new BinanceApi();
                 var aggregateTradeCache = new AggregateTradeCache(binanceApi, new AggregateTradeWebSocketClient());
                 aggregateTradeCache.Subscribe(symbol, limit, e =>
                 {
@@ -268,6 +275,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
             try
             {
+                var binanceApi = new BinanceApi();
                 var tradeCache = new TradeCache(binanceApi, new TradeWebSocketClient());
                 tradeCache.Subscribe(symbol, limit, e =>
                 {
@@ -311,6 +319,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
             try
             {
+                var binanceApi = new BinanceApi();
                 var symbolStatisticsCache = new SymbolStatisticsCache(binanceApi, new SymbolStatisticsWebSocketClient());
                 symbolStatisticsCache.Subscribe(e =>
                 {
@@ -344,6 +353,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
         public async Task SubscribeAccountInfo(Interface.Model.User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
+            var binanceApi = new BinanceApi();
             var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret);
             var streamControl = new UserDataWebSocketStreamControl(binanceApi);
             var listenKey = await streamControl.OpenStreamAsync(apiUser).ConfigureAwait(false);
