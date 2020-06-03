@@ -12,7 +12,7 @@ Alt currency trading application built on the [Origin](https://github.com/grantc
   * [Dashboard](#dashboard)
 * [Running a Strategy](#running-a-strategy)
 * [Extending tradeview](#extending-tradeview)
-  * [Adding a new Exchange](#adding-a-new-exchange)
+  * [Adding a new Exchange API](#adding-a-new-exchange-api)
   * [Persisting Configuration Data](#persisting-configuration-data)
 
 ## Overview
@@ -54,6 +54,82 @@ Strategies are run on an instance of [tradeserver](https://github.com/grantcolle
 
 ## Extending tradeview
 
-#### Adding a new Exchange
+#### Adding a new Exchange API
+**tradeview** is intended to trade against multiple exchanges and the following api's are currently supported:
+* [Binance](https://github.com/sonvister/Binance)
+* [Kucoin.Net](https://github.com/JKorf/Kucoin.Net)
+
+To add a new api create a new .NET Standard project for the API wrapper and create a class that implements [IExchangeApi](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Interface/Interfaces/IExchangeApi.cs).
+For example see [BinanceExchangeApi](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Api.Binance/BinanceExchangeApi.cs). 
+
+```C#
+namespace DevelopmentInProgress.TradeView.Api.Binance
+{
+    public class BinanceExchangeApi : IExchangeApi
+    {
+        private IBinanceApi binanceApi;
+
+        public BinanceExchangeApi()
+        {
+            binanceApi = new BinanceApi();
+        }
+
+        public async Task<Order> PlaceOrder(User user, ClientOrder clientOrder)
+        {
+            var order = OrderHelper.GetOrder(user, clientOrder);
+            var result = await binanceApi.PlaceAsync(order).ConfigureAwait(false);
+            return NewOrder(user, result);
+        }
+
+        public async Task<string> CancelOrderAsync(User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var id = Convert.ToInt64(orderId);
+            using (var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret))
+            {
+                var result = await binanceApi.CancelOrderAsync(apiUser, symbol, id, newClientOrderId, recWindow, cancellationToken).ConfigureAwait(false);
+                return result;
+            }
+        }
+```
+
+Next, add the exchange to the [Exchange](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Interface/Enums/Exchange.cs) enum.
+
+```C#
+    public enum Exchange
+    {
+        Unknown,
+        Binance,
+        Kucoin,
+        Test
+    }
+```
+
+Finally, return an instance of the new exchange from the [ExchangeApiFactory](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Service/ExchangeApiFactory.cs).
+
+```C#
+    public class ExchangeApiFactory : IExchangeApiFactory
+    {
+        public IExchangeApi GetExchangeApi(Exchange exchange)
+        {
+            switch(exchange)
+            {
+                case Exchange.Binance:
+                    return new BinanceExchangeApi();
+                case Exchange.Kucoin:
+                    return new KucoinExchangeApi();
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        public Dictionary<Exchange, IExchangeApi> GetExchanges()
+        {
+            var exchanges = new Dictionary<Exchange, IExchangeApi>();
+            exchanges.Add(Exchange.Binance, GetExchangeApi(Exchange.Binance));
+            exchanges.Add(Exchange.Kucoin, GetExchangeApi(Exchange.Kucoin));
+            return exchanges;
+        }
+    }
+```
 
 #### Persisting Configuration Data
