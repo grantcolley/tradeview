@@ -54,6 +54,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
             TimeFormatter = chartHelper.TimeFormatter;
             PriceFormatter = chartHelper.PriceFormatter;
+            ZoomingMode = ZoomingOptions.Xy;
 
             symbolCancellationTokenSource = new CancellationTokenSource();
 
@@ -77,6 +78,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         public Func<double, string> TimeFormatter { get; set; }
 
         public Func<double, string> PriceFormatter { get; set; }
+
+        public ZoomingOptions ZoomingMode { get; set; }
 
         public bool IsLoadingOrderBook
         {
