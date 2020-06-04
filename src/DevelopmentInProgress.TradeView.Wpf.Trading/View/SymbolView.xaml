@@ -158,15 +158,15 @@
                             <progress:CircularProgress/>
                         </Viewbox>
 
-                        <lc:CartesianChart Grid.Row="0" DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}" Zoom="{Binding ZoomingMode}"
+                        <lc:CartesianChart Grid.Row="0" DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}" Zoom="Xy"
                                            Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}"
                                            MouseDoubleClick="ResetTradesChartZoom">
                             <lc:CartesianChart.Series>
                                 <lc:LineSeries Values="{Binding TradesChart}" 
                                                Stroke="Orange" 
-                                               PointForeground="Orange"
+                                               PointForeground="White"
                                                StrokeThickness="1" 
-                                               PointGeometrySize="1"/>
+                                               PointGeometrySize="3"/>
                             </lc:CartesianChart.Series>
                             <lc:CartesianChart.AxisY>
                                 <lc:Axis Name="tradeY" LabelFormatter="{Binding PriceFormatter}">
@@ -218,12 +218,11 @@
                                     <Label HorizontalAlignment="Center" Content="{Binding OrderBook.BidAskSpread}"/>
                                     <Label HorizontalAlignment="Center" Content="%"/>
                                 </StackPanel>
-                                <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}" Zoom="{Binding ZoomingMode}"
+                                <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}" Zoom="Xy"
                                                    Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"
                                                    MouseDoubleClick="ResetOrderBookChartZoom">
                                     <lc:CartesianChart.Series>
                                         <lc:StepLineSeries Values="{Binding OrderBook.ChartAsks}" 
-                                                        DataLabels="False"
                                                         Stroke="#FFC71585" 
                                                         AlternativeStroke="#FFC71585" 
                                                         PointForeground="#FFC71585"
@@ -231,7 +230,6 @@
                                                         PointGeometrySize="1"
                                                         Title="Asks"/>
                                         <lc:StepLineSeries Values="{Binding OrderBook.ChartBids}" 
-                                                        DataLabels="False"
                                                         Stroke="#FF008000" 
                                                         AlternativeStroke="#FF008000"
                                                         PointForeground="#FF008000"
@@ -270,12 +268,11 @@
                                     <Label HorizontalAlignment="Center" Content="{Binding OrderBook.BidAskSpread}"/>
                                     <Label HorizontalAlignment="Center" Content="%"/>
                                 </StackPanel>
-                                <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}" Zoom="{Binding ZoomingMode}"
+                                <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}" Zoom="Xy"
                                                    Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"
                                                    MouseDoubleClick="ResetOrderBookAggregateChartZoom">
                                     <lc:CartesianChart.Series>
                                         <lc:StepLineSeries Values="{Binding OrderBook.ChartAggregatedAsks}" 
-                                                        DataLabels="False"
                                                         Stroke="#FFC71585" 
                                                         AlternativeStroke="#FFC71585" 
                                                         PointForeground="#FFC71585"
@@ -283,7 +280,6 @@
                                                         PointGeometrySize="1"
                                                         Title="Asks"/>
                                         <lc:StepLineSeries Values="{Binding OrderBook.ChartAggregatedBids}" 
-                                                        DataLabels="False"
                                                         Stroke="#FF008000" 
                                                         AlternativeStroke="#FF008000"
                                                         PointForeground="#FF008000"

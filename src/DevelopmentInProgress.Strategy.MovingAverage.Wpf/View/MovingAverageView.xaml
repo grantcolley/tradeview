@@ -86,7 +86,7 @@
 
                 <DockPanel Grid.Row="0" Grid.Column="1" LastChildFill="True" Margin="5,1,1,1"
                            Grid.RowSpan="{Binding ShowCandlesticks, Converter={StaticResource gridRowColumnSpanConverter}}">
-                    <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}" Zoom="{Binding ZoomingMode}"
+                    <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}" Zoom="Xy"
                                        Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}"
                                        MouseDoubleClick="ResetTradesChartZoom">
                         <lc:CartesianChart.Series>
@@ -143,7 +143,7 @@
 
                 <DockPanel Grid.Row="2" Grid.Column="0" LastChildFill="True">
                     <Label DockPanel.Dock="Top" Content="Order Book (Cumulative)" HorizontalAlignment="Center" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                    <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}" Zoom="{Binding ZoomingMode}"
+                    <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}" Zoom="Xy"
                                        Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"
                                        MouseDoubleClick="ResetOrderBookChartZoom">
                         <lc:CartesianChart.Series>
@@ -190,7 +190,7 @@
                 </DockPanel>
 
                 <DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="True" Visibility="{Binding ShowCandlesticks, Converter={StaticResource boolToVisibilityConverter}}">
-                    <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}" Zoom="{Binding ZoomingMode}"
+                    <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}" Zoom="Xy"
                                        Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}"
                                        MouseDoubleClick="ResetCandlestickChartZoom">
                         <lc:CartesianChart.Series>
