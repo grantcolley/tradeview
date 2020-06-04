@@ -86,8 +86,9 @@
 
                 <DockPanel Grid.Row="0" Grid.Column="1" LastChildFill="True" Margin="5,1,1,1"
                            Grid.RowSpan="{Binding ShowCandlesticks, Converter={StaticResource gridRowColumnSpanConverter}}">
-                    <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}"
-                                       Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}">
+                    <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}" Zoom="{Binding ZoomingMode}"
+                                       Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}"
+                                       MouseDoubleClick="ResetTradesChartZoom">
                         <lc:CartesianChart.Series>
                             <lc:LineSeries Values="{Binding TradesChart}" 
                                                                 DataLabels="False"
@@ -115,23 +116,10 @@
                                                                 Fill="Transparent"
                                                                 PointGeometry="{x:Null}"/>
                         </lc:CartesianChart.Series>
-                        <lc:CartesianChart.AxisX>
-                            <lc:Axis LabelFormatter="{Binding TimeFormatter}">
-                                <lc:Axis.Separator>
-                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="False">
-                                        <!--Here, see the IsEnabled => false-->
-                                        <lc:Separator.Stroke>
-                                            <SolidColorBrush Color="#404F56" />
-                                        </lc:Separator.Stroke>
-                                    </lc:Separator>
-                                </lc:Axis.Separator>
-                            </lc:Axis>
-                        </lc:CartesianChart.AxisX>
                         <lc:CartesianChart.AxisY>
-                            <lc:Axis LabelFormatter="{Binding PriceFormatter}">
+                            <lc:Axis Name="tradeY" LabelFormatter="{Binding PriceFormatter}">
                                 <lc:Axis.Separator>
-                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="False">
-                                        <!--Here, see the IsEnabled => false-->
+                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2">
                                         <lc:Separator.Stroke>
                                             <SolidColorBrush Color="#404F56" />
                                         </lc:Separator.Stroke>
@@ -139,13 +127,25 @@
                                 </lc:Axis.Separator>
                             </lc:Axis>
                         </lc:CartesianChart.AxisY>
+                        <lc:CartesianChart.AxisX>
+                            <lc:Axis Name="tradeX" LabelFormatter="{Binding TimeFormatter}">
+                                <lc:Axis.Separator>
+                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2">
+                                        <lc:Separator.Stroke>
+                                            <SolidColorBrush Color="#404F56" />
+                                        </lc:Separator.Stroke>
+                                    </lc:Separator>
+                                </lc:Axis.Separator>
+                            </lc:Axis>
+                        </lc:CartesianChart.AxisX>
                     </lc:CartesianChart>
                 </DockPanel>
 
                 <DockPanel Grid.Row="2" Grid.Column="0" LastChildFill="True">
                     <Label DockPanel.Dock="Top" Content="Order Book (Cumulative)" HorizontalAlignment="Center" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"/>
-                    <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}"
-                                       Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}">
+                    <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}" Zoom="{Binding ZoomingMode}"
+                                       Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"
+                                       MouseDoubleClick="ResetOrderBookChartZoom">
                         <lc:CartesianChart.Series>
                             <lc:StepLineSeries Values="{Binding OrderBook.ChartAggregatedAsks}" 
                                                 DataLabels="False"
@@ -164,23 +164,10 @@
                                                 PointGeometrySize="1"
                                                 Title="Bids"/>
                         </lc:CartesianChart.Series>
-                        <lc:CartesianChart.AxisX>
-                            <lc:Axis LabelFormatter="{Binding PriceFormatter}">
-                                <lc:Axis.Separator>
-                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="False">
-                                        <!--Here, see the IsEnabled => false-->
-                                        <lc:Separator.Stroke>
-                                            <SolidColorBrush Color="#404F56" />
-                                        </lc:Separator.Stroke>
-                                    </lc:Separator>
-                                </lc:Axis.Separator>
-                            </lc:Axis>
-                        </lc:CartesianChart.AxisX>
                         <lc:CartesianChart.AxisY>
-                            <lc:Axis>
+                            <lc:Axis Name="orderBookY">
                                 <lc:Axis.Separator>
-                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="False">
-                                        <!--Here, see the IsEnabled => false-->
+                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2">
                                         <lc:Separator.Stroke>
                                             <SolidColorBrush Color="#404F56" />
                                         </lc:Separator.Stroke>
@@ -188,29 +175,49 @@
                                 </lc:Axis.Separator>
                             </lc:Axis>
                         </lc:CartesianChart.AxisY>
+                        <lc:CartesianChart.AxisX>
+                            <lc:Axis Name="orderBookX" LabelFormatter="{Binding PriceFormatter}">
+                                <lc:Axis.Separator>
+                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2">
+                                        <lc:Separator.Stroke>
+                                            <SolidColorBrush Color="#404F56" />
+                                        </lc:Separator.Stroke>
+                                    </lc:Separator>
+                                </lc:Axis.Separator>
+                            </lc:Axis>
+                        </lc:CartesianChart.AxisX>
                     </lc:CartesianChart>
                 </DockPanel>
 
                 <DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="True" Visibility="{Binding ShowCandlesticks, Converter={StaticResource boolToVisibilityConverter}}">
-                    <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}"
-                                       Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}">
+                    <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}" Zoom="{Binding ZoomingMode}"
+                                       Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}"
+                                       MouseDoubleClick="ResetCandlestickChartZoom">
                         <lc:CartesianChart.Series>
                             <lc:OhlcSeries Values="{Binding CandlesticksChart}"/>
                         </lc:CartesianChart.Series>
-                        <lc:CartesianChart.AxisX>
-                            <lc:Axis Title="Time" Labels="{Binding CandlestickLabels}">
-                                <lc:Axis.Separator>
-                                    <lc:Separator IsEnabled="False"/>
-                                </lc:Axis.Separator>
-                            </lc:Axis>
-                        </lc:CartesianChart.AxisX>
                         <lc:CartesianChart.AxisY>
-                            <lc:Axis Title="Price">
+                            <lc:Axis Name="candlestickY" Title="Price">
                                 <lc:Axis.Separator>
-                                    <lc:Separator IsEnabled="False"/>
+                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2">
+                                        <lc:Separator.Stroke>
+                                            <SolidColorBrush Color="#404F56" />
+                                        </lc:Separator.Stroke>
+                                    </lc:Separator>
                                 </lc:Axis.Separator>
                             </lc:Axis>
                         </lc:CartesianChart.AxisY>
+                        <lc:CartesianChart.AxisX>
+                            <lc:Axis Name="candlestickX" Title="Time" Labels="{Binding CandlestickLabels}">
+                                <lc:Axis.Separator>
+                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2">
+                                        <lc:Separator.Stroke>
+                                            <SolidColorBrush Color="#404F56" />
+                                        </lc:Separator.Stroke>
+                                    </lc:Separator>
+                                </lc:Axis.Separator>
+                            </lc:Axis>
+                        </lc:CartesianChart.AxisX>
                     </lc:CartesianChart>
                 </DockPanel>
             </Grid>

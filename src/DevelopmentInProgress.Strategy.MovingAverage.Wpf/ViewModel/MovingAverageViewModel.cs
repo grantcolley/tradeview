@@ -50,6 +50,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
             var chartHelper = ServiceLocator.Current.GetInstance<IChartHelper>();
             TimeFormatter = chartHelper.TimeFormatter;
             PriceFormatter = chartHelper.PriceFormatter;
+            ZoomingMode = ZoomingOptions.Xy;
 
             IsActive = false;
             IsLoadingTrades = true;
@@ -66,6 +67,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
 
         public Func<double, string> TimeFormatter { get; set; }
         public Func<double, string> PriceFormatter { get; set; }
+        public ZoomingOptions ZoomingMode { get; set; }
 
         public bool IsLoadingTrades
         {
