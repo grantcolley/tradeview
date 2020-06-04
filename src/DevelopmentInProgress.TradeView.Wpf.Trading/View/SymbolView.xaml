@@ -162,7 +162,6 @@
                                            Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}">
                             <lc:CartesianChart.Series>
                                 <lc:LineSeries Values="{Binding TradesChart}" 
-                                               DataLabels="False"
                                                Stroke="Orange" 
                                                PointForeground="Orange"
                                                StrokeThickness="1" 
@@ -171,8 +170,7 @@
                             <lc:CartesianChart.AxisX>
                                 <lc:Axis LabelFormatter="{Binding TimeFormatter}">
                                     <lc:Axis.Separator>
-                                        <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="False">
-                                            <!--Here, see the IsEnabled => false-->
+                                        <lc:Separator StrokeThickness="1" StrokeDashArray="2">
                                             <lc:Separator.Stroke>
                                                 <SolidColorBrush Color="#404F56" />
                                             </lc:Separator.Stroke>
@@ -183,8 +181,7 @@
                             <lc:CartesianChart.AxisY>
                                 <lc:Axis LabelFormatter="{Binding PriceFormatter}">
                                     <lc:Axis.Separator>
-                                        <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="False">
-                                            <!--Here, see the IsEnabled => false-->
+                                        <lc:Separator StrokeThickness="1" StrokeDashArray="2">
                                             <lc:Separator.Stroke>
                                                 <SolidColorBrush Color="#404F56" />
                                             </lc:Separator.Stroke>
