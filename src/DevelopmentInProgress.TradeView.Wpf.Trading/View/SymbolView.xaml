@@ -218,7 +218,7 @@
                                     <Label HorizontalAlignment="Center" Content="{Binding OrderBook.BidAskSpread}"/>
                                     <Label HorizontalAlignment="Center" Content="%"/>
                                 </StackPanel>
-                                <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}"
+                                <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}" Zoom="{Binding ZoomingMode}"
                                                    Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"
                                                    MouseDoubleClick="ResetOrderBookChartZoom">
                                     <lc:CartesianChart.Series>
@@ -270,7 +270,7 @@
                                     <Label HorizontalAlignment="Center" Content="{Binding OrderBook.BidAskSpread}"/>
                                     <Label HorizontalAlignment="Center" Content="%"/>
                                 </StackPanel>
-                                <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}"
+                                <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}" Zoom="{Binding ZoomingMode}"
                                                    Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"
                                                    MouseDoubleClick="ResetOrderBookAggregateChartZoom">
                                     <lc:CartesianChart.Series>
