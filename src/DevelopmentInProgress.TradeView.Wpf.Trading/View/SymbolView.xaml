@@ -240,8 +240,7 @@
                                     <lc:CartesianChart.AxisX>
                                         <lc:Axis LabelFormatter="{Binding PriceFormatter}">
                                             <lc:Axis.Separator>
-                                                <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="False">
-                                                    <!--Here, see the IsEnabled => false-->
+                                                <lc:Separator StrokeThickness="1" StrokeDashArray="2">
                                                     <lc:Separator.Stroke>
                                                         <SolidColorBrush Color="#404F56" />
                                                     </lc:Separator.Stroke>
@@ -252,8 +251,7 @@
                                     <lc:CartesianChart.AxisY>
                                         <lc:Axis>
                                             <lc:Axis.Separator>
-                                                <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="False">
-                                                    <!--Here, see the IsEnabled => false-->
+                                                <lc:Separator StrokeThickness="1" StrokeDashArray="2">
                                                     <lc:Separator.Stroke>
                                                         <SolidColorBrush Color="#404F56" />
                                                     </lc:Separator.Stroke>
@@ -293,8 +291,7 @@
                                     <lc:CartesianChart.AxisX>
                                         <lc:Axis LabelFormatter="{Binding PriceFormatter}">
                                             <lc:Axis.Separator>
-                                                <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="False">
-                                                    <!--Here, see the IsEnabled => false-->
+                                                <lc:Separator StrokeThickness="1" StrokeDashArray="2">
                                                     <lc:Separator.Stroke>
                                                         <SolidColorBrush Color="#404F56" />
                                                     </lc:Separator.Stroke>
@@ -305,8 +302,7 @@
                                     <lc:CartesianChart.AxisY>
                                         <lc:Axis>
                                             <lc:Axis.Separator>
-                                                <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="False">
-                                                    <!--Here, see the IsEnabled => false-->
+                                                <lc:Separator StrokeThickness="1" StrokeDashArray="2">
                                                     <lc:Separator.Stroke>
                                                         <SolidColorBrush Color="#404F56" />
                                                     </lc:Separator.Stroke>
