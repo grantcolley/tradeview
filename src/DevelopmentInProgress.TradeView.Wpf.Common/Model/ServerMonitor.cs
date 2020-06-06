@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.WebSockets;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
@@ -15,6 +16,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 {
     public class ServerMonitor : EntityBase
     {
+        private SemaphoreSlim serverMonitorSemaphoreSlim = new SemaphoreSlim(1, 1);
         private SocketClient socketClient;
         private bool isConnecting;
         private bool isConnected;
@@ -216,6 +218,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 
         public async Task ConnectAsync(Dispatcher dispatcher)
         {
+            await serverMonitorSemaphoreSlim.WaitAsync();
+
             try
             {
                 if(socketClient != null)
@@ -291,6 +295,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 await DisposeSocketAsync();
 
                 OnException(ex.Message, ex);
+            }
+            finally
+            {
+                serverMonitorSemaphoreSlim.Release();
             }
         }
 
