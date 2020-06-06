@@ -165,9 +165,9 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="40*"/>
                 <ColumnDefinition Width="2"/>
-                <ColumnDefinition Width="30*"/>
-                <ColumnDefinition Width="2"/>
                 <ColumnDefinition Width="40*"/>
+                <ColumnDefinition Width="2"/>
+                <ColumnDefinition Width="30*"/>
             </Grid.ColumnDefinitions>
 
             <DockPanel Grid.Column="0" LastChildFill="True">
@@ -176,7 +176,13 @@
 
             <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
 
-            <GroupBox Grid.Column="2" Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
+            <DockPanel Grid.Column="2" LastChildFill="True">
+                <ContentControl Content="{Binding OrdersViewModel}"/>
+            </DockPanel>
+            
+            <GridSplitter Grid.Column="3" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
+
+            <GroupBox Grid.Column="4" Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
                 <messaging:MessagePanel HeaderBackground="Transparent"
                                     HeaderText="Notifications"
                                     Messages="{Binding Notifications}" 
@@ -185,12 +191,6 @@
                                     ShowMessageTextAlignment="Left"
                                     Margin="2"/>
             </GroupBox>
-            
-            <GridSplitter Grid.Column="3" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
-
-            <DockPanel Grid.Column="4" LastChildFill="True">
-                <ContentControl Content="{Binding OrdersViewModel}"/>
-            </DockPanel>
             
         </Grid>
        
