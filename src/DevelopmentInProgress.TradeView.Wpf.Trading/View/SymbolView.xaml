@@ -158,24 +158,24 @@
                             <progress:CircularProgress/>
                         </Viewbox>
 
-                        <lc:CartesianChart Grid.Row="0" DisableAnimations="True" Hoverable="False" Zoom="Xy"
+                        <lc:CartesianChart Grid.Row="0" DisableAnimations="True" Hoverable="False" Zoom="Xy" DataTooltip="{x:Null}"
                                            Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}"
                                            MouseDoubleClick="ResetTradesChartZoom">
-                            <lc:CartesianChart.DataTooltip>
+                            <!--<lc:CartesianChart.DataTooltip>
                                 <lc:DefaultTooltip SelectionMode="OnlySender" Background="DarkSlateGray" />
-                            </lc:CartesianChart.DataTooltip>
+                            </lc:CartesianChart.DataTooltip>-->
                             <lc:CartesianChart.Series>
-                                <lc:LineSeries Values="{Binding TradesChart}" 
+                                <lc:LineSeries Values="{Binding TradesChart}" LineSmoothness="0"
                                                Stroke="Orange" 
                                                PointForeground="Orange"
                                                StrokeThickness="1" 
-                                               PointGeometrySize="2"
-                                               Title="Price"/>
+                                               PointGeometrySize="1"/>
+                                               <!--Title="Price"/>-->
                             </lc:CartesianChart.Series>
                             <lc:CartesianChart.AxisY>
                                 <lc:Axis Name="tradeY" LabelFormatter="{Binding PriceFormatter}">
                                     <lc:Axis.Separator>
-                                        <lc:Separator StrokeThickness="1" StrokeDashArray="2">
+                                        <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="True">
                                             <lc:Separator.Stroke>
                                                 <SolidColorBrush Color="#404F56" />
                                             </lc:Separator.Stroke>
@@ -186,7 +186,7 @@
                             <lc:CartesianChart.AxisX>
                                 <lc:Axis Name="tradeX" LabelFormatter="{Binding TimeFormatter}">
                                     <lc:Axis.Separator>
-                                        <lc:Separator StrokeThickness="1" StrokeDashArray="2">
+                                        <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="True">
                                             <lc:Separator.Stroke>
                                                 <SolidColorBrush Color="#404F56" />
                                             </lc:Separator.Stroke>
@@ -222,32 +222,34 @@
                                     <Label HorizontalAlignment="Center" Content="{Binding OrderBook.BidAskSpread}"/>
                                     <Label HorizontalAlignment="Center" Content="%"/>
                                 </StackPanel>
-                                <lc:CartesianChart DisableAnimations="True" Hoverable="False" Zoom="Xy"
+                                <lc:CartesianChart DisableAnimations="True" Hoverable="False" Zoom="Xy" DataTooltip="{x:Null}"
                                                    Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"
                                                    MouseDoubleClick="ResetOrderBookChartZoom">
-                                    <lc:CartesianChart.DataTooltip>
+                                    <!--<lc:CartesianChart.DataTooltip>
                                         <lc:DefaultTooltip SelectionMode="OnlySender" Background="DarkSlateGray" />
-                                    </lc:CartesianChart.DataTooltip>
+                                    </lc:CartesianChart.DataTooltip>-->
                                     <lc:CartesianChart.Series>
                                         <lc:StepLineSeries Values="{Binding OrderBook.ChartAsks}" 
                                                         Stroke="#FFC71585" 
+                                                        Fill="#FFC71585"
                                                         AlternativeStroke="#FFC71585" 
                                                         PointForeground="#FFC71585"
                                                         StrokeThickness="1" 
-                                                        PointGeometrySize="2"
-                                                        Title="Ask"/>
+                                                        PointGeometrySize="2"/>
+                                                        <!--Title="Ask"/>-->
                                         <lc:StepLineSeries Values="{Binding OrderBook.ChartBids}" 
                                                         Stroke="#FF008000" 
+                                                        Fill="#FF008000"
                                                         AlternativeStroke="#FF008000"
                                                         PointForeground="White"
                                                         StrokeThickness="1" 
-                                                        PointGeometrySize="2"
-                                                        Title="Bid"/>
+                                                        PointGeometrySize="2"/>
+                                                        <!--Title="Bid"/>-->
                                     </lc:CartesianChart.Series>
                                     <lc:CartesianChart.AxisY>
                                         <lc:Axis Name="orderBookY">
                                             <lc:Axis.Separator>
-                                                <lc:Separator StrokeThickness="1" StrokeDashArray="2">
+                                                <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="True">
                                                     <lc:Separator.Stroke>
                                                         <SolidColorBrush Color="#404F56" />
                                                     </lc:Separator.Stroke>
@@ -258,7 +260,7 @@
                                     <lc:CartesianChart.AxisX>
                                         <lc:Axis Name="orderBookX" LabelFormatter="{Binding PriceFormatter}">
                                             <lc:Axis.Separator>
-                                                <lc:Separator StrokeThickness="1" StrokeDashArray="2">
+                                                <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="False">
                                                     <lc:Separator.Stroke>
                                                         <SolidColorBrush Color="#404F56" />
                                                     </lc:Separator.Stroke>
@@ -275,32 +277,34 @@
                                     <Label HorizontalAlignment="Center" Content="{Binding OrderBook.BidAskSpread}"/>
                                     <Label HorizontalAlignment="Center" Content="%"/>
                                 </StackPanel>
-                                <lc:CartesianChart DisableAnimations="True" Hoverable="False" Zoom="Xy"
+                                <lc:CartesianChart DisableAnimations="True" Hoverable="False" Zoom="Xy" DataTooltip="{x:Null}"
                                                    Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}"
                                                    MouseDoubleClick="ResetOrderBookAggregateChartZoom">
-                                    <lc:CartesianChart.DataTooltip>
+                                    <!--<lc:CartesianChart.DataTooltip>
                                         <lc:DefaultTooltip SelectionMode="OnlySender" Background="DarkSlateGray" />
-                                    </lc:CartesianChart.DataTooltip>
+                                    </lc:CartesianChart.DataTooltip>-->
                                     <lc:CartesianChart.Series>
                                         <lc:StepLineSeries Values="{Binding OrderBook.ChartAggregatedAsks}" 
                                                         Stroke="#FFC71585" 
+                                                        Fill="#FFC71585"                                                            
                                                         AlternativeStroke="#FFC71585" 
                                                         PointForeground="#FFC71585"
                                                         StrokeThickness="1" 
-                                                        PointGeometrySize="2"
-                                                        Title="Asks"/>
+                                                        PointGeometrySize="2"/>
+                                                        <!--Title="Asks"/>-->
                                         <lc:StepLineSeries Values="{Binding OrderBook.ChartAggregatedBids}" 
-                                                        Stroke="#FF008000" 
+                                                        Stroke="#FF008000"
+                                                        Fill="#FF008000"
                                                         AlternativeStroke="#FF008000"
                                                         PointForeground="#FF008000"
                                                         StrokeThickness="1" 
-                                                        PointGeometrySize="2"
-                                                        Title="Bids"/>
+                                                        PointGeometrySize="2"/>
+                                                        <!--Title="Bids"/>-->
                                     </lc:CartesianChart.Series>
                                     <lc:CartesianChart.AxisY>
                                         <lc:Axis Name="orderBookAggregateY">
                                             <lc:Axis.Separator>
-                                                <lc:Separator StrokeThickness="1" StrokeDashArray="2">
+                                                <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="True">
                                                     <lc:Separator.Stroke>
                                                         <SolidColorBrush Color="#404F56" />
                                                     </lc:Separator.Stroke>
@@ -311,7 +315,7 @@
                                     <lc:CartesianChart.AxisX>
                                         <lc:Axis Name="orderBookAggregateX" LabelFormatter="{Binding PriceFormatter}">
                                             <lc:Axis.Separator>
-                                                <lc:Separator StrokeThickness="1" StrokeDashArray="2">
+                                                <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="False">
                                                     <lc:Separator.Stroke>
                                                         <SolidColorBrush Color="#404F56" />
                                                     </lc:Separator.Stroke>
