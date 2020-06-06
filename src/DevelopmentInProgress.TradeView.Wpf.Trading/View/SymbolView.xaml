@@ -71,7 +71,6 @@
                         <DockPanel Grid.Row="2" LastChildFill="True" Visibility="{Binding IsLoadingOrderBook, Converter={StaticResource invertBoolToVisibilityConverter}}">
                             <Label VerticalAlignment="Center" 
                                    HorizontalAlignment="Center"
-                                   Width="{Binding ElementName=askPanel, Path=Width}" 
                                    Content="{Binding Symbol.SymbolStatistics.LastPrice}" 
                                    Foreground="{Binding Symbol.LastPriceChangeDirection, Converter={StaticResource LastPriceChangeDirectionColourConverter}}"/>
                         </DockPanel>
