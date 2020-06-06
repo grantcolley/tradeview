@@ -86,40 +86,46 @@
 
                 <DockPanel Grid.Row="0" Grid.Column="1" LastChildFill="True" Margin="5,1,1,1"
                            Grid.RowSpan="{Binding ShowCandlesticks, Converter={StaticResource gridRowColumnSpanConverter}}">
-                    <lc:CartesianChart DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}" Zoom="Xy"
+                    <lc:CartesianChart DisableAnimations="True" Hoverable="False" Zoom="Xy" DataTooltip="{x:Null}"
                                        Visibility="{Binding IsLoadingTrades, Converter={StaticResource invertBoolToVisibilityConverter}}"
                                        MouseDoubleClick="ResetTradesChartZoom">
+                        <!--<lc:CartesianChart.DataTooltip>
+                            <lc:DefaultTooltip SelectionMode="OnlySender" Background="DarkSlateGray" />
+                        </lc:CartesianChart.DataTooltip>-->
                         <lc:CartesianChart.Series>
                             <lc:LineSeries Values="{Binding TradesChart}" 
-                                                                DataLabels="False"
-                                                                Stroke="Orange" 
-                                                                StrokeThickness="1" 
-                                                                PointGeometry="{x:Null}"/>
+                                           LineSmoothness="0"
+                                           DataLabels="False"
+                                           Stroke="Orange" 
+                                           PointForeground="Orange"
+                                           StrokeThickness="1" 
+                                           PointGeometrySize="2"/>
+                                           <!--Title="Price"/>-->
                             <lc:LineSeries Values="{Binding SmaTradesChart}" 
-                                                                DataLabels="False"
-                                                                Stroke="Red" 
-                                                                StrokeThickness="1" 
-                                                                Fill="Transparent"
-                                                                PointGeometry="{x:Null}"/>
+                                           DataLabels="False"
+                                           Stroke="Red" 
+                                           StrokeThickness="1" 
+                                           Fill="Transparent"
+                                           PointGeometry="{x:Null}"/>
                             <lc:LineSeries Values="{Binding BuyIndicatorChart}" 
-                                                                DataLabels="False"
-                                                                Stroke="Green" 
-                                                                StrokeThickness="1" 
-                                                                StrokeDashArray="2"
-                                                                Fill="Transparent"
-                                                                PointGeometry="{x:Null}"/>
+                                           DataLabels="False"
+                                           Stroke="Green" 
+                                           StrokeThickness="1" 
+                                           StrokeDashArray="2"
+                                           Fill="Transparent"
+                                           PointGeometry="{x:Null}"/>
                             <lc:LineSeries Values="{Binding SellIndicatorChart}" 
-                                                                DataLabels="False"
-                                                                Stroke="Green"
-                                                                StrokeThickness="1" 
-                                                                StrokeDashArray="2"
-                                                                Fill="Transparent"
-                                                                PointGeometry="{x:Null}"/>
+                                           DataLabels="False"
+                                           Stroke="Green"
+                                           StrokeThickness="1" 
+                                           StrokeDashArray="2"
+                                           Fill="Transparent"
+                                           PointGeometry="{x:Null}"/>
                         </lc:CartesianChart.Series>
                         <lc:CartesianChart.AxisY>
                             <lc:Axis Name="tradeY" LabelFormatter="{Binding PriceFormatter}">
                                 <lc:Axis.Separator>
-                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2">
+                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="True">
                                         <lc:Separator.Stroke>
                                             <SolidColorBrush Color="#404F56" />
                                         </lc:Separator.Stroke>
@@ -130,7 +136,7 @@
                         <lc:CartesianChart.AxisX>
                             <lc:Axis Name="tradeX" LabelFormatter="{Binding TimeFormatter}">
                                 <lc:Axis.Separator>
-                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2">
+                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="True">
                                         <lc:Separator.Stroke>
                                             <SolidColorBrush Color="#404F56" />
                                         </lc:Separator.Stroke>
@@ -167,7 +173,7 @@
                         <lc:CartesianChart.AxisY>
                             <lc:Axis Name="orderBookY">
                                 <lc:Axis.Separator>
-                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2">
+                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="True">
                                         <lc:Separator.Stroke>
                                             <SolidColorBrush Color="#404F56" />
                                         </lc:Separator.Stroke>
@@ -178,7 +184,7 @@
                         <lc:CartesianChart.AxisX>
                             <lc:Axis Name="orderBookX" LabelFormatter="{Binding PriceFormatter}">
                                 <lc:Axis.Separator>
-                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2">
+                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="False">
                                         <lc:Separator.Stroke>
                                             <SolidColorBrush Color="#404F56" />
                                         </lc:Separator.Stroke>
@@ -199,7 +205,7 @@
                         <lc:CartesianChart.AxisY>
                             <lc:Axis Name="candlestickY" Title="Price">
                                 <lc:Axis.Separator>
-                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2">
+                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="True">
                                         <lc:Separator.Stroke>
                                             <SolidColorBrush Color="#404F56" />
                                         </lc:Separator.Stroke>
@@ -210,7 +216,7 @@
                         <lc:CartesianChart.AxisX>
                             <lc:Axis Name="candlestickX" Title="Time" Labels="{Binding CandlestickLabels}">
                                 <lc:Axis.Separator>
-                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2">
+                                    <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="True">
                                         <lc:Separator.Stroke>
                                             <SolidColorBrush Color="#404F56" />
                                         </lc:Separator.Stroke>
