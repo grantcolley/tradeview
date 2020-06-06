@@ -5,6 +5,7 @@ using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
@@ -92,8 +93,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                 {
                     serverConfiguraion = await configurationServer.GetServerConfiguration();
                 }
-
-                StartObserveringServers();
             }
             catch (Exception ex)
             {
@@ -103,6 +102,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
             {
                 serverMonitorSemaphoreSlim.Release();
             }
+
+            StartObserveringServers();
         }
 
         public async void Dispose()
@@ -134,15 +135,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                 return;
             }
 
-            double observeServerInterval = 0;
-
-            observableInterval = Observable.Interval(TimeSpan.FromSeconds(observeServerInterval))
+            observableInterval = Observable.Interval(TimeSpan.FromSeconds(serverConfiguraion.ObserveServerInterval))
                 .Subscribe(async i =>
                 {
-                    await serverMonitorSemaphoreSlim.WaitAsync();
-
                     try
                     {
+                        Debug.Print($"{DateTime.Now} - should be {serverConfiguraion.ObserveServerInterval} seconds");
+
                         var connectServers = serverMonitors.Where(
                             s => !s.IsConnected
                             && !s.IsConnecting 
@@ -158,12 +157,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                     {
                         OnServerMonitorCacheNotification($"Observing Servers : {ex.Message}", ex);
                     }
-                    finally
-                    {
-                        serverMonitorSemaphoreSlim.Release();
-                    }
-
-                    observeServerInterval = serverConfiguraion.ObserveServerInterval;
                 });
         }
 
