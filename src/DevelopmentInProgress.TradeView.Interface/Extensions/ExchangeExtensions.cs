@@ -20,6 +20,8 @@ namespace DevelopmentInProgress.TradeView.Interface.Extensions
 
         public static Exchange GetExchange(this string exchange)
         {
+            exchange.NullCheck();
+
             return (Exchange)Enum.Parse(typeof(Exchange), exchange.Replace(" ", ""));
         }
     }

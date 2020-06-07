@@ -8,6 +8,11 @@ namespace DevelopmentInProgress.TradeView.Interface.Extensions
     {
         public static ServerNotification GetNotification(this ServerMonitor serverMonitor, List<ServerStrategy> serverStrategies)
         {
+            if (serverMonitor == null)
+            {
+                throw new ArgumentNullException(nameof(serverMonitor));
+            }
+
             var clone = new ServerMonitor
             {
                 Name = serverMonitor.Name,

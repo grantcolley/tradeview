@@ -1,4 +1,5 @@
 ﻿using DevelopmentInProgress.TradeView.Interface.Model;
+using System;
 using System.Collections.Generic;
 
 namespace DevelopmentInProgress.TradeView.Interface.Extensions
@@ -7,6 +8,11 @@ namespace DevelopmentInProgress.TradeView.Interface.Extensions
     {
         public static AccountInfo Clone(this AccountInfo ai)
         {
+            if (ai == null)
+            {
+                throw new ArgumentNullException(nameof(ai));
+            }
+
             var accountInfo = new AccountInfo
             {
                 User = new User 

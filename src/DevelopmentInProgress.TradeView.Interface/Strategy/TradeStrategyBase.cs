@@ -132,6 +132,11 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
 
         public virtual void SubscribeAccountInfo(AccountInfoEventArgs accountInfoEventArgs)
         {
+            if (accountInfoEventArgs == null)
+            {
+                throw new ArgumentNullException(nameof(accountInfoEventArgs));
+            }
+
             lock (accountLock)
             {
                 accountInfo = accountInfoEventArgs.AccountInfo.Clone();
@@ -159,6 +164,11 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
 
         public virtual void SubscribeTrades(TradeEventArgs tradeEventArgs)
         {
+            if (tradeEventArgs == null)
+            {
+                throw new ArgumentNullException(nameof(tradeEventArgs));
+            }
+
             var message = JsonConvert.SerializeObject(tradeEventArgs.Trades);
 
             var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.Trade };
@@ -177,6 +187,11 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
 
         public void SubscribeOrderBook(OrderBookEventArgs orderBookEventArgs)
         {
+            if (orderBookEventArgs == null)
+            {
+                throw new ArgumentNullException(nameof(orderBookEventArgs));
+            }
+
             var message = JsonConvert.SerializeObject(orderBookEventArgs.OrderBook);
 
             var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.OrderBook };
@@ -195,6 +210,11 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
 
         public virtual void SubscribeCandlesticks(CandlestickEventArgs candlestickEventArgs)
         {
+            if (candlestickEventArgs == null)
+            {
+                throw new ArgumentNullException(nameof(candlestickEventArgs));
+            }
+
             var message = JsonConvert.SerializeObject(candlestickEventArgs.Candlesticks);
 
             var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.Candlesticks };
@@ -213,6 +233,11 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
 
         public virtual void SubscribeStatistics(StatisticsEventArgs statisticsEventArgs)
         {
+            if (statisticsEventArgs == null)
+            {
+                throw new ArgumentNullException(nameof(statisticsEventArgs));
+            }
+
             var message = JsonConvert.SerializeObject(statisticsEventArgs.Statistics);
 
             var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.Statistics };

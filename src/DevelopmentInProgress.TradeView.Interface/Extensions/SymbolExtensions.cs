@@ -1,5 +1,6 @@
 ﻿using DevelopmentInProgress.TradeView.Interface.Model;
 using DevelopmentInProgress.TradeView.Interface.Validation;
+using System;
 using System.Collections.Generic;
 
 namespace DevelopmentInProgress.TradeView.Interface.Extensions
@@ -22,6 +23,11 @@ namespace DevelopmentInProgress.TradeView.Interface.Extensions
 
         public static void  ValidateClientOrder(this Symbol symbol, ClientOrder clientOrder)
         {
+            if (clientOrder == null)
+            {
+                throw new ArgumentNullException(nameof(clientOrder));
+            }
+
             string message;
             if(!orderValidation[clientOrder.Type].TryValidate(symbol, clientOrder, out message))
             {

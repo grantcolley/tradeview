@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Text;
@@ -10,6 +11,11 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
     {
         public async Task<HttpResponseMessage> PostAsync(string requestUri, string jsonSerializedStrategy, IEnumerable<string> libraries)
         {
+            if (libraries == null)
+            {
+                throw new ArgumentNullException(nameof(libraries));
+            }
+
             var byteArrayContents = new List<ByteArrayContent>();
 
             try

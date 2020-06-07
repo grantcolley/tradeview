@@ -98,6 +98,8 @@ namespace DevelopmentInProgress.TradeView.Interface.Extensions
 
         public static OrderType GetOrderType(this string orderType)
         {
+            orderType.NullCheck();
+
             return (OrderType)Enum.Parse(typeof(OrderType), orderType.Replace(" ", ""));
         }
 

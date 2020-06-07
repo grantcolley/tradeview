@@ -7,6 +7,11 @@ namespace DevelopmentInProgress.TradeView.Interface.Extensions
     {
         public static StrategyNotification GetNotification(this Strategy.Strategy strategy, NotificationLevel notificationLevel, int notificationEvent, string message)
         {
+            if (strategy == null)
+            {
+                throw new ArgumentNullException(nameof(strategy));
+            }
+
             return new StrategyNotification
             {
                 Id = strategy.Id,
