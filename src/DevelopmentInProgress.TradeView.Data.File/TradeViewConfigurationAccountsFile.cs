@@ -12,7 +12,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
 {
     public class TradeViewConfigurationAccountsFile : ITradeViewConfigurationAccounts
     {
-        private string userAccountsFile;
+        private readonly string userAccountsFile;
 
         public TradeViewConfigurationAccountsFile()
         {

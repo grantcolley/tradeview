@@ -15,8 +15,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 {
     public class StrategyViewModel : BaseViewModel
     {
-        private IStrategyService strategyService;
-        private IStrategyFileManager strategyFileManager;
+        private readonly IStrategyService strategyService;
+        private readonly IStrategyFileManager strategyFileManager;
         private Strategy strategy;
         bool disposed = false;
 

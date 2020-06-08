@@ -9,7 +9,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Validation
 {
     public class ClientOrderValidationBuilder
     {
-        private List<Action<Symbol, ClientOrder, StringBuilder>> validations;
+        private readonly List<Action<Symbol, ClientOrder, StringBuilder>> validations;
 
         public ClientOrderValidationBuilder()
         {
