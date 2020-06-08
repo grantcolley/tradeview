@@ -7,14 +7,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Extensions
     {
         public static string[] GetCandlestickIntervalNames()
         {
-            var source = Enum.GetNames(typeof(CandlestickInterval));
-            var list = new string[source.Length];
-            for (int i = 0; i < source.Length; i++)
-            {
-                list[i] = source[i].Replace("_", " ").Trim();
-            }
-
-            return list;
+            return Enum.GetNames(typeof(CandlestickInterval));
         }
 
         public static CandlestickInterval GetCandlestickInterval(this string candlestickInterval)
@@ -24,7 +17,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Extensions
                 return CandlestickInterval.Day;
             }
 
-            return (CandlestickInterval)Enum.Parse(typeof(CandlestickInterval), candlestickInterval.Replace(" ", "_"));
+            return (CandlestickInterval)Enum.Parse(typeof(CandlestickInterval), candlestickInterval);
         }
     }
 }

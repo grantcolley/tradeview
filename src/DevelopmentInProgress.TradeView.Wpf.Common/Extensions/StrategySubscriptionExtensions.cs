@@ -56,7 +56,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 ApiPassPhrase = interfaceStrategySubscription.ApiPassPhrase,
                 SecretKey = interfaceStrategySubscription.SecretKey,
                 Exchange = interfaceStrategySubscription.Exchange,
-                CandlestickInterval = interfaceStrategySubscription.CandlestickInterval.ToString().Replace("_", " ")
+                CandlestickInterval = interfaceStrategySubscription.CandlestickInterval.ToString()
             };
 
             if ((interfaceStrategySubscription.Subscribe & Interface.Strategy.Subscribe.AccountInfo) == Interface.Strategy.Subscribe.AccountInfo)

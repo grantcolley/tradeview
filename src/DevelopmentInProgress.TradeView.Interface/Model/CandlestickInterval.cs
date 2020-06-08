@@ -3,18 +3,18 @@
     public enum CandlestickInterval
     {
         Minute,
-        Minutes_3,
-        Minutes_5,
-        Minutes_15,
-        Minutes_30,
+        Minutes3,
+        Minutes5,
+        Minutes15,
+        Minutes30,
         Hour,
-        Hours_2,
-        Hours_4,
-        Hours_6,
-        Hours_8,
-        Hours_12,
+        Hours2,
+        Hours4,
+        Hours6,
+        Hours8,
+        Hours12,
         Day,
-        Days_3,
+        Days3,
         Week,
         Month
     }
