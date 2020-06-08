@@ -38,8 +38,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Extensions
                 return false;
             }
 
-            OrderType result;
-            if (Enum.TryParse<OrderType>(compare.Replace(" ", ""), out result))
+            if (Enum.TryParse<OrderType>(compare.Replace(" ", ""), out OrderType result))
             {
                 return orderType.Equals(result);
             }
@@ -54,8 +53,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Extensions
                 return false;
             }
 
-            OrderType result;
-            if (Enum.TryParse<OrderType>(orderType.Replace(" ", ""), out result))
+            if (Enum.TryParse<OrderType>(orderType.Replace(" ", ""), out OrderType result))
             {
                 switch (result)
                 {
@@ -78,8 +76,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Extensions
                 return false;
             }
 
-            OrderType result;
-            if (Enum.TryParse<OrderType>(orderType.Replace(" ", ""), out result))
+            if (Enum.TryParse<OrderType>(orderType.Replace(" ", ""), out OrderType result))
             {
                 switch (result)
                 {
