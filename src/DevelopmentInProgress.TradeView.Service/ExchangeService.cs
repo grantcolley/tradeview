@@ -16,7 +16,7 @@ namespace DevelopmentInProgress.TradeView.Service
 
         public ExchangeService(IExchangeApiFactory exchangeApiFactory)
         {
-            this.exchangeApiFactory = exchangeApiFactory;
+            this.exchangeApiFactory = exchangeApiFactory ?? throw new ArgumentNullException(nameof(exchangeApiFactory));
             exchanges = this.exchangeApiFactory.GetExchanges();
         }
 
