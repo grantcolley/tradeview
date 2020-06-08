@@ -7,19 +7,16 @@ namespace DevelopmentInProgress.TradeView.Interface.Extensions
 {
     public static class SymbolExtensions
     {
-        private static Dictionary<OrderType, IValidateClientOrder> orderValidation;
-
-        static SymbolExtensions()
+        private static readonly Dictionary<OrderType, IValidateClientOrder> orderValidation = new Dictionary<OrderType, IValidateClientOrder>
         {
-            orderValidation = new Dictionary<OrderType, IValidateClientOrder>();
-            orderValidation.Add(OrderType.Limit, new ValidateLimit());
-            orderValidation.Add(OrderType.LimitMaker, new ValidateLimit());
-            orderValidation.Add(OrderType.StopLossLimit, new ValidateStopOrderLimit());
-            orderValidation.Add(OrderType.TakeProfitLimit, new ValidateStopOrderLimit());
-            orderValidation.Add(OrderType.Market, new ValidateMarket());
-            orderValidation.Add(OrderType.StopLoss, new ValidateStopOrder());
-            orderValidation.Add(OrderType.TakeProfit, new ValidateStopOrder());
-        }
+            { OrderType.Limit, new ValidateLimit()},
+            { OrderType.LimitMaker, new ValidateLimit()},
+            {OrderType.StopLossLimit, new ValidateStopOrderLimit() },
+            {OrderType.TakeProfitLimit, new ValidateStopOrderLimit() },
+            { OrderType.Market, new ValidateMarket()},
+            { OrderType.StopLoss, new ValidateStopOrder()},
+            {OrderType.TakeProfit, new ValidateStopOrder() }
+        };
 
         public static void  ValidateClientOrder(this Symbol symbol, ClientOrder clientOrder)
         {
@@ -28,8 +25,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Extensions
                 throw new ArgumentNullException(nameof(clientOrder));
             }
 
-            string message;
-            if(!orderValidation[clientOrder.Type].TryValidate(symbol, clientOrder, out message))
+            if(!orderValidation[clientOrder.Type].TryValidate(symbol, clientOrder, out string message))
             {
                 throw new OrderValidationException(message);
             }
