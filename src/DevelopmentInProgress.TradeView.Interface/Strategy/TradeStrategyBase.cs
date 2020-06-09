@@ -14,22 +14,11 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
 {
     public abstract class TradeStrategyBase : ITradeStrategy
     {
-        protected Dictionary<Exchange, IExchangeService> exchangeServices;
-        protected Dictionary<Exchange, List<Symbol>> exchangeSymbols;
-        protected bool run;
-
-        protected AccountInfo accountInfo;
-        protected object accountLock = new object();
-        protected bool placingOrder;
-        protected bool suspend;
-
-        protected CancellationToken cancellationToken;
-
         protected TradeStrategyBase()
         {
-            run = true;
-            exchangeServices = new Dictionary<Exchange, IExchangeService>();
-            exchangeSymbols = new Dictionary<Exchange, List<Symbol>>();
+            Run = true;
+            ExchangeServices = new Dictionary<Exchange, IExchangeService>();
+            ExchangeSymbols = new Dictionary<Exchange, List<Symbol>>();
         }
 
         public event EventHandler<StrategyNotificationEventArgs> StrategyNotificationEvent;
@@ -42,6 +31,15 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
         public event EventHandler<StrategyNotificationEventArgs> StrategyCustomNotificationEvent;
 
         public Strategy Strategy { get; private set; }
+
+        protected object AccountLock { get; } = new object();
+        protected CancellationToken CancellationToken { get; set; }
+        protected Dictionary<Exchange, IExchangeService> ExchangeServices { get; }
+        protected Dictionary<Exchange, List<Symbol>> ExchangeSymbols { get; }
+        protected AccountInfo AccountInfo { get; set; }
+        protected bool Run { get; set; }
+        protected bool PlacingOrder { get; set; }
+        protected bool Suspend { get; set; }
 
         public virtual void SetStrategy(Strategy strategy)
         {
@@ -56,15 +54,15 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
                 throw new Exception("Strategy not set.");
             }
 
-            this.cancellationToken = cancellationToken;
+            this.CancellationToken = cancellationToken;
 
             await TryUpdateStrategyAsync(Strategy.Parameters);
 
-            while (run)
+            while (Run)
             {
-                if (this.cancellationToken.IsCancellationRequested)
+                if (this.CancellationToken.IsCancellationRequested)
                 {
-                    run = false;
+                    Run = false;
                 }
                 else
                 {
@@ -80,30 +78,30 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
 
         public async virtual Task AddExchangeService(IEnumerable<StrategySubscription> strategySubscriptions, Exchange exchange, IExchangeService exchangeService)
         {
-            if (exchangeServices.ContainsKey(exchange))
+            if (ExchangeServices.ContainsKey(exchange))
             {
                 return;
             }
 
-            exchangeServices.Add(exchange, exchangeService);
+            ExchangeServices.Add(exchange, exchangeService);
 
-            var symbols = await exchangeService.GetSymbolsAsync(exchange, cancellationToken);
+            var symbols = await exchangeService.GetSymbolsAsync(exchange, CancellationToken);
 
             var subscribedSymbols = (from s in symbols
                                      join ss in strategySubscriptions on s.ExchangeSymbol equals ss.Symbol
                                      select s).ToList();
 
-            exchangeSymbols.Add(exchange, subscribedSymbols);
+            ExchangeSymbols.Add(exchange, subscribedSymbols);
         }
 
         public virtual Task<bool> TryStopStrategy(string strategyParameters)
         {
             var tcs = new TaskCompletionSource<bool>();
             
-            suspend = true;
-            run = false;
+            Suspend = true;
+            Run = false;
 
-            tcs.SetResult(suspend);
+            tcs.SetResult(Suspend);
 
             return tcs.Task;
         }
@@ -116,7 +114,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
             {
                 var parameters = JsonConvert.DeserializeObject<StrategyParameters>(strategyParameters);
 
-                suspend = parameters.Suspend;
+                Suspend = parameters.Suspend;
 
                 StrategyParameterUpdateNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = Strategy.Name, Message = strategyParameters, NotificationLevel = NotificationLevel.Information } });
 
@@ -137,10 +135,10 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
                 throw new ArgumentNullException(nameof(accountInfoEventArgs));
             }
 
-            lock (accountLock)
+            lock (AccountLock)
             {
-                accountInfo = accountInfoEventArgs.AccountInfo.Clone();
-                placingOrder = false;
+                AccountInfo = accountInfoEventArgs.AccountInfo.Clone();
+                PlacingOrder = false;
 
                 if (Strategy == null)
                 {

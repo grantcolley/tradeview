@@ -43,7 +43,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
                     tradeCache.TradeCreator.Reset(movingAverageTradeParameters);
                 }
 
-                suspend = movingAverageTradeParameters.Suspend;
+                Suspend = movingAverageTradeParameters.Suspend;
 
                 StrategyParameterUpdateNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = Strategy.Name, Message = parameters, NotificationLevel = NotificationLevel.ParameterUpdate } });
 
@@ -92,7 +92,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
 
                 var lastTrade = tradeCache.GetLastTrade();
 
-                if (!suspend)
+                if (!Suspend)
                 {
                     PlaceOrder(lastTrade);
                 }
@@ -110,17 +110,17 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
 
         private void PlaceOrder(MovingAverageTrade trade)
         {
-            if (accountInfo == null
-                || placingOrder)
+            if (AccountInfo == null
+                || PlacingOrder)
             {
                 return;
             }
 
-            lock (accountLock)
+            lock (AccountLock)
             {
                 try
                 {                    
-                    var symbol = exchangeSymbols[Exchange.Binance].Single(s => s.ExchangeSymbol.Equals(trade.Symbol));
+                    var symbol = ExchangeSymbols[Exchange.Binance].Single(s => s.ExchangeSymbol.Equals(trade.Symbol));
 
                     OrderSide orderSide;
                     decimal stopPrice = 0m;
@@ -142,8 +142,8 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
 
                     decimal quantity = 0m;
 
-                    var quoteAssetBalance = accountInfo.Balances.FirstOrDefault(b => b.Asset.Equals(symbol.QuoteAsset.Symbol));
-                    var baseAssetBalance = accountInfo.Balances.FirstOrDefault(b => b.Asset.Equals(symbol.BaseAsset.Symbol));
+                    var quoteAssetBalance = AccountInfo.Balances.FirstOrDefault(b => b.Asset.Equals(symbol.QuoteAsset.Symbol));
+                    var baseAssetBalance = AccountInfo.Balances.FirstOrDefault(b => b.Asset.Equals(symbol.BaseAsset.Symbol));
 
                     if (orderSide.Equals(OrderSide.Buy)
                         && quoteAssetBalance.Free > 0)
@@ -179,7 +179,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
 
                         var strategySymbol = Strategy.StrategySubscriptions.SingleOrDefault(ss => ss.Symbol.Equals(trade.Symbol));
                         var user = new User { ApiKey = strategySymbol.ApiKey, ApiSecret = strategySymbol.SecretKey, Exchange = Exchange.Binance };
-                        var order = exchangeServices[Exchange.Binance].PlaceOrder(user.Exchange, user, clientOrder).Result;
+                        var order = ExchangeServices[Exchange.Binance].PlaceOrder(user.Exchange, user, clientOrder).Result;
 
                         var message = $"{clientOrder.Symbol} {order.Price} {clientOrder.Quantity} {clientOrder.Side} {clientOrder.Type}";
 
@@ -187,12 +187,12 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
                     }
                     else
                     {
-                        placingOrder = false;
+                        PlacingOrder = false;
                     }
                 }
                 catch (Exception ex)
                 {
-                    placingOrder = false;
+                    PlacingOrder = false;
                     StrategyNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = Strategy.Name, Message = ex.Message, NotificationLevel = NotificationLevel.Information } });
                 }
             }
