@@ -56,7 +56,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
 
             this.CancellationToken = cancellationToken;
 
-            await TryUpdateStrategyAsync(Strategy.Parameters);
+            await TryUpdateStrategyAsync(Strategy.Parameters).ConfigureAwait(false);
 
             while (Run)
             {
@@ -66,7 +66,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
                 }
                 else
                 {
-                    await Task.Delay(500);
+                    await Task.Delay(500).ConfigureAwait(false);
                 }
             }
 
@@ -78,6 +78,11 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
 
         public async virtual Task AddExchangeService(IEnumerable<StrategySubscription> strategySubscriptions, Exchange exchange, IExchangeService exchangeService)
         {
+            if(exchangeService == null)
+            {
+                throw new ArgumentNullException(nameof(exchangeService));
+            }
+
             if (ExchangeServices.ContainsKey(exchange))
             {
                 return;
@@ -85,7 +90,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
 
             ExchangeServices.Add(exchange, exchangeService);
 
-            var symbols = await exchangeService.GetSymbolsAsync(exchange, CancellationToken);
+            var symbols = await exchangeService.GetSymbolsAsync(exchange, CancellationToken).ConfigureAwait(false);
 
             var subscribedSymbols = (from s in symbols
                                      join ss in strategySubscriptions on s.ExchangeSymbol equals ss.Symbol
@@ -125,7 +130,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
                 tcs.SetException(ex);
             }
 
-            return await tcs.Task;
+            return await tcs.Task.ConfigureAwait(false);
         }
 
         public virtual void SubscribeAccountInfo(AccountInfoEventArgs accountInfoEventArgs)

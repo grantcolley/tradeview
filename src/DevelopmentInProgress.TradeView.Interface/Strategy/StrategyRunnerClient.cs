@@ -40,7 +40,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
                             }
                         }
 
-                        return await client.PostAsync(requestUri, multipartFormDataContent);
+                        return await client.PostAsync(requestUri, multipartFormDataContent).ConfigureAwait(false);
                     }
                 }
             }
@@ -64,7 +64,7 @@ namespace DevelopmentInProgress.TradeView.Interface.Strategy
                     using (var multipartFormDataContent = new MultipartFormDataContent())
                     {
                         multipartFormDataContent.Add(stringContent, "strategyparameters");
-                        return await client.PostAsync(requestUri, multipartFormDataContent);
+                        return await client.PostAsync(requestUri, multipartFormDataContent).ConfigureAwait(false);
                     }
                 }
             }
