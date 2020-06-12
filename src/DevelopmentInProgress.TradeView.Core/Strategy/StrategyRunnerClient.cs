@@ -16,6 +16,8 @@ namespace DevelopmentInProgress.TradeView.Core.Strategy
                 throw new ArgumentNullException(nameof(libraries));
             }
 
+            var stringContent = new StringContent(jsonSerializedStrategy, Encoding.UTF8, "application/json");
+
             var byteArrayContents = new List<ByteArrayContent>();
 
             try
@@ -24,7 +26,7 @@ namespace DevelopmentInProgress.TradeView.Core.Strategy
                 {
                     using (var multipartFormDataContent = new MultipartFormDataContent())
                     {
-                        multipartFormDataContent.Add(new StringContent(jsonSerializedStrategy, Encoding.UTF8, "application/json"), "strategy");
+                        multipartFormDataContent.Add(stringContent, "strategy");
 
                         foreach (var file in libraries)
                         {
@@ -50,6 +52,8 @@ namespace DevelopmentInProgress.TradeView.Core.Strategy
                 {
                     byteArrayContent.Dispose();
                 }
+
+                stringContent.Dispose();
             }
         }
 
