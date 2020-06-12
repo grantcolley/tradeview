@@ -125,8 +125,9 @@ namespace DevelopmentInProgress.TradeView.Core.Strategy
 
                 tcs.SetResult(true);
             }
-            catch (Exception ex)
+            catch (JsonException ex)
             {
+                tcs.SetResult(false);
                 tcs.SetException(ex);
             }
 
