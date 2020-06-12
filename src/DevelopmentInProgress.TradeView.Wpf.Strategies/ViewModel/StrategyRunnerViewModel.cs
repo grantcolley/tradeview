@@ -465,7 +465,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 var strategyParameters = new CoreStrategy.StrategyParameters { StrategyName = Strategy.Name };
                 var strategyParametersJson = JsonConvert.SerializeObject(strategyParameters);
 
-                var response = await CoreStrategy.StrategyRunnerClient.PostAsync($"{SelectedServer.Url}/isstrategyrunning", strategyParametersJson);
+                var response = await CoreStrategy.StrategyRunnerClient.PostAsync(new Uri($"{SelectedServer.Url}/isstrategyrunning"), strategyParametersJson);
 
                 var content = await response.Content.ReadAsStringAsync();
 
@@ -543,7 +543,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                     var dependencies = strategy.Dependencies.Select(d => d.File);
 
-                    var response = await CoreStrategy.StrategyRunnerClient.PostAsync($"{SelectedServer.Url}/runstrategy", jsonContent, dependencies);
+                    var response = await CoreStrategy.StrategyRunnerClient.PostAsync(new Uri($"{SelectedServer.Url}/runstrategy"), jsonContent, dependencies);
 
                     if(response.StatusCode != System.Net.HttpStatusCode.OK)
                     {
@@ -597,7 +597,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                     return;
                 }
 
-                var response = await CoreStrategy.StrategyRunnerClient.PostAsync($"{SelectedServer.Url}/updatestrategy", strategyParameters);
+                var response = await CoreStrategy.StrategyRunnerClient.PostAsync(new Uri($"{SelectedServer.Url}/updatestrategy"), strategyParameters);
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
@@ -641,7 +641,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                     return;
                 }
 
-                var response = await CoreStrategy.StrategyRunnerClient.PostAsync($"{SelectedServer.Url}/stopstrategy", strategyParameters);
+                var response = await CoreStrategy.StrategyRunnerClient.PostAsync(new Uri($"{SelectedServer.Url}/stopstrategy"), strategyParameters);
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {

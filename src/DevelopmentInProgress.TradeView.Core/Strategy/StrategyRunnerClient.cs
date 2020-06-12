@@ -9,7 +9,7 @@ namespace DevelopmentInProgress.TradeView.Core.Strategy
 {
     public static class StrategyRunnerClient
     {
-        public static async Task<HttpResponseMessage> PostAsync(string requestUri, string jsonSerializedStrategy, IEnumerable<string> libraries)
+        public static async Task<HttpResponseMessage> PostAsync(Uri uri, string jsonSerializedStrategy, IEnumerable<string> libraries)
         {
             if (libraries == null)
             {
@@ -42,7 +42,7 @@ namespace DevelopmentInProgress.TradeView.Core.Strategy
                             }
                         }
 
-                        return await client.PostAsync(requestUri, multipartFormDataContent).ConfigureAwait(false);
+                        return await client.PostAsync(uri, multipartFormDataContent).ConfigureAwait(false);
                     }
                 }
             }
@@ -57,7 +57,7 @@ namespace DevelopmentInProgress.TradeView.Core.Strategy
             }
         }
 
-        public static async Task<HttpResponseMessage> PostAsync(string requestUri, string jsonSerializedStrategyParameters)
+        public static async Task<HttpResponseMessage> PostAsync(Uri uri, string jsonSerializedStrategyParameters)
         {
             var stringContent = new StringContent(jsonSerializedStrategyParameters, Encoding.UTF8, "application/json");
 
@@ -68,7 +68,7 @@ namespace DevelopmentInProgress.TradeView.Core.Strategy
                     using (var multipartFormDataContent = new MultipartFormDataContent())
                     {
                         multipartFormDataContent.Add(stringContent, "strategyparameters");
-                        return await client.PostAsync(requestUri, multipartFormDataContent).ConfigureAwait(false);
+                        return await client.PostAsync(uri, multipartFormDataContent).ConfigureAwait(false);
                     }
                 }
             }
