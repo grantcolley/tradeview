@@ -62,9 +62,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\DevelopmentInProgress.TradeView.Interface\DevelopmentInProgress.TradeView.Interface.csproj">
-      <Project>{e3236e65-3232-438d-8dc9-5cd6be419b68}</Project>
-      <Name>DevelopmentInProgress.TradeView.Interface</Name>
+    <ProjectReference Include="..\..\src\DevelopmentInProgress.TradeView.Core\DevelopmentInProgress.TradeView.Core.csproj">
+      <Project>{63c14275-0279-4cf1-bdd2-5aab8378d6d0}</Project>
+      <Name>DevelopmentInProgress.TradeView.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\DevelopmentInProgress.TradeView.Service\DevelopmentInProgress.TradeView.Service.csproj">
       <Project>{B0472037-1788-4314-AC54-1D2169029329}</Project>

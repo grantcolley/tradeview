@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Interfaces;
+﻿using DevelopmentInProgress.TradeView.Core.Interfaces;
 using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.Strategy.Common.Test

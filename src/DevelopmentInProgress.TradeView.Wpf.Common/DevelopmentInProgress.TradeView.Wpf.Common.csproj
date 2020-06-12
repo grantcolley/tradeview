@@ -185,13 +185,13 @@
       <Project>{03680064-ec5b-42a0-9c53-5a0b097458ea}</Project>
       <Name>DevelopmentInProgress.TradeView.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Core\DevelopmentInProgress.TradeView.Core.csproj">
+      <Project>{63c14275-0279-4cf1-bdd2-5aab8378d6d0}</Project>
+      <Name>DevelopmentInProgress.TradeView.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Data\DevelopmentInProgress.TradeView.Data.csproj">
       <Project>{dac8d225-b833-41eb-a595-25a0c59cc85e}</Project>
       <Name>DevelopmentInProgress.TradeView.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Interface\DevelopmentInProgress.TradeView.Interface.csproj">
-      <Project>{e3236e65-3232-438d-8dc9-5cd6be419b68}</Project>
-      <Name>DevelopmentInProgress.TradeView.Interface</Name>
     </ProjectReference>
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Service\DevelopmentInProgress.TradeView.Service.csproj">
       <Project>{b0472037-1788-4314-ac54-1d2169029329}</Project>

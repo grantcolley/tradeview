@@ -1,13 +1,12 @@
-﻿using DevelopmentInProgress.TradeView.Wpf.Host.Module;
-using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
-using DevelopmentInProgress.TradeView.Wpf.Configuration.View;
+﻿using DevelopmentInProgress.TradeView.Wpf.Configuration.View;
 using DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel;
-using Microsoft.Practices.Unity;
-using Prism.Logging;
-using System;
+using DevelopmentInProgress.TradeView.Wpf.Host.Module;
+using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Host.View;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.View;
 using DevelopmentInProgress.TradeView.Wpf.Trading.View;
+using Microsoft.Practices.Unity;
+using Prism.Logging;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Configuration
 {

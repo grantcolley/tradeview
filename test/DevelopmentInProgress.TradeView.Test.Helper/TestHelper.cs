@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Model;
+﻿using DevelopmentInProgress.TradeView.Core.Model;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;

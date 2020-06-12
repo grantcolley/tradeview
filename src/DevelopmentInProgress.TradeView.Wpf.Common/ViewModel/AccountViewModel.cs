@@ -176,9 +176,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             onAccountNotification?.Invoke(this, args);
         }
 
-        private void AccountInfoUpdate(Interface.Model.AccountInfo e)
+        private void AccountInfoUpdate(Core.Model.AccountInfo e)
         {
-            Action<Interface.Model.AccountInfo> action = aie =>
+            Action<Core.Model.AccountInfo> action = aie =>
             {
                 lock (balancesLock)
                 {
@@ -189,7 +189,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
                         return;
                     }
 
-                    Func<AccountBalance, Interface.Model.AccountBalance, AccountBalance> f = ((ab, nb) =>
+                    Func<AccountBalance, Core.Model.AccountBalance, AccountBalance> f = ((ab, nb) =>
                     {
                         ab.Free = nb.Free;
                         ab.Locked = nb.Locked;

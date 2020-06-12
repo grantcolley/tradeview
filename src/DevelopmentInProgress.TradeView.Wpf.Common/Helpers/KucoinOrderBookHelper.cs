@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DevelopmentInProgress.TradeView.Interface.Extensions;
-using DevelopmentInProgress.TradeView.Interface.Interfaces;
+using DevelopmentInProgress.TradeView.Core.Extensions;
+using DevelopmentInProgress.TradeView.Core.Interfaces;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using LiveCharts;
 
@@ -19,7 +19,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             this.kucoinExchangeApi = kucoinExchangeApi;
         }
 
-        public async Task<OrderBook> CreateLocalOrderBook(Symbol symbol, Interface.Model.OrderBook orderBook, int listDisplayCount, int chartDisplayCount)
+        public async Task<OrderBook> CreateLocalOrderBook(Symbol symbol, Core.Model.OrderBook orderBook, int listDisplayCount, int chartDisplayCount)
         {
             var cancellationTokenSource = new CancellationTokenSource();
 
@@ -27,8 +27,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
             // Order by price: bids (ASC) and asks (ASC)
             // Discard those that we are not interested in displaying on the screen.
-            var snapShotAsks = new List<Interface.Model.OrderBookPriceLevel>(snapShot.Asks.OrderBy(a => a.Price).ToList());
-            var snapShotBids = new List<Interface.Model.OrderBookPriceLevel>(snapShot.Bids.OrderBy(b => b.Price).ToList());
+            var snapShotAsks = new List<Core.Model.OrderBookPriceLevel>(snapShot.Asks.OrderBy(a => a.Price).ToList());
+            var snapShotBids = new List<Core.Model.OrderBookPriceLevel>(snapShot.Bids.OrderBy(b => b.Price).ToList());
 
             long latestSquence = snapShot.LastUpdateId;
 
@@ -101,7 +101,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             };
         }
 
-        public void UpdateLocalOrderBook(OrderBook orderBook, Interface.Model.OrderBook updateOrderBook,
+        public void UpdateLocalOrderBook(OrderBook orderBook, Core.Model.OrderBook updateOrderBook,
             int pricePrecision, int quantityPrecision, int listDisplayCount, int chartDisplayCount)
         {
             long latestSquence = orderBook.LastUpdateId;
@@ -159,9 +159,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             UpdateChartValues(orderBook.ChartAggregatedBids, aggregatedBids);
         }
 
-        private List<Interface.Model.OrderBookPriceLevel> ReplayPriceLevels(
-            List<Interface.Model.OrderBookPriceLevel> orderBookPriceLevels, 
-            IEnumerable<Interface.Model.OrderBookPriceLevel> playBackPriceLevels, 
+        private List<Core.Model.OrderBookPriceLevel> ReplayPriceLevels(
+            List<Core.Model.OrderBookPriceLevel> orderBookPriceLevels, 
+            IEnumerable<Core.Model.OrderBookPriceLevel> playBackPriceLevels, 
             long orderBookSequence, 
             ref long latestSquence)
         {

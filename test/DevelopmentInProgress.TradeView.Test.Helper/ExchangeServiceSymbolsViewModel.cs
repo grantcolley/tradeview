@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DevelopmentInProgress.TradeView.Interface.Events;
-using DevelopmentInProgress.TradeView.Interface.Interfaces;
-using DevelopmentInProgress.TradeView.Interface.Model;
-using DevelopmentInProgress.TradeView.Interface.Enums;
+using DevelopmentInProgress.TradeView.Core.Events;
+using DevelopmentInProgress.TradeView.Core.Interfaces;
+using DevelopmentInProgress.TradeView.Core.Model;
+using DevelopmentInProgress.TradeView.Core.Enums;
 
 namespace DevelopmentInProgress.TradeView.Test.Helper
 {

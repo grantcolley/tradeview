@@ -19,10 +19,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var symbolsCache = SymbolsCacheHelper.GetSymbolsCache(exchangeService);
             var symbols = await symbolsCache.GetSymbols(new[] { "BIBBTC" });
 
-            var balances = new List<Interface.Model.AccountBalance>();
-            balances.Add(new Interface.Model.AccountBalance { Asset = "BTC", Free = 0.00794722m });
+            var balances = new List<Core.Model.AccountBalance>();
+            balances.Add(new Core.Model.AccountBalance { Asset = "BTC", Free = 0.00794722m });
 
-            var accountInfo = new Interface.Model.AccountInfo
+            var accountInfo = new Core.Model.AccountInfo
             {
                 Balances = balances
             };
@@ -46,10 +46,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var symbolsCache = SymbolsCacheHelper.GetSymbolsCache(exchangeService);
             var symbols = await symbolsCache.GetSymbols(new[] { "BNBBTC" });
 
-            var balances = new List<Interface.Model.AccountBalance>();
-            balances.Add(new Interface.Model.AccountBalance { Asset = "BNB", Free = 1.88373641m });
+            var balances = new List<Core.Model.AccountBalance>();
+            balances.Add(new Core.Model.AccountBalance { Asset = "BNB", Free = 1.88373641m });
 
-            var accountInfo = new Interface.Model.AccountInfo
+            var accountInfo = new Core.Model.AccountInfo
             {
                 Balances = balances
             };
@@ -73,11 +73,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var symbolsCache = SymbolsCacheHelper.GetSymbolsCache(exchangeService);
             var symbols = await symbolsCache.GetSymbols(new[] { "BNBBTC" });
 
-            var balances = new List<Interface.Model.AccountBalance>();
-            balances.Add(new Interface.Model.AccountBalance { Asset = "BTC", Free = 0.00396715m });
-            balances.Add(new Interface.Model.AccountBalance { Asset = "BNB", Free = 0.94444141m });
+            var balances = new List<Core.Model.AccountBalance>();
+            balances.Add(new Core.Model.AccountBalance { Asset = "BTC", Free = 0.00396715m });
+            balances.Add(new Core.Model.AccountBalance { Asset = "BNB", Free = 0.94444141m });
 
-            var accountInfo = new Interface.Model.AccountInfo
+            var accountInfo = new Core.Model.AccountInfo
             {
                 Balances = balances
             };

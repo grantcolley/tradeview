@@ -56,19 +56,19 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             }
         }
 
-        public virtual Task TradeNotificationsAsync(List<Interface.Strategy.StrategyNotification> tradeNotifications)
+        public virtual Task TradeNotificationsAsync(List<Core.Strategy.StrategyNotification> tradeNotifications)
         {
-            throw new NotImplementedException("StrategyDisplayViewModelBase.TradeNotifications(List<Interface.Strategy.StrategyNotification> tradeNotifications)");
+            throw new NotImplementedException("StrategyDisplayViewModelBase.TradeNotifications(List<Core.Strategy.StrategyNotification> tradeNotifications)");
         }
 
-        public virtual Task OrderNotificationsAsync(List<Interface.Strategy.StrategyNotification> orderNotifications)
+        public virtual Task OrderNotificationsAsync(List<Core.Strategy.StrategyNotification> orderNotifications)
         {
-            throw new NotImplementedException("StrategyDisplayViewModelBase.OrderNotifications(List<Interface.Strategy.StrategyNotification> orderNotifications)");
+            throw new NotImplementedException("StrategyDisplayViewModelBase.OrderNotifications(List<Core.Strategy.StrategyNotification> orderNotifications)");
         }
 
-        public virtual Task CandlestickNotificationsAsync(List<Interface.Strategy.StrategyNotification> candlestickNotifications)
+        public virtual Task CandlestickNotificationsAsync(List<Core.Strategy.StrategyNotification> candlestickNotifications)
         {
-            throw new NotImplementedException("StrategyDisplayViewModelBase.CandlestickNotifications(List<Interface.Strategy.StrategyNotification> candlestickNotifications)");
+            throw new NotImplementedException("StrategyDisplayViewModelBase.CandlestickNotifications(List<Core.Strategy.StrategyNotification> candlestickNotifications)");
         }
 
         protected void OnException(string message, Exception exception)

@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Model;
+﻿using DevelopmentInProgress.TradeView.Core.Model;
 using Kucoin.Net.Objects;
 using System;
 

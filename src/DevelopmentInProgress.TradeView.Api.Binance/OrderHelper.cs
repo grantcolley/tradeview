@@ -4,7 +4,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 {
     public static class OrderHelper
     {
-        public static ClientOrder GetOrder(BinanceApiUser apiUser, Interface.Model.ClientOrder clientOrder)
+        public static ClientOrder GetOrder(BinanceApiUser apiUser, Core.Model.ClientOrder clientOrder)
         {
             var orderType = (OrderType)clientOrder.Type;
             switch (orderType)

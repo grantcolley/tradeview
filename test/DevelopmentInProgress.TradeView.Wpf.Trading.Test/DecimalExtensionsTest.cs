@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Extensions;
+﻿using DevelopmentInProgress.TradeView.Core.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test

@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Enums;
+﻿using DevelopmentInProgress.TradeView.Core.Enums;
 using DevelopmentInProgress.TradeView.Wpf.Common.Cache;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 

@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Enums;
+﻿using DevelopmentInProgress.TradeView.Core.Enums;
 using System.Collections.ObjectModel;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
@@ -26,7 +26,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
             }
         }
 
-        public Account(Interface.Model.AccountInfo accountInfo)
+        public Account(Core.Model.AccountInfo accountInfo)
         {
             AccountInfo = accountInfo;
 
@@ -49,7 +49,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
             OnPropertyChanged("Balances");
         }
 
-        public Interface.Model.AccountInfo AccountInfo { get; private set; }
+        public Core.Model.AccountInfo AccountInfo { get; private set; }
 
         public string ApiKey
         {

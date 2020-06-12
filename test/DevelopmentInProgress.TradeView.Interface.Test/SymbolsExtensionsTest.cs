@@ -1,10 +1,10 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Extensions;
-using DevelopmentInProgress.TradeView.Interface.Model;
-using DevelopmentInProgress.TradeView.Interface.Validation;
+﻿using DevelopmentInProgress.TradeView.Core.Extensions;
+using DevelopmentInProgress.TradeView.Core.Model;
+using DevelopmentInProgress.TradeView.Core.Validation;
 using DevelopmentInProgress.TradeView.Test.Helper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace DevelopmentInProgress.TradeView.Interface.Test
+namespace DevelopmentInProgress.TradeView.Core.Test
 {
     [TestClass]
     public class SymbolsExtensionsTest

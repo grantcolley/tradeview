@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Interface\DevelopmentInProgress.TradeView.Interface.csproj" />
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Core\DevelopmentInProgress.TradeView.Core.csproj" />
   </ItemGroup>
 
 </Project>

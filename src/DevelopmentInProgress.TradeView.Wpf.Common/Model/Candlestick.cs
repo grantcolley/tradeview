@@ -1,5 +1,5 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Enums;
-using DevelopmentInProgress.TradeView.Interface.Model;
+﻿using DevelopmentInProgress.TradeView.Core.Enums;
+using DevelopmentInProgress.TradeView.Core.Model;
 using System;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Model

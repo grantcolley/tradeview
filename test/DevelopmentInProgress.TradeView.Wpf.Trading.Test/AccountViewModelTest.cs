@@ -27,7 +27,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var symbolsCacheFactory = SymbolsCacheFactoryHelper.GetSymbolsCachefactory(exchangeService);
             var accountViewModel = new AccountViewModel(exchangeService, symbolsCacheFactory, new DebugLogger());
 
-            var account = new Account(new Interface.Model.AccountInfo { User = new Interface.Model.User() })
+            var account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
                 ApiKey = "apikey",
                 ApiSecret = "apisecret"
@@ -74,7 +74,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var symbolsCacheFactory = SymbolsCacheFactoryHelper.GetSymbolsCachefactory(exchangeService);
             var accountViewModel = new AccountViewModel(exchangeService, symbolsCacheFactory, new DebugLogger());
 
-            var account = new Account(new Interface.Model.AccountInfo { User = new Interface.Model.User() })
+            var account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
                 ApiKey = "apikey",
                 ApiSecret = "apisecret"
@@ -130,7 +130,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var symbolsCacheFactory = SymbolsCacheFactoryHelper.GetSymbolsCachefactory(exchangeService);
             var accountViewModel = new AccountViewModel(exchangeService, symbolsCacheFactory, new DebugLogger());
 
-            var account = new Account(new Interface.Model.AccountInfo { User = new Interface.Model.User() })
+            var account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
                 ApiKey = "apikey",
                 ApiSecret = "apisecret"

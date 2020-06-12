@@ -1,15 +1,15 @@
 ﻿using DevelopmentInProgress.TradeView.Common.Extensions;
+using DevelopmentInProgress.TradeView.Wpf.Common.Command;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Threading;
-using System;
-using System.Linq;
-using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
+using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using Prism.Logging;
-using DevelopmentInProgress.TradeView.Wpf.Common.Command;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel

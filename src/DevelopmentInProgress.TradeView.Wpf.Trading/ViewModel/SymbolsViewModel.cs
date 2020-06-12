@@ -1,14 +1,13 @@
-﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
-using DevelopmentInProgress.TradeView.Wpf.Trading.Events;
+﻿using DevelopmentInProgress.TradeView.Wpf.Common.Cache;
+using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
+using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
+using DevelopmentInProgress.TradeView.Wpf.Trading.Events;
+using Prism.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DevelopmentInProgress.TradeView.Wpf.Common.Cache;
 using System.Threading.Tasks;
-using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
-using Prism.Logging;
-using System.Diagnostics;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 {

@@ -1,12 +1,12 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using System;
-using DevelopmentInProgress.TradeView.Interface.Extensions;
+using DevelopmentInProgress.TradeView.Core.Extensions;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 {
     public static class OrderExtensions
     {
-        public static Order GetViewOrder(this Interface.Model.Order o)
+        public static Order GetViewOrder(this Core.Model.Order o)
         {
             return new Order
             {

@@ -143,10 +143,6 @@
     <Resource Include="Images\Running.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\tradeview\src\DevelopmentInProgress.TradeView.Interface\DevelopmentInProgress.TradeView.Interface.csproj">
-      <Project>{e3236e65-3232-438d-8dc9-5cd6be419b68}</Project>
-      <Name>DevelopmentInProgress.TradeView.Interface</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\tradeview\src\DevelopmentInProgress.TradeView.Wpf.Common\DevelopmentInProgress.TradeView.Wpf.Common.csproj">
       <Project>{2b523839-ee20-4ed3-a1ba-ac2070c99f4d}</Project>
       <Name>DevelopmentInProgress.TradeView.Wpf.Common</Name>
@@ -166,6 +162,10 @@
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Common\DevelopmentInProgress.TradeView.Common.csproj">
       <Project>{03680064-ec5b-42a0-9c53-5a0b097458ea}</Project>
       <Name>DevelopmentInProgress.TradeView.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Core\DevelopmentInProgress.TradeView.Core.csproj">
+      <Project>{63c14275-0279-4cf1-bdd2-5aab8378d6d0}</Project>
+      <Name>DevelopmentInProgress.TradeView.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

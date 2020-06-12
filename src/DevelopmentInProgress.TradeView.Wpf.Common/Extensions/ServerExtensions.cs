@@ -4,7 +4,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 {
     public static class ServerExtensions
     {
-        public static Server ToWpfServer(this Interface.Server.Server server)
+        public static Server ToWpfServer(this Core.Server.Server server)
         {
             return new Server
             {
@@ -15,9 +15,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
             };
         }
 
-        public static Interface.Server.Server ToInterfaceServer(this Server server)
+        public static Core.Server.Server ToInterfaceServer(this Server server)
         {
-            return new Interface.Server.Server
+            return new Core.Server.Server
             {
                 Name = server.Name,
                 Url = server.Url,

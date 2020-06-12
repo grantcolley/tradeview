@@ -1,6 +1,6 @@
 ﻿using DevelopmentInProgress.Strategy.Common.Parameter;
 using DevelopmentInProgress.Strategy.Common.StrategyTrade;
-using DevelopmentInProgress.TradeView.Interface.Interfaces;
+using DevelopmentInProgress.TradeView.Core.Interfaces;
 using System;
 using System.Runtime.CompilerServices;
 

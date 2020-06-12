@@ -1,7 +1,7 @@
 ﻿using System;
 using DevelopmentInProgress.Strategy.Common.Parameter;
 using DevelopmentInProgress.Strategy.Common.TradeCreator;
-using DevelopmentInProgress.TradeView.Interface.Model;
+using DevelopmentInProgress.TradeView.Core.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DevelopmentInProgress.Strategy.Common.Test

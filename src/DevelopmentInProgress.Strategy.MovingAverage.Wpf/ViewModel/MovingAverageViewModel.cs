@@ -1,11 +1,12 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Extensions;
-using DevelopmentInProgress.TradeView.Interface.Interfaces;
+﻿using DevelopmentInProgress.Strategy.Common.StrategyTrade;
+using DevelopmentInProgress.TradeView.Core.Extensions;
+using DevelopmentInProgress.TradeView.Core.Interfaces;
+using DevelopmentInProgress.TradeView.Core.Strategy;
 using DevelopmentInProgress.TradeView.Wpf.Common.Chart;
 using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;
+using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
-using DevelopmentInProgress.TradeView.Interface.Strategy;
-using WpfStrategy = DevelopmentInProgress.TradeView.Wpf.Common.Model.Strategy;
 using LiveCharts;
 using Microsoft.Practices.ServiceLocation;
 using Newtonsoft.Json;
@@ -14,11 +15,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Threading;
-using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
 using System.Threading;
 using System.Threading.Tasks;
-using DevelopmentInProgress.Strategy.Common.StrategyTrade;
+using System.Windows.Threading;
+using WpfStrategy = DevelopmentInProgress.TradeView.Wpf.Common.Model.Strategy;
 
 namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
 {
@@ -335,7 +335,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
 
                 var candlestickNotification = candlestickNotifications.Last();
 
-                var cs = JsonConvert.DeserializeObject<List<TradeView.Interface.Model.Candlestick>>(candlestickNotification.Message);
+                var cs = JsonConvert.DeserializeObject<List<TradeView.Core.Model.Candlestick>>(candlestickNotification.Message);
 
                 Candlestick last = null;
 
@@ -425,7 +425,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                     {
                         var orderBookNotification = orderNotifications.Last();
                         
-                        var ob = JsonConvert.DeserializeObject<TradeView.Interface.Model.OrderBook>(orderBookNotification.Message);
+                        var ob = JsonConvert.DeserializeObject<TradeView.Core.Model.OrderBook>(orderBookNotification.Message);
 
                         var orderBookHelper = orderBookHelperFactory.GetOrderBookHelper(ob.Exchange);
 
@@ -443,11 +443,11 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                         int quantityPrecision;
                         int pricePrecision;
 
-                        var orderBookUpdates = new List<TradeView.Interface.Model.OrderBook>();
+                        var orderBookUpdates = new List<TradeView.Core.Model.OrderBook>();
 
                         foreach (var notification in orderNotifications)
                         {
-                            var ob = JsonConvert.DeserializeObject<TradeView.Interface.Model.OrderBook>(notification.Message);
+                            var ob = JsonConvert.DeserializeObject<TradeView.Core.Model.OrderBook>(notification.Message);
 
                             if (first)
                             {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DevelopmentInProgress.TradeView.Interface.Extensions;
+using DevelopmentInProgress.TradeView.Core.Extensions;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using LiveCharts;
 
@@ -10,7 +10,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 {
     public class BinanceOrderBookHelper : IOrderBookHelper
     {
-        public Task<OrderBook> CreateLocalOrderBook(Symbol symbol, Interface.Model.OrderBook orderBook, int listDisplayCount, int chartDisplayCount)
+        public Task<OrderBook> CreateLocalOrderBook(Symbol symbol, Core.Model.OrderBook orderBook, int listDisplayCount, int chartDisplayCount)
         {
             var tcs = new TaskCompletionSource<OrderBook>();
 
@@ -52,7 +52,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             return tcs.Task;
         }
 
-        public void UpdateLocalOrderBook(OrderBook orderBook, Interface.Model.OrderBook updateOrderBook,
+        public void UpdateLocalOrderBook(OrderBook orderBook, Core.Model.OrderBook updateOrderBook,
             int pricePrecision, int quantityPrecision, int listDisplayCount, int chartDisplayCount)
         {
             orderBook.LastUpdateId = updateOrderBook.LastUpdateId;
@@ -82,7 +82,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             UpdateChartValues(orderBook.ChartAggregatedBids, aggregatedBids);
         }
 
-        private void GetBidsAndAsks(Interface.Model.OrderBook orderBook, int pricePrecision, int quantityPrecision, 
+        private void GetBidsAndAsks(Core.Model.OrderBook orderBook, int pricePrecision, int quantityPrecision, 
             int listDisplayCount, int chartDisplayCount, 
             out List<OrderBookPriceLevel> topAsks, out List<OrderBookPriceLevel> topBids, 
             out List<OrderBookPriceLevel> chartAsks, out List<OrderBookPriceLevel> chartBids,

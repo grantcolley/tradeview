@@ -1,5 +1,5 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Interfaces;
-using DevelopmentInProgress.TradeView.Interface.Strategy;
+﻿using DevelopmentInProgress.TradeView.Core.Interfaces;
+using DevelopmentInProgress.TradeView.Core.Strategy;
 using System;
 using System.Linq;
 

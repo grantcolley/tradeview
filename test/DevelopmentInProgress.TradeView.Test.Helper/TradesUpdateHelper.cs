@@ -1,5 +1,5 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Interfaces;
-using DevelopmentInProgress.TradeView.Interface.Model;
+﻿using DevelopmentInProgress.TradeView.Core.Interfaces;
+using DevelopmentInProgress.TradeView.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

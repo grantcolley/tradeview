@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DevelopmentInProgress.TradeView.Interface.Extensions;
-using DevelopmentInProgress.TradeView.Interface.Interfaces;
+using DevelopmentInProgress.TradeView.Core.Extensions;
+using DevelopmentInProgress.TradeView.Core.Interfaces;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using LiveCharts;
 

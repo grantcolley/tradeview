@@ -9,16 +9,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
     public class AccountTest
     {
         private static string apiKey;
-        private static Interface.Model.User user;
-        private static List<Interface.Model.AccountBalance>  balances;
+        private static Core.Model.User user;
+        private static List<Core.Model.AccountBalance>  balances;
 
         [ClassInitialize()]
         public static void ClientOrderValidationBuilderTest_Initialize(TestContext testContext)
         {
             apiKey = "abcdefghijklmnopqrstuvwxyz";
-            user = new Interface.Model.User() { ApiKey = apiKey };
-            var balance = new Interface.Model.AccountBalance { Asset = "TRX", Free = 300, Locked = 100 };
-            balances = new List<Interface.Model.AccountBalance>() { balance };
+            user = new Core.Model.User() { ApiKey = apiKey };
+            var balance = new Core.Model.AccountBalance { Asset = "TRX", Free = 300, Locked = 100 };
+            balances = new List<Core.Model.AccountBalance>() { balance };
         }
 
         [TestMethod]
@@ -27,7 +27,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             // Arrange
 
             // Act
-            var account = new Account(new Interface.Model.AccountInfo { User = user, Balances = balances });
+            var account = new Account(new Core.Model.AccountInfo { User = user, Balances = balances });
 
             // Assert
             Assert.IsTrue(account.ApiKey.Equals(apiKey));
@@ -40,7 +40,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
         public void SetApiSecret_Pass()
         {
             // Arrange
-            var account = new Account(new Interface.Model.AccountInfo { User = user });
+            var account = new Account(new Core.Model.AccountInfo { User = user });
 
             // Act
             account.ApiSecret = "0123456789";

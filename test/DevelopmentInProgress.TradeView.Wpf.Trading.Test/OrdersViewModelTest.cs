@@ -22,7 +22,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var accountViewModel = new OrdersViewModel(exchangeService, new DebugLogger());
 
-            var account = new Account(new Interface.Model.AccountInfo { User = new Interface.Model.User() })
+            var account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
                 ApiKey = "apikey",
                 ApiSecret = "apisecret"
@@ -47,7 +47,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var accountViewModel = new OrdersViewModel(exchangeService, new DebugLogger());
 
-            var firstAccount = new Account(new Interface.Model.AccountInfo { User = new Interface.Model.User() })
+            var firstAccount = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
                 ApiKey = "apikey",
                 ApiSecret = "apisecret"
@@ -57,7 +57,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var firstorder = new Order { ClientOrderId = "test123", Symbol = "ETHBTC" };
             accountViewModel.Orders.Add(firstorder);
 
-            var newAccount = new Account(new Interface.Model.AccountInfo { User = new Interface.Model.User() })
+            var newAccount = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
                 ApiKey = "newapikey",
                 ApiSecret = "newapisecret"
@@ -82,7 +82,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var accountViewModel = new OrdersViewModel(exchangeService, new DebugLogger());
 
-            var account = new Account(new Interface.Model.AccountInfo { User = new Interface.Model.User() })
+            var account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
                 ApiKey = "apikey",
                 ApiSecret = "apisecret"
@@ -110,7 +110,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var accountViewModel = new OrdersViewModel(exchangeService, new DebugLogger());
 
-            var account = new Account(new Interface.Model.AccountInfo { User = new Interface.Model.User() })
+            var account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
                 ApiKey = "apikey",
                 ApiSecret = "apisecret"

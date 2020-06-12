@@ -4,7 +4,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 {
     public static class ServerMonitorExtensions
     {
-        public static ServerMonitor ToServerMonitor(this Interface.Server.Server server)
+        public static ServerMonitor ToServerMonitor(this Core.Server.Server server)
         {
             return new ServerMonitor
             {

@@ -1,5 +1,5 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Enums;
-using DevelopmentInProgress.TradeView.Interface.Interfaces;
+﻿using DevelopmentInProgress.TradeView.Core.Enums;
+using DevelopmentInProgress.TradeView.Core.Interfaces;
 using DevelopmentInProgress.TradeView.Service;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using System.Collections.Generic;

@@ -18,10 +18,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Test
             var subscribeOrderBookUpdate = TestHelper.KucoinOrderBook_15_18;
             var symbol = new Symbol
             {
-                BaseAsset = new Interface.Model.Asset { Symbol = "BTC" },
-                QuoteAsset = new Interface.Model.Asset { Symbol = "USDT" },
-                Price = new Interface.Model.InclusiveRange { Increment = 0.00000001M },
-                Quantity = new Interface.Model.InclusiveRange { Increment = 1m }
+                BaseAsset = new Core.Model.Asset { Symbol = "BTC" },
+                QuoteAsset = new Core.Model.Asset { Symbol = "USDT" },
+                Price = new Core.Model.InclusiveRange { Increment = 0.00000001M },
+                Quantity = new Core.Model.InclusiveRange { Increment = 1m }
             };
 
             // Act
@@ -120,10 +120,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Test
             var subscribeOrderBookUpdate = TestHelper.KucoinOrderBook_Create_IUIIRA;
             var symbol = new Symbol
             {
-                BaseAsset = new Interface.Model.Asset { Symbol = "BTC" },
-                QuoteAsset = new Interface.Model.Asset { Symbol = "USDT" },
-                Price = new Interface.Model.InclusiveRange { Increment = 0.00000001M },
-                Quantity = new Interface.Model.InclusiveRange { Increment = 1m }
+                BaseAsset = new Core.Model.Asset { Symbol = "BTC" },
+                QuoteAsset = new Core.Model.Asset { Symbol = "USDT" },
+                Price = new Core.Model.InclusiveRange { Increment = 0.00000001M },
+                Quantity = new Core.Model.InclusiveRange { Increment = 1m }
             };
 
             // Act
@@ -310,10 +310,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Test
             var subscribeOrderBookUpdate = TestHelper.KucoinOrderBook_Create_RUIRRA;
             var symbol = new Symbol
             {
-                BaseAsset = new Interface.Model.Asset { Symbol = "BTC" },
-                QuoteAsset = new Interface.Model.Asset { Symbol = "USDT" },
-                Price = new Interface.Model.InclusiveRange { Increment = 0.00000001M },
-                Quantity = new Interface.Model.InclusiveRange { Increment = 1 }
+                BaseAsset = new Core.Model.Asset { Symbol = "BTC" },
+                QuoteAsset = new Core.Model.Asset { Symbol = "USDT" },
+                Price = new Core.Model.InclusiveRange { Increment = 0.00000001M },
+                Quantity = new Core.Model.InclusiveRange { Increment = 1 }
             };
 
             // Act
@@ -437,10 +437,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Test
             var subscribeOrderBookUpdate = TestHelper.KucoinOrderBook_Update;
             var symbol = new Symbol
             {
-                BaseAsset = new Interface.Model.Asset { Symbol = "BTC" },
-                QuoteAsset = new Interface.Model.Asset { Symbol = "USDT" },
-                Price = new Interface.Model.InclusiveRange { Increment = 0.00000001M },
-                Quantity = new Interface.Model.InclusiveRange { Increment = 1 }
+                BaseAsset = new Core.Model.Asset { Symbol = "BTC" },
+                QuoteAsset = new Core.Model.Asset { Symbol = "USDT" },
+                Price = new Core.Model.InclusiveRange { Increment = 0.00000001M },
+                Quantity = new Core.Model.InclusiveRange { Increment = 1 }
             };
 
             // Act

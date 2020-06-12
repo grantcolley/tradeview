@@ -1,5 +1,5 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Enums;
-using DevelopmentInProgress.TradeView.Interface.Interfaces;
+﻿using DevelopmentInProgress.TradeView.Core.Enums;
+using DevelopmentInProgress.TradeView.Core.Interfaces;
 using DevelopmentInProgress.TradeView.Wpf.Common.Chart;
 using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
@@ -255,7 +255,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
         }
 
-        internal async void UpdateOrderBook(Interface.Model.OrderBook exchangeOrderBook)
+        internal async void UpdateOrderBook(Core.Model.OrderBook exchangeOrderBook)
         {
             if(symbolCancellationTokenSource.IsCancellationRequested)
             {

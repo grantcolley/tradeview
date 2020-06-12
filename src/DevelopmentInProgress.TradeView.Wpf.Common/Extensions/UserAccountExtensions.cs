@@ -6,7 +6,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 {
     public static class UserAccountExtensions
     {
-        public static UserAccount ToUserAccount(this Interface.Model.UserAccount ua)
+        public static UserAccount ToUserAccount(this Core.Model.UserAccount ua)
         {
             var userAccount = new UserAccount
             {
@@ -32,16 +32,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
             return userAccount;
         }
 
-        public static Interface.Model.UserAccount ToInterfaceUserAccount(this UserAccount ua)
+        public static Core.Model.UserAccount ToInterfaceUserAccount(this UserAccount ua)
         {
-            var userAccount = new Interface.Model.UserAccount
+            var userAccount = new Core.Model.UserAccount
             {
                 AccountName = ua.AccountName,
                 ApiKey = ua.ApiKey,
                 ApiSecret = ua.ApiSecret,
                 ApiPassPhrase = ua.ApiPassPhrase,
                 Exchange = ua.Exchange,
-                Preferences = new Interface.Model.Preferences
+                Preferences = new Core.Model.Preferences
                 {
                     SelectedSymbol = ua.Preferences.SelectedSymbol,
                     ShowAggregateTrades = ua.Preferences.ShowAggregateTrades,

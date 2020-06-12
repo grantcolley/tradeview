@@ -5,9 +5,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 {
     public static class StrategyExtensions
     {
-        public static Interface.Strategy.Strategy ToInterfaceStrategy(this Strategy strategy)
+        public static Core.Strategy.Strategy ToCoreStrategy(this Strategy strategy)
         {
-            var interfaceStrategy = new Interface.Strategy.Strategy
+            var interfaceStrategy = new Core.Strategy.Strategy
             {
                 Id = strategy.Id,
                 Name = strategy.Name,
@@ -23,9 +23,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
             return interfaceStrategy;
         }
 
-        public static Interface.Strategy.StrategyConfig ToInterfaceStrategyConfig(this Strategy strategy)
+        public static Core.Strategy.StrategyConfig ToCoreStrategyConfig(this Strategy strategy)
         {
-            var strategyConfig = new Interface.Strategy.StrategyConfig
+            var strategyConfig = new Core.Strategy.StrategyConfig
             {
                 Id = strategy.Id,
                 Name = strategy.Name,
@@ -50,7 +50,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
             return strategyConfig;
         }
 
-        public static Strategy ToWpfStrategy(this Interface.Strategy.StrategyConfig strategyConfig)
+        public static Strategy ToWpfStrategy(this Core.Strategy.StrategyConfig strategyConfig)
         {
             var strategy = new Strategy()
             {

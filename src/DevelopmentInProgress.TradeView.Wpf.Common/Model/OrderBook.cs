@@ -76,8 +76,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
             }
         }
 
-        public List<Interface.Model.OrderBookPriceLevel> Asks { get; set; }
-        public List<Interface.Model.OrderBookPriceLevel> Bids { get; set; }
+        public List<Core.Model.OrderBookPriceLevel> Asks { get; set; }
+        public List<Core.Model.OrderBookPriceLevel> Bids { get; set; }
 
         public List<OrderBookPriceLevel> TopAsks
         {

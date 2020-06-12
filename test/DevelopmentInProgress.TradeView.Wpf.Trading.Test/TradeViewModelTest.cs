@@ -2,18 +2,18 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DevelopmentInProgress.TradeView.Interface.Extensions;
+using DevelopmentInProgress.TradeView.Core.Extensions;
 using DevelopmentInProgress.TradeView.Test.Helper;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel;
-using InterfaceExtensions = DevelopmentInProgress.TradeView.Interface.Extensions;
+using InterfaceExtensions = DevelopmentInProgress.TradeView.Core.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Reactive.Linq;
 using DevelopmentInProgress.TradeView.Wpf.Trading.Events;
-using DevelopmentInProgress.TradeView.Interface.Validation;
+using DevelopmentInProgress.TradeView.Core.Validation;
 using Prism.Logging;
-using DevelopmentInProgress.TradeView.Interface.Enums;
+using DevelopmentInProgress.TradeView.Core.Enums;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 {
@@ -35,7 +35,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 
             tradeViewModel.SetSymbols(symbols.ToList());
 
-            var account = new Account(new Interface.Model.AccountInfo { User = new Interface.Model.User() })
+            var account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
                 ApiKey = "apikey",
                 ApiSecret = "apisecret"
@@ -67,7 +67,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 
             tradeViewModel.SetSymbols(symbols.ToList());
 
-            var account = new Account(new Interface.Model.AccountInfo { User = new Interface.Model.User() })
+            var account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
                 ApiKey = "apikey",
                 ApiSecret = "apisecret"
@@ -99,7 +99,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 
             tradeViewModel.SetSymbols(symbols.ToList());
 
-            var account = new Account(new Interface.Model.AccountInfo { User = new Interface.Model.User() })
+            var account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
                 ApiKey = "apikey",
                 ApiSecret = "apisecret"
@@ -109,7 +109,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 
             tradeViewModel.SetAccount(account);
 
-            var differentAccount = new Account(new Interface.Model.AccountInfo { User = new Interface.Model.User() })
+            var differentAccount = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
                 ApiKey = "test123",
                 ApiSecret = "test123"
@@ -158,7 +158,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
-            var account = new Account(new Interface.Model.AccountInfo { User = new Interface.Model.User() })
+            var account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
                 ApiKey = "apikey",
                 ApiSecret = "apisecret"
@@ -195,7 +195,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var exchangeService = new WpfExchangeService(exchangeApi);
             var tradeViewModel = new TradeViewModel(exchangeService, new DebugLogger());
 
-            var account = new Account(new Interface.Model.AccountInfo { User = new Interface.Model.User() })
+            var account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
                 ApiKey = "apikey",
                 ApiSecret = "apisecret"
@@ -524,8 +524,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var missing = OrderExtensions.OrderTypes().Except(tradeViewModel.OrderTypes).ToList();
             foreach(var orderType in missing)
             {
-                if (orderType != OrderExtensions.GetOrderTypeName(Interface.Model.OrderType.StopLoss)
-                    && orderType != OrderExtensions.GetOrderTypeName(Interface.Model.OrderType.TakeProfit))
+                if (orderType != OrderExtensions.GetOrderTypeName(Core.Model.OrderType.StopLoss)
+                    && orderType != OrderExtensions.GetOrderTypeName(Core.Model.OrderType.TakeProfit))
                 {
                     Assert.Fail();
                 }
@@ -544,7 +544,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
 
-            var account = new Account(new Interface.Model.AccountInfo { User = new Interface.Model.User() })
+            var account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
                 ApiKey = "apikey",
                 ApiSecret = "apisecret"
@@ -576,7 +576,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
 
-            var account = new Account(new Interface.Model.AccountInfo { User = new Interface.Model.User() })
+            var account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
                 ApiKey = "apikey",
                 ApiSecret = "apisecret"
@@ -609,7 +609,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
 
-            var account = new Account(new Interface.Model.AccountInfo { User = new Interface.Model.User() })
+            var account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
                 ApiKey = "apikey",
                 ApiSecret = "apisecret"
@@ -641,7 +641,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
 
-            var account = new Account(new Interface.Model.AccountInfo { User = new Interface.Model.User() })
+            var account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
                 ApiKey = "apikey",
                 ApiSecret = "apisecret"
@@ -692,7 +692,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
 
-            var account = new Account(new Interface.Model.AccountInfo { User = new Interface.Model.User() })
+            var account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
                 ApiKey = "apikey",
                 ApiSecret = "apisecret"
@@ -742,7 +742,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
 
-            var account = new Account(new Interface.Model.AccountInfo { User = new Interface.Model.User() })
+            var account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
                 ApiKey = "apikey",
                 ApiSecret = "apisecret"
@@ -793,7 +793,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
 
-            var account = new Account(new Interface.Model.AccountInfo { User = new Interface.Model.User() })
+            var account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
                 ApiKey = "apikey",
                 ApiSecret = "apisecret"
@@ -847,7 +847,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
             var trx = symbols.Single(s => s.Name.Equals("TRXBTC"));
 
-            var account = new Account(new Interface.Model.AccountInfo { User = new Interface.Model.User() })
+            var account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
                 ApiKey = "apikey",
                 ApiSecret = "apisecret"

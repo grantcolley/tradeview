@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Interfaces;
+﻿using DevelopmentInProgress.TradeView.Core.Interfaces;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using LiveCharts;
 using System;

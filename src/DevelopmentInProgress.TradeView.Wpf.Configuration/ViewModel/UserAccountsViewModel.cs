@@ -1,17 +1,16 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
+using DevelopmentInProgress.TradeView.Wpf.Common.Services;
+using DevelopmentInProgress.TradeView.Wpf.Configuration.Events;
+using DevelopmentInProgress.TradeView.Wpf.Configuration.Utility;
 using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using DevelopmentInProgress.TradeView.Wpf.Host.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.ViewModel;
-using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Input;
-using DevelopmentInProgress.TradeView.Wpf.Configuration.Events;
 using System.Reactive.Linq;
-using System.Collections.Generic;
-using DevelopmentInProgress.TradeView.Wpf.Configuration.Utility;
-using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 {

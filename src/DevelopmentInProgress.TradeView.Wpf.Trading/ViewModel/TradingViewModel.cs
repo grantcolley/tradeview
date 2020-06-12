@@ -1,19 +1,19 @@
-﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
+﻿using DevelopmentInProgress.TradeView.Wpf.Common.Chart;
+using DevelopmentInProgress.TradeView.Wpf.Common.Events;
+using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
+using DevelopmentInProgress.TradeView.Wpf.Common.Model;
+using DevelopmentInProgress.TradeView.Wpf.Common.Services;
+using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using DevelopmentInProgress.TradeView.Wpf.Host.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.ViewModel;
-using DevelopmentInProgress.TradeView.Wpf.Common.Services;
+using DevelopmentInProgress.TradeView.Wpf.Trading.Events;
+using Newtonsoft.Json;
+using Prism.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using DevelopmentInProgress.TradeView.Wpf.Trading.Events;
-using Prism.Logging;
-using DevelopmentInProgress.TradeView.Wpf.Common.Events;
-using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
-using DevelopmentInProgress.TradeView.Wpf.Common.Chart;
-using Newtonsoft.Json;
-using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
 using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
@@ -166,7 +166,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             tradeViewModel.Dispatcher = ViewModelContext.UiDispatcher;
             ordersViewModel.Dispatcher = ViewModelContext.UiDispatcher;
 
-            Account = new Account(new Interface.Model.AccountInfo { User = new Interface.Model.User() });
+            Account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() });
 
             try
             {

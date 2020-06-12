@@ -63,9 +63,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\DevelopmentInProgress.TradeView.Interface\DevelopmentInProgress.TradeView.Interface.csproj">
-      <Project>{e3236e65-3232-438d-8dc9-5cd6be419b68}</Project>
-      <Name>DevelopmentInProgress.TradeView.Interface</Name>
+    <ProjectReference Include="..\..\src\DevelopmentInProgress.TradeView.Core\DevelopmentInProgress.TradeView.Core.csproj">
+      <Project>{63c14275-0279-4cf1-bdd2-5aab8378d6d0}</Project>
+      <Name>DevelopmentInProgress.TradeView.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Test.Helper\DevelopmentInProgress.TradeView.Test.Helper.csproj">
       <Project>{57648e9e-b953-40c7-85fc-503270b99640}</Project>

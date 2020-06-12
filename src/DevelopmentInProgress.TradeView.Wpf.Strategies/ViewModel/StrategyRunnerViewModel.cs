@@ -1,5 +1,5 @@
-﻿using InterfaceModel = DevelopmentInProgress.TradeView.Interface.Model;
-using InterfaceStrategy = DevelopmentInProgress.TradeView.Interface.Strategy;
+﻿using CoreModel = DevelopmentInProgress.TradeView.Core.Model;
+using CoreStrategy = DevelopmentInProgress.TradeView.Core.Strategy;
 using DevelopmentInProgress.Socket.Client;
 using DevelopmentInProgress.TradeView.Common.Extensions;
 using DevelopmentInProgress.TradeView.Wpf.Common.Cache;
@@ -292,7 +292,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                 StrategyParametersViewModel.Strategy = Strategy;
 
-                var account = new Account(new InterfaceModel.AccountInfo { User = new InterfaceModel.User() });
+                var account = new Account(new CoreModel.AccountInfo { User = new CoreModel.User() });
 
                 if (Strategy.StrategySubscriptions.Any())
                 {
@@ -351,7 +351,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             await SetCommandVisibility(StrategyRunnerCommandVisibility.Connecting);
 
-            var strategyParameters = new InterfaceStrategy.StrategyParameters { StrategyName = Strategy.Name };
+            var strategyParameters = new CoreStrategy.StrategyParameters { StrategyName = Strategy.Name };
             var strategyParametersJson = JsonConvert.SerializeObject(strategyParameters);
 
             await StopAsync(strategyParametersJson);
@@ -462,10 +462,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                     return false;
                 }
 
-                var strategyParameters = new InterfaceStrategy.StrategyParameters { StrategyName = Strategy.Name };
+                var strategyParameters = new CoreStrategy.StrategyParameters { StrategyName = Strategy.Name };
                 var strategyParametersJson = JsonConvert.SerializeObject(strategyParameters);
 
-                var strategyRunnerClient = new InterfaceStrategy.StrategyRunnerClient();
+                var strategyRunnerClient = new CoreStrategy.StrategyRunnerClient();
 
                 var response = await strategyRunnerClient.PostAsync($"{SelectedServer.Url}/isstrategyrunning", strategyParametersJson);
 
@@ -540,12 +540,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                 if (result)
                 {
-                    var interfaceStrategy = Strategy.ToInterfaceStrategy();
+                    var interfaceStrategy = Strategy.ToCoreStrategy();
                     var jsonContent = JsonConvert.SerializeObject(interfaceStrategy);
 
                     var dependencies = strategy.Dependencies.Select(d => d.File);
 
-                    var strategyRunnerClient = new InterfaceStrategy.StrategyRunnerClient();
+                    var strategyRunnerClient = new CoreStrategy.StrategyRunnerClient();
 
                     var response = await strategyRunnerClient.PostAsync($"{SelectedServer.Url}/runstrategy", jsonContent, dependencies);
 
@@ -601,7 +601,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                     return;
                 }
 
-                var strategyRunnerClient = new TradeView.Interface.Strategy.StrategyRunnerClient();
+                var strategyRunnerClient = new TradeView.Core.Strategy.StrategyRunnerClient();
 
                 var response = await strategyRunnerClient.PostAsync($"{SelectedServer.Url}/updatestrategy", strategyParameters);
 
@@ -647,7 +647,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                     return;
                 }
 
-                var strategyRunnerClient = new TradeView.Interface.Strategy.StrategyRunnerClient();
+                var strategyRunnerClient = new TradeView.Core.Strategy.StrategyRunnerClient();
 
                 var response = await strategyRunnerClient.PostAsync($"{SelectedServer.Url}/stopstrategy", strategyParameters);
 
@@ -817,13 +817,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
-                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Interface.Strategy.StrategyNotification>>(message.Data);
+                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Core.Strategy.StrategyNotification>>(message.Data);
 
                 foreach (var notification in strategyNotifications)
                 {
                     NotificationsAdd(notification.GetMessage());
 
-                    if(notification.NotificationLevel.Equals(TradeView.Interface.Strategy.NotificationLevel.DisconnectClient))
+                    if(notification.NotificationLevel.Equals(TradeView.Core.Strategy.NotificationLevel.DisconnectClient))
                     {
                         await DisconnectSocketAsync();
                     }
@@ -841,7 +841,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
-                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Interface.Strategy.StrategyNotification>>(message.Data);
+                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Core.Strategy.StrategyNotification>>(message.Data);
 
                 var orderedStrategyNotifications = strategyNotifications.OrderBy(n => n.Timestamp).ToList();
 
@@ -859,7 +859,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
-                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Interface.Strategy.StrategyNotification>>(message.Data);
+                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Core.Strategy.StrategyNotification>>(message.Data);
 
                 var orderedStrategyNotifications = strategyNotifications.OrderBy(n => n.Timestamp).ToList();
 
@@ -877,7 +877,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
-                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Interface.Strategy.StrategyNotification>>(message.Data);
+                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Core.Strategy.StrategyNotification>>(message.Data);
 
                 var latestStrategyNotification = strategyNotifications.OrderBy(n => n.Timestamp).Last();
 
@@ -897,7 +897,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
-                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Interface.Strategy.StrategyNotification>>(message.Data);
+                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Core.Strategy.StrategyNotification>>(message.Data);
 
                 var orderedStrategyNotifications = strategyNotifications.OrderBy(n => n.Timestamp).ToList();
 

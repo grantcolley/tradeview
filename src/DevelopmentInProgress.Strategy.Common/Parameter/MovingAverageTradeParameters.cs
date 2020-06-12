@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Strategy;
+﻿using DevelopmentInProgress.TradeView.Core.Strategy;
 
 namespace DevelopmentInProgress.Strategy.Common.Parameter
 {

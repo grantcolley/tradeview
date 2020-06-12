@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Interfaces;
+﻿using DevelopmentInProgress.TradeView.Core.Interfaces;
 
 namespace DevelopmentInProgress.TradeView.Test.Helper
 {

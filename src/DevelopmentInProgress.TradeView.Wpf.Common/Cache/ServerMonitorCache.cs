@@ -21,7 +21,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
         private readonly ObservableCollection<ServerMonitor> serverMonitors;
         private readonly SemaphoreSlim serverMonitorSemaphoreSlim = new SemaphoreSlim(1, 1);
         private readonly Dictionary<string, IDisposable> serverMonitorSubscriptions;
-        private Interface.Server.ServerConfiguration serverConfiguraion;
+        private Core.Server.ServerConfiguration serverConfiguraion;
         private IDisposable observableInterval;
         private Dispatcher dispatcher;
         private bool disposed;
@@ -66,7 +66,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                         }
                     }
 
-                    Func<ServerMonitor, Interface.Server.Server, ServerMonitor> updateServerMonitor = (sm, s) =>
+                    Func<ServerMonitor, Core.Server.Server, ServerMonitor> updateServerMonitor = (sm, s) =>
                     {
                         sm.Url = s.Url;
                         sm.MaxDegreeOfParallelism = s.MaxDegreeOfParallelism;

@@ -30,12 +30,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
 
         public Task SaveStrategy(Strategy strategy)
         {
-            return configurationStrategy.SaveStrategyAsync(strategy.ToInterfaceStrategyConfig());
+            return configurationStrategy.SaveStrategyAsync(strategy.ToCoreStrategyConfig());
         }
 
         public Task DeleteStrategy(Strategy strategy)
         {
-            return configurationStrategy.DeleteStrategyAsync(strategy.ToInterfaceStrategyConfig());
+            return configurationStrategy.DeleteStrategyAsync(strategy.ToCoreStrategyConfig());
         }
     }
 }

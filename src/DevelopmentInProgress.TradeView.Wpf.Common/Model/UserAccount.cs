@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Enums;
+﻿using DevelopmentInProgress.TradeView.Core.Enums;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 {

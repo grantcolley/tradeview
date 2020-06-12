@@ -1,10 +1,9 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Enums;
-using DevelopmentInProgress.TradeView.Interface.Extensions;
+﻿using DevelopmentInProgress.TradeView.Core.Enums;
+using DevelopmentInProgress.TradeView.Core.Extensions;
 using DevelopmentInProgress.TradeView.Wpf.Common.Command;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Configuration.Events;
-using Newtonsoft.Json;
 using Prism.Logging;
 using System;
 using System.Windows.Input;

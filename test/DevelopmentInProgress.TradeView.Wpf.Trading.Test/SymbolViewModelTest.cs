@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DevelopmentInProgress.TradeView.Interface.Enums;
-using DevelopmentInProgress.TradeView.Interface.Interfaces;
-using DevelopmentInProgress.TradeView.Interface.Model;
+using DevelopmentInProgress.TradeView.Core.Enums;
+using DevelopmentInProgress.TradeView.Core.Interfaces;
+using DevelopmentInProgress.TradeView.Core.Model;
 using DevelopmentInProgress.TradeView.Test.Helper;
 using DevelopmentInProgress.TradeView.Wpf.Common.Chart;
 using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;

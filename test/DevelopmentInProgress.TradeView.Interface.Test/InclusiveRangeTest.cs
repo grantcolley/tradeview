@@ -1,7 +1,7 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Model;
+﻿using DevelopmentInProgress.TradeView.Core.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace DevelopmentInProgress.TradeView.Interface.Test
+namespace DevelopmentInProgress.TradeView.Core.Test
 {
     [TestClass]
     public class InclusiveRangeTest

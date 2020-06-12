@@ -1,5 +1,5 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Enums;
-using DevelopmentInProgress.TradeView.Interface.Extensions;
+﻿using DevelopmentInProgress.TradeView.Core.Enums;
+using DevelopmentInProgress.TradeView.Core.Extensions;
 using System.Collections.Generic;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
@@ -15,13 +15,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         public string NameDelimiter { get; set; }
         public string ExchangeSymbol { get; set; }
         public decimal NotionalMinimumValue { get; set; }
-        public Interface.Model.Asset BaseAsset { get; set; }
-        public Interface.Model.InclusiveRange Price { get; set; }
-        public Interface.Model.InclusiveRange Quantity { get; set; }
-        public Interface.Model.Asset QuoteAsset { get; set; }
-        public Interface.Model.SymbolStatus Status { get; set; }
+        public Core.Model.Asset BaseAsset { get; set; }
+        public Core.Model.InclusiveRange Price { get; set; }
+        public Core.Model.InclusiveRange Quantity { get; set; }
+        public Core.Model.Asset QuoteAsset { get; set; }
+        public Core.Model.SymbolStatus Status { get; set; }
         public bool IsIcebergAllowed { get; set; }
-        public IEnumerable<Interface.Model.OrderType> OrderTypes { get; set; }
+        public IEnumerable<Core.Model.OrderType> OrderTypes { get; set; }
         public SymbolStatistics SymbolStatistics { get; set; }
 
         public bool IsFavourite 

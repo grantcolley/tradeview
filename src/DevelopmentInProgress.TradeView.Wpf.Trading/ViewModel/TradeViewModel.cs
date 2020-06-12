@@ -1,17 +1,17 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Extensions;
+﻿using DevelopmentInProgress.TradeView.Core.Extensions;
 using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
+using DevelopmentInProgress.TradeView.Wpf.Common.Services;
+using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Host.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Trading.Events;
-using DevelopmentInProgress.TradeView.Wpf.Common.Services;
+using Prism.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Input;
-using InterfaceExtensions = DevelopmentInProgress.TradeView.Interface.Extensions;
 using System.Threading.Tasks;
-using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
-using Prism.Logging;
+using System.Windows.Input;
+using CoreExtensions = DevelopmentInProgress.TradeView.Core.Extensions;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 {
@@ -305,7 +305,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                     return SelectedSymbol.OrderTypes.GetOrderTypeNames();
                 }
 
-                return InterfaceExtensions.OrderExtensions.OrderTypes();
+                return CoreExtensions.OrderExtensions.OrderTypes();
             }
         }
 
@@ -377,15 +377,15 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
         private async void Buy(object param)
         {
-            await SendClientOrder(Interface.Model.OrderSide.Buy);
+            await SendClientOrder(Core.Model.OrderSide.Buy);
         }
 
         private async void Sell(object param)
         {
-            await SendClientOrder(Interface.Model.OrderSide.Sell);
+            await SendClientOrder(Core.Model.OrderSide.Sell);
         }
 
-        private async Task SendClientOrder(Interface.Model.OrderSide orderSide)
+        private async Task SendClientOrder(Core.Model.OrderSide orderSide)
         {
             try
             {
@@ -394,7 +394,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                     throw new Exception("Order not valid: No order type.");
                 }
 
-                var clientOrder = new Interface.Model.ClientOrder
+                var clientOrder = new Core.Model.ClientOrder
                 {
                     Symbol = SelectedSymbol?.ExchangeSymbol,
                     Type = SelectedOrderType.GetOrderType(),

@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Server;
+﻿using DevelopmentInProgress.TradeView.Core.Server;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

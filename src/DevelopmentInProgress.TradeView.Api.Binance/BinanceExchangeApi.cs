@@ -1,5 +1,5 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Events;
-using DevelopmentInProgress.TradeView.Interface.Interfaces;
+﻿using DevelopmentInProgress.TradeView.Core.Events;
+using DevelopmentInProgress.TradeView.Core.Interfaces;
 using Binance;
 using Binance.Cache;
 using Binance.WebSocket;
@@ -8,13 +8,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DevelopmentInProgress.TradeView.Interface.Enums;
+using DevelopmentInProgress.TradeView.Core.Enums;
 
 namespace DevelopmentInProgress.TradeView.Api.Binance
 {
     public class BinanceExchangeApi : IExchangeApi
     {
-        public async Task<Interface.Model.Order> PlaceOrder(Interface.Model.User user, Interface.Model.ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Core.Model.Order> PlaceOrder(Core.Model.User user, Core.Model.ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
             var binanceApi = new BinanceApi();
             using (var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret))
@@ -25,7 +25,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             }
         }
 
-        public async Task<string> CancelOrderAsync(Interface.Model.User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<string> CancelOrderAsync(Core.Model.User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
             var binanceApi = new BinanceApi();
             var id = Convert.ToInt64(orderId);
@@ -36,20 +36,20 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             }
         }
 
-        public async Task<Interface.Model.AccountInfo> GetAccountInfoAsync(Interface.Model.User user, CancellationToken cancellationToken)
+        public async Task<Core.Model.AccountInfo> GetAccountInfoAsync(Core.Model.User user, CancellationToken cancellationToken)
         {
             var binanceApi = new BinanceApi();
             using (var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret))
             {
                 var result = await binanceApi.GetAccountInfoAsync(apiUser, 0, cancellationToken).ConfigureAwait(false);
                 var accountInfo = GetAccountInfo(result);
-                user.RateLimiter = new Interface.Model.RateLimiter { IsEnabled = result.User.RateLimiter.IsEnabled };
+                user.RateLimiter = new Core.Model.RateLimiter { IsEnabled = result.User.RateLimiter.IsEnabled };
                 accountInfo.User = user;
                 return accountInfo;
             }
         }
 
-        public async Task<IEnumerable<Interface.Model.AccountTrade>> GetAccountTradesAsync(Interface.Model.User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IEnumerable<Core.Model.AccountTrade>> GetAccountTradesAsync(Core.Model.User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
             var binanceApi = new BinanceApi();
             using (var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret))
@@ -60,7 +60,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             }
         }
 
-        public async Task<IEnumerable<Interface.Model.Candlestick>> GetCandlesticksAsync(string symbol, Interface.Model.CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = 0, CancellationToken token = default(CancellationToken))
+        public async Task<IEnumerable<Core.Model.Candlestick>> GetCandlesticksAsync(string symbol, Core.Model.CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = 0, CancellationToken token = default(CancellationToken))
         {
             var binanceApi = new BinanceApi();
             var candlestickInterval = interval.ToBinanceCandlestickInterval();
@@ -69,12 +69,12 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             return candlesticks;
         }
 
-        public async Task<IEnumerable<Interface.Model.Symbol>> GetSymbols24HourStatisticsAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerable<Core.Model.Symbol>> GetSymbols24HourStatisticsAsync(CancellationToken cancellationToken)
         {
             var symbols = await GetSymbolsAsync(cancellationToken).ConfigureAwait(false);
             var symbolStatistics = await Get24HourStatisticsAsync(cancellationToken).ConfigureAwait(false);
 
-            Func<Interface.Model.Symbol, Interface.Model.SymbolStats, Interface.Model.Symbol> f = (s, ss) =>
+            Func<Core.Model.Symbol, Core.Model.SymbolStats, Core.Model.Symbol> f = (s, ss) =>
             {
                 s.SymbolStatistics = ss;
                 return s;
@@ -87,28 +87,28 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             return updatedSymbols;
         }
 
-        public async Task<IEnumerable<Interface.Model.Symbol>> GetSymbolsAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerable<Core.Model.Symbol>> GetSymbolsAsync(CancellationToken cancellationToken)
         {
             var binanceApi = new BinanceApi();
             var result = await binanceApi.GetSymbolsAsync(cancellationToken).ConfigureAwait(false);
-            var symbols = result.Select(s => new Interface.Model.Symbol
+            var symbols = result.Select(s => new Core.Model.Symbol
             {
                 Name = $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}",
                 ExchangeSymbol = $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}",
                 Exchange = Exchange.Binance,
                 NotionalMinimumValue = s.NotionalMinimumValue,
-                BaseAsset = new Interface.Model.Asset { Symbol = s.BaseAsset.Symbol, Precision = s.BaseAsset.Precision },
-                Price = new Interface.Model.InclusiveRange { Increment = s.Price.Increment /*, Minimum = s.Price.Minimum, Maximum = s.Price.Maximum*/ }, // HACK : remove Price Min and Max because it realtime calcs hits performance.
-                Quantity = new Interface.Model.InclusiveRange { Increment = s.Quantity.Increment, Minimum = s.Quantity.Minimum, Maximum = s.Quantity.Maximum },
-                QuoteAsset = new Interface.Model.Asset { Symbol = s.QuoteAsset.Symbol, Precision = s.QuoteAsset.Precision },
-                Status = (Interface.Model.SymbolStatus)s.Status,
+                BaseAsset = new Core.Model.Asset { Symbol = s.BaseAsset.Symbol, Precision = s.BaseAsset.Precision },
+                Price = new Core.Model.InclusiveRange { Increment = s.Price.Increment /*, Minimum = s.Price.Minimum, Maximum = s.Price.Maximum*/ }, // HACK : remove Price Min and Max because it realtime calcs hits performance.
+                Quantity = new Core.Model.InclusiveRange { Increment = s.Quantity.Increment, Minimum = s.Quantity.Minimum, Maximum = s.Quantity.Maximum },
+                QuoteAsset = new Core.Model.Asset { Symbol = s.QuoteAsset.Symbol, Precision = s.QuoteAsset.Precision },
+                Status = (Core.Model.SymbolStatus)s.Status,
                 IsIcebergAllowed = s.IsIcebergAllowed,
-                OrderTypes = (IEnumerable<Interface.Model.OrderType>)s.OrderTypes
+                OrderTypes = (IEnumerable<Core.Model.OrderType>)s.OrderTypes
             }).ToList();
             return symbols;
         }
 
-        public async Task<IEnumerable<Interface.Model.SymbolStats>> Get24HourStatisticsAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerable<Core.Model.SymbolStats>> Get24HourStatisticsAsync(CancellationToken cancellationToken)
         {
             var binanceApi = new BinanceApi();
             var stats = await binanceApi.Get24HourStatisticsAsync(cancellationToken).ConfigureAwait(false);
@@ -116,7 +116,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             return symbolsStats;
         }
 
-        public async Task<Interface.Model.OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken)
+        public async Task<Core.Model.OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
             var binanceApi = new BinanceApi();
             var result = await binanceApi.GetOrderBookAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
@@ -124,7 +124,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             return orderBook;
         }
 
-        public async Task<IEnumerable<Interface.Model.AggregateTrade>> GetAggregateTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Core.Model.AggregateTrade>> GetAggregateTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
             var binanceApi = new BinanceApi();
             var trades = await binanceApi.GetAggregateTradesAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
@@ -132,7 +132,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             return aggregateTrades;
         }
 
-        public async Task<IEnumerable<Interface.Model.Trade>> GetTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Core.Model.Trade>> GetTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
             var binanceApi = new BinanceApi();
             var result = await binanceApi.GetTradesAsync(symbol, limit, cancellationToken).ConfigureAwait(false);
@@ -140,7 +140,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             return trades;
         }
 
-        public async Task<IEnumerable<Interface.Model.Order>> GetOpenOrdersAsync(Interface.Model.User user, string symbol = null, long recWindow = 0, Action<Exception> exception = default(Action<Exception>), CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IEnumerable<Core.Model.Order>> GetOpenOrdersAsync(Core.Model.User user, string symbol = null, long recWindow = 0, Action<Exception> exception = default(Action<Exception>), CancellationToken cancellationToken = default(CancellationToken))
         {
             var binanceApi = new BinanceApi();
             using (var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret))
@@ -151,7 +151,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             }
         }
 
-        public Task SubscribeCandlesticks(string symbol, Interface.Model.CandlestickInterval candlestickInterval, int limit, Action<CandlestickEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public Task SubscribeCandlesticks(string symbol, Core.Model.CandlestickInterval candlestickInterval, int limit, Action<CandlestickEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             var tcs = new TaskCompletionSource<object>();
 
@@ -351,7 +351,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             return tcs.Task;
         }
 
-        public async Task SubscribeAccountInfo(Interface.Model.User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
+        public async Task SubscribeAccountInfo(Core.Model.User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             var binanceApi = new BinanceApi();
             var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret);
@@ -385,29 +385,29 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             });
         }
 
-        private Interface.Model.AccountInfo GetAccountInfo(AccountInfo a)
+        private Core.Model.AccountInfo GetAccountInfo(AccountInfo a)
         {
-            var accountInfo = new Interface.Model.AccountInfo
+            var accountInfo = new Core.Model.AccountInfo
             {
                 Exchange = Exchange.Binance,
-                Commissions = new Interface.Model.AccountCommissions { Buyer = a.Commissions.Buyer, Maker = a.Commissions.Maker, Seller = a.Commissions.Seller, Taker = a.Commissions.Taker },
-                Status = new Interface.Model.AccountStatus { CanDeposit = a.Status.CanDeposit, CanTrade = a.Status.CanTrade, CanWithdraw = a.Status.CanWithdraw },
+                Commissions = new Core.Model.AccountCommissions { Buyer = a.Commissions.Buyer, Maker = a.Commissions.Maker, Seller = a.Commissions.Seller, Taker = a.Commissions.Taker },
+                Status = new Core.Model.AccountStatus { CanDeposit = a.Status.CanDeposit, CanTrade = a.Status.CanTrade, CanWithdraw = a.Status.CanWithdraw },
                 Time = a.Time,
-                Balances = new List<Interface.Model.AccountBalance>()
+                Balances = new List<Core.Model.AccountBalance>()
             };
 
             var balances = a.Balances.Where(b => b.Free > 0 || b.Locked > 0);
             foreach (var balance in balances)
             {
-                accountInfo.Balances.Add(new Interface.Model.AccountBalance { Asset = balance.Asset, Free = balance.Free, Locked = balance.Locked });
+                accountInfo.Balances.Add(new Core.Model.AccountBalance { Asset = balance.Asset, Free = balance.Free, Locked = balance.Locked });
             }
 
             return accountInfo;
         }
 
-        private Interface.Model.Order NewOrder(Interface.Model.User user, Order o)
+        private Core.Model.Order NewOrder(Core.Model.User user, Order o)
         {
-            return new Interface.Model.Order
+            return new Core.Model.Order
             {
                 User = user,
                 Symbol = o.Symbol,
@@ -417,15 +417,15 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
                 Price = o.Price,
                 OriginalQuantity = o.OriginalQuantity,
                 ExecutedQuantity = o.ExecutedQuantity,
-                Status = (Interface.Model.OrderStatus)o.Status,
-                TimeInForce = (Interface.Model.TimeInForce)o.TimeInForce,
-                Type = (Interface.Model.OrderType)o.Type,
-                Side = (Interface.Model.OrderSide)o.Side,
+                Status = (Core.Model.OrderStatus)o.Status,
+                TimeInForce = (Core.Model.TimeInForce)o.TimeInForce,
+                Type = (Core.Model.OrderType)o.Type,
+                Side = (Core.Model.OrderSide)o.Side,
                 StopPrice = o.StopPrice,
                 IcebergQuantity = o.IcebergQuantity,
                 Time = o.Time,
                 IsWorking = o.IsWorking,
-                Fills = o.Fills?.Select(f => new Interface.Model.Fill
+                Fills = o.Fills?.Select(f => new Core.Model.Fill
                 {
                     Price = f.Price,
                     Quantity = f.Quantity,
@@ -436,9 +436,9 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             };
         }
 
-        private Interface.Model.SymbolStats NewSymbolStats(SymbolStatistics s)
+        private Core.Model.SymbolStats NewSymbolStats(SymbolStatistics s)
         {
-            return new Interface.Model.SymbolStats
+            return new Core.Model.SymbolStats
             {
                 Exchange = Exchange.Binance,
                 FirstTradeId = s.FirstTradeId,
@@ -466,24 +466,24 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             };
         }
 
-        private Interface.Model.OrderBook NewOrderBook(OrderBook ob)
+        private Core.Model.OrderBook NewOrderBook(OrderBook ob)
         {
-            var orderBook = new Interface.Model.OrderBook
+            var orderBook = new Core.Model.OrderBook
             {
                 Symbol = ob.Symbol,
                 Exchange = Exchange.Binance,
                 LastUpdateId = ob.LastUpdateId
             };
 
-            orderBook.Asks = (from ask in ob.Asks select new Interface.Model.OrderBookPriceLevel { Price = ask.Price, Quantity = ask.Quantity }).ToList();
-            orderBook.Bids = (from bid in ob.Bids select new Interface.Model.OrderBookPriceLevel { Price = bid.Price, Quantity = bid.Quantity }).ToList();
+            orderBook.Asks = (from ask in ob.Asks select new Core.Model.OrderBookPriceLevel { Price = ask.Price, Quantity = ask.Quantity }).ToList();
+            orderBook.Bids = (from bid in ob.Bids select new Core.Model.OrderBookPriceLevel { Price = bid.Price, Quantity = bid.Quantity }).ToList();
 
             return orderBook;
         }
 
-        private Interface.Model.AggregateTrade NewAggregateTrade(AggregateTrade at)
+        private Core.Model.AggregateTrade NewAggregateTrade(AggregateTrade at)
         {
-            return new Interface.Model.AggregateTrade
+            return new Core.Model.AggregateTrade
             {
                 Symbol = at.Symbol,
                 Exchange = Exchange.Binance,
@@ -498,9 +498,9 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             };
         }
 
-        private Interface.Model.Trade NewTrade(Trade t)
+        private Core.Model.Trade NewTrade(Trade t)
         {
-            return new Interface.Model.Trade
+            return new Core.Model.Trade
             {
                 Symbol = t.Symbol,
                 Exchange = Exchange.Binance,
@@ -515,11 +515,11 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             };
         }
 
-        private Interface.Model.Candlestick NewCandlestick(Candlestick c)
+        private Core.Model.Candlestick NewCandlestick(Candlestick c)
         {
             var interval = c.Interval.ToTradeViewCandlestickInterval();
 
-            return new Interface.Model.Candlestick
+            return new Core.Model.Candlestick
             {
                 Symbol = c.Symbol,
                 Exchange = Exchange.Binance,
@@ -538,9 +538,9 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             };
         }
 
-        private Interface.Model.AccountTrade NewAccountTrade(AccountTrade t)
+        private Core.Model.AccountTrade NewAccountTrade(AccountTrade t)
         {
-            return new Interface.Model.AccountTrade
+            return new Core.Model.AccountTrade
             {
                 Symbol = t.Symbol,
                 Exchange = Exchange.Binance,

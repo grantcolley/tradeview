@@ -1,9 +1,9 @@
 ﻿using CryptoExchange.Net.Objects;
 using CryptoExchange.Net.Sockets;
-using DevelopmentInProgress.TradeView.Interface.Enums;
-using DevelopmentInProgress.TradeView.Interface.Events;
-using DevelopmentInProgress.TradeView.Interface.Interfaces;
-using DevelopmentInProgress.TradeView.Interface.Model;
+using DevelopmentInProgress.TradeView.Core.Enums;
+using DevelopmentInProgress.TradeView.Core.Events;
+using DevelopmentInProgress.TradeView.Core.Interfaces;
+using DevelopmentInProgress.TradeView.Core.Model;
 using Kucoin.Net;
 using Kucoin.Net.Objects;
 using System;

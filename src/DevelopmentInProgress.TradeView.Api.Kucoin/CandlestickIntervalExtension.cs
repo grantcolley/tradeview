@@ -1,75 +1,76 @@
-﻿using Kucoin.Net.Objects;
+﻿using DevelopmentInProgress.TradeView.Core.Model;
+using Kucoin.Net.Objects;
 using System;
 
 namespace DevelopmentInProgress.TradeView.Api.Kucoin
 {
     public static class CandlestickIntervalExtension
     {
-        public static KucoinKlineInterval ToKucoinCandlestickInterval(this Interface.Model.CandlestickInterval candlestickInterval)
+        public static KucoinKlineInterval ToKucoinCandlestickInterval(this CandlestickInterval candlestickInterval)
         {
             switch (candlestickInterval)
             {
-                case Interface.Model.CandlestickInterval.Minute:
+                case CandlestickInterval.Minute:
                     return KucoinKlineInterval.OneMinute;
-                case Interface.Model.CandlestickInterval.Minutes3:
+                case CandlestickInterval.Minutes3:
                     return KucoinKlineInterval.ThreeMinutes;
-                case Interface.Model.CandlestickInterval.Minutes5:
+                case CandlestickInterval.Minutes5:
                     return KucoinKlineInterval.FiveMinutes;
-                case Interface.Model.CandlestickInterval.Minutes15:
+                case CandlestickInterval.Minutes15:
                     return KucoinKlineInterval.FifteenMinutes;
-                case Interface.Model.CandlestickInterval.Minutes30:
+                case CandlestickInterval.Minutes30:
                     return KucoinKlineInterval.ThirtyMinutes;
-                case Interface.Model.CandlestickInterval.Hour:
+                case CandlestickInterval.Hour:
                     return KucoinKlineInterval.OneHour;
-                case Interface.Model.CandlestickInterval.Hours2:
+                case CandlestickInterval.Hours2:
                     return KucoinKlineInterval.TwoHours;
-                case Interface.Model.CandlestickInterval.Hours4:
+                case CandlestickInterval.Hours4:
                     return KucoinKlineInterval.FourHours;
-                case Interface.Model.CandlestickInterval.Hours6:
+                case CandlestickInterval.Hours6:
                     return KucoinKlineInterval.SixHours;
-                case Interface.Model.CandlestickInterval.Hours8:
+                case CandlestickInterval.Hours8:
                     return KucoinKlineInterval.EightHours;
-                case Interface.Model.CandlestickInterval.Hours12:
+                case CandlestickInterval.Hours12:
                     return KucoinKlineInterval.TwelfHours;
-                case Interface.Model.CandlestickInterval.Day:
+                case CandlestickInterval.Day:
                     return KucoinKlineInterval.OneDay;
-                case Interface.Model.CandlestickInterval.Week:
+                case CandlestickInterval.Week:
                     return KucoinKlineInterval.OneWeek;
                 default:
                     throw new NotImplementedException();
             }
         }
 
-        public static Interface.Model.CandlestickInterval ToTradeViewCandlestickInterval(this KucoinKlineInterval candlestickInterval)
+        public static CandlestickInterval ToTradeViewCandlestickInterval(this KucoinKlineInterval candlestickInterval)
         {
             switch (candlestickInterval)
             {
                 case KucoinKlineInterval.OneMinute:
-                    return Interface.Model.CandlestickInterval.Minute;
+                    return CandlestickInterval.Minute;
                 case KucoinKlineInterval.ThreeMinutes:
-                    return Interface.Model.CandlestickInterval.Minutes3;
+                    return CandlestickInterval.Minutes3;
                 case KucoinKlineInterval.FiveMinutes:
-                    return Interface.Model.CandlestickInterval.Minutes5;
+                    return CandlestickInterval.Minutes5;
                 case KucoinKlineInterval.FifteenMinutes:
-                    return Interface.Model.CandlestickInterval.Minutes15;
+                    return CandlestickInterval.Minutes15;
                 case KucoinKlineInterval.ThirtyMinutes:
-                    return Interface.Model.CandlestickInterval.Minutes30;
+                    return CandlestickInterval.Minutes30;
                 case KucoinKlineInterval.OneHour:
-                    return Interface.Model.CandlestickInterval.Hour;
+                    return CandlestickInterval.Hour;
                 case KucoinKlineInterval.TwoHours:
-                    return Interface.Model.CandlestickInterval.Hours2;
+                    return CandlestickInterval.Hours2;
                 case KucoinKlineInterval.FourHours:
-                    return Interface.Model.CandlestickInterval.Hours4;
+                    return CandlestickInterval.Hours4;
                 case KucoinKlineInterval.SixHours:
-                    return Interface.Model.CandlestickInterval.Hours6;
+                    return CandlestickInterval.Hours6;
                 case KucoinKlineInterval.EightHours:
-                    return Interface.Model.CandlestickInterval.Hours8;
+                    return CandlestickInterval.Hours8;
                 case KucoinKlineInterval.TwelfHours:
-                    return Interface.Model.CandlestickInterval.Hours12;
+                    return CandlestickInterval.Hours12;
                 case KucoinKlineInterval.OneDay:
-                    return Interface.Model.CandlestickInterval.Day;
+                    return CandlestickInterval.Day;
                 case KucoinKlineInterval.OneWeek:
-                    return Interface.Model.CandlestickInterval.Week;
+                    return CandlestickInterval.Week;
                 default:
                     throw new NotImplementedException();
             }

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using DevelopmentInProgress.TradeView.Test.Helper;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DevelopmentInProgress.TradeView.Interface.Enums;
+using DevelopmentInProgress.TradeView.Core.Enums;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 {
@@ -20,7 +20,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken);
 
-            var orderTypes = new List<Interface.Model.OrderType>();
+            var orderTypes = new List<Core.Model.OrderType>();
             foreach(var symbol in symbols)
             {
                 foreach(var orderType in symbol.OrderTypes)

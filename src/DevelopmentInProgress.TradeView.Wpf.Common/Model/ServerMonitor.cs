@@ -331,9 +331,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         {
             try
             {
-                var serverMonitorNotifications = JsonConvert.DeserializeObject<List<Interface.Server.ServerNotification>>(message.Data);
+                var serverMonitorNotifications = JsonConvert.DeserializeObject<List<Core.Server.ServerNotification>>(message.Data);
 
-                if (serverMonitorNotifications.Any(smn => smn.Equals(Interface.Server.ServerNotificationLevel.DisconnectClient)))
+                if (serverMonitorNotifications.Any(smn => smn.Equals(Core.Server.ServerNotificationLevel.DisconnectClient)))
                 {
                     await DisposeSocketAsync();
                 }
@@ -341,7 +341,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 {
                     var serverMonitorNotification = serverMonitorNotifications.OrderByDescending(smn => smn.Timestamp).First();
 
-                    var serverMonitor = JsonConvert.DeserializeObject<Interface.Server.ServerMonitor>(serverMonitorNotification.Message);
+                    var serverMonitor = JsonConvert.DeserializeObject<Core.Server.ServerMonitor>(serverMonitorNotification.Message);
 
                     ServerMonitorHelper.UpdateServerMonitor(this, serverMonitor);
 

@@ -8,7 +8,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 {
     public static class ServerMonitorHelper
     {
-        public static void UpdateServerMonitor(ServerMonitor serverMonitor, Interface.Server.ServerMonitor ism)
+        public static void UpdateServerMonitor(ServerMonitor serverMonitor, Core.Server.ServerMonitor ism)
         {
             serverMonitor.Started = ism.Started;
             serverMonitor.StartedBy = ism.StartedBy;
@@ -22,7 +22,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             serverMonitor.StrategyCount = serverMonitor.Strategies.Count;
         }
 
-        private static void RemoveOldStrategies(ObservableCollection<ServerStrategy> strategies, List<Interface.Server.ServerStrategy> serverStrategies)
+        private static void RemoveOldStrategies(ObservableCollection<ServerStrategy> strategies, List<Core.Server.ServerStrategy> serverStrategies)
         {
             var removeStrategies = strategies.Where(s => !serverStrategies.Any(ism => ism.Strategy.Name == s.Name)).ToList();
             foreach (var strategy in removeStrategies)
@@ -31,9 +31,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             }
         }
 
-        private static void UpdateStrategies(ObservableCollection<ServerStrategy> strategies, List<Interface.Server.ServerStrategy> serverStrategies)
+        private static void UpdateStrategies(ObservableCollection<ServerStrategy> strategies, List<Core.Server.ServerStrategy> serverStrategies)
         {
-            Func<ServerStrategy, Interface.Server.ServerStrategy, ServerStrategy> updateStrategy = ((s, ism) =>
+            Func<ServerStrategy, Core.Server.ServerStrategy, ServerStrategy> updateStrategy = ((s, ism) =>
             {
                 s.Started = ism.Started;
                 s.StartedBy = ism.StartedBy;
@@ -68,7 +68,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
              select updateStrategy(s, ism)).ToList();
         }
 
-        private static void AddStrategies(ObservableCollection<ServerStrategy> strategies, List<Interface.Server.ServerStrategy> serverStrategies)
+        private static void AddStrategies(ObservableCollection<ServerStrategy> strategies, List<Core.Server.ServerStrategy> serverStrategies)
         {
             var newServerStrategies = serverStrategies.Where(ism => !strategies.Any(s => s.Name == ism.Strategy.Name)).ToList();
 

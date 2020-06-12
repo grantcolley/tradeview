@@ -1,6 +1,6 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Enums;
-using DevelopmentInProgress.TradeView.Interface.Model;
-using DevelopmentInProgress.TradeView.Interface.Strategy;
+﻿using DevelopmentInProgress.TradeView.Core.Enums;
+using DevelopmentInProgress.TradeView.Core.Model;
+using DevelopmentInProgress.TradeView.Core.Strategy;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -154,12 +154,12 @@ namespace DevelopmentInProgress.TradeView.Data.File
                 Dependencies = new List<string> 
                 {
                     Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.Common.dll"),
-                    Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.TradeView.Interface.dll"),
+                    Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.TradeView.Core.dll"),
                     Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.MovingAverage.dll"),
                 },
                 DisplayDependencies = new List<string>
                 {
-                    Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.TradeView.Interface.dll"),
+                    Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.TradeView.Core.dll"),
                     Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.MovingAverage.dll"),
                     Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.MovingAverage.Wpf.dll")
                 }

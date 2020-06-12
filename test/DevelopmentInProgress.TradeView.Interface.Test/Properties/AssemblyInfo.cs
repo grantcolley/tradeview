@@ -2,11 +2,11 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("DevelopmentInProgress.TradeView.Interface.Test")]
+[assembly: AssemblyTitle("DevelopmentInProgress.TradeView.Core.Test")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DevelopmentInProgress.TradeView.Interface.Test")]
+[assembly: AssemblyProduct("DevelopmentInProgress.TradeView.Core.Test")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

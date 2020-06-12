@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Strategy;
+﻿using DevelopmentInProgress.TradeView.Core.Strategy;
 using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions

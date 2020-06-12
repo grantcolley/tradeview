@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DevelopmentInProgress.Strategy.Common\DevelopmentInProgress.Strategy.Common.csproj" />
-    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Interface\DevelopmentInProgress.TradeView.Interface.csproj" />
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Core\DevelopmentInProgress.TradeView.Core.csproj" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

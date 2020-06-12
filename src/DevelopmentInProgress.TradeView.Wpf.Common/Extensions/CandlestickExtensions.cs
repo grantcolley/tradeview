@@ -4,7 +4,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 {
     public static class CandlestickExtensions
     {
-        public static Candlestick ToViewCandlestick(this Interface.Model.Candlestick c)
+        public static Candlestick ToViewCandlestick(this Core.Model.Candlestick c)
         {
             return new Candlestick
             {

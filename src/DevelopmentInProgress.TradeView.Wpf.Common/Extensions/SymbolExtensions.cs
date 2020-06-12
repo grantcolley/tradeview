@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.TradeView.Interface.Extensions;
+﻿using DevelopmentInProgress.TradeView.Core.Extensions;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using System;
 
@@ -6,9 +6,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 {
     public static class SymbolExtensions
     {
-        public static Interface.Model.Symbol GetInterfaceSymbol(this Symbol s)
+        public static Core.Model.Symbol GetInterfaceSymbol(this Symbol s)
         {
-            return new Interface.Model.Symbol
+            return new Core.Model.Symbol
             {
                 Name = s.Name,
                 Exchange = s.Exchange,
@@ -25,7 +25,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
             };
         }
 
-        public static Symbol GetViewSymbol(this Interface.Model.Symbol s)
+        public static Symbol GetViewSymbol(this Core.Model.Symbol s)
         {
             var symbol =  new Symbol
             {
@@ -52,7 +52,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
             return symbol;
         }
 
-        public static Symbol UpdateStatistics(this Symbol sy, Interface.Model.SymbolStats st)
+        public static Symbol UpdateStatistics(this Symbol sy, Core.Model.SymbolStats st)
         {
             sy.SymbolStatistics.PriceChangePercent = decimal.Round(st.PriceChangePercent, 2, MidpointRounding.AwayFromZero);
             sy.PriceChangePercentDirection = sy.SymbolStatistics.PriceChangePercent > 0 ? 1 : sy.SymbolStatistics.PriceChangePercent < 0 ? -1 : 0;

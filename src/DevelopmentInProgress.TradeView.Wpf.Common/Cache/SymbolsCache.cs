@@ -5,8 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
-using DevelopmentInProgress.TradeView.Interface.Extensions;
-using DevelopmentInProgress.TradeView.Interface.Enums;
+using DevelopmentInProgress.TradeView.Core.Extensions;
+using DevelopmentInProgress.TradeView.Core.Enums;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 {

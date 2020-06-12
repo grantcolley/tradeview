@@ -5,7 +5,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 {
     public static class SymbolStatisticsExtensions
     {
-        public static SymbolStatistics GetViewSymbolStatistics(this Interface.Model.SymbolStats s)
+        public static SymbolStatistics GetViewSymbolStatistics(this Core.Model.SymbolStats s)
         {
             return new SymbolStatistics
             {

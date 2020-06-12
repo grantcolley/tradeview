@@ -1,11 +1,11 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
-using DevelopmentInProgress.TradeView.Interface.Extensions;
+using DevelopmentInProgress.TradeView.Core.Extensions;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 {
     public static class StrategySubscriptionExtensions
     {
-        public static Interface.Strategy.StrategySubscription ToInterfaceStrategySubscription(this StrategySubscription strategySubscription)
+        public static Core.Strategy.StrategySubscription ToInterfaceStrategySubscription(this StrategySubscription strategySubscription)
         {
             int subscribe = 0;
 
@@ -29,7 +29,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 subscribe += 8;
             }
 
-            var interfaceStrategySubscription = new Interface.Strategy.StrategySubscription
+            var interfaceStrategySubscription = new Core.Strategy.StrategySubscription
             {
                 AccountName = strategySubscription.AccountName,
                 Symbol = strategySubscription.Symbol,
@@ -38,14 +38,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 SecretKey = strategySubscription.SecretKey,
                 ApiPassPhrase = strategySubscription.ApiPassPhrase,
                 Exchange = strategySubscription.Exchange,
-                Subscribe = (Interface.Strategy.Subscribe)subscribe,
+                Subscribe = (Core.Strategy.Subscribe)subscribe,
                 CandlestickInterval = strategySubscription.CandlestickInterval.GetCandlestickInterval()
             };
 
             return interfaceStrategySubscription;
         }
 
-        public static StrategySubscription ToWpfStrategySubscription(this Interface.Strategy.StrategySubscription interfaceStrategySubscription)
+        public static StrategySubscription ToWpfStrategySubscription(this Core.Strategy.StrategySubscription interfaceStrategySubscription)
         {
             var strategySubScription = new StrategySubscription
             {
@@ -59,22 +59,22 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 CandlestickInterval = interfaceStrategySubscription.CandlestickInterval.ToString()
             };
 
-            if ((interfaceStrategySubscription.Subscribe & Interface.Strategy.Subscribe.AccountInfo) == Interface.Strategy.Subscribe.AccountInfo)
+            if ((interfaceStrategySubscription.Subscribe & Core.Strategy.Subscribe.AccountInfo) == Core.Strategy.Subscribe.AccountInfo)
             {
                 strategySubScription.SubscribeAccount = true;
             }
 
-            if ((interfaceStrategySubscription.Subscribe & Interface.Strategy.Subscribe.Trades) == Interface.Strategy.Subscribe.Trades)
+            if ((interfaceStrategySubscription.Subscribe & Core.Strategy.Subscribe.Trades) == Core.Strategy.Subscribe.Trades)
             {
                 strategySubScription.SubscribeTrades = true;
             }
 
-            if ((interfaceStrategySubscription.Subscribe & Interface.Strategy.Subscribe.OrderBook) == Interface.Strategy.Subscribe.OrderBook)
+            if ((interfaceStrategySubscription.Subscribe & Core.Strategy.Subscribe.OrderBook) == Core.Strategy.Subscribe.OrderBook)
             {
                 strategySubScription.SubscribeOrderBook = true;
             }
 
-            if ((interfaceStrategySubscription.Subscribe & Interface.Strategy.Subscribe.Candlesticks) == Interface.Strategy.Subscribe.Candlesticks)
+            if ((interfaceStrategySubscription.Subscribe & Core.Strategy.Subscribe.Candlesticks) == Core.Strategy.Subscribe.Candlesticks)
             {
                 strategySubScription.SubscribeCandlesticks = true;
             }
