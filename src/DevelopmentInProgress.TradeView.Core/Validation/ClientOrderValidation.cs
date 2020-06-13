@@ -29,7 +29,7 @@ namespace DevelopmentInProgress.TradeView.Core.Validation
             {
                 message = messageBuilder.ToString();
                 message = message.Insert(0, $"{clientOrder.Symbol} {clientOrder.Type.GetOrderTypeName()} order not valid: ");
-                if (message.EndsWith(";"))
+                if (message.EndsWith(";", StringComparison.Ordinal))
                 {
                     message = message.Remove(message.Length - 1, 1);
                 }

@@ -21,7 +21,7 @@ namespace DevelopmentInProgress.TradeView.Core.Validation
                 {
                     sb.Append("Order has no symbol;");
                 }
-                else if (!o.Symbol.Equals($"{s.ExchangeSymbol}"))
+                else if (!o.Symbol.Equals($"{s.ExchangeSymbol}", StringComparison.Ordinal))
                 {
                     sb.Append($"Order {o.Symbol} validation symbol {s.BaseAsset.Symbol}{s.QuoteAsset.Symbol} mismatch;");
                 }

@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 
 namespace DevelopmentInProgress.TradeView.Core.Extensions
 {
@@ -7,7 +8,7 @@ namespace DevelopmentInProgress.TradeView.Core.Extensions
         public static decimal Trim(this decimal v, int precision)
         {
             var p = v.ToString(CultureInfo.InvariantCulture);
-            var pos = p.IndexOf(".");
+            var pos = p.IndexOf(".", StringComparison.Ordinal);
 
             if (pos == -1)
             {
@@ -35,7 +36,7 @@ namespace DevelopmentInProgress.TradeView.Core.Extensions
         public static int GetPrecision(this decimal v)
         {
             var p = v.ToString(CultureInfo.InvariantCulture);
-            return p.IndexOf(".") == -1 ? 0 : p.Substring(p.IndexOf(".") + 1).Length;
+            return p.IndexOf(".", StringComparison.Ordinal) == -1 ? 0 : p.Substring(p.IndexOf(".", StringComparison.Ordinal) + 1).Length;
         }
     }
 }
