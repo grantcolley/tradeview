@@ -102,12 +102,14 @@
                                            PointGeometrySize="2"/>
                                            <!--Title="Price"/>-->
                             <lc:LineSeries Values="{Binding SmaTradesChart}" 
+                                           LineSmoothness="1"
                                            DataLabels="False"
                                            Stroke="Red" 
                                            StrokeThickness="1" 
                                            Fill="Transparent"
                                            PointGeometry="{x:Null}"/>
                             <lc:LineSeries Values="{Binding BuyIndicatorChart}" 
+                                           LineSmoothness="1"
                                            DataLabels="False"
                                            Stroke="Green" 
                                            StrokeThickness="1" 
@@ -115,6 +117,7 @@
                                            Fill="Transparent"
                                            PointGeometry="{x:Null}"/>
                             <lc:LineSeries Values="{Binding SellIndicatorChart}" 
+                                           LineSmoothness="1"
                                            DataLabels="False"
                                            Stroke="Green"
                                            StrokeThickness="1" 
