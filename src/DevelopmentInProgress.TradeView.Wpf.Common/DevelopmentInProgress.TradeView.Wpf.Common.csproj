@@ -86,7 +86,7 @@
     <Compile Include="Events\AccountEventType.cs" />
     <Compile Include="Events\EventArgsBase.cs" />
     <Compile Include="Events\OrdersEventArgs.cs" />
-    <Compile Include="Events\ServerEventArgs.cs" />
+    <Compile Include="Events\TradeServerEventArgs.cs" />
     <Compile Include="Events\ServerMonitorCacheEventArgs.cs" />
     <Compile Include="Events\ServerMonitorEventArgs.cs" />
     <Compile Include="Events\StrategyEventArgs.cs" />
@@ -94,7 +94,7 @@
     <Compile Include="Extensions\ServerMonitorExtensions.cs" />
     <Compile Include="Extensions\StrategyExtensions.cs" />
     <Compile Include="Extensions\StrategyNotificationExtensions.cs" />
-    <Compile Include="Extensions\ServerExtensions.cs" />
+    <Compile Include="Extensions\TradeServerExtensions.cs" />
     <Compile Include="Extensions\StrategySubscriptionExtensions.cs" />
     <Compile Include="Extensions\UserAccountExtensions.cs" />
     <Compile Include="Helpers\BinanceOrderBookHelper.cs" />
@@ -120,7 +120,7 @@
     <Compile Include="Model\ServerMonitor.cs" />
     <Compile Include="Model\ServerStrategy.cs" />
     <Compile Include="Model\StrategyFileType.cs" />
-    <Compile Include="Model\Server.cs" />
+    <Compile Include="Model\TradeServer.cs" />
     <Compile Include="Model\TimeValuePoint.cs" />
     <Compile Include="Model\Strategy.cs" />
     <Compile Include="Model\StrategyFile.cs" />
@@ -130,9 +130,9 @@
     <Compile Include="Model\UserAccounts.cs" />
     <Compile Include="Services\AccountsService.cs" />
     <Compile Include="Services\IAccountsService.cs" />
-    <Compile Include="Services\IServerService.cs" />
+    <Compile Include="Services\ITradeServerService.cs" />
     <Compile Include="Services\IStrategyService.cs" />
-    <Compile Include="Services\ServerService.cs" />
+    <Compile Include="Services\TradeServerService.cs" />
     <Compile Include="Services\StrategyService.cs" />
     <Compile Include="ViewModel\AccountViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />

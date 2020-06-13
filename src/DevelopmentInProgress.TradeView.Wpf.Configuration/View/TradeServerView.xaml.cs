@@ -5,9 +5,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.View
     /// <summary>
     /// Interaction logic for ServerView.xaml
     /// </summary>
-    public partial class ServerView : UserControl
+    public partial class TradeServerView : UserControl
     {
-        public ServerView()
+        public TradeServerView()
         {
             InitializeComponent();
         }

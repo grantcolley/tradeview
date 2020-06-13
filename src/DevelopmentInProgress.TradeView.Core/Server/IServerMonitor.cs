@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DevelopmentInProgress.TradeView.Core.Server
 {
-    public interface IServerMonitor : IServer
+    public interface IServerMonitor : ITradeServer
     {
         string StartedBy { get; set; }
         string StoppedBy { get; set; }

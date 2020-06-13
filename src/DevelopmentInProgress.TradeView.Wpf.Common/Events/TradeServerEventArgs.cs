@@ -2,7 +2,7 @@
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Events
 {
-    public class ServerEventArgs : EventArgsBase<Server>
+    public class TradeServerEventArgs : EventArgsBase<TradeServer>
     {
     }
 }

@@ -7,9 +7,9 @@ namespace DevelopmentInProgress.TradeView.Data
     public interface ITradeViewConfigurationServer
     {
         Task<ServerConfiguration> GetServerConfiguration();
-        Task<List<Server>> GetServersAsync();
-        Task<Server> GetServerAsync(string serverName);
-        Task SaveServerAsync(Server server);
-        Task DeleteServerAsync(Server server);
+        Task<List<TradeServer>> GetTradeServersAsync();
+        Task<TradeServer> GetTradeServerAsync(string tradeServerName);
+        Task SaveTradeServerAsync(TradeServer tradeServer);
+        Task DeleteTradeServerAsync(TradeServer tradeServer);
     }
 }

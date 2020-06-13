@@ -1,6 +1,6 @@
 ﻿namespace DevelopmentInProgress.TradeView.Core.Server
 {
-    public class Server : IServer
+    public class TradeServer : ITradeServer
     {
         public string Name { get; set; }
         public string Url { get; set; }

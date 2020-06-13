@@ -15,7 +15,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
         public TradeViewConfigurationServerFile()
         {
-            userServersFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{Environment.MachineName}_Servers.txt");
+            userServersFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{Environment.MachineName}_TradeServers.txt");
         }
 
         public Task<ServerConfiguration> GetServerConfiguration()
@@ -23,62 +23,62 @@ namespace DevelopmentInProgress.TradeView.Data.File
             return Task.FromResult(new ServerConfiguration { ObserveServerInterval = 10 });
         }
 
-        public async Task<List<Server>> GetServersAsync()
+        public async Task<List<TradeServer>> GetTradeServersAsync()
         {
             if (System.IO.File.Exists(userServersFile))
             {
                 using (var reader = System.IO.File.OpenText(userServersFile))
                 {
                     var json = await reader.ReadToEndAsync();
-                    var Servers = JsonConvert.DeserializeObject<List<Server>>(json);
+                    var Servers = JsonConvert.DeserializeObject<List<TradeServer>>(json);
                     return Servers;
                 }
             }
 
-            return new List<Server>
+            return new List<TradeServer>
             {
-                GetDemoServer()
+                GetDemoTradeServer()
             };
         }
 
-        public async Task<Server> GetServerAsync(string serverName)
+        public async Task<TradeServer> GetTradeServerAsync(string serverName)
         {
-            Server server = null;
+            TradeServer server = null;
 
             if (System.IO.File.Exists(userServersFile))
             {
                 using (var reader = System.IO.File.OpenText(userServersFile))
                 {
                     var json = await reader.ReadToEndAsync();
-                    var servers = JsonConvert.DeserializeObject<List<Server>>(json);
+                    var servers = JsonConvert.DeserializeObject<List<TradeServer>>(json);
                     server = servers.FirstOrDefault(s => s.Name.Equals(serverName));
                     return server;
                 }
             }
 
-            return GetDemoServer();
+            return GetDemoTradeServer();
         }
 
-        public async Task SaveServerAsync(Server server)
+        public async Task SaveTradeServerAsync(TradeServer server)
         {
             if (server == null)
             {
                 return;
             }
 
-            List<Server> servers;
+            List<TradeServer> servers;
 
             if (System.IO.File.Exists(userServersFile))
             {
                 using (var reader = System.IO.File.OpenText(userServersFile))
                 {
                     var rjson = await reader.ReadToEndAsync();
-                    servers = JsonConvert.DeserializeObject<List<Server>>(rjson);
+                    servers = JsonConvert.DeserializeObject<List<TradeServer>>(rjson);
                 }
             }
             else
             {
-                servers = new List<Server>();
+                servers = new List<TradeServer>();
             }
 
             var dupe = servers.FirstOrDefault(s => s.Name.Equals(server.Name));
@@ -99,16 +99,16 @@ namespace DevelopmentInProgress.TradeView.Data.File
             }
         }
 
-        public async Task DeleteServerAsync(Server server)
+        public async Task DeleteTradeServerAsync(TradeServer server)
         {
             if (System.IO.File.Exists(userServersFile))
             {
-                List<Server> servers = null;
+                List<TradeServer> servers = null;
 
                 using (var reader = System.IO.File.OpenText(userServersFile))
                 {
                     var rjson = await reader.ReadToEndAsync();
-                    servers = JsonConvert.DeserializeObject<List<Server>>(rjson);
+                    servers = JsonConvert.DeserializeObject<List<TradeServer>>(rjson);
                 }
 
                 var remove = servers.FirstOrDefault(s => s.Name.Equals(server.Name));
@@ -127,9 +127,9 @@ namespace DevelopmentInProgress.TradeView.Data.File
             }
         }
 
-        private Server GetDemoServer()
+        private TradeServer GetDemoTradeServer()
         {
-            return new Server
+            return new TradeServer
             {
                 Name = "TradeServer",
                 Url = "http://localhost:5500",

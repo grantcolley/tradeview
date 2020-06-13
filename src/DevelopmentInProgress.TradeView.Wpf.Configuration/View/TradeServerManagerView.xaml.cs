@@ -7,9 +7,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.View
     /// <summary>
     /// Interaction logic for ServerManagerView.xaml
     /// </summary>
-    public partial class ServerManagerView : DocumentViewBase
+    public partial class TradeServerManagerView : DocumentViewBase
     {
-        public ServerManagerView(IViewContext viewContext, ServerManagerViewModel serverManagerViewModel)
+        public TradeServerManagerView(IViewContext viewContext, TradeServerManagerViewModel serverManagerViewModel)
             : base(viewContext, serverManagerViewModel, Module.ModuleName)
         {
             InitializeComponent();

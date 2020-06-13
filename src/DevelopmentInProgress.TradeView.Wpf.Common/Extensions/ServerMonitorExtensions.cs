@@ -4,14 +4,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 {
     public static class ServerMonitorExtensions
     {
-        public static ServerMonitor ToServerMonitor(this Core.Server.Server server)
+        public static ServerMonitor ToServerMonitor(this Core.Server.TradeServer tradeServer)
         {
             return new ServerMonitor
             {
-                Name = server.Name,
-                Url = server.Url,
-                MaxDegreeOfParallelism = server.MaxDegreeOfParallelism,
-                Enabled = server.Enabled
+                Name = tradeServer.Name,
+                Url = tradeServer.Url,
+                MaxDegreeOfParallelism = tradeServer.MaxDegreeOfParallelism,
+                Enabled = tradeServer.Enabled
             };
         }
     }

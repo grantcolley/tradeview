@@ -108,9 +108,9 @@
     <Compile Include="Utility\ISymbolsLoader.cs" />
     <Compile Include="Utility\StrategyFileManager.cs" />
     <Compile Include="Utility\SymbolsLoader.cs" />
-    <Compile Include="ViewModel\ServerManagerViewModel.cs" />
+    <Compile Include="ViewModel\TradeServerManagerViewModel.cs" />
     <Compile Include="ViewModel\StrategyManagerViewModel.cs" />
-    <Compile Include="ViewModel\ServerViewModel.cs" />
+    <Compile Include="ViewModel\TradeServerViewModel.cs" />
     <Compile Include="ViewModel\StrategyViewModel.cs" />
     <Compile Include="ViewModel\SymbolsViewModel.cs" />
     <Compile Include="ViewModel\UserAccountsViewModel.cs" />
@@ -118,14 +118,14 @@
     <Compile Include="View\ParameterDialogView.xaml.cs">
       <DependentUpon>ParameterDialogView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ServerView.xaml.cs">
-      <DependentUpon>ServerView.xaml</DependentUpon>
+    <Compile Include="View\TradeServerView.xaml.cs">
+      <DependentUpon>TradeServerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\StrategyManagerView.xaml.cs">
       <DependentUpon>StrategyManagerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ServerManagerView.xaml.cs">
-      <DependentUpon>ServerManagerView.xaml</DependentUpon>
+    <Compile Include="View\TradeServerManagerView.xaml.cs">
+      <DependentUpon>TradeServerManagerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\StrategyView.xaml.cs">
       <DependentUpon>StrategyView.xaml</DependentUpon>
@@ -193,7 +193,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\ServerView.xaml">
+    <Page Include="View\TradeServerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -201,7 +201,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\ServerManagerView.xaml">
+    <Page Include="View\TradeServerManagerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

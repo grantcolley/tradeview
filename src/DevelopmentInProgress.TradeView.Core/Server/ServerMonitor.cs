@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace DevelopmentInProgress.TradeView.Core.Server
 {
-    public class ServerMonitor : Server, IServerMonitor
+    public class ServerMonitor : TradeServer, IServerMonitor
     {
         public ServerMonitor()
         {

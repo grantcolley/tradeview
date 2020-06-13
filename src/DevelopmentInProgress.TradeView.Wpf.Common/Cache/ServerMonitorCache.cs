@@ -49,7 +49,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 
             try
             {
-                var servers = await configurationServer.GetServersAsync();
+                var servers = await configurationServer.GetTradeServersAsync();
 
                 await dispatcher.InvokeAsync(async () =>
                 {
@@ -66,7 +66,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                         }
                     }
 
-                    Func<ServerMonitor, Core.Server.Server, ServerMonitor> updateServerMonitor = (sm, s) =>
+                    Func<ServerMonitor, Core.Server.TradeServer, ServerMonitor> updateServerMonitor = (sm, s) =>
                     {
                         sm.Url = s.Url;
                         sm.MaxDegreeOfParallelism = s.MaxDegreeOfParallelism;
