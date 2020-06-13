@@ -1,10 +1,12 @@
-﻿namespace DevelopmentInProgress.TradeView.Core.Extensions
+﻿using System.Globalization;
+
+namespace DevelopmentInProgress.TradeView.Core.Extensions
 {
     public static class DecimalExtensions
     {
         public static decimal Trim(this decimal v, int precision)
         {
-            var p = v.ToString();
+            var p = v.ToString(CultureInfo.InvariantCulture);
             var pos = p.IndexOf(".");
 
             if (pos == -1)
@@ -22,7 +24,7 @@
                 return v;
             }
 
-            return decimal.Parse(p.Substring(0, pos + precision));
+            return decimal.Parse(p.Substring(0, pos + precision), CultureInfo.InvariantCulture);
         }
 
         public static bool HasRemainder(this decimal v)
@@ -32,7 +34,7 @@
 
         public static int GetPrecision(this decimal v)
         {
-            var p = v.ToString();
+            var p = v.ToString(CultureInfo.InvariantCulture);
             return p.IndexOf(".") == -1 ? 0 : p.Substring(p.IndexOf(".") + 1).Length;
         }
     }
