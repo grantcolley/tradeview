@@ -17,7 +17,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 Parameters = strategy.Parameters
             };
 
-            var subscriptions = strategy.StrategySubscriptions.Select(s => s.ToInterfaceStrategySubscription()).ToList();
+            var subscriptions = strategy.StrategySubscriptions.Select(s => s.ToCoreStrategySubscription()).ToList();
             interfaceStrategy.StrategySubscriptions.AddRange(subscriptions);
 
             return interfaceStrategy;
@@ -44,7 +44,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 DisplayDependencies = strategy.DisplayDependencies.Select(f=> f.File).ToList()
             };
             
-            var subscriptions = strategy.StrategySubscriptions.Select(s => s.ToInterfaceStrategySubscription()).ToList();
+            var subscriptions = strategy.StrategySubscriptions.Select(s => s.ToCoreStrategySubscription()).ToList();
             strategyConfig.StrategySubscriptions.AddRange(subscriptions);
 
             return strategyConfig;

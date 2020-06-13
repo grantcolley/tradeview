@@ -4,7 +4,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 {
     public static class AccountBalanceExtensions
     {
-        public static Core.Model.AccountBalance GetInterfaceAccountBalance(this AccountBalance ab)
+        public static Core.Model.AccountBalance GetCoreAccountBalance(this AccountBalance ab)
         {
             return new Core.Model.AccountBalance
             {

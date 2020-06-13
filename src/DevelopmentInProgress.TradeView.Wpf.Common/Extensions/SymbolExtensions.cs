@@ -6,7 +6,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 {
     public static class SymbolExtensions
     {
-        public static Core.Model.Symbol GetInterfaceSymbol(this Symbol s)
+        public static Core.Model.Symbol GetCoreSymbol(this Symbol s)
         {
             return new Core.Model.Symbol
             {

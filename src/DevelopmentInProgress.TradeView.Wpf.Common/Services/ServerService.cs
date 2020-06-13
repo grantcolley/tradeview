@@ -33,13 +33,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
 
         public async Task SaveServer(Server server)
         {
-            await configurationServer.SaveServerAsync(server.ToInterfaceServer());
+            await configurationServer.SaveServerAsync(server.ToCoreServer());
             await serverMonitorCache.RefreshServerMonitorsAsync();
         }
 
         public async Task DeleteServer(Server server)
         {
-            await configurationServer.DeleteServerAsync(server.ToInterfaceServer());
+            await configurationServer.DeleteServerAsync(server.ToCoreServer());
             await serverMonitorCache.RefreshServerMonitorsAsync();
         }
     }

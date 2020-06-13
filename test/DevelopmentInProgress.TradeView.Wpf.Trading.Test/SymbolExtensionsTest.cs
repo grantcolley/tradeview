@@ -16,7 +16,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 
             // Act
             var viewSymbol = symbol.GetViewSymbol();
-            var interfaceSymbol = viewSymbol.GetInterfaceSymbol();
+            var interfaceSymbol = viewSymbol.GetCoreSymbol();
             var missingOrderTypes = symbol.OrderTypes.Except(interfaceSymbol.OrderTypes).ToList();
             missingOrderTypes.AddRange(interfaceSymbol.OrderTypes.Except(symbol.OrderTypes));
 

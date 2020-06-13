@@ -402,11 +402,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                     Quantity = Quantity,
                     Price = Price,
                     StopPrice = StopPrice,
-                    BaseAccountBalance = BaseAccountBalance?.GetInterfaceAccountBalance(),
-                    QuoteAccountBalance = QuoteAccountBalance?.GetInterfaceAccountBalance()
+                    BaseAccountBalance = BaseAccountBalance?.GetCoreAccountBalance(),
+                    QuoteAccountBalance = QuoteAccountBalance?.GetCoreAccountBalance()
                 };
 
-                SelectedSymbol.GetInterfaceSymbol().ValidateClientOrder(clientOrder);
+                SelectedSymbol.GetCoreSymbol().ValidateClientOrder(clientOrder);
 
                 await ExchangeService.PlaceOrder(Account.AccountInfo.User.Exchange, Account.AccountInfo.User, clientOrder).ConfigureAwait(false);
             }

@@ -15,7 +15,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
             };
         }
 
-        public static Core.Server.Server ToInterfaceServer(this Server server)
+        public static Core.Server.Server ToCoreServer(this Server server)
         {
             return new Core.Server.Server
             {

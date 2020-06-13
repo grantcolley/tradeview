@@ -5,7 +5,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 {
     public static class StrategySubscriptionExtensions
     {
-        public static Core.Strategy.StrategySubscription ToInterfaceStrategySubscription(this StrategySubscription strategySubscription)
+        public static Core.Strategy.StrategySubscription ToCoreStrategySubscription(this StrategySubscription strategySubscription)
         {
             int subscribe = 0;
 
@@ -29,7 +29,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 subscribe += 8;
             }
 
-            var interfaceStrategySubscription = new Core.Strategy.StrategySubscription
+            var coreStrategySubscription = new Core.Strategy.StrategySubscription
             {
                 AccountName = strategySubscription.AccountName,
                 Symbol = strategySubscription.Symbol,
@@ -42,39 +42,39 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 CandlestickInterval = strategySubscription.CandlestickInterval.GetCandlestickInterval()
             };
 
-            return interfaceStrategySubscription;
+            return coreStrategySubscription;
         }
 
-        public static StrategySubscription ToWpfStrategySubscription(this Core.Strategy.StrategySubscription interfaceStrategySubscription)
+        public static StrategySubscription ToWpfStrategySubscription(this Core.Strategy.StrategySubscription coreStrategySubscription)
         {
             var strategySubScription = new StrategySubscription
             {
-                AccountName = interfaceStrategySubscription.AccountName,
-                Symbol = interfaceStrategySubscription.Symbol,
-                Limit = interfaceStrategySubscription.Limit,
-                ApiKey = interfaceStrategySubscription.ApiKey,
-                ApiPassPhrase = interfaceStrategySubscription.ApiPassPhrase,
-                SecretKey = interfaceStrategySubscription.SecretKey,
-                Exchange = interfaceStrategySubscription.Exchange,
-                CandlestickInterval = interfaceStrategySubscription.CandlestickInterval.ToString()
+                AccountName = coreStrategySubscription.AccountName,
+                Symbol = coreStrategySubscription.Symbol,
+                Limit = coreStrategySubscription.Limit,
+                ApiKey = coreStrategySubscription.ApiKey,
+                ApiPassPhrase = coreStrategySubscription.ApiPassPhrase,
+                SecretKey = coreStrategySubscription.SecretKey,
+                Exchange = coreStrategySubscription.Exchange,
+                CandlestickInterval = coreStrategySubscription.CandlestickInterval.ToString()
             };
 
-            if ((interfaceStrategySubscription.Subscribe & Core.Strategy.Subscribe.AccountInfo) == Core.Strategy.Subscribe.AccountInfo)
+            if ((coreStrategySubscription.Subscribe & Core.Strategy.Subscribe.AccountInfo) == Core.Strategy.Subscribe.AccountInfo)
             {
                 strategySubScription.SubscribeAccount = true;
             }
 
-            if ((interfaceStrategySubscription.Subscribe & Core.Strategy.Subscribe.Trades) == Core.Strategy.Subscribe.Trades)
+            if ((coreStrategySubscription.Subscribe & Core.Strategy.Subscribe.Trades) == Core.Strategy.Subscribe.Trades)
             {
                 strategySubScription.SubscribeTrades = true;
             }
 
-            if ((interfaceStrategySubscription.Subscribe & Core.Strategy.Subscribe.OrderBook) == Core.Strategy.Subscribe.OrderBook)
+            if ((coreStrategySubscription.Subscribe & Core.Strategy.Subscribe.OrderBook) == Core.Strategy.Subscribe.OrderBook)
             {
                 strategySubScription.SubscribeOrderBook = true;
             }
 
-            if ((interfaceStrategySubscription.Subscribe & Core.Strategy.Subscribe.Candlesticks) == Core.Strategy.Subscribe.Candlesticks)
+            if ((coreStrategySubscription.Subscribe & Core.Strategy.Subscribe.Candlesticks) == Core.Strategy.Subscribe.Candlesticks)
             {
                 strategySubScription.SubscribeCandlesticks = true;
             }

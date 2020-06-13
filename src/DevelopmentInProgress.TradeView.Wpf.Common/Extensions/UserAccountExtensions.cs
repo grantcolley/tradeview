@@ -32,7 +32,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
             return userAccount;
         }
 
-        public static Core.Model.UserAccount ToInterfaceUserAccount(this UserAccount ua)
+        public static Core.Model.UserAccount ToCoreUserAccount(this UserAccount ua)
         {
             var userAccount = new Core.Model.UserAccount
             {

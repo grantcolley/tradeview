@@ -33,12 +33,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
 
         public Task SaveAccountAsync(UserAccount userAccount)
         {
-            return configurationAccounts.SaveAccountAsync(userAccount.ToInterfaceUserAccount());
+            return configurationAccounts.SaveAccountAsync(userAccount.ToCoreUserAccount());
         }
 
         public Task DeleteAccountAsync(UserAccount userAccount)
         {
-            return configurationAccounts.DeleteAccountAsync(userAccount.ToInterfaceUserAccount());
+            return configurationAccounts.DeleteAccountAsync(userAccount.ToCoreUserAccount());
         }
     }
 }
