@@ -12,7 +12,7 @@ namespace DevelopmentInProgress.TradeView.Core.Strategy
         public string SecretKey { get; set; }
         public string ApiPassPhrase { get; set; }
         public Exchange Exchange { get; set; }
-        public Subscribe Subscribe { get; set; }
+        public Subscribes Subscribes { get; set; }
         public CandlestickInterval CandlestickInterval { get; set; }
     }
 }

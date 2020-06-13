@@ -3,7 +3,7 @@
 namespace DevelopmentInProgress.TradeView.Core.Strategy
 {
     [Flags]
-    public enum Subscribe
+    public enum Subscribes
     {
         None = 0,
         AccountInfo = 1,

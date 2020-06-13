@@ -147,7 +147,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
                         Symbol = "ETHBTC",
                         Limit = 0,
                         Exchange = Exchange.Binance,
-                        Subscribe = Subscribe.Trades | Subscribe.OrderBook | Subscribe.Candlesticks,
+                        Subscribes = Subscribes.Trades | Subscribes.OrderBook | Subscribes.Candlesticks,
                         CandlestickInterval = CandlestickInterval.Minute
                     }
                 },

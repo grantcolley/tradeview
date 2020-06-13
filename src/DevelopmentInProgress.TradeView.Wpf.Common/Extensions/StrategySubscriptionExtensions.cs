@@ -38,7 +38,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 SecretKey = strategySubscription.SecretKey,
                 ApiPassPhrase = strategySubscription.ApiPassPhrase,
                 Exchange = strategySubscription.Exchange,
-                Subscribe = (Core.Strategy.Subscribe)subscribe,
+                Subscribes = (Core.Strategy.Subscribes)subscribe,
                 CandlestickInterval = strategySubscription.CandlestickInterval.GetCandlestickInterval()
             };
 
@@ -59,22 +59,22 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 CandlestickInterval = coreStrategySubscription.CandlestickInterval.ToString()
             };
 
-            if ((coreStrategySubscription.Subscribe & Core.Strategy.Subscribe.AccountInfo) == Core.Strategy.Subscribe.AccountInfo)
+            if ((coreStrategySubscription.Subscribes & Core.Strategy.Subscribes.AccountInfo) == Core.Strategy.Subscribes.AccountInfo)
             {
                 strategySubScription.SubscribeAccount = true;
             }
 
-            if ((coreStrategySubscription.Subscribe & Core.Strategy.Subscribe.Trades) == Core.Strategy.Subscribe.Trades)
+            if ((coreStrategySubscription.Subscribes & Core.Strategy.Subscribes.Trades) == Core.Strategy.Subscribes.Trades)
             {
                 strategySubScription.SubscribeTrades = true;
             }
 
-            if ((coreStrategySubscription.Subscribe & Core.Strategy.Subscribe.OrderBook) == Core.Strategy.Subscribe.OrderBook)
+            if ((coreStrategySubscription.Subscribes & Core.Strategy.Subscribes.OrderBook) == Core.Strategy.Subscribes.OrderBook)
             {
                 strategySubScription.SubscribeOrderBook = true;
             }
 
-            if ((coreStrategySubscription.Subscribe & Core.Strategy.Subscribe.Candlesticks) == Core.Strategy.Subscribe.Candlesticks)
+            if ((coreStrategySubscription.Subscribes & Core.Strategy.Subscribes.Candlesticks) == Core.Strategy.Subscribes.Candlesticks)
             {
                 strategySubScription.SubscribeCandlesticks = true;
             }
