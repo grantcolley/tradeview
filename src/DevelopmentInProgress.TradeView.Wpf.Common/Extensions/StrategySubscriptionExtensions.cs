@@ -5,7 +5,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 {
     public static class StrategySubscriptionExtensions
     {
-        public static Core.Strategy.StrategySubscription ToCoreStrategySubscription(this StrategySubscription strategySubscription)
+        public static Core.TradeStrategy.StrategySubscription ToCoreStrategySubscription(this StrategySubscription strategySubscription)
         {
             int subscribe = 0;
 
@@ -29,7 +29,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 subscribe += 8;
             }
 
-            var coreStrategySubscription = new Core.Strategy.StrategySubscription
+            var coreStrategySubscription = new Core.TradeStrategy.StrategySubscription
             {
                 AccountName = strategySubscription.AccountName,
                 Symbol = strategySubscription.Symbol,
@@ -38,14 +38,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 SecretKey = strategySubscription.SecretKey,
                 ApiPassPhrase = strategySubscription.ApiPassPhrase,
                 Exchange = strategySubscription.Exchange,
-                Subscribes = (Core.Strategy.Subscribes)subscribe,
+                Subscribes = (Core.TradeStrategy.Subscribes)subscribe,
                 CandlestickInterval = strategySubscription.CandlestickInterval.GetCandlestickInterval()
             };
 
             return coreStrategySubscription;
         }
 
-        public static StrategySubscription ToWpfStrategySubscription(this Core.Strategy.StrategySubscription coreStrategySubscription)
+        public static StrategySubscription ToWpfStrategySubscription(this Core.TradeStrategy.StrategySubscription coreStrategySubscription)
         {
             var strategySubScription = new StrategySubscription
             {
@@ -59,22 +59,22 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 CandlestickInterval = coreStrategySubscription.CandlestickInterval.ToString()
             };
 
-            if ((coreStrategySubscription.Subscribes & Core.Strategy.Subscribes.AccountInfo) == Core.Strategy.Subscribes.AccountInfo)
+            if ((coreStrategySubscription.Subscribes & Core.TradeStrategy.Subscribes.AccountInfo) == Core.TradeStrategy.Subscribes.AccountInfo)
             {
                 strategySubScription.SubscribeAccount = true;
             }
 
-            if ((coreStrategySubscription.Subscribes & Core.Strategy.Subscribes.Trades) == Core.Strategy.Subscribes.Trades)
+            if ((coreStrategySubscription.Subscribes & Core.TradeStrategy.Subscribes.Trades) == Core.TradeStrategy.Subscribes.Trades)
             {
                 strategySubScription.SubscribeTrades = true;
             }
 
-            if ((coreStrategySubscription.Subscribes & Core.Strategy.Subscribes.OrderBook) == Core.Strategy.Subscribes.OrderBook)
+            if ((coreStrategySubscription.Subscribes & Core.TradeStrategy.Subscribes.OrderBook) == Core.TradeStrategy.Subscribes.OrderBook)
             {
                 strategySubScription.SubscribeOrderBook = true;
             }
 
-            if ((coreStrategySubscription.Subscribes & Core.Strategy.Subscribes.Candlesticks) == Core.Strategy.Subscribes.Candlesticks)
+            if ((coreStrategySubscription.Subscribes & Core.TradeStrategy.Subscribes.Candlesticks) == Core.TradeStrategy.Subscribes.Candlesticks)
             {
                 strategySubScription.SubscribeCandlesticks = true;
             }

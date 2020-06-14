@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.TradeView.Core.Strategy;
+﻿using DevelopmentInProgress.TradeView.Core.TradeStrategy;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Configuration.View;
 using Newtonsoft.Json;

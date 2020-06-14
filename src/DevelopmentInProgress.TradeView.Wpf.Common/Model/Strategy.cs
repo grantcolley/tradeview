@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.TradeView.Core.Strategy;
+﻿using DevelopmentInProgress.TradeView.Core.TradeStrategy;
 using System.Collections.ObjectModel;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Model

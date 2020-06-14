@@ -1,5 +1,5 @@
 ﻿using CoreModel = DevelopmentInProgress.TradeView.Core.Model;
-using CoreStrategy = DevelopmentInProgress.TradeView.Core.Strategy;
+using CoreStrategy = DevelopmentInProgress.TradeView.Core.TradeStrategy;
 using DevelopmentInProgress.Socket.Client;
 using DevelopmentInProgress.TradeView.Common.Extensions;
 using DevelopmentInProgress.TradeView.Wpf.Common.Cache;
@@ -809,13 +809,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
-                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Core.Strategy.StrategyNotification>>(message.Data);
+                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Core.TradeStrategy.StrategyNotification>>(message.Data);
 
                 foreach (var notification in strategyNotifications)
                 {
                     NotificationsAdd(notification.GetMessage());
 
-                    if(notification.NotificationLevel.Equals(TradeView.Core.Strategy.NotificationLevel.DisconnectClient))
+                    if(notification.NotificationLevel.Equals(TradeView.Core.TradeStrategy.NotificationLevel.DisconnectClient))
                     {
                         await DisconnectSocketAsync();
                     }
@@ -833,7 +833,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
-                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Core.Strategy.StrategyNotification>>(message.Data);
+                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Core.TradeStrategy.StrategyNotification>>(message.Data);
 
                 var orderedStrategyNotifications = strategyNotifications.OrderBy(n => n.Timestamp).ToList();
 
@@ -851,7 +851,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
-                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Core.Strategy.StrategyNotification>>(message.Data);
+                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Core.TradeStrategy.StrategyNotification>>(message.Data);
 
                 var orderedStrategyNotifications = strategyNotifications.OrderBy(n => n.Timestamp).ToList();
 
@@ -869,7 +869,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
-                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Core.Strategy.StrategyNotification>>(message.Data);
+                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Core.TradeStrategy.StrategyNotification>>(message.Data);
 
                 var latestStrategyNotification = strategyNotifications.OrderBy(n => n.Timestamp).Last();
 
@@ -889,7 +889,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
-                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Core.Strategy.StrategyNotification>>(message.Data);
+                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Core.TradeStrategy.StrategyNotification>>(message.Data);
 
                 var orderedStrategyNotifications = strategyNotifications.OrderBy(n => n.Timestamp).ToList();
 

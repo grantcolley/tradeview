@@ -10,7 +10,7 @@ namespace DevelopmentInProgress.TradeView.Core.Server
             Connections = new List<ServerStrategyConnection>();
         }
 
-        public Strategy.Strategy Strategy { get; set; }
+        public TradeStrategy.Strategy Strategy { get; set; }
         public string StartedBy { get; set; }
         public string StoppedBy { get; set; }
         public DateTime Started { get; set; }

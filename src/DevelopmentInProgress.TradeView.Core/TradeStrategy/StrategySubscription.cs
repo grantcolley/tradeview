@@ -1,7 +1,7 @@
 ﻿using DevelopmentInProgress.TradeView.Core.Enums;
 using DevelopmentInProgress.TradeView.Core.Model;
 
-namespace DevelopmentInProgress.TradeView.Core.Strategy
+namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
 {
     public class StrategySubscription
     {

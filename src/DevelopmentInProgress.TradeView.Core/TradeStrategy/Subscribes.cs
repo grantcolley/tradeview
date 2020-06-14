@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DevelopmentInProgress.TradeView.Core.Strategy
+namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
 {
     [Flags]
     public enum Subscribes

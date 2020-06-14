@@ -1,6 +1,6 @@
 ﻿using DevelopmentInProgress.TradeView.Core.Enums;
 using DevelopmentInProgress.TradeView.Core.Model;
-using DevelopmentInProgress.TradeView.Core.Strategy;
+using DevelopmentInProgress.TradeView.Core.TradeStrategy;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

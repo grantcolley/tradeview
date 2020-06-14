@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DevelopmentInProgress.TradeView.Core.Strategy
+namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
 {
     public interface ITradeStrategy
     {

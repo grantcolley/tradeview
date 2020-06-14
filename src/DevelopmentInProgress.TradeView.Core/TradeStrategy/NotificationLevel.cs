@@ -1,4 +1,4 @@
-﻿namespace DevelopmentInProgress.TradeView.Core.Strategy
+﻿namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
 {
     public enum NotificationLevel
     {

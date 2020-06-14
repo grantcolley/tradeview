@@ -1,11 +1,11 @@
 ﻿using System;
-using DevelopmentInProgress.TradeView.Core.Strategy;
+using DevelopmentInProgress.TradeView.Core.TradeStrategy;
 
 namespace DevelopmentInProgress.TradeView.Core.Extensions
 {
     public static class StrategyExtensions
     {
-        public static StrategyNotification GetNotification(this Strategy.Strategy strategy, NotificationLevel notificationLevel, int notificationEvent, string message)
+        public static StrategyNotification GetNotification(this TradeStrategy.Strategy strategy, NotificationLevel notificationLevel, int notificationEvent, string message)
         {
             if (strategy == null)
             {
