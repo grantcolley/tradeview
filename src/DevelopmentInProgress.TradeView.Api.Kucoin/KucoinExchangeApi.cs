@@ -73,7 +73,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
             {
                 var result = await kucoinClient.GetKlinesAsync(symbol, candlestickInterval, startTime, endTime);
 
-                Func<KucoinKline, Candlestick> f = k =>
+                Candlestick f(KucoinKline k)
                 {
                     return new Candlestick
                     {
@@ -179,7 +179,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
 
                 var currencies = await kucoinClient.GetCurrenciesAsync().ConfigureAwait(false);
 
-                Func<Asset, KucoinCurrency, Asset> f = (a, c) =>
+                Asset f(Asset a, KucoinCurrency c)
                 {
                     a.Precision = c.Precision;
                     return a;
