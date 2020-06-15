@@ -144,15 +144,20 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 
         private void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (disposed)
+            {
+                return;
+            }
+
+            if (disposing)
             {
                 if (!subscribeSymbolsCxlTokenSrc.IsCancellationRequested)
                 {
                     subscribeSymbolsCxlTokenSrc.Cancel();
                 }
-
-                disposed = false;
             }
+
+            disposed = false;
         }
 
     }
