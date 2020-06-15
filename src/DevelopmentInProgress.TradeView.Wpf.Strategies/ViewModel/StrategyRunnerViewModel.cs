@@ -489,7 +489,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Log($"IsStrategyRunningAsync {ex.ToString()}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log($"IsStrategyRunningAsync {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Unable to connect to the remote server.", TextVerbose = ex.ToString() });
             }
@@ -703,7 +703,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             {
                 ViewModelContext.UiDispatcher.Invoke(() =>
                 {
-                    NotificationsAdd(new Message { MessageType = MessageType.Info, Text = $"Connected - {message.ToString()}", Timestamp = DateTime.Now });
+                    NotificationsAdd(new Message { MessageType = MessageType.Info, Text = $"Connected - {message}", Timestamp = DateTime.Now });
                 });
             });
 
@@ -796,7 +796,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Log($"MonitorAsync {ex.ToString()}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log($"MonitorAsync {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Monitor - {ex.Message}", TextVerbose=ex.ToString(), Timestamp = DateTime.Now });
                 await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect);
@@ -823,7 +823,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Log($"OnStrategyNotification {ex.ToString()}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log($"OnStrategyNotification {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"OnStrategyNotification - {ex.Message}", TextVerbose = ex.ToString() });
             }
@@ -841,7 +841,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Log($"OnTradeNotification {ex.ToString()}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log($"OnTradeNotification {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"OnTradeNotification - {ex.Message}", TextVerbose = ex.ToString() });
             }
@@ -859,7 +859,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
             catch(Exception ex)
             {
-                Logger.Log($"OnCandlesticksNotification {ex.ToString()}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log($"OnCandlesticksNotification {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"OnCandlesticksNotification - {ex.Message}", TextVerbose = ex.ToString() });
             }
@@ -877,7 +877,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Log($"OnParameterUpdateNotificationAsync {ex.ToString()}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log($"OnParameterUpdateNotificationAsync {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"OnParameterUpdateNotificationAsync - {ex.Message}", TextVerbose = ex.ToString() });
             }
@@ -897,7 +897,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Log($"OnOrderBookNotification {ex.ToString()}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log($"OnOrderBookNotification {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"OnOrderBookNotification - {ex.Message}", TextVerbose = ex.ToString() });
             }
@@ -911,7 +911,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Log($"OnAccountNotification {ex.ToString()}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log($"OnAccountNotification {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"OnAccountNotification - {ex.Message}", TextVerbose = ex.ToString() });
             }
@@ -1078,7 +1078,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
             Logger.Log(message.Text, category, Prism.Logging.Priority.Low);
 
-            message.Text = $"{message.Timestamp.ToString("dd/MM/yyyy hh:mm:ss.fff tt")} {message.Text}";
+            message.Text = $"{message.Timestamp:dd/MM/yyyy hh:mm:ss.fff tt} {message.Text}";
             Notifications.Insert(0, message);
         }
 
@@ -1134,7 +1134,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Log($"SetCommandVisibility {ex.ToString()}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log($"SetCommandVisibility {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"SetCommandVisibility - {ex.Message}", TextVerbose = ex.ToString() });
             }
