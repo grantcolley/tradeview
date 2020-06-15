@@ -220,7 +220,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                     Price = t.Price,
                     Quantity = t.Quantity,
                     Time = t.Timestamp,
-                    IsBuyerMaker = t.Side == KucoinOrderSide.Sell ? true : false
+                    IsBuyerMaker = t.Side == KucoinOrderSide.Sell
                 }).ToList();
 
                 return trades;
