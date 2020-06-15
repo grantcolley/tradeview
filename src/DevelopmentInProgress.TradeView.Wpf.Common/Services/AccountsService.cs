@@ -8,7 +8,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
 { 
     public class AccountsService : IAccountsService
     {
-        private ITradeViewConfigurationAccounts configurationAccounts;
+        private readonly ITradeViewConfigurationAccounts configurationAccounts;
 
         public AccountsService(ITradeViewConfigurationAccounts configurationAccounts)
         {
