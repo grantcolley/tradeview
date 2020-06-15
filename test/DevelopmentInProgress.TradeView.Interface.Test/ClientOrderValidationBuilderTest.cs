@@ -13,7 +13,6 @@ namespace DevelopmentInProgress.TradeView.Core.Test
         public void BaseValidation_Fail_NoSymbol_OrderType_MinQty_StepSize()
         {
             // Arrange
-            string message;
             var trx = TestHelper.Trx;
             var trxStats = TestHelper.TrxStats;
             var clientOrder = new ClientOrder() { Type = OrderType.Limit, Side = OrderSide.Buy, Quantity = 0.00090000M, Price = trxStats.LastPrice };
@@ -23,7 +22,7 @@ namespace DevelopmentInProgress.TradeView.Core.Test
 
             // Act
             var clientOrderValidation = new ClientOrderValidationBuilder().Build();
-            var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
+            var result = clientOrderValidation.TryValidate(trx, clientOrder, out string message);
 
             // Assert
             Assert.IsFalse(result);
@@ -34,7 +33,6 @@ namespace DevelopmentInProgress.TradeView.Core.Test
         public void BaseValidation_Fail_NoSymbol_OrderType_MaxQty()
         {
             // Arrange
-            string message;
             var trx = TestHelper.Trx;
             var trxStats = TestHelper.TrxStats;
             var clientOrder = new ClientOrder() { Type = OrderType.Limit, Side = OrderSide.Buy, Quantity = 150000000.00000000M, Price = trxStats.LastPrice };
@@ -44,7 +42,7 @@ namespace DevelopmentInProgress.TradeView.Core.Test
 
             // Act
             var clientOrderValidation = new ClientOrderValidationBuilder().Build();
-            var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
+            var result = clientOrderValidation.TryValidate(trx, clientOrder, out string message);
 
             // Assert
             Assert.IsFalse(result);
@@ -55,7 +53,6 @@ namespace DevelopmentInProgress.TradeView.Core.Test
         public void BaseValidation_Failed_SymbolMismatch()
         {
             // Arrange
-            string message;
             var trx = TestHelper.Trx;
             var trxStats = TestHelper.TrxStats;
             var clientOrder = new ClientOrder() { Symbol = "ETHBTC", Side = OrderSide.Buy, Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice };
@@ -63,7 +60,7 @@ namespace DevelopmentInProgress.TradeView.Core.Test
 
             // Act
             var clientOrderValidation = new ClientOrderValidationBuilder().Build();
-            var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
+            var result = clientOrderValidation.TryValidate(trx, clientOrder, out string message);
 
             // Assert
             Assert.IsFalse(result);
@@ -74,7 +71,6 @@ namespace DevelopmentInProgress.TradeView.Core.Test
         public void BaseValidation_Pass()
         {
             // Arrange
-            string message;
             var trx = TestHelper.Trx;
             var trxStats = TestHelper.TrxStats;
             var clientOrder = new ClientOrder() { Symbol = "TRXBTC", Side = OrderSide.Buy, Type = OrderType.Limit, Quantity = 500.00000000M, Price = trxStats.LastPrice };
@@ -82,7 +78,7 @@ namespace DevelopmentInProgress.TradeView.Core.Test
 
             // Act
             var clientOrderValidation = new ClientOrderValidationBuilder().Build();
-            var result = clientOrderValidation.TryValidate(trx, clientOrder, out message);
+            var result = clientOrderValidation.TryValidate(trx, clientOrder, out string message);
 
             // Assert
             Assert.IsTrue(result);
