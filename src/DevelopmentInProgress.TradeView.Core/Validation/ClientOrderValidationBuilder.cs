@@ -13,71 +13,72 @@ namespace DevelopmentInProgress.TradeView.Core.Validation
 
         public ClientOrderValidationBuilder()
         {
-            validations = new List<Action<Symbol, ClientOrder, StringBuilder>>();
-
-            validations.Add((s, o, sb) =>
+            validations = new List<Action<Symbol, ClientOrder, StringBuilder>>
             {
-                if (string.IsNullOrWhiteSpace(o.Symbol))
+                (s, o, sb) =>
                 {
-                    sb.Append("Order has no symbol;");
-                }
-                else if (!o.Symbol.Equals($"{s.ExchangeSymbol}", StringComparison.Ordinal))
-                {
-                    sb.Append($"Order {o.Symbol} validation symbol {s.BaseAsset.Symbol}{s.QuoteAsset.Symbol} mismatch;");
-                }
-
-                if (!s.OrderTypes.Contains(o.Type))
-                {
-                    sb.Append($"{o.Type} order is not permitted;");
-                }
-
-                if (o.Side.Equals(OrderSide.Sell)
-                    && !o.BaseAccountBalance.HasAvailableQuantity(o.Quantity))
-                {
-                    sb.Append($"Insufficient quantity to sell: {o.Quantity} is greater than the available quantity {o.BaseAccountBalance.Free};");
-                }
-                else if (o.Side.Equals(OrderSide.Buy)
-                    && !o.QuoteAccountBalance.HasAvailableFunds(o.Price, o.Quantity))
-                {
-                    switch(o.Type)
+                    if (string.IsNullOrWhiteSpace(o.Symbol))
                     {
-                        case OrderType.Market:
-                        case OrderType.TakeProfit:
-                        case OrderType.StopLoss:
-                            sb.Append($"Insufficient funds to buy: Indicative cost {o.Price * o.Quantity} is greater than the available funds {o.QuoteAccountBalance.Free};");
-                            break;
-                        case OrderType.Limit:
-                        case OrderType.LimitMaker:
-                        case OrderType.StopLossLimit:
-                        case OrderType.TakeProfitLimit:
-                            sb.Append($"Insufficient funds to buy: {o.Price * o.Quantity} is greater than the available funds {o.QuoteAccountBalance.Free};");
-                            break;
+                        sb.Append("Order has no symbol;");
                     }
-                }
+                    else if (!o.Symbol.Equals($"{s.ExchangeSymbol}", StringComparison.Ordinal))
+                    {
+                        sb.Append($"Order {o.Symbol} validation symbol {s.BaseAsset.Symbol}{s.QuoteAsset.Symbol} mismatch;");
+                    }
 
-                if (o.Quantity < s.Quantity.Minimum)
-                {
-                    sb.Append($"Quantity {o.Quantity} is below the minimum {s.Quantity.Minimum};");
-                }
+                    if (!s.OrderTypes.Contains(o.Type))
+                    {
+                        sb.Append($"{o.Type} order is not permitted;");
+                    }
 
-                if (o.Quantity > s.Quantity.Maximum)
-                {
-                    sb.Append($"Quantity {o.Quantity} is above the maximum {s.Quantity.Maximum};");
-                }
+                    if (o.Side.Equals(OrderSide.Sell)
+                        && !o.BaseAccountBalance.HasAvailableQuantity(o.Quantity))
+                    {
+                        sb.Append($"Insufficient quantity to sell: {o.Quantity} is greater than the available quantity {o.BaseAccountBalance.Free};");
+                    }
+                    else if (o.Side.Equals(OrderSide.Buy)
+                        && !o.QuoteAccountBalance.HasAvailableFunds(o.Price, o.Quantity))
+                    {
+                        switch(o.Type)
+                        {
+                            case OrderType.Market:
+                            case OrderType.TakeProfit:
+                            case OrderType.StopLoss:
+                                sb.Append($"Insufficient funds to buy: Indicative cost {o.Price * o.Quantity} is greater than the available funds {o.QuoteAccountBalance.Free};");
+                                break;
+                            case OrderType.Limit:
+                            case OrderType.LimitMaker:
+                            case OrderType.StopLossLimit:
+                            case OrderType.TakeProfitLimit:
+                                sb.Append($"Insufficient funds to buy: {o.Price * o.Quantity} is greater than the available funds {o.QuoteAccountBalance.Free};");
+                                break;
+                        }
+                    }
 
-                if ((o.Quantity - s.Quantity.Minimum) % s.Quantity.Increment != 0)
-                {
-                    sb.Append($"Quantity {o.Quantity} must be in multiples of the step size {s.Quantity.Increment};");
-                }
+                    if (o.Quantity < s.Quantity.Minimum)
+                    {
+                        sb.Append($"Quantity {o.Quantity} is below the minimum {s.Quantity.Minimum};");
+                    }
 
-                var notional = o.Price * o.Quantity;
-                if (notional < s.NotionalMinimumValue)
-                {
-                    sb.Append($"Notional {notional} is less than the minimum notional {s.NotionalMinimumValue};");
-                }
+                    if (o.Quantity > s.Quantity.Maximum)
+                    {
+                        sb.Append($"Quantity {o.Quantity} is above the maximum {s.Quantity.Maximum};");
+                    }
 
-                // NOTE: Timestamp is mandatory...
-            });
+                    if ((o.Quantity - s.Quantity.Minimum) % s.Quantity.Increment != 0)
+                    {
+                        sb.Append($"Quantity {o.Quantity} must be in multiples of the step size {s.Quantity.Increment};");
+                    }
+
+                    var notional = o.Price * o.Quantity;
+                    if (notional < s.NotionalMinimumValue)
+                    {
+                        sb.Append($"Notional {notional} is less than the minimum notional {s.NotionalMinimumValue};");
+                    }
+
+                    // NOTE: Timestamp is mandatory...
+                }
+            };
         }
 
         public ClientOrderValidation Build()
