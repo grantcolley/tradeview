@@ -21,9 +21,10 @@ namespace DevelopmentInProgress.TradeView.Core.Extensions
                 StartedBy = serverMonitor.StartedBy,
                 Started = serverMonitor.Started,
                 StoppedBy = serverMonitor.StoppedBy,
-                Stopped = serverMonitor.Stopped,
-                Strategies = serverStrategies
+                Stopped = serverMonitor.Stopped                
             };
+
+            clone.Strategies.AddRange(serverStrategies);
 
             return new ServerNotification
             {

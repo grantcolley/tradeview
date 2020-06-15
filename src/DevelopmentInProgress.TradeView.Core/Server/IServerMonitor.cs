@@ -9,7 +9,7 @@ namespace DevelopmentInProgress.TradeView.Core.Server
         string StoppedBy { get; set; }
         DateTime Started { get; set; }
         DateTime Stopped { get; set; }
-        List<ServerStrategy> Strategies { get; set; }
+        List<ServerStrategy> Strategies { get; }
         ServerNotification GetServerNotification(List<ServerStrategy> strategies);
     }
 }

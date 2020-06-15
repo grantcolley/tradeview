@@ -16,7 +16,7 @@ namespace DevelopmentInProgress.TradeView.Core.Server
         public string StoppedBy { get; set; }
         public DateTime Started { get; set; } = DateTime.Now;
         public DateTime Stopped { get; set; }
-        public List<ServerStrategy> Strategies { get; set; }
+        public List<ServerStrategy> Strategies { get; private set; }
 
         public ServerNotification GetServerNotification(List<ServerStrategy> strategies)
         {

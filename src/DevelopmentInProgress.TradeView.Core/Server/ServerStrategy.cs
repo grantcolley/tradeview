@@ -15,6 +15,6 @@ namespace DevelopmentInProgress.TradeView.Core.Server
         public string StoppedBy { get; set; }
         public DateTime Started { get; set; }
         public DateTime Stopped { get; set; }
-        public List<ServerStrategyConnection> Connections { get; set; }
+        public List<ServerStrategyConnection> Connections { get; private set; }
     }
 }
