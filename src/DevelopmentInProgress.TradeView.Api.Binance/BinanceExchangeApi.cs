@@ -392,8 +392,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
                 Exchange = Exchange.Binance,
                 Commissions = new Core.Model.AccountCommissions { Buyer = a.Commissions.Buyer, Maker = a.Commissions.Maker, Seller = a.Commissions.Seller, Taker = a.Commissions.Taker },
                 Status = new Core.Model.AccountStatus { CanDeposit = a.Status.CanDeposit, CanTrade = a.Status.CanTrade, CanWithdraw = a.Status.CanWithdraw },
-                Time = a.Time,
-                Balances = new List<Core.Model.AccountBalance>()
+                Time = a.Time
             };
 
             var balances = a.Balances.Where(b => b.Free > 0 || b.Locked > 0);

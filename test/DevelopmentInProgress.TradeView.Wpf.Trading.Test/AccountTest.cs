@@ -25,9 +25,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
         public void CreateAccountInstance_Pass()
         {
             // Arrange
+            var accountInfo = new Core.Model.AccountInfo { User = user };
+            accountInfo.Balances.AddRange(balances);
 
             // Act
-            var account = new Account(new Core.Model.AccountInfo { User = user, Balances = balances });
+            var account = new Account(accountInfo);
 
             // Assert
             Assert.IsTrue(account.ApiKey.Equals(apiKey));

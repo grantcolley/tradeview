@@ -182,8 +182,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             {
                 lock (balancesLock)
                 {
-                    if (aie.Balances == null
-                        || !aie.Balances.Any())
+                    if (!aie.Balances.Any())
                     {
                         Account.Balances.Clear();
                         return;

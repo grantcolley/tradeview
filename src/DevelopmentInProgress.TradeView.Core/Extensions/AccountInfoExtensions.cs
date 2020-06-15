@@ -26,8 +26,7 @@ namespace DevelopmentInProgress.TradeView.Core.Extensions
                 Exchange = ai.Exchange,
                 Status = new AccountStatus { CanDeposit = ai.Status.CanDeposit, CanTrade = ai.Status.CanTrade, CanWithdraw = ai.Status.CanWithdraw },
                 Commissions = new AccountCommissions { Buyer = ai.Commissions.Buyer, Maker = ai.Commissions.Maker, Seller = ai.Commissions.Seller, Taker = ai.Commissions.Taker },
-                Time = ai.Time,
-                Balances = new List<AccountBalance>()
+                Time = ai.Time
             };
 
             foreach(var balance in ai.Balances)

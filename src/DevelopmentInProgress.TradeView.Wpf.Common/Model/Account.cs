@@ -37,12 +37,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 
             Balances = new ObservableCollection<AccountBalance>();
 
-            if (accountInfo.Balances != null)
+            foreach (var balance in AccountInfo.Balances)
             {
-                foreach (var balance in AccountInfo.Balances)
-                {
-                    Balances.Add(new AccountBalance { Asset = balance.Asset, Free = balance.Free, Locked = balance.Locked });
-                }
+                Balances.Add(new AccountBalance { Asset = balance.Asset, Free = balance.Free, Locked = balance.Locked });
             }
 
             OnPropertyChanged("ApiKey");

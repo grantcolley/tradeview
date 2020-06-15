@@ -17,15 +17,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.Standard);
             var exchangeService = new WpfExchangeService(exchangeApi);
             var symbolsCache = SymbolsCacheHelper.GetSymbolsCache(exchangeService);
-            var symbols = await symbolsCache.GetSymbols(new[] { "BIBBTC" });
+            var symbols = await symbolsCache.GetSymbols(new[] { "BNBBTC" });
 
             var balances = new List<Core.Model.AccountBalance>();
             balances.Add(new Core.Model.AccountBalance { Asset = "BTC", Free = 0.00794722m });
 
-            var accountInfo = new Core.Model.AccountInfo
-            {
-                Balances = balances
-            };
+            var accountInfo = new Core.Model.AccountInfo();
+            accountInfo.Balances.AddRange(balances);
 
             var account = new Account(accountInfo);
 
@@ -49,10 +47,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var balances = new List<Core.Model.AccountBalance>();
             balances.Add(new Core.Model.AccountBalance { Asset = "BNB", Free = 1.88373641m });
 
-            var accountInfo = new Core.Model.AccountInfo
-            {
-                Balances = balances
-            };
+            var accountInfo = new Core.Model.AccountInfo();
+            accountInfo.Balances.AddRange(balances);
 
             var account = new Account(accountInfo);
 
@@ -77,10 +73,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             balances.Add(new Core.Model.AccountBalance { Asset = "BTC", Free = 0.00396715m });
             balances.Add(new Core.Model.AccountBalance { Asset = "BNB", Free = 0.94444141m });
 
-            var accountInfo = new Core.Model.AccountInfo
-            {
-                Balances = balances
-            };
+            var accountInfo = new Core.Model.AccountInfo();
+            accountInfo.Balances.AddRange(balances);
 
             var account = new Account(accountInfo);
 

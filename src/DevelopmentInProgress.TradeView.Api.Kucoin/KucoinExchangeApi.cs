@@ -37,7 +37,12 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                 ApiCredentials = new KucoinApiCredentials(user.ApiKey, user.ApiSecret, user.ApiPassPhrase)
             };
 
-            var accountInfo = new AccountInfo { User = user, Exchange = Exchange.Kucoin, Balances = new List<AccountBalance>() };
+            var accountInfo = new AccountInfo
+            {
+                User = user,
+                Exchange = Exchange.Kucoin
+            };
+
             using (var kucoinClient = new KucoinClient(options))
             {
                 var accounts = await kucoinClient.GetAccountsAsync(accountType: KucoinAccountType.Trade).ConfigureAwait(false);
