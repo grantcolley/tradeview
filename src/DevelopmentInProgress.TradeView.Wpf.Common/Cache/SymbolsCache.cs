@@ -14,13 +14,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
     {
         private const string BTCUSDT = "BTCUSDT";
 
-        private Exchange exchange;
-        private IWpfExchangeService wpfExchangeService;
-        private CancellationTokenSource subscribeSymbolsCxlTokenSrc = new CancellationTokenSource();
-        private List<Symbol> symbols;
-        private List<Symbol> subscribedSymbols;
+        private readonly Exchange exchange;
+        private readonly IWpfExchangeService wpfExchangeService;
+        private readonly CancellationTokenSource subscribeSymbolsCxlTokenSrc = new CancellationTokenSource();
+        private readonly SemaphoreSlim semaphoreSlimGetSymbols = new SemaphoreSlim(1, 1);
+        private readonly List<Symbol> symbols;
+        private readonly List<Symbol> subscribedSymbols;
         private Symbol btcUsdt;
-        private SemaphoreSlim semaphoreSlimGetSymbols = new SemaphoreSlim(1, 1);
         private bool disposed;
 
         public SymbolsCache(Exchange exchange, IWpfExchangeService wpfExchangeService)

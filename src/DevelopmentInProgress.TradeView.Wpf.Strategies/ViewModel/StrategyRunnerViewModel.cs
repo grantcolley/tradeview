@@ -28,9 +28,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 {
     public class StrategyRunnerViewModel : DocumentViewModel
     {
-        private IStrategyService strategyService;
-        private IServerMonitorCache serverMonitorCache;
-        private IStrategyAssemblyManager strategyAssemblyManager;
+        private readonly IStrategyService strategyService;
+        private readonly IServerMonitorCache serverMonitorCache;
+        private readonly IStrategyAssemblyManager strategyAssemblyManager;
 
         private Strategy strategy;
         private ServerMonitor selectedServer;

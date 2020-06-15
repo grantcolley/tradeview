@@ -13,15 +13,15 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
 {
     public class AccountViewModel : ExchangeViewModel
     {
-        private CancellationTokenSource accountCancellationTokenSource;
-        private DispatcherTimer dispatcherTimer;
-        private ISymbolsCacheFactory symbolsCacheFactory;
+        private readonly CancellationTokenSource accountCancellationTokenSource;
+        private readonly ISymbolsCacheFactory symbolsCacheFactory;
+        private readonly object balancesLock = new object();
         private ISymbolsCache symbolsCache;
-        private Account account;
+        private DispatcherTimer dispatcherTimer;
         private AccountBalance selectedAsset;
+        private Account account;
         private bool isLoggingIn;
         private bool disposed;
-        private object balancesLock = new object();
 
         public AccountViewModel(IWpfExchangeService exchangeService, ISymbolsCacheFactory symbolsCacheFactory, ILoggerFacade logger)
             : base(exchangeService, logger)
