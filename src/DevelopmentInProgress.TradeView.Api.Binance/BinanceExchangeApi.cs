@@ -74,7 +74,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             var symbols = await GetSymbolsAsync(cancellationToken).ConfigureAwait(false);
             var symbolStatistics = await Get24HourStatisticsAsync(cancellationToken).ConfigureAwait(false);
 
-            Func<Core.Model.Symbol, Core.Model.SymbolStats, Core.Model.Symbol> f = (s, ss) =>
+            Core.Model.Symbol f(Core.Model.Symbol s, Core.Model.SymbolStats ss)
             {
                 s.SymbolStatistics = ss;
                 return s;
