@@ -51,7 +51,7 @@ namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
         {
             if(Strategy == null)
             {
-                throw new Exception("Strategy not set.");
+                throw new NullReferenceException(typeof(Strategy).Name);
             }
 
             this.CancellationToken = cancellationToken;
@@ -151,7 +151,7 @@ namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
                     return;
                 }
 
-                var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = "Update strategy performance.", NotificationLevel = NotificationLevel.Account };
+                var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = $"Update {Strategy.Name} performance.", NotificationLevel = NotificationLevel.Account };
 
                 StrategyAccountInfoNotification(new StrategyNotificationEventArgs { StrategyNotification = strategyNotification });
             }
