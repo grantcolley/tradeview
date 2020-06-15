@@ -16,7 +16,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
 {
     public class KucoinExchangeApi : IExchangeApi
     {
-        public async Task<string> CancelOrderAsync(User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<string> CancelOrderAsync(User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default)
         {
             var options = new KucoinClientOptions
             {
@@ -55,7 +55,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
             return accountInfo;
         }
 
-        public Task<IEnumerable<AccountTrade>> GetAccountTradesAsync(User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<IEnumerable<AccountTrade>> GetAccountTradesAsync(User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
@@ -65,7 +65,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Candlestick>> GetCandlesticksAsync(string symbol, CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = 0, CancellationToken token = default(CancellationToken))
+        public async Task<IEnumerable<Candlestick>> GetCandlesticksAsync(string symbol, CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = 0, CancellationToken token = default)
         {
             var candlestickInterval = interval.ToKucoinCandlestickInterval();
 
@@ -95,7 +95,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
             }
         }
 
-        public async Task<IEnumerable<Order>> GetOpenOrdersAsync(User user, string symbol = null, long recWindow = 0, Action<Exception> exception = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IEnumerable<Order>> GetOpenOrdersAsync(User user, string symbol = null, long recWindow = 0, Action<Exception> exception = null, CancellationToken cancellationToken = default)
         {
             var options = new KucoinClientOptions
             {
@@ -227,7 +227,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
             }
         }
 
-        public async Task<Order> PlaceOrder(User user, ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Order> PlaceOrder(User user, ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default)
         {
             var options = new KucoinClientOptions
             {
