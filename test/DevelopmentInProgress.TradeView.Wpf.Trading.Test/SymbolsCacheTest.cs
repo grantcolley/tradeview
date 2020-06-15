@@ -17,7 +17,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.Standard);
             var exchangeService = new WpfExchangeService(exchangeApi);
             var symbolsCache = SymbolsCacheHelper.GetSymbolsCache(exchangeService);
-            var symbols = await symbolsCache.GetSymbols(new[] { "BNBBTC" });
+            await symbolsCache.GetSymbols(new[] { "BNBBTC" });
 
             var balances = new List<Core.Model.AccountBalance>();
             balances.Add(new Core.Model.AccountBalance { Asset = "BTC", Free = 0.00794722m });
@@ -42,7 +42,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.Standard);
             var exchangeService = new WpfExchangeService(exchangeApi);
             var symbolsCache = SymbolsCacheHelper.GetSymbolsCache(exchangeService);
-            var symbols = await symbolsCache.GetSymbols(new[] { "BNBBTC" });
+            await symbolsCache.GetSymbols(new[] { "BNBBTC" });
 
             var balances = new List<Core.Model.AccountBalance>();
             balances.Add(new Core.Model.AccountBalance { Asset = "BNB", Free = 1.88373641m });
@@ -67,7 +67,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.Standard);
             var exchangeService = new WpfExchangeService(exchangeApi);
             var symbolsCache = SymbolsCacheHelper.GetSymbolsCache(exchangeService);
-            var symbols = await symbolsCache.GetSymbols(new[] { "BNBBTC" });
+            await symbolsCache.GetSymbols(new[] { "BNBBTC" });
 
             var balances = new List<Core.Model.AccountBalance>();
             balances.Add(new Core.Model.AccountBalance { Asset = "BTC", Free = 0.00396715m });
