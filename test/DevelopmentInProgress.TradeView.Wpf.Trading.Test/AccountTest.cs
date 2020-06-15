@@ -42,10 +42,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
         public void SetApiSecret_Pass()
         {
             // Arrange
-            var account = new Account(new Core.Model.AccountInfo { User = user });
-
-            // Act
-            account.ApiSecret = "0123456789";
+            var account = new Account(new Core.Model.AccountInfo { User = user })
+            {
+                // Act
+                ApiSecret = "0123456789"
+            };
 
             // Assert
             Assert.IsTrue(account.ApiSecret.Equals("**********"));
