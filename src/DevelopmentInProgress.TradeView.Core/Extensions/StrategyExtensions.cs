@@ -12,12 +12,11 @@ namespace DevelopmentInProgress.TradeView.Core.Extensions
                 throw new ArgumentNullException(nameof(strategy));
             }
 
-            return new StrategyNotification
+            var strategyNotification = new StrategyNotification
             {
                 Id = strategy.Id,
                 Name = strategy.Name,
                 Status = strategy.Status,
-                StrategySubscriptions = strategy.StrategySubscriptions,
                 TargetAssembly = strategy.TargetAssembly,
                 TargetType = strategy.TargetType,
                 Parameters = strategy.Parameters,
@@ -26,6 +25,10 @@ namespace DevelopmentInProgress.TradeView.Core.Extensions
                 NotificationLevel = notificationLevel,
                 Message = message
             };
+
+            strategyNotification.StrategySubscriptions.AddRange(strategy.StrategySubscriptions);
+
+            return strategyNotification;
         }
     }
 }

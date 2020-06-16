@@ -12,7 +12,7 @@ namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
         public int Id { get; set; }
         public string Name { get; set; }
         public StrategyStatus Status { get; set; }
-        public List<StrategySubscription> StrategySubscriptions { get; set; }
+        public List<StrategySubscription> StrategySubscriptions { get; private set; }
 
         /// <summary>
         /// The assembly to load and run. The assembly must contain a class that implements
