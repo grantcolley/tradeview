@@ -21,9 +21,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
         private readonly ObservableCollection<ServerMonitor> serverMonitors;
         private readonly SemaphoreSlim serverMonitorSemaphoreSlim = new SemaphoreSlim(1, 1);
         private readonly Dictionary<string, IDisposable> serverMonitorSubscriptions;
+        private readonly Dispatcher dispatcher;
         private Core.Server.ServerConfiguration serverConfiguraion;
         private IDisposable observableInterval;
-        private Dispatcher dispatcher;
         private bool disposed;
 
         public ServerMonitorCache(ITradeViewConfigurationServer configurationServer)
