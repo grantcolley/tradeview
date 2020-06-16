@@ -89,7 +89,7 @@ namespace DevelopmentInProgress.Socket.Client
 
             if (clientWebSocket.State == WebSocketState.Open)
             {
-                await clientWebSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+                await clientWebSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None).ConfigureAwait(false);
             }
 
             clientWebSocket.Dispose();
@@ -113,7 +113,7 @@ namespace DevelopmentInProgress.Socket.Client
         /// <returns>A <see cref="Task"/>.</returns>
         public async Task StartAsync()
         {
-            await StartAsync(string.Empty);
+            await StartAsync(string.Empty).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace DevelopmentInProgress.Socket.Client
 
             var uriBuilder = new UriBuilder(Url) { Query = collection.ToString() };
 
-            await clientWebSocket.ConnectAsync(uriBuilder.Uri, CancellationToken.None);
+            await clientWebSocket.ConnectAsync(uriBuilder.Uri, CancellationToken.None).ConfigureAwait(false);
 
             RunReceiving();
         }
@@ -147,7 +147,7 @@ namespace DevelopmentInProgress.Socket.Client
 
                 var bytes = Encoding.UTF8.GetBytes(json);
 
-                await clientWebSocket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
+                await clientWebSocket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None).ConfigureAwait(false);
             }
         }
 
@@ -159,7 +159,7 @@ namespace DevelopmentInProgress.Socket.Client
         {
             if (clientWebSocket.State.Equals(WebSocketState.Open))
             {
-                await clientWebSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+                await clientWebSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None).ConfigureAwait(false);
             }
         }
 
@@ -181,7 +181,7 @@ namespace DevelopmentInProgress.Socket.Client
             {
                 try
                 {
-                    await Receiving();
+                    await Receiving().ConfigureAwait(false);
                 }
                 catch(Exception ex)
                 {
@@ -205,7 +205,7 @@ namespace DevelopmentInProgress.Socket.Client
                 {
                     try
                     {
-                        webSocketReceiveResult = await clientWebSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+                        webSocketReceiveResult = await clientWebSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None).ConfigureAwait(false);
                     }
                     catch (WebSocketException)
                     {
@@ -219,7 +219,7 @@ namespace DevelopmentInProgress.Socket.Client
 
                     if (webSocketReceiveResult.MessageType == WebSocketMessageType.Close)
                     {
-                        await clientWebSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+                        await clientWebSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None).ConfigureAwait(false);
                         break;
                     }
                     else if (webSocketReceiveResult.MessageType.Equals(WebSocketMessageType.Text))

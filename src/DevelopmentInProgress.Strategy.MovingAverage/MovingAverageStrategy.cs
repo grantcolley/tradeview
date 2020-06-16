@@ -54,7 +54,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
                 tcs.SetException(ex);
             }
 
-            return await tcs.Task;
+            return await tcs.Task.ConfigureAwait(false);
         }
 
         public override void SubscribeTrades(TradeEventArgs tradeEventArgs)

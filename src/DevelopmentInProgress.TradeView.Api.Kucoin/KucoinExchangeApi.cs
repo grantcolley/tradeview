@@ -71,7 +71,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
 
             using (var kucoinClient = new KucoinClient())
             {
-                var result = await kucoinClient.GetKlinesAsync(symbol, candlestickInterval, startTime, endTime);
+                var result = await kucoinClient.GetKlinesAsync(symbol, candlestickInterval, startTime, endTime).ConfigureAwait(false);
 
                 Candlestick f(KucoinKline k)
                 {
@@ -312,7 +312,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
 
                     try
                     {
-                        var accountInfo = await GetAccountInfoAsync(localUser, cancellationToken);
+                        var accountInfo = await GetAccountInfoAsync(localUser, cancellationToken).ConfigureAwait(false);
 
                         callback.Invoke(new AccountInfoEventArgs { AccountInfo = accountInfo });
                     }
@@ -323,7 +323,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                         kucoinClient.Dispose();
                         return;
                     }
-                });
+                }).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -386,7 +386,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                         kucoinClient.Dispose();
                         return;
                     }
-                });
+                }).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -450,7 +450,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                             kucoinSocketClient.Dispose();
                             return;
                         }
-                    });
+                    }).ConfigureAwait(false);
                 }
             }
             catch (Exception)
@@ -514,7 +514,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                         kucoinClient.Dispose();
                         return;
                     }
-                });
+                }).ConfigureAwait(false);
             }
             catch (Exception)
             {
