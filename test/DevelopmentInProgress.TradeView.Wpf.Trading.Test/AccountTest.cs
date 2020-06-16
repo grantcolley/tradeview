@@ -15,7 +15,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
         [ClassInitialize()]
         public static void ClientOrderValidationBuilderTest_Initialize(TestContext testContext)
         {
-            apiKey = "abcdefghijklmnopqrstuvwxyz";
+            apiKey = testContext.GetHashCode().ToString();
             user = new Core.Model.User() { ApiKey = apiKey };
             var balance = new Core.Model.AccountBalance { Asset = "TRX", Free = 300, Locked = 100 };
             balances = new List<Core.Model.AccountBalance>() { balance };
