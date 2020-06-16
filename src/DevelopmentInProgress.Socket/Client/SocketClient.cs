@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DevelopmentInProgress.Socket.Server;
 using System.Web;
+using System.Globalization;
 
 namespace DevelopmentInProgress.Socket.Client
 {
@@ -57,11 +58,11 @@ namespace DevelopmentInProgress.Socket.Client
         /// <param name="clientId">The client side identifier.</param>
         public SocketClient(string url, string clientId)
         {
-            if (url.ToLower().StartsWith("https"))
+            if (url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
             {
                 Url = $"ws{url.Substring(5)}";
             }
-            else if (url.ToLower().StartsWith("http"))
+            else if (url.StartsWith("http", StringComparison.OrdinalIgnoreCase))
             {
                 Url = $"ws{url.Substring(4)}";
             }

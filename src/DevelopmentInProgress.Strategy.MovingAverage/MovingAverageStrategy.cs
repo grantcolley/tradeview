@@ -120,7 +120,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
             {
                 try
                 {                    
-                    var symbol = ExchangeSymbols[Exchange.Binance].Single(s => s.ExchangeSymbol.Equals(trade.Symbol));
+                    var symbol = ExchangeSymbols[Exchange.Binance].Single(s => s.ExchangeSymbol.Equals(trade.Symbol, StringComparison.Ordinal));
 
                     OrderSide orderSide;
                     decimal stopPrice = 0m;
@@ -142,8 +142,8 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
 
                     decimal quantity = 0m;
 
-                    var quoteAssetBalance = AccountInfo.Balances.FirstOrDefault(b => b.Asset.Equals(symbol.QuoteAsset.Symbol));
-                    var baseAssetBalance = AccountInfo.Balances.FirstOrDefault(b => b.Asset.Equals(symbol.BaseAsset.Symbol));
+                    var quoteAssetBalance = AccountInfo.Balances.FirstOrDefault(b => b.Asset.Equals(symbol.QuoteAsset.Symbol, StringComparison.Ordinal));
+                    var baseAssetBalance = AccountInfo.Balances.FirstOrDefault(b => b.Asset.Equals(symbol.BaseAsset.Symbol, StringComparison.Ordinal));
 
                     if (orderSide.Equals(OrderSide.Buy)
                         && quoteAssetBalance.Free > 0)
@@ -177,7 +177,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
 
                         symbol.ValidateClientOrder(clientOrder);
 
-                        var strategySymbol = Strategy.StrategySubscriptions.SingleOrDefault(ss => ss.Symbol.Equals(trade.Symbol));
+                        var strategySymbol = Strategy.StrategySubscriptions.SingleOrDefault(ss => ss.Symbol.Equals(trade.Symbol, StringComparison.Ordinal));
                         var user = new User { ApiKey = strategySymbol.ApiKey, ApiSecret = strategySymbol.SecretKey, Exchange = Exchange.Binance };
                         var order = ExchangeServices[Exchange.Binance].PlaceOrder(user.Exchange, user, clientOrder).Result;
 
