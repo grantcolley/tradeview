@@ -66,7 +66,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                         }
                     }
 
-                    Func<ServerMonitor, Core.Server.TradeServer, ServerMonitor> updateServerMonitor = (sm, s) =>
+                    ServerMonitor updateServerMonitor(ServerMonitor sm, Core.Server.TradeServer s)
                     {
                         sm.Url = s.Url;
                         sm.MaxDegreeOfParallelism = s.MaxDegreeOfParallelism;
