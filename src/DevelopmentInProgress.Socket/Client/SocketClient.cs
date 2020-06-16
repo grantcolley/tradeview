@@ -16,8 +16,8 @@ namespace DevelopmentInProgress.Socket.Client
     /// </summary>
     public class SocketClient
     {
-        private ClientWebSocket clientWebSocket;
-        private Dictionary<string, Action<Message>> registeredMethods;
+        private readonly ClientWebSocket clientWebSocket;
+        private readonly Dictionary<string, Action<Message>> registeredMethods;
         private bool disposed;
 
         /// <summary>
