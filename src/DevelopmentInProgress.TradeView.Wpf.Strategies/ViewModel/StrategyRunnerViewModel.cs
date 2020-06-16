@@ -911,7 +911,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Log($"OnAccountNotification {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log($"{message.MethodName} {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"OnAccountNotification - {ex.Message}", TextVerbose = ex.ToString() });
             }
