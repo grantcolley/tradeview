@@ -58,6 +58,11 @@ namespace DevelopmentInProgress.Socket.Client
         /// <param name="clientId">The client side identifier.</param>
         public SocketClient(string url, string clientId)
         {
+            if (url == null)
+            {
+                throw new ArgumentNullException(nameof(url));
+            }
+
             if (url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
             {
                 Url = $"ws{url.Substring(5)}";

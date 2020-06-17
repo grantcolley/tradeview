@@ -65,6 +65,11 @@ namespace DevelopmentInProgress.Socket.Server
         /// <returns>The <see cref="Connection"/> for the <see cref="WebSocket"/>.</returns>
         public virtual async Task<Connection> OnClientDisonnectAsync(WebSocket webSocket)
         {
+            if (webSocket == null)
+            {
+                throw new ArgumentNullException(nameof(webSocket));
+            }
+
             if (connectionManager.TryRemoveWebSocketConnection(webSocket, out Connection connection))
             {
                 connection.Channels.All(c => c.Value.Connections.TryRemove(connection.ConnectionId, out Connection removedConnection));
@@ -199,6 +204,16 @@ namespace DevelopmentInProgress.Socket.Server
         /// <returns>A <see cref="Task"/>.</returns>
         public async Task SendMessageAsync(WebSocket webSocket, string message)
         {
+            if(webSocket == null)
+            {
+                throw new ArgumentNullException(nameof(webSocket));
+            }
+
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
+
             if (!webSocket.State.Equals(WebSocketState.Open))
             {
                 return;

@@ -25,7 +25,12 @@ namespace DevelopmentInProgress.Strategy.Common.TradeCreator
 
         public MovingAverageTrade CreateTrade(ITrade trade)
         {
-            lock(tradeLock)
+            if (trade == null)
+            {
+                throw new ArgumentNullException(nameof(trade));
+            }
+
+            lock (tradeLock)
             {
                 position += 1;
 
@@ -75,6 +80,11 @@ namespace DevelopmentInProgress.Strategy.Common.TradeCreator
 
         public void Reset(MovingAverageTradeParameters parameters)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             lock (tradeLock)
             {
                 buyIndicator = parameters.BuyIndicator;

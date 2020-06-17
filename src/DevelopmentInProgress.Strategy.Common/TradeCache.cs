@@ -87,6 +87,11 @@ namespace DevelopmentInProgress.Strategy.Common
 
         public T[] AddRange(ITrade[] newTrades)
         {
+            if (newTrades == null)
+            {
+                throw new ArgumentNullException(nameof(newTrades));
+            }
+
             int length = newTrades.Length;
 
             var range = new T[length];

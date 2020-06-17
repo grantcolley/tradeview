@@ -59,6 +59,11 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
 
         public override void SubscribeTrades(TradeEventArgs tradeEventArgs)
         {
+            if (tradeEventArgs == null)
+            {
+                throw new ArgumentNullException(nameof(tradeEventArgs));
+            }
+
             if (Strategy == null)
             {
                 return;

@@ -16,6 +16,11 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
     {
         public async Task<Core.Model.Order> PlaceOrder(Core.Model.User user, Core.Model.ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
             var binanceApi = new BinanceApi();
             using (var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret))
             {
@@ -27,6 +32,16 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
         public async Task<string> CancelOrderAsync(Core.Model.User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (orderId == null)
+            {
+                throw new ArgumentNullException(nameof(orderId));
+            }
+
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
             var binanceApi = new BinanceApi();
             var id = Convert.ToInt64(orderId);
             using (var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret))
@@ -38,6 +53,11 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
         public async Task<Core.Model.AccountInfo> GetAccountInfoAsync(Core.Model.User user, CancellationToken cancellationToken)
         {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
             var binanceApi = new BinanceApi();
             using (var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret))
             {
@@ -51,6 +71,11 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
         public async Task<IEnumerable<Core.Model.AccountTrade>> GetAccountTradesAsync(Core.Model.User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
             var binanceApi = new BinanceApi();
             using (var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret))
             {
@@ -142,6 +167,11 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
         public async Task<IEnumerable<Core.Model.Order>> GetOpenOrdersAsync(Core.Model.User user, string symbol = null, long recWindow = 0, Action<Exception> exception = default(Action<Exception>), CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
             var binanceApi = new BinanceApi();
             using (var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret))
             {
@@ -353,6 +383,11 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 
         public async Task SubscribeAccountInfo(Core.Model.User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
             var binanceApi = new BinanceApi();
             var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret);
             var streamControl = new UserDataWebSocketStreamControl(binanceApi);

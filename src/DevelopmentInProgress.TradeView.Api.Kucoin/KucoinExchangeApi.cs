@@ -18,6 +18,11 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
     {
         public async Task<string> CancelOrderAsync(User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default)
         {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
             var options = new KucoinClientOptions
             {
                 ApiCredentials = new KucoinApiCredentials(user.ApiKey, user.ApiSecret, user.ApiPassPhrase)
@@ -32,6 +37,11 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
 
         public async Task<AccountInfo> GetAccountInfoAsync(User user, CancellationToken cancellationToken)
         {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
             var options = new KucoinClientOptions
             {
                 ApiCredentials = new KucoinApiCredentials(user.ApiKey, user.ApiSecret, user.ApiPassPhrase)
@@ -97,6 +107,11 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
 
         public async Task<IEnumerable<Order>> GetOpenOrdersAsync(User user, string symbol = null, long recWindow = 0, Action<Exception> exception = null, CancellationToken cancellationToken = default)
         {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
             var options = new KucoinClientOptions
             {
                 ApiCredentials = new KucoinApiCredentials(user.ApiKey, user.ApiSecret, user.ApiPassPhrase)
@@ -229,6 +244,16 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
 
         public async Task<Order> PlaceOrder(User user, ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default)
         {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            if (clientOrder == null)
+            {
+                throw new ArgumentNullException(nameof(clientOrder));
+            }
+
             var options = new KucoinClientOptions
             {
                 ApiCredentials = new KucoinApiCredentials(user.ApiKey, user.ApiSecret, user.ApiPassPhrase)
@@ -293,6 +318,11 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
 
         public async Task SubscribeAccountInfo(User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
             var localUser = user;
 
             var kucoinClient = new KucoinSocketClient(new KucoinSocketClientOptions { ApiCredentials = new KucoinApiCredentials(user.ApiKey, user.ApiSecret, user.ApiPassPhrase) });
@@ -407,6 +437,11 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
 
         public async Task SubscribeStatistics(IEnumerable<string> symbols, Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
+            if (symbols == null)
+            {
+                throw new ArgumentNullException(nameof(symbols));
+            }
+
             var kucoinSocketClient = new KucoinSocketClient();
 
             CallResult<UpdateSubscription> result = null;

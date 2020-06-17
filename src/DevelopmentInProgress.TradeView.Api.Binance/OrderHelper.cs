@@ -1,4 +1,5 @@
 ﻿using Binance;
+using System;
 
 namespace DevelopmentInProgress.TradeView.Api.Binance
 {
@@ -6,6 +7,16 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
     {
         public static ClientOrder GetOrder(BinanceApiUser apiUser, Core.Model.ClientOrder clientOrder)
         {
+            if (apiUser == null)
+            {
+                throw new ArgumentNullException(nameof(apiUser));
+            }
+
+            if (clientOrder == null)
+            {
+                throw new ArgumentNullException(nameof(clientOrder));
+            }
+
             var orderType = (OrderType)clientOrder.Type;
             switch (orderType)
             {
