@@ -35,7 +35,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
                 case OrderType.TakeProfitLimit:
                     return new TakeProfitLimitOrder(apiUser) { Symbol = clientOrder.Symbol, Side = (OrderSide)clientOrder.Side, Quantity = clientOrder.Quantity, StopPrice = clientOrder.StopPrice, Price = clientOrder.Price };
                 default:
-                    throw new System.Exception("Unknown order type.");
+                    throw new ArgumentOutOfRangeException($"Order type not supported for {nameof(clientOrder)}");
             }
         }
     }
