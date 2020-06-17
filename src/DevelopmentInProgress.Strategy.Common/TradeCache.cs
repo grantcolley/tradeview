@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace DevelopmentInProgress.Strategy.Common
 {
-    public class TradeCache<TC, T, P>  where TC : ITradeCreator<T,P>, new()
+    public class TradeCache<TC, T, TP>  where TC : ITradeCreator<T,TP>, new()
                                        where T : ITrade, new()
-                                       where P : StrategyParameters
+                                       where TP : StrategyParameters
     {
         private T[] trades;
 
@@ -24,7 +24,7 @@ namespace DevelopmentInProgress.Strategy.Common
         public int CacheSize { get { return trades.Length; } }
         public int TradeRange { get; private set; }
         public int Position { get; private set; }
-        public ITradeCreator<T, P> TradeCreator { get; private set; }
+        public ITradeCreator<T, TP> TradeCreator { get; private set; }
 
         public T[] GetTrades()
         {
