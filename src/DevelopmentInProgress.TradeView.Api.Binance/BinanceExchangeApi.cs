@@ -421,7 +421,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             });
         }
 
-        private Core.Model.AccountInfo GetAccountInfo(AccountInfo a)
+        private static Core.Model.AccountInfo GetAccountInfo(AccountInfo a)
         {
             var accountInfo = new Core.Model.AccountInfo
             {
@@ -440,7 +440,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             return accountInfo;
         }
 
-        private Core.Model.Order NewOrder(Core.Model.User user, Order o)
+        private static Core.Model.Order NewOrder(Core.Model.User user, Order o)
         {
             return new Core.Model.Order
             {
@@ -471,7 +471,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             };
         }
 
-        private Core.Model.SymbolStats NewSymbolStats(SymbolStatistics s)
+        private static Core.Model.SymbolStats NewSymbolStats(SymbolStatistics s)
         {
             return new Core.Model.SymbolStats
             {
@@ -501,7 +501,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             };
         }
 
-        private Core.Model.OrderBook NewOrderBook(OrderBook ob)
+        private static Core.Model.OrderBook NewOrderBook(OrderBook ob)
         {
             var orderBook = new Core.Model.OrderBook
             {
@@ -516,7 +516,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             return orderBook;
         }
 
-        private Core.Model.AggregateTrade NewAggregateTrade(AggregateTrade at)
+        private static Core.Model.AggregateTrade NewAggregateTrade(AggregateTrade at)
         {
             return new Core.Model.AggregateTrade
             {
@@ -533,7 +533,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             };
         }
 
-        private Core.Model.Trade NewTrade(Trade t)
+        private static Core.Model.Trade NewTrade(Trade t)
         {
             return new Core.Model.Trade
             {
@@ -550,7 +550,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             };
         }
 
-        private Core.Model.Candlestick NewCandlestick(Candlestick c)
+        private static Core.Model.Candlestick NewCandlestick(Candlestick c)
         {
             var interval = c.Interval.ToTradeViewCandlestickInterval();
 
@@ -573,7 +573,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             };
         }
 
-        private Core.Model.AccountTrade NewAccountTrade(AccountTrade t)
+        private static Core.Model.AccountTrade NewAccountTrade(AccountTrade t)
         {
             return new Core.Model.AccountTrade
             {

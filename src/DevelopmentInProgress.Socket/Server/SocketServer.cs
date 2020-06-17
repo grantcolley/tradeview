@@ -122,7 +122,7 @@ namespace DevelopmentInProgress.Socket.Server
         /// <param name="connections">The connections to send messages to.</param>
         /// <param name="getMessage">The delegate to get the message for each connection.</param>
         /// <returns>A <see cref="Task"/>.</returns>
-        public async Task SendMessageAsync(List<Connection> connections, Func<Connection, Message> getMessage)
+        public static async Task SendMessageAsync(List<Connection> connections, Func<Connection, Message> getMessage)
         {
             var webSockets = (from connection in connections select SendMessageAsync(connection.WebSocket, getMessage(connection))).ToList();
 
@@ -169,7 +169,7 @@ namespace DevelopmentInProgress.Socket.Server
         /// <param name="channelName">The channel name.</param>
         /// <param name="message">The message to send.</param>
         /// <returns>A <see cref="Task"/>.</returns>
-        public async Task SendMessageToChannelAsync(Channel channel, Message message)
+        public static async Task SendMessageToChannelAsync(Channel channel, Message message)
         {
             if (channel == null)
             {
@@ -189,7 +189,7 @@ namespace DevelopmentInProgress.Socket.Server
         /// <param name="webSocket">The <see cref="WebSocket"/> to send the message to.</param>
         /// <param name="message">The message to send.</param>
         /// <returns>A <see cref="Task"/>.</returns>
-        public async Task SendMessageAsync(WebSocket webSocket, Message message)
+        public static async Task SendMessageAsync(WebSocket webSocket, Message message)
         {
             var json = JsonConvert.SerializeObject(message);
 
@@ -202,7 +202,7 @@ namespace DevelopmentInProgress.Socket.Server
         /// <param name="webSocket">The <see cref="WebSocket"/> to send the message to.</param>
         /// <param name="message">The message to send.</param>
         /// <returns>A <see cref="Task"/>.</returns>
-        public async Task SendMessageAsync(WebSocket webSocket, string message)
+        public static async Task SendMessageAsync(WebSocket webSocket, string message)
         {
             if(webSocket == null)
             {
