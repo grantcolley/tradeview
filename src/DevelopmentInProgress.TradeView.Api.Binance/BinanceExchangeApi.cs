@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DevelopmentInProgress.TradeView.Core.Enums;
+using System.Globalization;
 
 namespace DevelopmentInProgress.TradeView.Api.Binance
 {
@@ -446,7 +447,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
                 User = user,
                 Symbol = o.Symbol,
                 Exchange = Exchange.Binance,
-                Id = o.Id.ToString(),
+                Id = o.Id.ToString(CultureInfo.InvariantCulture),
                 ClientOrderId = o.ClientOrderId,
                 Price = o.Price,
                 OriginalQuantity = o.OriginalQuantity,
