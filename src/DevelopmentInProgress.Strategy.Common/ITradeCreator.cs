@@ -3,10 +3,10 @@ using DevelopmentInProgress.TradeView.Core.TradeStrategy;
 
 namespace DevelopmentInProgress.Strategy.Common
 {
-    public interface ITradeCreator<T, P>    where T : ITrade
-                                            where P : StrategyParameters
+    public interface ITradeCreator<T, TP>   where T : ITrade
+                                            where TP : StrategyParameters
     {
-        void Reset(P parameters);
+        void Reset(TP parameters);
         T CreateTrade(ITrade trade);
     }
 }
