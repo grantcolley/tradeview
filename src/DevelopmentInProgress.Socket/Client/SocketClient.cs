@@ -15,7 +15,7 @@ namespace DevelopmentInProgress.Socket.Client
     /// <summary>
     /// Send and receives <see cref="WebSocket"/> requests to a <see cref="SocketServer"/>
     /// </summary>
-    public class SocketClient
+    public class SocketClient : IDisposable
     {
         private readonly ClientWebSocket clientWebSocket;
         private readonly Dictionary<string, Action<Message>> registeredMethods;
@@ -75,6 +75,33 @@ namespace DevelopmentInProgress.Socket.Client
 
             clientWebSocket = new ClientWebSocket();
             registeredMethods = new Dictionary<string, Action<Message>>();
+        }
+
+        /// <summary>
+        /// Close and dispose of the <see cref="ClientWebSocket"/>.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+            {
+                return;
+            }
+
+            if (clientWebSocket.State == WebSocketState.Open)
+            {
+                clientWebSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None).Wait();
+            }
+
+            clientWebSocket.Dispose();
+
+            disposed = true;
         }
 
         /// <summary>
