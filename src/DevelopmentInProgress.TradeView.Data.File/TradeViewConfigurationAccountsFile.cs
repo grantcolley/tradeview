@@ -31,7 +31,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
                     userAccounts = JsonConvert.DeserializeObject<UserAccounts>(rjson);
                 }
 
-                var remove = userAccounts.Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName));
+                var remove = userAccounts.Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName, StringComparison.Ordinal));
                 if (remove != null)
                 {
                     userAccounts.Accounts.Remove(remove);
@@ -58,7 +58,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
                 }
 
                 var userAccounts = JsonConvert.DeserializeObject<UserAccounts>(json);
-                var userAccount = userAccounts.Accounts.Single(a => a.AccountName.Equals(accountName));
+                var userAccount = userAccounts.Accounts.Single(a => a.AccountName.Equals(accountName, StringComparison.Ordinal));
                 return userAccount;
             }
 
@@ -102,7 +102,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
                 userAccounts = new UserAccounts();
             }
 
-            var dupe = userAccounts.Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName));
+            var dupe = userAccounts.Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName, StringComparison.Ordinal));
             if (dupe != null)
             {
                 userAccounts.Accounts.Remove(dupe);

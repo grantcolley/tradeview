@@ -48,7 +48,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
                 {
                     var json = await reader.ReadToEndAsync().ConfigureAwait(false);
                     var strategies = JsonConvert.DeserializeObject<List<StrategyConfig>>(json);
-                    strategy = strategies.FirstOrDefault(s => s.Name.Equals(strategyName));
+                    strategy = strategies.FirstOrDefault(s => s.Name.Equals(strategyName, StringComparison.Ordinal));
                     return strategy;
                 }
             }
@@ -78,7 +78,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
                 strategies = new List<StrategyConfig>();
             }
 
-            var dupe = strategies.FirstOrDefault(s => s.Name.Equals(strategyConfig.Name));
+            var dupe = strategies.FirstOrDefault(s => s.Name.Equals(strategyConfig.Name, StringComparison.Ordinal));
             if (dupe != null)
             {
                 strategies.Remove(dupe);
@@ -108,7 +108,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
                     strategies = JsonConvert.DeserializeObject<List<StrategyConfig>>(rjson);
                 }
 
-                var remove = strategies.FirstOrDefault(s => s.Name.Equals(strategyConfig.Name));
+                var remove = strategies.FirstOrDefault(s => s.Name.Equals(strategyConfig.Name, StringComparison.Ordinal));
                 if (remove != null)
                 {
                     strategies.Remove(remove);

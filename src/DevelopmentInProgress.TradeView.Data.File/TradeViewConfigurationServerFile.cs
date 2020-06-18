@@ -51,7 +51,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
                 {
                     var json = await reader.ReadToEndAsync().ConfigureAwait(false);
                     var servers = JsonConvert.DeserializeObject<List<TradeServer>>(json);
-                    server = servers.FirstOrDefault(s => s.Name.Equals(serverName));
+                    server = servers.FirstOrDefault(s => s.Name.Equals(serverName, StringComparison.Ordinal));
                     return server;
                 }
             }
@@ -81,7 +81,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
                 servers = new List<TradeServer>();
             }
 
-            var dupe = servers.FirstOrDefault(s => s.Name.Equals(server.Name));
+            var dupe = servers.FirstOrDefault(s => s.Name.Equals(server.Name, StringComparison.Ordinal));
             if (dupe != null)
             {
                 servers.Remove(dupe);
@@ -111,7 +111,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
                     servers = JsonConvert.DeserializeObject<List<TradeServer>>(rjson);
                 }
 
-                var remove = servers.FirstOrDefault(s => s.Name.Equals(server.Name));
+                var remove = servers.FirstOrDefault(s => s.Name.Equals(server.Name, StringComparison.Ordinal));
                 if (remove != null)
                 {
                     servers.Remove(remove);
