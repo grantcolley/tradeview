@@ -186,38 +186,32 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
         {
             var tcs = new TaskCompletionSource<object>();
 
-            try
+            var binanceApi = new BinanceApi();
+            var interval = candlestickInterval.ToBinanceCandlestickInterval();
+            var canclestickCache = new CandlestickCache(binanceApi, new CandlestickWebSocketClient());
+
+            canclestickCache.Subscribe(symbol, interval, limit, e =>
             {
-                var binanceApi = new BinanceApi();
-                var interval = candlestickInterval.ToBinanceCandlestickInterval();
-                var canclestickCache = new CandlestickCache(binanceApi, new CandlestickWebSocketClient());
-                canclestickCache.Subscribe(symbol, interval, limit, e =>
+                if (cancellationToken.IsCancellationRequested)
                 {
-                    if (cancellationToken.IsCancellationRequested)
-                    {
-                        canclestickCache.Unsubscribe();
-                        return;
-                    }
+                    canclestickCache.Unsubscribe();
+                    return;
+                }
 
-                    try
-                    {
-                        var candlesticks = (from c in e.Candlesticks select NewCandlestick(c)).ToList();
-                        callback.Invoke(new CandlestickEventArgs { Candlesticks = candlesticks });
-                    }
-                    catch (Exception ex)
-                    {
-                        canclestickCache.Unsubscribe();
-                        exception.Invoke(ex);
-                        return;
-                    }
-                });
+                try
+                {
+                    var candlesticks = (from c in e.Candlesticks select NewCandlestick(c)).ToList();
+                    callback.Invoke(new CandlestickEventArgs { Candlesticks = candlesticks });
+                }
+                catch (Exception ex)
+                {
+                    canclestickCache.Unsubscribe();
+                    exception.Invoke(ex);
+                    return;
+                }
+            });
 
-                tcs.SetResult(null);
-            }
-            catch (Exception ex)
-            {
-                tcs.SetException(ex);
-            }
+            tcs.SetResult(null);
 
             return tcs.Task;
         }
@@ -226,37 +220,30 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
         {
             var tcs = new TaskCompletionSource<object>();
 
-            try
+            var binanceApi = new BinanceApi();
+            var orderBookCache = new OrderBookCache(binanceApi, new DepthWebSocketClient());
+            orderBookCache.Subscribe(symbol, limit, e =>
             {
-                var binanceApi = new BinanceApi();
-                var orderBookCache = new OrderBookCache(binanceApi, new DepthWebSocketClient());
-                orderBookCache.Subscribe(symbol, limit, e =>
+                if (cancellationToken.IsCancellationRequested)
                 {
-                    if (cancellationToken.IsCancellationRequested)
-                    {
-                        orderBookCache.Unsubscribe();
-                        return;
-                    }
+                    orderBookCache.Unsubscribe();
+                    return;
+                }
 
-                    try
-                    {
-                        var orderBook = NewOrderBook(e.OrderBook);
-                        callback.Invoke(new OrderBookEventArgs { OrderBook = orderBook });
-                    }
-                    catch (Exception ex)
-                    {
-                        orderBookCache.Unsubscribe();
-                        exception.Invoke(ex);
-                        return;
-                    }
-                });
+                try
+                {
+                    var orderBook = NewOrderBook(e.OrderBook);
+                    callback.Invoke(new OrderBookEventArgs { OrderBook = orderBook });
+                }
+                catch (Exception ex)
+                {
+                    orderBookCache.Unsubscribe();
+                    exception.Invoke(ex);
+                    return;
+                }
+            });
 
-                tcs.SetResult(null);
-            }
-            catch (Exception ex)
-            {
-                tcs.SetException(ex);
-            }
+            tcs.SetResult(null);
 
             return tcs.Task;
         }
@@ -265,37 +252,30 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
         {
             var tcs = new TaskCompletionSource<object>();
 
-            try
+            var binanceApi = new BinanceApi();
+            var aggregateTradeCache = new AggregateTradeCache(binanceApi, new AggregateTradeWebSocketClient());
+            aggregateTradeCache.Subscribe(symbol, limit, e =>
             {
-                var binanceApi = new BinanceApi();
-                var aggregateTradeCache = new AggregateTradeCache(binanceApi, new AggregateTradeWebSocketClient());
-                aggregateTradeCache.Subscribe(symbol, limit, e =>
+                if (cancellationToken.IsCancellationRequested)
                 {
-                    if (cancellationToken.IsCancellationRequested)
-                    {
-                        aggregateTradeCache.Unsubscribe();
-                        return;
-                    }
+                    aggregateTradeCache.Unsubscribe();
+                    return;
+                }
 
-                    try
-                    {
-                        var aggregateTrades = e.Trades.Select(at => NewAggregateTrade(at)).ToList();
-                        callback.Invoke(new TradeEventArgs { Trades = aggregateTrades });
-                    }
-                    catch (Exception ex)
-                    {
-                        aggregateTradeCache.Unsubscribe();
-                        exception.Invoke(ex);
-                        return;
-                    }
-                });
+                try
+                {
+                    var aggregateTrades = e.Trades.Select(at => NewAggregateTrade(at)).ToList();
+                    callback.Invoke(new TradeEventArgs { Trades = aggregateTrades });
+                }
+                catch (Exception ex)
+                {
+                    aggregateTradeCache.Unsubscribe();
+                    exception.Invoke(ex);
+                    return;
+                }
+            });
 
-                tcs.SetResult(null);
-            }
-            catch (Exception ex)
-            {
-                tcs.SetException(ex);
-            }
+            tcs.SetResult(null);
 
             return tcs.Task;
         }
@@ -304,37 +284,30 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
         {
             var tcs = new TaskCompletionSource<object>();
 
-            try
+            var binanceApi = new BinanceApi();
+            var tradeCache = new TradeCache(binanceApi, new TradeWebSocketClient());
+            tradeCache.Subscribe(symbol, limit, e =>
             {
-                var binanceApi = new BinanceApi();
-                var tradeCache = new TradeCache(binanceApi, new TradeWebSocketClient());
-                tradeCache.Subscribe(symbol, limit, e =>
+                if (cancellationToken.IsCancellationRequested)
                 {
-                    if (cancellationToken.IsCancellationRequested)
-                    {
-                        tradeCache.Unsubscribe();
-                        return;
-                    }
+                    tradeCache.Unsubscribe();
+                    return;
+                }
 
-                    try
-                    {
-                        var trades = e.Trades.Select(t => NewTrade(t)).ToList();
-                        callback.Invoke(new TradeEventArgs { Trades = trades });
-                    }
-                    catch (Exception ex)
-                    {
-                        tradeCache.Unsubscribe();
-                        exception.Invoke(ex);
-                        return;
-                    }
-                });
+                try
+                {
+                    var trades = e.Trades.Select(t => NewTrade(t)).ToList();
+                    callback.Invoke(new TradeEventArgs { Trades = trades });
+                }
+                catch (Exception ex)
+                {
+                    tradeCache.Unsubscribe();
+                    exception.Invoke(ex);
+                    return;
+                }
+            });
 
-                tcs.SetResult(null);
-            }
-            catch (Exception ex)
-            {
-                tcs.SetException(ex);
-            }
+            tcs.SetResult(null);
 
             return tcs.Task;
         }
@@ -348,36 +321,30 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
         {
             var tcs = new TaskCompletionSource<object>();
 
-            try
+            var binanceApi = new BinanceApi();
+            var symbolStatisticsCache = new SymbolStatisticsCache(binanceApi, new SymbolStatisticsWebSocketClient());
+            symbolStatisticsCache.Subscribe(e =>
             {
-                var binanceApi = new BinanceApi();
-                var symbolStatisticsCache = new SymbolStatisticsCache(binanceApi, new SymbolStatisticsWebSocketClient());
-                symbolStatisticsCache.Subscribe(e =>
+                if (cancellationToken.IsCancellationRequested)
                 {
-                    if (cancellationToken.IsCancellationRequested)
-                    {
-                        symbolStatisticsCache.Unsubscribe();
-                        return;
-                    }
+                    symbolStatisticsCache.Unsubscribe();
+                    return;
+                }
 
-                    try
-                    {
-                        var symbolsStats = e.Statistics.Select(s => NewSymbolStats(s)).ToList();
-                        callback.Invoke(new StatisticsEventArgs { Statistics = symbolsStats });
-                    }
-                    catch (Exception ex)
-                    {
-                        symbolStatisticsCache.Unsubscribe();
-                        exception.Invoke(ex);
-                        return;
-                    }
-                });
-                tcs.SetResult(null);
-            }
-            catch (Exception ex)
-            {
-                tcs.SetException(ex);
-            }
+                try
+                {
+                    var symbolsStats = e.Statistics.Select(s => NewSymbolStats(s)).ToList();
+                    callback.Invoke(new StatisticsEventArgs { Statistics = symbolsStats });
+                }
+                catch (Exception ex)
+                {
+                    symbolStatisticsCache.Unsubscribe();
+                    exception.Invoke(ex);
+                    return;
+                }
+            });
+
+            tcs.SetResult(null);
 
             return tcs.Task;
         }
