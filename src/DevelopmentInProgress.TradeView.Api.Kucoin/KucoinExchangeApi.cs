@@ -317,6 +317,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposing kucoinClient early breaks subscription.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions raised in the callback and feed it back to the subscriber through the exception callback.")]
         public async Task SubscribeAccountInfo(User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             if (user == null)
@@ -341,10 +342,10 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                         return;
                     }
 
+                    var accountInfo = await GetAccountInfoAsync(localUser, cancellationToken).ConfigureAwait(false);
+
                     try
                     {
-                        var accountInfo = await GetAccountInfoAsync(localUser, cancellationToken).ConfigureAwait(false);
-
                         callback.Invoke(new AccountInfoEventArgs { AccountInfo = accountInfo });
                     }
                     catch (Exception ex)
@@ -379,6 +380,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposing kucoinSocketClient early breaks subscription.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions raised in the callback and feed it back to the subscriber through the exception callback.")]
         public async Task SubscribeOrderBook(string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             var kucoinClient = new KucoinSocketClient();
@@ -396,19 +398,19 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                         return;
                     }
 
+                    var orderBook = new OrderBook
+                    {
+                        Symbol = data.Symbol,
+                        Exchange = Exchange.Kucoin,
+                        FirstUpdateId = data.SequenceStart,
+                        LastUpdateId = data.SequenceEnd
+                    };
+
+                    orderBook.Asks = (from ask in data.Changes.Asks select new OrderBookPriceLevel { Id = ask.Sequence, Price = ask.Price, Quantity = ask.Quantity }).ToList();
+                    orderBook.Bids = (from bid in data.Changes.Bids select new OrderBookPriceLevel { Id = bid.Sequence, Price = bid.Price, Quantity = bid.Quantity }).ToList();
+
                     try
                     {
-                        var orderBook = new OrderBook
-                        {
-                            Symbol = data.Symbol,
-                            Exchange = Exchange.Kucoin,
-                            FirstUpdateId = data.SequenceStart,
-                            LastUpdateId = data.SequenceEnd
-                        };
-
-                        orderBook.Asks = (from ask in data.Changes.Asks select new OrderBookPriceLevel { Id = ask.Sequence, Price = ask.Price, Quantity = ask.Quantity}).ToList();
-                        orderBook.Bids = (from bid in data.Changes.Bids select new OrderBookPriceLevel { Id = bid.Sequence, Price = bid.Price, Quantity = bid.Quantity }).ToList();
-
                         callback.Invoke(new OrderBookEventArgs { OrderBook = orderBook });
                     }
                     catch (Exception ex)
@@ -438,6 +440,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposing kucoinSocketClient early breaks subscription.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions raised in the callback and feed it back to the subscriber through the exception callback.")]
         public async Task SubscribeStatistics(IEnumerable<string> symbols, Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             if (symbols == null)
@@ -464,28 +467,28 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                             return;
                         }
 
+                        var symbolStats = new SymbolStats
+                        {
+                            Symbol = data.Symbol,
+                            Exchange = Exchange.Kucoin,
+                            CloseTime = data.Timestamp,
+                            Volume = data.Volume,
+                            LowPrice = data.Low,
+                            HighPrice = data.High,
+                            LastPrice = data.LastPrice,
+                            PriceChange = data.ChangePrice,
+                            PriceChangePercent = data.ChangePercentage * 100
+                        };
+
                         try
                         {
-                            var symbolStats = new SymbolStats
-                            {
-                                Symbol = data.Symbol,
-                                Exchange = Exchange.Kucoin,
-                                CloseTime = data.Timestamp,
-                                Volume = data.Volume,
-                                LowPrice = data.Low,
-                                HighPrice = data.High,
-                                LastPrice = data.LastPrice,
-                                PriceChange = data.ChangePrice,
-                                PriceChangePercent = data.ChangePercentage * 100
-                            };
-
                             callback.Invoke(new StatisticsEventArgs { Statistics = new[] { symbolStats } });
                         }
                         catch (Exception ex)
                         {
                             await kucoinSocketClient.Unsubscribe(result.Data).ConfigureAwait(false);
-                            exception.Invoke(ex);
                             kucoinSocketClient.Dispose();
+                            exception.Invoke(ex);
                             return;
                         }
                     }).ConfigureAwait(false);
@@ -504,6 +507,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposing kucoinSocketClient early breaks subscription.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions raised in the callback and feed it back to the subscriber through the exception callback.")]
         public async Task SubscribeTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             var kucoinClient = new KucoinSocketClient();
@@ -549,8 +553,8 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                     catch (Exception ex)
                     {
                         await kucoinClient.Unsubscribe(result.Data).ConfigureAwait(false);
-                        exception.Invoke(ex);
                         kucoinClient.Dispose();
+                        exception.Invoke(ex);
                         return;
                     }
                 }).ConfigureAwait(false);
