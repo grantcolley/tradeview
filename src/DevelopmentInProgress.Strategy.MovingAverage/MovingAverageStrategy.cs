@@ -95,6 +95,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
             StrategyTradeNotification(new StrategyNotificationEventArgs { StrategyNotification = strategyNotification });
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch exceptions raised in validating an order or placing an order and feed it back to the subscriber.")]
         private void PlaceOrder(MovingAverageTrade trade)
         {
             if (AccountInfo == null
@@ -105,63 +106,63 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
 
             lock (AccountLock)
             {
-                try
-                {                    
-                    var symbol = ExchangeSymbols[Exchange.Binance].Single(s => s.ExchangeSymbol.Equals(trade.Symbol, StringComparison.Ordinal));
+                var symbol = ExchangeSymbols[Exchange.Binance].Single(s => s.ExchangeSymbol.Equals(trade.Symbol, StringComparison.Ordinal));
 
-                    OrderSide orderSide;
-                    decimal stopPrice = 0m;
+                OrderSide orderSide;
+                decimal stopPrice = 0m;
 
-                    if (trade.Price > trade.SellPrice)
+                if (trade.Price > trade.SellPrice)
+                {
+                    orderSide = OrderSide.Sell;
+                    stopPrice = trade.SellPrice.HasRemainder() ? trade.SellPrice.Trim(symbol.Price.Increment.GetPrecision()) : trade.SellPrice;
+                }
+                else if (trade.Price < trade.BuyPrice)
+                {
+                    orderSide = OrderSide.Buy;
+                    stopPrice = trade.BuyPrice.HasRemainder() ? trade.BuyPrice.Trim(symbol.Price.Increment.GetPrecision()) : trade.BuyPrice;
+                }
+                else
+                {
+                    return;
+                }
+
+                decimal quantity = 0m;
+
+                var quoteAssetBalance = AccountInfo.Balances.FirstOrDefault(b => b.Asset.Equals(symbol.QuoteAsset.Symbol, StringComparison.Ordinal));
+                var baseAssetBalance = AccountInfo.Balances.FirstOrDefault(b => b.Asset.Equals(symbol.BaseAsset.Symbol, StringComparison.Ordinal));
+
+                if (orderSide.Equals(OrderSide.Buy)
+                    && quoteAssetBalance.Free > 0)
+                {
+                    quantity = quoteAssetBalance.Free / trade.Price;
+                }
+                else if (orderSide.Equals(OrderSide.Sell)
+                    && baseAssetBalance.Free > 0)
+                {
+                    quantity = baseAssetBalance.Free;
+                }
+
+                var trimmedQuantity = quantity.HasRemainder() ? quantity.Trim(symbol.Quantity.Increment.GetPrecision()) : quantity;
+                var trimmedPrice = trade.Price.HasRemainder() ? trade.Price.Trim(symbol.Price.Increment.GetPrecision()) : trade.Price;
+
+                var value = trimmedQuantity * trimmedPrice;
+
+                if (value > symbol.NotionalMinimumValue)
+                {
+                    var clientOrder = new ClientOrder
                     {
-                        orderSide = OrderSide.Sell;
-                        stopPrice = trade.SellPrice.HasRemainder() ? trade.SellPrice.Trim(symbol.Price.Increment.GetPrecision()) : trade.SellPrice;
-                    }
-                    else if (trade.Price < trade.BuyPrice)
+                        Symbol = trade.Symbol,
+                        Price = trimmedPrice,
+                        StopPrice = stopPrice,
+                        Type = OrderType.Limit,
+                        Side = orderSide,
+                        Quantity = trimmedQuantity,
+                        QuoteAccountBalance = quoteAssetBalance,
+                        BaseAccountBalance = baseAssetBalance
+                    };
+
+                    try
                     {
-                        orderSide = OrderSide.Buy;
-                        stopPrice = trade.BuyPrice.HasRemainder() ? trade.BuyPrice.Trim(symbol.Price.Increment.GetPrecision()) : trade.BuyPrice;
-                    }
-                    else
-                    {
-                        return;
-                    }
-
-                    decimal quantity = 0m;
-
-                    var quoteAssetBalance = AccountInfo.Balances.FirstOrDefault(b => b.Asset.Equals(symbol.QuoteAsset.Symbol, StringComparison.Ordinal));
-                    var baseAssetBalance = AccountInfo.Balances.FirstOrDefault(b => b.Asset.Equals(symbol.BaseAsset.Symbol, StringComparison.Ordinal));
-
-                    if (orderSide.Equals(OrderSide.Buy)
-                        && quoteAssetBalance.Free > 0)
-                    {
-                        quantity = quoteAssetBalance.Free / trade.Price;
-                    }
-                    else if (orderSide.Equals(OrderSide.Sell)
-                        && baseAssetBalance.Free > 0)
-                    {
-                        quantity = baseAssetBalance.Free;
-                    }
-
-                    var trimmedQuantity = quantity.HasRemainder() ? quantity.Trim(symbol.Quantity.Increment.GetPrecision()) : quantity;
-                    var trimmedPrice = trade.Price.HasRemainder() ? trade.Price.Trim(symbol.Price.Increment.GetPrecision()) : trade.Price;
-
-                    var value = trimmedQuantity * trimmedPrice;
-
-                    if (value > symbol.NotionalMinimumValue)
-                    {
-                        var clientOrder = new ClientOrder
-                        {
-                            Symbol = trade.Symbol,
-                            Price = trimmedPrice,
-                            StopPrice = stopPrice,
-                            Type = OrderType.Limit,
-                            Side = orderSide,
-                            Quantity = trimmedQuantity,
-                            QuoteAccountBalance = quoteAssetBalance,
-                            BaseAccountBalance = baseAssetBalance
-                        };
-
                         symbol.ValidateClientOrder(clientOrder);
 
                         var strategySymbol = Strategy.StrategySubscriptions.SingleOrDefault(ss => ss.Symbol.Equals(trade.Symbol, StringComparison.Ordinal));
@@ -172,15 +173,15 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
 
                         StrategyNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.Information } });
                     }
-                    else
+                    catch (Exception ex)
                     {
                         PlacingOrder = false;
+                        StrategyNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = Strategy.Name, Message = ex.Message, NotificationLevel = NotificationLevel.Information } });
                     }
                 }
-                catch (Exception ex)
+                else
                 {
                     PlacingOrder = false;
-                    StrategyNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = Strategy.Name, Message = ex.Message, NotificationLevel = NotificationLevel.Information } });
                 }
             }
         }
