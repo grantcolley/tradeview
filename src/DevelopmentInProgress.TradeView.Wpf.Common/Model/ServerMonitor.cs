@@ -16,7 +16,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 {
     public class ServerMonitor : EntityBase
     {
-        private SemaphoreSlim serverMonitorSemaphoreSlim = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim serverMonitorSemaphoreSlim = new SemaphoreSlim(1, 1);
         private SocketClient socketClient;
         private bool isConnecting;
         private bool isConnected;
