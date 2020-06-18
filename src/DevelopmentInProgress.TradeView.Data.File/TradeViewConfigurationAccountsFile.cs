@@ -120,7 +120,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
             }
         }
 
-        private UserAccount GetDemoAccount()
+        private static UserAccount GetDemoAccount()
         {
             return new UserAccount
             {

@@ -127,7 +127,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
             }
         }
 
-        private TradeServer GetDemoTradeServer()
+        private static TradeServer GetDemoTradeServer()
         {
             return new TradeServer
             {

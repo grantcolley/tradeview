@@ -124,7 +124,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
             }
         }
 
-        private StrategyConfig GetDemoStrategyConfig()
+        private static StrategyConfig GetDemoStrategyConfig()
         {
             return new StrategyConfig
             {
