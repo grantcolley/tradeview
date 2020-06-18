@@ -182,30 +182,32 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions raised in the callback and feed it back to the subscriber through the exception callback.")]
         public Task SubscribeCandlesticks(string symbol, Core.Model.CandlestickInterval candlestickInterval, int limit, Action<CandlestickEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             var tcs = new TaskCompletionSource<object>();
 
             var binanceApi = new BinanceApi();
             var interval = candlestickInterval.ToBinanceCandlestickInterval();
-            var canclestickCache = new CandlestickCache(binanceApi, new CandlestickWebSocketClient());
+            var candlestickCache = new CandlestickCache(binanceApi, new CandlestickWebSocketClient());
 
-            canclestickCache.Subscribe(symbol, interval, limit, e =>
+            candlestickCache.Subscribe(symbol, interval, limit, e =>
             {
                 if (cancellationToken.IsCancellationRequested)
                 {
-                    canclestickCache.Unsubscribe();
+                    candlestickCache.Unsubscribe();
                     return;
                 }
 
+                var candlesticks = (from c in e.Candlesticks select NewCandlestick(c)).ToList();
+
                 try
                 {
-                    var candlesticks = (from c in e.Candlesticks select NewCandlestick(c)).ToList();
                     callback.Invoke(new CandlestickEventArgs { Candlesticks = candlesticks });
                 }
                 catch (Exception ex)
                 {
-                    canclestickCache.Unsubscribe();
+                    candlestickCache.Unsubscribe();
                     exception.Invoke(ex);
                     return;
                 }
@@ -216,6 +218,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             return tcs.Task;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions raised in the callback and feed it back to the subscriber through the exception callback.")]
         public Task SubscribeOrderBook(string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             var tcs = new TaskCompletionSource<object>();
@@ -230,9 +233,10 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
                     return;
                 }
 
+                var orderBook = NewOrderBook(e.OrderBook);
+
                 try
                 {
-                    var orderBook = NewOrderBook(e.OrderBook);
                     callback.Invoke(new OrderBookEventArgs { OrderBook = orderBook });
                 }
                 catch (Exception ex)
@@ -248,6 +252,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             return tcs.Task;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions raised in the callback and feed it back to the subscriber through the exception callback.")]
         public Task SubscribeAggregateTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             var tcs = new TaskCompletionSource<object>();
@@ -262,9 +267,10 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
                     return;
                 }
 
+                var aggregateTrades = e.Trades.Select(at => NewAggregateTrade(at)).ToList();
+
                 try
                 {
-                    var aggregateTrades = e.Trades.Select(at => NewAggregateTrade(at)).ToList();
                     callback.Invoke(new TradeEventArgs { Trades = aggregateTrades });
                 }
                 catch (Exception ex)
@@ -280,6 +286,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             return tcs.Task;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions raised in the callback and feed it back to the subscriber through the exception callback.")]
         public Task SubscribeTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             var tcs = new TaskCompletionSource<object>();
@@ -294,9 +301,10 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
                     return;
                 }
 
+                var trades = e.Trades.Select(t => NewTrade(t)).ToList();
+
                 try
                 {
-                    var trades = e.Trades.Select(t => NewTrade(t)).ToList();
                     callback.Invoke(new TradeEventArgs { Trades = trades });
                 }
                 catch (Exception ex)
@@ -317,6 +325,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             return SubscribeStatistics(callback, exception, cancellationToken);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions raised in the callback and feed it back to the subscriber through the exception callback.")]
         public Task SubscribeStatistics(Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             var tcs = new TaskCompletionSource<object>();
@@ -331,9 +340,10 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
                     return;
                 }
 
+                var symbolsStats = e.Statistics.Select(s => NewSymbolStats(s)).ToList();
+
                 try
                 {
-                    var symbolsStats = e.Statistics.Select(s => NewSymbolStats(s)).ToList();
                     callback.Invoke(new StatisticsEventArgs { Statistics = symbolsStats });
                 }
                 catch (Exception ex)
@@ -350,6 +360,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposing apiUser and streamControl early breaks subscription.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions raised in the callback and feed it back to the subscriber through the exception callback.")]
         public async Task SubscribeAccountInfo(Core.Model.User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             if (user == null)
@@ -373,10 +384,11 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
                     return;
                 }
 
+                var accountInfo = GetAccountInfo(e.AccountInfo);
+                accountInfo.User = user;
+
                 try
                 {
-                    var accountInfo = GetAccountInfo(e.AccountInfo);
-                    accountInfo.User = user;
                     callback.Invoke(new AccountInfoEventArgs { AccountInfo = accountInfo });
                 }
                 catch (Exception ex)
