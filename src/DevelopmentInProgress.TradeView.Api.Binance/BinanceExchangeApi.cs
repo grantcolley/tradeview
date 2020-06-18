@@ -44,7 +44,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             }
 
             var binanceApi = new BinanceApi();
-            var id = Convert.ToInt64(orderId);
+            var id = Convert.ToInt64(orderId, CultureInfo.InvariantCulture);
             using (var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret))
             {
                 var result = await binanceApi.CancelOrderAsync(apiUser, symbol, id, newClientOrderId, recWindow, cancellationToken).ConfigureAwait(false);
