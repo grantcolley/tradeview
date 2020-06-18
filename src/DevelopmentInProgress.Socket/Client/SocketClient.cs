@@ -253,6 +253,7 @@ namespace DevelopmentInProgress.Socket.Client
                     if (webSocketReceiveResult.MessageType == WebSocketMessageType.Close)
                     {
                         await clientWebSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None).ConfigureAwait(false);
+                        OnClose();
                         break;
                     }
                     else if (webSocketReceiveResult.MessageType.Equals(WebSocketMessageType.Text))
