@@ -24,35 +24,28 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
         {
             var tcs = new TaskCompletionSource<bool>();
 
-            try
+            var strategyParameters = JsonConvert.DeserializeObject<MovingAverageTradeParameters>(parameters);
+
+            if (tradeCache == null)
             {
-                var strategyParameters = JsonConvert.DeserializeObject<MovingAverageTradeParameters>(parameters);
-
-                if(tradeCache == null)
-                {
-                    tradeCache = new TradeCache<MovingAverageTradeCreator, MovingAverageTrade, MovingAverageTradeParameters>(strategyParameters.TradeRange);
-                }
-
-                if(movingAverageTradeParameters == null 
-                   || !strategyParameters.MovingAvarageRange.Equals(movingAverageTradeParameters.MovingAvarageRange)
-                   || !strategyParameters.SellIndicator.Equals(movingAverageTradeParameters.SellIndicator)
-                   || !strategyParameters.BuyIndicator.Equals(movingAverageTradeParameters.BuyIndicator))
-                {
-                    movingAverageTradeParameters = strategyParameters;
-                    Strategy.Parameters = parameters;
-                    tradeCache.TradeCreator.Reset(movingAverageTradeParameters);
-                }
-
-                Suspend = movingAverageTradeParameters.Suspend;
-
-                StrategyParameterUpdateNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = Strategy.Name, Message = parameters, NotificationLevel = NotificationLevel.ParameterUpdate } });
-
-                tcs.SetResult(true);
+                tradeCache = new TradeCache<MovingAverageTradeCreator, MovingAverageTrade, MovingAverageTradeParameters>(strategyParameters.TradeRange);
             }
-            catch (Exception ex)
+
+            if (movingAverageTradeParameters == null
+               || !strategyParameters.MovingAvarageRange.Equals(movingAverageTradeParameters.MovingAvarageRange)
+               || !strategyParameters.SellIndicator.Equals(movingAverageTradeParameters.SellIndicator)
+               || !strategyParameters.BuyIndicator.Equals(movingAverageTradeParameters.BuyIndicator))
             {
-                tcs.SetException(ex);
+                movingAverageTradeParameters = strategyParameters;
+                Strategy.Parameters = parameters;
+                tradeCache.TradeCreator.Reset(movingAverageTradeParameters);
             }
+
+            Suspend = movingAverageTradeParameters.Suspend;
+
+            StrategyParameterUpdateNotification(new StrategyNotificationEventArgs { StrategyNotification = new StrategyNotification { Name = Strategy.Name, Message = parameters, NotificationLevel = NotificationLevel.ParameterUpdate } });
+
+            tcs.SetResult(true);
 
             return await tcs.Task.ConfigureAwait(false);
         }
@@ -69,47 +62,36 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
                 return;
             }
 
+            var previousLastTrade = tradeCache.GetLastTrade();
+
+            ITrade[] trades;
+            MovingAverageTrade[] movingAverageTrades;
+
+            if (previousLastTrade == null)
+            {
+                trades = (from t in tradeEventArgs.Trades
+                          orderby t.Time, t.Id
+                          select t).ToArray();
+                movingAverageTrades = tradeCache.AddRange(trades);
+            }
+            else
+            {
+                trades = (from t in tradeEventArgs.Trades
+                          where t.Time > previousLastTrade.Time && t.Id > previousLastTrade.Id
+                          orderby t.Time, t.Id
+                          select t).ToArray();
+                movingAverageTrades = tradeCache.AddRange(trades);
+            }
+
+            var lastTrade = tradeCache.GetLastTrade();
+
+            if (!Suspend)
+            {
+                PlaceOrder(lastTrade);
+            }
+
             var strategyNotification = new StrategyNotification { Name = Strategy.Name, NotificationLevel = NotificationLevel.Trade };
-            string message;
-
-            try
-            {
-                var previousLastTrade = tradeCache.GetLastTrade();
-
-                ITrade[] trades;
-                MovingAverageTrade[] movingAverageTrades;
-
-                if (previousLastTrade == null)
-                {
-                    trades = (from t in tradeEventArgs.Trades
-                                  orderby t.Time, t.Id
-                                  select t).ToArray();
-                    movingAverageTrades = tradeCache.AddRange(trades);
-                }
-                else
-                {
-                    trades = (from t in tradeEventArgs.Trades
-                                  where t.Time > previousLastTrade.Time && t.Id > previousLastTrade.Id
-                                  orderby t.Time, t.Id
-                                  select t).ToArray();
-                    movingAverageTrades = tradeCache.AddRange(trades);
-                }
-
-                var lastTrade = tradeCache.GetLastTrade();
-
-                if (!Suspend)
-                {
-                    PlaceOrder(lastTrade);
-                }
-
-                message = JsonConvert.SerializeObject(movingAverageTrades);
-            }
-            catch (Exception ex)
-            {
-                message = JsonConvert.SerializeObject(ex);
-            }
-
-            strategyNotification.Message = message;
+            strategyNotification.Message = JsonConvert.SerializeObject(movingAverageTrades);
             StrategyTradeNotification(new StrategyNotificationEventArgs { StrategyNotification = strategyNotification });
         }
 
