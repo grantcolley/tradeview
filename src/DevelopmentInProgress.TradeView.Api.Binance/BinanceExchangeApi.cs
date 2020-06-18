@@ -349,6 +349,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             return tcs.Task;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposing apiUser and streamControl early breaks subscription.")]
         public async Task SubscribeAccountInfo(Core.Model.User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             if (user == null)
@@ -360,15 +361,15 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret);
             var streamControl = new UserDataWebSocketStreamControl(binanceApi);
             var listenKey = await streamControl.OpenStreamAsync(apiUser).ConfigureAwait(false);
-
             var accountInfoCache = new AccountInfoCache(binanceApi, new UserDataWebSocketClient());
 
             accountInfoCache.Subscribe(listenKey, apiUser, e =>
             {
                 if (cancellationToken.IsCancellationRequested)
                 {
-                    apiUser.Dispose();
                     accountInfoCache.Unsubscribe();
+                    streamControl.Dispose();
+                    apiUser.Dispose();
                     return;
                 }
 
@@ -380,8 +381,9 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
                 }
                 catch (Exception ex)
                 {
-                    apiUser.Dispose();
                     accountInfoCache.Unsubscribe();
+                    streamControl.Dispose();
+                    apiUser.Dispose();
                     exception.Invoke(ex);
                     return;
                 }
