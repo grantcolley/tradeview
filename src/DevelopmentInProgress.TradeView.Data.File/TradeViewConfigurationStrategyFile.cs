@@ -26,7 +26,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
             {
                 using (var reader = System.IO.File.OpenText(userStrategiesFile))
                 {
-                    var json = await reader.ReadToEndAsync();
+                    var json = await reader.ReadToEndAsync().ConfigureAwait(false);
                     var strategies = JsonConvert.DeserializeObject<List<StrategyConfig>>(json);
                     return strategies;
                 }
@@ -46,7 +46,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
             {
                 using (var reader = System.IO.File.OpenText(userStrategiesFile))
                 {
-                    var json = await reader.ReadToEndAsync();
+                    var json = await reader.ReadToEndAsync().ConfigureAwait(false);
                     var strategies = JsonConvert.DeserializeObject<List<StrategyConfig>>(json);
                     strategy = strategies.FirstOrDefault(s => s.Name.Equals(strategyName));
                     return strategy;
@@ -69,7 +69,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
             {
                 using (var reader = System.IO.File.OpenText(userStrategiesFile))
                 {
-                    var rjson = await reader.ReadToEndAsync();
+                    var rjson = await reader.ReadToEndAsync().ConfigureAwait(false);
                     strategies = JsonConvert.DeserializeObject<List<StrategyConfig>>(rjson);
                 }
             }
@@ -92,7 +92,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
             char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
             using (StreamWriter writer = System.IO.File.CreateText(userStrategiesFile))
             {
-                await writer.WriteAsync(chars, 0, chars.Length);
+                await writer.WriteAsync(chars, 0, chars.Length).ConfigureAwait(false);
             }
         }
 
@@ -104,7 +104,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
                 using (var reader = System.IO.File.OpenText(userStrategiesFile))
                 {
-                    var rjson = await reader.ReadToEndAsync();
+                    var rjson = await reader.ReadToEndAsync().ConfigureAwait(false);
                     strategies = JsonConvert.DeserializeObject<List<StrategyConfig>>(rjson);
                 }
 
@@ -118,7 +118,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
                     char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
                     using (StreamWriter writer = System.IO.File.CreateText(userStrategiesFile))
                     {
-                        await writer.WriteAsync(chars, 0, chars.Length);
+                        await writer.WriteAsync(chars, 0, chars.Length).ConfigureAwait(false);
                     }
                 }
             }

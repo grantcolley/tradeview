@@ -29,7 +29,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
             {
                 using (var reader = System.IO.File.OpenText(userServersFile))
                 {
-                    var json = await reader.ReadToEndAsync();
+                    var json = await reader.ReadToEndAsync().ConfigureAwait(false);
                     var Servers = JsonConvert.DeserializeObject<List<TradeServer>>(json);
                     return Servers;
                 }
@@ -49,7 +49,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
             {
                 using (var reader = System.IO.File.OpenText(userServersFile))
                 {
-                    var json = await reader.ReadToEndAsync();
+                    var json = await reader.ReadToEndAsync().ConfigureAwait(false);
                     var servers = JsonConvert.DeserializeObject<List<TradeServer>>(json);
                     server = servers.FirstOrDefault(s => s.Name.Equals(serverName));
                     return server;
@@ -72,7 +72,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
             {
                 using (var reader = System.IO.File.OpenText(userServersFile))
                 {
-                    var rjson = await reader.ReadToEndAsync();
+                    var rjson = await reader.ReadToEndAsync().ConfigureAwait(false);
                     servers = JsonConvert.DeserializeObject<List<TradeServer>>(rjson);
                 }
             }
@@ -95,7 +95,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
             char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
             using (StreamWriter writer = System.IO.File.CreateText(userServersFile))
             {
-                await writer.WriteAsync(chars, 0, chars.Length);
+                await writer.WriteAsync(chars, 0, chars.Length).ConfigureAwait(false);
             }
         }
 
@@ -107,7 +107,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
                 using (var reader = System.IO.File.OpenText(userServersFile))
                 {
-                    var rjson = await reader.ReadToEndAsync();
+                    var rjson = await reader.ReadToEndAsync().ConfigureAwait(false);
                     servers = JsonConvert.DeserializeObject<List<TradeServer>>(rjson);
                 }
 
@@ -121,7 +121,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
                     char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
                     using (StreamWriter writer = System.IO.File.CreateText(userServersFile))
                     {
-                        await writer.WriteAsync(chars, 0, chars.Length);
+                        await writer.WriteAsync(chars, 0, chars.Length).ConfigureAwait(false);
                     }
                 }
             }
