@@ -316,6 +316,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposing kucoinClient early breaks subscription.")]
         public async Task SubscribeAccountInfo(User user, Action<AccountInfoEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             if (user == null)
@@ -377,6 +378,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
             throw new NotImplementedException();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposing kucoinSocketClient early breaks subscription.")]
         public async Task SubscribeOrderBook(string symbol, int limit, Action<OrderBookEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             var kucoinClient = new KucoinSocketClient();
@@ -435,6 +437,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
             throw new NotImplementedException();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposing kucoinSocketClient early breaks subscription.")]
         public async Task SubscribeStatistics(IEnumerable<string> symbols, Action<StatisticsEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             if (symbols == null)
@@ -500,6 +503,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposing kucoinSocketClient early breaks subscription.")]
         public async Task SubscribeTrades(string symbol, int limit, Action<TradeEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
         {
             var kucoinClient = new KucoinSocketClient();
