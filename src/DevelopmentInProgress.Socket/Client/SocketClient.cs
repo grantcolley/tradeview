@@ -216,7 +216,7 @@ namespace DevelopmentInProgress.Socket.Client
                 {
                     await Receiving().ConfigureAwait(false);
                 }
-                catch(Exception ex)
+                catch(WebSocketException ex)
                 {
                     OnError(ex);
                 }
