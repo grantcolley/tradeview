@@ -71,7 +71,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
             {
                 using (var reader = System.IO.File.OpenText(userAccountsFile))
                 {
-                    var json = await reader.ReadToEndAsync().ConfigureAwait(false);
+                    var json = await reader.ReadToEndAsync().ConfigureAwait(true);
                     return JsonConvert.DeserializeObject<UserAccounts>(json);
                 }
             }

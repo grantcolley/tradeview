@@ -26,7 +26,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
             {
                 using (var reader = System.IO.File.OpenText(userStrategiesFile))
                 {
-                    var json = await reader.ReadToEndAsync().ConfigureAwait(false);
+                    var json = await reader.ReadToEndAsync().ConfigureAwait(true);
                     var strategies = JsonConvert.DeserializeObject<List<StrategyConfig>>(json);
                     return strategies;
                 }

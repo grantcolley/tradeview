@@ -38,7 +38,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies
 
             try
             {
-                var userStrategies = await strategyService.GetStrategies();
+                var userStrategies = await strategyService.GetStrategies().ConfigureAwait(true);
 
                 foreach (var strategy in userStrategies)
                 {
