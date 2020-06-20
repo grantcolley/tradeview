@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DevelopmentInProgress.TradeView.Core.Enums;
 using DevelopmentInProgress.TradeView.Core.Model;
+using DevelopmentInProgress.TradeView.Data.File.Extensions;
+using DevelopmentInProgress.TradeView.Data.File.Model;
 using Newtonsoft.Json;
 
 namespace DevelopmentInProgress.TradeView.Data.File
@@ -23,19 +24,19 @@ namespace DevelopmentInProgress.TradeView.Data.File
         {
             if (System.IO.File.Exists(userAccountsFile))
             {
-                UserAccounts userAccounts;
+                UserAccountsPreferencesData userAccountsPreferencesData;
 
                 using (var reader = System.IO.File.OpenText(userAccountsFile))
                 {
                     var rjson = await reader.ReadToEndAsync().ConfigureAwait(false);
-                    userAccounts = JsonConvert.DeserializeObject<UserAccounts>(rjson);
+                    userAccountsPreferencesData = JsonConvert.DeserializeObject<UserAccountsPreferencesData>(rjson);
                 }
 
-                var remove = userAccounts.Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName, StringComparison.Ordinal));
+                var remove = userAccountsPreferencesData.Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName, StringComparison.Ordinal));
                 if (remove != null)
                 {
-                    userAccounts.Accounts.Remove(remove);
-                    var wjson = JsonConvert.SerializeObject(userAccounts, Formatting.Indented);
+                    userAccountsPreferencesData.Accounts.Remove(remove);
+                    var wjson = JsonConvert.SerializeObject(userAccountsPreferencesData, Formatting.Indented);
 
                     UnicodeEncoding encoding = new UnicodeEncoding();
                     char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
@@ -57,8 +58,9 @@ namespace DevelopmentInProgress.TradeView.Data.File
                     json = await reader.ReadToEndAsync().ConfigureAwait(false);
                 }
 
-                var userAccounts = JsonConvert.DeserializeObject<UserAccounts>(json);
-                var userAccount = userAccounts.Accounts.Single(a => a.AccountName.Equals(accountName, StringComparison.Ordinal));
+                var userAccountsPreferencesData = JsonConvert.DeserializeObject<UserAccountsPreferencesData>(json);
+                var userAccountPreferencesData = userAccountsPreferencesData.Accounts.Single(a => a.AccountName.Equals(accountName, StringComparison.Ordinal));
+                var userAccount = userAccountPreferencesData.ConvertToUserAccount();
                 return userAccount;
             }
 
@@ -72,45 +74,45 @@ namespace DevelopmentInProgress.TradeView.Data.File
                 using (var reader = System.IO.File.OpenText(userAccountsFile))
                 {
                     var json = await reader.ReadToEndAsync().ConfigureAwait(true);
-                    return JsonConvert.DeserializeObject<UserAccounts>(json);
+                    var userAccountsPreferencesData = JsonConvert.DeserializeObject<UserAccountsPreferencesData>(json);
+                    var accounts = userAccountsPreferencesData.Accounts.Select(ua => ua.ConvertToUserAccount()).ToList();
+                    var userAccounts = new UserAccounts();
+                    userAccounts.Accounts.AddRange(accounts);
+                    return userAccounts;
                 }
             }
 
-            return new UserAccounts
-            {
-                Accounts = new List<UserAccount>
-                { 
-                    GetDemoAccount() 
-                }
-            };
+            var demoUserAccounts = new UserAccounts();
+            demoUserAccounts.Accounts.Add(GetDemoAccount());
+            return demoUserAccounts;
         }
 
         public async Task SaveAccountAsync(UserAccount userAccount)
         {
-            UserAccounts userAccounts;
+            UserAccountsPreferencesData userAccountsPreferencesData;
 
             if (System.IO.File.Exists(userAccountsFile))
             {
                 using (var reader = System.IO.File.OpenText(userAccountsFile))
                 {
                     var rjson = await reader.ReadToEndAsync().ConfigureAwait(false);
-                    userAccounts = JsonConvert.DeserializeObject<UserAccounts>(rjson);
+                    userAccountsPreferencesData = JsonConvert.DeserializeObject<UserAccountsPreferencesData>(rjson);
                 }
             }
             else
             {
-                userAccounts = new UserAccounts();
+                userAccountsPreferencesData = new UserAccountsPreferencesData();
             }
 
-            var dupe = userAccounts.Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName, StringComparison.Ordinal));
+            var dupe = userAccountsPreferencesData.Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName, StringComparison.Ordinal));
             if (dupe != null)
             {
-                userAccounts.Accounts.Remove(dupe);
+                userAccountsPreferencesData.Accounts.Remove(dupe);
             }
 
-            userAccounts.Accounts.Add(userAccount);
+            userAccountsPreferencesData.Accounts.Add(userAccount.ConvertToUserAccountPreferencesData());
 
-            var wjson = JsonConvert.SerializeObject(userAccounts, Formatting.Indented);
+            var wjson = JsonConvert.SerializeObject(userAccountsPreferencesData, Formatting.Indented);
 
             UnicodeEncoding encoding = new UnicodeEncoding();
             char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
@@ -122,7 +124,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
         private static UserAccount GetDemoAccount()
         {
-            return new UserAccount
+            var userAccount = new UserAccount
             {
                 AccountName = "Demo Account",
                 Exchange = Exchange.Binance,
@@ -133,10 +135,13 @@ namespace DevelopmentInProgress.TradeView.Data.File
                     TradesChartDisplayCount = 500,
                     TradesDisplayCount = 18,
                     OrderBookDisplayCount = 9,
-                    OrderBookChartDisplayCount = 15,
-                    FavouriteSymbols = new List<string> { "BTCUSDT", "ETHBTC", "ETHUSDT" }
+                    OrderBookChartDisplayCount = 15
                 }
             };
+
+            userAccount.Preferences.FavouriteSymbols.AddRange(new string[] { "BTCUSDT", "ETHBTC", "ETHUSDT" });
+
+            return userAccount;
         }
     }
 }
