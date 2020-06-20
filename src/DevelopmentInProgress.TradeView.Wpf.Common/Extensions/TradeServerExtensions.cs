@@ -9,7 +9,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
             return new TradeServer
             {
                 Name = tradeServer.Name,
-                Url = tradeServer.Url,
+                Uri = tradeServer.Uri,
                 MaxDegreeOfParallelism = tradeServer.MaxDegreeOfParallelism,
                 Enabled = tradeServer.Enabled
             };
@@ -20,7 +20,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
             return new Core.Server.TradeServer
             {
                 Name = tradeServer.Name,
-                Url = tradeServer.Url,
+                Uri = tradeServer.Uri,
                 MaxDegreeOfParallelism = tradeServer.MaxDegreeOfParallelism,
                 Enabled = tradeServer.Enabled
             };

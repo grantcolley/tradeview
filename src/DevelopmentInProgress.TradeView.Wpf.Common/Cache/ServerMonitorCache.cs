@@ -68,7 +68,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 
                     ServerMonitor updateServerMonitor(ServerMonitor sm, Core.Server.TradeServer s)
                     {
-                        sm.Url = s.Url;
+                        sm.Uri = s.Uri;
                         sm.MaxDegreeOfParallelism = s.MaxDegreeOfParallelism;
                         sm.Enabled = s.Enabled;
                         return sm;
@@ -145,7 +145,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                         var connectServers = serverMonitors.Where(
                             s => !s.IsConnected
                             && !s.IsConnecting 
-                            && !string.IsNullOrWhiteSpace(s.Url) 
+                            && !string.IsNullOrWhiteSpace(s.Uri.ToString()) 
                             && s.Enabled).ToList();
 
                         if(connectServers.Any())

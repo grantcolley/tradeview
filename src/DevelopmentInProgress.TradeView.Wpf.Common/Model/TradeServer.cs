@@ -1,9 +1,11 @@
-﻿namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
+﻿using System;
+
+namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 {
     public class TradeServer : EntityBase
     {
         private string name;
-        private string url;
+        private Uri uri;
         private int maxDegreeOfParallelism;
         private bool enabled;
 
@@ -20,15 +22,15 @@
             }
         }
 
-        public string Url
+        public Uri Uri
         {
-            get { return url; }
+            get { return uri; }
             set
             {
-                if (url != value)
+                if (uri != value)
                 {
-                    url = value;
-                    OnPropertyChanged("Url");
+                    uri = value;
+                    OnPropertyChanged("Uri");
                 }
             }
         }

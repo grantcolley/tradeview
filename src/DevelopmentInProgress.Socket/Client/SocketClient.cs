@@ -37,9 +37,9 @@ namespace DevelopmentInProgress.Socket.Client
         public string ConnectionId { get; private set; }
 
         /// <summary>
-        /// Gets the url of the <see cref="SocketServer"/>.
+        /// Gets the uri of the <see cref="SocketServer"/>.
         /// </summary>
-        public string Url { get; private set; }
+        public Uri Uri { get; private set; }
 
         /// <summary>
         /// Gets the client identifier.
@@ -65,15 +65,19 @@ namespace DevelopmentInProgress.Socket.Client
 
             if (url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
             {
-                Url = $"ws{url.Substring(5)}";
+                Uri = new Uri($"ws{url.Substring(5)}");
             }
             else if (url.StartsWith("http", StringComparison.OrdinalIgnoreCase))
             {
-                Url = $"ws{url.Substring(4)}";
+                Uri = new Uri($"ws{url.Substring(4)}");
+            }
+            else if (url.StartsWith("ws://", StringComparison.OrdinalIgnoreCase))
+            {
+                Uri = new Uri(url);
             }
             else
             {
-                Url = url;
+                throw new ArgumentException($"Uri not supported : {url}");
             }
 
             ClientId = clientId;
@@ -160,7 +164,7 @@ namespace DevelopmentInProgress.Socket.Client
             collection["clientId"] = ClientId;
             collection["data"] = data;
 
-            var uriBuilder = new UriBuilder(Url) { Query = collection.ToString() };
+            var uriBuilder = new UriBuilder(Uri) { Query = collection.ToString() };
 
             await clientWebSocket.ConnectAsync(uriBuilder.Uri, CancellationToken.None).ConfigureAwait(false);
 

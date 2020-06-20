@@ -132,7 +132,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
             return new TradeServer
             {
                 Name = "TradeServer",
-                Url = "http://localhost:5500",
+                Uri = new Uri("http://localhost:5500"),
                 MaxDegreeOfParallelism = 5,
                 Enabled = true
             };

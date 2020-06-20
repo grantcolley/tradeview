@@ -1,9 +1,11 @@
-﻿namespace DevelopmentInProgress.TradeView.Core.Server
+﻿using System;
+
+namespace DevelopmentInProgress.TradeView.Core.Server
 {
     public interface ITradeServer
     {
         string Name { get; set; }
-        string Url { get; set; }
+        Uri Uri { get; set; }
         int MaxDegreeOfParallelism { get; set; }
     }
 }

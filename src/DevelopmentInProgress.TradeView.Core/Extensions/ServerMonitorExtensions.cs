@@ -16,7 +16,7 @@ namespace DevelopmentInProgress.TradeView.Core.Extensions
             var clone = new ServerMonitor
             {
                 Name = serverMonitor.Name,
-                Url = serverMonitor.Url,
+                Uri = serverMonitor.Uri,
                 MaxDegreeOfParallelism = serverMonitor.MaxDegreeOfParallelism,
                 StartedBy = serverMonitor.StartedBy,
                 Started = serverMonitor.Started,

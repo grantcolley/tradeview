@@ -22,7 +22,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         private bool isConnected;
 
         private string name;
-        private string url;
+        private Uri uri;
         private int maxDegreeOfParallelism;
         private bool enabled;
         private string startedBy;
@@ -51,15 +51,15 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
             }
         }
 
-        public string Url
+        public Uri Uri
         {
-            get { return url; }
+            get { return uri; }
             set
             {
-                if (url != value)
+                if (uri != value)
                 {
-                    url = value;
-                    OnPropertyChanged("Url");
+                    uri = value;
+                    OnPropertyChanged("Uri");
                 }
             }
         }
@@ -236,7 +236,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 
                 IsConnecting = true;
 
-                socketClient = new SocketClient($"{Url}/serverhub", Environment.UserName);
+                socketClient = new SocketClient($"{Uri}serverhub", Environment.UserName);
 
                 socketClient.On("OnConnected", message =>
                 {
@@ -308,7 +308,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
             {
                 using (var client = new HttpClient())
                 {
-                    using (var response = await client.GetAsync($"{Url}/ping"))
+                    using (var response = await client.GetAsync($"{Uri}ping"))
                     {
                         var content = await response.Content.ReadAsStringAsync();
 

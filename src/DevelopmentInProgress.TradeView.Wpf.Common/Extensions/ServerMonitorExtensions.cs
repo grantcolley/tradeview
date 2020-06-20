@@ -9,7 +9,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
             return new ServerMonitor
             {
                 Name = tradeServer.Name,
-                Url = tradeServer.Url,
+                Uri = tradeServer.Uri,
                 MaxDegreeOfParallelism = tradeServer.MaxDegreeOfParallelism,
                 Enabled = tradeServer.Enabled
             };
