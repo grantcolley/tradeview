@@ -54,30 +54,30 @@ namespace DevelopmentInProgress.Socket.Client
         /// <summary>
         /// Creates a new instance of the <see cref="SocketClient"/>.
         /// </summary>
-        /// <param name="url">The url of the <see cref="SocketServer"/>. Http and Https will be converted to ws.</param>
+        /// <param name="uri">The url of the <see cref="SocketServer"/>. Http and Https will be converted to ws.</param>
         /// <param name="clientId">The client side identifier.</param>
-        public SocketClient(string url, string clientId)
+        public SocketClient(Uri uri, string clientId)
         {
-            if (url == null)
+            if (uri == null)
             {
-                throw new ArgumentNullException(nameof(url));
+                throw new ArgumentNullException(nameof(uri));
             }
 
-            if (url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
+            if (uri.ToString().StartsWith("https", StringComparison.OrdinalIgnoreCase))
             {
-                Uri = new Uri($"ws{url.Substring(5)}");
+                Uri = new Uri($"ws{uri.ToString().Substring(5)}");
             }
-            else if (url.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+            else if (uri.ToString().StartsWith("http", StringComparison.OrdinalIgnoreCase))
             {
-                Uri = new Uri($"ws{url.Substring(4)}");
+                Uri = new Uri($"ws{uri.ToString().Substring(4)}");
             }
-            else if (url.StartsWith("ws://", StringComparison.OrdinalIgnoreCase))
+            else if (uri.ToString().StartsWith("ws://", StringComparison.OrdinalIgnoreCase))
             {
-                Uri = new Uri(url);
+                Uri = new Uri(uri.ToString());
             }
             else
             {
-                throw new ArgumentException($"Uri not supported : {url}");
+                throw new ArgumentException($"Uri not supported : {uri}");
             }
 
             ClientId = clientId;

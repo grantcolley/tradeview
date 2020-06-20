@@ -697,7 +697,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 throw new Exception("StrategyAssemblyManager has not loaded the strategy assemblies.");
             }
 
-            socketClient = new SocketClient($"{SelectedServer.Uri}notificationhub", strategyAssemblyManager.Id);
+            socketClient = new SocketClient(new Uri(SelectedServer.Uri, "notificationhub"), strategyAssemblyManager.Id);
 
             socketClient.On("Connected", message =>
             {

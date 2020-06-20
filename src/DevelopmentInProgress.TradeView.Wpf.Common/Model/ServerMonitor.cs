@@ -236,7 +236,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 
                 IsConnecting = true;
 
-                socketClient = new SocketClient($"{Uri}serverhub", Environment.UserName);
+                socketClient = new SocketClient(new Uri(Uri, "serverhub"), Environment.UserName);
 
                 socketClient.On("OnConnected", message =>
                 {
@@ -308,7 +308,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
             {
                 using (var client = new HttpClient())
                 {
-                    using (var response = await client.GetAsync($"{Uri}ping"))
+                    using (var response = await client.GetAsync(new Uri(Uri, "ping")))
                     {
                         var content = await response.Content.ReadAsStringAsync();
 
