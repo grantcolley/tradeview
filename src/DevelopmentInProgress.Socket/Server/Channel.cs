@@ -25,6 +25,6 @@ namespace DevelopmentInProgress.Socket.Server
         /// <summary>
         /// Gets or sets a dictionary of <see cref="Connection"/>'s.
         /// </summary>
-        public ConcurrentDictionary<string, Connection> Connections { get; set; }
+        public ConcurrentDictionary<string, Connection> Connections { get; private set; }
     }
 }

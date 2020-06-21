@@ -279,11 +279,10 @@ namespace DevelopmentInProgress.Socket.Server
         /// <returns></returns>
         public ServerInfo GetServerInfo()
         {
-            return new ServerInfo
-            {
-                Channels = GetChannelInfos(),
-                Connections = GetConnectionInfos()
-            };
+            var serverInfo = new ServerInfo();
+            serverInfo.Channels.AddRange(GetChannelInfos());
+            serverInfo.Connections.AddRange(GetConnectionInfos());
+            return serverInfo;
         }
 
         /// <summary>

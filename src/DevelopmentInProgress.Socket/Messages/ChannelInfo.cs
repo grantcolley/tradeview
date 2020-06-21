@@ -30,6 +30,6 @@ namespace DevelopmentInProgress.Socket.Messages
         /// Gets or sets a list containing information about the  
         /// connection's that have subscribed to the channel.
         /// </summary>
-        public List<ConnectionInfo> Connections { get; set; }
+        public List<ConnectionInfo> Connections { get; private set; }
     }
 }

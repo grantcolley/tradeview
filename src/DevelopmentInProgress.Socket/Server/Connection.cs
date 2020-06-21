@@ -36,6 +36,6 @@ namespace DevelopmentInProgress.Socket.Server
         /// <summary>
         /// Gets or sets a dictionary of <see cref="Channel"/>'s the connection has subscribed to.
         /// </summary>
-        public ConcurrentDictionary<string, Channel> Channels { get; set; }
+        public ConcurrentDictionary<string, Channel> Channels { get; private set; }
     }
 }
