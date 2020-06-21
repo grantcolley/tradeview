@@ -15,8 +15,8 @@ namespace DevelopmentInProgress.Socket.Server
     /// </summary>
     public abstract class SocketServer
     {
-        private ConnectionManager connectionManager;
-        private ChannelManager channelManager;
+        private readonly ConnectionManager connectionManager;
+        private readonly ChannelManager channelManager;
 
         /// <summary>
         /// Creates a new instance of the <see cref="SocketServer"/> base class.
