@@ -1,6 +1,4 @@
-﻿using CoreModel = DevelopmentInProgress.TradeView.Core.Model;
-using CoreStrategy = DevelopmentInProgress.TradeView.Core.TradeStrategy;
-using DevelopmentInProgress.Socket.Client;
+﻿using DevelopmentInProgress.Socket.Client;
 using DevelopmentInProgress.TradeView.Common.Extensions;
 using DevelopmentInProgress.TradeView.Wpf.Common.Cache;
 using DevelopmentInProgress.TradeView.Wpf.Common.Events;
@@ -11,6 +9,7 @@ using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using DevelopmentInProgress.TradeView.Wpf.Host.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.ViewModel;
+using DevelopmentInProgress.TradeView.Wpf.Strategies.Enums;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.Events;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.Utility;
 using Newtonsoft.Json;
@@ -18,11 +17,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.WebSockets;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Reactive.Linq;
-using System.Net.WebSockets;
-using DevelopmentInProgress.TradeView.Wpf.Strategies.Enums;
+using CoreModel = DevelopmentInProgress.TradeView.Core.Model;
+using CoreStrategy = DevelopmentInProgress.TradeView.Core.TradeStrategy;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 {
