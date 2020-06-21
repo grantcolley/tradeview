@@ -14,7 +14,7 @@ namespace DevelopmentInProgress.Socket.Server
     /// </summary>
     public sealed class ChannelManager
     {
-        private ConcurrentDictionary<string, Channel> channels;
+        private readonly ConcurrentDictionary<string, Channel> channels;
 
         /// <summary>
         /// Creates a new instance of the <see cref="ChannelManager"/> class.
