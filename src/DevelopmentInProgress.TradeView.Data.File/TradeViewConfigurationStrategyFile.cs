@@ -126,7 +126,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
         private static StrategyConfig GetDemoStrategyConfig()
         {
-            return new StrategyConfig
+            var strategyConfig = new StrategyConfig
             {
                 Name = "Binance Moving Average - ETHBTC",
                 TargetType = "DevelopmentInProgress.Strategy.MovingAverage.MovingAverageStrategy",
@@ -138,8 +138,10 @@ namespace DevelopmentInProgress.TradeView.Data.File
                 TradesChartDisplayCount = 1000,
                 TradesDisplayCount = 13,
                 OrderBookChartDisplayCount = 20,
-                OrderBookDisplayCount = 9,
-                StrategySubscriptions = new List<StrategySubscription>
+                OrderBookDisplayCount = 9
+            };
+
+            strategyConfig.StrategySubscriptions.AddRange(new List<StrategySubscription>
                 {
                     new StrategySubscription
                     {
@@ -150,20 +152,23 @@ namespace DevelopmentInProgress.TradeView.Data.File
                         Subscribes = Subscribes.Trades | Subscribes.OrderBook | Subscribes.Candlesticks,
                         CandlestickInterval = CandlestickInterval.Minute
                     }
-                },
-                Dependencies = new List<string> 
+                });
+
+            strategyConfig.Dependencies.AddRange(new List<string>
                 {
                     Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.Common.dll"),
                     Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.TradeView.Core.dll"),
                     Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.MovingAverage.dll"),
-                },
-                DisplayDependencies = new List<string>
+                });
+
+            strategyConfig.DisplayDependencies.AddRange(new List<string>
                 {
                     Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.TradeView.Core.dll"),
                     Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.MovingAverage.dll"),
                     Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.MovingAverage.Wpf.dll")
-                }
-            };
+                });
+
+            return strategyConfig;
         }
     }
 }

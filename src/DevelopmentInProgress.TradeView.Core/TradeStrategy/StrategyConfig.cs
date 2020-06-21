@@ -24,8 +24,8 @@ namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
         public int OrderBookChartDisplayCount { get; set; }
         public int OrderBookDisplayCount { get; set; }
         public StrategyStatus Status { get; set; }
-        public List<StrategySubscription> StrategySubscriptions { get; set; }
-        public List<string> Dependencies { get; set; }
-        public List<string> DisplayDependencies { get; set; }
+        public List<StrategySubscription> StrategySubscriptions { get; private set; }
+        public List<string> Dependencies { get; private set; }
+        public List<string> DisplayDependencies { get; private set; }
     }
 }

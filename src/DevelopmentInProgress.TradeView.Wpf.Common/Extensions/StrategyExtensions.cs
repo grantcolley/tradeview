@@ -40,10 +40,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 TradesDisplayCount = strategy.TradesDisplayCount,
                 OrderBookChartDisplayCount = strategy.OrderBookChartDisplayCount,
                 OrderBookDisplayCount = strategy.OrderBookDisplayCount,
-                Dependencies = strategy.Dependencies.Select(f => f.File).ToList(),
-                DisplayDependencies = strategy.DisplayDependencies.Select(f=> f.File).ToList()
             };
-            
+
+            strategyConfig.Dependencies.AddRange(strategy.Dependencies.Select(f => f.File).ToList());
+            strategyConfig.DisplayDependencies.AddRange(strategy.DisplayDependencies.Select(f => f.File).ToList());
+
             var subscriptions = strategy.StrategySubscriptions.Select(s => s.ToCoreStrategySubscription()).ToList();
             strategyConfig.StrategySubscriptions.AddRange(subscriptions);
 
