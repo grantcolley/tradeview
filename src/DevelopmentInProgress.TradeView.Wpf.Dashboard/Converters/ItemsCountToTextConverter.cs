@@ -8,9 +8,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is int)
+            if (value is int v)
             {
-                return $"({(int)value})";
+                return $"({v})";
             }
 
             return "(0)";
