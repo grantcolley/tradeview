@@ -69,9 +69,10 @@ namespace DevelopmentInProgress.Socket.Server
 
             if (channels.TryGetValue(channelName, out Channel channel))
             {
-                channel.Connections.TryRemove(connection.ConnectionId, out Connection removedConnection);
-
-                removedConnection.Channels.TryRemove(channel.Name, out Channel removedConnectionChannel);
+                if (channel.Connections.TryRemove(connection.ConnectionId, out Connection removedConnection))
+                {
+                    removedConnection.Channels.TryRemove(channel.Name, out _);
+                }
 
                 if (channel.Connections.Any())
                 {
@@ -96,7 +97,7 @@ namespace DevelopmentInProgress.Socket.Server
                 {
                     if(channel.Connections.TryRemove(connectionId, out Connection connection))
                     {
-                        connection.Channels.TryRemove(channelName, out Channel removed);
+                        connection.Channels.TryRemove(channelName, out _);
                     }
                 }
 
