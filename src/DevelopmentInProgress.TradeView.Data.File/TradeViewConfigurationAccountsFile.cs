@@ -5,8 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using DevelopmentInProgress.TradeView.Core.Enums;
 using DevelopmentInProgress.TradeView.Core.Model;
-using DevelopmentInProgress.TradeView.Data.File.Extensions;
-using DevelopmentInProgress.TradeView.Data.File.Model;
 using Newtonsoft.Json;
 
 namespace DevelopmentInProgress.TradeView.Data.File
@@ -24,19 +22,19 @@ namespace DevelopmentInProgress.TradeView.Data.File
         {
             if (System.IO.File.Exists(userAccountsFile))
             {
-                UserAccountsPreferencesData userAccountsPreferencesData;
+                UserAccounts userAccounts;
 
                 using (var reader = System.IO.File.OpenText(userAccountsFile))
                 {
                     var rjson = await reader.ReadToEndAsync().ConfigureAwait(false);
-                    userAccountsPreferencesData = JsonConvert.DeserializeObject<UserAccountsPreferencesData>(rjson);
+                    userAccounts = JsonConvert.DeserializeObject<UserAccounts>(rjson);
                 }
 
-                var remove = userAccountsPreferencesData.Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName, StringComparison.Ordinal));
+                var remove = userAccounts.Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName, StringComparison.Ordinal));
                 if (remove != null)
                 {
-                    userAccountsPreferencesData.Accounts.Remove(remove);
-                    var wjson = JsonConvert.SerializeObject(userAccountsPreferencesData, Formatting.Indented);
+                    userAccounts.Accounts.Remove(remove);
+                    var wjson = JsonConvert.SerializeObject(userAccounts, Formatting.Indented);
 
                     UnicodeEncoding encoding = new UnicodeEncoding();
                     char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
@@ -58,9 +56,8 @@ namespace DevelopmentInProgress.TradeView.Data.File
                     json = await reader.ReadToEndAsync().ConfigureAwait(false);
                 }
 
-                var userAccountsPreferencesData = JsonConvert.DeserializeObject<UserAccountsPreferencesData>(json);
-                var userAccountPreferencesData = userAccountsPreferencesData.Accounts.Single(a => a.AccountName.Equals(accountName, StringComparison.Ordinal));
-                var userAccount = userAccountPreferencesData.ConvertToUserAccount();
+                var userAccountss = JsonConvert.DeserializeObject<UserAccounts>(json);
+                var userAccount = userAccountss.Accounts.Single(a => a.AccountName.Equals(accountName, StringComparison.Ordinal));
                 return userAccount;
             }
 
@@ -74,10 +71,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
                 using (var reader = System.IO.File.OpenText(userAccountsFile))
                 {
                     var json = await reader.ReadToEndAsync().ConfigureAwait(true);
-                    var userAccountsPreferencesData = JsonConvert.DeserializeObject<UserAccountsPreferencesData>(json);
-                    var accounts = userAccountsPreferencesData.Accounts.Select(ua => ua.ConvertToUserAccount()).ToList();
-                    var userAccounts = new UserAccounts();
-                    userAccounts.Accounts.AddRange(accounts);
+                    var userAccounts = JsonConvert.DeserializeObject<UserAccounts>(json);
                     return userAccounts;
                 }
             }
@@ -89,30 +83,30 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
         public async Task SaveAccountAsync(UserAccount userAccount)
         {
-            UserAccountsPreferencesData userAccountsPreferencesData;
+            UserAccounts userAccounts;
 
             if (System.IO.File.Exists(userAccountsFile))
             {
                 using (var reader = System.IO.File.OpenText(userAccountsFile))
                 {
                     var rjson = await reader.ReadToEndAsync().ConfigureAwait(false);
-                    userAccountsPreferencesData = JsonConvert.DeserializeObject<UserAccountsPreferencesData>(rjson);
+                    userAccounts = JsonConvert.DeserializeObject<UserAccounts>(rjson);
                 }
             }
             else
             {
-                userAccountsPreferencesData = new UserAccountsPreferencesData();
+                userAccounts = new UserAccounts();
             }
 
-            var dupe = userAccountsPreferencesData.Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName, StringComparison.Ordinal));
+            var dupe = userAccounts.Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName, StringComparison.Ordinal));
             if (dupe != null)
             {
-                userAccountsPreferencesData.Accounts.Remove(dupe);
+                userAccounts.Accounts.Remove(dupe);
             }
 
-            userAccountsPreferencesData.Accounts.Add(userAccount.ConvertToUserAccountPreferencesData());
+            userAccounts.Accounts.Add(userAccount);
 
-            var wjson = JsonConvert.SerializeObject(userAccountsPreferencesData, Formatting.Indented);
+            var wjson = JsonConvert.SerializeObject(userAccounts, Formatting.Indented);
 
             UnicodeEncoding encoding = new UnicodeEncoding();
             char[] chars = encoding.GetChars(encoding.GetBytes(wjson));

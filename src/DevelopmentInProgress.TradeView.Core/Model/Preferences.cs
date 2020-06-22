@@ -17,6 +17,6 @@ namespace DevelopmentInProgress.TradeView.Core.Model
         public int OrderBookLimit { get; set; }
         public int OrderBookChartDisplayCount { get; set; }
         public int OrderBookDisplayCount { get; set; }
-        public List<string> FavouriteSymbols { get; }
+        public List<string> FavouriteSymbols { get; private set; }
     }
 }
