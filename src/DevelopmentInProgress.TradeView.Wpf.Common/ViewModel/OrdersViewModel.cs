@@ -180,13 +180,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
                                        join r in res on o.ClientOrderId equals r.ClientOrderId
                                        select o.Update(r)).ToList();
 
-                        var remove = Orders.Where(o => !res.Any(r => r.ClientOrderId.Equals(o.ClientOrderId)));
+                        var remove = Orders.Where(o => !res.Any(r => r.ClientOrderId.Equals(o.ClientOrderId))).ToList();
                         foreach (var order in remove)
                         {
                             Orders.Remove(order);
                         }
 
-                        var add = res.Where(r => !Orders.Any(o => o.ClientOrderId.Equals(r.ClientOrderId)));
+                        var add = res.Where(r => !Orders.Any(o => o.ClientOrderId.Equals(r.ClientOrderId))).ToList();
                         foreach (var order in add)
                         {
                             Orders.Add(order);
