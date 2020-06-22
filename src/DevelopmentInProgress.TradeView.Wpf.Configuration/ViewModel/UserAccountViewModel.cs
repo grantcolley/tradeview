@@ -79,7 +79,17 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
         private void OpenSymbolsWindow(object param)
         {
             var onSymbolsNotification = OnSymbolsNotification;
-            onSymbolsNotification?.Invoke(this, new UserAccountEventArgs { Value = userAccount });
+
+            if (userAccount.Exchange.Equals(Exchange.Unknown)
+                || userAccount.Exchange.Equals(Exchange.Test))
+            {
+                var message = $"{userAccount.AccountName} doesn't have a valid exchange.";
+                onSymbolsNotification?.Invoke(this, new UserAccountEventArgs { Value = userAccount, Message = message, Exception = new Exception(message) });
+            }
+            else
+            {
+                onSymbolsNotification?.Invoke(this, new UserAccountEventArgs { Value = userAccount });
+            }
         }
     }
 }
