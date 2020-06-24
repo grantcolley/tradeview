@@ -99,10 +99,6 @@
       <Project>{2b523839-ee20-4ed3-a1ba-ac2070c99f4d}</Project>
       <Name>DevelopmentInProgress.TradeView.Wpf.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Controls\DevelopmentInProgress.TradeView.Wpf.Controls.csproj">
-      <Project>{5acdc574-0f6f-48bc-ad2a-2f29bd7009fe}</Project>
-      <Name>DevelopmentInProgress.TradeView.Wpf.Controls</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

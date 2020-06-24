@@ -243,12 +243,6 @@
   <ItemGroup>
     <Resource Include="Images\Log.png" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Controls\DevelopmentInProgress.TradeView.Wpf.Controls.csproj">
-      <Project>{5acdc574-0f6f-48bc-ad2a-2f29bd7009fe}</Project>
-      <Name>DevelopmentInProgress.TradeView.Wpf.Controls</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
