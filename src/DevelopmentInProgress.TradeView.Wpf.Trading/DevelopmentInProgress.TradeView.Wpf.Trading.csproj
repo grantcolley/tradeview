@@ -88,10 +88,6 @@
       <Project>{b0472037-1788-4314-ac54-1d2169029329}</Project>
       <Name>DevelopmentInProgress.TradeView.Service</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Common\DevelopmentInProgress.TradeView.Wpf.Common.csproj">
-      <Project>{2b523839-ee20-4ed3-a1ba-ac2070c99f4d}</Project>
-      <Name>DevelopmentInProgress.TradeView.Wpf.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Host\DevelopmentInProgress.TradeView.Wpf.Host.csproj">
       <Project>{7bce5d35-0443-4031-843a-3563356290e1}</Project>
       <Name>DevelopmentInProgress.TradeView.Wpf.Host</Name>

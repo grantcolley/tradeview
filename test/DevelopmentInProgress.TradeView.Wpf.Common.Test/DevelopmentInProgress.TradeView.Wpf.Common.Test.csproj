@@ -70,10 +70,6 @@
       <Project>{B0472037-1788-4314-AC54-1D2169029329}</Project>
       <Name>DevelopmentInProgress.TradeView.Service</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\DevelopmentInProgress.TradeView.Wpf.Common\DevelopmentInProgress.TradeView.Wpf.Common.csproj">
-      <Project>{2b523839-ee20-4ed3-a1ba-ac2070c99f4d}</Project>
-      <Name>DevelopmentInProgress.TradeView.Wpf.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Test.Helper\DevelopmentInProgress.TradeView.Test.Helper.csproj">
       <Project>{57648e9e-b953-40c7-85fc-503270b99640}</Project>
       <Name>DevelopmentInProgress.TradeView.Test.Helper</Name>
