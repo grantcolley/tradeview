@@ -1,5 +1,4 @@
-﻿using CommonServiceLocator;
-using DevelopmentInProgress.Strategy.Common.StrategyTrade;
+﻿using DevelopmentInProgress.Strategy.Common.StrategyTrade;
 using DevelopmentInProgress.TradeView.Core.Extensions;
 using DevelopmentInProgress.TradeView.Core.Interfaces;
 using DevelopmentInProgress.TradeView.Core.TradeStrategy;
@@ -9,6 +8,7 @@ using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using LiveCharts;
+using Microsoft.Practices.ServiceLocation;
 using Newtonsoft.Json;
 using Prism.Logging;
 using System;

@@ -39,8 +39,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Strat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.Strategy.MovingAverage", "src\DevelopmentInProgress.Strategy.MovingAverage\DevelopmentInProgress.Strategy.MovingAverage.csproj", "{4A8A3464-37B1-4EFB-AB69-3DAE33824877}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Strategy.MovingAverage.Wpf", "src\DevelopmentInProgress.Strategy.MovingAverage.Wpf\DevelopmentInProgress.Strategy.MovingAverage.Wpf.csproj", "{0A22E692-5958-41BD-AA1E-245000571604}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.TradeView.Wpf.Dashboard", "src\DevelopmentInProgress.TradeView.Wpf.Dashboard\DevelopmentInProgress.TradeView.Wpf.Dashboard.csproj", "{291C8E7F-7357-4A5E-8900-4A2EB13182CC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.Socket", "src\DevelopmentInProgress.Socket\DevelopmentInProgress.Socket.csproj", "{F74255BE-5A48-41AB-A175-8BBBFBE64265}"
@@ -51,7 +49,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.Trade
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.TradeView.Wpf.Controls", "src\DevelopmentInProgress.TradeView.Wpf.Controls\DevelopmentInProgress.TradeView.Wpf.Controls.csproj", "{4F53D773-3BC4-44C5-B306-6FD37995208B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.TradeView.Wpf.Common", "src\DevelopmentInProgress.TradeView.Wpf.Common\DevelopmentInProgress.TradeView.Wpf.Common.csproj", "{AEB9F266-AB1A-4F09-95C2-3246C71BB339}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.TradeView.Wpf.Common", "src\DevelopmentInProgress.TradeView.Wpf.Common\DevelopmentInProgress.TradeView.Wpf.Common.csproj", "{AEB9F266-AB1A-4F09-95C2-3246C71BB339}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.Strategy.MovingAverage.Wpf", "src\DevelopmentInProgress.Strategy.MovingAverage.Wpf\DevelopmentInProgress.Strategy.MovingAverage.Wpf.csproj", "{9BE57657-E9E2-4567-93E9-1C04E9561A1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -407,26 +407,6 @@ Global
 		{4A8A3464-37B1-4EFB-AB69-3DAE33824877}.Release|x64.Build.0 = Release|Any CPU
 		{4A8A3464-37B1-4EFB-AB69-3DAE33824877}.Release|x86.ActiveCfg = Release|Any CPU
 		{4A8A3464-37B1-4EFB-AB69-3DAE33824877}.Release|x86.Build.0 = Release|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Debug|ARM.Build.0 = Debug|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Debug|ARM64.ActiveCfg = Debug|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Debug|ARM64.Build.0 = Debug|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Debug|x64.Build.0 = Debug|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Debug|x86.Build.0 = Debug|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Release|ARM.ActiveCfg = Release|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Release|ARM.Build.0 = Release|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Release|ARM64.ActiveCfg = Release|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Release|ARM64.Build.0 = Release|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Release|x64.ActiveCfg = Release|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Release|x64.Build.0 = Release|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Release|x86.ActiveCfg = Release|Any CPU
-		{0A22E692-5958-41BD-AA1E-245000571604}.Release|x86.Build.0 = Release|Any CPU
 		{291C8E7F-7357-4A5E-8900-4A2EB13182CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{291C8E7F-7357-4A5E-8900-4A2EB13182CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{291C8E7F-7357-4A5E-8900-4A2EB13182CC}.Debug|ARM.ActiveCfg = Debug|Any CPU
@@ -547,6 +527,26 @@ Global
 		{AEB9F266-AB1A-4F09-95C2-3246C71BB339}.Release|x64.Build.0 = Release|Any CPU
 		{AEB9F266-AB1A-4F09-95C2-3246C71BB339}.Release|x86.ActiveCfg = Release|Any CPU
 		{AEB9F266-AB1A-4F09-95C2-3246C71BB339}.Release|x86.Build.0 = Release|Any CPU
+		{9BE57657-E9E2-4567-93E9-1C04E9561A1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BE57657-E9E2-4567-93E9-1C04E9561A1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BE57657-E9E2-4567-93E9-1C04E9561A1A}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{9BE57657-E9E2-4567-93E9-1C04E9561A1A}.Debug|ARM.Build.0 = Debug|Any CPU
+		{9BE57657-E9E2-4567-93E9-1C04E9561A1A}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{9BE57657-E9E2-4567-93E9-1C04E9561A1A}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{9BE57657-E9E2-4567-93E9-1C04E9561A1A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9BE57657-E9E2-4567-93E9-1C04E9561A1A}.Debug|x64.Build.0 = Debug|Any CPU
+		{9BE57657-E9E2-4567-93E9-1C04E9561A1A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9BE57657-E9E2-4567-93E9-1C04E9561A1A}.Debug|x86.Build.0 = Debug|Any CPU
+		{9BE57657-E9E2-4567-93E9-1C04E9561A1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BE57657-E9E2-4567-93E9-1C04E9561A1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BE57657-E9E2-4567-93E9-1C04E9561A1A}.Release|ARM.ActiveCfg = Release|Any CPU
+		{9BE57657-E9E2-4567-93E9-1C04E9561A1A}.Release|ARM.Build.0 = Release|Any CPU
+		{9BE57657-E9E2-4567-93E9-1C04E9561A1A}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{9BE57657-E9E2-4567-93E9-1C04E9561A1A}.Release|ARM64.Build.0 = Release|Any CPU
+		{9BE57657-E9E2-4567-93E9-1C04E9561A1A}.Release|x64.ActiveCfg = Release|Any CPU
+		{9BE57657-E9E2-4567-93E9-1C04E9561A1A}.Release|x64.Build.0 = Release|Any CPU
+		{9BE57657-E9E2-4567-93E9-1C04E9561A1A}.Release|x86.ActiveCfg = Release|Any CPU
+		{9BE57657-E9E2-4567-93E9-1C04E9561A1A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
