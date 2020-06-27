@@ -5,16 +5,16 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
+using CommonServiceLocator;
+using DevelopmentInProgress.TradeView.Wpf.Host.View;
+using DevelopmentInProgress.TradeView.Wpf.Host.ViewModel;
+using Prism.Logging;
 using System;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using DevelopmentInProgress.TradeView.Wpf.Host.View;
-using DevelopmentInProgress.TradeView.Wpf.Host.ViewModel;
-using Microsoft.Practices.ServiceLocation;
-using Prism.Logging;
 using Xceed.Wpf.AvalonDock.Layout;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host

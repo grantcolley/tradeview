@@ -5,8 +5,8 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
-using System;
 using DevelopmentInProgress.TradeView.Wpf.Host.View;
+using System;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.Navigation
 {

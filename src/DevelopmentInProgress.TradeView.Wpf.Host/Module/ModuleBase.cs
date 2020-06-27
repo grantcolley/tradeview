@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------
 
 using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
-using Microsoft.Practices.Unity;
+using Prism.Ioc;
 using Prism.Logging;
 using Prism.Modularity;
 
@@ -20,25 +20,25 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Module
         /// <summary>
         /// Initializes a new instance of the ModuleBase class.
         /// </summary>
-        /// <param name="container">An instance of the unity container.</param>
         /// <param name="moduleNavigator">An instance of the module navigator.</param>
         /// <param name="logger">An instance of the logger.</param>
-        protected ModuleBase(IUnityContainer container, ModuleNavigator moduleNavigator, ILoggerFacade logger)
+        protected ModuleBase(ModuleNavigator moduleNavigator, ILoggerFacade logger)
         {
-            Container = container;
             ModuleNavigator = moduleNavigator;
             Logger = logger;
         }
 
         /// <summary>
-        /// The modules manager calls the Initialize method when it instantiates the module.
+        /// Used to resgister types with the container that will be used by your application.
         /// </summary>
-        public abstract void Initialize();
+        /// <param name="containerRegistry">The container registry.</param>
+        public abstract void RegisterTypes(IContainerRegistry containerRegistry);
 
         /// <summary>
-        /// Gets an instance of the Unity container.
+        /// Notifies the module that it has been initialised.
         /// </summary>
-        public IUnityContainer Container { get; private set; }
+        /// <param name="containerProvider">The container provider.</param>
+        public abstract void OnInitialized(IContainerProvider containerProvider);
 
         /// <summary>
         /// Gets an instance of the module manager.

@@ -5,12 +5,12 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
-using System;
-using System.Windows.Media.Imaging;
+using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using DevelopmentInProgress.TradeView.Wpf.Host.View;
 using DevelopmentInProgress.TradeView.Wpf.Host.ViewModel;
-using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
-using Microsoft.Practices.Unity;
+using System;
+using System.Windows.Media.Imaging;
+using Unity;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.Navigation
 {

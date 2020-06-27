@@ -5,11 +5,11 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
-using System.Windows.Controls;
+using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using DevelopmentInProgress.TradeView.Wpf.Host.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
-using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using Prism.Logging;
+using System.Windows.Controls;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.View
 {

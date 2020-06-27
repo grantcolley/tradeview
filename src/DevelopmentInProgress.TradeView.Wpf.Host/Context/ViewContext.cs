@@ -6,9 +6,9 @@
 //-----------------------------------------------------------------------
 
 using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
-using Microsoft.Practices.Unity;
 using Prism.Logging;
 using Prism.Regions;
+using Unity;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.Context
 {

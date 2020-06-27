@@ -5,14 +5,14 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
-using System;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Windows;
 using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Host.View;
 using Prism.Regions;
 using Prism.Regions.Behaviors;
+using System;
+using System.Collections.Specialized;
+using System.Linq;
+using System.Windows;
 using Xceed.Wpf.AvalonDock;
 using Xceed.Wpf.AvalonDock.Controls;
 using Xceed.Wpf.AvalonDock.Layout;

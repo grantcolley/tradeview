@@ -5,13 +5,13 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
+using DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel;
+using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
-using DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel;
-using System.Linq;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.View
 {

@@ -5,9 +5,9 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
-using System.Windows.Threading;
-using Microsoft.Practices.Unity;
 using Prism.Logging;
+using System.Windows.Threading;
+using Unity;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.Context
 {

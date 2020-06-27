@@ -1,12 +1,5 @@
-﻿<Application x:Class="DevelopmentInProgress.TradeView.Wpf.Host.App"
+﻿<prism:PrismApplication x:Class="DevelopmentInProgress.TradeView.Wpf.Host.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Application.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/DevelopmentInProgress.TradeView.Wpf.Controls;component/themes/MetroDark/MetroDark.MSControls.Core.Implicit.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/DevelopmentInProgress.TradeView.Wpf.Controls;component/themes/MetroDark/MetroDark.MSControls.Toolkit.Implicit.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Application.Resources>
-</Application>
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/">
+</prism:PrismApplication>

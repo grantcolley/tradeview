@@ -6,7 +6,8 @@
 //-----------------------------------------------------------------------
 
 using DevelopmentInProgress.TradeView.Wpf.Host.View;
-using Microsoft.Practices.Unity;
+using Unity;
+using Unity.Lifetime;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.Navigation
 {

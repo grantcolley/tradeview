@@ -5,8 +5,8 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
-using Microsoft.Practices.Unity;
 using Prism.Logging;
+using Unity;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.Context
 {

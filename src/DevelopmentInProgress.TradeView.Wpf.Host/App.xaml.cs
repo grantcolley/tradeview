@@ -1,105 +1,76 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="App.xaml.cs" company="Development In Progress Ltd">
-//     Copyright © 2012. All rights reserved.
-// </copyright>
-// <author>Grant Colley</author>
-//-----------------------------------------------------------------------
-
-using System;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Threading;
-using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
-using Microsoft.Practices.ServiceLocation;
+﻿using CommonServiceLocator;
+using DevelopmentInProgress.TradeView.Wpf.Host.Logger;
+using DevelopmentInProgress.TradeView.Wpf.Host.RegionAdapters;
+using Microsoft.Practices.Unity.Configuration;
+using Prism.Ioc;
 using Prism.Logging;
+using Prism.Modularity;
+using Prism.Regions;
+using Prism.Unity;
+using Serilog;
+using System.Configuration;
+using System.IO;
+using System.Linq;
+using System.Windows;
+using Xceed.Wpf.AvalonDock;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host
 {
     /// <summary>
-    /// The application class.
+    /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App : PrismApplication
     {
-        private ILoggerFacade logger;
-        
-        /// <summary>
-        /// Initializes a new instance of the App class.
-        /// </summary>
-        public App()
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            // Fix for memory leak in WPF present in versions of the framework up to and 
-            // including .NET 3.5 SP1. This occurs because of the way WPF selects which 
-            // HWND to use to send messages from the render thread to the UI thread.
-            // http://stackoverflow.com/questions/1705849/wpf-memory-leak-on-xp-cmilchannel-hwnd
-            new HwndSource(new HwndSourceParameters());
-        }
+            Serilog.Core.Logger logger = new LoggerConfiguration()
+                .ReadFrom.AppSettings()
+                .CreateLogger();
 
-        /// <summary>
-        /// Start up method which loads and runs the bootstrapper.
-        /// </summary>
-        /// <param name="e">Startup event arguments.</param>
-        protected override  void OnStartup(StartupEventArgs e)
-        {
-            base.OnStartup(e);
+            containerRegistry.RegisterInstance<ILogger>(logger);
+            containerRegistry.RegisterSingleton<ILoggerFacade, LoggerFacade>();
 
-            AppDomain.CurrentDomain.UnhandledException += UnhandledException;
-            Current.DispatcherUnhandledException += DispatcherUnhandledException;
+            var files = from f in Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "Configuration"))
+                        where f.ToUpper().EndsWith("UNITY.CONFIG")
+                        select f;
 
-            var bootstrapper = new Bootstrapper();
-            bootstrapper.Run();
-
-            logger = ServiceLocator.Current.GetInstance<ILoggerFacade>();
-        }
-
-        /// <summary>
-        /// DispatcherUnhandledException is raised by an Application for each 
-        /// exception that is unhandled by code running on the main UI thread.
-        /// The error is logged, displayed in a window and then marked as handled.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">Exception event arguments.</param>
-        private new void DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
-        {
-            LogException(e.Exception);
-
-            var modalManager = ServiceLocator.Current.GetInstance<ModalNavigator>();
-            modalManager.ShowError(e.Exception);
-            
-            e.Handled = true;
-        }
-
-        /// <summary>
-        /// This event allows the application to log information about an 
-        /// unhandled exception before the system default handler reports 
-        /// the exception to the user and terminates the application.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">Exception event arguments.</param>
-        private void UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            var ex = e.ExceptionObject as Exception;
-            if (ex != null)
+            foreach (string fileName in files)
             {
-                LogException(ex);
-            }
-            else if (e.ExceptionObject != null)
-            {
-                LogException(new Exception(e.ExceptionObject.ToString()));
+                var unityMap = new ExeConfigurationFileMap
+                {
+                    ExeConfigFilename = fileName
+                };
+
+                var unityConfig = ConfigurationManager.OpenMappedExeConfiguration(unityMap, ConfigurationUserLevel.None);
+                var unityConfigSection = (UnityConfigurationSection)unityConfig.GetSection("unity");
+                unityConfigSection.Configure(Container.GetContainer());
             }
         }
 
-        /// <summary>
-        /// Logs an exception to the application log file.
-        /// </summary>
-        /// <param name="e">The exception to log.</param>
-        private void LogException(Exception e)
+        protected override IModuleCatalog CreateModuleCatalog()
         {
-            logger.Log(e.Message, Category.Exception, Priority.High);
-            logger.Log(e.StackTrace, Category.Exception, Priority.High);
-            if (e.InnerException != null)
+            using (Stream xamlStream = File.OpenRead("Configuration/ModuleCatalog.xaml"))
             {
-                LogException(e.InnerException);
+                var moduleCatalog = ModuleCatalog.CreateFromXaml(xamlStream);
+                return moduleCatalog;
             }
+        }
+
+        protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings regionAdapterMappings)
+        {
+            regionAdapterMappings.RegisterMapping(typeof(DockingManager), new DockingManagerRegionAdapter(ServiceLocator.Current.GetInstance<IRegionBehaviorFactory>()));
+        }
+
+        protected override Window CreateShell()
+        {
+            return Container.Resolve<Shell>();
+        }
+
+        protected override void InitializeShell(Window shell)
+        {
+            Current.MainWindow = shell;
+            Current.MainWindow.WindowState = WindowState.Maximized;
+            Current.MainWindow.Show();
         }
     }
 }

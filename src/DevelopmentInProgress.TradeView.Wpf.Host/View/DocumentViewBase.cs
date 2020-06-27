@@ -5,9 +5,9 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
-using System;
 using DevelopmentInProgress.TradeView.Wpf.Host.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.ViewModel;
+using System;
 using Xceed.Wpf.AvalonDock.Layout;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.View

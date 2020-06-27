@@ -5,13 +5,13 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
+using DevelopmentInProgress.TradeView.Wpf.Host.Context;
+using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
-using DevelopmentInProgress.TradeView.Wpf.Host.Context;
-using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
-using Prism.Regions;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.ViewModel
 {

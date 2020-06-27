@@ -5,10 +5,10 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
 using DevelopmentInProgress.TradeView.Wpf.Host.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
+using System;
+using System.Collections.Generic;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.ViewModel
 {

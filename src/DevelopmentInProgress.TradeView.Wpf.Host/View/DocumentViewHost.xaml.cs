@@ -5,8 +5,8 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
-using System.Windows.Controls;
 using DevelopmentInProgress.TradeView.Wpf.Host.RegionAdapters;
+using System.Windows.Controls;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.View
 {

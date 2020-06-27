@@ -5,16 +5,16 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
+using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
+using DevelopmentInProgress.TradeView.Wpf.Host.Context;
+using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
+using DevelopmentInProgress.TradeView.Wpf.Host.View;
+using Prism.Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
-using DevelopmentInProgress.TradeView.Wpf.Host.Context;
-using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
-using DevelopmentInProgress.TradeView.Wpf.Host.View;
-using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
-using Prism.Logging;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.ViewModel
 {
