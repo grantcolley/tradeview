@@ -2,8 +2,9 @@
 using DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Host.Module;
 using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
-using Prism.Ioc;
+using Microsoft.Practices.Unity;
 using Prism.Logging;
+using System;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Dashboard
 {
@@ -11,13 +12,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard
     {
         public const string ModuleName = "Dashboard";
 
-        public Module(ModuleNavigator moduleNavigator, ILoggerFacade logger)
-            : base(moduleNavigator, logger)
+        public Module(IUnityContainer container, ModuleNavigator moduleNavigator, ILoggerFacade logger)
+            : base(container, moduleNavigator, logger)
         {
         }
 
-        public override void OnInitialized(IContainerProvider containerProvider)
+        public override void Initialize()
         {
+            Container.RegisterType<Object, ServerMonitorView>(typeof(ServerMonitorView).Name);
+            Container.RegisterType<ServerMonitorViewModel>(typeof(ServerMonitorViewModel).Name);
+
             var moduleSettings = new ModuleSettings();
             moduleSettings.ModuleName = ModuleName;
             moduleSettings.ModuleImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Dashboard;component/Images/Dashboard.png";
@@ -36,12 +40,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard
             ModuleNavigator.AddModuleNavigation(moduleSettings);
 
             Logger.Log("Initialize DevelopmentInProgress.TradeView.Wpf.Dashboard", Category.Info, Priority.None);
-        }
 
-        public override void RegisterTypes(IContainerRegistry containerRegistry)
-        {
-            containerRegistry.Register<object, ServerMonitorView>(typeof(ServerMonitorView).Name);
-            containerRegistry.Register<ServerMonitorViewModel>(typeof(ServerMonitorViewModel).Name);
         }
     }
 }
