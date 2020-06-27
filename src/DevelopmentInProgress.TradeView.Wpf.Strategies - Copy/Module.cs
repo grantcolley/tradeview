@@ -3,31 +3,30 @@ using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.View;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel;
+using Microsoft.Practices.Unity;
 using Prism.Logging;
 using System;
-using Prism.Ioc;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Strategies
 {
     public class Module : ModuleBase
     {
         public const string ModuleName = "Strategies";
+        private static IUnityContainer StaticContainer;
 
         private static string StrategyUser = $"Strategies";
 
-        public Module(ModuleNavigator moduleNavigator, ILoggerFacade logger)
-            : base(moduleNavigator, logger)
+        public Module(IUnityContainer container, ModuleNavigator moduleNavigator, ILoggerFacade logger)
+            : base(container, moduleNavigator, logger)
         {
+            StaticContainer = container;
         }
 
-        public override void RegisterTypes(IContainerRegistry containerRegistry)
+        public async override void Initialize()
         {
-            containerRegistry.Register<object, StrategyRunnerView>(typeof(StrategyRunnerView).Name);
-            containerRegistry.Register<StrategyRunnerViewModel>(typeof(StrategyRunnerViewModel).Name);
-        }
+            Container.RegisterType<object, StrategyRunnerView>(typeof(StrategyRunnerView).Name);
+            Container.RegisterType<StrategyRunnerViewModel>(typeof(StrategyRunnerViewModel).Name);
 
-        public async override void OnInitialized(IContainerProvider containerProvider)
-        {
             var moduleSettings = new ModuleSettings();
             moduleSettings.ModuleName = ModuleName;
             moduleSettings.ModuleImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Strategies;component/Images/strategyManager.png";
@@ -35,7 +34,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies
             var moduleGroup = new ModuleGroup();
             moduleGroup.ModuleGroupName = StrategyUser;
 
-            var strategyService = containerProvider.Resolve<IStrategyService>();
+            var strategyService = Container.Resolve<IStrategyService>();
 
             try
             {
