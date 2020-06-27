@@ -102,10 +102,6 @@
       <Project>{63c14275-0279-4cf1-bdd2-5aab8378d6d0}</Project>
       <Name>DevelopmentInProgress.TradeView.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\DevelopmentInProgress.TradeView.Wpf.Trading\DevelopmentInProgress.TradeView.Wpf.Trading.csproj">
-      <Project>{2183c26d-6932-41d9-bb1e-16fa55adf983}</Project>
-      <Name>DevelopmentInProgress.TradeView.Wpf.Trading</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Interface.Test\DevelopmentInProgress.TradeView.Interface.Test.csproj">
       <Project>{cf7e490f-2ced-4287-a704-766de5c90b1b}</Project>
       <Name>DevelopmentInProgress.TradeView.Interface.Test</Name>

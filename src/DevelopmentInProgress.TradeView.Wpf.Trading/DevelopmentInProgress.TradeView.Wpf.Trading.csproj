@@ -1,150 +1,28 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2183C26D-6932-41D9-BB1E-16FA55ADF983}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DevelopmentInProgress.TradeView.Wpf.Trading</RootNamespace>
-    <AssemblyName>DevelopmentInProgress.TradeView.Wpf.Trading</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\..\output\UI\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <LangVersion>latest</LangVersion>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>C:\GitHub\tradeview\output\UI\</OutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Serilog.2.6.0\lib\net46\Serilog.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Windows" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Prism.Core" Version="7.2.0.1422" />
+    <PackageReference Include="System.Reactive" Version="4.4.1" />
+    <PackageReference Include="System.Reactive.Linq" Version="4.4.1" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Converters\BoolToLoginConverter.cs" />
-    <Compile Include="Events\SymbolEventArgs.cs" />
-    <Compile Include="Events\SymbolsEventArgs.cs" />
-    <Compile Include="Events\TradeEventArgs.cs" />
-    <Compile Include="Module.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\SymbolsViewModel.cs" />
-    <Compile Include="ViewModel\SymbolViewModel.cs" />
-    <Compile Include="ViewModel\TradeViewModel.cs" />
-    <Compile Include="ViewModel\TradingViewModel.cs" />
-    <Compile Include="View\SymbolsView.xaml.cs">
-      <DependentUpon>SymbolsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\SymbolView.xaml.cs">
-      <DependentUpon>SymbolView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\TradeView.xaml.cs">
-      <DependentUpon>TradeView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\TradingView.xaml.cs">
-      <DependentUpon>TradingView.xaml</DependentUpon>
-    </Compile>
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Common\DevelopmentInProgress.TradeView.Common.csproj" />
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Core\DevelopmentInProgress.TradeView.Core.csproj" />
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Service\DevelopmentInProgress.TradeView.Service.csproj" />
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Common\DevelopmentInProgress.TradeView.Wpf.Common.csproj" />
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Controls\DevelopmentInProgress.TradeView.Wpf.Controls.csproj" />
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Host\DevelopmentInProgress.TradeView.Wpf.Host.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Common\DevelopmentInProgress.TradeView.Common.csproj">
-      <Project>{03680064-ec5b-42a0-9c53-5a0b097458ea}</Project>
-      <Name>DevelopmentInProgress.TradeView.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Core\DevelopmentInProgress.TradeView.Core.csproj">
-      <Project>{63c14275-0279-4cf1-bdd2-5aab8378d6d0}</Project>
-      <Name>DevelopmentInProgress.TradeView.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Service\DevelopmentInProgress.TradeView.Service.csproj">
-      <Project>{b0472037-1788-4314-ac54-1d2169029329}</Project>
-      <Name>DevelopmentInProgress.TradeView.Service</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Host\DevelopmentInProgress.TradeView.Wpf.Host.csproj">
-      <Project>{7bce5d35-0443-4031-843a-3563356290e1}</Project>
-      <Name>DevelopmentInProgress.TradeView.Wpf.Host</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Images\ImageResources.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\SymbolsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\SymbolView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\TradeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\TradingView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="LiveCharts.Wpf">
-      <Version>0.9.7</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Prism.Core">
-      <Version>6.3.0</Version>
-    </PackageReference>
-    <PackageReference Include="Prism.Unity">
-      <Version>6.3.0</Version>
-    </PackageReference>
-    <PackageReference Include="Prism.Wpf">
-      <Version>6.3.0</Version>
-    </PackageReference>
-    <PackageReference Include="System.Reactive">
-      <Version>4.2.0</Version>
-    </PackageReference>
-    <PackageReference Include="Unity">
-      <Version>4.0.1</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\account.png" />
-    <Resource Include="Images\marketview.png" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>

@@ -3,7 +3,7 @@ using DevelopmentInProgress.TradeView.Wpf.Host.Module;
 using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Trading.View;
 using DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel;
-using Prism.Ioc;
+using Microsoft.Practices.Unity;
 using Prism.Logging;
 using System;
 
@@ -13,20 +13,19 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading
     {
         public const string ModuleName = "Trading";
         private static string AccountUser = $"Accounts";
+        private static IUnityContainer StaticContainer;
 
-        public Module(ModuleNavigator moduleNavigator, ILoggerFacade logger)
-            : base(moduleNavigator, logger)
+        public Module(IUnityContainer container, ModuleNavigator moduleNavigator, ILoggerFacade logger)
+            : base(container, moduleNavigator, logger)
         {
+            StaticContainer = Container;
         }
 
-        public override void RegisterTypes(IContainerRegistry containerRegistry)
+        public async override void Initialize()
         {
-            containerRegistry.Register<object, TradingView>(typeof(TradingView).Name);
-            containerRegistry.Register<TradingViewModel>(typeof(TradingViewModel).Name);
-        }
+            Container.RegisterType<object, TradingView>(typeof(TradingView).Name);
+            Container.RegisterType<TradingViewModel>(typeof(TradingViewModel).Name);
 
-        public async override void OnInitialized(IContainerProvider containerProvider)
-        {
             var moduleSettings = new ModuleSettings();
             moduleSettings.ModuleName = ModuleName;
             moduleSettings.ModuleImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Trading;component/Images/marketview.png";
@@ -34,7 +33,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading
             var moduleGroup = new ModuleGroup();
             moduleGroup.ModuleGroupName = AccountUser;
 
-            var accountsService = containerProvider.Resolve<IAccountsService>();
+            var accountsService = Container.Resolve<IAccountsService>();
 
             try
             {
@@ -51,7 +50,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading
 
                 Logger.Log("Initialize DevelopmentInProgress.TradeView.Wpf.Trading Complete", Category.Info, Priority.None);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Logger.Log($"Initialize DevelopmentInProgress.TradeView.Wpf.Trading failed to load: {ex.ToString()}", Category.Exception, Priority.None);
             }
