@@ -16,6 +16,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard
         {
         }
 
+        public override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.Register<object, ServerMonitorView>(typeof(ServerMonitorView).Name);
+            containerRegistry.Register<ServerMonitorViewModel>(typeof(ServerMonitorViewModel).Name);
+        }
+
         public override void OnInitialized(IContainerProvider containerProvider)
         {
             var moduleSettings = new ModuleSettings();
@@ -36,12 +42,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard
             ModuleNavigator.AddModuleNavigation(moduleSettings);
 
             Logger.Log("Initialize DevelopmentInProgress.TradeView.Wpf.Dashboard", Category.Info, Priority.None);
-        }
-
-        public override void RegisterTypes(IContainerRegistry containerRegistry)
-        {
-            containerRegistry.Register<object, ServerMonitorView>(typeof(ServerMonitorView).Name);
-            containerRegistry.Register<ServerMonitorViewModel>(typeof(ServerMonitorViewModel).Name);
         }
     }
 }

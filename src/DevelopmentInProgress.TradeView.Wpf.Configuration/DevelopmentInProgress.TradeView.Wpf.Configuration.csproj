@@ -19,7 +19,6 @@
     <PackageReference Include="System.Reactive.Interfaces" Version="4.4.1" />
     <PackageReference Include="System.Reactive.Linq" Version="4.4.1" />
     <PackageReference Include="System.Reactive.PlatformServices" Version="4.4.1" />
-    <PackageReference Include="Unity" Version="5.11.7" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +27,7 @@
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Service\DevelopmentInProgress.TradeView.Service.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Common\DevelopmentInProgress.TradeView.Wpf.Common.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Controls\DevelopmentInProgress.TradeView.Wpf.Controls.csproj" />
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Host\DevelopmentInProgress.TradeView.Wpf.Host.csproj" />
   </ItemGroup>
 
 </Project>
