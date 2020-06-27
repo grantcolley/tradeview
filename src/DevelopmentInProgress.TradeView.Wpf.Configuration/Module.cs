@@ -5,13 +5,15 @@ using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Host.View;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.View;
 using DevelopmentInProgress.TradeView.Wpf.Trading.View;
-using Microsoft.Practices.Unity;
+using Prism.Ioc;
 using Prism.Logging;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Configuration
 {
     public class Module : ModuleBase
     {
+        private static IContainerProvider staticContainerProvider;
+
         public const string ModuleName = "Configuration";
         private static string ConfigurationUser = $"Configuration";
 
@@ -21,22 +23,24 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration
         private const string TradingModuleName = "Trading";
         private static string AccountUser = $"Accounts";
 
-        private static IUnityContainer StaticContainer;
-
-        public Module(IUnityContainer container, ModuleNavigator moduleNavigator, ILoggerFacade logger)
-            : base(container, moduleNavigator, logger)
+        public Module(ModuleNavigator moduleNavigator, ILoggerFacade logger)
+            : base(moduleNavigator, logger)
         {
-            StaticContainer = container;
         }
 
-        public override void Initialize()
+        public override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            Container.RegisterType<object, StrategyManagerView>(typeof(StrategyManagerView).Name);
-            Container.RegisterType<StrategyManagerViewModel>(typeof(StrategyManagerViewModel).Name);
-            Container.RegisterType<object, UserAccountsView>(typeof(UserAccountsView).Name);
-            Container.RegisterType<UserAccountsViewModel>(typeof(UserAccountsViewModel).Name);
-            Container.RegisterType<object, TradeServerManagerView>(typeof(TradeServerManagerView).Name);
-            Container.RegisterType<TradeServerManagerViewModel>(typeof(TradeServerManagerViewModel).Name);
+            containerRegistry.Register<object, StrategyManagerView>(typeof(StrategyManagerView).Name);
+            containerRegistry.Register<StrategyManagerViewModel>(typeof(StrategyManagerViewModel).Name);
+            containerRegistry.Register<object, UserAccountsView>(typeof(UserAccountsView).Name);
+            containerRegistry.Register<UserAccountsViewModel>(typeof(UserAccountsViewModel).Name);
+            containerRegistry.Register<object, TradeServerManagerView>(typeof(TradeServerManagerView).Name);
+            containerRegistry.Register<TradeServerManagerViewModel>(typeof(TradeServerManagerViewModel).Name);
+        }
+
+        public override void OnInitialized(IContainerProvider containerProvider)
+        {
+            staticContainerProvider = containerProvider;
 
             var moduleSettings = new ModuleSettings();
             moduleSettings.ModuleName = ModuleName;
@@ -76,7 +80,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration
         {
             var strategyDocument = CreateStrategyModuleGroupItem(strategyName, strategyName);
 
-            var modulesNavigationView = StaticContainer.Resolve(typeof(ModulesNavigationView),
+            var modulesNavigationView = staticContainerProvider.Resolve(typeof(ModulesNavigationView),
                 typeof(ModulesNavigationView).Name) as ModulesNavigationView;
 
             modulesNavigationView.AddNavigationListItem(StrategyModuleName, StrategyUser, strategyDocument);
@@ -84,7 +88,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration
 
         public static void RemoveStrategy(string strategyName)
         {
-            var modulesNavigationView = StaticContainer.Resolve(typeof(ModulesNavigationView),
+            var modulesNavigationView = staticContainerProvider.Resolve(typeof(ModulesNavigationView),
                 typeof(ModulesNavigationView).Name) as ModulesNavigationView;
 
             modulesNavigationView.RemoveNavigationListItem(StrategyModuleName, StrategyUser, strategyName);
@@ -94,7 +98,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration
         {
             var accountDocument = CreateAccountModuleGroupItem(accountName, accountName);
 
-            var modulesNavigationView = StaticContainer.Resolve(typeof(ModulesNavigationView),
+            var modulesNavigationView = staticContainerProvider.Resolve(typeof(ModulesNavigationView),
                 typeof(ModulesNavigationView).Name) as ModulesNavigationView;
 
             modulesNavigationView.AddNavigationListItem(TradingModuleName, AccountUser, accountDocument);
@@ -102,7 +106,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration
 
         public static void RemoveAccount(string accountName)
         {
-            var modulesNavigationView = StaticContainer.Resolve(typeof(ModulesNavigationView),
+            var modulesNavigationView = staticContainerProvider.Resolve(typeof(ModulesNavigationView),
                 typeof(ModulesNavigationView).Name) as ModulesNavigationView;
 
             modulesNavigationView.RemoveNavigationListItem(TradingModuleName, AccountUser, accountName);
