@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>C:\GitHub\tradeview\output\UI\</OutputPath>
+    <OutputPath>C:\GitHub\tradeview\output</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

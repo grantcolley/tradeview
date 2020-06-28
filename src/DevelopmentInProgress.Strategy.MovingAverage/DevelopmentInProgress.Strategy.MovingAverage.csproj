@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>C:\GitHub\tradeview\output\UI\</OutputPath>
+    <OutputPath>C:\GitHub\tradeview\output\</OutputPath>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
 
@@ -23,9 +23,5 @@
     <ProjectReference Include="..\DevelopmentInProgress.Strategy.Common\DevelopmentInProgress.Strategy.Common.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Core\DevelopmentInProgress.TradeView.Core.csproj" />
   </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="IF EXIST $(SolutionDir)output\UI\netstandard2.0\ copy $(SolutionDir)output\UI\netstandard2.0\$(TargetFileName) $(SolutionDir)output\UI\$(TargetFileName)&#xD;&#xA;IF EXIST $(SolutionDir)output\UI\netstandard2.0\ copy $(SolutionDir)output\UI\netstandard2.0\DevelopmentInProgress.Strategy.MovingAverage.pdb $(SolutionDir)output\UI\DevelopmentInProgress.Strategy.MovingAverage.pdb" />
-  </Target>
 
 </Project>
