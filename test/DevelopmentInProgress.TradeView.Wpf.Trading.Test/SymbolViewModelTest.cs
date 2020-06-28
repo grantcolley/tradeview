@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DevelopmentInProgress.TradeView.Core.Enums;
+﻿using DevelopmentInProgress.TradeView.Core.Enums;
 using DevelopmentInProgress.TradeView.Core.Interfaces;
 using DevelopmentInProgress.TradeView.Core.Model;
 using DevelopmentInProgress.TradeView.Test.Helper;
@@ -12,6 +9,9 @@ using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Prism.Logging;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Model = DevelopmentInProgress.TradeView.Wpf.Common.Model;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test

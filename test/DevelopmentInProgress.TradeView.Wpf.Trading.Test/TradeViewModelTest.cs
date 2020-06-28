@@ -1,19 +1,19 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using DevelopmentInProgress.TradeView.Core.Enums;
 using DevelopmentInProgress.TradeView.Core.Extensions;
+using DevelopmentInProgress.TradeView.Core.Validation;
 using DevelopmentInProgress.TradeView.Test.Helper;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
-using DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel;
-using InterfaceExtensions = DevelopmentInProgress.TradeView.Core.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Reactive.Linq;
 using DevelopmentInProgress.TradeView.Wpf.Trading.Events;
-using DevelopmentInProgress.TradeView.Core.Validation;
+using DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Prism.Logging;
-using DevelopmentInProgress.TradeView.Core.Enums;
+using System;
+using System.Linq;
+using System.Reactive.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using InterfaceExtensions = DevelopmentInProgress.TradeView.Core.Extensions;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 {

@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using DevelopmentInProgress.TradeView.Core.Enums;
 using DevelopmentInProgress.TradeView.Test.Helper;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DevelopmentInProgress.TradeView.Core.Enums;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 {
