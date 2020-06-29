@@ -34,6 +34,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
                         where f.ToUpper().EndsWith("UNITY.CONFIG")
                         select f;
 
+
+            // configuring the container declaratively from a configuration file
+            // https://www.nuget.org/packages/Unity.NetCore/
+
             foreach (string fileName in files)
             {
                 var unityMap = new ExeConfigurationFileMap

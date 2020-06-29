@@ -2,8 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>DevelopmentInProgress.TradeView.Api.Kucoin</RootNamespace>
+    <AssemblyName>DevelopmentInProgress.TradeView.Api.Kucoin</AssemblyName>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+  
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>C:\GitHub\tradeview\output\</OutputPath>
   </PropertyGroup>

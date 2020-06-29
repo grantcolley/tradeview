@@ -15,9 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Configuration\ModuleCatalog.xaml">
+    <None Include="Configuration\ModuleCatalog.xaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
