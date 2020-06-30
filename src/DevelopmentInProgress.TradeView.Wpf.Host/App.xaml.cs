@@ -1,16 +1,24 @@
 ﻿using CommonServiceLocator;
+using DevelopmentInProgress.TradeView.Core.Interfaces;
+using DevelopmentInProgress.TradeView.Data;
+using DevelopmentInProgress.TradeView.Data.File;
+using DevelopmentInProgress.TradeView.Service;
+using DevelopmentInProgress.TradeView.Wpf.Common.Cache;
+using DevelopmentInProgress.TradeView.Wpf.Common.Chart;
+using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
+using DevelopmentInProgress.TradeView.Wpf.Common.Services;
+using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
+using DevelopmentInProgress.TradeView.Wpf.Host.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.Logger;
+using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Host.RegionAdapters;
-using Microsoft.Practices.Unity.Configuration;
 using Prism.Ioc;
 using Prism.Logging;
 using Prism.Modularity;
 using Prism.Regions;
 using Prism.Unity;
 using Serilog;
-using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using Xceed.Wpf.AvalonDock;
 
@@ -29,26 +37,35 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
 
             containerRegistry.RegisterInstance<ILogger>(logger);
             containerRegistry.RegisterSingleton<ILoggerFacade, LoggerFacade>();
+            containerRegistry.RegisterSingleton<IRegionManager>();
+            containerRegistry.RegisterSingleton<NavigationManager>();
+            containerRegistry.RegisterSingleton<ModuleNavigator>();
+            containerRegistry.Register<IViewContext, ViewContext>();
 
-            var files = from f in Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "Configuration"))
-                        where f.ToUpper().EndsWith("UNITY.CONFIG")
-                        select f;
+            containerRegistry.RegisterSingleton<IExchangeApiFactory, ExchangeApiFactory>();
+            containerRegistry.Register<IExchangeService, ExchangeService>();
 
+            containerRegistry.Register<ITradeViewConfigurationAccounts, TradeViewConfigurationAccountsFile>();
+            containerRegistry.Register<ITradeViewConfigurationStrategy, TradeViewConfigurationStrategyFile>();
+            containerRegistry.Register<ITradeViewConfigurationServer, TradeViewConfigurationServerFile>();
 
-            // configuring the container declaratively from a configuration file
-            // https://www.nuget.org/packages/Unity.NetCore/
+            containerRegistry.Register<IAccountsService, AccountsService>();
+            containerRegistry.Register<IStrategyService, StrategyService>();
+            containerRegistry.Register<ITradeServerService, TradeServerService>();
 
-            foreach (string fileName in files)
-            {
-                var unityMap = new ExeConfigurationFileMap
-                {
-                    ExeConfigFilename = fileName
-                };
+            containerRegistry.Register<IWpfExchangeService, WpfExchangeService>();
+            containerRegistry.Register<ISymbolsCache, SymbolsCache>();
+            containerRegistry.RegisterSingleton<ISymbolsCacheFactory, SymbolsCacheFactory>();
+            containerRegistry.RegisterSingleton<IServerMonitorCache, ServerMonitorCache>();
 
-                var unityConfig = ConfigurationManager.OpenMappedExeConfiguration(unityMap, ConfigurationUserLevel.None);
-                var unityConfigSection = (UnityConfigurationSection)unityConfig.GetSection("unity");
-                unityConfigSection.Configure(Container.GetContainer());
-            }
+            containerRegistry.RegisterSingleton<IOrderBookHelperFactory, OrderBookHelperFactory>();
+            containerRegistry.RegisterSingleton<ITradeHelperFactory, TradeHelperFactory>();
+            containerRegistry.RegisterSingleton<IHelperFactoryContainer, HelperFactoryContainer>();
+            containerRegistry.RegisterSingleton<IChartHelper, ChartHelper>();
+
+            containerRegistry.Register<OrdersViewModel>();
+            containerRegistry.Register<AccountViewModel>();
+
         }
 
         protected override IModuleCatalog CreateModuleCatalog()
