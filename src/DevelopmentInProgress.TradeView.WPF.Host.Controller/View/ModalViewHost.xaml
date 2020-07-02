@@ -1,8 +1,8 @@
-﻿<Window x:Class="DevelopmentInProgress.TradeView.Wpf.Host.View.ModalViewHost"
+﻿<Window x:Class="DevelopmentInProgress.TradeView.Wpf.Host.Controller.View.ModalViewHost"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:progress="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controls.Progress"
-        xmlns:converters="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Converters"
+        xmlns:progress="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controller.Controls.Progress"
+        xmlns:converters="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controller.Converters"
         xmlns:messaging="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;assembly=DevelopmentInProgress.TradeView.Wpf.Controls"
         Background="{StaticResource TextBoxBackgroundBrush}">
     <Window.Resources>

@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -9,30 +10,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="View\DocumentViewHost.xaml" />
-    <None Remove="View\ModalViewHost.xaml" />
-    <None Remove="View\ModulesNavigationView.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Prism.Core" Version="7.2.0.1422" />
     <PackageReference Include="Prism.Unity" Version="7.2.0.1422" />
   </ItemGroup>
 
   <ItemGroup>
-    <Page Include="View\DocumentViewHost.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ModalViewHost.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ModulesNavigationView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <ProjectReference Include="..\..\..\avalondock\Xceed.Wpf.AvalonDock\Xceed.Wpf.AvalonDock.csproj" />
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Controls\DevelopmentInProgress.TradeView.Wpf.Controls.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Controls\DevelopmentInProgress.TradeView.Wpf.Controls.csproj" />
+    <None Update="Controls\Progress\CircularProgress.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
   </ItemGroup>
 
 </Project>
