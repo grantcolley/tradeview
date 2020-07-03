@@ -1,12 +1,11 @@
-﻿<UserControl x:Class="DevelopmentInProgress.TradeView.Wpf.Host.View.ModulesNavigationView"
+﻿<UserControl x:Class="DevelopmentInProgress.TradeView.Wpf.Host.Controller.View.ModulesNavigationView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:navigation="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel;assembly=DevelopmentInProgress.TradeView.Wpf.Controls"
-             xmlns:navigationPanel="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel;assembly=DevelopmentInProgress.TradeView.Wpf.Controls"
              mc:Ignorable="d">
     <Grid>
-        <navigationPanel:NavigationPanel x:Name="navigationPanel"/>
+        <navigation:NavigationPanel x:Name="navigationPanel"/>
     </Grid>
 </UserControl>

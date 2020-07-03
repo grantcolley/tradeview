@@ -8,7 +8,7 @@
 using System;
 using System.Windows.Input;
 
-namespace DevelopmentInProgress.TradeView.Wpf.Host.Command
+namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Command
 {
     /// <summary>
     /// A custom command.

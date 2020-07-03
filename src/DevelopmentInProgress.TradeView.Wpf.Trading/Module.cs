@@ -1,6 +1,6 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Common.Services;
-using DevelopmentInProgress.TradeView.Wpf.Host.Module;
-using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Module;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Trading.View;
 using DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel;
 using Prism.Ioc;

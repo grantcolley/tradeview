@@ -18,4 +18,15 @@
     <PackageReference Include="System.Reactive.PlatformServices" Version="4.4.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Resource Include="Images\AddNewItem.png" />
+    <Resource Include="Images\ArrowLeft.png" />
+    <Resource Include="Images\ArrowRight.png" />
+    <Resource Include="Images\clipboard.png" />
+    <Resource Include="Images\Close.png" />
+    <Resource Include="Images\Filter.png" />
+    <Resource Include="Images\Origin.png" />
+    <Resource Include="Images\RemoveItem.png" />
+  </ItemGroup>
+
 </Project>

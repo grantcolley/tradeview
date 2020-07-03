@@ -21,7 +21,12 @@
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Core\DevelopmentInProgress.TradeView.Core.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Common\DevelopmentInProgress.TradeView.Wpf.Common.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Controls\DevelopmentInProgress.TradeView.Wpf.Controls.csproj" />
-    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Host\DevelopmentInProgress.TradeView.Wpf.Host.csproj" />
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.WPF.Host.Controller\DevelopmentInProgress.TradeView.WPF.Host.Controller.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\account.png" />
+    <Resource Include="Images\marketview.png" />
   </ItemGroup>
 
 </Project>

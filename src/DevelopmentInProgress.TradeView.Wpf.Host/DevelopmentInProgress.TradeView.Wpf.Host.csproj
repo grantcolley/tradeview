@@ -11,10 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Page Remove="Configuration\ModuleCatalog.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Configuration\ModuleCatalog.xaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -40,13 +36,22 @@
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Data.File\DevelopmentInProgress.TradeView.Data.File.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Data\DevelopmentInProgress.TradeView.Data.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Common\DevelopmentInProgress.TradeView.Wpf.Common.csproj" />
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Configuration\DevelopmentInProgress.TradeView.Wpf.Configuration.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Controls\DevelopmentInProgress.TradeView.Wpf.Controls.csproj" />
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Dashboard\DevelopmentInProgress.TradeView.Wpf.Dashboard.csproj" />
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.WPF.Host.Controller\DevelopmentInProgress.TradeView.WPF.Host.Controller.csproj" />
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Strategies\DevelopmentInProgress.TradeView.Wpf.Strategies.csproj" />
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Trading\DevelopmentInProgress.TradeView.Wpf.Trading.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Configuration\DevelopmentInProgress.TradeView.Wpf.Host.Unity.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <Resource Include="Images\close.png" />
+    <Resource Include="Images\GroupListItem.png" />
+    <Resource Include="Images\Log.png" />
+    <Resource Include="Images\Origin.png" />
+    <Resource Include="Images\Refresh.png" />
+    <Resource Include="Images\Save.png" />
+    <Resource Include="Images\SaveAll.png" />
   </ItemGroup>
 
 </Project>

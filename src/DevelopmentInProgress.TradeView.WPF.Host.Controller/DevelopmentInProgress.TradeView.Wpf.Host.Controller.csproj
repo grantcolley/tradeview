@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -6,23 +6,25 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>C:\GitHub\tradeview\output\</OutputPath>
+    <OutputPath>C:\GitHub\tradeview\output</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Prism.Core" Version="7.2.0.1422" />
     <PackageReference Include="Prism.Unity" Version="7.2.0.1422" />
+    <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
+    <PackageReference Include="Unity.Abstractions" Version="5.11.6" />
   </ItemGroup>
-
+  
   <ItemGroup>
+    <ProjectReference Include="..\..\..\avalondock\Xceed.Wpf.AvalonDock.Themes.Aero\Xceed.Wpf.AvalonDock.Themes.Aero.csproj" />
+    <ProjectReference Include="..\..\..\avalondock\Xceed.Wpf.AvalonDock.Themes.VS2013\Xceed.Wpf.AvalonDock.Themes.VS2013.csproj" />
     <ProjectReference Include="..\..\..\avalondock\Xceed.Wpf.AvalonDock\Xceed.Wpf.AvalonDock.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Controls\DevelopmentInProgress.TradeView.Wpf.Controls.csproj" />
   </ItemGroup>
-
+  
   <ItemGroup>
-    <None Update="Controls\Progress\CircularProgress.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
+    <Resource Include="Images\Origin.png" />
   </ItemGroup>
 
 </Project>

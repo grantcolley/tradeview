@@ -29,4 +29,8 @@
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Controls\DevelopmentInProgress.TradeView.Wpf.Controls.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Resource Include="Images\close.png" />
+  </ItemGroup>
+
 </Project>

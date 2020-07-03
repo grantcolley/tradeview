@@ -1,7 +1,7 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Dashboard.View;
 using DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel;
-using DevelopmentInProgress.TradeView.Wpf.Host.Module;
-using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Module;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
 using Prism.Ioc;
 using Prism.Logging;
 

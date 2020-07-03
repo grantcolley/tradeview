@@ -1,11 +1,11 @@
-﻿using DevelopmentInProgress.TradeView.Wpf.Host.Module;
-using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
-using DevelopmentInProgress.TradeView.Wpf.Common.Services;
+﻿using DevelopmentInProgress.TradeView.Wpf.Common.Services;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Module;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.View;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel;
+using Prism.Ioc;
 using Prism.Logging;
 using System;
-using Prism.Ioc;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Strategies
 {

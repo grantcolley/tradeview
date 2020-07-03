@@ -8,10 +8,13 @@ using DevelopmentInProgress.TradeView.Wpf.Common.Chart;
 using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
-using DevelopmentInProgress.TradeView.Wpf.Host.Context;
+using DevelopmentInProgress.TradeView.Wpf.Configuration.Utility;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.RegionAdapters;
 using DevelopmentInProgress.TradeView.Wpf.Host.Logger;
-using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
-using DevelopmentInProgress.TradeView.Wpf.Host.RegionAdapters;
+using DevelopmentInProgress.TradeView.Wpf.Strategies.Utility;
+using DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel;
 using Prism.Ioc;
 using Prism.Logging;
 using Prism.Modularity;
@@ -29,6 +32,15 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
     /// </summary>
     public partial class App : PrismApplication
     {
+        protected override IModuleCatalog CreateModuleCatalog()
+        {
+            using (Stream xamlStream = File.OpenRead("Configuration/ModuleCatalog.xaml"))
+            {
+                var moduleCatalog = ModuleCatalog.CreateFromXaml(xamlStream);
+                return moduleCatalog;
+            }
+        }
+
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             Serilog.Core.Logger logger = new LoggerConfiguration()
@@ -37,7 +49,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
 
             containerRegistry.RegisterInstance<ILogger>(logger);
             containerRegistry.RegisterSingleton<ILoggerFacade, LoggerFacade>();
-            containerRegistry.RegisterSingleton<IRegionManager>();
+
             containerRegistry.RegisterSingleton<NavigationManager>();
             containerRegistry.RegisterSingleton<ModuleNavigator>();
             containerRegistry.Register<IViewContext, ViewContext>();
@@ -66,15 +78,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
             containerRegistry.Register<OrdersViewModel>();
             containerRegistry.Register<AccountViewModel>();
 
-        }
+            containerRegistry.Register<SymbolsViewModel>();
+            containerRegistry.Register<TradeViewModel>();
 
-        protected override IModuleCatalog CreateModuleCatalog()
-        {
-            using (Stream xamlStream = File.OpenRead("Configuration/ModuleCatalog.xaml"))
-            {
-                var moduleCatalog = ModuleCatalog.CreateFromXaml(xamlStream);
-                return moduleCatalog;
-            }
+            containerRegistry.Register<IStrategyFileManager, StrategyFileManager>();
+            containerRegistry.Register<ISymbolsLoader, SymbolsLoader>();
+
+            containerRegistry.Register<IStrategyAssemblyManager, StrategyAssemblyManager>();
+
+            containerRegistry.Register<Strategies.ViewModel.SymbolsViewModel>();
+            containerRegistry.Register<Strategies.ViewModel.StrategyParametersViewModel>();
         }
 
         protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings regionAdapterMappings)

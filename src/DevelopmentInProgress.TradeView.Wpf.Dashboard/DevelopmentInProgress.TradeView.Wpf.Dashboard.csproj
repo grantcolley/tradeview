@@ -23,7 +23,17 @@
   <ItemGroup>
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Common\DevelopmentInProgress.TradeView.Wpf.Common.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Controls\DevelopmentInProgress.TradeView.Wpf.Controls.csproj" />
-    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Host\DevelopmentInProgress.TradeView.Wpf.Host.csproj" />
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.WPF.Host.Controller\DevelopmentInProgress.TradeView.WPF.Host.Controller.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Connection.png" />
+    <Resource Include="Images\Dashboard.png" />
+    <Resource Include="Images\NotRunning.png" />
+    <Resource Include="Images\Running.png" />
+    <Resource Include="Images\Server.png" />
+    <Resource Include="Images\ServerMonitor.png" />
+    <Resource Include="Images\Strategy.png" />
   </ItemGroup>
 
 </Project>

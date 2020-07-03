@@ -1,6 +1,6 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel;
-using DevelopmentInProgress.TradeView.Wpf.Host.Context;
-using DevelopmentInProgress.TradeView.Wpf.Host.View;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.View;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.View
 {

@@ -1,7 +1,6 @@
 ﻿//------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------
 //
-//    I google'd 'circular progress bar' and came up with this little nugget by Sacha Barber    
 //    http://www.codeproject.com/Articles/49853/Better-WPF-Circular-Progress-Bar
 // 
 //    The Code Project Open License (CPOL) 1.02
