@@ -23,6 +23,7 @@ using Prism.Unity;
 using Serilog;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using Xceed.Wpf.AvalonDock;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host
@@ -92,7 +93,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
 
         protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings regionAdapterMappings)
         {
-            regionAdapterMappings.RegisterMapping(typeof(DockingManager), new DockingManagerRegionAdapter(ServiceLocator.Current.GetInstance<IRegionBehaviorFactory>()));
+            var regionBehaviourFactory = ServiceLocator.Current.GetInstance<IRegionBehaviorFactory>();
+            regionAdapterMappings.RegisterMapping(typeof(DockingManager), new DockingManagerRegionAdapter(regionBehaviourFactory));
+            regionAdapterMappings.RegisterMapping(typeof(ContentControl), new ContentControlRegionAdapter(regionBehaviourFactory));
         }
 
         protected override Window CreateShell()
