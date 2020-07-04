@@ -50,7 +50,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies
                 moduleSettings.ModuleGroups.Add(moduleGroup);
                 ModuleNavigator.AddModuleNavigation(moduleSettings);
 
-                Logger.Log("Initialize DevelopmentInProgress.Wpf.Strategies Complete", Category.Info, Priority.None);
+                Logger.Log("Initialized DevelopmentInProgress.Wpf.Strategies", Category.Info, Priority.None);
             }
             catch (Exception ex)
             {
