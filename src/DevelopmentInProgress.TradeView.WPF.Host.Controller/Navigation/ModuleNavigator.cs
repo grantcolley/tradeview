@@ -6,49 +6,32 @@
 //-----------------------------------------------------------------------
 
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.View;
-using Unity;
-using Unity.Lifetime;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
+using Prism.Modularity;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
 {
     /// <summary>
-    /// The ModuleManager class sets up the module navigation for each
+    /// The <see cref="ModuleNavigator"/> class sets up the module navigation for each
     /// module that is configured in the ModuleCatalog.xaml file. 
     /// 
     /// Module navigation is the entry point for each module enabling the
-    /// user to open documents for the module via the <see cref="ModulesNavigationView"/>.
+    /// user to open documents for the module via the <see cref="ModulesNavigationViewModel"/>.
     /// 
-    /// The ModuleManager class is registered in the Unity.config file
-    /// as a singleton and is injected into each module's entry class 
+    /// The <see cref="ModuleNavigator"/> class is injected into each module's entry class 
     /// that implements Unity's <see cref="IModule"/> interface.
     /// </summary>
     public class ModuleNavigator
     {
-        private readonly IUnityContainer container;
-        private readonly NavigationManager navigationManager;
+        private readonly ModulesNavigationViewModel modulesNavigationViewModel;
 
         /// <summary>
-        /// Instantiates a new instance of the ModuleManager class. During instantiation  
-        /// the <see cref="ModulesNavigationView"/> is registered with Unity and loaded 
-        /// using Prism. 
+        /// Instantiates a new instance of the <see cref="ModuleNavigator"/> class.
         /// </summary>
-        /// <param name="container">The unity container which is used to register the <see cref="ModulesNavigationView"/> class.</param>
-        /// <param name="navigationManager">Loads the <see cref="ModulesNavigationView"/> class using Prism.</param>
-        public ModuleNavigator(IUnityContainer container, NavigationManager navigationManager)
+        /// <param name="modulesNavigationView">The <see cref="ModulesNavigationView"/> class.</param>
+        public ModuleNavigator(ModulesNavigationViewModel modulesNavigationView)
         {
-            this.container = container;
-            this.navigationManager = navigationManager;
-
-            //  UNITY
-            //  1. When a class is resolving from Unity as System.Object types to get it to resolve to the correct
-            //     type map Unity's native System.Object resolution to the correct type for the class requested.
-            // 
-            //  2. Include an instance of the ContainerControlledLifetimeManager class in the parameters
-            //     to the RegisterType method to instruct the container to register a singleton mapping.
-            container.RegisterType<object, ModulesNavigationView>(typeof(ModulesNavigationView).Name,
-                new ContainerControlledLifetimeManager());
-
-            navigationManager.NavigateNavigationRegion(typeof(ModulesNavigationView).Name);
+            this.modulesNavigationViewModel = modulesNavigationView;
         }
 
         /// <summary>
@@ -60,13 +43,17 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
         /// </param>
         public void AddModuleNavigation(ModuleSettings moduleSettings)
         {
-            //  UNITY
-            //  When a class has been registered as a named registration, to resolve for that class specify the name.
-            //  Here, we resolve for the name registered singleton ModulesNavigationView.
-            var modulesNavigationView = container.Resolve(typeof(ModulesNavigationView), 
-                typeof(ModulesNavigationView).Name) as ModulesNavigationView;
+            modulesNavigationViewModel.AddModule(moduleSettings);
+        }
 
-            modulesNavigationView.AddModule(moduleSettings);
+        public void AddNavigationListItem(string navigationPanelItemName, string navigationListName, ModuleGroupItem moduleGroupItem)
+        {
+            modulesNavigationViewModel.AddNavigationListItem(navigationPanelItemName, navigationListName, moduleGroupItem);
+        }
+
+        public void RemoveNavigationListItem(string navigationPanelItemName, string navigationListName, string moduleGroupItemName)
+        {
+            modulesNavigationViewModel.RemoveNavigationListItem(navigationPanelItemName, navigationListName, moduleGroupItemName);
         }
     }
 }

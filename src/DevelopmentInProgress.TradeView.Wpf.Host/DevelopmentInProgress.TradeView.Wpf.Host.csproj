@@ -39,7 +39,7 @@
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Configuration\DevelopmentInProgress.TradeView.Wpf.Configuration.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Controls\DevelopmentInProgress.TradeView.Wpf.Controls.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Dashboard\DevelopmentInProgress.TradeView.Wpf.Dashboard.csproj" />
-    <ProjectReference Include="..\DevelopmentInProgress.TradeView.WPF.Host.Controller\DevelopmentInProgress.TradeView.WPF.Host.Controller.csproj" />
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Host.Controller\DevelopmentInProgress.TradeView.Wpf.Host.Controller.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Strategies\DevelopmentInProgress.TradeView.Wpf.Strategies.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Trading\DevelopmentInProgress.TradeView.Wpf.Trading.csproj" />
   </ItemGroup>

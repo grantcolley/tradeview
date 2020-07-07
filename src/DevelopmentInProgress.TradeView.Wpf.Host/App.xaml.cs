@@ -12,9 +12,11 @@ using DevelopmentInProgress.TradeView.Wpf.Configuration.Utility;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.RegionAdapters;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.View;
 using DevelopmentInProgress.TradeView.Wpf.Host.Logger;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.Utility;
 using DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
 using Prism.Ioc;
 using Prism.Logging;
 using Prism.Modularity;
@@ -23,7 +25,6 @@ using Prism.Unity;
 using Serilog;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 using Xceed.Wpf.AvalonDock;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host
@@ -52,6 +53,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
             containerRegistry.RegisterSingleton<ILoggerFacade, LoggerFacade>();
 
             containerRegistry.RegisterSingleton<NavigationManager>();
+            containerRegistry.RegisterSingleton<ModulesNavigationView>();
+            containerRegistry.RegisterSingleton<ModulesNavigationViewModel>();
+
             containerRegistry.RegisterSingleton<ModuleNavigator>();
             containerRegistry.Register<IViewContext, ViewContext>();
 
@@ -93,9 +97,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
 
         protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings regionAdapterMappings)
         {
-            var regionBehaviourFactory = ServiceLocator.Current.GetInstance<IRegionBehaviorFactory>();
-            regionAdapterMappings.RegisterMapping(typeof(DockingManager), new DockingManagerRegionAdapter(regionBehaviourFactory));
-            regionAdapterMappings.RegisterMapping(typeof(ContentControl), new ContentControlRegionAdapter(regionBehaviourFactory));
+            regionAdapterMappings.RegisterMapping(typeof(DockingManager), new DockingManagerRegionAdapter(ServiceLocator.Current.GetInstance<IRegionBehaviorFactory>()));
         }
 
         protected override Window CreateShell()
@@ -105,6 +107,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
 
         protected override void InitializeShell(Window shell)
         {
+            var modulesNavigationViewModel = Container.Resolve<ModulesNavigationViewModel>();
+            ((Shell)shell).ModulesNavigationViewModel = modulesNavigationViewModel;
+
             Current.MainWindow = shell;
             Current.MainWindow.WindowState = WindowState.Maximized;
             Current.MainWindow.Show();

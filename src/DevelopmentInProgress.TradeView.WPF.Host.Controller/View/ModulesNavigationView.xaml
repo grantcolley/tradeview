@@ -5,7 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:navigation="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel;assembly=DevelopmentInProgress.TradeView.Wpf.Controls"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/DevelopmentInProgress.TradeView.Wpf.Controls;component/NavigationPanel/NavigationPanelResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
-        <navigation:NavigationPanel x:Name="navigationPanel"/>
+        <navigation:NavigationPanel x:Name="navigationPanel" NavigationPanelItems="{Binding NavigationPanelItems}"/>
     </Grid>
 </UserControl>

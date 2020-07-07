@@ -59,7 +59,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.Strat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.TradeView.Wpf.Trading.Test", "test\DevelopmentInProgress.TradeView.Wpf.Trading.Test\DevelopmentInProgress.TradeView.Wpf.Trading.Test.csproj", "{963471D2-838A-42DE-8A4B-786E03F3603D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevelopmentInProgress.TradeView.WPF.Host.Controller", "src\DevelopmentInProgress.TradeView.WPF.Host.Controller\DevelopmentInProgress.TradeView.WPF.Host.Controller.csproj", "{15AA8CD0-16F1-46C1-9535-3654F22E23AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevelopmentInProgress.TradeView.Wpf.Host.Controller", "src\DevelopmentInProgress.TradeView.Wpf.Host.Controller\DevelopmentInProgress.TradeView.Wpf.Host.Controller.csproj", "{15AA8CD0-16F1-46C1-9535-3654F22E23AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

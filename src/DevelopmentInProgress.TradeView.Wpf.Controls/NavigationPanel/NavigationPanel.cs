@@ -6,6 +6,7 @@
 //-----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -38,8 +39,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel
                 typeof (NavigationPanelItem), typeof (NavigationPanel));
 
             NavigationPanelItemsProperty = DependencyProperty.Register("NavigationPanelItems",
-                typeof (List<NavigationPanelItem>),
-                typeof (NavigationPanel), new FrameworkPropertyMetadata(new List<NavigationPanelItem>()));
+                typeof (ObservableCollection<NavigationPanelItem>),
+                typeof (NavigationPanel), new FrameworkPropertyMetadata(new ObservableCollection<NavigationPanelItem>()));
 
             IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof (bool), typeof (NavigationPanel));
 
@@ -52,7 +53,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel
         /// </summary>
         public NavigationPanel()
         {
-            NavigationPanelItems = new List<NavigationPanelItem>();
+            NavigationPanelItems = new ObservableCollection<NavigationPanelItem>();
             selectionChangedCommand = new WpfCommand(OnSelectionChanged);
             expanderChangedCommand = new WpfCommand(OnExpanderChanged);
             IsExpanded = true;
@@ -90,9 +91,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel
         /// <summary>
         /// Gets or sets a list of <see cref="NavigationPanelItem"/>'s.
         /// </summary>
-        public List<NavigationPanelItem> NavigationPanelItems
+        public ObservableCollection<NavigationPanelItem> NavigationPanelItems
         {
-            get { return (List<NavigationPanelItem>)GetValue(NavigationPanelItemsProperty); }
+            get { return (ObservableCollection<NavigationPanelItem>)GetValue(NavigationPanelItemsProperty); }
             set { SetValue(NavigationPanelItemsProperty, value); }
         }
 

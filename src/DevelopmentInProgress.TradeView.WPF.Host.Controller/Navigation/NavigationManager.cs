@@ -124,15 +124,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
         }
 
         /// <summary>
-        /// Navigate to the NavigationRegion (module navigation) passing in the view Uri. 
-        /// </summary>
-        /// <param name="uri">The view to navigate to.</param>
-        public void NavigateNavigationRegion(string uri)
-        {
-            NavigateRegion(uri, "NavigationRegion");
-        }
-
-        /// <summary>
         /// Uses Prism's region manager to navigate to the specified view at the specified region.
         /// </summary>
         /// <param name="uri">The view to navigate to.</param>

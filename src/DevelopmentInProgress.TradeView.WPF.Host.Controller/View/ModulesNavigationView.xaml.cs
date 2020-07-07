@@ -5,11 +5,11 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
+using CommonServiceLocator;
 using DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -21,18 +21,22 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
     public partial class ModulesNavigationView : UserControl
     {
         private readonly NavigationManager navigationManager;
-        private readonly Dictionary<string, NavigationSettings> navigationSettingsList;
+        private readonly ModulesNavigationViewModel modulesNavigationViewModel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModulesNavigationView"/> class. 
         /// </summary>
-        /// <param name="navigationManager">The navigation manager.</param>
-        public ModulesNavigationView(NavigationManager navigationManager)
+        public ModulesNavigationView()
         {
-            navigationSettingsList = new Dictionary<string, NavigationSettings>();
-            this.navigationManager = navigationManager;
-
             InitializeComponent();
+
+            modulesNavigationViewModel = ServiceLocator.Current.GetInstance<ModulesNavigationViewModel>();
+            navigationManager = ServiceLocator.Current.GetInstance<NavigationManager>();
+
+            modulesNavigationViewModel.RegisterNavigation += ModulesNavigationViewModelRegisterNavigation;
+            modulesNavigationViewModel.UnregisterNavigation += ModulesNavigationViewModelUnregisterNavigation;
+
+            DataContext = this.modulesNavigationViewModel;
 
             navigationPanel.ItemSelected += SelectedModuleListItem;
         }
@@ -43,117 +47,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
         /// </summary>
         public static event EventHandler<ModuleEventArgs> ModuleSelected;
 
-        /// <summary>
-        /// Adds a new module to the navigation view. Called by the <see cref="ModuleNavigator"/>.
-        /// </summary>
-        /// <param name="moduleSettings">Module settings.</param>
-        public void AddModule(ModuleSettings moduleSettings)
+        private void ModulesNavigationViewModelUnregisterNavigation(object sender, NavigationEventArgs e)
         {
-            var navigationPanelItem = new NavigationPanelItem();
-            navigationPanelItem.NavigationPanelItemName = moduleSettings.ModuleName;
-            navigationPanelItem.ImageLocation = moduleSettings.ModuleImagePath;
-
-            foreach (ModuleGroup moduleGroup in moduleSettings.ModuleGroups)
-            {
-                var navigationList = new NavigationList {NavigationListName = moduleGroup.ModuleGroupName};
-
-                foreach (ModuleGroupItem moduleGroupItem in moduleGroup.ModuleGroupItems)
-                {
-                    var navigationListItems = new NavigationListItem
-                    {
-                        ItemName = moduleGroupItem.ModuleGroupItemName,
-                        ImageLocation = moduleGroupItem.ModuleGroupItemImagePath
-                    };
-
-                    navigationListItems.ItemClicked += GroupListItemItemClicked;
-                    navigationList.NavigationListItems.Add(navigationListItems);
-
-                    var navigationSettings = new NavigationSettings
-                    {
-                        Title = moduleGroupItem.TargetViewTitle,
-                        View = moduleGroupItem.TargetView
-                    };
-
-                    string navigationKey = String.Format("{0}.{1}.{2}",
-                        navigationPanelItem.NavigationPanelItemName,
-                        navigationList.NavigationListName,
-                        navigationListItems.ItemName);
-
-                    navigationListItems.Tag = navigationKey;
-                    navigationSettingsList.Add(navigationKey, navigationSettings);
-                }
-
-                navigationPanelItem.NavigationList.Add(navigationList);
-            }
-
-            navigationPanel.NavigationPanelItems.Add(navigationPanelItem);
+            e.NavigationListItem.ItemClicked -= GroupListItemItemClicked;
         }
 
-        /// <summary>
-        /// Adds a new item to the navigation panel given the module (navigationPanelItemName) and module group ().
-        /// Note, if either module or module group does not exist then an exception is thrown.
-        /// </summary>
-        /// <param name="navigationPanelItemName"></param>
-        /// <param name="navigationListName"></param>
-        /// <param name="moduleGroupItem"></param>
-        public void AddNavigationListItem(string navigationPanelItemName, string navigationListName, ModuleGroupItem moduleGroupItem)
+        private void ModulesNavigationViewModelRegisterNavigation(object sender, NavigationEventArgs e)
         {
-            var navigationPanelItem = navigationPanel.NavigationPanelItems.FirstOrDefault(
-                npi => npi.NavigationPanelItemName.Equals(navigationPanelItemName));
-
-            var navigationList = navigationPanelItem.NavigationList.FirstOrDefault(
-                nl => nl.NavigationListName.Equals(navigationListName));
-            
-            var navigationListItems = new NavigationListItem
-            {
-                ItemName = moduleGroupItem.ModuleGroupItemName,
-                ImageLocation = moduleGroupItem.ModuleGroupItemImagePath
-            };
-
-            navigationListItems.ItemClicked += GroupListItemItemClicked;
-            navigationList.NavigationListItems.Add(navigationListItems);
-
-            var navigationSettings = new NavigationSettings
-            {
-                Title = moduleGroupItem.TargetViewTitle,
-                View = moduleGroupItem.TargetView
-            };
-
-            string navigationKey = String.Format("{0}.{1}.{2}",
-                navigationPanelItem.NavigationPanelItemName,
-                navigationList.NavigationListName,
-                navigationListItems.ItemName);
-
-            navigationListItems.Tag = navigationKey;
-            navigationSettingsList.Add(navigationKey, navigationSettings);
-        }
-
-        /// <summary>
-        /// Removes an item from the navigation panel given the module (navigationPanelItemName) and module group (navigationListName).
-        /// Note, if either module or module group does not exist then an exception is thrown.
-        /// </summary>
-        /// <param name="navigationPanelItemName"></param>
-        /// <param name="navigationListName"></param>
-        /// <param name="moduleGroupItemName"></param>
-        public void RemoveNavigationListItem(string navigationPanelItemName, string navigationListName, string moduleGroupItemName)
-        {
-            var navigationPanelItem = navigationPanel.NavigationPanelItems.Single(
-                npi => npi.NavigationPanelItemName.Equals(navigationPanelItemName));
-
-            var navigationList = navigationPanelItem.NavigationList.Single(
-                nl => nl.NavigationListName.Equals(navigationListName));
-
-            var navigationListItems = navigationList.NavigationListItems.Single(nli => nli.ItemName.Equals(moduleGroupItemName));
-
-            navigationListItems.ItemClicked -= GroupListItemItemClicked;
-            navigationList.NavigationListItems.Remove(navigationListItems);
-
-            string navigationKey = String.Format("{0}.{1}.{2}",
-                navigationPanelItem.NavigationPanelItemName,
-                navigationList.NavigationListName,
-                navigationListItems.ItemName);
-
-            navigationSettingsList.Remove(navigationKey);
+            e.NavigationListItem.ItemClicked += GroupListItemItemClicked;
         }
 
         /// <summary>
@@ -166,10 +67,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
             var navigationListItem = (NavigationListItem)e.Source;
             string navigationKey = navigationListItem.Tag.ToString();
             NavigationSettings navigationSettings;
-            if (navigationSettingsList.TryGetValue(navigationKey, out navigationSettings))
+            if (((ModulesNavigationViewModel)DataContext).NavigationSettingsList.TryGetValue(navigationKey, out navigationSettings))
             {
                 navigationManager.NavigateDocumentRegion(navigationSettings);
             }
+
+            e.Handled = true;
         }
 
         /// <summary>

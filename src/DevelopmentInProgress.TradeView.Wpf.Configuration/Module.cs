@@ -2,9 +2,9 @@
 using DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Module;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
-using DevelopmentInProgress.TradeView.Wpf.Host.Controller.View;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.View;
 using DevelopmentInProgress.TradeView.Wpf.Trading.View;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
 using Prism.Ioc;
 using Prism.Logging;
 
@@ -80,36 +80,32 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration
         {
             var strategyDocument = CreateStrategyModuleGroupItem(strategyName, strategyName);
 
-            var modulesNavigationView = staticContainerProvider.Resolve(typeof(ModulesNavigationView),
-                typeof(ModulesNavigationView).Name) as ModulesNavigationView;
+            var moduleNavigator = staticContainerProvider.Resolve<ModuleNavigator>();
 
-            modulesNavigationView.AddNavigationListItem(StrategyModuleName, StrategyUser, strategyDocument);
+            moduleNavigator.AddNavigationListItem(StrategyModuleName, StrategyUser, strategyDocument);
         }
 
         public static void RemoveStrategy(string strategyName)
         {
-            var modulesNavigationView = staticContainerProvider.Resolve(typeof(ModulesNavigationView),
-                typeof(ModulesNavigationView).Name) as ModulesNavigationView;
+            var moduleNavigator = staticContainerProvider.Resolve<ModuleNavigator>();
 
-            modulesNavigationView.RemoveNavigationListItem(StrategyModuleName, StrategyUser, strategyName);
+            moduleNavigator.RemoveNavigationListItem(StrategyModuleName, StrategyUser, strategyName);
         }
 
         public static void AddAccount(string accountName)
         {
             var accountDocument = CreateAccountModuleGroupItem(accountName, accountName);
 
-            var modulesNavigationView = staticContainerProvider.Resolve(typeof(ModulesNavigationView),
-                typeof(ModulesNavigationView).Name) as ModulesNavigationView;
+            var moduleNavigator = staticContainerProvider.Resolve<ModuleNavigator>();
 
-            modulesNavigationView.AddNavigationListItem(TradingModuleName, AccountUser, accountDocument);
+            moduleNavigator.AddNavigationListItem(TradingModuleName, AccountUser, accountDocument);
         }
 
         public static void RemoveAccount(string accountName)
         {
-            var modulesNavigationView = staticContainerProvider.Resolve(typeof(ModulesNavigationView),
-                typeof(ModulesNavigationView).Name) as ModulesNavigationView;
+            var moduleNavigator = staticContainerProvider.Resolve<ModuleNavigator>();
 
-            modulesNavigationView.RemoveNavigationListItem(TradingModuleName, AccountUser, accountName);
+            moduleNavigator.RemoveNavigationListItem(TradingModuleName, AccountUser, accountName);
         }
 
         private static ModuleGroupItem CreateStrategyModuleGroupItem(string name, string title)
