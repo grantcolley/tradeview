@@ -1,105 +1,118 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="App.xaml.cs" company="Development In Progress Ltd">
-//     Copyright © 2012. All rights reserved.
-// </copyright>
-// <author>Grant Colley</author>
-//-----------------------------------------------------------------------
-
-using System;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Threading;
-using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
-using Microsoft.Practices.ServiceLocation;
+﻿using CommonServiceLocator;
+using DevelopmentInProgress.TradeView.Core.Interfaces;
+using DevelopmentInProgress.TradeView.Data;
+using DevelopmentInProgress.TradeView.Data.File;
+using DevelopmentInProgress.TradeView.Service;
+using DevelopmentInProgress.TradeView.Wpf.Common.Cache;
+using DevelopmentInProgress.TradeView.Wpf.Common.Chart;
+using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
+using DevelopmentInProgress.TradeView.Wpf.Common.Services;
+using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
+using DevelopmentInProgress.TradeView.Wpf.Configuration.Utility;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.RegionAdapters;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.View;
+using DevelopmentInProgress.TradeView.Wpf.Host.Logger;
+using DevelopmentInProgress.TradeView.Wpf.Strategies.Utility;
+using DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
+using Prism.Ioc;
 using Prism.Logging;
+using Prism.Modularity;
+using Prism.Regions;
+using Prism.Unity;
+using Serilog;
+using System.IO;
+using System.Windows;
+using Xceed.Wpf.AvalonDock;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host
 {
     /// <summary>
-    /// The application class.
+    /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App : PrismApplication
     {
-        private ILoggerFacade logger;
-        
-        /// <summary>
-        /// Initializes a new instance of the App class.
-        /// </summary>
-        public App()
+        protected override IModuleCatalog CreateModuleCatalog()
         {
-            // Fix for memory leak in WPF present in versions of the framework up to and 
-            // including .NET 3.5 SP1. This occurs because of the way WPF selects which 
-            // HWND to use to send messages from the render thread to the UI thread.
-            // http://stackoverflow.com/questions/1705849/wpf-memory-leak-on-xp-cmilchannel-hwnd
-            new HwndSource(new HwndSourceParameters());
-        }
-
-        /// <summary>
-        /// Start up method which loads and runs the bootstrapper.
-        /// </summary>
-        /// <param name="e">Startup event arguments.</param>
-        protected override  void OnStartup(StartupEventArgs e)
-        {
-            base.OnStartup(e);
-
-            AppDomain.CurrentDomain.UnhandledException += UnhandledException;
-            Current.DispatcherUnhandledException += DispatcherUnhandledException;
-
-            var bootstrapper = new Bootstrapper();
-            bootstrapper.Run();
-
-            logger = ServiceLocator.Current.GetInstance<ILoggerFacade>();
-        }
-
-        /// <summary>
-        /// DispatcherUnhandledException is raised by an Application for each 
-        /// exception that is unhandled by code running on the main UI thread.
-        /// The error is logged, displayed in a window and then marked as handled.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">Exception event arguments.</param>
-        private new void DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
-        {
-            LogException(e.Exception);
-
-            var modalManager = ServiceLocator.Current.GetInstance<ModalNavigator>();
-            modalManager.ShowError(e.Exception);
-            
-            e.Handled = true;
-        }
-
-        /// <summary>
-        /// This event allows the application to log information about an 
-        /// unhandled exception before the system default handler reports 
-        /// the exception to the user and terminates the application.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">Exception event arguments.</param>
-        private void UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            var ex = e.ExceptionObject as Exception;
-            if (ex != null)
+            using (Stream xamlStream = File.OpenRead("Configuration/ModuleCatalog.xaml"))
             {
-                LogException(ex);
-            }
-            else if (e.ExceptionObject != null)
-            {
-                LogException(new Exception(e.ExceptionObject.ToString()));
+                var moduleCatalog = ModuleCatalog.CreateFromXaml(xamlStream);
+                return moduleCatalog;
             }
         }
 
-        /// <summary>
-        /// Logs an exception to the application log file.
-        /// </summary>
-        /// <param name="e">The exception to log.</param>
-        private void LogException(Exception e)
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            logger.Log(e.Message, Category.Exception, Priority.High);
-            logger.Log(e.StackTrace, Category.Exception, Priority.High);
-            if (e.InnerException != null)
-            {
-                LogException(e.InnerException);
-            }
+            Serilog.Core.Logger logger = new LoggerConfiguration()
+                .ReadFrom.AppSettings()
+                .CreateLogger();
+
+            containerRegistry.RegisterInstance<ILogger>(logger);
+            containerRegistry.RegisterSingleton<ILoggerFacade, LoggerFacade>();
+
+            containerRegistry.RegisterSingleton<NavigationManager>();
+            containerRegistry.RegisterSingleton<ModulesNavigationView>();
+            containerRegistry.RegisterSingleton<ModulesNavigationViewModel>();
+
+            containerRegistry.RegisterSingleton<ModuleNavigator>();
+            containerRegistry.Register<IViewContext, ViewContext>();
+
+            containerRegistry.RegisterSingleton<IExchangeApiFactory, ExchangeApiFactory>();
+            containerRegistry.Register<IExchangeService, ExchangeService>();
+
+            containerRegistry.Register<ITradeViewConfigurationAccounts, TradeViewConfigurationAccountsFile>();
+            containerRegistry.Register<ITradeViewConfigurationStrategy, TradeViewConfigurationStrategyFile>();
+            containerRegistry.Register<ITradeViewConfigurationServer, TradeViewConfigurationServerFile>();
+
+            containerRegistry.Register<IAccountsService, AccountsService>();
+            containerRegistry.Register<IStrategyService, StrategyService>();
+            containerRegistry.Register<ITradeServerService, TradeServerService>();
+
+            containerRegistry.Register<IWpfExchangeService, WpfExchangeService>();
+            containerRegistry.Register<ISymbolsCache, SymbolsCache>();
+            containerRegistry.RegisterSingleton<ISymbolsCacheFactory, SymbolsCacheFactory>();
+            containerRegistry.RegisterSingleton<IServerMonitorCache, ServerMonitorCache>();
+
+            containerRegistry.RegisterSingleton<IOrderBookHelperFactory, OrderBookHelperFactory>();
+            containerRegistry.RegisterSingleton<ITradeHelperFactory, TradeHelperFactory>();
+            containerRegistry.RegisterSingleton<IHelperFactoryContainer, HelperFactoryContainer>();
+            containerRegistry.RegisterSingleton<IChartHelper, ChartHelper>();
+
+            containerRegistry.Register<OrdersViewModel>();
+            containerRegistry.Register<AccountViewModel>();
+
+            containerRegistry.Register<SymbolsViewModel>();
+            containerRegistry.Register<TradeViewModel>();
+
+            containerRegistry.Register<IStrategyFileManager, StrategyFileManager>();
+            containerRegistry.Register<ISymbolsLoader, SymbolsLoader>();
+
+            containerRegistry.Register<IStrategyAssemblyManager, StrategyAssemblyManager>();
+
+            containerRegistry.Register<Strategies.ViewModel.SymbolsViewModel>();
+            containerRegistry.Register<Strategies.ViewModel.StrategyParametersViewModel>();
+        }
+
+        protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings regionAdapterMappings)
+        {
+            regionAdapterMappings.RegisterMapping(typeof(DockingManager), new DockingManagerRegionAdapter(ServiceLocator.Current.GetInstance<IRegionBehaviorFactory>()));
+        }
+
+        protected override Window CreateShell()
+        {
+            return Container.Resolve<Shell>();
+        }
+
+        protected override void InitializeShell(Window shell)
+        {
+            var modulesNavigationViewModel = Container.Resolve<ModulesNavigationViewModel>();
+            ((Shell)shell).ModulesNavigationViewModel = modulesNavigationViewModel;
+
+            Current.MainWindow = shell;
+            Current.MainWindow.WindowState = WindowState.Maximized;
+            Current.MainWindow.Show();
         }
     }
 }

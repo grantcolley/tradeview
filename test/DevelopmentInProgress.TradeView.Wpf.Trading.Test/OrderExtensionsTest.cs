@@ -1,8 +1,8 @@
 ﻿using DevelopmentInProgress.TradeView.Test.Helper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 {

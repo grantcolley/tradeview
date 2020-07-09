@@ -1,5 +1,5 @@
-﻿using DevelopmentInProgress.TradeView.Wpf.Host.Context;
-using DevelopmentInProgress.TradeView.Wpf.Host.View;
+﻿using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.View;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.Events;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel;
 

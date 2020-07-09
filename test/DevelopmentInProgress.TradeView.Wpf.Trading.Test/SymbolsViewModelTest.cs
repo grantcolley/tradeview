@@ -1,17 +1,17 @@
-﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
-using DevelopmentInProgress.TradeView.Wpf.Trading.Events;
+﻿using DevelopmentInProgress.TradeView.Test.Helper;
+using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
+using DevelopmentInProgress.TradeView.Wpf.Trading.Events;
 using DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using Prism.Logging;
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using Prism.Logging;
-using System.Collections.ObjectModel;
-using DevelopmentInProgress.TradeView.Test.Helper;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 {

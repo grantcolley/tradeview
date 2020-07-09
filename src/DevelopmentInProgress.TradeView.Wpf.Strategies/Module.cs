@@ -1,9 +1,9 @@
-﻿using DevelopmentInProgress.TradeView.Wpf.Host.Module;
-using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
-using DevelopmentInProgress.TradeView.Wpf.Common.Services;
+﻿using DevelopmentInProgress.TradeView.Wpf.Common.Services;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Module;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.View;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel;
-using Microsoft.Practices.Unity;
+using Prism.Ioc;
 using Prism.Logging;
 using System;
 
@@ -12,21 +12,22 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies
     public class Module : ModuleBase
     {
         public const string ModuleName = "Strategies";
-        private static IUnityContainer StaticContainer;
 
         private static string StrategyUser = $"Strategies";
 
-        public Module(IUnityContainer container, ModuleNavigator moduleNavigator, ILoggerFacade logger)
-            : base(container, moduleNavigator, logger)
+        public Module(ModuleNavigator moduleNavigator, ILoggerFacade logger)
+            : base(moduleNavigator, logger)
         {
-            StaticContainer = container;
         }
 
-        public async override void Initialize()
+        public override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            Container.RegisterType<object, StrategyRunnerView>(typeof(StrategyRunnerView).Name);
-            Container.RegisterType<StrategyRunnerViewModel>(typeof(StrategyRunnerViewModel).Name);
+            containerRegistry.Register<object, StrategyRunnerView>(typeof(StrategyRunnerView).Name);
+            containerRegistry.Register<StrategyRunnerViewModel>(typeof(StrategyRunnerViewModel).Name);
+        }
 
+        public async override void OnInitialized(IContainerProvider containerProvider)
+        {
             var moduleSettings = new ModuleSettings();
             moduleSettings.ModuleName = ModuleName;
             moduleSettings.ModuleImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Strategies;component/Images/strategyManager.png";
@@ -34,7 +35,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies
             var moduleGroup = new ModuleGroup();
             moduleGroup.ModuleGroupName = StrategyUser;
 
-            var strategyService = Container.Resolve<IStrategyService>();
+            var strategyService = containerProvider.Resolve<IStrategyService>();
 
             try
             {
@@ -49,7 +50,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies
                 moduleSettings.ModuleGroups.Add(moduleGroup);
                 ModuleNavigator.AddModuleNavigation(moduleSettings);
 
-                Logger.Log("Initialize DevelopmentInProgress.Wpf.Strategies Complete", Category.Info, Priority.None);
+                Logger.Log("Initialized DevelopmentInProgress.Wpf.Strategies", Category.Info, Priority.None);
             }
             catch (Exception ex)
             {

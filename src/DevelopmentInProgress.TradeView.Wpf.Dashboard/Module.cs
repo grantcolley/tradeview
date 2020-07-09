@@ -1,10 +1,9 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Dashboard.View;
 using DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel;
-using DevelopmentInProgress.TradeView.Wpf.Host.Module;
-using DevelopmentInProgress.TradeView.Wpf.Host.Navigation;
-using Microsoft.Practices.Unity;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Module;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
+using Prism.Ioc;
 using Prism.Logging;
-using System;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Dashboard
 {
@@ -12,16 +11,19 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard
     {
         public const string ModuleName = "Dashboard";
 
-        public Module(IUnityContainer container, ModuleNavigator moduleNavigator, ILoggerFacade logger)
-            : base(container, moduleNavigator, logger)
+        public Module(ModuleNavigator moduleNavigator, ILoggerFacade logger)
+            : base(moduleNavigator, logger)
         {
         }
 
-        public override void Initialize()
+        public override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            Container.RegisterType<Object, ServerMonitorView>(typeof(ServerMonitorView).Name);
-            Container.RegisterType<ServerMonitorViewModel>(typeof(ServerMonitorViewModel).Name);
+            containerRegistry.Register<object, ServerMonitorView>(typeof(ServerMonitorView).Name);
+            containerRegistry.Register<ServerMonitorViewModel>(typeof(ServerMonitorViewModel).Name);
+        }
 
+        public override void OnInitialized(IContainerProvider containerProvider)
+        {
             var moduleSettings = new ModuleSettings();
             moduleSettings.ModuleName = ModuleName;
             moduleSettings.ModuleImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Dashboard;component/Images/Dashboard.png";
@@ -39,8 +41,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard
             moduleSettings.ModuleGroups.Add(moduleGroup);
             ModuleNavigator.AddModuleNavigation(moduleSettings);
 
-            Logger.Log("Initialize DevelopmentInProgress.TradeView.Wpf.Dashboard", Category.Info, Priority.None);
-
+            Logger.Log("Initialized DevelopmentInProgress.TradeView.Wpf.Dashboard", Category.Info, Priority.None);
         }
     }
 }

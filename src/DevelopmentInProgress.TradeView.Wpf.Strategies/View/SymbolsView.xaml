@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:model="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Common.Model;assembly=DevelopmentInProgress.TradeView.Wpf.Common" 
-             xmlns:converters="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Converters;assembly=DevelopmentInProgress.TradeView.Wpf.Host"
-             xmlns:progress="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controls.Progress;assembly=DevelopmentInProgress.TradeView.Wpf.Host"
+             xmlns:converters="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controller.Converters;assembly=DevelopmentInProgress.TradeView.Wpf.Host.Controller"
+             xmlns:progress="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controller.Controls.Progress;assembly=DevelopmentInProgress.TradeView.Wpf.Host.Controller"
              xmlns:commonConverters="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Common.Converters;assembly=DevelopmentInProgress.TradeView.Wpf.Common"
              mc:Ignorable="d">
     <UserControl.Resources>

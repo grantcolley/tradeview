@@ -1,15 +1,15 @@
-﻿using DevelopmentInProgress.TradeView.Core.Events;
-using DevelopmentInProgress.TradeView.Core.Interfaces;
-using Binance;
+﻿using Binance;
 using Binance.Cache;
 using Binance.WebSocket;
+using DevelopmentInProgress.TradeView.Core.Enums;
+using DevelopmentInProgress.TradeView.Core.Events;
+using DevelopmentInProgress.TradeView.Core.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DevelopmentInProgress.TradeView.Core.Enums;
-using System.Globalization;
 
 namespace DevelopmentInProgress.TradeView.Api.Binance
 {

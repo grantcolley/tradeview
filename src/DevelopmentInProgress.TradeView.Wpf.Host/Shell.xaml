@@ -3,14 +3,22 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://prismlibrary.com/"
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
-        xmlns:progress="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controls.Progress"
-        xmlns:converters="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Converters"
+        xmlns:progress="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controller.Controls.Progress;assembly=DevelopmentInProgress.TradeView.Wpf.Host.Controller"
+        xmlns:converters="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controller.Converters;assembly=DevelopmentInProgress.TradeView.Wpf.Host.Controller" 
+        xmlns:viewModel="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;assembly=DevelopmentInProgress.TradeView.Wpf.Host.Controller"
+        xmlns:view=     "clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controller.View;assembly=DevelopmentInProgress.TradeView.Wpf.Host.Controller"
         Title="Origin" Height="600" Width="1000" 
         Icon="Images/Origin.png"
         ResizeMode="CanResizeWithGrip"
         Background="{StaticResource ButtonBackgroundBrush}">
     <Window.Resources>
+        
         <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
+
+        <DataTemplate DataType="{x:Type viewModel:ModulesNavigationViewModel}">
+            <view:ModulesNavigationView></view:ModulesNavigationView>
+        </DataTemplate>
+        
     </Window.Resources>
     <Grid Background="{StaticResource ButtonBackgroundBrush}">
         <Grid.ColumnDefinitions>
@@ -50,7 +58,7 @@
             </Button>
             <ContentControl/>
         </DockPanel>
-        <ContentControl Grid.Row="2" Grid.Column="0" prism:RegionManager.RegionName="NavigationRegion"/>
+        <ContentControl Grid.Row="2" Grid.Column="0" Content="{Binding Path=ModulesNavigationViewModel, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
         <GridSplitter Grid.Row="2" Grid.Column="1" Width="2" VerticalAlignment="Stretch" HorizontalAlignment="Center" Style="{StaticResource GridSplitterStyle}"/>
         <xcad:DockingManager x:Name="dockingManager" Grid.Row="2" Grid.Column="2" prism:RegionManager.RegionName="DocumentRegion" Background="{StaticResource TextBoxBackgroundBrush}" BorderBrush="{StaticResource TextBoxBackgroundBrush}">
             <xcad:DockingManager.Theme>

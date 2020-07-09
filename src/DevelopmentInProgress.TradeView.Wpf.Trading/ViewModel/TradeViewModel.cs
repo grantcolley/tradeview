@@ -3,7 +3,7 @@ using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
-using DevelopmentInProgress.TradeView.Wpf.Host.ViewModel;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Trading.Events;
 using Prism.Logging;
 using System;

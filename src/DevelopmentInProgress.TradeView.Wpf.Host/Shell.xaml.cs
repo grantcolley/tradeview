@@ -5,16 +5,17 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
+using CommonServiceLocator;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.View;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
+using Prism.Logging;
 using System;
+using System.ComponentModel;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using DevelopmentInProgress.TradeView.Wpf.Host.View;
-using DevelopmentInProgress.TradeView.Wpf.Host.ViewModel;
-using Microsoft.Practices.ServiceLocation;
-using Prism.Logging;
 using Xceed.Wpf.AvalonDock.Layout;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host
@@ -22,7 +23,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
     /// <summary>
     /// The main window.
     /// </summary>
-    public partial class Shell : Window
+    public partial class Shell : Window, INotifyPropertyChanged
     {
         /// <summary>
         /// Determines the operation to perform on all visible documents.
@@ -49,6 +50,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
 
         private ILoggerFacade logger;
 
+        private ModulesNavigationViewModel modulesNavigationViewModel;
+
         /// <summary>
         /// Initializes a new instance of the Shell class.
         /// </summary>
@@ -62,9 +65,24 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
                 ? Visibility.Visible
                 : Visibility.Collapsed;
 
-            this.Title = $"Trade View : {Environment.UserName}";
+            Title = $"Trade View : {Environment.UserName}";
 
             logger = ServiceLocator.Current.GetInstance<ILoggerFacade>();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public ModulesNavigationViewModel ModulesNavigationViewModel
+        {
+            get { return modulesNavigationViewModel; }
+            set
+            {
+                if(modulesNavigationViewModel != value)
+                {
+                    modulesNavigationViewModel = value;
+                    OnPropertyChanged("ModulesNavigationViewModel");
+                }
+            }
         }
 
         /// <summary>
@@ -193,6 +211,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
                     }
                 }
             }
+        }
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            var propertyChanged = PropertyChanged;
+            propertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -2,8 +2,8 @@
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
-using DevelopmentInProgress.TradeView.Wpf.Host.Context;
-using DevelopmentInProgress.TradeView.Wpf.Host.ViewModel;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

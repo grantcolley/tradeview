@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>C:\GitHub\tradeview\output\UI\</OutputPath>
+    <OutputPath>C:\GitHub\tradeview\output\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
