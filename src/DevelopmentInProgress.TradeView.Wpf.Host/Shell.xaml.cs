@@ -8,7 +8,6 @@
 using CommonServiceLocator;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.View;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
-using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
 using Prism.Logging;
 using System;
 using System.ComponentModel;
