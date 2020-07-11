@@ -8,21 +8,21 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
 {
     public static class TestHelper
     {
-        private static string symbols;
-        private static string symbolsStatistics;
-        private static string orders;
-        private static string eth;
-        private static string ethStats;
-        private static string trx;
-        private static string trxStats;
-        private static string accountInfo;
-        private static string trades;
-        private static string tradesUpdated;
-        private static string aggregateTrades;
-        private static string aggregateTradesUpdated;
-        private static string orderBook;
-        private static string orderBookUpdated;
-        private static string bnb;
+        private static readonly string symbols;
+        private static readonly string symbolsStatistics;
+        private static readonly string orders;
+        private static readonly string eth;
+        private static readonly string ethStats;
+        private static readonly string trx;
+        private static readonly string trxStats;
+        private static readonly string accountInfo;
+        private static readonly string trades;
+        private static readonly string tradesUpdated;
+        private static readonly string aggregateTrades;
+        private static readonly string aggregateTradesUpdated;
+        private static readonly string orderBook;
+        private static readonly string orderBookUpdated;
+        private static readonly string bnb;
 
         static  TestHelper()
         {
