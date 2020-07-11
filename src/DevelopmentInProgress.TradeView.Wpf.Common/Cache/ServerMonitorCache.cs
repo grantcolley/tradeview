@@ -125,6 +125,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 
             await Task.WhenAll(serverMonitors.Select(s => s.DisposeAsync()).ToList());
 
+            if(serverMonitorSemaphoreSlim != null)
+            {
+                serverMonitorSemaphoreSlim.Dispose();
+            }
+
             disposed = true;
         }
 

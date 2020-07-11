@@ -155,6 +155,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                 {
                     subscribeSymbolsCxlTokenSrc.Cancel();
                 }
+
+                semaphoreSlimGetSymbols.Dispose();
+
+                subscribeSymbolsCxlTokenSrc.Dispose();
             }
 
             disposed = false;

@@ -92,6 +92,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
                 {
                     accountCancellationTokenSource.Cancel();
                 }
+
+                accountCancellationTokenSource.Dispose();
             }
 
             disposed = true;

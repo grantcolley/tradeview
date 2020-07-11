@@ -223,6 +223,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
                 {
                     ordersCancellationTokenSource.Cancel();
                 }
+
+                ordersCancellationTokenSource.Dispose();
             }
 
             disposed = true;
