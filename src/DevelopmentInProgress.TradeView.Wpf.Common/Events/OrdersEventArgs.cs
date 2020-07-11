@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Events
 {
-    public class OrdersEventArgs : EventArgsBase<IEnumerable<Order>>
+    public class OrdersEventArgs : BaseEventArgs<IEnumerable<Order>>
     {
     }
 }

@@ -2,7 +2,7 @@
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Events
 {
-    public class ServerMonitorCacheEventArgs : EventArgsBase<ServerMonitorCache>
+    public class ServerMonitorCacheEventArgs : BaseEventArgs<ServerMonitorCache>
     {
     }
 }

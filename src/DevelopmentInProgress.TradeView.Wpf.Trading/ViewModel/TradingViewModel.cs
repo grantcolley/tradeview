@@ -398,7 +398,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             });
         }
 
-        private void TradingViewModelException<T>(EventArgsBase<T> eventArgs)
+        private void TradingViewModelException<T>(BaseEventArgs<T> eventArgs)
         {
             if (eventArgs.Exception != null)
             {

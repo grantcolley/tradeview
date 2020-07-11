@@ -2,7 +2,7 @@
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Events
 {
-    public class StrategyEventArgs : EventArgsBase<Strategy>
+    public class StrategyEventArgs : BaseEventArgs<Strategy>
     {
     }
 }

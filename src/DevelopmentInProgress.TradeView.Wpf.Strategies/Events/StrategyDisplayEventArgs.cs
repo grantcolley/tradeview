@@ -4,7 +4,7 @@ using DevelopmentInProgress.TradeView.Wpf.Strategies.Utility;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Events
 {
-    public class StrategyDisplayEventArgs : EventArgsBase<Strategy>
+    public class StrategyDisplayEventArgs : BaseEventArgs<Strategy>
     {
         public IStrategyAssemblyManager StrategyAssemblyManager { get; set; }
     }
