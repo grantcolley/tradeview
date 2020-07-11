@@ -51,15 +51,15 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                     var allSymbols = await wpfExchangeService.GetSymbols24HourStatisticsAsync(exchange, subscribeSymbolsCxlTokenSrc.Token);
 
                     symbols.AddRange(allSymbols);
-                    btcUsdt = symbols.Single(s => s.Name.Equals(BTCUSDT));
+                    btcUsdt = symbols.Single(s => s.Name.Equals(BTCUSDT, StringComparison.Ordinal));
                 }
 
-                var newSubs1 = subscriptions.Where(s => !subscribedSymbols.Any(sub => sub.ExchangeSymbol.Equals(s))).ToList();
+                var newSubs1 = subscriptions.Where(s => !subscribedSymbols.Any(sub => sub.ExchangeSymbol.Equals(s, StringComparison.Ordinal))).ToList();
 
                 // Only subscribe to the symbols that aren't already in the subscribed symbols cache.
                 if (newSubs1.Any())
                 {
-                    var newSubs2 = subscriptions.Where(s => !subscribedSymbols.Any(sub => sub.ExchangeSymbol.Equals(s))).ToList();
+                    var newSubs2 = subscriptions.Where(s => !subscribedSymbols.Any(sub => sub.ExchangeSymbol.Equals(s, StringComparison.Ordinal))).ToList();
 
                     if (newSubs2.Any())
                     {
@@ -110,13 +110,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                     continue;
                 }
 
-                if (balance.Asset.Equals("BTC"))
+                if (balance.Asset.Equals("BTC", StringComparison.Ordinal))
                 {
                     btc += qty;
                 }
                 else
                 {
-                    var symbol = symbols.FirstOrDefault(s => s.Name.Equals($"{balance.Asset}BTC"));
+                    var symbol = symbols.FirstOrDefault(s => s.Name.Equals($"{balance.Asset}BTC", StringComparison.Ordinal));
                     if (symbol != null)
                     {
                         btc += symbol.SymbolStatistics.LastPrice * qty;

@@ -22,7 +22,7 @@ namespace DevelopmentInProgress.TradeView.Core.Extensions
         {
             exchange.NullCheck();
 
-            return (Exchange)Enum.Parse(typeof(Exchange), exchange.Replace(" ", ""));
+            return (Exchange)Enum.Parse(typeof(Exchange), exchange.Replace(" ", "", StringComparison.Ordinal));
         }
     }
 }

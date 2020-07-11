@@ -38,7 +38,7 @@ namespace DevelopmentInProgress.TradeView.Core.Extensions
                 return false;
             }
 
-            if (Enum.TryParse<OrderType>(compare.Replace(" ", ""), out OrderType result))
+            if (Enum.TryParse<OrderType>(compare.Replace(" ", "", StringComparison.Ordinal), out OrderType result))
             {
                 return orderType.Equals(result);
             }
@@ -53,7 +53,7 @@ namespace DevelopmentInProgress.TradeView.Core.Extensions
                 return false;
             }
 
-            if (Enum.TryParse<OrderType>(orderType.Replace(" ", ""), out OrderType result))
+            if (Enum.TryParse<OrderType>(orderType.Replace(" ", "", StringComparison.Ordinal), out OrderType result))
             {
                 switch (result)
                 {
@@ -76,7 +76,7 @@ namespace DevelopmentInProgress.TradeView.Core.Extensions
                 return false;
             }
 
-            if (Enum.TryParse<OrderType>(orderType.Replace(" ", ""), out OrderType result))
+            if (Enum.TryParse<OrderType>(orderType.Replace(" ", "", StringComparison.Ordinal), out OrderType result))
             {
                 switch (result)
                 {
@@ -97,7 +97,7 @@ namespace DevelopmentInProgress.TradeView.Core.Extensions
         {
             orderType.NullCheck();
 
-            return (OrderType)Enum.Parse(typeof(OrderType), orderType.Replace(" ", ""));
+            return (OrderType)Enum.Parse(typeof(OrderType), orderType.Replace(" ", "", StringComparison.Ordinal));
         }
 
         public static string GetOrderTypeName(this OrderType orderType)

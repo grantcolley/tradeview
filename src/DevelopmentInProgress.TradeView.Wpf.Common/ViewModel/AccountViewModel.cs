@@ -199,13 +199,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
                                     join nb in aie.Balances on ab.Asset equals nb.Asset
                                     select f(ab, nb)).ToList();
 
-                    var remove = Account.Balances.Where(ab => !aie.Balances.Any(nb => nb.Asset.Equals(ab.Asset))).ToList();
+                    var remove = Account.Balances.Where(ab => !aie.Balances.Any(nb => nb.Asset.Equals(ab.Asset, StringComparison.Ordinal))).ToList();
                     foreach (var ob in remove)
                     {
                         Account.Balances.Remove(ob);
                     }
 
-                    var add = aie.Balances.Where(nb => !Account.Balances.Any(ab => ab.Asset.Equals(nb.Asset))).ToList();
+                    var add = aie.Balances.Where(nb => !Account.Balances.Any(ab => ab.Asset.Equals(nb.Asset, StringComparison.Ordinal))).ToList();
                     foreach (var nb in add)
                     {
                         Account.Balances.Add(new AccountBalance { Asset = nb.Asset, Free = nb.Free, Locked = nb.Locked });

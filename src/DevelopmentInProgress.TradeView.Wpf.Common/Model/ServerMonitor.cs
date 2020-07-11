@@ -314,7 +314,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 
                         if (response.StatusCode == System.Net.HttpStatusCode.OK)
                         {
-                            return content.Contains("Alive");
+                            return content.Contains("Alive", StringComparison.Ordinal);
                         }
                     }
                 }

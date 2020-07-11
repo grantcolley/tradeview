@@ -118,7 +118,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             {
                 if (Account == null
                     || account == null
-                    || !Account.ApiKey.Equals(account.ApiKey))
+                    || !Account.ApiKey.Equals(account.ApiKey, StringComparison.Ordinal))
                 {
                     Account = account;
 
@@ -180,13 +180,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
                                        join r in res on o.ClientOrderId equals r.ClientOrderId
                                        select o.Update(r)).ToList();
 
-                        var remove = Orders.Where(o => !res.Any(r => r.ClientOrderId.Equals(o.ClientOrderId))).ToList();
+                        var remove = Orders.Where(o => !res.Any(r => r.ClientOrderId.Equals(o.ClientOrderId, StringComparison.Ordinal))).ToList();
                         foreach (var order in remove)
                         {
                             Orders.Remove(order);
                         }
 
-                        var add = res.Where(r => !Orders.Any(o => o.ClientOrderId.Equals(r.ClientOrderId))).ToList();
+                        var add = res.Where(r => !Orders.Any(o => o.ClientOrderId.Equals(r.ClientOrderId, StringComparison.Ordinal))).ToList();
                         foreach (var order in add)
                         {
                             Orders.Add(order);
