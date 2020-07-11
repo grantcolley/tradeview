@@ -4,6 +4,10 @@
 
 Alt currency trading application built on the [Origin](https://github.com/grantcolley/origin) framework.
 
+##### Technologies
+* ###### .NET Core WPF, Prism, Unity, WebSockets
+#####  
+
 #### Table of Contents
 * [Overview](#overview)
   * [Configuration](#configuration)
