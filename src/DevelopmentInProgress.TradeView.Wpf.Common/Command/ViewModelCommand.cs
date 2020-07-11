@@ -60,5 +60,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Command
         {
             execute(parameter);
         }
+
+        /// <summary>
+        /// Raises the CanExecuteChanged event.
+        /// </summary>
+        public void OnCanExecuteChanged()
+        {
+            var canExecuteChanged = CanExecuteChanged;
+            canExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
     }
 }
