@@ -23,4 +23,10 @@
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Test.Helper\DevelopmentInProgress.TradeView.Test.Helper.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="UserAccounts.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
