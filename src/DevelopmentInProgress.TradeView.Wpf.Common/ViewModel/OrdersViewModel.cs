@@ -25,7 +25,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
         private bool isCancellAllVisible;
         private bool disposed;
 
-        private object lockOrders = new object();
+        private readonly object lockOrders = new object();
 
         public OrdersViewModel(IWpfExchangeService exchangeService, ILoggerFacade logger)
             : base(exchangeService, logger)
