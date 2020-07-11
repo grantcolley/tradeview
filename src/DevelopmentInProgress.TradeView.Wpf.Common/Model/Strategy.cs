@@ -37,7 +37,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (name != value)
                 {
                     name = value;
-                    OnPropertyChanged("Name");
+                    OnPropertyChanged(nameof(Name));
                 }
             }
         }
@@ -50,7 +50,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if(targetAssembly != value)
                 {
                     targetAssembly = value;
-                    OnPropertyChanged("TargetAssembly");
+                    OnPropertyChanged(nameof(TargetAssembly));
                 }
             }
         }
@@ -63,7 +63,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (displayAssembly != value)
                 {
                     displayAssembly = value;
-                    OnPropertyChanged("DisplayAssembly");
+                    OnPropertyChanged(nameof(DisplayAssembly));
                 }
             }
         }
@@ -76,7 +76,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (parameters != value)
                 {
                     parameters = value;
-                    OnPropertyChanged("Parameters");
+                    OnPropertyChanged(nameof(Parameters));
                 }
             }
         }

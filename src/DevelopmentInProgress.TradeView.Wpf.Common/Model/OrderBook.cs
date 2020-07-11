@@ -45,7 +45,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (baseSymbol != value)
                 {
                     baseSymbol = value;
-                    OnPropertyChanged("BaseSymbol");
+                    OnPropertyChanged(nameof(BaseSymbol));
                 }
             }
         }
@@ -58,7 +58,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (quoteSymbol != value)
                 {
                     quoteSymbol = value;
-                    OnPropertyChanged("QuoteSymbol");
+                    OnPropertyChanged(nameof(QuoteSymbol));
                 }
             }
         }
@@ -71,7 +71,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (bidAskSpread != value)
                 {
                     bidAskSpread = value;
-                    OnPropertyChanged("BidAskSpread");
+                    OnPropertyChanged(nameof(BidAskSpread));
                 }
             }
         }
@@ -87,7 +87,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if(topAsks != value)
                 {
                     topAsks = value;
-                    OnPropertyChanged("TopAsks");
+                    OnPropertyChanged(nameof(TopAsks));
                 }
             }
         }
@@ -100,7 +100,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (chartAsks != value)
                 {
                     chartAsks = value;
-                    OnPropertyChanged("ChartAsks");
+                    OnPropertyChanged(nameof(ChartAsks));
                 }
             }
         }
@@ -113,7 +113,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (chartAggregatedAsks != value)
                 {
                     chartAggregatedAsks = value;
-                    OnPropertyChanged("ChartAggregatedAsks");
+                    OnPropertyChanged(nameof(ChartAggregatedAsks));
                 }
             }
         }
@@ -126,7 +126,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (topBids != value)
                 {
                     topBids = value;
-                    OnPropertyChanged("TopBids");
+                    OnPropertyChanged(nameof(TopBids));
                 }
             }
         }
@@ -139,7 +139,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (chartBids != value)
                 {
                     chartBids = value;
-                    OnPropertyChanged("ChartBids");
+                    OnPropertyChanged(nameof(ChartBids));
                 }
             }
         }
@@ -152,7 +152,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (chartAggregatedBids != value)
                 {
                     chartAggregatedBids = value;
-                    OnPropertyChanged("ChartAggregatedBids");
+                    OnPropertyChanged(nameof(ChartAggregatedBids));
                 }
             }
         }

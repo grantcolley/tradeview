@@ -30,7 +30,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if(status != value)
                 {
                     status = value;
-                    OnPropertyChanged("Status");
+                    OnPropertyChanged(nameof(Status));
                 }
             }
         }
@@ -43,8 +43,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (executedQuantity != value)
                 {
                     executedQuantity = value;
-                    OnPropertyChanged("ExecutedQuantity");
-                    OnPropertyChanged("FilledPercent");
+                    OnPropertyChanged(nameof(ExecutedQuantity));
+                    OnPropertyChanged(nameof(FilledPercent));
                 }
             }
         }

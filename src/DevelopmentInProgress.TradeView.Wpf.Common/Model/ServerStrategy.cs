@@ -26,7 +26,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if(name != value)
                 {
                     name = value;
-                    OnPropertyChanged("Name");
+                    OnPropertyChanged(nameof(Name));
                 }
             }
         }
@@ -39,7 +39,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (startedBy != value)
                 {
                     startedBy = value;
-                    OnPropertyChanged("StartedBy");
+                    OnPropertyChanged(nameof(StartedBy));
                 }
             }
         }
@@ -52,7 +52,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (stoppedBy != value)
                 {
                     stoppedBy = value;
-                    OnPropertyChanged("StoppedBy");
+                    OnPropertyChanged(nameof(StoppedBy));
                 }
             }
         }
@@ -65,7 +65,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (started != value)
                 {
                     started = value;
-                    OnPropertyChanged("Started");
+                    OnPropertyChanged(nameof(Started));
                 }
             }
         }
@@ -78,7 +78,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (stopped != value)
                 {
                     stopped = value;
-                    OnPropertyChanged("Stopped");
+                    OnPropertyChanged(nameof(Stopped));
                 }
             }
         }
@@ -91,7 +91,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (parameters != value)
                 {
                     parameters = value;
-                    OnPropertyChanged("Parameters");
+                    OnPropertyChanged(nameof(Parameters));
                 }
             }
         }
@@ -104,7 +104,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (connections != value)
                 {
                     connections = value;
-                    OnPropertyChanged("Connections");
+                    OnPropertyChanged(nameof(Connections));
                 }
             }
         }
@@ -112,7 +112,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         public int ConnectionCount
         {
             get { return Connections.Count; }
-            set { OnPropertyChanged("ConnectionCount"); }
+            set { OnPropertyChanged(nameof(ConnectionCount)); }
         }
     }
 }

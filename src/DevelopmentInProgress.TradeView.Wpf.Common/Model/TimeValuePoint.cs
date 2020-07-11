@@ -15,7 +15,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (y != value)
                 {
                     y = value;
-                    OnPropertyChanged("Y");
+                    OnPropertyChanged(nameof(Y));
                 }
             }
         }
@@ -28,7 +28,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (x != value)
                 {
                     x = value;
-                    OnPropertyChanged("X");
+                    OnPropertyChanged(nameof(X));
                 }
             }
         }

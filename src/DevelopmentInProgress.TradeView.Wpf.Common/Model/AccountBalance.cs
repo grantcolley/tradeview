@@ -14,7 +14,7 @@
                 if (asset != value)
                 {
                     asset = value;
-                    OnPropertyChanged("Asset");
+                    OnPropertyChanged(nameof(Asset));
                 }
             }
         }
@@ -27,7 +27,7 @@
                 if (free != value)
                 {
                     free = value;
-                    OnPropertyChanged("Free");
+                    OnPropertyChanged(nameof(Free));
                 }
             }
         }
@@ -40,7 +40,7 @@
                 if (locked != value)
                 {
                     locked = value;
-                    OnPropertyChanged("Locked");
+                    OnPropertyChanged(nameof(Locked));
                 }
             }
         }

@@ -31,7 +31,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (id != value)
                 {
                     id = value;
-                    OnPropertyChanged("Id");
+                    OnPropertyChanged(nameof(Id));
                 }
             }
         }
@@ -45,8 +45,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (isReadOnly != value)
                 {
                     isReadOnly = value;
-                    OnPropertyChanged("IsVisible");
-                    OnPropertyChanged("CanModify");
+                    OnPropertyChanged(nameof(IsVisible));
+                    OnPropertyChanged(nameof(CanModify));
                 }
             }
         }
@@ -60,7 +60,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (isVisible != value)
                 {
                     isVisible = value;
-                    OnPropertyChanged("IsVisible");
+                    OnPropertyChanged(nameof(IsVisible));
                 }
             }
         }

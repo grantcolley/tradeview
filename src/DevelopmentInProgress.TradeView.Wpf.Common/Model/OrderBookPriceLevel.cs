@@ -13,7 +13,7 @@
                 if (price != value)
                 {
                     price = value;
-                    OnPropertyChanged("Price");
+                    OnPropertyChanged(nameof(Price));
                 }
             }
         }
@@ -26,7 +26,7 @@
                 if (quantity != value)
                 {
                     quantity = value;
-                    OnPropertyChanged("Quantity");
+                    OnPropertyChanged(nameof(Quantity));
                 }
             }
         }

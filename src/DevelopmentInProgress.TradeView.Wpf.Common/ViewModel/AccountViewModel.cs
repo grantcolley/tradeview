@@ -41,7 +41,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
                 if (account != value)
                 {
                     account = value;
-                    OnPropertyChanged("Account");
+                    OnPropertyChanged(nameof(Account));
                 }
             }
         }
@@ -55,7 +55,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
                 {
                     selectedAsset = value;
                     OnSelectedAsset(selectedAsset);
-                    OnPropertyChanged("SelectedAsset");
+                    OnPropertyChanged(nameof(SelectedAsset));
                 }
             }
         }
@@ -68,7 +68,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
                 if (isLoggingIn != value)
                 {
                     isLoggingIn = value;
-                    OnPropertyChanged("IsLoggingIn");
+                    OnPropertyChanged(nameof(IsLoggingIn));
                 }
             }
         }

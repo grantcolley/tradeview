@@ -38,7 +38,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
                 if (isActive != value)
                 {
                     isActive = value;
-                    OnPropertyChanged("IsActive");
+                    OnPropertyChanged(nameof(IsActive));
                 }
             }
         }
@@ -51,7 +51,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
                 if (symbols != value)
                 {
                     symbols = value;
-                    OnPropertyChanged("Symbols");
+                    OnPropertyChanged(nameof(Symbols));
                 }
             }
         }

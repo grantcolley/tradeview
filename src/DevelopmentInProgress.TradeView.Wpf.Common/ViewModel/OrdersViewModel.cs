@@ -53,7 +53,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
                 if (account != value)
                 {
                     account = value;
-                    OnPropertyChanged("Account");
+                    OnPropertyChanged(nameof(Account));
                 }
             }
         }
@@ -66,7 +66,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
                 if (orders != value)
                 {
                     orders = value;
-                    OnPropertyChanged("Orders");
+                    OnPropertyChanged(nameof(Orders));
                 }
             }
         }
@@ -79,7 +79,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
                 if(selectedOrder != value)
                 {
                     selectedOrder = value;
-                    OnPropertyChanged("SelectedOrder");
+                    OnPropertyChanged(nameof(SelectedOrder));
                 }
             }
         }
@@ -92,7 +92,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
                 if (isLoading != value)
                 {
                     isLoading = value;
-                    OnPropertyChanged("IsLoading");
+                    OnPropertyChanged(nameof(IsLoading));
                 }
             }
         }
@@ -105,7 +105,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
                 if (isCancellAllVisible != value)
                 {
                     isCancellAllVisible = value;
-                    OnPropertyChanged("IsCancellAllVisible");
+                    OnPropertyChanged(nameof(IsCancellAllVisible));
                 }
             }
         }

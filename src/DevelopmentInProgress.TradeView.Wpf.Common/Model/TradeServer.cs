@@ -17,7 +17,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if(name != value)
                 {
                     name = value;
-                    OnPropertyChanged("Name");
+                    OnPropertyChanged(nameof(Name));
                 }
             }
         }
@@ -30,7 +30,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (uri != value)
                 {
                     uri = value;
-                    OnPropertyChanged("Uri");
+                    OnPropertyChanged(nameof(Uri));
                 }
             }
         }
@@ -43,7 +43,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (maxDegreeOfParallelism != value)
                 {
                     maxDegreeOfParallelism = value;
-                    OnPropertyChanged("MaxDegreeOfParallelism");
+                    OnPropertyChanged(nameof(MaxDegreeOfParallelism));
                 }
             }
         }
@@ -56,7 +56,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (enabled != value)
                 {
                     enabled = value;
-                    OnPropertyChanged("Enabled");
+                    OnPropertyChanged(nameof(Enabled));
                 }
             }
         }

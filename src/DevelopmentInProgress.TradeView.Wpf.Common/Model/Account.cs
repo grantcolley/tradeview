@@ -21,7 +21,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (AccountInfo.User.AccountName != value)
                 {
                     AccountInfo.User.AccountName = value;
-                    OnPropertyChanged("AccountName");
+                    OnPropertyChanged(nameof(AccountName));
                 }
             }
         }
@@ -42,8 +42,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 Balances.Add(new AccountBalance { Asset = balance.Asset, Free = balance.Free, Locked = balance.Locked });
             }
 
-            OnPropertyChanged("ApiKey");
-            OnPropertyChanged("Balances");
+            OnPropertyChanged(nameof(ApiKey));
+            OnPropertyChanged(nameof(Balances));
         }
 
         public Core.Model.AccountInfo AccountInfo { get; private set; }
@@ -56,7 +56,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (AccountInfo.User.ApiKey != value)
                 {
                     AccountInfo.User.ApiKey = value;
-                    OnPropertyChanged("ApiKey");
+                    OnPropertyChanged(nameof(ApiKey));
                 }
             }
         }
@@ -70,7 +70,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 {
                     AccountInfo.User.ApiSecret = value;
                     apiSecret = string.IsNullOrWhiteSpace(value) ? string.Empty : secretText; 
-                    OnPropertyChanged("ApiSecret");
+                    OnPropertyChanged(nameof(ApiSecret));
                 }
             }
         }
@@ -83,7 +83,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (AccountInfo.User.ApiPassPhrase != value)
                 {
                     AccountInfo.User.ApiPassPhrase = value;
-                    OnPropertyChanged("ApiPassPhrase");
+                    OnPropertyChanged(nameof(ApiPassPhrase));
                 }
             }
         }
@@ -106,7 +106,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (AccountInfo.User.Exchange != value)
                 {
                     AccountInfo.User.Exchange = value;
-                    OnPropertyChanged("Exchange");
+                    OnPropertyChanged(nameof(Exchange));
                 }
             }
         }
@@ -119,7 +119,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (btcDisplayValue != value)
                 {
                     btcDisplayValue = value;
-                    OnPropertyChanged("BTCDisplayValue");
+                    OnPropertyChanged(nameof(BTCDisplayValue));
                 }
             }
         }
@@ -138,7 +138,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                         EqualsDisplayValue = "=";
                     }
 
-                    OnPropertyChanged("USDTDisplayValue");
+                    OnPropertyChanged(nameof(USDTDisplayValue));
                 }
             }
         }
@@ -151,7 +151,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (equalsDisplayValue != value)
                 {
                     equalsDisplayValue = value;
-                    OnPropertyChanged("EqualsDisplayValue");
+                    OnPropertyChanged(nameof(EqualsDisplayValue));
                 }
             }
         }
@@ -165,7 +165,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 {
                     btcValue = value;
                     BTCDisplayValue = $"BTC {btcValue}";
-                    OnPropertyChanged("BTCValue");
+                    OnPropertyChanged(nameof(BTCValue));
                 }
             }
         }
@@ -179,7 +179,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 {
                     usdtValue = value;
                     USDTDisplayValue = $"${usdtValue}";
-                    OnPropertyChanged("USDTValue");
+                    OnPropertyChanged(nameof(USDTValue));
                 }
             }
         }

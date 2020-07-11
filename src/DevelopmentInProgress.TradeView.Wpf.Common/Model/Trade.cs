@@ -24,7 +24,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (price != value)
                 {
                     price = value;
-                    OnPropertyChanged("Price");
+                    OnPropertyChanged(nameof(Price));
                 }
             }
         }
@@ -37,7 +37,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (quantity != value)
                 {
                     quantity = value;
-                    OnPropertyChanged("Quantity");
+                    OnPropertyChanged(nameof(Quantity));
                 }
             }
         }
@@ -50,7 +50,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (time != value)
                 {
                     time = value;
-                    OnPropertyChanged("Time");
+                    OnPropertyChanged(nameof(Time));
                 }
             }
         }

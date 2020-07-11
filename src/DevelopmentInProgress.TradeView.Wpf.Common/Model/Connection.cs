@@ -15,7 +15,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (name != value)
                 {
                     name = value;
-                    OnPropertyChanged("Name");
+                    OnPropertyChanged(nameof(Name));
                 }
             }
         }
@@ -28,7 +28,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (connected != value)
                 {
                     connected = value;
-                    OnPropertyChanged("Connected");
+                    OnPropertyChanged(nameof(Connected));
                 }
             }
         }

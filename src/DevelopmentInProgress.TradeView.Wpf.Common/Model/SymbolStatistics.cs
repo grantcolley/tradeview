@@ -38,7 +38,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (firstTradeId != value)
                 {
                     firstTradeId = value;
-                    OnPropertyChanged("FirstTradeId");
+                    OnPropertyChanged(nameof(FirstTradeId));
                 }
             }
         }
@@ -51,7 +51,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (closeTime != value)
                 {
                     closeTime = value;
-                    OnPropertyChanged("CloseTime");
+                    OnPropertyChanged(nameof(CloseTime));
                 }
             }
         }
@@ -64,7 +64,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (openTime != value)
                 {
                     openTime = value;
-                    OnPropertyChanged("OpenTime");
+                    OnPropertyChanged(nameof(OpenTime));
                 }
             }
         }
@@ -77,7 +77,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (quoteVolume != value)
                 {
                     quoteVolume = value;
-                    OnPropertyChanged("QuoteVolume");
+                    OnPropertyChanged(nameof(QuoteVolume));
                 }
             }
         }
@@ -90,7 +90,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (volume != value)
                 {
                     volume = value;
-                    OnPropertyChanged("Volume");
+                    OnPropertyChanged(nameof(Volume));
                 }
             }
         }
@@ -103,7 +103,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (lowPrice != value)
                 {
                     lowPrice = value;
-                    OnPropertyChanged("LowPrice");
+                    OnPropertyChanged(nameof(LowPrice));
                 }
             }
         }
@@ -116,7 +116,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (highPrice != value)
                 {
                     highPrice = value;
-                    OnPropertyChanged("HighPrice");
+                    OnPropertyChanged(nameof(HighPrice));
                 }
             }
         }
@@ -129,7 +129,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (openPrice != value)
                 {
                     openPrice = value;
-                    OnPropertyChanged("OpenPrice");
+                    OnPropertyChanged(nameof(OpenPrice));
                 }
             }
         }
@@ -142,7 +142,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (askQuantity != value)
                 {
                     askQuantity = value;
-                    OnPropertyChanged("AskQuantity");
+                    OnPropertyChanged(nameof(AskQuantity));
                 }
             }
         }
@@ -155,7 +155,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (askPrice != value)
                 {
                     askPrice = value;
-                    OnPropertyChanged("AskPrice");
+                    OnPropertyChanged(nameof(AskPrice));
                 }
             }
         }
@@ -168,7 +168,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (bidQuantity != value)
                 {
                     bidQuantity = value;
-                    OnPropertyChanged("BidQuantity");
+                    OnPropertyChanged(nameof(BidQuantity));
                 }
             }
         }
@@ -181,7 +181,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (bidPrice != value)
                 {
                     bidPrice = value;
-                    OnPropertyChanged("BidPrice");
+                    OnPropertyChanged(nameof(BidPrice));
                 }
             }
         }
@@ -194,7 +194,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (lastQuantity != value)
                 {
                     lastQuantity = value;
-                    OnPropertyChanged("LastQuantity");
+                    OnPropertyChanged(nameof(LastQuantity));
                 }
             }
         }
@@ -207,7 +207,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (lastPrice != value)
                 {
                     lastPrice = value;
-                    OnPropertyChanged("LastPrice");
+                    OnPropertyChanged(nameof(LastPrice));
                 }
             }
         }
@@ -220,7 +220,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (previousClosePrice != value)
                 {
                     previousClosePrice = value;
-                    OnPropertyChanged("PreviousClosePrice");
+                    OnPropertyChanged(nameof(PreviousClosePrice));
                 }
             }
         }
@@ -233,7 +233,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (weightedAveragePrice != value)
                 {
                     weightedAveragePrice = value;
-                    OnPropertyChanged("WeightedAveragePrice");
+                    OnPropertyChanged(nameof(WeightedAveragePrice));
                 }
             }
         }
@@ -246,7 +246,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (priceChangePercent != value)
                 {
                     priceChangePercent = value;
-                    OnPropertyChanged("PriceChangePercent");
+                    OnPropertyChanged(nameof(PriceChangePercent));
                 }
             }
         }
@@ -259,7 +259,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (priceChange != value)
                 {
                     priceChange = value;
-                    OnPropertyChanged("PriceChange");
+                    OnPropertyChanged(nameof(PriceChange));
                 }
             }
         }
@@ -272,7 +272,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (period != value)
                 {
                     period = value;
-                    OnPropertyChanged("Period");
+                    OnPropertyChanged(nameof(Period));
                 }
             }
         }
@@ -285,7 +285,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (symbol != value)
                 {
                     symbol = value;
-                    OnPropertyChanged("Symbol");
+                    OnPropertyChanged(nameof(Symbol));
                 }
             }
         }
@@ -298,7 +298,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (lastTradeId != value)
                 {
                     lastTradeId = value;
-                    OnPropertyChanged("LastTradeId");
+                    OnPropertyChanged(nameof(LastTradeId));
                 }
             }
         }
@@ -311,7 +311,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (tradeCount != value)
                 {
                     tradeCount = value;
-                    OnPropertyChanged("TradeCount");
+                    OnPropertyChanged(nameof(TradeCount));
                 }
             }
         }

@@ -30,7 +30,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if(openTime != value)
                 {
                     openTime = value;
-                    OnPropertyChanged("OpenTime");
+                    OnPropertyChanged(nameof(OpenTime));
                 }
             }
         }
@@ -43,7 +43,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (open != value)
                 {
                     open = value;
-                    OnPropertyChanged("Open");
+                    OnPropertyChanged(nameof(Open));
                 }
             }
         }
@@ -56,7 +56,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (high != value)
                 {
                     high = value;
-                    OnPropertyChanged("High");
+                    OnPropertyChanged(nameof(High));
                 }
             }
         }
@@ -69,7 +69,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (low != value)
                 {
                     low = value;
-                    OnPropertyChanged("Low");
+                    OnPropertyChanged(nameof(Low));
                 }
             }
         }
@@ -82,7 +82,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (close != value)
                 {
                     close = value;
-                    OnPropertyChanged("Close");
+                    OnPropertyChanged(nameof(Close));
                 }
             }
         }
@@ -95,7 +95,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (closeTime != value)
                 {
                     closeTime = value;
-                    OnPropertyChanged("CloseTime");
+                    OnPropertyChanged(nameof(CloseTime));
                 }
             }
         }

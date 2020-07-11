@@ -43,7 +43,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if(candlestickInterval != value)
                 {
                     candlestickInterval = value;
-                    OnPropertyChanged("CandlestickInterval");
+                    OnPropertyChanged(nameof(CandlestickInterval));
                 }
             }
         }

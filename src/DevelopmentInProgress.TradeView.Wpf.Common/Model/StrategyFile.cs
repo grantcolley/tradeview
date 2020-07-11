@@ -16,8 +16,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                     file = value;
                     var fileInfo = new FileInfo(file);
                     DisplayName = fileInfo.Name;
-                    OnPropertyChanged("File");
-                    OnPropertyChanged("DisplayName");
+                    OnPropertyChanged(nameof(File));
+                    OnPropertyChanged(nameof(DisplayName));
                 }
             }
         }

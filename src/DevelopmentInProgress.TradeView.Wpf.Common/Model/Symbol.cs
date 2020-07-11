@@ -32,7 +32,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if(isFavourite != value)
                 {
                     isFavourite = value;
-                    OnPropertyChanged("IsFavourite");
+                    OnPropertyChanged(nameof(IsFavourite));
                 }
             }
         }
@@ -45,7 +45,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (lastPriceChangeDirection != value)
                 {
                     lastPriceChangeDirection = value;
-                    OnPropertyChanged("LastPriceChangeDirection");
+                    OnPropertyChanged(nameof(LastPriceChangeDirection));
                 }
             }
         }
@@ -58,7 +58,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (priceChangePercentDirection != value)
                 {
                     priceChangePercentDirection = value;
-                    OnPropertyChanged("PriceChangePercentDirection");
+                    OnPropertyChanged(nameof(PriceChangePercentDirection));
                 }
             }
         }
