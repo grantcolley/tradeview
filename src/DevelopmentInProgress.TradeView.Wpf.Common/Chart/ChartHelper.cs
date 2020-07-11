@@ -2,6 +2,7 @@
 using LiveCharts;
 using LiveCharts.Configurations;
 using System;
+using System.Globalization;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Chart
 {
@@ -31,10 +32,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Chart
             Charting.For<Candlestick>(candlestickMapper, SeriesOrientation.Horizontal);
         }
 
-        public Func<double, string> TimeFormatter => value => new DateTime((long)value).ToString("H:mm:ss");
+        public Func<double, string> TimeFormatter => value => new DateTime((long)value).ToString("H:mm:ss", CultureInfo.InvariantCulture);
 
-        public Func<double, string> PriceFormatter => value => value.ToString("0.00000000");
+        public Func<double, string> PriceFormatter => value => value.ToString("0.00000000", CultureInfo.InvariantCulture);
 
-        public Func<double, string> PercentageFormatter => value => Math.Round(value, 2).ToString();
+        public Func<double, string> PercentageFormatter => value => Math.Round(value, 2).ToString(CultureInfo.InvariantCulture);
     }
 }
