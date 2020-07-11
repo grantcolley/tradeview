@@ -8,6 +8,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
     {
         public static Order GetViewOrder(this Core.Model.Order o)
         {
+            if (o == null)
+            {
+                throw new ArgumentNullException(nameof(o));
+            }
+
             return new Order
             {
                 Symbol = o.Symbol,
@@ -30,6 +35,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 
         public static Order Update(this Order o, Order order)
         {
+            if (o == null)
+            {
+                throw new ArgumentNullException(nameof(o));
+            }
+
+            if (order == null)
+            {
+                throw new ArgumentNullException(nameof(order));
+            }
+
             if (string.IsNullOrWhiteSpace(o.ClientOrderId)
                 || string.IsNullOrWhiteSpace(order.ClientOrderId)
                 || o.ClientOrderId != order.ClientOrderId)

@@ -21,6 +21,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
         public async Task<OrderBook> CreateLocalOrderBook(Symbol symbol, Core.Model.OrderBook orderBook, int listDisplayCount, int chartDisplayCount)
         {
+            if (symbol == null)
+            {
+                throw new ArgumentNullException(nameof(symbol));
+            }
+
+            if (orderBook == null)
+            {
+                throw new ArgumentNullException(nameof(orderBook));
+            }
+
             var cancellationTokenSource = new CancellationTokenSource();
 
             var snapShot = await kucoinExchangeApi.GetOrderBookAsync(symbol.ExchangeSymbol, 100, cancellationTokenSource.Token);
@@ -104,6 +114,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
         public void UpdateLocalOrderBook(OrderBook orderBook, Core.Model.OrderBook updateOrderBook,
             int pricePrecision, int quantityPrecision, int listDisplayCount, int chartDisplayCount)
         {
+            if (orderBook == null)
+            {
+                throw new ArgumentNullException(nameof(orderBook));
+            }
+
+            if (updateOrderBook == null)
+            {
+                throw new ArgumentNullException(nameof(updateOrderBook));
+            }
+
             long latestSquence = orderBook.LastUpdateId;
 
             orderBook.Asks = ReplayPriceLevels(orderBook.Asks, updateOrderBook.Asks, orderBook.LastUpdateId, ref latestSquence);

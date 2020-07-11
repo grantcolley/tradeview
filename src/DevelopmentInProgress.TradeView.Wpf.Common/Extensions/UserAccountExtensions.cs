@@ -1,4 +1,5 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -8,6 +9,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
     {
         public static UserAccount ToUserAccount(this Core.Model.UserAccount ua)
         {
+            if (ua == null)
+            {
+                throw new ArgumentNullException(nameof(ua));
+            }
+
             var userAccount = new UserAccount
             {
                 AccountName = ua.AccountName,
@@ -34,6 +40,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 
         public static Core.Model.UserAccount ToCoreUserAccount(this UserAccount ua)
         {
+            if(ua == null)
+            {
+                throw new ArgumentNullException(nameof(ua));
+            }
+
             var userAccount = new Core.Model.UserAccount
             {
                 AccountName = ua.AccountName,

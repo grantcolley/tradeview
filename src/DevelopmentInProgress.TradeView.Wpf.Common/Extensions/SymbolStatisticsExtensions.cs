@@ -7,6 +7,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
     {
         public static SymbolStatistics GetViewSymbolStatistics(this Core.Model.SymbolStats s)
         {
+            if (s == null)
+            {
+                throw new ArgumentNullException(nameof(s));
+            }
+
             return new SymbolStatistics
             {
                 Exchange = s.Exchange,

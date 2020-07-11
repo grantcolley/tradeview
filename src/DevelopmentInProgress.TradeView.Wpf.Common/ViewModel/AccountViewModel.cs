@@ -101,6 +101,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
 
         public async Task Login(Account account)
         {
+            if(account == null)
+            {
+                throw new ArgumentNullException(nameof(account));
+            }
+
             try
             {
                 if (string.IsNullOrWhiteSpace(account.AccountInfo.User.ApiKey)

@@ -18,6 +18,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             int tradesChartDisplayCount,
             int tradeLimit) where T : Trade, new()
         {
+            if (symbol == null)
+            {
+                throw new ArgumentNullException(nameof(symbol));
+            }
+
             var tcs = new TaskCompletionSource<LocalTradeListResult<T>>();
 
             try
@@ -97,6 +102,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             out List<T> trades, 
             ref ChartValues<T> tradesChart) where T : Trade, new()
         {
+            if (symbol == null)
+            {
+                throw new ArgumentNullException(nameof(symbol));
+            }
+
+            if (currentTrades == null)
+            {
+                throw new ArgumentNullException(nameof(currentTrades));
+            }
+
             var pricePrecision = symbol.PricePrecision;
             var quantityPrecision = symbol.QuantityPrecision;
 
@@ -196,6 +211,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
         protected virtual void UpdateChartTrades<T>(List<T> newTrades, int newTradesCount, int tradesChartDisplayCount, ref ChartValues<T> tradesChart)
         {
+            if (newTrades == null)
+            {
+                throw new ArgumentNullException(nameof(newTrades));
+            }
+
+            if (tradesChart == null)
+            {
+                throw new ArgumentNullException(nameof(tradesChart));
+            }
+
             var tradesChartCount = tradesChart.Count;
 
             if (tradesChartCount >= tradesChartDisplayCount)

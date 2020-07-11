@@ -1,4 +1,5 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
+using System;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 {
@@ -6,6 +7,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
     {
         public static Candlestick ToViewCandlestick(this Core.Model.Candlestick c)
         {
+            if (c == null)
+            {
+                throw new ArgumentNullException(nameof(c));
+            }
+
             return new Candlestick
             {
                 Symbol = c.Symbol,

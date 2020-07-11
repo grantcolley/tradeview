@@ -10,6 +10,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
     {
         public static void UpdateServerMonitor(ServerMonitor serverMonitor, Core.Server.ServerMonitor ism)
         {
+            if (serverMonitor == null)
+            {
+                throw new ArgumentNullException(nameof(serverMonitor));
+            }
+
+            if (ism == null)
+            {
+                throw new ArgumentNullException(nameof(ism));
+            }
+
             serverMonitor.Started = ism.Started;
             serverMonitor.StartedBy = ism.StartedBy;
 

@@ -1,5 +1,6 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Core.Extensions;
+using System;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 {
@@ -7,6 +8,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
     {
         public static Core.TradeStrategy.StrategySubscription ToCoreStrategySubscription(this StrategySubscription strategySubscription)
         {
+            if (strategySubscription == null)
+            {
+                throw new ArgumentNullException(nameof(strategySubscription));
+            }
+
             int subscribe = 0;
 
             if (strategySubscription.SubscribeAccount)
@@ -47,6 +53,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 
         public static StrategySubscription ToWpfStrategySubscription(this Core.TradeStrategy.StrategySubscription coreStrategySubscription)
         {
+            if (coreStrategySubscription == null)
+            {
+                throw new ArgumentNullException(nameof(coreStrategySubscription));
+            }
+
             var strategySubScription = new StrategySubscription
             {
                 AccountName = coreStrategySubscription.AccountName,

@@ -1,5 +1,6 @@
 ﻿using DevelopmentInProgress.TradeView.Core.TradeStrategy;
 using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
+using System;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 {
@@ -7,6 +8,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
     {
         public static Message GetMessage(this StrategyNotification strategyNotification)
         {
+            if (strategyNotification == null)
+            {
+                throw new ArgumentNullException(nameof(strategyNotification));
+            }
+
             MessageType messageType;
             switch(strategyNotification.NotificationLevel)
             {

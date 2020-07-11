@@ -12,6 +12,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
     {
         public Task<OrderBook> CreateLocalOrderBook(Symbol symbol, Core.Model.OrderBook orderBook, int listDisplayCount, int chartDisplayCount)
         {
+            if (symbol == null)
+            {
+                throw new ArgumentNullException(nameof(symbol));
+            }
+
+            if (orderBook == null)
+            {
+                throw new ArgumentNullException(nameof(orderBook));
+            }
+
             var tcs = new TaskCompletionSource<OrderBook>();
 
             try
@@ -55,6 +65,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
         public void UpdateLocalOrderBook(OrderBook orderBook, Core.Model.OrderBook updateOrderBook,
             int pricePrecision, int quantityPrecision, int listDisplayCount, int chartDisplayCount)
         {
+            if (updateOrderBook == null)
+            {
+                throw new ArgumentNullException(nameof(updateOrderBook));
+            }
+
+            if (orderBook == null)
+            {
+                throw new ArgumentNullException(nameof(orderBook));
+            }
+
             orderBook.LastUpdateId = updateOrderBook.LastUpdateId;
 
             List<OrderBookPriceLevel> topAsks;

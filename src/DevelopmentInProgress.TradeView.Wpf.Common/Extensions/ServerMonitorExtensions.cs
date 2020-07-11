@@ -1,4 +1,5 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
+using System;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 {
@@ -6,6 +7,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
     {
         public static ServerMonitor ToServerMonitor(this Core.Server.TradeServer tradeServer)
         {
+            if (tradeServer == null)
+            {
+                throw new ArgumentNullException(nameof(tradeServer));
+            }
+
             return new ServerMonitor
             {
                 Name = tradeServer.Name,

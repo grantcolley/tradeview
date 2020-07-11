@@ -8,6 +8,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
     {
         public static Core.Model.Symbol GetCoreSymbol(this Symbol s)
         {
+            if (s == null)
+            {
+                throw new ArgumentNullException(nameof(s));
+            }
+
             return new Core.Model.Symbol
             {
                 Name = s.Name,
@@ -27,6 +32,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 
         public static Symbol GetViewSymbol(this Core.Model.Symbol s)
         {
+            if (s == null)
+            {
+                throw new ArgumentNullException(nameof(s));
+            }
+
             var symbol =  new Symbol
             {
                 Name = s.Name,
@@ -54,6 +64,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 
         public static Symbol UpdateStatistics(this Symbol sy, Core.Model.SymbolStats st)
         {
+            if (sy == null)
+            {
+                throw new ArgumentNullException(nameof(sy));
+            }
+
+            if (st == null)
+            {
+                throw new ArgumentNullException(nameof(st));
+            }
+
             sy.SymbolStatistics.PriceChangePercent = decimal.Round(st.PriceChangePercent, 2, MidpointRounding.AwayFromZero);
             sy.PriceChangePercentDirection = sy.SymbolStatistics.PriceChangePercent > 0 ? 1 : sy.SymbolStatistics.PriceChangePercent < 0 ? -1 : 0;
             sy.LastPriceChangeDirection = st.LastPrice > sy.SymbolStatistics.LastPrice ? 1 : st.LastPrice < sy.SymbolStatistics.LastPrice ? -1 : 0;
@@ -84,7 +104,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 
         public static Symbol JoinStatistics(this Symbol sy, SymbolStatistics st)
         {
-            sy.SymbolStatistics = st;
+            if (sy == null)
+            {
+                throw new ArgumentNullException(nameof(sy));
+            }
+
+            sy.SymbolStatistics = st ?? throw new ArgumentNullException(nameof(st));
             sy.PriceChangePercentDirection = sy.SymbolStatistics.PriceChangePercent > 0 ? 1 : sy.SymbolStatistics.PriceChangePercent < 0 ? -1 : 0;
             return sy;
         }

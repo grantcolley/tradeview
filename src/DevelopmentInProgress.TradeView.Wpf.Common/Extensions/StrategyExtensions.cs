@@ -1,4 +1,5 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
+using System;
 using System.Linq;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
@@ -7,6 +8,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
     {
         public static Core.TradeStrategy.Strategy ToCoreStrategy(this Strategy strategy)
         {
+            if(strategy == null)
+            {
+                throw new ArgumentNullException(nameof(strategy));
+            }
+
             var interfaceStrategy = new Core.TradeStrategy.Strategy
             {
                 Id = strategy.Id,
@@ -25,6 +31,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 
         public static Core.TradeStrategy.StrategyConfig ToCoreStrategyConfig(this Strategy strategy)
         {
+            if (strategy == null)
+            {
+                throw new ArgumentNullException(nameof(strategy));
+            }
+
             var strategyConfig = new Core.TradeStrategy.StrategyConfig
             {
                 Id = strategy.Id,
@@ -53,6 +64,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
 
         public static Strategy ToWpfStrategy(this Core.TradeStrategy.StrategyConfig strategyConfig)
         {
+            if (strategyConfig == null)
+            {
+                throw new ArgumentNullException(nameof(strategyConfig));
+            }
+
             var strategy = new Strategy()
             {
                 Id = strategyConfig.Id,

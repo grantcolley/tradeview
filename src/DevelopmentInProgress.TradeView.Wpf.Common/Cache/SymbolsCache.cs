@@ -92,6 +92,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 
         public void ValueAccount(Account account)
         {
+            if(account == null)
+            {
+                throw new ArgumentNullException(nameof(account));
+            }
+
             if (btcUsdt == null
                 || !symbols.Any())
             {
