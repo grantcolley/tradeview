@@ -8,6 +8,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
     {
         private readonly Dictionary<Exchange, ITradeHelper> tradeHelpers;
 
+        public HelperFactoryType HelperFactoryType { get { return HelperFactoryType.TradeHelper; } }
+
         public TradeHelperFactory(IExchangeApiFactory exchangeApiFactory)
         {
             tradeHelpers = new Dictionary<Exchange, ITradeHelper>();

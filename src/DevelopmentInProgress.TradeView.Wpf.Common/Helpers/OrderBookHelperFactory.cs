@@ -9,6 +9,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
     {
         private readonly Dictionary<Exchange, IOrderBookHelper> orderBookHelpers;
 
+        public HelperFactoryType HelperFactoryType { get { return HelperFactoryType.OrderBookHelper; } }
+
         public OrderBookHelperFactory(IExchangeApiFactory exchangeApiFactory)
         {
             if(exchangeApiFactory == null)
