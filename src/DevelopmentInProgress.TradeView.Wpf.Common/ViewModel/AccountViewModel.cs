@@ -116,11 +116,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
 
                 IsLoggingIn = true;
 
-                Account = await ExchangeService.GetAccountInfoAsync(account.AccountInfo.User.Exchange, account.AccountInfo.User, accountCancellationTokenSource.Token);
+                Account = await ExchangeService.GetAccountInfoAsync(account.AccountInfo.User.Exchange, account.AccountInfo.User, accountCancellationTokenSource.Token).ConfigureAwait(true);
 
                 OnAccountLoggedIn();
 
-                await ExchangeService.SubscribeAccountInfo(Account.AccountInfo.User.Exchange, Account.AccountInfo.User, e => AccountInfoUpdate(e.AccountInfo), SubscribeAccountInfoException, accountCancellationTokenSource.Token);
+                await ExchangeService.SubscribeAccountInfo(Account.AccountInfo.User.Exchange, Account.AccountInfo.User, e => AccountInfoUpdate(e.AccountInfo), SubscribeAccountInfoException, accountCancellationTokenSource.Token).ConfigureAwait(true);
 
                 symbolsCache = symbolsCacheFactory.GetSymbolsCache(Account.AccountInfo.User.Exchange);
 

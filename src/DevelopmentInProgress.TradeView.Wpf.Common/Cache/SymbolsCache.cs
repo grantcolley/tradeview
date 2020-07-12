@@ -41,14 +41,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                 return null;
             }
 
-            await semaphoreSlimGetSymbols.WaitAsync(subscribeSymbolsCxlTokenSrc.Token);
+            await semaphoreSlimGetSymbols.WaitAsync(subscribeSymbolsCxlTokenSrc.Token).ConfigureAwait(false);
 
             try
             {
                 // If the cached full symbol list is empty go get them.
                 if (!symbols.Any())
                 {
-                    var allSymbols = await wpfExchangeService.GetSymbols24HourStatisticsAsync(exchange, subscribeSymbolsCxlTokenSrc.Token);
+                    var allSymbols = await wpfExchangeService.GetSymbols24HourStatisticsAsync(exchange, subscribeSymbolsCxlTokenSrc.Token).ConfigureAwait(false);
 
                     symbols.AddRange(allSymbols);
                     btcUsdt = symbols.Single(s => s.Name.Equals(BTCUSDT, StringComparison.Ordinal));
@@ -72,7 +72,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                             newSubSymbols.Add(btcUsdt);
                         }
 
-                        await wpfExchangeService.SubscribeStatistics(exchange, newSubSymbols, SubscribeStatisticsException, subscribeSymbolsCxlTokenSrc.Token);
+                        await wpfExchangeService.SubscribeStatistics(exchange, newSubSymbols, SubscribeStatisticsException, subscribeSymbolsCxlTokenSrc.Token).ConfigureAwait(false);
 
                         // Add new subscriptions to the cache
                         subscribedSymbols.AddRange(newSubSymbols);

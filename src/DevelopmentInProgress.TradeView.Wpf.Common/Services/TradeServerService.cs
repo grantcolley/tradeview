@@ -21,26 +21,26 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
 
         public async Task<List<TradeServer>> GetTradeServers()
         {
-            var result = await configurationServer.GetTradeServersAsync();
+            var result = await configurationServer.GetTradeServersAsync().ConfigureAwait(false);
             return result.Select(s => s.ToWpfTradeServer()).ToList();
         }
 
         public async Task<TradeServer> GetTradeServer(string serverName)
         {
-            var result = await configurationServer.GetTradeServerAsync(serverName);
+            var result = await configurationServer.GetTradeServerAsync(serverName).ConfigureAwait(false);
             return result.ToWpfTradeServer();
         }
 
         public async Task SaveTradeServer(TradeServer server)
         {
-            await configurationServer.SaveTradeServerAsync(server.ToCoreTradeServer());
-            await serverMonitorCache.RefreshServerMonitorsAsync();
+            await configurationServer.SaveTradeServerAsync(server.ToCoreTradeServer()).ConfigureAwait(false);
+            await serverMonitorCache.RefreshServerMonitorsAsync().ConfigureAwait(false);
         }
 
         public async Task DeleteTradeServer(TradeServer server)
         {
-            await configurationServer.DeleteTradeServerAsync(server.ToCoreTradeServer());
-            await serverMonitorCache.RefreshServerMonitorsAsync();
+            await configurationServer.DeleteTradeServerAsync(server.ToCoreTradeServer()).ConfigureAwait(false);
+            await serverMonitorCache.RefreshServerMonitorsAsync().ConfigureAwait(false);
         }
     }
 }

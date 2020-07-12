@@ -18,13 +18,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
 
         public async Task<List<Strategy>> GetStrategies()
         {
-            var result = await configurationStrategy.GetStrategiesAsync();
+            var result = await configurationStrategy.GetStrategiesAsync().ConfigureAwait(false);
             return result.Select(s => s.ToWpfStrategy()).ToList();
         }
 
         public async Task<Strategy> GetStrategy(string strategyName)
         {
-            var result = await configurationStrategy.GetStrategyAsync(strategyName);
+            var result = await configurationStrategy.GetStrategyAsync(strategyName).ConfigureAwait(false);
             return result.ToWpfStrategy();
         }
 

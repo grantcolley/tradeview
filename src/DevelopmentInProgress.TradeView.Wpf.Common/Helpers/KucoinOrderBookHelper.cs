@@ -33,7 +33,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
             var cancellationTokenSource = new CancellationTokenSource();
 
-            var snapShot = await kucoinExchangeApi.GetOrderBookAsync(symbol.ExchangeSymbol, 100, cancellationTokenSource.Token);
+            var snapShot = await kucoinExchangeApi.GetOrderBookAsync(symbol.ExchangeSymbol, 100, cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Order by price: bids (ASC) and asks (ASC)
             // Discard those that we are not interested in displaying on the screen.

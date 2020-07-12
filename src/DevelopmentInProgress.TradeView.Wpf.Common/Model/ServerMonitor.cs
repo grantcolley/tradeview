@@ -199,7 +199,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
             {
                 if (socketClient != null)
                 {
-                    await socketClient.DisposeAsync();
+                    await socketClient.DisposeAsync().ConfigureAwait(false);
                 }
 
                 OnNotification();
@@ -218,7 +218,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 
         public async Task ConnectAsync(Dispatcher dispatcher)
         {
-            await serverMonitorSemaphoreSlim.WaitAsync();
+            await serverMonitorSemaphoreSlim.WaitAsync().ConfigureAwait(false);
 
             try
             {
@@ -227,7 +227,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                     return;
                 }
 
-                var serverIsRunning = await IsServerRunningAsync();
+                var serverIsRunning = await IsServerRunningAsync().ConfigureAwait(false);
 
                 if(!serverIsRunning)
                 {
@@ -253,16 +253,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 {
                     await dispatcher.Invoke(async () =>
                     {
-                        await OnServerMonitorNotificationAsync(message);
-                    });
+                        await OnServerMonitorNotificationAsync(message).ConfigureAwait(false);
+                    }).ConfigureAwait(false);
                 });
 
                 socketClient.Closed += async (sender, args) =>
                 {
                     await dispatcher.Invoke(async () =>
                     {
-                        await DisposeSocketAsync();
-                    });
+                        await DisposeSocketAsync().ConfigureAwait(false);
+                    }).ConfigureAwait(false);
                 };
 
                 socketClient.Error += async (sender, args) =>
@@ -270,7 +270,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                     var ex = args as Exception;
                     if (ex.InnerException is TaskCanceledException)
                     {
-                        await DisposeSocketAsync();
+                        await DisposeSocketAsync().ConfigureAwait(false);
 
                     }
                     else
@@ -279,20 +279,20 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                         {
                             OnException(args.Message, new Exception(args.Message));
 
-                            await DisposeSocketAsync();
-                        });
+                            await DisposeSocketAsync().ConfigureAwait(false);
+                        }).ConfigureAwait(false);
                     }
                 };
 
-                await socketClient.StartAsync(Name);
+                await socketClient.StartAsync(Name).ConfigureAwait(false);
             }
             catch(WebSocketException)
             {
-                await DisposeSocketAsync();
+                await DisposeSocketAsync().ConfigureAwait(false);
             }
             catch(Exception ex)
             {
-                await DisposeSocketAsync();
+                await DisposeSocketAsync().ConfigureAwait(false);
 
                 OnException(ex.Message, ex);
             }
@@ -308,9 +308,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
             {
                 using (var client = new HttpClient())
                 {
-                    using (var response = await client.GetAsync(new Uri(Uri, "ping")))
+                    using (var response = await client.GetAsync(new Uri(Uri, "ping")).ConfigureAwait(false))
                     {
-                        var content = await response.Content.ReadAsStringAsync();
+                        var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                         if (response.StatusCode == System.Net.HttpStatusCode.OK)
                         {
@@ -335,7 +335,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 
                 if (serverMonitorNotifications.Any(smn => smn.Equals(Core.Server.ServerNotificationLevel.DisconnectClient)))
                 {
-                    await DisposeSocketAsync();
+                    await DisposeSocketAsync().ConfigureAwait(false);
                 }
                 else
                 {

@@ -73,7 +73,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
                 tcs.SetException(ex);
             }
 
-            return await tcs.Task;
+            return await tcs.Task.ConfigureAwait(false);
         }
 
         public virtual ChartValues<T> CreateLocalChartTrades<T>(

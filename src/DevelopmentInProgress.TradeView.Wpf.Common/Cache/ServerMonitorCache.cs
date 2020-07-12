@@ -39,24 +39,24 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 
         public async Task<ObservableCollection<ServerMonitor>> GetServerMonitorsAsync()
         {
-            await RefreshServerMonitorsAsync();
+            await RefreshServerMonitorsAsync().ConfigureAwait(false);
             return serverMonitors;
         }
 
         public async Task RefreshServerMonitorsAsync()
         {
-            await serverMonitorSemaphoreSlim.WaitAsync();
+            await serverMonitorSemaphoreSlim.WaitAsync().ConfigureAwait(false);
 
             try
             {
-                var servers = await configurationServer.GetTradeServersAsync();
+                var servers = await configurationServer.GetTradeServersAsync().ConfigureAwait(false);
 
                 await dispatcher.InvokeAsync(async () =>
                 {
                     var removeServers = serverMonitors.Where(sm => !servers.Any(s => s.Name == sm.Name)).ToList();
                     if (removeServers.Any())
                     {
-                        await Task.WhenAll(removeServers.Select(s => s.DisposeAsync()).ToList());
+                        await Task.WhenAll(removeServers.Select(s => s.DisposeAsync()).ToList()).ConfigureAwait(false);
 
                         foreach (var server in removeServers)
                         {
@@ -91,7 +91,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 
                 if (serverConfiguraion == null)
                 {
-                    serverConfiguraion = await configurationServer.GetServerConfiguration();
+                    serverConfiguraion = await configurationServer.GetServerConfiguration().ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -123,7 +123,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                 serverMonitorSubscription.Dispose();
             }
 
-            await Task.WhenAll(serverMonitors.Select(s => s.DisposeAsync()).ToList());
+            await Task.WhenAll(serverMonitors.Select(s => s.DisposeAsync()).ToList()).ConfigureAwait(false);
 
             if(serverMonitorSemaphoreSlim != null)
             {
@@ -155,7 +155,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 
                         if(connectServers.Any())
                         {
-                            await Task.WhenAll(connectServers.Select(s => s.ConnectAsync(dispatcher)).ToList());
+                            await Task.WhenAll(connectServers.Select(s => s.ConnectAsync(dispatcher)).ToList()).ConfigureAwait(false);
                         }
                     }
                     catch (Exception ex)

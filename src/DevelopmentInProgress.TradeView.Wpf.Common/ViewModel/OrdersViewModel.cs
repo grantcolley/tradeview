@@ -124,16 +124,19 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
 
                     if (Account != null)
                     {
-                        var result =  await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User);
+                        var result =  await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User).ConfigureAwait(false);
 
-                        lock (lockOrders)
+                        Dispatcher.Invoke(() =>
                         {
-                            Orders.Clear();
-                            foreach (var order in result)
+                            lock (lockOrders)
                             {
-                                Orders.Add(order);
+                                Orders.Clear();
+                                foreach (var order in result)
+                                {
+                                    Orders.Add(order);
+                                }
                             }
-                        }
+                        });
                     }
                     else
                     {
@@ -164,7 +167,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
         {
             try
             {
-                var result = await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User);
+                var result = await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User).ConfigureAwait(true);
 
                 Action<IEnumerable<Order>> action = res =>
                 {
@@ -232,7 +235,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
 
         private async void Cancel(object orderId)
         {
-            await Cancel(orderId.ToString());
+            await Cancel(orderId.ToString()).ConfigureAwait(false);
         }
 
         private async Task Cancel(string orderId)
@@ -241,7 +244,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             {
                 var order = orders.Single(o => o.Id == orderId);
                 order.IsVisible = false;
-                var result = await ExchangeService.CancelOrderAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User, order.Symbol, order.Id, null, 0, ordersCancellationTokenSource.Token);
+                var result = await ExchangeService.CancelOrderAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User, order.Symbol, order.Id, null, 0, ordersCancellationTokenSource.Token).ConfigureAwait(true);
                 lock (lockOrders)
                 {
                     Orders.Remove(order);
@@ -258,7 +261,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             try
             {
                 IsCancellAllVisible = false;
-                Parallel.ForEach(Orders, async order => { var result = await ExchangeService.CancelOrderAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User, order.Symbol, order.Id, null, 0, ordersCancellationTokenSource.Token); });
+                Parallel.ForEach(Orders, async order => 
+                {
+                    var result = await ExchangeService.CancelOrderAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User, order.Symbol, order.Id, null, 0, ordersCancellationTokenSource.Token).ConfigureAwait(false); 
+                });
+
                 lock (lockOrders)
                 {
                     Orders.Clear();

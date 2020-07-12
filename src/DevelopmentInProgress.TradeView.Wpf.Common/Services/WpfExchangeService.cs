@@ -94,7 +94,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
 
                 (from sy in symbols join st in stats on sy.ExchangeSymbol equals st.Symbol select sy.UpdateStatistics(st)).ToList();
 
-            }, exception, cancellationToken);
+            }, exception, cancellationToken).ConfigureAwait(false);
         }
 
         public Task SubscribeCandlesticks(Exchange exchange, string symbol, Core.Model.CandlestickInterval candlestickInterval, int limit, Action<CandlestickEventArgs> callback, Action<Exception> exception, CancellationToken cancellationToken)
