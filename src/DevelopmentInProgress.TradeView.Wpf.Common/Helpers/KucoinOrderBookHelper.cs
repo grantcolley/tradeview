@@ -244,7 +244,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
         
         private List<OrderBookPriceLevel> GetAggregatedAsks(List<OrderBookPriceLevel> orders)
         {
-            var count = orders.Count();
+            var count = orders.Count;
 
             var aggregatedList = orders.Select(p => new OrderBookPriceLevel { Price = p.Price, Quantity = p.Quantity }).ToList();
 
@@ -261,7 +261,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
         private List<OrderBookPriceLevel> GetAggregatedBids(List<OrderBookPriceLevel> orders)
         {
-            var index = orders.Count() - 1;
+            var index = orders.Count - 1;
 
             var aggregatedList = orders.Select(p => new OrderBookPriceLevel { Price = p.Price, Quantity = p.Quantity }).ToList();
 

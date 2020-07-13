@@ -159,7 +159,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
         private List<OrderBookPriceLevel> GetAggregatedList(List<OrderBookPriceLevel> orders)
         {
-            var count = orders.Count();
+            var count = orders.Count;
 
             var aggregatedList = orders.Select(p => new OrderBookPriceLevel { Price = p.Price, Quantity = p.Quantity }).ToList();
 
