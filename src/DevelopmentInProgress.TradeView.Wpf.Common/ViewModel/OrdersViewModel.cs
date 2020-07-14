@@ -126,17 +126,29 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
                     {
                         var result =  await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User).ConfigureAwait(false);
 
-                        Dispatcher.Invoke(() =>
-                        {
-                            lock (lockOrders)
+                        Action updateOrders = delegate ()
                             {
-                                Orders.Clear();
-                                foreach (var order in result)
+                                lock (lockOrders)
                                 {
-                                    Orders.Add(order);
+                                    Orders.Clear();
+                                    foreach (var order in result)
+                                    {
+                                        Orders.Add(order);
+                                    }
                                 }
-                            }
-                        });
+                            };
+
+                        if (Dispatcher == null)
+                        {
+                            updateOrders();
+                        }
+                        else
+                        {
+                            Dispatcher.Invoke(() =>
+                            {
+                                updateOrders();
+                            });
+                        }
                     }
                     else
                     {
