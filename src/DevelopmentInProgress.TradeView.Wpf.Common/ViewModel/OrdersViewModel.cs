@@ -169,7 +169,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             }
             catch (Exception ex)
             {
-                OnException("OrdersViewModel.SetAccount", ex);
+                OnException(ex.Message, ex);
             }
 
             IsLoading = false;
@@ -220,7 +220,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             }
             catch (Exception ex)
             {
-                OnException("OrdersViewModel.UpdateOrders", ex);
+                OnException(ex.Message, ex);
             }
         }
 
@@ -264,7 +264,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             }
             catch (Exception ex)
             {
-                OnException("OrdersViewModel.Cancel", ex);
+                OnException(ex.Message, ex);
             }
         }
 

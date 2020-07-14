@@ -180,7 +180,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
             if (count != pl.Count)
             {
-                throw new Exception("Order Book count difference...");
+                throw new IndexOutOfRangeException();
             }
 
             for(int i = 0; i <  count; i++)

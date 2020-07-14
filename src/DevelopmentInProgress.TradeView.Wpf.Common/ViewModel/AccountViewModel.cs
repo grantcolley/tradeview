@@ -133,7 +133,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             }
             catch (Exception ex)
             {
-                OnException("AccountViewModel.Login", ex);
+                OnException(ex.Message, ex);
             }
             finally
             {
@@ -152,13 +152,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             }
             catch (Exception ex)
             {
-                OnException("AccountViewModel.DispatcherTimerTick", ex);
+                OnException(ex.Message, ex);
             }
         }
 
         private void SubscribeAccountInfoException(Exception exception)
         {
-            OnException("AccountViewModel.Login - ExchangeService.SubscribeAccountInfo", exception);
+            OnException(exception.Message, exception);
         }
 
         private void OnException(string message, Exception exception)
