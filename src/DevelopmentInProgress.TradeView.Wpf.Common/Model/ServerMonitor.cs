@@ -46,7 +46,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if(name != value)
                 {
                     name = value;
-                    OnPropertyChanged("Name");
+                    OnPropertyChanged(nameof(Name));
                 }
             }
         }
@@ -59,7 +59,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (uri != value)
                 {
                     uri = value;
-                    OnPropertyChanged("Uri");
+                    OnPropertyChanged(nameof(Uri));
                 }
             }
         }
@@ -72,7 +72,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (maxDegreeOfParallelism != value)
                 {
                     maxDegreeOfParallelism = value;
-                    OnPropertyChanged("MaxDegreeOfParallelism");
+                    OnPropertyChanged(nameof(MaxDegreeOfParallelism));
                 }
             }
         }
@@ -85,7 +85,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (enabled != value)
                 {
                     enabled = value;
-                    OnPropertyChanged("Enabled");
+                    OnPropertyChanged(nameof(Enabled));
                 }
             }
         }
@@ -98,7 +98,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (startedBy != value)
                 {
                     startedBy = value;
-                    OnPropertyChanged("StartedBy");
+                    OnPropertyChanged(nameof(StartedBy));
                 }
             }
         }
@@ -111,7 +111,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (stoppedBy != value)
                 {
                     stoppedBy = value;
-                    OnPropertyChanged("StoppedBy");
+                    OnPropertyChanged(nameof(StoppedBy));
                 }
             }
         }
@@ -124,7 +124,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (started != value)
                 {
                     started = value;
-                    OnPropertyChanged("Started");
+                    OnPropertyChanged(nameof(Started));
                 }
             }
         }
@@ -137,7 +137,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (stopped != value)
                 {
                     stopped = value;
-                    OnPropertyChanged("Stopped");
+                    OnPropertyChanged(nameof(Stopped));
                 }
             }
         }
@@ -150,7 +150,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (isConnecting != value)
                 {
                     isConnecting = value;
-                    OnPropertyChanged("IsConnecting");
+                    OnPropertyChanged(nameof(IsConnecting));
                 }
             }
         }
@@ -163,7 +163,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (isConnected != value)
                 {
                     isConnected = value;
-                    OnPropertyChanged("IsConnected");
+                    OnPropertyChanged(nameof(IsConnected));
                 }
             }
         }
@@ -176,8 +176,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (strategies != value)
                 {
                     strategies = value;
-                    OnPropertyChanged("Strategies");
-                    OnPropertyChanged("StrategyCount");
+                    OnPropertyChanged(nameof(Strategies));
+                    OnPropertyChanged(nameof(StrategyCount));
                 }
             }
         }
@@ -185,7 +185,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         public int StrategyCount
         {
             get { return strategies.Count; }
-            set { OnPropertyChanged("StrategyCount"); }
+            set { OnPropertyChanged(nameof(StrategyCount)); }
         }
 
         public Task DisposeAsync()

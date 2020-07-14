@@ -275,7 +275,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             }
             catch (Exception ex)
             {
-                OnException("OrdersViewModel.CancelAll", ex);
+                OnException($"{typeof(OrdersViewModel).Name}.{nameof(CancelAll)}", ex);
             }
         }
 
