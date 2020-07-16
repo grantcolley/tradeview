@@ -10,12 +10,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         private string baseSymbol;
         private string quoteSymbol;
         public decimal bidAskSpread;
-        private List<OrderBookPriceLevel> topAsks;
-        private List<OrderBookPriceLevel> topBids;
-        private ChartValues<OrderBookPriceLevel> chartAsks;
-        private ChartValues<OrderBookPriceLevel> chartBids;
-        private ChartValues<OrderBookPriceLevel> chartAggregatedAsks;
-        private ChartValues<OrderBookPriceLevel> chartAggregatedBids;
 
         static OrderBook()
         {
@@ -28,10 +22,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 
         public OrderBook()
         {
-            chartAsks = new ChartValues<OrderBookPriceLevel>();
-            chartBids = new ChartValues<OrderBookPriceLevel>();
-            chartAggregatedAsks = new ChartValues<OrderBookPriceLevel>();
-            chartAggregatedBids = new ChartValues<OrderBookPriceLevel>();
+            Asks = new List<Core.Model.OrderBookPriceLevel>();
+            Bids = new List<Core.Model.OrderBookPriceLevel>();
+            TopAsks = new List<OrderBookPriceLevel>();
+            TopBids = new List<OrderBookPriceLevel>();
+            ChartAsks = new ChartValues<OrderBookPriceLevel>();
+            ChartBids = new ChartValues<OrderBookPriceLevel>();
+            ChartAggregatedAsks = new ChartValues<OrderBookPriceLevel>();
+            ChartAggregatedBids = new ChartValues<OrderBookPriceLevel>();
         }
 
         public string Symbol { get; set; }
@@ -76,86 +74,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
             }
         }
 
-        public List<Core.Model.OrderBookPriceLevel> Asks { get; set; }
-        public List<Core.Model.OrderBookPriceLevel> Bids { get; set; }
-
-        public List<OrderBookPriceLevel> TopAsks
-        {
-            get { return topAsks; }
-            set
-            {
-                if(topAsks != value)
-                {
-                    topAsks = value;
-                    OnPropertyChanged(nameof(TopAsks));
-                }
-            }
-        }
-
-        public ChartValues<OrderBookPriceLevel> ChartAsks
-        {
-            get { return chartAsks; }
-            set
-            {
-                if (chartAsks != value)
-                {
-                    chartAsks = value;
-                    OnPropertyChanged(nameof(ChartAsks));
-                }
-            }
-        }
-
-        public ChartValues<OrderBookPriceLevel> ChartAggregatedAsks
-        {
-            get { return chartAggregatedAsks; }
-            set
-            {
-                if (chartAggregatedAsks != value)
-                {
-                    chartAggregatedAsks = value;
-                    OnPropertyChanged(nameof(ChartAggregatedAsks));
-                }
-            }
-        }
-
-        public List<OrderBookPriceLevel> TopBids
-        {
-            get { return topBids; }
-            set
-            {
-                if (topBids != value)
-                {
-                    topBids = value;
-                    OnPropertyChanged(nameof(TopBids));
-                }
-            }
-        }
-
-        public ChartValues<OrderBookPriceLevel> ChartBids
-        {
-            get { return chartBids; }
-            set
-            {
-                if (chartBids != value)
-                {
-                    chartBids = value;
-                    OnPropertyChanged(nameof(ChartBids));
-                }
-            }
-        }
-
-        public ChartValues<OrderBookPriceLevel> ChartAggregatedBids
-        {
-            get { return chartAggregatedBids; }
-            set
-            {
-                if (chartAggregatedBids != value)
-                {
-                    chartAggregatedBids = value;
-                    OnPropertyChanged(nameof(ChartAggregatedBids));
-                }
-            }
-        }
+        public List<Core.Model.OrderBookPriceLevel> Asks { get; }
+        public List<Core.Model.OrderBookPriceLevel> Bids { get; }
+        public List<OrderBookPriceLevel> TopAsks { get; }
+        public ChartValues<OrderBookPriceLevel> ChartAsks { get; }
+        public ChartValues<OrderBookPriceLevel> ChartAggregatedAsks { get; }
+        public List<OrderBookPriceLevel> TopBids { get; }
+        public ChartValues<OrderBookPriceLevel> ChartBids { get; }
+        public ChartValues<OrderBookPriceLevel> ChartAggregatedBids { get; }
 
         public void Clear()
         {
@@ -163,10 +89,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
             ChartBids.Clear();
             ChartAggregatedAsks.Clear();
             ChartAggregatedBids.Clear();
-            Asks = null;
-            Bids = null;
-            TopAsks = null;
-            TopBids = null;
+            Asks.Clear();
+            Bids.Clear();
+            TopAsks.Clear();
+            TopBids.Clear();
         }
     }
 }

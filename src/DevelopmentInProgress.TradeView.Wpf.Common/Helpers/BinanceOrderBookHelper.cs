@@ -43,14 +43,15 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
                     Symbol = orderBook.Symbol,
                     BaseSymbol = symbol.BaseAsset.Symbol,
                     QuoteSymbol = symbol.QuoteAsset.Symbol,
-                    BidAskSpread = bidAskSpread,
-                    TopAsks = topAsks,
-                    TopBids = topBids,
-                    ChartAsks = new ChartValues<OrderBookPriceLevel>(chartAsks),
-                    ChartBids = new ChartValues<OrderBookPriceLevel>(chartBids),
-                    ChartAggregatedAsks = new ChartValues<OrderBookPriceLevel>(aggregatedAsks),
-                    ChartAggregatedBids = new ChartValues<OrderBookPriceLevel>(aggregatedBids)
+                    BidAskSpread = bidAskSpread
                 };
+
+                newOrderBook.TopAsks.AddRange(topAsks);
+                newOrderBook.TopBids.AddRange(topBids);
+                newOrderBook.ChartAsks.AddRange(new ChartValues<OrderBookPriceLevel>(chartAsks));
+                newOrderBook.ChartBids.AddRange(new ChartValues<OrderBookPriceLevel>(chartBids));
+                newOrderBook.ChartAggregatedAsks.AddRange(new ChartValues<OrderBookPriceLevel>(aggregatedAsks));
+                newOrderBook.ChartAggregatedBids.AddRange(new ChartValues<OrderBookPriceLevel>(aggregatedBids));
 
                 tcs.SetResult(newOrderBook);
             }
@@ -90,8 +91,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
             // Create new instances of the top 
             // bids and asks, reversing the asks
-            orderBook.TopAsks = topAsks;
-            orderBook.TopBids = topBids;
+            orderBook.TopAsks.AddRange(topAsks);
+            orderBook.TopBids.AddRange(topBids);
             orderBook.BidAskSpread = bidAskSpread;
 
             // Update the existing orderbook chart

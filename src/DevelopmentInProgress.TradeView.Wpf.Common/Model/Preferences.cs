@@ -18,6 +18,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         public int OrderBookLimit { get; set; }
         public int OrderBookChartDisplayCount { get; set; }
         public int OrderBookDisplayCount { get; set; }
-        public ObservableCollection<string> FavouriteSymbols { get; set; }
+        public ObservableCollection<string> FavouriteSymbols { get; }
     }
 }

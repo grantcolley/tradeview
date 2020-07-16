@@ -93,22 +93,25 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             var aggregatedAsks = GetAggregatedAsks(chartAsks);
             var aggregatedBids = GetAggregatedBids(chartBids);
 
-            return new OrderBook
+            var newOrderBook = new OrderBook
             {
                 LastUpdateId = latestSquence,
                 Symbol = orderBook.Symbol,
                 BaseSymbol = symbol.BaseAsset.Symbol,
                 QuoteSymbol = symbol.QuoteAsset.Symbol,
-                BidAskSpread = bidAskSpread,
-                Asks = replayedAsks,
-                Bids = replayedBids,
-                TopAsks = topAsks,
-                TopBids = topBids,
-                ChartAsks = new ChartValues<OrderBookPriceLevel>(chartAsks),
-                ChartBids = new ChartValues<OrderBookPriceLevel>(chartBids),
-                ChartAggregatedAsks = new ChartValues<OrderBookPriceLevel>(aggregatedAsks),
-                ChartAggregatedBids = new ChartValues<OrderBookPriceLevel>(aggregatedBids)
+                BidAskSpread = bidAskSpread
             };
+
+            newOrderBook.Asks.AddRange(replayedAsks);
+            newOrderBook.Bids.AddRange(replayedBids);
+            newOrderBook.TopAsks.AddRange(topAsks);
+            newOrderBook.TopBids.AddRange(topBids);
+            newOrderBook.ChartAsks.AddRange(new ChartValues<OrderBookPriceLevel>(chartAsks));
+            newOrderBook.ChartBids.AddRange(new ChartValues<OrderBookPriceLevel>(chartBids));
+            newOrderBook.ChartAggregatedAsks.AddRange(new ChartValues<OrderBookPriceLevel>(aggregatedAsks));
+            newOrderBook.ChartAggregatedBids.AddRange(new ChartValues<OrderBookPriceLevel>(aggregatedBids));
+
+            return newOrderBook;
         }
 
         public void UpdateLocalOrderBook(OrderBook orderBook, Core.Model.OrderBook updateOrderBook,
@@ -126,8 +129,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
             long latestSquence = orderBook.LastUpdateId;
 
-            orderBook.Asks = ReplayPriceLevels(orderBook.Asks, updateOrderBook.Asks, orderBook.LastUpdateId, ref latestSquence);
-            orderBook.Bids = ReplayPriceLevels(orderBook.Bids, updateOrderBook.Bids, orderBook.LastUpdateId, ref latestSquence);
+            orderBook.Asks.AddRange(ReplayPriceLevels(orderBook.Asks, updateOrderBook.Asks, orderBook.LastUpdateId, ref latestSquence));
+            orderBook.Bids.AddRange(ReplayPriceLevels(orderBook.Bids, updateOrderBook.Bids, orderBook.LastUpdateId, ref latestSquence));
 
             orderBook.LastUpdateId = latestSquence;
 
@@ -156,8 +159,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             }
 
             // Take the top bids and asks for the order book bid and ask lists and order descending.
-            orderBook.TopAsks = asks.Take(listDisplayCount).OrderByDescending(a => a.Price).ToList();
-            orderBook.TopBids = bids.OrderByDescending(b => b.Price).Take(listDisplayCount).ToList();
+            orderBook.TopAsks.AddRange(asks.Take(listDisplayCount).OrderByDescending(a => a.Price).ToList());
+            orderBook.TopBids.AddRange(bids.OrderByDescending(b => b.Price).Take(listDisplayCount).ToList());
 
             var skipExcessBids = 0;
             if (bids.Count > chartDisplayCount)

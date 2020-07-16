@@ -30,10 +30,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                     TradesDisplayCount = ua.Preferences.TradesDisplayCount,
                     OrderBookLimit = ua.Preferences.OrderBookLimit,
                     OrderBookChartDisplayCount = ua.Preferences.OrderBookChartDisplayCount,
-                    OrderBookDisplayCount = ua.Preferences.OrderBookDisplayCount,
-                    FavouriteSymbols = new ObservableCollection<string>(ua.Preferences.FavouriteSymbols)
+                    OrderBookDisplayCount = ua.Preferences.OrderBookDisplayCount
                 }
             };
+
+            ua.Preferences.FavouriteSymbols.ForEach(userAccount.Preferences.FavouriteSymbols.Add);
 
             return userAccount;
         }

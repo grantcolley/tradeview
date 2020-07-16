@@ -19,7 +19,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
     {
         private CancellationTokenSource ordersCancellationTokenSource;
         private Account account;
-        private ObservableCollection<Order> orders;
         private Order selectedOrder;
         private bool isLoading;
         private bool isCancellAllVisible;
@@ -58,19 +57,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             }
         }
 
-        public ObservableCollection<Order> Orders
-        {
-            get { return orders; }
-            set
-            {
-                if (orders != value)
-                {
-                    orders = value;
-                    OnPropertyChanged(nameof(Orders));
-                }
-            }
-        }
-
+        public ObservableCollection<Order> Orders { get; }
+        
         public Order SelectedOrder
         {
             get { return selectedOrder; }
@@ -254,7 +242,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
         {
             try
             {
-                var order = orders.Single(o => o.Id == orderId);
+                var order = Orders.Single(o => o.Id == orderId);
                 order.IsVisible = false;
                 var result = await ExchangeService.CancelOrderAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User, order.Symbol, order.Id, null, 0, ordersCancellationTokenSource.Token).ConfigureAwait(true);
                 lock (lockOrders)

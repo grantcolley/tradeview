@@ -5,7 +5,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 {
     public class LocalTradeListResult<T>
     {
-        public List<T> Trades { get; set; }
-        public ChartValues<T> TradesChart { get; set; }
+        public LocalTradeListResult()
+        {
+            Trades = new List<T>();
+            TradesChart = new ChartValues<T>();
+        }
+
+        public List<T> Trades { get; }
+        public ChartValues<T> TradesChart { get; }
     }
 }

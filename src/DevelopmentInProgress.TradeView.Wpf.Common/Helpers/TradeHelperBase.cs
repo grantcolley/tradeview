@@ -48,7 +48,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
                 var newTradesCount = newTrades.Count;
 
-                result.TradesChart = GetNewChartTrades(newTrades, newTradesCount, tradesChartDisplayCount);
+                result.TradesChart.AddRange(GetNewChartTrades(newTrades, newTradesCount, tradesChartDisplayCount));
 
                 if (newTradesCount > tradesDisplayCount)
                 {
@@ -56,14 +56,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
                     var tradeBooktrades = newTrades.Skip(newTradesCount - tradesDisplayCount).ToList();
 
                     // Order by newest to oldest (as it will appear on trade list)
-                    result.Trades = new List<T>(tradeBooktrades.Reverse<T>().ToList());
+                    result.Trades.AddRange(new List<T>(tradeBooktrades.Reverse<T>().ToList()));
                 }
                 else
                 {
                     // New trades less (or equal) the 
                     // total trades to show in the trade list.
                     // Order by newest to oldest (as it will appear on trade list)
-                    result.Trades = new List<T>(newTrades.Reverse<T>().ToList());
+                    result.Trades.AddRange(new List<T>(newTrades.Reverse<T>().ToList()));
                 }
 
                 tcs.SetResult(result);

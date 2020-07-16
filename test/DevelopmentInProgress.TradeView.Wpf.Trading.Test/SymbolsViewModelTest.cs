@@ -48,15 +48,15 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
                 }
             });
 
-            await symbolsViewModel.SetAccount(
-                new UserAccount
-                {
-                    Preferences = new Preferences
-                    {
-                        SelectedSymbol = "BNBBTC",
-                        FavouriteSymbols = new ObservableCollection<string>(new[] { "BNBBTC", "TRXBTC" })
-                    }
-                });
+            var userAccount = new UserAccount
+            {
+                Preferences = new Preferences { SelectedSymbol = "BNBBTC", }
+            };
+
+            userAccount.Preferences.FavouriteSymbols.Add("BNBBTC");
+            userAccount.Preferences.FavouriteSymbols.Add("TRXBTC");
+
+            await symbolsViewModel.SetAccount(userAccount);
 
             await Task.Delay(1000);
 
@@ -100,11 +100,15 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
                 }
             });
 
-            await symbolsViewModel.SetAccount(
-                new UserAccount { 
-                    Preferences = new Preferences { 
-                        SelectedSymbol = "BNBBTC", 
-                        FavouriteSymbols = new ObservableCollection<string>(new[] { "BNBBTC", "TRXBTC" }) } });
+            var userAccount = new UserAccount
+            {
+                Preferences = new Preferences { SelectedSymbol = "BNBBTC", }
+            };
+
+            userAccount.Preferences.FavouriteSymbols.Add("BNBBTC");
+            userAccount.Preferences.FavouriteSymbols.Add("TRXBTC");
+            
+            await symbolsViewModel.SetAccount(userAccount);
 
             await Task.Delay(1000);
 
