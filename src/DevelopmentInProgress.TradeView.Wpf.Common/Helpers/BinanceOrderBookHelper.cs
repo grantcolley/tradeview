@@ -91,6 +91,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
             // Create new instances of the top 
             // bids and asks, reversing the asks
+            orderBook.TopAsks.Clear();
+            orderBook.TopBids.Clear();
             orderBook.TopAsks.AddRange(topAsks);
             orderBook.TopBids.AddRange(topBids);
             orderBook.BidAskSpread = bidAskSpread;

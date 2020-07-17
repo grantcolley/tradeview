@@ -42,20 +42,19 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
             long latestSquence = snapShot.LastUpdateId;
 
-            var replayedAsks = ReplayPriceLevels(snapShotAsks, orderBook.Asks, snapShot.LastUpdateId, ref latestSquence);
-
-            var replayedBids = ReplayPriceLevels(snapShotBids, orderBook.Bids, snapShot.LastUpdateId, ref latestSquence);
+            ReplayPriceLevels(snapShotAsks, orderBook.Asks, snapShot.LastUpdateId, ref latestSquence);
+            ReplayPriceLevels(snapShotBids, orderBook.Bids, snapShot.LastUpdateId, ref latestSquence);
             
             var pricePrecision = symbol.PricePrecision;
             var quantityPrecision = symbol.QuantityPrecision;
             
-            var asks = replayedAsks.Select(ask => new OrderBookPriceLevel
+            var asks = snapShotAsks.Select(ask => new OrderBookPriceLevel
             {
                 Price = ask.Price.Trim(pricePrecision),
                 Quantity = ask.Quantity.Trim(quantityPrecision)
             }).ToList();
 
-            var bids = replayedBids.Select(bid => new OrderBookPriceLevel
+            var bids = snapShotBids.Select(bid => new OrderBookPriceLevel
             {
                 Price = bid.Price.Trim(pricePrecision),
                 Quantity = bid.Quantity.Trim(quantityPrecision)
@@ -102,8 +101,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
                 BidAskSpread = bidAskSpread
             };
 
-            newOrderBook.Asks.AddRange(replayedAsks);
-            newOrderBook.Bids.AddRange(replayedBids);
+            newOrderBook.Asks.AddRange(snapShotAsks);
+            newOrderBook.Bids.AddRange(snapShotBids);
             newOrderBook.TopAsks.AddRange(topAsks);
             newOrderBook.TopBids.AddRange(topBids);
             newOrderBook.ChartAsks.AddRange(new ChartValues<OrderBookPriceLevel>(chartAsks));
@@ -129,8 +128,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
             long latestSquence = orderBook.LastUpdateId;
 
-            orderBook.Asks.AddRange(ReplayPriceLevels(orderBook.Asks, updateOrderBook.Asks, orderBook.LastUpdateId, ref latestSquence));
-            orderBook.Bids.AddRange(ReplayPriceLevels(orderBook.Bids, updateOrderBook.Bids, orderBook.LastUpdateId, ref latestSquence));
+            ReplayPriceLevels(orderBook.Asks, updateOrderBook.Asks, orderBook.LastUpdateId, ref latestSquence);
+            ReplayPriceLevels(orderBook.Bids, updateOrderBook.Bids, orderBook.LastUpdateId, ref latestSquence);
 
             orderBook.LastUpdateId = latestSquence;
 
@@ -159,6 +158,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             }
 
             // Take the top bids and asks for the order book bid and ask lists and order descending.
+            orderBook.TopAsks.Clear();
+            orderBook.TopBids.Clear();
             orderBook.TopAsks.AddRange(asks.Take(listDisplayCount).OrderByDescending(a => a.Price).ToList());
             orderBook.TopBids.AddRange(bids.OrderByDescending(b => b.Price).Take(listDisplayCount).ToList());
 
@@ -182,7 +183,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             UpdateChartValues(orderBook.ChartAggregatedBids, aggregatedBids);
         }
 
-        private List<Core.Model.OrderBookPriceLevel> ReplayPriceLevels(
+        private void ReplayPriceLevels(
             List<Core.Model.OrderBookPriceLevel> orderBookPriceLevels, 
             IEnumerable<Core.Model.OrderBookPriceLevel> playBackPriceLevels, 
             long orderBookSequence, 
@@ -241,8 +242,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
                     orderBookPriceLevels.Add(priceLevel);
                 }
             }
-
-            return orderBookPriceLevels;
         }
         
         private List<OrderBookPriceLevel> GetAggregatedAsks(List<OrderBookPriceLevel> orders)
