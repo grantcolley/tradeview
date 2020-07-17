@@ -105,7 +105,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             UpdateChartValues(orderBook.ChartAggregatedBids, aggregatedBids);
         }
 
-        private void GetBidsAndAsks(Core.Model.OrderBook orderBook, int pricePrecision, int quantityPrecision, 
+        private static void GetBidsAndAsks(Core.Model.OrderBook orderBook, int pricePrecision, int quantityPrecision, 
             int listDisplayCount, int chartDisplayCount, 
             out List<OrderBookPriceLevel> topAsks, out List<OrderBookPriceLevel> topBids, 
             out List<OrderBookPriceLevel> chartAsks, out List<OrderBookPriceLevel> chartBids,
@@ -160,7 +160,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             aggregatedBids = aggBids.Reverse<OrderBookPriceLevel>().ToList();
         }
 
-        private List<OrderBookPriceLevel> GetAggregatedList(List<OrderBookPriceLevel> orders)
+        private static List<OrderBookPriceLevel> GetAggregatedList(List<OrderBookPriceLevel> orders)
         {
             var count = orders.Count;
 
@@ -177,7 +177,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             return aggregatedList;
         }
 
-        private void UpdateChartValues(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
+        private static void UpdateChartValues(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
         {
             var count = cv.Count;
 

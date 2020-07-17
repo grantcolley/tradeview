@@ -183,7 +183,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             UpdateChartValues(orderBook.ChartAggregatedBids, aggregatedBids);
         }
 
-        private void ReplayPriceLevels(
+        private static void ReplayPriceLevels(
             List<Core.Model.OrderBookPriceLevel> orderBookPriceLevels, 
             IEnumerable<Core.Model.OrderBookPriceLevel> playBackPriceLevels, 
             long orderBookSequence, 
@@ -244,7 +244,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             }
         }
         
-        private List<OrderBookPriceLevel> GetAggregatedAsks(List<OrderBookPriceLevel> orders)
+        private static List<OrderBookPriceLevel> GetAggregatedAsks(List<OrderBookPriceLevel> orders)
         {
             var count = orders.Count;
 
@@ -261,7 +261,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             return aggregatedList;
         }
 
-        private List<OrderBookPriceLevel> GetAggregatedBids(List<OrderBookPriceLevel> orders)
+        private static List<OrderBookPriceLevel> GetAggregatedBids(List<OrderBookPriceLevel> orders)
         {
             var index = orders.Count - 1;
 
@@ -279,7 +279,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
         }
 
-        private void UpdateChartValues(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
+        private static void UpdateChartValues(ChartValues<OrderBookPriceLevel> cv, List<OrderBookPriceLevel> pl)
         {
             var count = cv.Count;
 
