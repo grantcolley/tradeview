@@ -17,10 +17,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
             DisplayDependencies = new ObservableCollection<StrategyFile>();
         }
 
+        public ObservableCollection<StrategySubscription> StrategySubscriptions { get; }
+        public ObservableCollection<StrategyFile> DisplayDependencies { get; }
+        public ObservableCollection<StrategyFile> Dependencies { get; }
         public StrategyStatus Status { get; set; }
-        public ObservableCollection<StrategySubscription> StrategySubscriptions { get; set; }
-        public ObservableCollection<StrategyFile> Dependencies { get; set; }
-        public ObservableCollection<StrategyFile> DisplayDependencies { get; set; }
         public string TargetType { get; set; }
         public string DisplayViewType { get; set; }
         public string DisplayViewModelType { get; set; }

@@ -11,7 +11,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
 {
     public abstract class StrategyDisplayViewModelBase : BaseViewModel
     {
-        private List<Symbol> symbols;
         private bool isActive;
 
         public StrategyDisplayViewModelBase(Strategy strategy,
@@ -22,9 +21,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             HelperFactoryContainer = iHelperFactoryContainer;
             Dispatcher = UiDispatcher;
             Strategy = strategy;
+
+            Symbols = new List<Symbol>();
         }
 
         public event EventHandler<StrategyEventArgs> OnStrategyNotification;
+
+        public List<Symbol> Symbols { get; }
 
         public Strategy Strategy { get; set; }
 
@@ -39,19 +42,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
                 {
                     isActive = value;
                     OnPropertyChanged(nameof(IsActive));
-                }
-            }
-        }
-
-        public List<Symbol> Symbols
-        {
-            get { return symbols; }
-            set
-            {
-                if (symbols != value)
-                {
-                    symbols = value;
-                    OnPropertyChanged(nameof(Symbols));
                 }
             }
         }

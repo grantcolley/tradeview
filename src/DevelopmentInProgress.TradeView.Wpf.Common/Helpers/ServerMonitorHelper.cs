@@ -82,19 +82,29 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
         {
             var newServerStrategies = serverStrategies.Where(ism => !strategies.Any(s => s.Name == ism.Strategy.Name)).ToList();
 
-            var newStrategies = newServerStrategies.Select(ism => new ServerStrategy
+            Func<Core.Server.ServerStrategy, ServerStrategy> f = (ism) =>
             {
-                Name = ism.Strategy.Name,
-                Started = ism.Started,
-                StartedBy = ism.StartedBy,
-                Parameters = ism.Strategy.Parameters,
-                Connections = new ObservableCollection<Connection>(ism.Connections.Select(c => new Connection
+                var serverStrategy = new ServerStrategy
+                {
+                    Name = ism.Strategy.Name,
+                    Started = ism.Started,
+                    StartedBy = ism.StartedBy,
+                    Parameters = ism.Strategy.Parameters,
+                    ConnectionCount = ism.Connections.Count
+                };
+
+                var connections = ism.Connections.Select(c => new Connection
                 {
                     Name = c.Connection,
                     Connected = c.Connected
-                })),
-                ConnectionCount = ism.Connections.Count
-            });
+                }).ToList();
+
+                connections.ForEach(serverStrategy.Connections.Add);
+
+                return serverStrategy;
+            };
+
+            var newStrategies = newServerStrategies.Select(ism => f(ism));
 
             foreach(var strategy in newStrategies)
             {

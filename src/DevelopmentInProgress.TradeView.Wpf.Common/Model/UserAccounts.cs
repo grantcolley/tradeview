@@ -9,6 +9,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
             Accounts = new List<UserAccount>();
         }
 
-        public List<UserAccount> Accounts { get; set; }
+        public List<UserAccount> Accounts { get; }
     }
 }

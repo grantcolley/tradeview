@@ -19,10 +19,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
         {
             var result = await configurationAccounts.GetAccountsAsync().ConfigureAwait(false);
 
-            return new UserAccounts
-            {
-                Accounts = result.Accounts.Select(ua => ua.ToUserAccount()).ToList()
-            };
+            var userAccounts = new UserAccounts();
+            userAccounts.Accounts.AddRange(result.Accounts.Select(ua => ua.ToUserAccount()).ToList());
+            return userAccounts;
         }
 
         public async Task<UserAccount> GetAccountAsync(string accountName)

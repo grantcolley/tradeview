@@ -933,7 +933,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 else if (string.IsNullOrWhiteSpace(args.Message) && args.Value.Any())
                 {
                     symbols = args.Value;
-                    StrategyDisplayViewModel.Symbols = symbols;
+                    StrategyDisplayViewModel.Symbols.AddRange(symbols);
                 }
                 else if (!string.IsNullOrWhiteSpace(args.Message))
                 {

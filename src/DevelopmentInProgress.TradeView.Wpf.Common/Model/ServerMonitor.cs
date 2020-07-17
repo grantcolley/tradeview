@@ -29,7 +29,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         private string stoppedBy;
         private DateTime started;
         private DateTime stopped;
-        private ObservableCollection<ServerStrategy> strategies;
 
         public ServerMonitor()
         {
@@ -37,6 +36,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         }
 
         public event EventHandler<ServerMonitorEventArgs> OnServerMonitorNotification;
+
+        public ObservableCollection<ServerStrategy> Strategies { get; }
 
         public string Name 
         {
@@ -168,23 +169,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
             }
         }
 
-        public ObservableCollection<ServerStrategy> Strategies
-        {
-            get { return strategies; }
-            set
-            {
-                if (strategies != value)
-                {
-                    strategies = value;
-                    OnPropertyChanged(nameof(Strategies));
-                    OnPropertyChanged(nameof(StrategyCount));
-                }
-            }
-        }
-
         public int StrategyCount
         {
-            get { return strategies.Count; }
+            get { return Strategies.Count; }
             set { OnPropertyChanged(nameof(StrategyCount)); }
         }
 

@@ -11,12 +11,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         private DateTime started;
         private DateTime stopped;
         public string parameters;
-        private ObservableCollection<Connection> connections;
 
         public ServerStrategy()
         {
             Connections = new ObservableCollection<Connection>();
         }
+
+        public ObservableCollection<Connection> Connections { get; }
 
         public string Name 
         {
@@ -92,19 +93,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 {
                     parameters = value;
                     OnPropertyChanged(nameof(Parameters));
-                }
-            }
-        }
-
-        public ObservableCollection<Connection> Connections
-        {
-            get { return connections; }
-            set
-            {
-                if (connections != value)
-                {
-                    connections = value;
-                    OnPropertyChanged(nameof(Connections));
                 }
             }
         }
