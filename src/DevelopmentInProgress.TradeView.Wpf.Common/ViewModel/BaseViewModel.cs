@@ -26,7 +26,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             GC.SuppressFinalize(this);
         }
 
-        protected void OnPropertyChanged(string propertyName, bool isDirty = false)
+        protected void OnPropertyChanged(string propertyName)
         {
             var propertyChangedHandler = PropertyChanged;
             propertyChangedHandler?.Invoke(this, new PropertyChangedEventArgs(propertyName));

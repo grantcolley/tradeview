@@ -1,5 +1,6 @@
 ﻿using DevelopmentInProgress.TradeView.Core.Enums;
 using DevelopmentInProgress.TradeView.Core.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
@@ -12,6 +13,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
         public TradeHelperFactory(IExchangeApiFactory exchangeApiFactory)
         {
+            if (exchangeApiFactory == null)
+            {
+                throw new ArgumentNullException(nameof(exchangeApiFactory));
+            }
+
             tradeHelpers = new Dictionary<Exchange, ITradeHelper>();
             tradeHelpers.Add(Exchange.Binance, new TradeHelper());
             tradeHelpers.Add(Exchange.Kucoin, new TradeHelper());

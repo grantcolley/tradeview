@@ -167,6 +167,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
         {
             try
             {
+                if (acccount == null)
+                {
+                    throw new ArgumentNullException(nameof(acccount));
+                }
+
+                if(account.AccountName != Account.AccountName)
+                {
+                    throw new ArgumentException($"{account.AccountName} doesnt match {Account.AccountName}");
+                }
+
                 var result = await ExchangeService.GetOpenOrdersAsync(Account.AccountInfo.User.Exchange, Account.AccountInfo.User).ConfigureAwait(true);
 
                 Action<IEnumerable<Order>> action = res =>
