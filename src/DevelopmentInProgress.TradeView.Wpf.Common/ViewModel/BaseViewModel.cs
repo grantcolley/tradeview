@@ -18,7 +18,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
 
         public Dispatcher Dispatcher { get; set; }
 
-        public abstract void Dispose(bool disposing);
+        protected abstract void Dispose(bool disposing);
 
         public void Dispose()
         {

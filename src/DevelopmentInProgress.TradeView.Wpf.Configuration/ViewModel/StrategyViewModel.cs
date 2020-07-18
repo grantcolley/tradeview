@@ -143,7 +143,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             get { return CandlestickIntervalExtensions.GetCandlestickIntervalNames(); }
         }
         
-        public override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposed)
             {

@@ -157,7 +157,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
         }
 
-        public override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposed)
             {
