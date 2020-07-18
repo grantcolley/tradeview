@@ -31,9 +31,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
                 throw new ArgumentNullException(nameof(orderBook));
             }
 
-            var cancellationTokenSource = new CancellationTokenSource();
+            Core.Model.OrderBook snapShot;
 
-            var snapShot = await kucoinExchangeApi.GetOrderBookAsync(symbol.ExchangeSymbol, 100, cancellationTokenSource.Token).ConfigureAwait(false);
+            using (var cancellationTokenSource = new CancellationTokenSource())
+            {
+                snapShot = await kucoinExchangeApi.GetOrderBookAsync(symbol.ExchangeSymbol, 100, cancellationTokenSource.Token).ConfigureAwait(false);
+            }
 
             // Order by price: bids (ASC) and asks (ASC)
             // Discard those that we are not interested in displaying on the screen.
