@@ -9,7 +9,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
     {
         private string baseSymbol;
         private string quoteSymbol;
-        public decimal bidAskSpread;
+        private decimal bidAskSpread;
 
         static OrderBook()
         {

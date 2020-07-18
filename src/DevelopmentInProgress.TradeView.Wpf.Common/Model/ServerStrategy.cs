@@ -10,7 +10,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         private string stoppedBy;
         private DateTime started;
         private DateTime stopped;
-        public string parameters;
+        private string parameters;
 
         public ServerStrategy()
         {
