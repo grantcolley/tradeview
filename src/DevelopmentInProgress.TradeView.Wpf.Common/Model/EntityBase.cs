@@ -74,10 +74,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         protected void OnPropertyChanged(string propertyName)
         {
             var propertyChangedHandler = PropertyChanged;
-            if (propertyChangedHandler != null)
-            {
-                propertyChangedHandler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            propertyChangedHandler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
