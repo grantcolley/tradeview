@@ -66,7 +66,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                         }
                     }
 
-                    ServerMonitor updateServerMonitor(ServerMonitor sm, Core.Server.TradeServer s)
+                    static ServerMonitor updateServerMonitor(ServerMonitor sm, Core.Server.TradeServer s)
                     {
                         sm.Uri = s.Uri;
                         sm.MaxDegreeOfParallelism = s.MaxDegreeOfParallelism;
