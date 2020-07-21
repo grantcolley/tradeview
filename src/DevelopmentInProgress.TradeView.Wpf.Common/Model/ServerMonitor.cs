@@ -320,17 +320,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         {
             try
             {
-                using (var client = new HttpClient())
-                {
-                    using (var response = await client.GetAsync(new Uri(Uri, "ping")).ConfigureAwait(false))
-                    {
-                        var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                using var client = new HttpClient();
 
-                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                        {
-                            return content.Contains("Alive", StringComparison.Ordinal);
-                        }
-                    }
+                using var response = await client.GetAsync(new Uri(Uri, "ping")).ConfigureAwait(false);
+                var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    return content.Contains("Alive", StringComparison.Ordinal);
                 }
             }
             catch (Exception)
