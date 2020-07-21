@@ -14,13 +14,13 @@ using System.Windows.Threading;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 {
-    public class ServerMonitor : EntityBase
+    public class ServerMonitor : EntityBase, IDisposable
     {
         private readonly SemaphoreSlim serverMonitorSemaphoreSlim = new SemaphoreSlim(1, 1);
         private SocketClient socketClient;
         private bool isConnecting;
         private bool isConnected;
-
+        private bool disposed;
         private string name;
         private Uri uri;
         private int maxDegreeOfParallelism;
@@ -175,9 +175,18 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
             set { OnPropertyChanged(nameof(StrategyCount)); }
         }
 
-        public Task DisposeAsync()
+        public void Dispose()
         {
-            return DisposeSocketAsync();
+            Dispose(true);
+
+            GC.SuppressFinalize(this);
+        }
+
+        public async Task DisposeAsync()
+        {
+            await DisposeSocketAsync().ConfigureAwait(false);
+
+            Dispose();
         }
 
         public async Task DisposeSocketAsync()
@@ -287,6 +296,24 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
             {
                 serverMonitorSemaphoreSlim.Release();
             }
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                if (serverMonitorSemaphoreSlim != null)
+                {
+                    serverMonitorSemaphoreSlim.Dispose();
+                }
+            }
+
+            disposed = true;
         }
 
         private async Task<bool> IsServerRunningAsync()
