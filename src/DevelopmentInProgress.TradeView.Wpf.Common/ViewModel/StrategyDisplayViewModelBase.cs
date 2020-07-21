@@ -48,17 +48,17 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
 
         public virtual Task TradeNotificationsAsync(List<Core.TradeStrategy.StrategyNotification> tradeNotifications)
         {
-            throw new NotImplementedException("StrategyDisplayViewModelBase.TradeNotifications(List<Core.TradeStrategy.StrategyNotification> tradeNotifications)");
+            throw new NotImplementedException();
         }
 
         public virtual Task OrderNotificationsAsync(List<Core.TradeStrategy.StrategyNotification> orderNotifications)
         {
-            throw new NotImplementedException("StrategyDisplayViewModelBase.OrderNotifications(List<Core.TradeStrategy.StrategyNotification> orderNotifications)");
+            throw new NotImplementedException();
         }
 
         public virtual Task CandlestickNotificationsAsync(List<Core.TradeStrategy.StrategyNotification> candlestickNotifications)
         {
-            throw new NotImplementedException("StrategyDisplayViewModelBase.CandlestickNotifications(List<Core.TradeStrategy.StrategyNotification> candlestickNotifications)");
+            throw new NotImplementedException();
         }
 
         protected void OnException(string message, Exception exception)
