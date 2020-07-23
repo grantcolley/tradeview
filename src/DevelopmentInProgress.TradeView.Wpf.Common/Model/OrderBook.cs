@@ -2,9 +2,11 @@
 using LiveCharts.Configurations;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 {
+    [SuppressMessage("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces")]
     public class OrderBook : EntityBase
     {
         private string baseSymbol;
