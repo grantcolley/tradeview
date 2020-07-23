@@ -43,6 +43,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
             return serverMonitors;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions and notify observers.")]
         public async Task RefreshServerMonitorsAsync()
         {
             await serverMonitorSemaphoreSlim.WaitAsync().ConfigureAwait(false);
@@ -133,6 +134,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
             disposed = true;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions and notify observers.")]
         private void StartObserveringServers()
         {
             if(observableInterval != null)

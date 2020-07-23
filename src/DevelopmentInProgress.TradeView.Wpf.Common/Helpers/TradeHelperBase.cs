@@ -11,6 +11,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 {
     public abstract class TradeHelperBase : ITradeHelper
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Set exception for TaskCompletionSource.")]
         public virtual async Task<LocalTradeListResult<T>> CreateLocalTradeList<T>(
             Symbol symbol,
             IEnumerable<ITrade> tradesUpdate, 

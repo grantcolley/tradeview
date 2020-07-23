@@ -98,6 +98,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions and notify observers.")]
         public async Task SetAccount(Account account)
         {
             IsLoading = true;
@@ -163,6 +164,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             IsLoading = false;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions and notify observers.")]
         public async Task UpdateOrders(Account acccount)
         {
             try
@@ -248,6 +250,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             await Cancel(orderId.ToString()).ConfigureAwait(false);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions and notify observers.")]
         private async Task Cancel(string orderId)
         {
             try
@@ -266,6 +269,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions and notify observers.")]
         private void CancelAll(object param)
         {
             try

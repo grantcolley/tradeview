@@ -189,6 +189,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
             Dispose();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions and notify observers.")]
         public async Task DisposeSocketAsync()
         {
             try
@@ -212,6 +213,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions and notify observers.")]
         public async Task ConnectAsync(Dispatcher dispatcher)
         {
             await serverMonitorSemaphoreSlim.WaitAsync().ConfigureAwait(false);
@@ -338,6 +340,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
             return false;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions and notify observers.")]
         private async Task OnServerMonitorNotificationAsync(Socket.Messages.Message message)
         {
             try

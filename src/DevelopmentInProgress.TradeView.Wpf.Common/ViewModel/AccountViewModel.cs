@@ -99,6 +99,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             disposed = true;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions and notify observers.")]
         public async Task Login(Account account)
         {
             if(account == null)
@@ -141,6 +142,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions and notify observers.")]
         private void DispatcherTimerTick(object sender, EventArgs e)
         {
             try
