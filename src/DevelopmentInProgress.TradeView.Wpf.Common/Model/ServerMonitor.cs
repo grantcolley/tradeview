@@ -332,7 +332,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                     return content.Contains("Alive", StringComparison.Ordinal);
                 }
             }
-            catch (Exception)
+            catch (HttpRequestException)
             {
                 // intentionally swallow
             }
