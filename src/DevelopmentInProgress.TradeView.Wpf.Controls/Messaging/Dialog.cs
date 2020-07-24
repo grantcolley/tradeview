@@ -46,8 +46,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Messaging
         public static MessageBoxResult ShowMessage(MessageBoxSettings messageBoxSettings)
         {
             var model = new MessageBoxViewModel(messageBoxSettings);
-            var view = new MessageBoxView();
-            view.DataContext = model;
+            var view = new MessageBoxView
+            {
+                DataContext = model
+            };
+
             view.ShowDialog();
             messageBoxSettings.MessageBoxResult = model.MessageBoxResult;
             return messageBoxSettings.MessageBoxResult;

@@ -49,9 +49,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         /// <param name="moduleSettings">Module settings.</param>
         public void AddModule(ModuleSettings moduleSettings)
         {
-            var navigationPanelItem = new NavigationPanelItem();
-            navigationPanelItem.NavigationPanelItemName = moduleSettings.ModuleName;
-            navigationPanelItem.ImageLocation = moduleSettings.ModuleImagePath;
+            var navigationPanelItem = new NavigationPanelItem
+            {
+                NavigationPanelItemName = moduleSettings.ModuleName,
+                ImageLocation = moduleSettings.ModuleImagePath
+            };
 
             foreach (ModuleGroup moduleGroup in moduleSettings.ModuleGroups)
             {

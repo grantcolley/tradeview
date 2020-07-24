@@ -42,32 +42,45 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration
         {
             staticContainerProvider = containerProvider;
 
-            var moduleSettings = new ModuleSettings();
-            moduleSettings.ModuleName = ModuleName;
-            moduleSettings.ModuleImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Configuration;component/Images/configuration.png";
+            var moduleSettings = new ModuleSettings
+            {
+                ModuleName = ModuleName,
+                ModuleImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Configuration;component/Images/configuration.png"
+            };
 
-            var moduleGroup = new ModuleGroup();
-            moduleGroup.ModuleGroupName = ConfigurationUser;
+            var moduleGroup = new ModuleGroup
+            {
+                ModuleGroupName = ConfigurationUser
+            };
 
-            var newDocument = new ModuleGroupItem();
-            newDocument.ModuleGroupItemName = "Manage Strategies";
-            newDocument.TargetView = typeof(StrategyManagerView).Name;
-            newDocument.TargetViewTitle = "Manage Strategies";
-            newDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Configuration;component/Images/manageStrategies.png";
+            var newDocument = new ModuleGroupItem
+            {
+                ModuleGroupItemName = "Manage Strategies",
+                TargetView = typeof(StrategyManagerView).Name,
+                TargetViewTitle = "Manage Strategies",
+                ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Configuration;component/Images/manageStrategies.png"
+            };
+
             moduleGroup.ModuleGroupItems.Add(newDocument);
 
-            var manageAccountsDocument = new ModuleGroupItem();
-            manageAccountsDocument.ModuleGroupItemName = "Manage Accounts";
-            manageAccountsDocument.TargetView = typeof(UserAccountsView).Name;
-            manageAccountsDocument.TargetViewTitle = "Manage Accounts";
-            manageAccountsDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Configuration;component/Images/accounts.png";
+            var manageAccountsDocument = new ModuleGroupItem
+            {
+                ModuleGroupItemName = "Manage Accounts",
+                TargetView = typeof(UserAccountsView).Name,
+                TargetViewTitle = "Manage Accounts",
+                ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Configuration;component/Images/accounts.png"
+            };
+
             moduleGroup.ModuleGroupItems.Add(manageAccountsDocument);
 
-            var manageServersDocument = new ModuleGroupItem();
-            manageServersDocument.ModuleGroupItemName = "Manage Trade Servers";
-            manageServersDocument.TargetView = typeof(TradeServerManagerView).Name;
-            manageServersDocument.TargetViewTitle = "Manage Servers";
-            manageServersDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Configuration;component/Images/manageServers.png";
+            var manageServersDocument = new ModuleGroupItem
+            {
+                ModuleGroupItemName = "Manage Trade Servers",
+                TargetView = typeof(TradeServerManagerView).Name,
+                TargetViewTitle = "Manage Servers",
+                ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Configuration;component/Images/manageServers.png"
+            };
+
             moduleGroup.ModuleGroupItems.Add(manageServersDocument);
 
             moduleSettings.ModuleGroups.Add(moduleGroup);
@@ -110,21 +123,27 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration
 
         private static ModuleGroupItem CreateStrategyModuleGroupItem(string name, string title)
         {
-            var strategyDocument = new ModuleGroupItem();
-            strategyDocument.ModuleGroupItemName = name;
-            strategyDocument.TargetView = typeof(StrategyRunnerView).Name;
-            strategyDocument.TargetViewTitle = title;
-            strategyDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Strategies;component/Images/strategy.png";
+            var strategyDocument = new ModuleGroupItem
+            {
+                ModuleGroupItemName = name,
+                TargetView = typeof(StrategyRunnerView).Name,
+                TargetViewTitle = title,
+                ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Strategies;component/Images/strategy.png"
+            };
+
             return strategyDocument;
         }
 
         private static ModuleGroupItem CreateAccountModuleGroupItem(string name, string title)
         {
-            var accountDocument = new ModuleGroupItem();
-            accountDocument.ModuleGroupItemName = name;
-            accountDocument.TargetView = typeof(TradingView).Name;
-            accountDocument.TargetViewTitle = title;
-            accountDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Trading;component/Images/account.png";
+            var accountDocument = new ModuleGroupItem
+            {
+                ModuleGroupItemName = name,
+                TargetView = typeof(TradingView).Name,
+                TargetViewTitle = title,
+                ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Trading;component/Images/account.png"
+            };
+
             return accountDocument;
         }
     }

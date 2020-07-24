@@ -28,12 +28,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies
 
         public async override void OnInitialized(IContainerProvider containerProvider)
         {
-            var moduleSettings = new ModuleSettings();
-            moduleSettings.ModuleName = ModuleName;
-            moduleSettings.ModuleImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Strategies;component/Images/strategyManager.png";
+            var moduleSettings = new ModuleSettings
+            {
+                ModuleName = ModuleName,
+                ModuleImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Strategies;component/Images/strategyManager.png"
+            };
 
-            var moduleGroup = new ModuleGroup();
-            moduleGroup.ModuleGroupName = StrategyUser;
+            var moduleGroup = new ModuleGroup
+            {
+                ModuleGroupName = StrategyUser
+            };
 
             var strategyService = containerProvider.Resolve<IStrategyService>();
 
@@ -60,11 +64,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies
 
         private static ModuleGroupItem CreateStrategyModuleGroupItem(string name, string title)
         {
-            var strategyDocument = new ModuleGroupItem();
-            strategyDocument.ModuleGroupItemName = name;
-            strategyDocument.TargetView = typeof(StrategyRunnerView).Name;
-            strategyDocument.TargetViewTitle = title;
-            strategyDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Strategies;component/Images/strategy.png";
+            var strategyDocument = new ModuleGroupItem
+            {
+                ModuleGroupItemName = name,
+                TargetView = typeof(StrategyRunnerView).Name,
+                TargetViewTitle = title,
+                ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Strategies;component/Images/strategy.png"
+            };
+
             return strategyDocument;
         }
     }

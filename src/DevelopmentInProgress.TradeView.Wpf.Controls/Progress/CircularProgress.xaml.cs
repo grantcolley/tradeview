@@ -41,8 +41,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Progress
             InitializeComponent();
 
             animationTimer = new DispatcherTimer(
-                DispatcherPriority.ContextIdle, Dispatcher);
-            animationTimer.Interval = new TimeSpan(0, 0, 0, 0, 75);
+                DispatcherPriority.ContextIdle, Dispatcher)
+            {
+                Interval = new TimeSpan(0, 0, 0, 0, 75)
+            };
         }
         #endregion
 

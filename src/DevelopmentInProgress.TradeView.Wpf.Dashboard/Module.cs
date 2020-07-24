@@ -24,18 +24,24 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard
 
         public override void OnInitialized(IContainerProvider containerProvider)
         {
-            var moduleSettings = new ModuleSettings();
-            moduleSettings.ModuleName = ModuleName;
-            moduleSettings.ModuleImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Dashboard;component/Images/Dashboard.png";
+            var moduleSettings = new ModuleSettings
+            {
+                ModuleName = ModuleName,
+                ModuleImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Dashboard;component/Images/Dashboard.png"
+            };
 
-            var moduleGroup = new ModuleGroup();
-            moduleGroup.ModuleGroupName = "Dashboard";
+            var moduleGroup = new ModuleGroup
+            {
+                ModuleGroupName = "Dashboard"
+            };
 
-            var newDocument = new ModuleGroupItem();
-            newDocument.ModuleGroupItemName = "Server Monitor";
-            newDocument.TargetView = typeof(ServerMonitorView).Name;
-            newDocument.TargetViewTitle = "Server Monitor";
-            newDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Dashboard;component/Images/ServerMonitor.png";
+            var newDocument = new ModuleGroupItem
+            {
+                ModuleGroupItemName = "Server Monitor",
+                TargetView = typeof(ServerMonitorView).Name,
+                TargetViewTitle = "Server Monitor",
+                ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Dashboard;component/Images/ServerMonitor.png"
+            };
 
             moduleGroup.ModuleGroupItems.Add(newDocument);
             moduleSettings.ModuleGroups.Add(moduleGroup);

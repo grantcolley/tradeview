@@ -55,11 +55,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
             ((ModalViewModel)viewModel).Publish(modalSettings.Parameters);
             view.RegisterDialogEventsHandlers((ModalViewModel)viewModel);
             view.DataContext = viewModel;
-            var window = new ModalViewHost(view);
-            window.Icon = new BitmapImage(new Uri(@"pack://application:,,/Images/Origin.png", UriKind.RelativeOrAbsolute));
-            window.Title = modalSettings.Title ?? String.Empty;
-            window.Height = modalSettings.Height;
-            window.Width = modalSettings.Width;
+            var window = new ModalViewHost(view)
+            {
+                Icon = new BitmapImage(new Uri(@"pack://application:,,/Images/Origin.png", UriKind.RelativeOrAbsolute)),
+                Title = modalSettings.Title ?? string.Empty,
+                Height = modalSettings.Height,
+                Width = modalSettings.Width
+            };
+
             var result = window.ShowDialog();
             modalSettings.Result = result;
             modalSettings.Output = ((ModalViewModel)viewModel).Output;

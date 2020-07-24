@@ -30,11 +30,13 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
             var bid8 = new OrderBookPriceLevel { Price = 0.95m, Quantity = 140 };
             var bid9 = new OrderBookPriceLevel { Price = 0.94m, Quantity = 160 };
 
-            var orderBook = new OrderBook();
-            orderBook.Symbol = "TRXBTC";
-            orderBook.LastUpdateId = DateTime.Now.Ticks;
-            orderBook.Asks = new List<OrderBookPriceLevel>(new[] { ask0, ask1, ask2, ask3, ask4, ask5, ask6, ask7, ask8, ask9 });
-            orderBook.Bids = new List<OrderBookPriceLevel>(new[] { bid0, bid1, bid2, bid3, bid4, bid5, bid6, bid7, bid8, bid9 });
+            var orderBook = new OrderBook
+            {
+                Symbol = "TRXBTC",
+                LastUpdateId = DateTime.Now.Ticks,
+                Asks = new List<OrderBookPriceLevel>(new[] { ask0, ask1, ask2, ask3, ask4, ask5, ask6, ask7, ask8, ask9 }),
+                Bids = new List<OrderBookPriceLevel>(new[] { bid0, bid1, bid2, bid3, bid4, bid5, bid6, bid7, bid8, bid9 })
+            };
 
             return orderBook;
         }
@@ -63,11 +65,13 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
             var bid8 = new OrderBookPriceLevel { Price = 0.97m, Quantity = 155 };
             var bid9 = new OrderBookPriceLevel { Price = 0.96m, Quantity = 146 };
 
-            var orderBook = new OrderBook();
-            orderBook.Symbol = "TRXBTC";
-            orderBook.LastUpdateId = DateTime.Now.Ticks;
-            orderBook.Asks = new List<OrderBookPriceLevel>(new[] { ask0, ask1, ask2, ask3, ask4, ask5, ask6, ask7, ask8, ask9 });
-            orderBook.Bids = new List<OrderBookPriceLevel>(new[] { bid0, bid1, bid2, bid3, bid4, bid5, bid6, bid7, bid8, bid9 });
+            var orderBook = new OrderBook
+            {
+                Symbol = "TRXBTC",
+                LastUpdateId = DateTime.Now.Ticks,
+                Asks = new List<OrderBookPriceLevel>(new[] { ask0, ask1, ask2, ask3, ask4, ask5, ask6, ask7, ask8, ask9 }),
+                Bids = new List<OrderBookPriceLevel>(new[] { bid0, bid1, bid2, bid3, bid4, bid5, bid6, bid7, bid8, bid9 })
+            };
 
             return orderBook;
         }

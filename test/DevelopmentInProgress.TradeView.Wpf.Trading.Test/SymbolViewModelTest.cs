@@ -31,11 +31,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
         public async Task SetSymbol()
         {
             // Arrange
-            var preferences = new Model.Preferences();
-            preferences.OrderBookChartDisplayCount = 8;
-            preferences.OrderBookDisplayCount = 5;
-            preferences.TradesDisplayCount = 5;
-            preferences.TradesChartDisplayCount = 8;
+            var preferences = new Model.Preferences
+            {
+                OrderBookChartDisplayCount = 8,
+                OrderBookDisplayCount = 5,
+                TradesDisplayCount = 5,
+                TradesChartDisplayCount = 8
+            };
 
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
@@ -65,9 +67,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
 
-            var preferences = new Model.Preferences();
-            preferences.OrderBookChartDisplayCount = 8;
-            preferences.OrderBookDisplayCount = 5;
+            var preferences = new Model.Preferences
+            {
+                OrderBookChartDisplayCount = 8,
+                OrderBookDisplayCount = 5
+            };
 
             var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, 
                 new BinanceOrderBookHelper(),
@@ -94,9 +98,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
 
-            var preferences = new Model.Preferences();
-            preferences.OrderBookChartDisplayCount = 8;
-            preferences.OrderBookDisplayCount = 5;
+            var preferences = new Model.Preferences
+            {
+                OrderBookChartDisplayCount = 8,
+                OrderBookDisplayCount = 5
+            };
 
             var symbolViewModel = new SymbolViewModel(Exchange.Test, exchangeService, chartHelper, 
                 new BinanceOrderBookHelper(),
@@ -129,11 +135,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
         public void UpdateTrades_First_Update()
         {
             // Arrange
-            var preferences = new Model.Preferences();
-            preferences.OrderBookChartDisplayCount = 8;
-            preferences.OrderBookDisplayCount = 5;
-            preferences.TradesDisplayCount = 5;
-            preferences.TradesChartDisplayCount = 8;
+            var preferences = new Model.Preferences
+            {
+                OrderBookChartDisplayCount = 8,
+                OrderBookDisplayCount = 5,
+                TradesDisplayCount = 5,
+                TradesChartDisplayCount = 8
+            };
 
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
             var exchangeService = new WpfExchangeService(exchangeApi);
@@ -158,11 +166,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
         public void UpdateTrades_Second_Update_5_New_Trades()
         {
             // Arrange
-            var preferences = new Model.Preferences();
-            preferences.OrderBookChartDisplayCount = 8;
-            preferences.OrderBookDisplayCount = 5;
-            preferences.TradesDisplayCount = 5;
-            preferences.TradesChartDisplayCount = 8;
+            var preferences = new Model.Preferences
+            {
+                OrderBookChartDisplayCount = 8,
+                OrderBookDisplayCount = 5,
+                TradesDisplayCount = 5,
+                TradesChartDisplayCount = 8
+            };
 
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
             var exchangeService = new WpfExchangeService(exchangeApi);
@@ -191,11 +201,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
         public void UpdateTrades_Second_Update_3_New_Trades()
         {
             // Arrange
-            var preferences = new Model.Preferences();
-            preferences.OrderBookChartDisplayCount = 8;
-            preferences.OrderBookDisplayCount = 5;
-            preferences.TradesDisplayCount = 5;
-            preferences.TradesChartDisplayCount = 8;
+            var preferences = new Model.Preferences
+            {
+                OrderBookChartDisplayCount = 8,
+                OrderBookDisplayCount = 5,
+                TradesDisplayCount = 5,
+                TradesChartDisplayCount = 8
+            };
 
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
             var exchangeService = new WpfExchangeService(exchangeApi);
@@ -224,11 +236,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
         public void UpdateTrades_Second_Update_3_New_Trades_Less_Than_Limit()
         {
             // Arrange
-            var preferences = new Model.Preferences();
-            preferences.OrderBookChartDisplayCount = 8;
-            preferences.OrderBookDisplayCount = 5;
-            preferences.TradesDisplayCount = 15;
-            preferences.TradesChartDisplayCount = 18;
+            var preferences = new Model.Preferences
+            {
+                OrderBookChartDisplayCount = 8,
+                OrderBookDisplayCount = 5,
+                TradesDisplayCount = 15,
+                TradesChartDisplayCount = 18
+            };
 
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
             var exchangeService = new WpfExchangeService(exchangeApi);
@@ -276,11 +290,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
         public void UpdateTrades_Third_Update()
         {
             // Arrange
-            var preferences = new Model.Preferences();
-            preferences.OrderBookChartDisplayCount = 8;
-            preferences.OrderBookDisplayCount = 5;
-            preferences.TradesDisplayCount = 15;
-            preferences.TradesChartDisplayCount = 18;
+            var preferences = new Model.Preferences
+            {
+                OrderBookChartDisplayCount = 8,
+                OrderBookDisplayCount = 5,
+                TradesDisplayCount = 15,
+                TradesChartDisplayCount = 18
+            };
 
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeOrderBookAggregateTrades);
             var exchangeService = new WpfExchangeService(exchangeApi);

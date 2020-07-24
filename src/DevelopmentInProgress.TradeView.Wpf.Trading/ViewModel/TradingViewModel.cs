@@ -277,9 +277,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 userAccount.Exchange, exchangeService, chartHelper,
                 orderBookHelperFactory.GetOrderBookHelper(userAccount.Exchange),
                 tradeHelperFactory.GetTradeHelper(userAccount.Exchange),
-                userAccount.Preferences, Logger);
-
-            SymbolViewModel.Dispatcher = ViewModelContext.UiDispatcher;
+                userAccount.Preferences, Logger)
+            {
+                Dispatcher = ViewModelContext.UiDispatcher
+            };
 
             ObserveSymbol(SymbolViewModel);
 

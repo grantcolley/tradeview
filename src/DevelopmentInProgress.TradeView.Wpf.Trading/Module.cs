@@ -27,12 +27,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading
 
         public async override void OnInitialized(IContainerProvider containerProvider)
         {
-            var moduleSettings = new ModuleSettings();
-            moduleSettings.ModuleName = ModuleName;
-            moduleSettings.ModuleImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Trading;component/Images/marketview.png";
+            var moduleSettings = new ModuleSettings
+            {
+                ModuleName = ModuleName,
+                ModuleImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Trading;component/Images/marketview.png"
+            };
 
-            var moduleGroup = new ModuleGroup();
-            moduleGroup.ModuleGroupName = AccountUser;
+            var moduleGroup = new ModuleGroup
+            {
+                ModuleGroupName = AccountUser
+            };
 
             var accountsService = containerProvider.Resolve<IAccountsService>();
 
@@ -59,11 +63,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading
 
         private static ModuleGroupItem CreateAccountModuleGroupItem(string name, string title)
         {
-            var accountDocument = new ModuleGroupItem();
-            accountDocument.ModuleGroupItemName = name;
-            accountDocument.TargetView = typeof(TradingView).Name;
-            accountDocument.TargetViewTitle = title;
-            accountDocument.ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Trading;component/Images/account.png";
+            var accountDocument = new ModuleGroupItem
+            {
+                ModuleGroupItemName = name,
+                TargetView = typeof(TradingView).Name,
+                TargetViewTitle = title,
+                ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Trading;component/Images/account.png"
+            };
+
             return accountDocument;
         }
     }
