@@ -12,7 +12,7 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
 {
     public class ExchangeService : IExchangeService
     {
-        public Task<string> CancelOrderAsync(Exchange exchange, User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<string> CancelOrderAsync(Exchange exchange, User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
@@ -45,14 +45,14 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
             return tcs.Task;
         }
 
-        public Task<IEnumerable<Order>> GetOpenOrdersAsync(Exchange exchange, User user, string symbol = null, long recWindow = 0, Action<Exception> exception = null, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<IEnumerable<Order>> GetOpenOrdersAsync(Exchange exchange, User user, string symbol = null, long recWindow = 0, Action<Exception> exception = null, CancellationToken cancellationToken = default)
         {
             var tcs = new TaskCompletionSource<IEnumerable<Order>>();
             tcs.SetResult(TestHelper.Orders);
             return tcs.Task;
         }
 
-        public Task<IEnumerable<Candlestick>> GetCandlesticksAsync(Exchange exchange, string symbol, CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = default(int), CancellationToken token = default(CancellationToken))
+        public Task<IEnumerable<Candlestick>> GetCandlesticksAsync(Exchange exchange, string symbol, CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = default, CancellationToken token = default)
         {
             throw new NotImplementedException();
         }
@@ -71,7 +71,7 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
             return tcs.Task;
         }
 
-        public Task<Order> PlaceOrder(Exchange exchange, User user, ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Order> PlaceOrder(Exchange exchange, User user, ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default)
         {
             var tcs = new TaskCompletionSource<Order>();
             tcs.SetResult(TestHelper.Orders.First());
@@ -132,7 +132,7 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
             return SubscribeStatistics(exchange, callback, exception, cancellationToken);
         }
 
-        public Task<IEnumerable<AccountTrade>> GetAccountTradesAsync(Exchange exchange, User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<IEnumerable<AccountTrade>> GetAccountTradesAsync(Exchange exchange, User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }

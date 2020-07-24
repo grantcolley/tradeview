@@ -20,7 +20,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
             this.exchangeService = exchangeService;
         }
        
-        public async Task<IEnumerable<Order>> GetOpenOrdersAsync(Exchange exchange, Core.Model.User user, string symbol = null, long recWindow = 0, Action<Exception> exception = default(Action<Exception>), CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IEnumerable<Order>> GetOpenOrdersAsync(Exchange exchange, Core.Model.User user, string symbol = null, long recWindow = 0, Action<Exception> exception = default, CancellationToken cancellationToken = default)
         {
             var result = await exchangeService.GetOpenOrdersAsync(exchange, user, symbol, recWindow, exception, cancellationToken).ConfigureAwait(false);
             var orders = result.Select(o => o.GetViewOrder()).ToList();
@@ -47,12 +47,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
             return symbols;
         }
 
-        public Task<Core.Model.Order> PlaceOrder(Exchange exchange, Core.Model.User user, Core.Model.ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<Core.Model.Order> PlaceOrder(Exchange exchange, Core.Model.User user, Core.Model.ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default)
         {
             return exchangeService.PlaceOrder(exchange, user, clientOrder, recWindow, cancellationToken);
         }
 
-        public Task<string> CancelOrderAsync(Exchange exchange, Core.Model.User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<string> CancelOrderAsync(Exchange exchange, Core.Model.User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default)
         {
             return exchangeService.CancelOrderAsync(exchange, user, symbol, orderId, newClientOrderId, recWindow, cancellationToken);
         }
@@ -72,12 +72,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
             return exchangeService.GetOrderBookAsync(exchange, symbol, limit, cancellationToken);
         }
 
-        public Task<IEnumerable<Core.Model.AccountTrade>> GetAccountTradesAsync(Exchange exchange, Core.Model.User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<IEnumerable<Core.Model.AccountTrade>> GetAccountTradesAsync(Exchange exchange, Core.Model.User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default)
         {
             return exchangeService.GetAccountTradesAsync(exchange, user, symbol, startDate, endDate, recWindow, cancellationToken);
         }
 
-        public async Task<IEnumerable<Candlestick>> GetCandlesticksAsync(Exchange exchange, string symbol, Core.Model.CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = default(int), CancellationToken token = default(CancellationToken))
+        public async Task<IEnumerable<Candlestick>> GetCandlesticksAsync(Exchange exchange, string symbol, Core.Model.CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = default, CancellationToken token = default)
         {
             var results = await exchangeService.GetCandlesticksAsync(exchange, symbol, interval, startTime, endTime, limit, token).ConfigureAwait(false);
             var candlesticks = results.Select(c => c.ToViewCandlestick()).ToList();

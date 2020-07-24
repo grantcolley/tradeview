@@ -15,7 +15,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 {
     public class BinanceExchangeApi : IExchangeApi
     {
-        public async Task<Core.Model.Order> PlaceOrder(Core.Model.User user, Core.Model.ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<Core.Model.Order> PlaceOrder(Core.Model.User user, Core.Model.ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default)
         {
             if (user == null)
             {
@@ -31,7 +31,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             }
         }
 
-        public async Task<string> CancelOrderAsync(Core.Model.User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<string> CancelOrderAsync(Core.Model.User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default)
         {
             if (orderId == null)
             {
@@ -70,7 +70,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             }
         }
 
-        public async Task<IEnumerable<Core.Model.AccountTrade>> GetAccountTradesAsync(Core.Model.User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IEnumerable<Core.Model.AccountTrade>> GetAccountTradesAsync(Core.Model.User user, string symbol, DateTime startDate, DateTime endDate, long recWindow = 0, CancellationToken cancellationToken = default)
         {
             if (user == null)
             {
@@ -86,7 +86,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             }
         }
 
-        public async Task<IEnumerable<Core.Model.Candlestick>> GetCandlesticksAsync(string symbol, Core.Model.CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = 0, CancellationToken token = default(CancellationToken))
+        public async Task<IEnumerable<Core.Model.Candlestick>> GetCandlesticksAsync(string symbol, Core.Model.CandlestickInterval interval, DateTime startTime, DateTime endTime, int limit = 0, CancellationToken token = default)
         {
             var binanceApi = new BinanceApi();
             var candlestickInterval = interval.ToBinanceCandlestickInterval();
@@ -166,7 +166,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
             return trades;
         }
 
-        public async Task<IEnumerable<Core.Model.Order>> GetOpenOrdersAsync(Core.Model.User user, string symbol = null, long recWindow = 0, Action<Exception> exception = default(Action<Exception>), CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IEnumerable<Core.Model.Order>> GetOpenOrdersAsync(Core.Model.User user, string symbol = null, long recWindow = 0, Action<Exception> exception = default, CancellationToken cancellationToken = default)
         {
             if (user == null)
             {
