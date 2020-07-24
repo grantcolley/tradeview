@@ -19,13 +19,13 @@ namespace DevelopmentInProgress.TradeView.Core.Model
 
         public override bool Equals(Object obj)
         {
-            if (obj == null || !(obj is Trade))
+            if (obj == null || !(obj is Trade trade))
             {
                 return false;
             }
             else
             {
-                return (Id == ((Trade)obj).Id);
+                return (Id == trade.Id);
             }
         }
 
