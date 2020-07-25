@@ -150,6 +150,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
             disposed = true;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions and notify observers.")]
         public override async Task TradeNotificationsAsync(List<StrategyNotification> tradeNotifications)
         {
             if(tradeNotifications == null)
@@ -252,6 +253,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions and notify observers.")]
         public override async Task CandlestickNotificationsAsync(List<StrategyNotification> candlestickNotifications)
         {
             if(cancellationTokenSource.IsCancellationRequested)
@@ -333,6 +335,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
             await Task.FromResult<object>(null).ConfigureAwait(false);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions and notify observers.")]
         public override async Task OrderNotificationsAsync(List<StrategyNotification> orderNotifications)
         {
             if (orderNotifications == null)
