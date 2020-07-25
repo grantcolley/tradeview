@@ -14,6 +14,7 @@ using Prism.Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -361,7 +362,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
 
                     CandlesticksChart = new ChartValues<Candlestick>(candlesticks);
 
-                    var labels = candlesticks.Select(c => c.CloseTime.ToString("H:mm:ss"));
+                    var labels = candlesticks.Select(c => c.CloseTime.ToString("H:mm:ss", CultureInfo.InvariantCulture));
                     CandlestickLabels = new ObservableCollection<string>(labels);
                 }
                 else
@@ -392,7 +393,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
 
                         CandlesticksChart.AddRange(newCandlesticks);
 
-                        var labels = newCandlesticks.Select(c => c.CloseTime.ToString("H:mm:ss"));
+                        var labels = newCandlesticks.Select(c => c.CloseTime.ToString("H:mm:ss", CultureInfo.InvariantCulture));
                         CandlestickLabels.AddRange(labels);
                     }
                 }
