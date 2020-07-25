@@ -24,6 +24,13 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
 {
     public class MovingAverageViewModel : StrategyDisplayViewModelBase
     {
+        private readonly SemaphoreSlim tradesSemaphoreSlim = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim candlestickSemaphoreSlim = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim orderBookSemaphoreSlim = new SemaphoreSlim(1, 1);
+        private readonly CancellationTokenSource cancellationTokenSource;
+        private readonly ITradeHelperFactory tradeHelperFactory;
+        private readonly IOrderBookHelperFactory orderBookHelperFactory;
+
         private ChartValues<Trade> tradesChart;
         private ChartValues<Trade> smaTradesChart;
         private ChartValues<Trade> buyIndicatorChart;
@@ -32,16 +39,10 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
         private ObservableCollection<string> candlestickLabels;
         private List<Trade> trades;
         private OrderBook orderBook;
-        private SemaphoreSlim tradesSemaphoreSlim = new SemaphoreSlim(1, 1);
-        private SemaphoreSlim candlestickSemaphoreSlim = new SemaphoreSlim(1, 1);
-        private SemaphoreSlim orderBookSemaphoreSlim = new SemaphoreSlim(1, 1);
-        private CancellationTokenSource cancellationTokenSource;
         private bool isLoadingTrades;
         private bool isLoadingOrderBook;
         private bool disposed;
         private bool showCandlesticks;
-        private ITradeHelperFactory tradeHelperFactory;
-        private IOrderBookHelperFactory orderBookHelperFactory;
 
         public MovingAverageViewModel(WpfStrategy strategy, IHelperFactoryContainer iHelperFactoryContainer, 
             Dispatcher UiDispatcher, ILoggerFacade logger)
