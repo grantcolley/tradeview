@@ -72,7 +72,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
         public bool IsActive { get; set; }
 
-        public bool HasSymbol => Symbol != null ? true : false;
+        public bool HasSymbol => Symbol != null;
 
         public Func<double, string> TimeFormatter { get; set; }
 
