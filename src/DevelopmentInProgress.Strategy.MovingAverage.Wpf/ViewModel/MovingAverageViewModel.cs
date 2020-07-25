@@ -216,6 +216,11 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
             if (disposing)
             {
                 cancellationTokenSource.Cancel();
+                cancellationTokenSource.Dispose();
+                tradesSemaphoreSlim.Dispose();
+                candlestickSemaphoreSlim.Dispose();
+                candlestickSemaphoreSlim.Dispose();
+                orderBookSemaphoreSlim.Dispose();
             }
 
             disposed = true;
