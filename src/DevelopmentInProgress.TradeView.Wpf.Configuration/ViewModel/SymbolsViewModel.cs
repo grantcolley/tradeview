@@ -111,7 +111,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
             try
             {
-                var results = await ExchangeService.GetSymbolsAsync(userAccount.Exchange, new CancellationToken());
+                var results = await ExchangeService.GetSymbolsAsync(userAccount.Exchange, new CancellationToken()).ConfigureAwait(true);
 
                 Func<Symbol, string, Symbol> f = ((s, p) =>
                 {

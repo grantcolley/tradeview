@@ -140,7 +140,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             {
                 IsLoading = true;
 
-                var tradeServers = await tradeServerService.GetTradeServers();
+                var tradeServers = await tradeServerService.GetTradeServers().ConfigureAwait(true);
 
                 TradeServers = new ObservableCollection<TradeServer>(tradeServers);
             }
@@ -182,7 +182,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
                 foreach (var serverViewModel in SelectedTradeServerViewModels)
                 {
-                    await tradeServerService.SaveTradeServer(serverViewModel.TradeServer);
+                    await tradeServerService.SaveTradeServer(serverViewModel.TradeServer).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -216,7 +216,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 IsLoading = true;
 
                 var tradeServer = new TradeServer { Name = tradeServerName };
-                await tradeServerService.SaveTradeServer(tradeServer);
+                await tradeServerService.SaveTradeServer(tradeServer).ConfigureAwait(true);
                 TradeServers.Add(tradeServer);
             }
             catch (Exception ex)
@@ -260,7 +260,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             {
                 IsLoading = true;
 
-                await tradeServerService.DeleteTradeServer(tradeServer);
+                await tradeServerService.DeleteTradeServer(tradeServer).ConfigureAwait(true);
                 TradeServers.Remove(tradeServer);
             }
             catch (Exception ex)

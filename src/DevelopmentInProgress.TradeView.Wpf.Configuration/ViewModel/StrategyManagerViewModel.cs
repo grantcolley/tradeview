@@ -143,7 +143,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             {
                 IsLoading = true;
 
-                var strategies = await strategyService.GetStrategies();
+                var strategies = await strategyService.GetStrategies().ConfigureAwait(true);
 
                 Strategies = new ObservableCollection<Strategy>(strategies);
             }
@@ -185,7 +185,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
                 foreach (var strategyViewModel in SelectedStrategyViewModels)
                 {
-                    await strategyService.SaveStrategy(strategyViewModel.Strategy);
+                    await strategyService.SaveStrategy(strategyViewModel.Strategy).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -219,7 +219,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 IsLoading = true;
 
                 var strategy = new Strategy { Name = strategyName };
-                await strategyService.SaveStrategy(strategy);
+                await strategyService.SaveStrategy(strategy).ConfigureAwait(true);
                 Strategies.Add(strategy);
                 Module.AddStrategy(strategy.Name);
             }
@@ -264,7 +264,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             {
                 IsLoading = true;
 
-                await strategyService.DeleteStrategy(strategy);
+                await strategyService.DeleteStrategy(strategy).ConfigureAwait(true);
                 Strategies.Remove(strategy);
                 Module.RemoveStrategy(strategy.Name);
             }

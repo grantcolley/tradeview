@@ -172,7 +172,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             try
             {
                 Strategy.StrategySubscriptions.Insert(0, new StrategySubscription { Symbol = symbol });
-                await strategyService.SaveStrategy(Strategy);
+                await strategyService.SaveStrategy(Strategy).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -193,7 +193,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 try
                 {
                     Strategy.StrategySubscriptions.Remove(subscription);
-                    await strategyService.SaveStrategy(Strategy);
+                    await strategyService.SaveStrategy(Strategy).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -223,7 +223,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                         Strategy.DisplayDependencies.Remove(file);
                     }
 
-                    await strategyService.SaveStrategy(Strategy);
+                    await strategyService.SaveStrategy(Strategy).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -257,7 +257,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
                 Strategy.Parameters = strategyTypeJson;
 
-                await strategyService.SaveStrategy(Strategy);
+                await strategyService.SaveStrategy(Strategy).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
