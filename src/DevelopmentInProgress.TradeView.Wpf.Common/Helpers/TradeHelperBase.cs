@@ -99,9 +99,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             IEnumerable<ITrade> tradesUpdate, 
             List<T> currentTrades, 
             int tradesDisplayCount, 
-            int tradesChartDisplayCount, 
-            out List<T> trades, 
-            ref ChartValues<T> tradesChart) where T : Trade, new()
+            int tradesChartDisplayCount,
+            ChartValues<T> tradesChart,
+            out List<T> trades) where T : Trade, new()
         {
             if (symbol == null)
             {
@@ -138,7 +138,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
             var newTradesCount = newTrades.Count;
 
-            UpdateChartTrades(newTrades, newTradesCount, tradesChartDisplayCount, ref tradesChart);
+            UpdateChartTrades(newTrades, newTradesCount, tradesChartDisplayCount, tradesChart);
 
             if (newTradesCount >= tradesDisplayCount)
             {
@@ -180,7 +180,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             int tradesChartDisplayCount,
             int pricePrecision,
             int quantityPrecision,
-            ref ChartValues<T> tradesChart) where T : Trade, new()
+            ChartValues<T> tradesChart) where T : Trade, new()
         {
             // Extract new trades where time and id is greater than latest available trade (seed). 
             // Order by oldest to newest (as it will appear in chart).
@@ -191,7 +191,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
             var newTradesCount = newTrades.Count;
 
-            UpdateChartTrades(newTrades, newTradesCount, tradesChartDisplayCount, ref tradesChart);
+            UpdateChartTrades(newTrades, newTradesCount, tradesChartDisplayCount, tradesChart);
         }
 
         protected virtual ChartValues<T> GetNewChartTrades<T>(List<T> newTrades, int newTradesCount, int tradesChartDisplayCount)
@@ -210,7 +210,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             }
         }
 
-        protected virtual void UpdateChartTrades<T>(List<T> newTrades, int newTradesCount, int tradesChartDisplayCount, ref ChartValues<T> tradesChart)
+        protected virtual void UpdateChartTrades<T>(List<T> newTrades, int newTradesCount, int tradesChartDisplayCount, ChartValues<T> tradesChart)
         {
             if (newTrades == null)
             {

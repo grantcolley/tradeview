@@ -320,7 +320,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 {
                     List<Trade> newTrades;
 
-                    tradeHelper.UpdateTrades(Symbol, tradesUpdate, Trades, TradesDisplayCount, TradesChartDisplayCount, out newTrades, ref tradesChart);
+                    tradeHelper.UpdateTrades(Symbol, tradesUpdate, Trades, TradesDisplayCount, TradesChartDisplayCount, tradesChart, out newTrades);
 
                     Trades = newTrades;
                 }

@@ -32,20 +32,13 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
         private readonly ITradeHelperFactory tradeHelperFactory;
         private readonly IOrderBookHelperFactory orderBookHelperFactory;
 
-        private ChartValues<Trade> tradesChart;
-        private ChartValues<Trade> smaTradesChart;
-        private ChartValues<Trade> buyIndicatorChart;
-        private ChartValues<Trade> sellIndicatorChart;
-        private ChartValues<Candlestick> candlesticksChart;
-        private ObservableCollection<string> candlestickLabels;
-        private List<Trade> trades;
         private OrderBook orderBook;
         private bool isLoadingTrades;
         private bool isLoadingOrderBook;
         private bool disposed;
         private bool showCandlesticks;
 
-        public MovingAverageViewModel(WpfStrategy strategy, IHelperFactoryContainer iHelperFactoryContainer, 
+        public MovingAverageViewModel(WpfStrategy strategy, IHelperFactoryContainer iHelperFactoryContainer,
             Dispatcher UiDispatcher, ILoggerFacade logger)
             : base(strategy, iHelperFactoryContainer, UiDispatcher, logger)
         {
@@ -64,10 +57,26 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
             orderBookHelperFactory = HelperFactoryContainer.GetFactory<IOrderBookHelperFactory>();
 
             ShowCandlesticks = Strategy.StrategySubscriptions.Any(s => s.SubscribeCandlesticks);
+
+            Trades = new List<Trade>();
+            TradesChart = new ChartValues<Trade>();
+            SmaTradesChart = new ChartValues<Trade>();
+            BuyIndicatorChart = new ChartValues<Trade>();
+            SellIndicatorChart = new ChartValues<Trade>();
+            CandlesticksChart = new ChartValues<Candlestick>();
+            CandlestickLabels = new ObservableCollection<string>();
         }
 
         public Func<double, string> TimeFormatter { get; set; }
         public Func<double, string> PriceFormatter { get; set; }
+
+        public List<Trade> Trades { get; }
+        public ChartValues<Trade> TradesChart { get; }
+        public ChartValues<Trade> SmaTradesChart { get; }
+        public ChartValues<Trade> BuyIndicatorChart { get; }
+        public ChartValues<Trade> SellIndicatorChart { get; }
+        public ChartValues<Candlestick> CandlesticksChart { get; }
+        public ObservableCollection<string> CandlestickLabels { get; }
 
         public bool IsLoadingTrades
         {
@@ -104,93 +113,6 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                 {
                     showCandlesticks = value;
                     OnPropertyChanged(nameof(ShowCandlesticks));
-                }
-            }
-        }
-        public ChartValues<Trade> TradesChart
-        {
-            get { return tradesChart; }
-            set
-            {
-                if (tradesChart != value)
-                {
-                    tradesChart = value;
-                    OnPropertyChanged(nameof(TradesChart));
-                }
-            }
-        }
-
-        public ChartValues<Trade> SmaTradesChart
-        {
-            get { return smaTradesChart; }
-            set
-            {
-                if (smaTradesChart != value)
-                {
-                    smaTradesChart = value;
-                    OnPropertyChanged(nameof(SmaTradesChart));
-                }
-            }
-        }
-
-        public ChartValues<Trade> BuyIndicatorChart
-        {
-            get { return buyIndicatorChart; }
-            set
-            {
-                if (buyIndicatorChart != value)
-                {
-                    buyIndicatorChart = value;
-                    OnPropertyChanged(nameof(BuyIndicatorChart));
-                }
-            }
-        }
-
-        public ChartValues<Trade> SellIndicatorChart
-        {
-            get { return sellIndicatorChart; }
-            set
-            {
-                if (sellIndicatorChart != value)
-                {
-                    sellIndicatorChart = value;
-                    OnPropertyChanged(nameof(SellIndicatorChart));
-                }
-            }
-        }
-
-        public ChartValues<Candlestick> CandlesticksChart
-        {
-            get { return candlesticksChart; }
-            set
-            {
-                if (candlesticksChart != value)
-                {
-                    candlesticksChart = value;
-                    OnPropertyChanged(nameof(CandlesticksChart));
-                }
-            }
-        }
-
-        public ObservableCollection<string> CandlestickLabels
-        {
-            get { return candlestickLabels; }
-            set
-            {
-                candlestickLabels = value;
-                OnPropertyChanged(nameof(CandlestickLabels));
-            }
-        }
-
-        public List<Trade> Trades
-        {
-            get { return trades; }
-            set
-            {
-                if (trades != value)
-                {
-                    trades = value;
-                    OnPropertyChanged(nameof(Trades));
                 }
             }
         }
@@ -284,18 +206,18 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                     var tradesDisplayCount = Strategy.TradesDisplayCount;
                     var tradesChartDisplayCount = Strategy.TradesChartDisplayCount;
 
-                    if (TradesChart == null)
+                    if (!TradesChart.Any())
                     {
                         var result = await tradeHelper.CreateLocalTradeList<Trade>(symbol, tradesUpdate, tradesDisplayCount, tradesChartDisplayCount, 0).ConfigureAwait(true);
 
-                        Trades = result.Trades;
-                        TradesChart = result.TradesChart;
+                        Trades.AddRange(result.Trades);
+                        TradesChart.AddRange(result.TradesChart);
 
-                        SmaTradesChart = tradeHelper.CreateLocalChartTrades(tradesUpdate, createSmaTrade, tradesChartDisplayCount, pricePrecision, quantityPrecision);
+                        SmaTradesChart.AddRange(tradeHelper.CreateLocalChartTrades(tradesUpdate, createSmaTrade, tradesChartDisplayCount, pricePrecision, quantityPrecision));
 
-                        BuyIndicatorChart = tradeHelper.CreateLocalChartTrades(tradesUpdate, createBuyIndicator, tradesChartDisplayCount, pricePrecision, quantityPrecision);
+                        BuyIndicatorChart.AddRange(tradeHelper.CreateLocalChartTrades(tradesUpdate, createBuyIndicator, tradesChartDisplayCount, pricePrecision, quantityPrecision));
 
-                        SellIndicatorChart = tradeHelper.CreateLocalChartTrades(tradesUpdate, createSellIndicator, tradesChartDisplayCount, pricePrecision, quantityPrecision);
+                        SellIndicatorChart.AddRange(tradeHelper.CreateLocalChartTrades(tradesUpdate, createSellIndicator, tradesChartDisplayCount, pricePrecision, quantityPrecision));
                     }
                     else
                     {
@@ -307,15 +229,16 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                         var seedTime = seed.Time;
                         var seedId = seed.Id;
 
-                        tradeHelper.UpdateTrades(symbol, tradesUpdate, Trades, tradesDisplayCount, tradesChartDisplayCount, out newTrades, ref tradesChart);
+                        tradeHelper.UpdateTrades(symbol, tradesUpdate, Trades, tradesDisplayCount, tradesChartDisplayCount, TradesChart, out newTrades);
 
-                        Trades = newTrades;
+                        Trades.Clear();
+                        Trades.AddRange(newTrades);
 
-                        tradeHelper.UpdateLocalChartTrades(tradesUpdate, createSmaTrade, seedTime, seedId, tradesChartDisplayCount, pricePrecision, quantityPrecision, ref smaTradesChart);
+                        tradeHelper.UpdateLocalChartTrades(tradesUpdate, createSmaTrade, seedTime, seedId, tradesChartDisplayCount, pricePrecision, quantityPrecision, SmaTradesChart);
 
-                        tradeHelper.UpdateLocalChartTrades(tradesUpdate, createBuyIndicator, seedTime, seedId, tradesChartDisplayCount, pricePrecision, quantityPrecision, ref buyIndicatorChart);
+                        tradeHelper.UpdateLocalChartTrades(tradesUpdate, createBuyIndicator, seedTime, seedId, tradesChartDisplayCount, pricePrecision, quantityPrecision, BuyIndicatorChart);
 
-                        tradeHelper.UpdateLocalChartTrades(tradesUpdate, createSellIndicator, seedTime, seedId, tradesChartDisplayCount, pricePrecision, quantityPrecision, ref sellIndicatorChart);
+                        tradeHelper.UpdateLocalChartTrades(tradesUpdate, createSellIndicator, seedTime, seedId, tradesChartDisplayCount, pricePrecision, quantityPrecision, SellIndicatorChart);
                     }
                 }
             }
@@ -360,10 +283,10 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                 {
                     var candlesticks = cs.OrderBy(c => c.OpenTime).Select(c => c.ToViewCandlestick()).ToList();
 
-                    CandlesticksChart = new ChartValues<Candlestick>(candlesticks);
+                    CandlesticksChart.AddRange(candlesticks);
 
                     var labels = candlesticks.Select(c => c.CloseTime.ToString("H:mm:ss", CultureInfo.InvariantCulture));
-                    CandlestickLabels = new ObservableCollection<string>(labels);
+                    CandlestickLabels.AddRange(labels);
                 }
                 else
                 {

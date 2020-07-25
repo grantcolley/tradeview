@@ -29,8 +29,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             List<T> currentTrades,
             int tradesDisplayCount,
             int tradesChartDisplayCount,
-            out List<T> trades,
-            ref ChartValues<T> tradesChart) where T : Trade, new();
+            ChartValues<T> tradesChart,
+            out List<T> trades) where T : Trade, new();
 
         void UpdateLocalChartTrades<T>(
             IEnumerable<ITrade> tradesUpdate,
@@ -40,6 +40,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
             int tradesChartDisplayCount,
             int pricePrecision,
             int quantityPrecision,
-            ref ChartValues<T> tradesChart) where T : Trade, new();
+            ChartValues<T> tradesChart) where T : Trade, new();
     }
 }
