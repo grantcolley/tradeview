@@ -222,15 +222,13 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                     }
                     else
                     {
-                        List<Trade> newTrades;
-
                         // Get the latest available trade - the first trade on the 
                         // trade list (which is also the last trade in the chart).
                         var seed = Trades.First();
                         var seedTime = seed.Time;
                         var seedId = seed.Id;
 
-                        tradeHelper.UpdateTrades(symbol, tradesUpdate, Trades, tradesDisplayCount, tradesChartDisplayCount, TradesChart, out newTrades);
+                        tradeHelper.UpdateTrades(symbol, tradesUpdate, Trades, tradesDisplayCount, tradesChartDisplayCount, TradesChart, out List<Trade> newTrades);
 
                         Trades.Clear();
                         Trades.AddRange(newTrades);

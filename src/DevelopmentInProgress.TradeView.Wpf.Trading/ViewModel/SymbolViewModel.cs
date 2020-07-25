@@ -318,9 +318,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 }
                 else
                 {
-                    List<Trade> newTrades;
-
-                    tradeHelper.UpdateTrades(Symbol, tradesUpdate, Trades, TradesDisplayCount, TradesChartDisplayCount, tradesChart, out newTrades);
+                    tradeHelper.UpdateTrades(Symbol, tradesUpdate, Trades, TradesDisplayCount, TradesChartDisplayCount, tradesChart, out List<Trade> newTrades);
 
                     Trades = newTrades;
                 }
