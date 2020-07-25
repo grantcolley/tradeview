@@ -63,7 +63,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 if (Strategy != null)
                 {
                     if (value != null
-                        && value.Count() > 0)
+                        && value.Any())
                     {
                         var file = value.First();
                         Strategy.TargetAssembly = new StrategyFile { File = file };
@@ -84,7 +84,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 if (Strategy != null)
                 {
                     if (value != null
-                        && value.Count() > 0)
+                        && value.Any())
                     {
                         foreach (string file in value)
                         {
@@ -102,7 +102,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 if (Strategy != null)
                 {
                     if (value != null
-                        && value.Count() > 0)
+                        && value.Any())
                     {
                         var file = value.First();
                         Strategy.DisplayAssembly = new StrategyFile { File = file };
@@ -123,7 +123,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 if (Strategy != null)
                 {
                     if (value != null
-                        && value.Count() > 0)
+                        && value.Any())
                     {
                         foreach (string file in value)
                         {
