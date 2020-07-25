@@ -76,7 +76,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                 if (isLoadingTrades != value)
                 {
                     isLoadingTrades = value;
-                    OnPropertyChanged("IsLoadingTrades");
+                    OnPropertyChanged(nameof(IsLoadingTrades));
                 }
             }
         }
@@ -89,7 +89,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                 if (isLoadingOrderBook != value)
                 {
                     isLoadingOrderBook = value;
-                    OnPropertyChanged("IsLoadingOrderBook");
+                    OnPropertyChanged(nameof(IsLoadingOrderBook));
                 }
             }
         }
@@ -102,7 +102,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                 if (showCandlesticks != value)
                 {
                     showCandlesticks = value;
-                    OnPropertyChanged("ShowCandlesticks");
+                    OnPropertyChanged(nameof(ShowCandlesticks));
                 }
             }
         }
@@ -114,7 +114,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                 if (tradesChart != value)
                 {
                     tradesChart = value;
-                    OnPropertyChanged("TradesChart");
+                    OnPropertyChanged(nameof(TradesChart));
                 }
             }
         }
@@ -127,7 +127,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                 if (smaTradesChart != value)
                 {
                     smaTradesChart = value;
-                    OnPropertyChanged("SmaTradesChart");
+                    OnPropertyChanged(nameof(SmaTradesChart));
                 }
             }
         }
@@ -140,7 +140,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                 if (buyIndicatorChart != value)
                 {
                     buyIndicatorChart = value;
-                    OnPropertyChanged("BuyIndicatorChart");
+                    OnPropertyChanged(nameof(BuyIndicatorChart));
                 }
             }
         }
@@ -153,7 +153,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                 if (sellIndicatorChart != value)
                 {
                     sellIndicatorChart = value;
-                    OnPropertyChanged("SellIndicatorChart");
+                    OnPropertyChanged(nameof(SellIndicatorChart));
                 }
             }
         }
@@ -166,7 +166,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                 if (candlesticksChart != value)
                 {
                     candlesticksChart = value;
-                    OnPropertyChanged("CandlesticksChart");
+                    OnPropertyChanged(nameof(CandlesticksChart));
                 }
             }
         }
@@ -177,7 +177,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
             set
             {
                 candlestickLabels = value;
-                OnPropertyChanged("CandlestickLabels");
+                OnPropertyChanged(nameof(CandlestickLabels));
             }
         }
 
@@ -189,7 +189,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                 if (trades != value)
                 {
                     trades = value;
-                    OnPropertyChanged("Trades");
+                    OnPropertyChanged(nameof(Trades));
                 }
             }
         }
@@ -202,7 +202,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                 if (orderBook != value)
                 {
                     orderBook = value;
-                    OnPropertyChanged("OrderBook");
+                    OnPropertyChanged(nameof((OrderBook));
                 }
             }
         }
