@@ -84,7 +84,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
                     if (selectedUserAccount != null)
                     {
-                        SelectedUserAccountViewModel = SelectedUserAccountViewModels.FirstOrDefault(s => s.UserAccount.AccountName.Equals(selectedUserAccount.AccountName));
+                        SelectedUserAccountViewModel = SelectedUserAccountViewModels.FirstOrDefault(s => s.UserAccount.AccountName.Equals(selectedUserAccount.AccountName, StringComparison.Ordinal));
 
                         if (SelectedUserAccountViewModel == null)
                         {
@@ -181,7 +181,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
                     await accountsService.SaveAccountAsync(userAccount).ConfigureAwait(true);
 
-                    var account = Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName));
+                    var account = Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName, StringComparison.Ordinal));
                     if (account != null)
                     {
                         var index = Accounts.IndexOf(account);
@@ -210,7 +210,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
             var accountName = param.ToString();
 
-            if(Accounts.Any( a => a.AccountName.Equals(accountName)))
+            if(Accounts.Any( a => a.AccountName.Equals(accountName, StringComparison.Ordinal)))
             {
                 ShowMessage(new Message { MessageType = MessageType.Info, Text = $"An account with the name {accountName} already exists." });
                 return;
@@ -256,7 +256,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 return;
             }
 
-            var userAccountViewModel = SelectedUserAccountViewModels.FirstOrDefault(a => a.UserAccount.AccountName.Equals(userAccount.AccountName));
+            var userAccountViewModel = SelectedUserAccountViewModels.FirstOrDefault(a => a.UserAccount.AccountName.Equals(userAccount.AccountName, StringComparison.Ordinal));
             if(userAccountViewModel != null)
             {
                 Close(userAccountViewModel);

@@ -83,7 +83,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
                     if (selectedStrategy != null)
                     {
-                        var strategyViewModel = SelectedStrategyViewModels.FirstOrDefault(s => s.Strategy.Name.Equals(selectedStrategy.Name));
+                        var strategyViewModel = SelectedStrategyViewModels.FirstOrDefault(s => s.Strategy.Name.Equals(selectedStrategy.Name, StringComparison.Ordinal));
 
                         if (strategyViewModel == null)
                         {
@@ -208,7 +208,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
             var strategyName = param.ToString();
 
-            if (Strategies.Any(s => s.Name.Equals(strategyName)))
+            if (Strategies.Any(s => s.Name.Equals(strategyName, StringComparison.Ordinal)))
             {
                 ShowMessage(new Message { MessageType = MessageType.Info, Text = $"A strategy with the name {strategyName} already exists." });
                 return;
@@ -254,7 +254,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 return;
             }
 
-            var strategyViewModel = SelectedStrategyViewModels.FirstOrDefault(s => s.Strategy.Name.Equals(strategy.Name));
+            var strategyViewModel = SelectedStrategyViewModels.FirstOrDefault(s => s.Strategy.Name.Equals(strategy.Name, StringComparison.Ordinal));
             if(strategyViewModel != null)
             {
                 Close(strategyViewModel);

@@ -80,7 +80,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
                     if (selectedTradeServer != null)
                     {
-                        var serverViewModel = SelectedTradeServerViewModels.FirstOrDefault(s => s.TradeServer.Name.Equals(selectedTradeServer.Name));
+                        var serverViewModel = SelectedTradeServerViewModels.FirstOrDefault(s => s.TradeServer.Name.Equals(selectedTradeServer.Name, StringComparison.Ordinal));
 
                         if (serverViewModel == null)
                         {
@@ -205,7 +205,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
             var tradeServerName = param.ToString();
 
-            if (TradeServers.Any(s => s.Name.Equals(tradeServerName)))
+            if (TradeServers.Any(s => s.Name.Equals(tradeServerName, StringComparison.Ordinal)))
             {
                 ShowMessage(new Message { MessageType = MessageType.Info, Text = $"A trade server with the name {tradeServerName} already exists." });
                 return;
@@ -250,7 +250,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 return;
             }
 
-            var tradeServerViewModel = SelectedTradeServerViewModels.FirstOrDefault(s => s.TradeServer.Name.Equals(tradeServer.Name));
+            var tradeServerViewModel = SelectedTradeServerViewModels.FirstOrDefault(s => s.TradeServer.Name.Equals(tradeServer.Name, StringComparison.Ordinal));
             if(tradeServerViewModel != null)
             {
                 Close(tradeServerViewModel);

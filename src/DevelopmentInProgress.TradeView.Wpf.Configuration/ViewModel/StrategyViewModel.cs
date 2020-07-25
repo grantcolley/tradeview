@@ -68,7 +68,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                         var file = value.First();
                         Strategy.TargetAssembly = new StrategyFile { File = file };
 
-                        if(!Strategy.Dependencies.Any(d => d.File.Equals(file)))
+                        if(!Strategy.Dependencies.Any(d => d.File.Equals(file, StringComparison.Ordinal)))
                         {
                             Strategy.Dependencies.Insert(0, new StrategyFile { File = file, FileType = StrategyFileType.StrategyFile });
                         }
@@ -107,7 +107,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                         var file = value.First();
                         Strategy.DisplayAssembly = new StrategyFile { File = file };
 
-                        if (!Strategy.DisplayDependencies.Any(d => d.File.Equals(file)))
+                        if (!Strategy.DisplayDependencies.Any(d => d.File.Equals(file, StringComparison.Ordinal)))
                         {
                             Strategy.DisplayDependencies.Insert(0, new StrategyFile { File = file, FileType = StrategyFileType.DisplayFile });
                         }
