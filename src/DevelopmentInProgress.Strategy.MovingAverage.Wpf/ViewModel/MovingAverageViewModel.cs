@@ -234,7 +234,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                 return;
             }
 
-            await tradesSemaphoreSlim.WaitAsync(cancellationTokenSource.Token);
+            await tradesSemaphoreSlim.WaitAsync(cancellationTokenSource.Token).ConfigureAwait(true);
 
             try
             {
@@ -280,7 +280,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
 
                     if (TradesChart == null)
                     {
-                        var result = await tradeHelper.CreateLocalTradeList<Trade>(symbol, tradesUpdate, tradesDisplayCount, tradesChartDisplayCount, 0);
+                        var result = await tradeHelper.CreateLocalTradeList<Trade>(symbol, tradesUpdate, tradesDisplayCount, tradesChartDisplayCount, 0).ConfigureAwait(true);
 
                         Trades = result.Trades;
                         TradesChart = result.TradesChart;
@@ -330,7 +330,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                 return;
             }
 
-            await candlestickSemaphoreSlim.WaitAsync(cancellationTokenSource.Token);
+            await candlestickSemaphoreSlim.WaitAsync(cancellationTokenSource.Token).ConfigureAwait(true);
 
             try
             {
@@ -401,7 +401,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                 candlestickSemaphoreSlim.Release();
             }
 
-            await Task.FromResult<object>(null);
+            await Task.FromResult<object>(null).ConfigureAwait(false);
         }
 
         public override async Task OrderNotificationsAsync(List<StrategyNotification> orderNotifications)
@@ -411,7 +411,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                 return;
             }
 
-            await orderBookSemaphoreSlim.WaitAsync(cancellationTokenSource.Token);
+            await orderBookSemaphoreSlim.WaitAsync(cancellationTokenSource.Token).ConfigureAwait(true);
 
             try
             {
@@ -439,7 +439,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                         var pricePrecision = symbol.PricePrecision;
                         var quantityPrecision = symbol.QuantityPrecision;
 
-                        OrderBook = await orderBookHelper.CreateLocalOrderBook(symbol, ob, orderBookDisplayCount, orderBookChartDisplayCount);
+                        OrderBook = await orderBookHelper.CreateLocalOrderBook(symbol, ob, orderBookDisplayCount, orderBookChartDisplayCount).ConfigureAwait(true);
                     }
                     else
                     {
@@ -490,7 +490,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                 orderBookSemaphoreSlim.Release();
             }
 
-            await Task.FromResult<object>(null);
+            await Task.FromResult<object>(null).ConfigureAwait(false);
         }
     }
 }
