@@ -10,7 +10,7 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
 {
     public class KucoinExchangeTestApi : IExchangeApi
     {
-        private KucoinExchangeTestApiEnum kucoinExchangeTestApiEnum;
+        private readonly KucoinExchangeTestApiEnum kucoinExchangeTestApiEnum;
 
         public KucoinExchangeTestApi(KucoinExchangeTestApiEnum kucoinExchangeTestApiEnum)
         {
