@@ -53,7 +53,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 if(accounts != value)
                 {
                     accounts = value;
-                    OnPropertyChanged("Accounts");
+                    OnPropertyChanged(nameof(Accounts));
                 }
             }
         }
@@ -68,7 +68,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 if (isLoading != value)
                 {
                     isLoading = value;
-                    OnPropertyChanged("IsLoading");
+                    OnPropertyChanged(nameof(IsLoading));
                 }
             }
         }
@@ -95,7 +95,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                         }
                     }
 
-                    OnPropertyChanged("SelectedUserAccount");
+                    OnPropertyChanged(nameof(SelectedUserAccount));
                 }
             }
         }
@@ -108,7 +108,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 if (selectedUserAccountViewModel != value)
                 {
                     selectedUserAccountViewModel = value;
-                    OnPropertyChanged("SelectedUserAccountViewModel");
+                    OnPropertyChanged(nameof(SelectedUserAccountViewModel));
                 }
             }
         }

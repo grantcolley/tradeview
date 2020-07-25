@@ -49,7 +49,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 if(tradeServers != value)
                 {
                     tradeServers = value;
-                    OnPropertyChanged("TradeServers");
+                    OnPropertyChanged(nameof(TradeServers));
                 }
             }
         }
@@ -64,7 +64,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 if (isLoading != value)
                 {
                     isLoading = value;
-                    OnPropertyChanged("IsLoading");
+                    OnPropertyChanged(nameof(IsLoading));
                 }
             }
         }
@@ -95,7 +95,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                         }
                     }
 
-                    OnPropertyChanged("SelectedTradeServer");
+                    OnPropertyChanged(nameof(SelectedTradeServer));
                 }
             }
         }
@@ -108,7 +108,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 if (selectedTradeServerViewModel != value)
                 {
                     selectedTradeServerViewModel = value;
-                    OnPropertyChanged("SelectedTradeServerViewModel");
+                    OnPropertyChanged(nameof(SelectedTradeServerViewModel));
                 }
             }
         }

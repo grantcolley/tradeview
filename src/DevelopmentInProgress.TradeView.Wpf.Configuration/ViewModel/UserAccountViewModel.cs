@@ -56,7 +56,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 if (userAccount != value)
                 {
                     userAccount = value;
-                    OnPropertyChanged("UserAccount");
+                    OnPropertyChanged(nameof(UserAccount));
                 }
             }
         }

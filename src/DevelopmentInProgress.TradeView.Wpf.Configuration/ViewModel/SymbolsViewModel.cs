@@ -49,7 +49,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 if (symbols != value)
                 {
                     symbols = value;
-                    OnPropertyChanged("Symbols");
+                    OnPropertyChanged(nameof(Symbols));
                 }
             }
         }
@@ -71,7 +71,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                         Symbols.ForEach(s => s.IsVisible = true);
                     }
 
-                    OnPropertyChanged("ShowFavourites");
+                    OnPropertyChanged(nameof(ShowFavourites));
                 }
             }
         }
@@ -84,7 +84,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 if (isLoadingSymbols != value)
                 {
                     isLoadingSymbols = value;
-                    OnPropertyChanged("IsLoadingSymbols");
+                    OnPropertyChanged(nameof(IsLoadingSymbols));
                 }
             }
         }

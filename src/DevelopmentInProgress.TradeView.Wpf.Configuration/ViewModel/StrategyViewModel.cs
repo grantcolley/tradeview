@@ -51,7 +51,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 if (strategy != value)
                 {
                     strategy = value;
-                    OnPropertyChanged("Strategy");
+                    OnPropertyChanged(nameof(Strategy));
                 }
             }
         }

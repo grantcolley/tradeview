@@ -30,7 +30,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 if (tradeServer != value)
                 {
                     tradeServer = value;
-                    OnPropertyChanged("TradeServer");
+                    OnPropertyChanged(nameof(TradeServer));
                 }
             }
         }

@@ -52,7 +52,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 if(strategies != value)
                 {
                     strategies = value;
-                    OnPropertyChanged("Strategies");
+                    OnPropertyChanged(nameof(Strategies));
                 }
             }
         }
@@ -67,7 +67,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 if (isLoading != value)
                 {
                     isLoading = value;
-                    OnPropertyChanged("IsLoading");
+                    OnPropertyChanged(nameof(IsLoading));
                 }
             }
         }
@@ -98,7 +98,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                         }
                     }
 
-                    OnPropertyChanged("SelectedStrategy");
+                    OnPropertyChanged(nameof(SelectedStrategy));
                 }
             }
         }
@@ -111,7 +111,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 if (selectedStrategyViewModel != value)
                 {
                     selectedStrategyViewModel = value;
-                    OnPropertyChanged("SelectedStrategyViewModel");
+                    OnPropertyChanged(nameof(SelectedStrategyViewModel));
                 }
             }
         }
