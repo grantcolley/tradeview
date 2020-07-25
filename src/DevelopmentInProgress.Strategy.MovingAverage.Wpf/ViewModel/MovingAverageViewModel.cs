@@ -269,7 +269,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
 
                     var trade = tradesUpdate.First();
 
-                    var symbol = Symbols.First(s => s.ExchangeSymbol.Equals(trade.Symbol));
+                    var symbol = Symbols.First(s => s.ExchangeSymbol.Equals(trade.Symbol, StringComparison.Ordinal));
 
                     var pricePrecision = symbol.PricePrecision;
                     var quantityPrecision = symbol.QuantityPrecision;
@@ -445,7 +445,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
 
                         var orderBookHelper = orderBookHelperFactory.GetOrderBookHelper(ob.Exchange);
 
-                        var symbol = Symbols.First(s => s.ExchangeSymbol.Equals(ob.Symbol));
+                        var symbol = Symbols.First(s => s.ExchangeSymbol.Equals(ob.Symbol, StringComparison.Ordinal));
                         var pricePrecision = symbol.PricePrecision;
                         var quantityPrecision = symbol.QuantityPrecision;
 
@@ -469,7 +469,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                             {
                                 orderBookHelper = orderBookHelperFactory.GetOrderBookHelper(ob.Exchange);
 
-                                symbol = Symbols.First(s => s.ExchangeSymbol.Equals(ob.Symbol));
+                                symbol = Symbols.First(s => s.ExchangeSymbol.Equals(ob.Symbol, StringComparison.Ordinal));
                                 quantityPrecision = symbol.QuantityPrecision;
                                 pricePrecision = symbol.PricePrecision;
                             }
