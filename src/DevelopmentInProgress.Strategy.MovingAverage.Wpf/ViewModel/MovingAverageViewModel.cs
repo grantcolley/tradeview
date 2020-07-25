@@ -202,7 +202,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                 if (orderBook != value)
                 {
                     orderBook = value;
-                    OnPropertyChanged(nameof((OrderBook));
+                    OnPropertyChanged(nameof(OrderBook));
                 }
             }
         }
