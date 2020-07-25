@@ -18,9 +18,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
                 throw new ArgumentNullException(nameof(exchangeApiFactory));
             }
 
-            orderBookHelpers = new Dictionary<Exchange, IOrderBookHelper>();
-            orderBookHelpers.Add(Exchange.Binance, new BinanceOrderBookHelper());
-            orderBookHelpers.Add(Exchange.Kucoin, new KucoinOrderBookHelper(exchangeApiFactory.GetExchangeApi(Exchange.Kucoin)));
+            orderBookHelpers = new Dictionary<Exchange, IOrderBookHelper>
+            {
+                { Exchange.Binance, new BinanceOrderBookHelper() },
+                { Exchange.Kucoin, new KucoinOrderBookHelper(exchangeApiFactory.GetExchangeApi(Exchange.Kucoin)) }
+            };
         }
 
         public IOrderBookHelper GetOrderBookHelper(Exchange exchange)
