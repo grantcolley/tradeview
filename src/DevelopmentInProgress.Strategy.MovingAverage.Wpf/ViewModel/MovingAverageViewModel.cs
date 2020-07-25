@@ -200,9 +200,9 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
 
                     var tradeHelper = tradeHelperFactory.GetTradeHelper(trade.Exchange);
 
-                    Func<ITrade, int, int, Trade> createSmaTrade = (t, p, q) => new Trade { Price = ((MovingAverageTrade)t).MovingAveragePrice.Trim(p), Time = t.Time.ToLocalTime(), Exchange = t.Exchange };
-                    Func<ITrade, int, int, Trade> createBuyIndicator = (t, p, q) => new Trade { Price = ((MovingAverageTrade)t).BuyPrice.Trim(p), Time = t.Time.ToLocalTime(), Exchange = t.Exchange };
-                    Func<ITrade, int, int, Trade> createSellIndicator = (t, p, q) => new Trade { Price = ((MovingAverageTrade)t).SellPrice.Trim(p), Time = t.Time.ToLocalTime(), Exchange = t.Exchange };
+                    Trade createSmaTrade(ITrade t, int p, int q) => new Trade { Price = ((MovingAverageTrade)t).MovingAveragePrice.Trim(p), Time = t.Time.ToLocalTime(), Exchange = t.Exchange };
+                    Trade createBuyIndicator(ITrade t, int p, int q) => new Trade { Price = ((MovingAverageTrade)t).BuyPrice.Trim(p), Time = t.Time.ToLocalTime(), Exchange = t.Exchange };
+                    Trade createSellIndicator(ITrade t, int p, int q) => new Trade { Price = ((MovingAverageTrade)t).SellPrice.Trim(p), Time = t.Time.ToLocalTime(), Exchange = t.Exchange };
 
                     var tradesDisplayCount = Strategy.TradesDisplayCount;
                     var tradesChartDisplayCount = Strategy.TradesChartDisplayCount;
