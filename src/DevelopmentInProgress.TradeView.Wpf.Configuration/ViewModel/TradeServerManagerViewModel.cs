@@ -13,6 +13,7 @@ using System.Windows.Input;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General exceptions are written to the log file and shown in the message panel.")]
     public class TradeServerManagerViewModel : DocumentViewModel
     {
         private ITradeServerService tradeServerService;

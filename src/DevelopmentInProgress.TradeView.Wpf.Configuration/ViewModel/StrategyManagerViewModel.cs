@@ -14,6 +14,7 @@ using System.Windows.Input;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General exceptions are written to the log file and show in the messages panel.")]
     public class StrategyManagerViewModel : DocumentViewModel
     {
         private IStrategyService strategyService;

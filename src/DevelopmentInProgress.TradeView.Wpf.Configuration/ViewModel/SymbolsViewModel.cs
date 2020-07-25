@@ -104,6 +104,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             disposed = true;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General exceptions are logged and displayed to the user in a dialog box.")]
         private async Task GetSymbols()
         {
             IsLoadingSymbols = true;
@@ -124,6 +125,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             }
             catch (Exception ex)
             {
+                Logger.Log(ex.ToString(), Category.Exception, Priority.Low);
                 Dialog.ShowException(ex);
             }
             finally

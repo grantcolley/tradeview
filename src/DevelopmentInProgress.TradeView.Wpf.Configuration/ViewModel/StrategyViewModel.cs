@@ -13,6 +13,7 @@ using System.Windows.Input;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General exceptions are reported to subscribers.")]
     public class StrategyViewModel : BaseViewModel
     {
         private readonly IStrategyService strategyService;
