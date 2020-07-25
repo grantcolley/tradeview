@@ -19,16 +19,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 {
     public class SymbolViewModel : ExchangeViewModel
     {
-        private CancellationTokenSource symbolCancellationTokenSource;
+        private readonly CancellationTokenSource symbolCancellationTokenSource;
+        private readonly SemaphoreSlim orderBookSemaphoreSlim = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim tradesSemaphoreSlim = new SemaphoreSlim(1, 1);
+        private readonly Exchange exchange;
+        private readonly IOrderBookHelper orderBookHelper;
+        private readonly ITradeHelper tradeHelper;
         private Symbol symbol;
         private OrderBook orderBook;
         private ChartValues<Trade> tradesChart;
         private List<Trade> trades;
-        private Exchange exchange;
-        private IOrderBookHelper orderBookHelper;
-        private ITradeHelper tradeHelper;
-        private SemaphoreSlim orderBookSemaphoreSlim = new SemaphoreSlim(1, 1);
-        private SemaphoreSlim tradesSemaphoreSlim = new SemaphoreSlim(1, 1);
         private bool isLoadingTrades;
         private bool isLoadingOrderBook;
         private bool disposed;
