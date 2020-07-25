@@ -229,6 +229,11 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
 
         public override async Task TradeNotificationsAsync(List<StrategyNotification> tradeNotifications)
         {
+            if(tradeNotifications == null)
+            {
+                throw new ArgumentNullException(nameof(tradeNotifications));
+            }
+
             if (cancellationTokenSource.IsCancellationRequested)
             {
                 return;
@@ -406,6 +411,11 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
 
         public override async Task OrderNotificationsAsync(List<StrategyNotification> orderNotifications)
         {
+            if (orderNotifications == null)
+            {
+                throw new ArgumentNullException(nameof(orderNotifications));
+            }
+
             if (cancellationTokenSource.IsCancellationRequested)
             {
                 return;
