@@ -262,7 +262,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             if(Strategy.TargetAssembly == null
                 || string.IsNullOrWhiteSpace(Strategy.TargetAssembly.File))
             {
-                OnStrategyException(new Exception("Target assembly must be specified."));
+                OnNotification($"{Strategy.Name}'s {nameof(Strategy.TargetAssembly)} must be specified.");
                 return;
             }
 
@@ -287,8 +287,18 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
         private void OnStrategyException(Exception exception)
         {
+            OnNotification(exception.Message, exception);
+        }
+
+        private void OnNotification(string message)
+        {
+            OnNotification(message, null);
+        }
+
+        private void OnNotification(string message, Exception exception)
+        {
             var onStrategyNotification = OnStrategyNotification;
-            onStrategyNotification?.Invoke(this, new StrategyEventArgs { Value = Strategy, Exception = exception });
+            onStrategyNotification?.Invoke(this, new StrategyEventArgs { Value = Strategy, Message = message, Exception = exception });
         }
     }
 }

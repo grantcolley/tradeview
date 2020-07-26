@@ -291,6 +291,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 {
                     ShowMessage(new Message { MessageType = MessageType.Error, Text = args.Exception.ToString() });
                 }
+                else
+                {
+                    ShowMessage(new Message { MessageType = MessageType.Info, Text = args.Message });
+                }
             });
 
             strategyObservableSubscriptions.Add(strategy.Strategy.Name, strateyObservableSubscription);
