@@ -64,12 +64,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             }
         }
 
-        public List<string> Exchanges
+        public static List<string> Exchanges
         {
             get { return ExchangeExtensions.Exchanges().ToList(); }
         }
 
-        public List<string> CandlestickIntervals
+        public static List<string> CandlestickIntervals
         {
             get { return CandlestickIntervalExtensions.GetCandlestickIntervalNames().ToList(); }
         }
