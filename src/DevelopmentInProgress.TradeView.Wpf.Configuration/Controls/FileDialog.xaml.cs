@@ -11,14 +11,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.Controls
     /// </summary>
     public partial class FileDialog : UserControl
     {
-        private static readonly DependencyProperty FilesCommandProperty;
-        private static readonly DependencyProperty MultiSelectProperty;
+        private static readonly DependencyProperty FilesCommandProperty =
+            DependencyProperty.Register("FilesCommand", typeof(ICommand), typeof(FileDialog));
 
-        static FileDialog()
-        {
-            FilesCommandProperty = DependencyProperty.Register("FilesCommand", typeof(ICommand), typeof(FileDialog));
-            MultiSelectProperty = DependencyProperty.Register("MultiSelect", typeof(bool), typeof(FileDialog), new PropertyMetadata(false));
-        }
+        private static readonly DependencyProperty MultiSelectProperty = 
+            DependencyProperty.Register("MultiSelect", typeof(bool), typeof(FileDialog), new PropertyMetadata(false));
 
         public FileDialog()
         {
