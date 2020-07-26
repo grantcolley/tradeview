@@ -85,7 +85,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration
             moduleSettings.ModuleGroups.Add(moduleGroup);
             ModuleNavigator.AddModuleNavigation(moduleSettings);
 
-            Logger.Log("Initialized DevelopmentInProgress.TradeView.Wpf.Configuration", Category.Info, Priority.None);
+            Logger.Log($"Initialized {this.GetType().FullName}", Category.Info, Priority.None);
         }
 
         public static void AddStrategy(string strategyName)
