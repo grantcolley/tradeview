@@ -64,14 +64,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             }
         }
 
-        public string[] Exchanges
+        public List<string> Exchanges
         {
-            get { return ExchangeExtensions.Exchanges(); }
+            get { return ExchangeExtensions.Exchanges().ToList(); }
         }
 
-        public string[] CandlestickIntervals
+        public List<string> CandlestickIntervals
         {
-            get { return CandlestickIntervalExtensions.GetCandlestickIntervalNames(); }
+            get { return CandlestickIntervalExtensions.GetCandlestickIntervalNames().ToList(); }
         }
         
         protected override void Dispose(bool disposing)
