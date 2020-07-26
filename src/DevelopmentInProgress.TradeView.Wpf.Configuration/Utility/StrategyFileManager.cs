@@ -1,10 +1,10 @@
 ﻿using DevelopmentInProgress.TradeView.Core.TradeStrategy;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Configuration.View;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
-using Microsoft.Win32;
 using System.Reflection;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Configuration.Utility

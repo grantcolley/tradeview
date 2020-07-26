@@ -1,5 +1,4 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
-using Prism.Logging;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Configuration.Utility
 {

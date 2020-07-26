@@ -4,7 +4,6 @@ using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Module;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.View;
 using DevelopmentInProgress.TradeView.Wpf.Trading.View;
-using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
 using Prism.Ioc;
 using Prism.Logging;
 
