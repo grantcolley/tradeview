@@ -7,6 +7,7 @@ using DevelopmentInProgress.TradeView.Wpf.Configuration.Events;
 using Prism.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
@@ -28,7 +29,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
         
         public ICommand OpenSymbolsWindowCommand { get; set; }
 
-        public List<string> Exchanges
+        public static List<string> Exchanges
         {
             get { return ExchangeExtensions.Exchanges().ToList(); }
         }
