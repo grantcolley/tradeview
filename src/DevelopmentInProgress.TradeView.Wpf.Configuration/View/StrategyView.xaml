@@ -143,7 +143,7 @@
                             <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Strategy.Name}" VerticalContentAlignment="Center" IsReadOnly="true"  Margin="2" Width="300" HorizontalAlignment="Left"/>
                             <Label Grid.Row="2" Grid.Column="0" Content="Target Assembly:" Margin="2"/>
                             <DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="True" Margin="2">
-                                <controls:FileDialog DockPanel.Dock="Right" Files="{Binding TargetAssembly, Mode=OneWayToSource}" ToolTip="Attach target assembly containing strategy."/>
+                                <controls:FileDialog DockPanel.Dock="Right" FilesCommand="{Binding TargetAssemblyCommand}" ToolTip="Attach target assembly containing strategy."/>
                                 <TextBox Name="targetAssembly" Text="{Binding Strategy.TargetAssembly.DisplayName, Mode=OneWay}" VerticalContentAlignment="Center" ToolTip="{Binding Strategy.TargetAssembly.File, Mode=OneWay}"/>
                             </DockPanel>
                             <Label Grid.Row="3" Grid.Column="0" Content="Target Type:" Margin="2"/>
@@ -169,7 +169,7 @@
                         <DockPanel Grid.Column="2" Margin="2" LastChildFill="True">
                             <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
                                 <Label Content="Add Target Assembly Dependencies" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-                                <controls:FileDialog DockPanel.Dock="Right" MultiSelect="True" Margin="2" Files="{Binding Dependencies, Mode=OneWayToSource}" ToolTip="Attach additional assemblies the target assembly is dependant on"/>
+                                <controls:FileDialog DockPanel.Dock="Right" MultiSelect="True" Margin="2" FilesCommand="{Binding DependenciesCommand}" ToolTip="Attach additional assemblies the target assembly is dependant on"/>
                             </StackPanel>
                             <GroupBox Style="{StaticResource GroupBoxNoHeaderStyle}">
                                 <ItemsControl Margin="10" ItemsSource="{Binding Strategy.Dependencies}"/>
@@ -226,7 +226,7 @@
                         </Grid.RowDefinitions>
                         <Label Grid.Row="0" Grid.Column="0" Content="Display Assembly:" Margin="2"/>
                         <DockPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4" LastChildFill="True" Margin="2">
-                            <controls:FileDialog DockPanel.Dock="Right" Files="{Binding DisplayAssembly, Mode=OneWayToSource}" ToolTip="Attach assembly containing strategy WPF display."/>
+                            <controls:FileDialog DockPanel.Dock="Right" FilesCommand="{Binding DisplayAssemblyCommand}" ToolTip="Attach assembly containing strategy WPF display."/>
                             <TextBox Text="{Binding Strategy.DisplayAssembly.DisplayName, Mode=OneWay}" ToolTip="{Binding Strategy.DisplayAssembly.File, Mode=OneWay}"/>
                         </DockPanel>
                         <Label Grid.Row="1" Grid.Column="0" Content="Display View Type:" Margin="2"/>
@@ -248,7 +248,7 @@
                     <DockPanel Grid.Column="2" Margin="2" LastChildFill="True">
                         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
                             <Label Content="Add Display Assembly Dependencies" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-                            <controls:FileDialog DockPanel.Dock="Right" MultiSelect="True" Margin="2" Files="{Binding DisplayDependencies, Mode=OneWayToSource}" ToolTip="Attach additional assemblies the strategy WPF display is dependant on"/>
+                            <controls:FileDialog DockPanel.Dock="Right" MultiSelect="True" Margin="2" FilesCommand="{Binding DisplayDependenciesCommand}" ToolTip="Attach additional assemblies the strategy WPF display is dependant on"/>
                         </StackPanel>
                         <GroupBox Style="{StaticResource GroupBoxNoHeaderStyle}">
                             <ItemsControl Margin="10" ItemsSource="{Binding Strategy.DisplayDependencies}"/>

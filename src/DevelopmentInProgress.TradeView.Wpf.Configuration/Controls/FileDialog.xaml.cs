@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Configuration.Controls
 {
@@ -10,12 +11,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.Controls
     /// </summary>
     public partial class FileDialog : UserControl
     {
-        private static readonly DependencyProperty FilesProperty;
+        private static readonly DependencyProperty FilesCommandProperty;
         private static readonly DependencyProperty MultiSelectProperty;
 
         static FileDialog()
         {
-            FilesProperty = DependencyProperty.Register("Files", typeof(IEnumerable<string>), typeof(FileDialog));
+            FilesCommandProperty = DependencyProperty.Register("FilesCommand", typeof(ICommand), typeof(FileDialog));
             MultiSelectProperty = DependencyProperty.Register("MultiSelect", typeof(bool), typeof(FileDialog), new PropertyMetadata(false));
         }
 
@@ -24,10 +25,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.Controls
             InitializeComponent();
         }
 
-        public IEnumerable<string> Files
+        public ICommand FilesCommand
         {
-            get { return (IEnumerable<string>)GetValue(FilesProperty); }
-            set { SetValue(FilesProperty, value); }
+            get { return (ICommand)GetValue(FilesCommandProperty); }
+            set { SetValue(FilesCommandProperty, value); }
         }
 
         public bool MultiSelect
@@ -55,7 +56,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.Controls
                 files.AddRange(dialog.FileNames);
             }
 
-            Files = files;
+            FilesCommand.Execute(files);
         }
     }
 }

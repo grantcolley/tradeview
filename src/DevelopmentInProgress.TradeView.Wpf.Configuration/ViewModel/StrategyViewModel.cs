@@ -32,6 +32,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             DeleteStrategySubscriptionCommand = new ViewModelCommand(DeleteStrategySubscription);
             DeleteStrategyDependencyCommand = new ViewModelCommand(DeleteStrategyDependency);
             AddParameterSchemaCommand = new ViewModelCommand(AddParameterSchema);
+            DisplayDependenciesCommand = new ViewModelCommand(DisplayDependencies);
+            DisplayAssemblyCommand = new ViewModelCommand(DisplayAssembly);
+            TargetAssemblyCommand = new ViewModelCommand(TargetAssembly);
+            DependenciesCommand = new ViewModelCommand(Dependencies);
 
             OnPropertyChanged(string.Empty);
         }
@@ -42,6 +46,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
         public ICommand DeleteStrategySubscriptionCommand { get; set; }
         public ICommand DeleteStrategyDependencyCommand { get; set; }
         public ICommand AddParameterSchemaCommand { get; set; }
+        public ICommand DisplayDependenciesCommand { get; set; }
+        public ICommand DisplayAssemblyCommand { get; set; }
+        public ICommand TargetAssemblyCommand { get; set; }
+        public ICommand DependenciesCommand { get; set; }
 
         public Strategy Strategy
         {
@@ -52,84 +60,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 {
                     strategy = value;
                     OnPropertyChanged(nameof(Strategy));
-                }
-            }
-        }
-
-        public IEnumerable<string> TargetAssembly
-        {
-            set
-            {
-                if (Strategy != null)
-                {
-                    if (value != null
-                        && value.Any())
-                    {
-                        var file = value.First();
-                        Strategy.TargetAssembly = new StrategyFile { File = file };
-
-                        if(!Strategy.Dependencies.Any(d => d.File.Equals(file, StringComparison.Ordinal)))
-                        {
-                            Strategy.Dependencies.Insert(0, new StrategyFile { File = file, FileType = StrategyFileType.StrategyFile });
-                        }
-                    }
-                }
-            }
-        }
-
-        public IEnumerable<string> Dependencies
-        {
-            set
-            {
-                if (Strategy != null)
-                {
-                    if (value != null
-                        && value.Any())
-                    {
-                        foreach (string file in value)
-                        {
-                            Strategy.Dependencies.Insert(0, new StrategyFile { File = file, FileType = StrategyFileType.StrategyFile });
-                        }
-                    }
-                }
-            }
-        }
-
-        public IEnumerable<string> DisplayAssembly
-        {
-            set
-            {
-                if (Strategy != null)
-                {
-                    if (value != null
-                        && value.Any())
-                    {
-                        var file = value.First();
-                        Strategy.DisplayAssembly = new StrategyFile { File = file };
-
-                        if (!Strategy.DisplayDependencies.Any(d => d.File.Equals(file, StringComparison.Ordinal)))
-                        {
-                            Strategy.DisplayDependencies.Insert(0, new StrategyFile { File = file, FileType = StrategyFileType.DisplayFile });
-                        }
-                    }
-                }
-            }
-        }
-
-        public IEnumerable<string> DisplayDependencies
-        {
-            set
-            {
-                if (Strategy != null)
-                {
-                    if (value != null
-                        && value.Any())
-                    {
-                        foreach (string file in value)
-                        {
-                            Strategy.DisplayDependencies.Insert(0, new StrategyFile { File = file, FileType = StrategyFileType.DisplayFile });
-                        }
-                    }
                 }
             }
         }
@@ -157,6 +87,96 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             }
 
             disposed = true;
+        }
+
+        private void DisplayAssembly(object arg)
+        {
+            IEnumerable<string> files = arg as IEnumerable<string>;
+
+            if (files == null)
+            {
+                return;
+            }
+
+            if (Strategy != null)
+            {
+                if (files.Any())
+                {
+                    var file = files.First();
+                    Strategy.DisplayAssembly = new StrategyFile { File = file };
+
+                    if (!Strategy.DisplayDependencies.Any(d => d.File.Equals(file, StringComparison.Ordinal)))
+                    {
+                        Strategy.DisplayDependencies.Insert(0, new StrategyFile { File = file, FileType = StrategyFileType.DisplayFile });
+                    }
+                }
+            }
+        }
+
+        private void DisplayDependencies(object arg)
+        {
+            IEnumerable<string> files = arg as IEnumerable<string>;
+
+            if (files == null)
+            {
+                return;
+            }
+
+            if (Strategy != null)
+            {
+                if (files.Any())
+                {
+                    foreach (string file in files)
+                    {
+                        Strategy.DisplayDependencies.Insert(0, new StrategyFile { File = file, FileType = StrategyFileType.DisplayFile });
+                    }
+                }
+            }
+        }
+
+        private void TargetAssembly(object arg)
+        {
+            IEnumerable<string> files = arg as IEnumerable<string>;
+
+            if (files == null)
+            {
+                return;
+            }
+
+            if (Strategy != null)
+            {
+                if (files.Any())
+                {
+                    var file = files.First();
+                    Strategy.TargetAssembly = new StrategyFile { File = file };
+
+                    if (!Strategy.Dependencies.Any(d => d.File.Equals(file, StringComparison.Ordinal)))
+                    {
+                        Strategy.Dependencies.Insert(0, new StrategyFile { File = file, FileType = StrategyFileType.StrategyFile });
+                    }
+                }
+            }
+        }
+
+        private void Dependencies(object arg)
+        {
+            IEnumerable<string> files = arg as IEnumerable<string>;
+
+            if (files == null)
+            {
+                return;
+            }
+
+            if (Strategy != null)
+            {
+                if (files.Any())
+                {
+                    foreach (string file in files)
+                    {
+                        Strategy.Dependencies.Insert(0, new StrategyFile { File = file, FileType = StrategyFileType.StrategyFile });
+                    }
+                }
+            }
         }
 
         private async void AddStrategySubscription(object param)
