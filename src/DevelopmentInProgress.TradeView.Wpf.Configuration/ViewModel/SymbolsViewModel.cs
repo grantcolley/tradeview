@@ -16,7 +16,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 {
     public class SymbolsViewModel : ExchangeViewModel
     {
-        private UserAccount userAccount;
+        private readonly UserAccount userAccount;
         private List<Symbol> symbols;
         private bool showFavourites;
         private bool isLoadingSymbols;

@@ -17,12 +17,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General exceptions are written to the log file and show in the messages panel.")]
     public class StrategyManagerViewModel : DocumentViewModel
     {
-        private IStrategyService strategyService;
-        private IStrategyFileManager strategyFileManager;
+        private readonly IStrategyService strategyService;
+        private readonly IStrategyFileManager strategyFileManager;
+        private readonly Dictionary<string, IDisposable> strategyObservableSubscriptions;
         private ObservableCollection<Strategy> strategies;
         private StrategyViewModel selectedStrategyViewModel;
         private Strategy selectedStrategy;
-        private Dictionary<string, IDisposable> strategyObservableSubscriptions;
         private bool isLoading;
         private bool disposed;
 

@@ -16,10 +16,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General exceptions are written to the log file and shown in the message panel.")]
     public class TradeServerManagerViewModel : DocumentViewModel
     {
-        private ITradeServerService tradeServerService;
+        private readonly ITradeServerService tradeServerService;
+        private readonly Dictionary<string, IDisposable> tradeServerObservableSubscriptions;
         private ObservableCollection<TradeServer> tradeServers;
         private TradeServerViewModel selectedTradeServerViewModel;
-        private Dictionary<string, IDisposable> tradeServerObservableSubscriptions;
         private TradeServer selectedTradeServer;
         private bool isLoading;
         private bool disposed;

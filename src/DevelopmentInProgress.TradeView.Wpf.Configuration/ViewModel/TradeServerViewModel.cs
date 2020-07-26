@@ -9,7 +9,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 {
     public class TradeServerViewModel : BaseViewModel
     {
-        private ITradeServerService tradeServerService;
+        private readonly ITradeServerService tradeServerService;
         private TradeServer tradeServer;
         bool disposed = false;
 
