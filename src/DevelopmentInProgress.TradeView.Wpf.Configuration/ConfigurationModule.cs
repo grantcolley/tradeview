@@ -14,13 +14,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration
         private static IContainerProvider staticContainerProvider;
 
         public const string ModuleName = "Configuration";
-        private static string ConfigurationUser = $"Configuration";
+        private readonly static string ConfigurationUser = $"Configuration";
 
         private const string StrategyModuleName = "Strategies";
-        private static string StrategyUser = $"Strategies";
+        private readonly static string StrategyUser = $"Strategies";
 
         private const string TradingModuleName = "Trading";
-        private static string AccountUser = $"Accounts";
+        private readonly static string AccountUser = $"Accounts";
 
         public ConfigurationModule(ModuleNavigator moduleNavigator, ILoggerFacade logger)
             : base(moduleNavigator, logger)
