@@ -10,7 +10,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.View
     public partial class StrategyManagerView : DocumentViewBase
     {
         public StrategyManagerView(IViewContext viewContext, StrategyManagerViewModel strategyManagerViewModel)
-            : base(viewContext, strategyManagerViewModel, Module.ModuleName)
+            : base(viewContext, strategyManagerViewModel, ConfigurationModule.ModuleName)
         {
             InitializeComponent();
 

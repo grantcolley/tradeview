@@ -10,7 +10,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.View
     public partial class TradeServerManagerView : DocumentViewBase
     {
         public TradeServerManagerView(IViewContext viewContext, TradeServerManagerViewModel serverManagerViewModel)
-            : base(viewContext, serverManagerViewModel, Module.ModuleName)
+            : base(viewContext, serverManagerViewModel, ConfigurationModule.ModuleName)
         {
             InitializeComponent();
 

@@ -9,7 +9,7 @@ using Prism.Logging;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Configuration
 {
-    public class Module : ModuleBase
+    public class ConfigurationModule : ModuleBase
     {
         private static IContainerProvider staticContainerProvider;
 
@@ -22,7 +22,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration
         private const string TradingModuleName = "Trading";
         private static string AccountUser = $"Accounts";
 
-        public Module(ModuleNavigator moduleNavigator, ILoggerFacade logger)
+        public ConfigurationModule(ModuleNavigator moduleNavigator, ILoggerFacade logger)
             : base(moduleNavigator, logger)
         {
         }

@@ -221,7 +221,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 var strategy = new Strategy { Name = strategyName };
                 await strategyService.SaveStrategy(strategy).ConfigureAwait(true);
                 Strategies.Add(strategy);
-                Module.AddStrategy(strategy.Name);
+                ConfigurationModule.AddStrategy(strategy.Name);
             }
             catch (Exception ex)
             {
@@ -266,7 +266,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
                 await strategyService.DeleteStrategy(strategy).ConfigureAwait(true);
                 Strategies.Remove(strategy);
-                Module.RemoveStrategy(strategy.Name);
+                ConfigurationModule.RemoveStrategy(strategy.Name);
             }
             catch (Exception ex)
             {

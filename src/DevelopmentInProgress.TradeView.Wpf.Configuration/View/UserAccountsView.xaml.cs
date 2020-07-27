@@ -10,7 +10,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.View
     public partial class UserAccountsView : DocumentViewBase
     {
         public UserAccountsView(IViewContext viewContext, UserAccountsViewModel userAccountsViewModel)
-            : base(viewContext, userAccountsViewModel, Module.ModuleName)
+            : base(viewContext, userAccountsViewModel, ConfigurationModule.ModuleName)
         {
             InitializeComponent();
 

@@ -223,7 +223,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 var userAccount = new UserAccount { AccountName = accountName };
                 await accountsService.SaveAccountAsync(userAccount).ConfigureAwait(true);
                 Accounts.Add(userAccount);
-                Module.AddAccount(userAccount.AccountName);
+                ConfigurationModule.AddAccount(userAccount.AccountName);
             }
             catch (Exception ex)
             {
@@ -268,7 +268,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
                 await accountsService.DeleteAccountAsync(userAccount).ConfigureAwait(true);
                 Accounts.Remove(userAccount);
-                Module.RemoveAccount(userAccount.AccountName);
+                ConfigurationModule.RemoveAccount(userAccount.AccountName);
             }
             catch (Exception ex)
             {

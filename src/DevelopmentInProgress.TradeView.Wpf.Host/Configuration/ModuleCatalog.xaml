@@ -5,7 +5,7 @@
 
     <prism:ModuleInfo Ref="Configuration"
                       ModuleName="Configuration"
-                      ModuleType="DevelopmentInProgress.TradeView.Wpf.Configuration.Module,DevelopmentInProgress.TradeView.Wpf.Configuration"
+                      ModuleType="DevelopmentInProgress.TradeView.Wpf.Configuration.ConfigurationModule,DevelopmentInProgress.TradeView.Wpf.Configuration"
                       InitializationMode="WhenAvailable">
     </prism:ModuleInfo>
 
