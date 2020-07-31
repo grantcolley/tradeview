@@ -20,7 +20,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
         private readonly IStrategyService strategyService;
         private readonly IStrategyFileManager strategyFileManager;
         private readonly Dictionary<string, IDisposable> strategyObservableSubscriptions;
-        private ObservableCollection<Strategy> strategies;
         private StrategyViewModel selectedStrategyViewModel;
         private Strategy selectedStrategy;
         private bool isLoading;
@@ -36,7 +35,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             DeleteStrategyCommand = new ViewModelCommand(DeleteStrategy);
             CloseCommand = new ViewModelCommand(Close);
 
+            Strategies = new ObservableCollection<Strategy>();
             SelectedStrategyViewModels = new ObservableCollection<StrategyViewModel>();
+
             strategyObservableSubscriptions = new Dictionary<string, IDisposable>();
         }
 
@@ -44,20 +45,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
         public ICommand DeleteStrategyCommand { get; set; }
         public ICommand CloseCommand { get; set; }
 
-        public ObservableCollection<Strategy> Strategies 
-        {
-            get { return strategies; } 
-            set
-            {
-                if(strategies != value)
-                {
-                    strategies = value;
-                    OnPropertyChanged(nameof(Strategies));
-                }
-            }
-        }
+        public ObservableCollection<Strategy> Strategies { get; }
 
-        public ObservableCollection<StrategyViewModel> SelectedStrategyViewModels { get; set; }
+        public ObservableCollection<StrategyViewModel> SelectedStrategyViewModels { get; }
 
         public bool IsLoading
         {
@@ -145,7 +135,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
                 var strategies = await strategyService.GetStrategies().ConfigureAwait(true);
 
-                Strategies = new ObservableCollection<Strategy>(strategies);
+                Strategies.Clear();
+                strategies.ForEach(s => Strategies.Add(s));
             }
             catch (Exception ex)
             {
