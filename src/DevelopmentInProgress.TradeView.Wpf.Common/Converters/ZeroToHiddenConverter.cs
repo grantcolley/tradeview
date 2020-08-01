@@ -10,8 +10,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Converters
                               object parameter, CultureInfo culture)
         {
             if (value != null
-                && value is decimal
-                && (decimal)value == 0m)
+                && value is decimal dec
+                && dec == 0m)
             {
                 return null;
             }
