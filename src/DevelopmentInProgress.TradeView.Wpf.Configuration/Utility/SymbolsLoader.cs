@@ -8,8 +8,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.Utility
 {
     public class SymbolsLoader : ISymbolsLoader
     {
-        private IWpfExchangeService exchangeService;
-        private ILoggerFacade logger;
+        private readonly IWpfExchangeService exchangeService;
+        private readonly ILoggerFacade logger;
 
         public SymbolsLoader(IWpfExchangeService exchangeService, ILoggerFacade logger)
         {

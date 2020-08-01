@@ -17,11 +17,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General exceptions are written to the log file and shown in the message panel.")]
     public class UserAccountsViewModel : DocumentViewModel
     {
-        private IAccountsService accountsService;
-        private ISymbolsLoader symbolsLoader;
+        private readonly IAccountsService accountsService;
+        private readonly ISymbolsLoader symbolsLoader;
+        private readonly Dictionary<string, IDisposable> observables;
         private UserAccount selectedUserAccount;
         private UserAccountViewModel selectedUserAccountViewModel;
-        private Dictionary<string, IDisposable> observables;
         private bool isLoading;
         private bool disposed;
 
