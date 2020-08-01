@@ -13,19 +13,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Extensions
                 throw new ArgumentNullException(nameof(strategyNotification));
             }
 
-            MessageType messageType;
-            switch(strategyNotification.NotificationLevel)
+            MessageType messageType = strategyNotification.NotificationLevel switch
             {
-                case NotificationLevel.Error:
-                    messageType = MessageType.Error;
-                    break;
-                case NotificationLevel.Warning:
-                    messageType = MessageType.Warn;
-                    break;
-                default:
-                    messageType = MessageType.Info;
-                    break;
-            }
+                NotificationLevel.Error => MessageType.Error,
+                NotificationLevel.Warning => MessageType.Warn,
+                _ => MessageType.Info
+            };
 
             return new Message
             {
