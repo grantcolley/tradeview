@@ -113,8 +113,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             {
                 strategy.Dispose();
 
-                IDisposable subscription;
-                if (strategyObservableSubscriptions.TryGetValue(strategy.Strategy.Name, out subscription))
+                if (strategyObservableSubscriptions.TryGetValue(strategy.Strategy.Name, out IDisposable subscription))
                 {
                     subscription.Dispose();
                 }

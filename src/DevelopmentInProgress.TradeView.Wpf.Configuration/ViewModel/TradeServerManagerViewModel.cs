@@ -107,8 +107,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             {
                 tradeServer.Dispose();
 
-                IDisposable subscription;
-                if (tradeServerObservableSubscriptions.TryGetValue(tradeServer.TradeServer.Name, out subscription))
+                if (tradeServerObservableSubscriptions.TryGetValue(tradeServer.TradeServer.Name, out IDisposable subscription))
                 {
                     subscription.Dispose();
                 }
