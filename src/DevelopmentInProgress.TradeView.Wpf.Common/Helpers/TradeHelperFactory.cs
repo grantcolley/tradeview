@@ -18,9 +18,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
                 throw new ArgumentNullException(nameof(exchangeApiFactory));
             }
 
-            tradeHelpers = new Dictionary<Exchange, ITradeHelper>();
-            tradeHelpers.Add(Exchange.Binance, new TradeHelper());
-            tradeHelpers.Add(Exchange.Kucoin, new TradeHelper());
+            tradeHelpers = new Dictionary<Exchange, ITradeHelper>()
+            {
+                { Exchange.Binance, new TradeHelper() },
+                { Exchange.Kucoin, new TradeHelper() }
+            };
         }
 
         public ITradeHelper GetTradeHelper(Exchange exchange)

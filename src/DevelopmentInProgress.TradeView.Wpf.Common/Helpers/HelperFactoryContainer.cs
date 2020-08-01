@@ -9,9 +9,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
         public HelperFactoryContainer(ITradeHelperFactory tradeHelperFactory, IOrderBookHelperFactory orderBookHelperFactory)
         {
-            factories = new Dictionary<Type, IHelperFactory>();
-            factories.Add(typeof(ITradeHelperFactory), tradeHelperFactory);
-            factories.Add(typeof(IOrderBookHelperFactory), orderBookHelperFactory);
+            factories = new Dictionary<Type, IHelperFactory>
+            {
+                { typeof(ITradeHelperFactory), tradeHelperFactory },
+                { typeof(IOrderBookHelperFactory), orderBookHelperFactory }
+            };
         }
 
         public T GetFactory<T>() where T : IHelperFactory
