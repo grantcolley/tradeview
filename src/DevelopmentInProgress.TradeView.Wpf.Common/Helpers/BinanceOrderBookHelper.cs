@@ -27,16 +27,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
             try
             {
-                List<OrderBookPriceLevel> topAsks;
-                List<OrderBookPriceLevel> topBids;
-                List<OrderBookPriceLevel> chartAsks;
-                List<OrderBookPriceLevel> chartBids;
-                List<OrderBookPriceLevel> aggregatedAsks;
-                List<OrderBookPriceLevel> aggregatedBids;
-                decimal bidAskSpread;
-
                 GetBidsAndAsks(orderBook, symbol.PricePrecision, symbol.QuantityPrecision, listDisplayCount, chartDisplayCount,
-                    out topAsks, out topBids, out chartAsks, out chartBids, out aggregatedAsks, out aggregatedBids, out bidAskSpread);
+                    out List<OrderBookPriceLevel> topAsks, out List<OrderBookPriceLevel> topBids,
+                    out List<OrderBookPriceLevel> chartAsks, out List<OrderBookPriceLevel> chartBids,
+                    out List<OrderBookPriceLevel> aggregatedAsks, out List<OrderBookPriceLevel> aggregatedBids,
+                    out decimal bidAskSpread);
 
                 var newOrderBook = new OrderBook
                 {
@@ -79,16 +74,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 
             orderBook.LastUpdateId = updateOrderBook.LastUpdateId;
 
-            List<OrderBookPriceLevel> topAsks;
-            List<OrderBookPriceLevel> topBids;
-            List<OrderBookPriceLevel> chartAsks;
-            List<OrderBookPriceLevel> chartBids;
-            List<OrderBookPriceLevel> aggregatedAsks;
-            List<OrderBookPriceLevel> aggregatedBids;
-            decimal bidAskSpread;
-
             GetBidsAndAsks(updateOrderBook, pricePrecision, quantityPrecision, listDisplayCount, chartDisplayCount,
-                out topAsks, out topBids, out chartAsks, out chartBids, out aggregatedAsks, out aggregatedBids, out bidAskSpread);
+                out List<OrderBookPriceLevel> topAsks, out List<OrderBookPriceLevel> topBids, 
+                out List<OrderBookPriceLevel> chartAsks, out List<OrderBookPriceLevel> chartBids, 
+                out List<OrderBookPriceLevel> aggregatedAsks, out List<OrderBookPriceLevel> aggregatedBids, 
+                out decimal bidAskSpread);
 
             // Create new instances of the top 
             // bids and asks, reversing the asks
