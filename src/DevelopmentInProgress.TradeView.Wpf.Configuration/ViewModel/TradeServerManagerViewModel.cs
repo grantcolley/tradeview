@@ -18,7 +18,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
     {
         private readonly ITradeServerService tradeServerService;
         private readonly Dictionary<string, IDisposable> tradeServerObservableSubscriptions;
-        private ObservableCollection<TradeServer> tradeServers;
         private TradeServerViewModel selectedTradeServerViewModel;
         private TradeServer selectedTradeServer;
         private bool isLoading;
@@ -41,20 +40,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
         public ICommand DeleteTradeServerCommand { get; set; }
         public ICommand CloseCommand { get; set; }
 
-        public ObservableCollection<TradeServer> TradeServers 
-        {
-            get { return tradeServers; } 
-            set
-            {
-                if(tradeServers != value)
-                {
-                    tradeServers = value;
-                    OnPropertyChanged(nameof(TradeServers));
-                }
-            }
-        }
-
-        public ObservableCollection<TradeServerViewModel> SelectedTradeServerViewModels { get; set; }
+        public ObservableCollection<TradeServerViewModel> SelectedTradeServerViewModels { get; }
+        public ObservableCollection<TradeServer> TradeServers { get; }
 
         public bool IsLoading
         {
@@ -142,7 +129,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
                 var tradeServers = await tradeServerService.GetTradeServers().ConfigureAwait(true);
 
-                TradeServers = new ObservableCollection<TradeServer>(tradeServers);
+                TradeServers.Clear();
+                tradeServers.ForEach(TradeServers.Add);
             }
             catch (Exception ex)
             {

@@ -17,7 +17,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
     public class SymbolsViewModel : ExchangeViewModel
     {
         private readonly UserAccount userAccount;
-        private List<Symbol> symbols;
         private bool showFavourites;
         private bool isLoadingSymbols;
         private bool disposed;
@@ -36,22 +35,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
         public ICommand UpdatePreferencesCommand { get; set; }
 
+        public List<Symbol> Symbols { get; }
+
         public string Exchange
         {
             get { return userAccount.Exchange.ToString(); }
-        }
-
-        public List<Symbol> Symbols
-        {
-            get { return symbols; }
-            set
-            {
-                if (symbols != value)
-                {
-                    symbols = value;
-                    OnPropertyChanged(nameof(Symbols));
-                }
-            }
         }
 
         public bool ShowFavourites
@@ -121,7 +109,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
                 (from s in results join p in userAccount.Preferences.FavouriteSymbols on s.ExchangeSymbol equals p select f(s, p)).ToList();
 
-                Symbols = new List<Symbol>(results);
+                Symbols.Clear();
+                Symbols.AddRange(results);
             }
             catch (Exception ex)
             {

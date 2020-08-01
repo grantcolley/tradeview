@@ -22,7 +22,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
         private UserAccount selectedUserAccount;
         private UserAccountViewModel selectedUserAccountViewModel;
         private Dictionary<string, IDisposable> observables;
-        private ObservableCollection<UserAccount> accounts;
         private bool isLoading;
         private bool disposed;
 
@@ -45,20 +44,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
         public ICommand DeleteAccountCommand { get; set; }
         public ICommand CloseCommand { get; set; }
 
-        public ObservableCollection<UserAccount> Accounts 
-        {
-            get { return accounts; }
-            set
-            {
-                if(accounts != value)
-                {
-                    accounts = value;
-                    OnPropertyChanged(nameof(Accounts));
-                }
-            }
-        }
+        public ObservableCollection<UserAccountViewModel> SelectedUserAccountViewModels { get; }
 
-        public ObservableCollection<UserAccountViewModel> SelectedUserAccountViewModels { get; set; }
+        public ObservableCollection<UserAccount> Accounts { get; }
 
         public bool IsLoading
         {
@@ -137,7 +125,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 IsLoading = true;
 
                 var accounts = await accountsService.GetAccountsAsync().ConfigureAwait(true);
-                Accounts = new ObservableCollection<UserAccount>(accounts.Accounts);
+                Accounts.Clear();
+                accounts.Accounts.ForEach(Accounts.Add);
             }
             catch (Exception ex)
             {
