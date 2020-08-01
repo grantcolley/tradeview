@@ -1,5 +1,4 @@
-﻿using DevelopmentInProgress.TradeView.Wpf.Common.Events;
-using DevelopmentInProgress.TradeView.Wpf.Common.Model;
+﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context;
@@ -17,7 +16,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
     public class TradeServerManagerViewModel : DocumentViewModel
     {
         private readonly ITradeServerService tradeServerService;
-        private readonly Dictionary<string, IDisposable> tradeServerObservableSubscriptions;
         private TradeServerViewModel selectedTradeServerViewModel;
         private TradeServer selectedTradeServer;
         private bool isLoading;
@@ -33,7 +31,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             CloseCommand = new ViewModelCommand(Close);
 
             SelectedTradeServerViewModels = new ObservableCollection<TradeServerViewModel>();
-            tradeServerObservableSubscriptions = new Dictionary<string, IDisposable>();
         }
 
         public ICommand AddTradeServerCommand { get; set; }
@@ -72,7 +69,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                         if (serverViewModel == null)
                         {
                             serverViewModel = new TradeServerViewModel(selectedTradeServer, Logger);
-                            ObserveServer(serverViewModel);
                             SelectedTradeServerViewModels.Add(serverViewModel);
                             SelectedTradeServerViewModel = serverViewModel;
                         }
@@ -105,14 +101,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             if (param is TradeServerViewModel tradeServer)
             {
                 tradeServer.Dispose();
-
-                if (tradeServerObservableSubscriptions.TryGetValue(tradeServer.TradeServer.Name, out IDisposable subscription))
-                {
-                    subscription.Dispose();
-                }
-
-                tradeServerObservableSubscriptions.Remove(tradeServer.TradeServer.Name);
-                
                 SelectedTradeServerViewModels.Remove(tradeServer);
             }
         }
@@ -145,11 +133,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             if(disposed)
             {
                 return;           
-            }
-
-            foreach (var subscription in tradeServerObservableSubscriptions.Values)
-            {
-                subscription.Dispose();
             }
 
             foreach (var tradeServerViewModel in SelectedTradeServerViewModels)
@@ -254,24 +237,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                     IsLoading = false;
                 }
             }
-        }
-
-        private void ObserveServer(TradeServerViewModel tradeServer)
-        {
-            var tradeServerObservable = Observable.FromEventPattern<TradeServerEventArgs>(
-                eventHandler => tradeServer.OnTradeServerNotification += eventHandler,
-                eventHandler => tradeServer.OnTradeServerNotification -= eventHandler)
-                .Select(eventPattern => eventPattern.EventArgs);
-
-            var tradeServerObservableSubscription = tradeServerObservable.Subscribe(args =>
-            {
-                if (args.HasException)
-                {
-                    ShowMessage(new Message { MessageType = MessageType.Error, Text = args.Exception.ToString() });
-                }
-            });
-
-            tradeServerObservableSubscriptions.Add(tradeServer.TradeServer.Name, tradeServerObservableSubscription);
         }
     }
 }

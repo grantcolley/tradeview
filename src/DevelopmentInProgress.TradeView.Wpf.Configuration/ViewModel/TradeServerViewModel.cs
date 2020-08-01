@@ -1,9 +1,6 @@
-﻿using DevelopmentInProgress.TradeView.Wpf.Common.Events;
-using DevelopmentInProgress.TradeView.Wpf.Common.Model;
-using DevelopmentInProgress.TradeView.Wpf.Common.Services;
+﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using Prism.Logging;
-using System;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 {
@@ -17,8 +14,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
         {
             this.tradeServer = tradeServer;
         }
-
-        public event EventHandler<TradeServerEventArgs> OnTradeServerNotification;
 
         public TradeServer TradeServer
         {
@@ -46,12 +41,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             }
 
             disposed = true;
-        }
-
-        private void OnTradeServerException(Exception exception)
-        {
-            var onServerNotification = OnTradeServerNotification;
-            onServerNotification?.Invoke(this, new TradeServerEventArgs { Value = TradeServer, Exception = exception });
         }
     }
 }
