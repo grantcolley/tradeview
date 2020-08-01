@@ -82,7 +82,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
         {
             var newServerStrategies = serverStrategies.Where(ism => !strategies.Any(s => s.Name == ism.Strategy.Name)).ToList();
 
-            Func<Core.Server.ServerStrategy, ServerStrategy> f = (ism) =>
+            static ServerStrategy f(Core.Server.ServerStrategy ism)
             {
                 var serverStrategy = new ServerStrategy
                 {
