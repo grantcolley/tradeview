@@ -91,23 +91,19 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
         private void DisplayAssembly(object arg)
         {
-            IEnumerable<string> files = arg as IEnumerable<string>;
-
-            if (files == null)
+            if (arg is IEnumerable<string> files)
             {
-                return;
-            }
-
-            if (Strategy != null)
-            {
-                if (files.Any())
+                if (Strategy != null)
                 {
-                    var file = files.First();
-                    Strategy.DisplayAssembly = new StrategyFile { File = file };
-
-                    if (!Strategy.DisplayDependencies.Any(d => d.File.Equals(file, StringComparison.Ordinal)))
+                    if (files.Any())
                     {
-                        Strategy.DisplayDependencies.Insert(0, new StrategyFile { File = file, FileType = StrategyFileType.DisplayFile });
+                        var file = files.First();
+                        Strategy.DisplayAssembly = new StrategyFile { File = file };
+
+                        if (!Strategy.DisplayDependencies.Any(d => d.File.Equals(file, StringComparison.Ordinal)))
+                        {
+                            Strategy.DisplayDependencies.Insert(0, new StrategyFile { File = file, FileType = StrategyFileType.DisplayFile });
+                        }
                     }
                 }
             }
@@ -115,20 +111,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
         private void DisplayDependencies(object arg)
         {
-            IEnumerable<string> files = arg as IEnumerable<string>;
-
-            if (files == null)
+            if (arg is IEnumerable<string> files)
             {
-                return;
-            }
-
-            if (Strategy != null)
-            {
-                if (files.Any())
+                if (Strategy != null)
                 {
-                    foreach (string file in files)
+                    if (files.Any())
                     {
-                        Strategy.DisplayDependencies.Insert(0, new StrategyFile { File = file, FileType = StrategyFileType.DisplayFile });
+                        foreach (string file in files)
+                        {
+                            Strategy.DisplayDependencies.Insert(0, new StrategyFile { File = file, FileType = StrategyFileType.DisplayFile });
+                        }
                     }
                 }
             }
@@ -136,23 +128,19 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
         private void TargetAssembly(object arg)
         {
-            IEnumerable<string> files = arg as IEnumerable<string>;
-
-            if (files == null)
+            if (arg is IEnumerable<string> files)
             {
-                return;
-            }
-
-            if (Strategy != null)
-            {
-                if (files.Any())
+                if (Strategy != null)
                 {
-                    var file = files.First();
-                    Strategy.TargetAssembly = new StrategyFile { File = file };
-
-                    if (!Strategy.Dependencies.Any(d => d.File.Equals(file, StringComparison.Ordinal)))
+                    if (files.Any())
                     {
-                        Strategy.Dependencies.Insert(0, new StrategyFile { File = file, FileType = StrategyFileType.StrategyFile });
+                        var file = files.First();
+                        Strategy.TargetAssembly = new StrategyFile { File = file };
+
+                        if (!Strategy.Dependencies.Any(d => d.File.Equals(file, StringComparison.Ordinal)))
+                        {
+                            Strategy.Dependencies.Insert(0, new StrategyFile { File = file, FileType = StrategyFileType.StrategyFile });
+                        }
                     }
                 }
             }
@@ -160,20 +148,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
         private void Dependencies(object arg)
         {
-            IEnumerable<string> files = arg as IEnumerable<string>;
-
-            if (files == null)
+            if (arg is IEnumerable<string> files)
             {
-                return;
-            }
-
-            if (Strategy != null)
-            {
-                if (files.Any())
+                if (Strategy != null)
                 {
-                    foreach (string file in files)
+                    if (files.Any())
                     {
-                        Strategy.Dependencies.Insert(0, new StrategyFile { File = file, FileType = StrategyFileType.StrategyFile });
+                        foreach (string file in files)
+                        {
+                            Strategy.Dependencies.Insert(0, new StrategyFile { File = file, FileType = StrategyFileType.StrategyFile });
+                        }
                     }
                 }
             }
@@ -207,8 +191,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 return;
             }
 
-            var subscription = param as StrategySubscription;
-            if (subscription != null)
+            if (param is StrategySubscription subscription)
             {
                 try
                 {
@@ -229,8 +212,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 return;
             }
 
-            var file = param as StrategyFile;
-            if (file != null)
+            if (param is StrategyFile file)
             {
                 try
                 {

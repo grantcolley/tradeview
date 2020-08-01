@@ -125,8 +125,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
         private void UpdatePreferences(object arg)
         {
-            var symbol = arg as Symbol;
-            if(symbol != null)
+            if(arg is Symbol symbol)
             {
                 if(symbol.IsFavourite)
                 {

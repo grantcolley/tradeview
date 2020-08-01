@@ -108,8 +108,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
         public void Close(object param)
         {
-            var strategy = param as StrategyViewModel;
-            if (strategy != null)
+            if (param is StrategyViewModel strategy)
             {
                 strategy.Dispose();
 
@@ -225,46 +224,43 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
         private async void DeleteStrategy(object param)
         {
-            var strategy = param as Strategy;
-            if (strategy == null)
+            if (param is Strategy strategy)
             {
-                return;
-            }
+                var result = Dialog.ShowMessage(new MessageBoxSettings
+                {
+                    Title = "Delete Strategy",
+                    Text = $"Are you sure you want to delete {strategy.Name}?",
+                    MessageType = MessageType.Question,
+                    MessageBoxButtons = MessageBoxButtons.OkCancel
+                });
 
-            var result = Dialog.ShowMessage(new MessageBoxSettings
-            {
-                Title = "Delete Strategy",
-                Text = $"Are you sure you want to delete {strategy.Name}?",
-                MessageType = MessageType.Question,
-                MessageBoxButtons = MessageBoxButtons.OkCancel
-            });
+                if (result.Equals(MessageBoxResult.Cancel))
+                {
+                    return;
+                }
 
-            if (result.Equals(MessageBoxResult.Cancel))
-            {
-                return;
-            }
+                var strategyViewModel = SelectedStrategyViewModels.FirstOrDefault(s => s.Strategy.Name.Equals(strategy.Name, StringComparison.Ordinal));
+                if (strategyViewModel != null)
+                {
+                    Close(strategyViewModel);
+                }
 
-            var strategyViewModel = SelectedStrategyViewModels.FirstOrDefault(s => s.Strategy.Name.Equals(strategy.Name, StringComparison.Ordinal));
-            if(strategyViewModel != null)
-            {
-                Close(strategyViewModel);
-            }
+                try
+                {
+                    IsLoading = true;
 
-            try
-            {
-                IsLoading = true;
-
-                await strategyService.DeleteStrategy(strategy).ConfigureAwait(true);
-                Strategies.Remove(strategy);
-                ConfigurationModule.RemoveStrategy(strategy.Name);
-            }
-            catch (Exception ex)
-            {
-                ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message });
-            }
-            finally
-            {
-                IsLoading = false;
+                    await strategyService.DeleteStrategy(strategy).ConfigureAwait(true);
+                    Strategies.Remove(strategy);
+                    ConfigurationModule.RemoveStrategy(strategy.Name);
+                }
+                catch (Exception ex)
+                {
+                    ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message });
+                }
+                finally
+                {
+                    IsLoading = false;
+                }
             }
         }
 

@@ -22,23 +22,26 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.View
         {
             if (e.Key == Key.Space)
             {
-                var symbol = ((ListViewItem)sender).DataContext as Symbol;
-                if (symbol != null)
+                if (sender is ListViewItem listViewItem)
                 {
-                    symbol.IsFavourite = !symbol.IsFavourite;
+                    if (listViewItem.DataContext is Symbol symbol)
+                    {
+                        symbol.IsFavourite = !symbol.IsFavourite;
+                    }
                 }
             }
         }
 
         private void CheckBoxChanged(object sender, RoutedEventArgs e)
         {
-            var symbol = ((CheckBox)sender).DataContext as Symbol;
-            if(symbol != null)
+            if (sender is CheckBox chkBox)
             {
-                var viewModel = DataContext as SymbolsViewModel;
-                if(viewModel != null)
+                if (chkBox.DataContext is Symbol symbol)
                 {
-                    viewModel.UpdatePreferencesCommand.Execute(symbol);
+                    if (DataContext is SymbolsViewModel viewModel)
+                    {
+                        viewModel.UpdatePreferencesCommand.Execute(symbol);
+                    }
                 }
             }
 

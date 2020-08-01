@@ -103,8 +103,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
         public void Close(object param)
         {
-            var userAccount = param as UserAccountViewModel;
-            if (userAccount != null)
+            if (param is UserAccountViewModel userAccount)
             {
                 userAccount.Dispose();
                 SelectedUserAccountViewModels.Remove(userAccount);
@@ -226,46 +225,43 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
         private async void DeleteAccount(object param)
         {
-            var userAccount = param as UserAccount;
-            if(userAccount == null)
+            if (param is UserAccount userAccount)
             {
-                return;
-            }
+                var result = Dialog.ShowMessage(new MessageBoxSettings
+                {
+                    Title = "Delete User Account",
+                    Text = $"Are you sure you want to delete {userAccount.AccountName}?",
+                    MessageType = MessageType.Question,
+                    MessageBoxButtons = MessageBoxButtons.OkCancel
+                });
 
-            var result = Dialog.ShowMessage(new MessageBoxSettings
-            {
-                Title = "Delete User Account",
-                Text = $"Are you sure you want to delete {userAccount.AccountName}?",
-                MessageType = MessageType.Question,
-                MessageBoxButtons = MessageBoxButtons.OkCancel
-            });
+                if (result.Equals(MessageBoxResult.Cancel))
+                {
+                    return;
+                }
 
-            if(result.Equals(MessageBoxResult.Cancel))
-            {
-                return;
-            }
+                var userAccountViewModel = SelectedUserAccountViewModels.FirstOrDefault(a => a.UserAccount.AccountName.Equals(userAccount.AccountName, StringComparison.Ordinal));
+                if (userAccountViewModel != null)
+                {
+                    Close(userAccountViewModel);
+                }
 
-            var userAccountViewModel = SelectedUserAccountViewModels.FirstOrDefault(a => a.UserAccount.AccountName.Equals(userAccount.AccountName, StringComparison.Ordinal));
-            if(userAccountViewModel != null)
-            {
-                Close(userAccountViewModel);
-            }
+                try
+                {
+                    IsLoading = true;
 
-            try
-            {
-                IsLoading = true;
-
-                await accountsService.DeleteAccountAsync(userAccount).ConfigureAwait(true);
-                Accounts.Remove(userAccount);
-                ConfigurationModule.RemoveAccount(userAccount.AccountName);
-            }
-            catch (Exception ex)
-            {
-                ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message });
-            }
-            finally
-            {
-                IsLoading = false;
+                    await accountsService.DeleteAccountAsync(userAccount).ConfigureAwait(true);
+                    Accounts.Remove(userAccount);
+                    ConfigurationModule.RemoveAccount(userAccount.AccountName);
+                }
+                catch (Exception ex)
+                {
+                    ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message });
+                }
+                finally
+                {
+                    IsLoading = false;
+                }
             }
         }
 
@@ -284,9 +280,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 }
                 else if (args.Value != null)
                 {
-                    var userAccount = args.Value as UserAccount;
-
-                    if (userAccount != null)
+                    if (args.Value is UserAccount userAccount)
                     {
                         symbolsLoader.ShowSymbols(userAccount);
                     }

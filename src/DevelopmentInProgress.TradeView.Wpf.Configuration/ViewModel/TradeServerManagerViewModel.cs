@@ -102,8 +102,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
         public void Close(object param)
         {
-            var tradeServer = param as TradeServerViewModel;
-            if (tradeServer != null)
+            if (param is TradeServerViewModel tradeServer)
             {
                 tradeServer.Dispose();
 
@@ -218,45 +217,42 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
         private async void DeleteTradeServer(object param)
         {
-            var tradeServer = param as TradeServer;
-            if (tradeServer == null)
+            if (param is TradeServer tradeServer)
             {
-                return;
-            }
+                var result = Dialog.ShowMessage(new MessageBoxSettings
+                {
+                    Title = "Delete Trade Server",
+                    Text = $"Are you sure you want to delete {tradeServer.Name}?",
+                    MessageType = MessageType.Question,
+                    MessageBoxButtons = MessageBoxButtons.OkCancel
+                });
 
-            var result = Dialog.ShowMessage(new MessageBoxSettings
-            {
-                Title = "Delete Trade Server",
-                Text = $"Are you sure you want to delete {tradeServer.Name}?",
-                MessageType = MessageType.Question,
-                MessageBoxButtons = MessageBoxButtons.OkCancel
-            });
+                if (result.Equals(MessageBoxResult.Cancel))
+                {
+                    return;
+                }
 
-            if (result.Equals(MessageBoxResult.Cancel))
-            {
-                return;
-            }
+                var tradeServerViewModel = SelectedTradeServerViewModels.FirstOrDefault(s => s.TradeServer.Name.Equals(tradeServer.Name, StringComparison.Ordinal));
+                if (tradeServerViewModel != null)
+                {
+                    Close(tradeServerViewModel);
+                }
 
-            var tradeServerViewModel = SelectedTradeServerViewModels.FirstOrDefault(s => s.TradeServer.Name.Equals(tradeServer.Name, StringComparison.Ordinal));
-            if(tradeServerViewModel != null)
-            {
-                Close(tradeServerViewModel);
-            }
+                try
+                {
+                    IsLoading = true;
 
-            try
-            {
-                IsLoading = true;
-
-                await tradeServerService.DeleteTradeServer(tradeServer).ConfigureAwait(true);
-                TradeServers.Remove(tradeServer);
-            }
-            catch (Exception ex)
-            {
-                ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message });
-            }
-            finally
-            {
-                IsLoading = false;
+                    await tradeServerService.DeleteTradeServer(tradeServer).ConfigureAwait(true);
+                    TradeServers.Remove(tradeServer);
+                }
+                catch (Exception ex)
+                {
+                    ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message });
+                }
+                finally
+                {
+                    IsLoading = false;
+                }
             }
         }
 
