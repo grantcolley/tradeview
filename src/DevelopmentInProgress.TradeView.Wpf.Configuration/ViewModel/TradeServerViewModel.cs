@@ -9,15 +9,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 {
     public class TradeServerViewModel : BaseViewModel
     {
-        private readonly ITradeServerService tradeServerService;
         private TradeServer tradeServer;
         bool disposed = false;
 
-        public TradeServerViewModel(TradeServer tradeServer, ITradeServerService tradeServerService, ILoggerFacade logger)
+        public TradeServerViewModel(TradeServer tradeServer, ILoggerFacade logger)
             : base(logger)
         {
             this.tradeServer = tradeServer;
-            this.tradeServerService = tradeServerService;
         }
 
         public event EventHandler<TradeServerEventArgs> OnTradeServerNotification;

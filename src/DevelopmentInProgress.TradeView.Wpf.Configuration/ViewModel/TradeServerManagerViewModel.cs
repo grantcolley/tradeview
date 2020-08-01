@@ -71,7 +71,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
                         if (serverViewModel == null)
                         {
-                            serverViewModel = new TradeServerViewModel(selectedTradeServer, tradeServerService, Logger);
+                            serverViewModel = new TradeServerViewModel(selectedTradeServer, Logger);
                             ObserveServer(serverViewModel);
                             SelectedTradeServerViewModels.Add(serverViewModel);
                             SelectedTradeServerViewModel = serverViewModel;
