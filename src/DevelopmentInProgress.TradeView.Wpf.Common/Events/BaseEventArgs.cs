@@ -6,7 +6,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Events
     {
         public T Value { get; set; }
         public Exception Exception { get; set; }
-        public bool HasException { get { return Exception == null ? false : true; } }
+        public bool HasException { get { return Exception != null; } }
         public string Message { get; set; }
     }
 }
