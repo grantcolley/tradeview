@@ -8,9 +8,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 {
     public class SymbolsCacheFactory : ISymbolsCacheFactory
     {
-        private IExchangeApiFactory exchangeApiFactory;
-        private Dictionary<Exchange, ISymbolsCache> exchangeSymbolsCache;
-        private object exchangeSymbolsCacheLock = new object();
+        private readonly IExchangeApiFactory exchangeApiFactory;
+        private readonly Dictionary<Exchange, ISymbolsCache> exchangeSymbolsCache;
+        private readonly object exchangeSymbolsCacheLock = new object();
 
         public SymbolsCacheFactory(IExchangeApiFactory exchangeApiFactory)
         {

@@ -13,7 +13,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
 {
     public class WpfExchangeService : IWpfExchangeService
     {
-        private IExchangeService exchangeService;
+        private readonly IExchangeService exchangeService;
 
         public WpfExchangeService(IExchangeService exchangeService)
         {

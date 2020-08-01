@@ -5,7 +5,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Helpers
 {
     public class HelperFactoryContainer : IHelperFactoryContainer
     {
-        private Dictionary<Type, IHelperFactory> factories;
+        private readonly Dictionary<Type, IHelperFactory> factories;
 
         public HelperFactoryContainer(ITradeHelperFactory tradeHelperFactory, IOrderBookHelperFactory orderBookHelperFactory)
         {
