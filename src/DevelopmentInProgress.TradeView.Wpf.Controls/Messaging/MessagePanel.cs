@@ -14,13 +14,31 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Messaging
 {
     public class MessagePanel : Control
     {
-        private static readonly DependencyProperty HeaderTextProperty;
-        private static readonly DependencyProperty MessagesProperty;
-        private static readonly DependencyProperty IsExpandedProperty;
-        private static readonly DependencyProperty HeaderBackgroundProperty;
-        private static readonly DependencyProperty PanelBackgroundProperty;
-        private static readonly DependencyProperty ClearMessagesCommandProperty;
-        private static readonly DependencyProperty ShowMessageTextAlignmentProperty;
+        private static readonly DependencyProperty HeaderTextProperty = 
+            DependencyProperty.Register("HeaderText", typeof(string), typeof(MessagePanel),
+                new FrameworkPropertyMetadata("Messages"));
+
+        private static readonly DependencyProperty MessagesProperty = 
+            DependencyProperty.Register("Messages", typeof(ObservableCollection<Message>), typeof(MessagePanel), 
+                new FrameworkPropertyMetadata(new ObservableCollection<Message>()));
+
+        private static readonly DependencyProperty IsExpandedProperty = 
+            DependencyProperty.Register("IsExpanded", typeof(bool), typeof(MessagePanel), 
+                new FrameworkPropertyMetadata(true));
+
+        private static readonly DependencyProperty HeaderBackgroundProperty = 
+            DependencyProperty.Register("HeaderBackground", typeof(Brush), typeof(MessagePanel));
+
+
+        private static readonly DependencyProperty PanelBackgroundProperty =
+            DependencyProperty.Register("PanelBackground", typeof(Brush), typeof(MessagePanel));
+
+        private static readonly DependencyProperty ClearMessagesCommandProperty = 
+            DependencyProperty.Register("ClearMessages", typeof(ICommand), typeof(MessagePanel));
+
+        private static readonly DependencyProperty ShowMessageTextAlignmentProperty = 
+            DependencyProperty.Register("ShowMessageTextAlignment", typeof(TextAlignment), typeof(MessagePanel),
+                new FrameworkPropertyMetadata(TextAlignment.Center));
 
         /// <summary>
         /// Static constructor for <see cref="MessagePanel"/> registers dependency properties and events.
@@ -29,23 +47,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Messaging
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MessagePanel),
                 new FrameworkPropertyMetadata(typeof(MessagePanel)));
-
-            HeaderTextProperty = DependencyProperty.Register("HeaderText", typeof (string), typeof (MessagePanel), new FrameworkPropertyMetadata("Messages"));
-
-            MessagesProperty = DependencyProperty.Register("Messages",
-                typeof(ObservableCollection<Message>),
-                typeof(MessagePanel), new FrameworkPropertyMetadata(new ObservableCollection<Message>()));
-
-            IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(MessagePanel), new FrameworkPropertyMetadata(true));
-
-            PanelBackgroundProperty = DependencyProperty.Register("PanelBackground", typeof(Brush), typeof(MessagePanel));
-
-            HeaderBackgroundProperty = DependencyProperty.Register("HeaderBackground", typeof(Brush), typeof(MessagePanel));
-
-            ShowMessageTextAlignmentProperty = DependencyProperty.Register("ShowMessageTextAlignment", typeof(TextAlignment), typeof(MessagePanel), new FrameworkPropertyMetadata(TextAlignment.Center));
-            
-            ClearMessagesCommandProperty = DependencyProperty.Register("ClearMessages", typeof (ICommand),
-                typeof (MessagePanel));
         }
 
         /// <summary>

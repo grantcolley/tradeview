@@ -23,9 +23,15 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
     /// </summary>
     public class XamlFilterBox : Control
     {
-        private static readonly DependencyProperty FilterTextProperty;
-        private static readonly DependencyProperty FilterFieldNameProperty;
-        private static readonly DependencyProperty ItemsSourceProperty;
+        private static readonly DependencyProperty FilterTextProperty = 
+            DependencyProperty.Register("FilterText", typeof(string), typeof(XamlFilterBox),
+                new PropertyMetadata("", (o, e) => (o as XamlFilterBox).FilterTextSubject.OnNext(e.NewValue.ToString())));
+
+        private static readonly DependencyProperty FilterFieldNameProperty = 
+            DependencyProperty.Register("FilterFieldName", typeof(string), typeof(XamlFilterBox));
+
+        private static readonly DependencyProperty ItemsSourceProperty = 
+            DependencyProperty.Register("ItemsSource", typeof(IEnumerable), typeof(XamlFilterBox));
 
         private int counter;
         private Delegate getter;
@@ -40,13 +46,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
         static XamlFilterBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(XamlFilterBox), new FrameworkPropertyMetadata(typeof(XamlFilterBox)));
-
-            FilterTextProperty = DependencyProperty.Register("FilterText", typeof(string), typeof(XamlFilterBox),
-                new PropertyMetadata("", (o, e) => (o as XamlFilterBox).FilterTextSubject.OnNext(e.NewValue.ToString())));
-
-            FilterFieldNameProperty = DependencyProperty.Register("FilterFieldName", typeof(string), typeof(XamlFilterBox));
-
-            ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(IEnumerable), typeof(XamlFilterBox));
         }
 
         public XamlFilterBox()

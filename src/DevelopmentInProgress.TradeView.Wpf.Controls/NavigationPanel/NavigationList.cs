@@ -16,8 +16,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel
     /// </summary>
     public class NavigationList : Control
     {
-        private readonly static DependencyProperty NavigationListNameProperty;
-        private readonly static DependencyProperty NavigationListItemsProperty;
+        private readonly static DependencyProperty NavigationListNameProperty = 
+            DependencyProperty.Register("NavigationListName", typeof(string), typeof(NavigationList));
+
+        private readonly static DependencyProperty NavigationListItemsProperty =
+            DependencyProperty.Register("NavigationListItems", typeof(ObservableCollection<NavigationListItem>), typeof(NavigationList), 
+                new FrameworkPropertyMetadata(new ObservableCollection<NavigationListItem>()));
 
         /// <summary>
         /// Static constructor for the <see cref="NavigationList"/> class for registering dependency properties and events.
@@ -25,10 +29,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel
         static NavigationList()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(NavigationList), new FrameworkPropertyMetadata(typeof(NavigationList)));
-
-            NavigationListNameProperty = DependencyProperty.Register("NavigationListName", typeof(string), typeof(NavigationList));
-            NavigationListItemsProperty = DependencyProperty.Register("NavigationListItems", typeof(ObservableCollection<NavigationListItem>), 
-                typeof(NavigationList), new FrameworkPropertyMetadata(new ObservableCollection<NavigationListItem>()));
         }
 
         /// <summary>

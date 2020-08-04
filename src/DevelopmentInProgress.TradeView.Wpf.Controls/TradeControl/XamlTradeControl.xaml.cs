@@ -9,22 +9,23 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.TradeControl
     /// </summary>
     public partial class XamlTradeControl : UserControl
     {
-        private static readonly DependencyProperty CurrencyProperty;
-        private static readonly DependencyProperty AvailableProperty;
-        private static readonly DependencyProperty IsBuyProperty;
-        private static readonly DependencyProperty HasAvailableProperty;
-        private static readonly DependencyProperty PercentageCommandProperty;
-        private static readonly DependencyProperty PlaceTradeCommandProperty;
+        private static readonly DependencyProperty CurrencyProperty = 
+            DependencyProperty.Register("Currency", typeof(string), typeof(XamlTradeControl));
 
-        static XamlTradeControl()
-        {
-            CurrencyProperty = DependencyProperty.Register("Currency", typeof(string), typeof(XamlTradeControl));
-            AvailableProperty = DependencyProperty.Register("Available", typeof(decimal), typeof(XamlTradeControl));
-            IsBuyProperty = DependencyProperty.Register("IsBuy", typeof(bool), typeof(XamlTradeControl));
-            HasAvailableProperty = DependencyProperty.Register("HasAvailable", typeof(bool), typeof(XamlTradeControl));
-            PercentageCommandProperty = DependencyProperty.Register("PercentageCommand", typeof(ICommand), typeof(XamlTradeControl));
-            PlaceTradeCommandProperty = DependencyProperty.Register("PlaceTradeCommand", typeof(ICommand), typeof(XamlTradeControl));
-        }
+        private static readonly DependencyProperty AvailableProperty = 
+            DependencyProperty.Register("Available", typeof(decimal), typeof(XamlTradeControl));
+
+        private static readonly DependencyProperty IsBuyProperty = 
+            DependencyProperty.Register("IsBuy", typeof(bool), typeof(XamlTradeControl));
+
+        private static readonly DependencyProperty HasAvailableProperty = 
+            DependencyProperty.Register("HasAvailable", typeof(bool), typeof(XamlTradeControl));
+
+        private static readonly DependencyProperty PercentageCommandProperty = 
+            DependencyProperty.Register("PercentageCommand", typeof(ICommand), typeof(XamlTradeControl));
+
+        private static readonly DependencyProperty PlaceTradeCommandProperty = 
+            DependencyProperty.Register("PlaceTradeCommand", typeof(ICommand), typeof(XamlTradeControl));
 
         public XamlTradeControl()
         {

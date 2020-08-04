@@ -5,7 +5,6 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,10 +21,19 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel
         private ICommand selectionChangedCommand;
         private ICommand expanderChangedCommand;
 
-        private readonly static DependencyProperty SelectedNavigationPanelItemProperty;
-        private readonly static DependencyProperty NavigationPanelItemsProperty;
-        private readonly static DependencyProperty IsExpandedProperty;
-        private readonly static RoutedEvent ItemSelectedEvent;
+        private readonly static DependencyProperty SelectedNavigationPanelItemProperty = 
+            DependencyProperty.Register("SelectedNavigationPanelItem", typeof(NavigationPanelItem), typeof(NavigationPanel));
+
+        private readonly static DependencyProperty NavigationPanelItemsProperty =
+            DependencyProperty.Register("NavigationPanelItems", typeof(ObservableCollection<NavigationPanelItem>), typeof(NavigationPanel), 
+                new FrameworkPropertyMetadata(new ObservableCollection<NavigationPanelItem>()));
+
+        private readonly static DependencyProperty IsExpandedProperty = 
+            DependencyProperty.Register("IsExpanded", typeof(bool), typeof(NavigationPanel), 
+            new FrameworkPropertyMetadata(true));
+
+        private readonly static RoutedEvent ItemSelectedEvent =
+            EventManager.RegisterRoutedEvent("ItemSelected", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NavigationPanel));
 
         /// <summary>
         /// Static constructor for <see cref="NavigationPanel"/> registers dependency properties and events.
@@ -34,18 +42,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(NavigationPanel),
                 new FrameworkPropertyMetadata(typeof(NavigationPanel)));
-
-            SelectedNavigationPanelItemProperty = DependencyProperty.Register("SelectedNavigationPanelItem",
-                typeof (NavigationPanelItem), typeof (NavigationPanel));
-
-            NavigationPanelItemsProperty = DependencyProperty.Register("NavigationPanelItems",
-                typeof (ObservableCollection<NavigationPanelItem>),
-                typeof (NavigationPanel), new FrameworkPropertyMetadata(new ObservableCollection<NavigationPanelItem>()));
-
-            IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof (bool), typeof (NavigationPanel));
-
-            ItemSelectedEvent = EventManager.RegisterRoutedEvent(
-                "ItemSelected", RoutingStrategy.Bubble, typeof (RoutedEventHandler), typeof (NavigationPanel));
         }
 
         /// <summary>

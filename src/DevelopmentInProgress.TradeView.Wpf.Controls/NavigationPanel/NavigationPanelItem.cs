@@ -17,14 +17,30 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel
     /// </summary>
     public class NavigationPanelItem : Control, ICommandSource
     {
-        private readonly static DependencyProperty NavigationPanelItemNameProperty;
-        private readonly static DependencyProperty ImageLocationProperty;
-        private readonly static DependencyProperty NavigationListProperty;
-        private readonly static DependencyProperty IsSelectedProperty;
-        private readonly static DependencyProperty CommandProperty;
-        private readonly static DependencyProperty CommandParameterProperty;
-        private readonly static DependencyProperty CommandTargetProperty;
-        private readonly static RoutedEvent ItemClickedEvent;
+        private readonly static DependencyProperty NavigationPanelItemNameProperty = 
+            DependencyProperty.Register("NavigationPanelItemName", typeof(string), typeof(NavigationPanelItem));
+
+        private readonly static DependencyProperty ImageLocationProperty =
+            DependencyProperty.Register("ImageLocation", typeof(string), typeof(NavigationPanelItem));
+
+        private readonly static DependencyProperty NavigationListProperty =
+            DependencyProperty.Register("NavigationList", typeof(List<NavigationList>), typeof(NavigationList), 
+                new FrameworkPropertyMetadata(new List<NavigationList>()));
+
+        private readonly static DependencyProperty IsSelectedProperty = 
+            DependencyProperty.Register("IsSelected", typeof(bool), typeof(NavigationPanelItem));
+
+        private readonly static DependencyProperty CommandProperty =
+            DependencyProperty.Register("Command", typeof(ICommand), typeof(NavigationPanelItem));
+
+        private readonly static DependencyProperty CommandParameterProperty = 
+            DependencyProperty.Register("CommandParameter", typeof(object), typeof(NavigationPanelItem));
+
+        private readonly static DependencyProperty CommandTargetProperty = 
+            DependencyProperty.Register("CommandTarget", typeof(UIElement), typeof(NavigationPanelItem));
+
+        private readonly static RoutedEvent ItemClickedEvent = 
+            EventManager.RegisterRoutedEvent("ItemClicked", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NavigationPanelItem));
 
         /// <summary>
         /// Static constructor for the <see cref="NavigationPanelItem"/> 
@@ -33,30 +49,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel
         static NavigationPanelItem()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(NavigationPanelItem), new FrameworkPropertyMetadata(typeof(NavigationPanelItem)));
-
-            NavigationPanelItemNameProperty = DependencyProperty.Register(
-                "NavigationPanelItemName", typeof(string), typeof(NavigationPanelItem));
-
-            ImageLocationProperty = DependencyProperty.Register(
-                "ImageLocation", typeof(string), typeof(NavigationPanelItem));
-
-            NavigationListProperty = DependencyProperty.Register(
-                "NavigationList", typeof(List<NavigationList>), typeof(NavigationList), new FrameworkPropertyMetadata(new List<NavigationList>()));
-
-            IsSelectedProperty = DependencyProperty.Register(
-                "IsSelected", typeof(bool), typeof(NavigationPanelItem));
-
-            CommandProperty = DependencyProperty.Register(
-                "Command", typeof(ICommand), typeof(NavigationPanelItem));
-
-            CommandParameterProperty = DependencyProperty.Register(
-                "CommandParameter", typeof(object), typeof(NavigationPanelItem));
-
-            CommandTargetProperty = DependencyProperty.Register(
-                "CommandTarget", typeof(UIElement), typeof(NavigationPanelItem));
-
-            ItemClickedEvent = EventManager.RegisterRoutedEvent(
-                "ItemClicked", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NavigationPanelItem));
         }
 
         /// <summary>

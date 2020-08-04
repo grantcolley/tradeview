@@ -16,12 +16,23 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel
     /// </summary>
     public class NavigationListItem : Control, ICommandSource
     {
-        private readonly static DependencyProperty ItemNameProperty;
-        private readonly static DependencyProperty ImageLocationProperty;
-        private readonly static DependencyProperty CommandProperty;
-        private readonly static DependencyProperty CommandParameterProperty;
-        private readonly static DependencyProperty CommandTargetProperty;
-        private readonly static RoutedEvent ItemClickedEvent;
+        private readonly static DependencyProperty ItemNameProperty =
+            DependencyProperty.Register("ItemName", typeof(string), typeof(NavigationListItem));
+
+        private readonly static DependencyProperty ImageLocationProperty = 
+            DependencyProperty.Register("ImageLocation", typeof(string), typeof(NavigationListItem));
+
+        private readonly static DependencyProperty CommandProperty =
+            DependencyProperty.Register("Command", typeof(ICommand), typeof(NavigationListItem));
+
+        private readonly static DependencyProperty CommandParameterProperty = 
+            DependencyProperty.Register("CommandParameter", typeof(object), typeof(NavigationListItem));
+
+        private readonly static DependencyProperty CommandTargetProperty = 
+            DependencyProperty.Register("CommandTarget", typeof(UIElement), typeof(NavigationListItem));
+
+        private readonly static RoutedEvent ItemClickedEvent = 
+            EventManager.RegisterRoutedEvent("ItemClicked", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NavigationListItem));
 
         /// <summary>
         /// Static constructor for the <see cref="NavigationListItem"/> class for registering dependency properties and events.
@@ -30,24 +41,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel
         {
             DefaultStyleKeyProperty.OverrideMetadata(
                 typeof(NavigationListItem), new FrameworkPropertyMetadata(typeof(NavigationListItem)));
-
-            ItemNameProperty = DependencyProperty.Register(
-                "ItemName", typeof(string), typeof(NavigationListItem));
-            
-            ImageLocationProperty = DependencyProperty.Register(
-                "ImageLocation", typeof(string), typeof(NavigationListItem));
-
-            CommandProperty = DependencyProperty.Register(
-                "Command", typeof(ICommand), typeof(NavigationListItem));
-
-            CommandParameterProperty = DependencyProperty.Register(
-                "CommandParameter", typeof(object), typeof(NavigationListItem));
-
-            CommandTargetProperty = DependencyProperty.Register(
-                "CommandTarget", typeof(UIElement), typeof(NavigationListItem));
-
-            ItemClickedEvent = EventManager.RegisterRoutedEvent(
-                "ItemClicked", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NavigationListItem));
         }
 
         /// <summary>

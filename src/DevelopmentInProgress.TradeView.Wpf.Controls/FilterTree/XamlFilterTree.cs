@@ -18,13 +18,26 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterTree
     /// </summary>
     public class XamlFilterTree : Control
     {
-        private static readonly DependencyProperty FilterTextProperty;
-        private static readonly DependencyProperty ItemsSourceProperty;
-        private static readonly DependencyProperty AddItemCommandProperty;
-        private static readonly DependencyProperty RemoveItemCommandProperty;
-        private static readonly DependencyProperty SelectItemCommandProperty;
-        private static readonly DependencyProperty DragDropCommandProperty;
-        private static readonly DependencyProperty IsEditableProperty;
+        private static readonly DependencyProperty FilterTextProperty = 
+            DependencyProperty.Register("FilterText", typeof(string), typeof(XamlFilterTree));
+
+        private static readonly DependencyProperty ItemsSourceProperty =
+            DependencyProperty.Register("ItemsSource", typeof(IEnumerable), typeof(XamlFilterTree));
+
+        private static readonly DependencyProperty AddItemCommandProperty =
+            DependencyProperty.Register("AddItemCommand", typeof(ICommand), typeof(XamlFilterTree));
+
+        private static readonly DependencyProperty RemoveItemCommandProperty =
+            DependencyProperty.Register("RemoveItemCommand", typeof(ICommand), typeof(XamlFilterTree));
+
+        private static readonly DependencyProperty SelectItemCommandProperty =
+            DependencyProperty.Register("SelectItemCommand", typeof(ICommand), typeof(XamlFilterTree));
+
+        private static readonly DependencyProperty DragDropCommandProperty = 
+            DependencyProperty.Register("DragDropCommand", typeof(ICommand), typeof(XamlFilterTree));
+
+        private static readonly DependencyProperty IsEditableProperty 
+            = DependencyProperty.Register("IsEditable", typeof(bool), typeof(XamlFilterTree), new PropertyMetadata(true));
 
         /// <summary>
         /// Static constructor for registering dependency properties.
@@ -32,27 +45,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterTree
         static XamlFilterTree()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof (XamlFilterTree),
-                new FrameworkPropertyMetadata(typeof (XamlFilterTree)));
-            
-            FilterTextProperty = DependencyProperty.Register("FilterText", typeof (string), typeof (XamlFilterTree));
-
-            ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(IEnumerable),
-                typeof(XamlFilterTree));
-
-            AddItemCommandProperty = DependencyProperty.Register("AddItemCommand", typeof (ICommand),
-                typeof (XamlFilterTree));
-
-            RemoveItemCommandProperty = DependencyProperty.Register("RemoveItemCommand", typeof(ICommand),
-                typeof (XamlFilterTree));
-
-            SelectItemCommandProperty = DependencyProperty.Register("SelectItemCommand", typeof (ICommand),
-                typeof (XamlFilterTree));
-
-            DragDropCommandProperty = DependencyProperty.Register("DragDropCommand", typeof(ICommand),
-                typeof (XamlFilterTree));
-
-            IsEditableProperty = DependencyProperty.Register("IsEditable", typeof(bool),
-                typeof (XamlFilterTree), new PropertyMetadata(true));
+                new FrameworkPropertyMetadata(typeof (XamlFilterTree)));            
         }
 
         /// <summary>
