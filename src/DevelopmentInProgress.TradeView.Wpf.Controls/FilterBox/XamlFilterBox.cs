@@ -21,7 +21,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
     /// <summary>
     /// A filter control. Bind a list to it and filter by the text typed into the text box.
     /// </summary>
-    public class XamlFilterBox : Control
+    public class XamlFilterBox : Control, IDisposable
     {
         private static readonly DependencyProperty FilterTextProperty = 
             DependencyProperty.Register("FilterText", typeof(string), typeof(XamlFilterBox),
@@ -33,6 +33,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
         private static readonly DependencyProperty ItemsSourceProperty = 
             DependencyProperty.Register("ItemsSource", typeof(IEnumerable), typeof(XamlFilterBox));
 
+        private bool disposed;
         private int counter;
         private Delegate getter;
 
@@ -82,6 +83,27 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
         {
             get { return (IEnumerable)GetValue(ItemsSourceProperty); }
             set { SetValue(ItemsSourceProperty, value); }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                filterTextDescription.Dispose();
+            }
+
+            disposed = true;
         }
 
         private void XamlFilterBoxUnloaded(object sender, RoutedEventArgs e)
