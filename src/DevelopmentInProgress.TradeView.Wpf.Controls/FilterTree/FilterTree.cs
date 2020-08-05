@@ -83,7 +83,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterTree
             return result;
         }
 
-        private bool Contains<T>(T t, string text, bool hasVisibleChild)
+        private static bool Contains<T>(T t, string text, bool hasVisibleChild)
         {
             var textPropertyInfo = t.GetType().GetProperty("Text");
             var visiblePropertyInfo = t.GetType().GetProperty("IsVisible");
@@ -133,7 +133,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterTree
             e.Handled = true;
         }
 
-        private void OnSelectItem<T>(T sender)
+        private static void OnSelectItem<T>(T sender)
         {
             var item = sender as TreeViewItem;
             if (item == null)
@@ -215,7 +215,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterTree
             e.Handled = true;
         }
 
-        private TreeViewItem GetNearestTreeViewItem(UIElement uiElement)
+        private static TreeViewItem GetNearestTreeViewItem(UIElement uiElement)
         {
             TreeViewItem treeViewItem = uiElement as TreeViewItem;
             while (treeViewItem == null

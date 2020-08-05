@@ -26,13 +26,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Messaging
         /// Gets the type of image to display for the error once 
         /// converted to image by <see cref="MessageTextToImageConverter"/>.
         /// </summary>
-        public string Type { get { return "Error"; } }
+        public static string Type { get { return "Error"; } }
 
         /// <summary>
         /// Gets the type of image to display for the clipboard
         /// once converted to image by <see cref="MessageTextToImageConverter"/>.
         /// </summary>
-        public string Clipboard { get { return "Clipboard"; } }
+        public static string Clipboard { get { return "Clipboard"; } }
 
         /// <summary>
         /// Gets the message to display.

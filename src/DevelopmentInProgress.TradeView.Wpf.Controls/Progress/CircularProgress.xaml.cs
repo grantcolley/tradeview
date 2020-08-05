@@ -86,7 +86,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Progress
             SetPosition(C8, offset, 8.0, step);
         }
 
-        private void SetPosition(Ellipse ellipse, double offset,
+        private static void SetPosition(Ellipse ellipse, double offset,
             double posOffSet, double step)
         {
             ellipse.SetValue(Canvas.LeftProperty, 50.0
