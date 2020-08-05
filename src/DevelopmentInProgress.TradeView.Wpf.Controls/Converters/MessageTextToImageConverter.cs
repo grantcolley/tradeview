@@ -25,6 +25,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Converters
             set { resourceDictionary = value; }
         }
 
+
         /// <summary>
         /// Converts the value to the converted type.
         /// </summary>
@@ -33,6 +34,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Converters
         /// <param name="parameter">The parameter.</param>
         /// <param name="culture">The culture information.</param>
         /// <returns>A converted type.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "Explicitly map to image file in lower case.")]
         public object Convert(object value, Type targetType,
             object parameter, CultureInfo culture)
         {
