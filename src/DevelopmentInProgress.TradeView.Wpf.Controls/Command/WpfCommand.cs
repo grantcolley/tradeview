@@ -69,12 +69,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Command
         /// <summary>
         /// Raises the can execute changed event.
         /// </summary>
-        public void RaiseCanExecuteChanged()
+        public void OnCanExecuteChanged()
         {
-            if (CanExecuteChanged != null)
-            {
-                CanExecuteChanged(this, EventArgs.Empty);
-            }
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }
