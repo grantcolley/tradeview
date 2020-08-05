@@ -100,7 +100,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterTree
 
                 var val = textPropertyInfo.GetValue(t, null);
                 if (val != null
-                    && val.ToString().ToLower().Contains(text.ToLower(), StringComparison.Ordinal))
+                    && val.ToString().Contains(text, StringComparison.OrdinalIgnoreCase))
                 {
                     visiblePropertyInfo.SetValue(t, true, null);
                     return true;

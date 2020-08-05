@@ -34,9 +34,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Converters
                 return (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFBABABA"));
             }
 
-            switch (value.ToString().ToLower())
+            switch (value.ToString().ToUpperInvariant())
             {
-                case "error":
+                case "ERROR":
                     return new SolidColorBrush(Colors.Red);
                 default:
                     return (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFBABABA"));

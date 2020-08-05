@@ -142,7 +142,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
 
             var val = getter.DynamicInvoke(item);
             if (val != null
-                && val.ToString().ToLower().StartsWith(text, StringComparison.OrdinalIgnoreCase))
+                && val.ToString().StartsWith(text, StringComparison.OrdinalIgnoreCase))
             {
                 return true;
             }

@@ -49,13 +49,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Converters
                 }
 
                 string image = value.ToString();
-                switch (image.ToLower())
+                switch (image.ToLower(CultureInfo.InvariantCulture))
                 {
-                    case "clipboard":
+                    case "CLIPBOARD":
                         return
-                            new BitmapImage(new Uri($@"..\Images\{image.ToLower()}.png", UriKind.RelativeOrAbsolute));
+                            new BitmapImage(new Uri($@"..\Images\{image.ToLower(CultureInfo.InvariantCulture)}.png", UriKind.RelativeOrAbsolute));
                     default:
-                        return ResourceDictionary[image.ToLower()];
+                        return ResourceDictionary[image.ToLower(CultureInfo.InvariantCulture)];
                 }
             }
             catch
