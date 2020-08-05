@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Controls.Messaging
@@ -33,7 +34,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Messaging
         /// <param name="e">The event arguments.</param>
         private void CopyClick(object sender, RoutedEventArgs e)
         {
-            string text = String.Format("Error: {0}\r\n\r\nStackTrace:\r\n {1}", txtMessage.Text, txtStackTrace.Text);
+            string text = String.Format(CultureInfo.InvariantCulture, "Error: {0}\r\n\r\nStackTrace:\r\n {1}", txtMessage.Text, txtStackTrace.Text);
             Clipboard.Clear();
             Clipboard.SetText(text);
         }

@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.Globalization;
 using System.Windows;
 using DevelopmentInProgress.TradeView.Wpf.Controls.Converters;
 
@@ -172,7 +173,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Messaging
         /// </summary>
         public void OnCopyClick()
         {
-            string text = String.Format("{0}\r\n{1}", messageBoxSettings.Title, messageBoxSettings.Text);
+            string text = String.Format(CultureInfo.InvariantCulture, "{0}\r\n{1}", messageBoxSettings.Title, messageBoxSettings.Text);
             System.Windows.Clipboard.Clear();
             System.Windows.Clipboard.SetText(text);
         }

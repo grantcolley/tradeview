@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -47,7 +48,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.DecimalBox
             {
                 if (val < 0)
                 {
-                    txt.Text = (val * -1).ToString();
+                    txt.Text = (val * -1).ToString(CultureInfo.InvariantCulture);
                 }
             }
         }
@@ -80,12 +81,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.DecimalBox
             {
                 if (val > 0)
                 {
-                    txt.Text = (val - Increment).ToString();
+                    txt.Text = (val - Increment).ToString(CultureInfo.InvariantCulture);
                 }
             }
             else
             {
-                txt.Text = (val + Increment).ToString();
+                txt.Text = (val + Increment).ToString(CultureInfo.InvariantCulture);
             }
         }
     }
