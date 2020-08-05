@@ -25,7 +25,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
     {
         private static readonly DependencyProperty FilterTextProperty = 
             DependencyProperty.Register("FilterText", typeof(string), typeof(XamlFilterBox),
-                new PropertyMetadata("", (o, e) => (o as XamlFilterBox).FilterTextSubject.OnNext(e.NewValue.ToString())));
+                new PropertyMetadata("", (o, e) => (o as XamlFilterBox).filterTextSubject.OnNext(e.NewValue.ToString())));
 
         private static readonly DependencyProperty FilterFieldNameProperty = 
             DependencyProperty.Register("FilterFieldName", typeof(string), typeof(XamlFilterBox));
@@ -42,7 +42,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
         /// <summary>
         /// Uses System.Reactive.Subjects.
         /// </summary>
-        public Subject<string> FilterTextSubject = new Subject<string>();
+        private Subject<string> filterTextSubject = new Subject<string>();
 
         static XamlFilterBox()
         {
@@ -53,7 +53,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
         {
             base.Unloaded += XamlFilterBoxUnloaded;
 
-            filterTextDescription = FilterTextSubject.Throttle(TimeSpan.FromMilliseconds(500))
+            filterTextDescription = filterTextSubject.Throttle(TimeSpan.FromMilliseconds(500))
                 .ObserveOnDispatcher()
                 .Subscribe(HandleFilterThrottle);
         }
@@ -101,6 +101,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
             if (disposing)
             {
                 filterTextDescription.Dispose();
+                filterTextSubject.Dispose();
             }
 
             disposed = true;
