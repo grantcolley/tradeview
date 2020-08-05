@@ -77,7 +77,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.DecimalBox
                 Decimal.TryParse(txt.Text, out val);
             }
 
-            if (btn.Name.Equals("btnDown"))
+            if (btn.Name.Equals("btnDown", StringComparison.Ordinal))
             {
                 if (val > 0)
                 {

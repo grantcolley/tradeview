@@ -7,6 +7,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -54,7 +55,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterTree
                             .Any(
                                 i =>
                                     i.IsGenericType &&
-                                    i.GetGenericTypeDefinition().Name.Equals(typeof (IEnumerable<>).Name)))
+                                    i.GetGenericTypeDefinition().Name.Equals(typeof (IEnumerable<>).Name, StringComparison.Ordinal)))
                     {
                         foreach (var itemType in property.PropertyType.GetGenericArguments())
                         {
@@ -99,7 +100,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterTree
 
                 var val = textPropertyInfo.GetValue(t, null);
                 if (val != null
-                    && val.ToString().ToLower().Contains(text.ToLower()))
+                    && val.ToString().ToLower().Contains(text.ToLower(), StringComparison.Ordinal))
                 {
                     visiblePropertyInfo.SetValue(t, true, null);
                     return true;
@@ -200,7 +201,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterTree
                 TreeViewItem dropItem = GetNearestTreeViewItem(currentUiElement);
                 if (dropItem != null)
                 {
-                    if (dragItem.ToolTip.ToString().Equals(dropItem.ToolTip.ToString()))
+                    if (dragItem.ToolTip.ToString().Equals(dropItem.ToolTip.ToString(), StringComparison.Ordinal))
                     {
                         e.Effects = DragDropEffects.None;
                     }

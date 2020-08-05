@@ -153,7 +153,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
         private void CreateTypeHelpers(Type t, string getterName)
         {
             var propertyInfos = t.GetProperties();
-            var getterPropertyInfo = propertyInfos.First(p => p.Name.Equals(getterName));
+            var getterPropertyInfo = propertyInfos.First(p => p.Name.Equals(getterName, StringComparison.Ordinal));
             getter = GetValue(t, getterPropertyInfo);
         }
 
