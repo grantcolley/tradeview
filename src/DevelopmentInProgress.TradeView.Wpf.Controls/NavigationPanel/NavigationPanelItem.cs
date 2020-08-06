@@ -5,6 +5,7 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -148,6 +149,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel
         /// <param name="e">Event arguments.</param>
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             base.OnMouseLeftButtonUp(e);
             OnItemClicked();
             e.Handled = true;

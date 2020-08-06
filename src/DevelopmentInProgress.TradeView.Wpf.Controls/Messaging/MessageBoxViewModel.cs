@@ -31,6 +31,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Messaging
         /// <param name="messageBoxSettings">The settings of the messsage to display.</param>
         public MessageBoxViewModel(MessageBoxSettings messageBoxSettings)
         {
+            if (messageBoxSettings == null)
+            {
+                throw new ArgumentNullException(nameof(messageBoxSettings));
+            }
+
             this.messageBoxSettings = messageBoxSettings;
 
             TextAlignment = messageBoxSettings.MessageBoxText.TextAlignment;

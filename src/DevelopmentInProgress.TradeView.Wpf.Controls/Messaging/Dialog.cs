@@ -45,6 +45,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Messaging
         /// <returns>The users response to the message.</returns>
         public static MessageBoxResult ShowMessage(MessageBoxSettings messageBoxSettings)
         {
+            if(messageBoxSettings == null)
+            {
+                throw new ArgumentNullException(nameof(messageBoxSettings));
+            }
+
             var model = new MessageBoxViewModel(messageBoxSettings);
             var view = new MessageBoxView
             {
@@ -62,6 +67,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Messaging
         /// <param name="exception">The exception to show.</param>
         public static void ShowException(Exception exception)
         {
+            if (exception == null)
+            {
+                throw new ArgumentNullException(nameof(exception));
+            }
+
             ShowException(exception.Message, exception.StackTrace);
         }
 
