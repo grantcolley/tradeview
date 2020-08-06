@@ -26,7 +26,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Converters
             set { resourceDictionary = value; }
         }
 
-
         /// <summary>
         /// Converts the value to the converted type.
         /// </summary>
