@@ -4,7 +4,6 @@ using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
@@ -31,6 +30,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             CloseCommand = new ViewModelCommand(Close);
 
             SelectedTradeServerViewModels = new ObservableCollection<TradeServerViewModel>();
+            TradeServers = new ObservableCollection<TradeServer>();
         }
 
         public ICommand AddTradeServerCommand { get; set; }
