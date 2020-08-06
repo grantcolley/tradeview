@@ -18,13 +18,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Converters
     /// </summary>
     public sealed class MessageTextToImageConverter : IValueConverter
     {
-        private ResourceDictionary resourceDictionary;
-
-        public ResourceDictionary ResourceDictionary
-        {
-            get { return resourceDictionary; }
-            set { resourceDictionary = value; }
-        }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Setter required as ResourceDictionary is set by a style.")]
+        public ResourceDictionary ResourceDictionary { get; set; }
 
         /// <summary>
         /// Converts the value to the converted type.

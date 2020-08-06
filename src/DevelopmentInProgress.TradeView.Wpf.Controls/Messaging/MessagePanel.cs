@@ -66,9 +66,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Messaging
             set { SetValue(ClearMessagesCommandProperty, value); }
         }
 
+
         /// <summary>
         /// Gets or sets a list of <see cref="Message"/>'s.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Required for binding in Xaml")]
         public ObservableCollection<Message> Messages
         {
             get { return (ObservableCollection<Message>)GetValue(MessagesProperty); }

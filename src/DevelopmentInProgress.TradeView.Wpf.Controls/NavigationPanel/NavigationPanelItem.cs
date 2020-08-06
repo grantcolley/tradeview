@@ -77,9 +77,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel
             set { SetValue(ImageLocationProperty, value); }
         }
 
+
         /// <summary>
         /// Gets or sets the list of <see cref="NavigationList"/>.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Required for binding in Xaml")]
         public List<NavigationList> NavigationList
         {
             get { return (List<NavigationList>)GetValue(NavigationListProperty); }

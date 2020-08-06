@@ -48,9 +48,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel
             set { SetValue(NavigationListNameProperty, value); }
         }
 
+
         /// <summary>
         /// Gets or sets the list of <see cref="NavigationListItem"/>'s.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Required for binding in Xaml")]
         public ObservableCollection<NavigationListItem> NavigationListItems
         {
             get { return (ObservableCollection<NavigationListItem>)GetValue(NavigationListItemsProperty); }
