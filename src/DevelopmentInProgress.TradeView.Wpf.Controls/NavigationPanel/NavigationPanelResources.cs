@@ -13,6 +13,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel
     /// <summary>
     /// The <see cref="NavigationPanelResources"/> class provides the code behind the resource dictionary. 
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1010:Generic interface should also be implemented")]
     partial class NavigationPanelResources
     {
         private void ExpanderImageMouseDown(object sender, MouseButtonEventArgs e)

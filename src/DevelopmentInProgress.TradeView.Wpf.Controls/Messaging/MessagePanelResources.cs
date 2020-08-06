@@ -12,6 +12,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Messaging
     /// <summary>
     /// Partial class providing code-behind supporting for events raised in MessagePanelResources.xaml.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1010:Generic interface should also be implemented")]
     public partial class MessagePanelResources
     {
         private void MessageMouseDoubleClick(object sender, MouseButtonEventArgs e)

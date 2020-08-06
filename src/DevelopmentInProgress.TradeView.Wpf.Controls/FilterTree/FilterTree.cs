@@ -19,6 +19,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterTree
     /// <summary>
     /// The <see cref="FilterTree"/> class provides the code behind the resource dictionary. 
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1010:Generic interface should also be implemented")]
     partial class FilterTree
     {
         #region Filtering operations
