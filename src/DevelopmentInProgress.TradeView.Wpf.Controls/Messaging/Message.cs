@@ -77,7 +77,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Messaging
                 if (isVisible != value)
                 {
                     isVisible = value;
-                    OnPropertyChanged("IsVisible");
+                    OnPropertyChanged(nameof(IsVisible));
                 }
             }
         }
@@ -85,10 +85,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Messaging
         protected void OnPropertyChanged(string propertyName)
         {
             var propertyChangedHandler = PropertyChanged;
-            if (propertyChangedHandler != null)
-            {
-                propertyChangedHandler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            propertyChangedHandler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
