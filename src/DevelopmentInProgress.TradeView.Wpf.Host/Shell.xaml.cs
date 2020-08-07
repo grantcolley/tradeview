@@ -164,8 +164,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
             if (layoutContent != null
                 && layoutContent.Content is DocumentViewHost host)
             {
-                var viewModel = host.DataContext as DocumentViewModel;
-                if (viewModel != null)
+                if (host.DataContext is DocumentViewModel viewModel)
                 {
                     if (action == ActionActiveEnum.Save)
                     {
@@ -193,8 +192,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
             {
                 if (layoutContent.Content is DocumentViewHost host)
                 {
-                    var viewModel = host.DataContext as ViewModelBase;
-                    if (viewModel != null)
+                    if (host.DataContext is ViewModelBase viewModel)
                     {
                         if (action == ActionAllEnum.RefreshAll)
                         {
