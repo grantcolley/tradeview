@@ -50,9 +50,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
                 throw new Exception("Navigation Manager Exception : Target view not specified.");
             }
 
-            var query = new NavigationParameters();
-            query.Add("Title", navigationSettings.Title ?? navigationSettings.View);
-            query.Add("Navigation", navigationSettings.NavigationHistory ?? String.Empty);
+            var query = new NavigationParameters
+            {
+                { "Title", navigationSettings.Title ?? navigationSettings.View },
+                { "Navigation", navigationSettings.NavigationHistory ?? String.Empty }
+            };
 
             string partialUri = navigationSettings.View + query.ToString();
             navigationSettings.PartialUri = partialUri;
