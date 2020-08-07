@@ -107,7 +107,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
 
         protected override Window CreateShell()
         {
-            return Container.Resolve<Shell>();
+            return Container.Resolve<ShellWindow>();
         }
 
         protected override void InitializeShell(Window shell)
@@ -118,7 +118,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
             }
 
             var modulesNavigationViewModel = Container.Resolve<ModulesNavigationViewModel>();
-            ((Shell)shell).ModulesNavigationViewModel = modulesNavigationViewModel;
+            ((ShellWindow)shell).ModulesNavigationViewModel = modulesNavigationViewModel;
 
             Current.MainWindow = shell;
             Current.MainWindow.WindowState = WindowState.Maximized;

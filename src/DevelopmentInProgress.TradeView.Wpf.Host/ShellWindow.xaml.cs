@@ -5,10 +5,8 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
-using CommonServiceLocator;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.View;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
-using Prism.Logging;
 using System;
 using System.ComponentModel;
 using System.Configuration;
@@ -23,7 +21,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
     /// <summary>
     /// The main window.
     /// </summary>
-    public partial class Shell : Window, INotifyPropertyChanged
+    public partial class ShellWindow : Window, INotifyPropertyChanged
     {
         /// <summary>
         /// Determines the operation to perform on all visible documents.
@@ -46,14 +44,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
         /// Determines whether the tool bar is vibile or not.
         /// </summary>
         private readonly static DependencyProperty IsToolBarVisibleProperty
-            = DependencyProperty.Register("IsToolBarVisible", typeof(bool), typeof(Shell));
+            = DependencyProperty.Register("IsToolBarVisible", typeof(bool), typeof(ShellWindow));
 
         private ModulesNavigationViewModel modulesNavigationViewModel;
 
         /// <summary>
         /// Initializes a new instance of the Shell class.
         /// </summary>
-        public Shell()
+        public ShellWindow()
         {
             InitializeComponent();
 

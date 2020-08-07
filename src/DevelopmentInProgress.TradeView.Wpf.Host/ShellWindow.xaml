@@ -1,4 +1,4 @@
-﻿<Window x:Class="DevelopmentInProgress.TradeView.Wpf.Host.Shell"
+﻿<Window x:Class="DevelopmentInProgress.TradeView.Wpf.Host.ShellWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://prismlibrary.com/"
