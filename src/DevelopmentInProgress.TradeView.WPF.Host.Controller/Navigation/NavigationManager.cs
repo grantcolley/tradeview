@@ -119,7 +119,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
                 return;
             }
 
-            var message = String.Format("The navigation list does not contain a Uri for navigation id {0}.", navigationId);
+            var message = $"The navigation list does not contain a Uri for navigation id {navigationId}.";
             throw new Exception(message);
         }
 
