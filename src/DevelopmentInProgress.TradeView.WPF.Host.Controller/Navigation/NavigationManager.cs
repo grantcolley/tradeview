@@ -93,10 +93,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
             int maxKey = 0;
             foreach (string key in navigationSettingsList.Keys)
             {
-                int iKey;
-                if (Int32.TryParse(key, out iKey))
+                if (Int32.TryParse(key, out int iKey))
                 {
-                    if (iKey>maxKey)
+                    if (iKey > maxKey)
                     {
                         maxKey = iKey;
                     }
@@ -114,8 +113,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
         /// <param name="navigationId">The navigation id of the Uri to navigate to.</param>
         public void NavigateDocumentRegion(string navigationId)
         {
-            NavigationSettings navigationSettings;
-            if (navigationSettingsList.TryGetValue(navigationId, out navigationSettings))
+            if (navigationSettingsList.TryGetValue(navigationId, out NavigationSettings navigationSettings))
             {
                 NavigateRegion(navigationSettings.ViewUri, "DocumentRegion");
                 return;
@@ -216,8 +214,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
                 var query = navigationResult.Context.Parameters;
                 var navigationId = query["NavigationId"].ToString();
 
-                NavigationSettings navigationSettings;
-                if (navigationSettingsList.TryGetValue(navigationId, out navigationSettings))
+                if (navigationSettingsList.TryGetValue(navigationId, out NavigationSettings navigationSettings))
                 {
                     object data = navigationSettings.Data;
                     var view = navigationResult.Context.NavigationService.Region.Views.FirstOrDefault(
