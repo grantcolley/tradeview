@@ -32,8 +32,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.DecimalBox
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            var txt = sender as TextBox;
-            if (txt == null)
+            if (!(sender is TextBox txt))
             {
                 return;
             }
@@ -55,14 +54,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.DecimalBox
 
         private void OnClick(object sender, RoutedEventArgs e)
         {
-            var btn = sender as Button;
-            if (btn == null)
+            if (!(sender is Button btn))
             {
                 return;
             }
 
-            var txt = btn.Tag as TextBox;
-            if (txt == null)
+            if (!(btn.Tag is TextBox txt))
             {
                 return;
             }
