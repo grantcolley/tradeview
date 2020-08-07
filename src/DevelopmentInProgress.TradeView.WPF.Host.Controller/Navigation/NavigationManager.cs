@@ -63,7 +63,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
             lock (lockNavigationList)
             {
                 var existingNavigationSetting = navigationSettingsList.Values.FirstOrDefault(
-                    ns => ns.PartialUri.Equals(partialUri) 
+                    ns => ns.PartialUri.Equals(partialUri, StringComparison.Ordinal) 
                         && (ns.Data == null || ns.Data.Equals(navigationSettings.Data)));
                 if (existingNavigationSetting != null)
                 {
@@ -163,7 +163,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
         /// <returns>The <see cref="DocumentViewModel"/> for the specified navigation id.</returns>
         public DocumentViewModel GetViewModel(string navigationId)
         {
-            var navigationSettings = navigationSettingsList.FirstOrDefault(n => n.Value.NavigationId.Equals(navigationId));
+            var navigationSettings = navigationSettingsList.FirstOrDefault(n => n.Value.NavigationId.Equals(navigationId, StringComparison.Ordinal));
             return navigationSettings.Value.DocumentView.ViewModel;
         }
 
@@ -177,7 +177,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
             var documentViewModels = (from views
                                 in navigationSettingsList
                                 where views.Value.DocumentView != null
-                                && views.Value.DocumentView.ModuleName.Equals(moduleName)
+                                && views.Value.DocumentView.ModuleName.Equals(moduleName, StringComparison.Ordinal)
                                 select views.Value.DocumentView.ViewModel).ToList();
             return documentViewModels;
         }
@@ -202,7 +202,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
         /// <param name="navigationResult">The navigation result.</param>
         private void NavigationCompleted(NavigationResult navigationResult)
         {
-            if (navigationResult.Context.NavigationService.Region.Name.Equals("DocumentRegion"))
+            if (navigationResult.Context.NavigationService.Region.Name.Equals("DocumentRegion", StringComparison.Ordinal))
             {
                 if (navigationResult.Result.HasValue
                     && !navigationResult.Result.Value)
@@ -218,14 +218,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
                 {
                     object data = navigationSettings.Data;
                     var view = navigationResult.Context.NavigationService.Region.Views.FirstOrDefault(
-                        v => (((DocumentViewBase)v).ViewModel.NavigationId.Equals(navigationId)));
+                        v => (((DocumentViewBase)v).ViewModel.NavigationId.Equals(navigationId, StringComparison.Ordinal)));
                     var documentView = (DocumentViewBase)view;
                     navigationSettings.DocumentView = documentView;
                     documentView.ViewModel.PublishData(data);
                     return;
                 }
 
-                var message = String.Format("The navigation list does not contain a Uri for navigation id {0}.", navigationId);
+                var message = $"The navigation list does not contain a Uri for navigation id {navigationId}.";
                 throw new Exception(message);
             }
         }
