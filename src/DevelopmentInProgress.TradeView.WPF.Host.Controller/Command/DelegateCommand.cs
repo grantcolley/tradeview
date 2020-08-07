@@ -72,10 +72,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Command
         /// </summary>
         public void OnRaiseCanExecuteChanged()
         {
-            if (CanExecuteChanged != null)
-            {
-                CanExecuteChanged(this, EventArgs.Empty);
-            }
+            var canExecuteChanged = CanExecuteChanged;
+            CanExecuteChanged(this, EventArgs.Empty);
         }
     }
 }
