@@ -80,7 +80,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
                 if(modulesNavigationViewModel != value)
                 {
                     modulesNavigationViewModel = value;
-                    OnPropertyChanged("ModulesNavigationViewModel");
+                    OnPropertyChanged(nameof(ModulesNavigationViewModel));
                 }
             }
         }
