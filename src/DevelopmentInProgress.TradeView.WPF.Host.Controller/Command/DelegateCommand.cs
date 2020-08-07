@@ -70,7 +70,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Command
         /// <summary>
         /// Raises the can execute changed event.
         /// </summary>
-        public void RaiseCanExecuteChanged()
+        public void OnRaiseCanExecuteChanged()
         {
             if (CanExecuteChanged != null)
             {
