@@ -146,20 +146,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
 
         private void NotificationsAdd(Message message)
         {
-            Category category;
-
-            switch (message.MessageType)
+            var category = message.MessageType switch
             {
-                case MessageType.Error:
-                    category = Category.Exception;
-                    break;
-                case MessageType.Warn:
-                    category = Category.Warn;
-                    break;
-                default:
-                    category = Category.Info;
-                    break;
-            }
+                MessageType.Error => Category.Exception,
+                MessageType.Warn => Category.Warn,
+                _ => Category.Info,
+            };
 
             Logger.Log(message.Text, category, Priority.Low);
 
