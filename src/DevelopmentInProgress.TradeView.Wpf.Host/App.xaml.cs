@@ -38,11 +38,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
     {
         protected override IModuleCatalog CreateModuleCatalog()
         {
-            using (Stream xamlStream = File.OpenRead("Configuration/ModuleCatalog.xaml"))
-            {
-                var moduleCatalog = ModuleCatalog.CreateFromXaml(xamlStream);
-                return moduleCatalog;
-            }
+            using Stream xamlStream = File.OpenRead("Configuration/ModuleCatalog.xaml");
+            var moduleCatalog = ModuleCatalog.CreateFromXaml(xamlStream);
+            return moduleCatalog;
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
