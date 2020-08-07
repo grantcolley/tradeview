@@ -13,7 +13,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies
     {
         public const string ModuleName = "Strategies";
 
-        private static string StrategyUser = $"Strategies";
+        private static readonly string StrategyUser = $"Strategies";
 
         public Module(ModuleNavigator moduleNavigator, ILoggerFacade logger)
             : base(moduleNavigator, logger)

@@ -37,12 +37,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
         private int counter;
         private Delegate getter;
 
-        private IDisposable filterTextDescription;
+        private readonly IDisposable filterTextDescription;
 
         /// <summary>
         /// Uses System.Reactive.Subjects.
         /// </summary>
-        private Subject<string> filterTextSubject = new Subject<string>();
+        private readonly Subject<string> filterTextSubject = new Subject<string>();
 
         static XamlFilterBox()
         {
