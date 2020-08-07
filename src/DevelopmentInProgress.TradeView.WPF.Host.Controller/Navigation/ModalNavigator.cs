@@ -47,6 +47,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
         /// <param name="modalSettings">The <see cref="ModalSettings"/>.</param>
         public void ShowModal(ModalSettings modalSettings)
         {
+            if(modalSettings == null)
+            {
+                throw new ArgumentNullException(nameof(modalSettings));
+            }
+
             var viewType = Type.GetType(modalSettings.View);
             var resolvedView = container.Resolve(viewType, modalSettings.View);
             var view = (ModalViewBase)resolvedView;
@@ -74,6 +79,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
         /// <param name="e">The exception to show.</param>
         public static void ShowError(Exception e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             ShowError(e.Message, e.StackTrace);
         }
 
