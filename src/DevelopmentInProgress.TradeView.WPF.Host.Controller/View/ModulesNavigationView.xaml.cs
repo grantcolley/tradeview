@@ -66,8 +66,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
         {
             var navigationListItem = (NavigationListItem)e.Source;
             string navigationKey = navigationListItem.Tag.ToString();
-            NavigationSettings navigationSettings;
-            if (((ModulesNavigationViewModel)DataContext).NavigationSettingsList.TryGetValue(navigationKey, out navigationSettings))
+            if (((ModulesNavigationViewModel)DataContext).NavigationSettingsList.TryGetValue(navigationKey, out NavigationSettings navigationSettings))
             {
                 navigationManager.NavigateDocumentRegion(navigationSettings);
             }
