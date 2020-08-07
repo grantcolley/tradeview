@@ -162,9 +162,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
 
             var layoutContent = documentPane.Children.FirstOrDefault(l => l.IsActive || l.IsSelected);
             if (layoutContent != null
-                && layoutContent.Content is DocumentViewHost)
+                && layoutContent.Content is DocumentViewHost host)
             {
-                var viewModel = ((DocumentViewHost)layoutContent.Content).DataContext as DocumentViewModel;
+                var viewModel = host.DataContext as DocumentViewModel;
                 if (viewModel != null)
                 {
                     if (action == ActionActiveEnum.Save)
@@ -191,9 +191,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
             // returned i.e. only the visible documents are returned.
             foreach (LayoutContent layoutContent in documentPane.Children)
             {
-                if (layoutContent.Content is DocumentViewHost)
+                if (layoutContent.Content is DocumentViewHost host)
                 {
-                    var viewModel = ((DocumentViewHost)layoutContent.Content).DataContext as ViewModelBase;
+                    var viewModel = host.DataContext as ViewModelBase;
                     if (viewModel != null)
                     {
                         if (action == ActionAllEnum.RefreshAll)
