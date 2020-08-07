@@ -48,8 +48,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
         private static DependencyProperty IsToolBarVisibleProperty = DependencyProperty.Register("IsToolBarVisible",
             typeof (bool), typeof (Shell));
 
-        private ILoggerFacade logger;
-
         private ModulesNavigationViewModel modulesNavigationViewModel;
 
         /// <summary>
@@ -66,8 +64,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
                 : Visibility.Collapsed;
 
             Title = $"Trade View : {Environment.UserName}";
-
-            logger = ServiceLocator.Current.GetInstance<ILoggerFacade>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
