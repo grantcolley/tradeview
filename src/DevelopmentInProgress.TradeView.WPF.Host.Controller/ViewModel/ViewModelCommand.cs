@@ -71,7 +71,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         /// <summary>
         /// Raises the CanExecuteChanged event.
         /// </summary>
-        public void RaiseCanExecuteChanged()
+        public void OnRaiseCanExecuteChanged()
         {
             var canExecuteChanged = CanExecuteChanged;
             if (canExecuteChanged != null)
