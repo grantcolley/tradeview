@@ -7,6 +7,7 @@
 
 using System;
 using System.Globalization;
+using System.IO;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
@@ -32,7 +33,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Converters
             {
                 return new BitmapImage(new Uri((string)value, UriKind.RelativeOrAbsolute));
             }
-            catch
+            catch(FileNotFoundException)
             {
                 return new BitmapImage(
                     new Uri(@"/DevelopmentInProgress.TradeView.Wpf.Host;component/Images/GroupListItem.png",
