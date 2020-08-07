@@ -35,7 +35,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
         /// Shows a message box and sets the message box result.
         /// </summary>
         /// <param name="messageBoxSettings">The message box settings.</param>
-        public void ShowMessageBox(MessageBoxSettings messageBoxSettings)
+        public static void ShowMessageBox(MessageBoxSettings messageBoxSettings)
         {
             Dialog.ShowMessage(messageBoxSettings);
         }
@@ -72,7 +72,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
         /// Shows an error message in a dialog window.
         /// </summary>
         /// <param name="e">The exception to show.</param>
-        public void ShowError(Exception e)
+        public static void ShowError(Exception e)
         {
             ShowError(e.Message, e.StackTrace);
         }
@@ -82,7 +82,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
         /// </summary>
         /// <param name="message">The error message to display.</param>
         /// <param name="stackTrace">The error stack trace.</param>
-        public void ShowError(string message, string stackTrace)
+        public static void ShowError(string message, string stackTrace)
         {
             Dialog.ShowException(message, stackTrace);
         }
