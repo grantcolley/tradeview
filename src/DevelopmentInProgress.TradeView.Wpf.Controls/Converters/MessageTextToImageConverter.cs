@@ -46,14 +46,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Converters
                 }
 
                 string image = value.ToString();
-                switch (image.ToLower(CultureInfo.InvariantCulture))
+                return (image.ToLower(CultureInfo.InvariantCulture)) switch
                 {
-                    case "CLIPBOARD":
-                        return
-                            new BitmapImage(new Uri($@"..\Images\{image.ToLower(CultureInfo.InvariantCulture)}.png", UriKind.RelativeOrAbsolute));
-                    default:
-                        return ResourceDictionary[image.ToLower(CultureInfo.InvariantCulture)];
-                }
+                    "CLIPBOARD" => new BitmapImage(new Uri($@"..\Images\{image.ToLower(CultureInfo.InvariantCulture)}.png", UriKind.RelativeOrAbsolute)),
+                    _ => ResourceDictionary[image.ToLower(CultureInfo.InvariantCulture)]
+                };
             }
             catch(FileNotFoundException)
             {
