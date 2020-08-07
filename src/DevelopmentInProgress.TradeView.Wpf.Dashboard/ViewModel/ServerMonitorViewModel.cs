@@ -163,7 +163,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
 
             Logger.Log(message.Text, category, Priority.Low);
 
-            message.Text = $"{message.Timestamp.ToString("dd/MM/yyyy hh:mm:ss.fff tt")} {message.Text}";
+            message.Text = $"{message.Timestamp:dd/MM/yyyy hh:mm:ss.fff tt} {message.Text}";
             ShowMessage(message);
         }
     }
