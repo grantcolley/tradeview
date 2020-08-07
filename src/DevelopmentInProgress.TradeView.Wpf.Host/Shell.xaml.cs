@@ -61,7 +61,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
 
             var appSettings = ConfigurationManager.AppSettings;
             var isShellToolBarVisible = appSettings["IsShellToolBarVisible"];
-            ShellToolBar.Visibility = isShellToolBarVisible.ToUpper().Equals("TRUE")
+            ShellToolBar.Visibility = isShellToolBarVisible.Equals("TRUE", StringComparison.OrdinalIgnoreCase)
                 ? Visibility.Visible
                 : Visibility.Collapsed;
 
@@ -145,7 +145,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
             var dirPath = filePath.Substring(0, filePath.LastIndexOf('\\'));
             var directory = new DirectoryInfo(dirPath);
             var logFile = directory.GetFiles()
-                .Where(f => f.Name.Contains("DevelopmentInProgress.TradeView.Wpf.Trading"))
+                .Where(f => f.Name.Contains("DevelopmentInProgress.TradeView.Wpf.Trading", StringComparison.OrdinalIgnoreCase))
                 .OrderByDescending(f => f.LastWriteTime).First();
 
             string logFileReader = ConfigurationManager.AppSettings["LogFileReader"].ToString();
