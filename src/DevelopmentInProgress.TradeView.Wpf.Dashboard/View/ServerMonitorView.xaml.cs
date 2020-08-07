@@ -10,7 +10,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.View
     public partial class ServerMonitorView : DocumentViewBase
     {
         public ServerMonitorView(IViewContext viewContext, ServerMonitorViewModel serverMonitorViewModel)
-            : base(viewContext, serverMonitorViewModel, Module.ModuleName)
+            : base(viewContext, serverMonitorViewModel, DashboardModule.ModuleName)
         {
             InitializeComponent();
 

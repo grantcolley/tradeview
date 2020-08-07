@@ -11,7 +11,7 @@
 
     <prism:ModuleInfo Ref="Dashboard"
                       ModuleName="Dashboard"
-                      ModuleType="DevelopmentInProgress.TradeView.Wpf.Dashboard.Module,DevelopmentInProgress.TradeView.Wpf.Dashboard">
+                      ModuleType="DevelopmentInProgress.TradeView.Wpf.Dashboard.DashboardModule,DevelopmentInProgress.TradeView.Wpf.Dashboard">
         <prism:ModuleInfo.DependsOn>
             <sys:String>Configuration</sys:String>
         </prism:ModuleInfo.DependsOn>

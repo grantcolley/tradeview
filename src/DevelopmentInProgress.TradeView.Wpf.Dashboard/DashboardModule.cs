@@ -7,11 +7,11 @@ using Prism.Logging;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Dashboard
 {
-    public class Module : ModuleBase
+    public class DashboardModule : ModuleBase
     {
         public const string ModuleName = "Dashboard";
 
-        public Module(ModuleNavigator moduleNavigator, ILoggerFacade logger)
+        public DashboardModule(ModuleNavigator moduleNavigator, ILoggerFacade logger)
             : base(moduleNavigator, logger)
         {
         }
