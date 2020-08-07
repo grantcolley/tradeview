@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel
+namespace DevelopmentInProgress.TradeView.Wpf.Controls.Navigation
 {
     /// <summary>
     /// The NavigationList class.

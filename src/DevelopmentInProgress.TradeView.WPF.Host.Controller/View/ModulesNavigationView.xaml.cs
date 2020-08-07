@@ -6,7 +6,7 @@
 //-----------------------------------------------------------------------
 
 using CommonServiceLocator;
-using DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel;
+using DevelopmentInProgress.TradeView.Wpf.Controls.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
 using System;

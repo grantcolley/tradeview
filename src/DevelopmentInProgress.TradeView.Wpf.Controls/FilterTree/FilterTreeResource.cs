@@ -7,7 +7,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,10 +16,10 @@ using System.Windows.Media;
 namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterTree
 {
     /// <summary>
-    /// The <see cref="FilterTree"/> class provides the code behind the resource dictionary. 
+    /// The <see cref="FilterTreeResource"/> class provides the code behind the resource dictionary. 
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1010:Generic interface should also be implemented")]
-    partial class FilterTree
+    partial class FilterTreeResource
     {
         #region Filtering operations
 

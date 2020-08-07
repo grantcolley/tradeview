@@ -11,7 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using DevelopmentInProgress.TradeView.Wpf.Controls.Command;
 
-namespace DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel
+namespace DevelopmentInProgress.TradeView.Wpf.Controls.Navigation
 {
     /// <summary>
     /// The navigation panel class.

@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    x:Class="DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel.NavigationPanelResources"
+                    x:Class="DevelopmentInProgress.TradeView.Wpf.Controls.Navigation.NavigationPanelResources"
                     xmlns:converters="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.Converters"
-                    xmlns:navigationPanel="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel">
+                    xmlns:navigationPanel="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.Navigation">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../themes/MetroDark/MetroDark.MSControls.Core.Implicit.xaml" />

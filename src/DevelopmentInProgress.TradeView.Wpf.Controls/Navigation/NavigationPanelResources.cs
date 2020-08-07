@@ -8,7 +8,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel
+namespace DevelopmentInProgress.TradeView.Wpf.Controls.Navigation
 {
     /// <summary>
     /// The <see cref="NavigationPanelResources"/> class provides the code behind the resource dictionary. 

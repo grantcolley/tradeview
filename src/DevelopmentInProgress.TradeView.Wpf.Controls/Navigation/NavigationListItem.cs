@@ -10,7 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel
+namespace DevelopmentInProgress.TradeView.Wpf.Controls.Navigation
 {
     /// <summary>
     /// The NavigationListItem class.

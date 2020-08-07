@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.TradeView.Wpf.Controls.NavigationPanel;
+﻿using DevelopmentInProgress.TradeView.Wpf.Controls.Navigation;
 using System;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation

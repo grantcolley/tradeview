@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:filterTree="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.FilterTree"
-                    x:Class="DevelopmentInProgress.TradeView.Wpf.Controls.FilterTree.FilterTree">
+                    x:Class="DevelopmentInProgress.TradeView.Wpf.Controls.FilterTree.FilterTreeResource">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../themes/MetroDark/MetroDark.MSControls.Core.Implicit.xaml" />
