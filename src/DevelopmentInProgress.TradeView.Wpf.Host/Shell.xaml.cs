@@ -45,8 +45,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
         /// <summary>
         /// Determines whether the tool bar is vibile or not.
         /// </summary>
-        private static DependencyProperty IsToolBarVisibleProperty = DependencyProperty.Register("IsToolBarVisible",
-            typeof (bool), typeof (Shell));
+        private readonly static DependencyProperty IsToolBarVisibleProperty
+            = DependencyProperty.Register("IsToolBarVisible", typeof(bool), typeof(Shell));
 
         private ModulesNavigationViewModel modulesNavigationViewModel;
 
