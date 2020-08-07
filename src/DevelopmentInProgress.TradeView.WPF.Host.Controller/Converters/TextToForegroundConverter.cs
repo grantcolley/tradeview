@@ -34,13 +34,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Converters
                 return new SolidColorBrush(Colors.Black);
             }
 
-            switch (value.ToString().ToLower())
+            return (value.ToString().ToUpperInvariant()) switch
             {
-                case "error":
-                    return new SolidColorBrush(Colors.Red);
-                default:
-                    return new SolidColorBrush(Colors.Black);
-            }
+                "ERROR" => new SolidColorBrush(Colors.Red),
+                _ => new SolidColorBrush(Colors.Black)
+            };
         }
 
         /// <summary>
