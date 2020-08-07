@@ -18,20 +18,17 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Messaging
         private void MessageMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
-            var contentControl = sender as ContentControl;
-            if (contentControl == null)
+            if (!(sender is ContentControl contentControl))
             {
                 return;
             }
 
-            var message = contentControl.DataContext as Message;
-            if (message == null)
+            if (!(contentControl.DataContext is Message message))
             {
                 return;
             }
 
-            var messagePanel = contentControl.Tag as MessagePanel;
-            if (messagePanel == null)
+            if (!(contentControl.Tag is MessagePanel messagePanel))
             {
                 return;
             }

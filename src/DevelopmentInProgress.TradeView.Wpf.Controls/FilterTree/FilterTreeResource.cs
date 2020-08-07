@@ -25,14 +25,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterTree
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            var textBox = sender as TextBox;
-            if (textBox == null)
+            if (!(sender is TextBox textBox))
             {
                 return;
             }
 
-            var xamlFilterTree = textBox.Tag as XamlFilterTree;
-            if (xamlFilterTree == null)
+            if (!(textBox.Tag is XamlFilterTree xamlFilterTree))
             {
                 return;
             }
@@ -135,16 +133,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterTree
 
         private static void OnSelectItem<T>(T sender)
         {
-            var item = sender as TreeViewItem;
-            if (item == null)
+            if (!(sender is TreeViewItem item))
             {
                 return;
             }
 
             if (item.IsSelected)
             {
-                var xamlFilterTree = item.Tag as XamlFilterTree;
-                if (xamlFilterTree == null
+                if (!(item.Tag is XamlFilterTree xamlFilterTree)
                     || xamlFilterTree.SelectItemCommand == null)
                 {
                     return;
@@ -163,15 +159,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterTree
 
         private void MouseMoveHandler(object sender, MouseEventArgs e)
         {
-            var item = sender as TreeViewItem;
-            if (item == null
+            if (!(sender is TreeViewItem item)
                 || !item.IsSelected)
             {
                 return;
             }
 
-            var xamlFilterTree = item.Tag as XamlFilterTree;
-            if (xamlFilterTree == null
+            if (!(item.Tag is XamlFilterTree xamlFilterTree)
                 || !xamlFilterTree.IsEditable)
             {
                 return;
@@ -187,8 +181,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterTree
 
         private void DragOverHandler(object sender, DragEventArgs e)
         {
-            var currentUiElement = e.OriginalSource as UIElement;
-            if (currentUiElement == null)
+            if (!(e.OriginalSource is UIElement currentUiElement))
             {
                 return;
             }
@@ -236,8 +229,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterTree
             TreeViewItem targetItem = GetNearestTreeViewItem(e.OriginalSource as UIElement);
             if (targetItem != null && dragItem != null)
             {
-                var xamlFilterTree = dragItem.Tag as XamlFilterTree;
-                if (xamlFilterTree != null
+                if (dragItem.Tag is XamlFilterTree xamlFilterTree
                     && xamlFilterTree.DragDropCommand != null)
                 {
                     xamlFilterTree.DragDropCommand.Execute(new FilterTreeDragDropArgs(dragItem.Header, targetItem.Header));

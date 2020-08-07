@@ -18,15 +18,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Navigation
     {
         private void ExpanderImageMouseDown(object sender, MouseButtonEventArgs e)
         {
-            var image = sender as Image;
-            if (image == null
+            if (!(sender is Image image)
                 || image.Tag == null)
             {
                 return;
             }
 
-            var navigationPanel = image.Tag as NavigationPanel;
-            if (navigationPanel == null)
+            if (!(image.Tag is NavigationPanel navigationPanel))
             {
                 return;
             }
@@ -36,15 +34,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Navigation
 
         private void NavigationPanelItemSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var listBox = sender as ListBox;
-            if (listBox == null
+            if (!(sender is ListBox listBox)
                 || listBox.Tag == null)
             {
                 return;
             }
 
-            var navigationPanel = listBox.Tag as NavigationPanel;
-            if (navigationPanel == null)
+            if (!(listBox.Tag is NavigationPanel navigationPanel))
             {
                 return;
             }
