@@ -42,8 +42,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.DecimalBox
                 return;
             }
 
-            decimal val;
-            if (Decimal.TryParse(txt.Text, out val))
+            if (Decimal.TryParse(txt.Text, out decimal val))
             {
                 if (val < 0)
                 {
