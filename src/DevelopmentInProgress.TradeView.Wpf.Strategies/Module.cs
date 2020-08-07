@@ -58,7 +58,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies
             }
             catch (Exception ex)
             {
-                Logger.Log($"Initialize DevelopmentInProgress.Wpf.Strategies failed to load: {ex.ToString()}", Category.Info, Priority.None);
+                Logger.Log($"Initialize DevelopmentInProgress.Wpf.Strategies failed to load: {ex}", Category.Info, Priority.None);
             }
         }
 
