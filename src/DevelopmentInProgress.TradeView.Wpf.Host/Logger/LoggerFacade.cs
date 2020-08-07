@@ -26,12 +26,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Logger
         /// </summary>
         public LoggerFacade(ILogger logger)
         {
-            if (logger == null)
-            {
-                throw new ArgumentNullException(nameof(logger));
-            }
-
-            this.logger = logger;
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             logger.Information("*********************************************");
             logger.Information("*********************************************");
