@@ -26,6 +26,8 @@ using Serilog;
 using System.IO;
 using System.Windows;
 using Xceed.Wpf.AvalonDock;
+using CryptoExchange.Net.Objects;
+using System;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host
 {
@@ -97,6 +99,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
 
         protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings regionAdapterMappings)
         {
+            if(regionAdapterMappings == null)
+            {
+                throw new ArgumentNullException(nameof(regionAdapterMappings));
+            }
+
             regionAdapterMappings.RegisterMapping(typeof(DockingManager), new DockingManagerRegionAdapter(ServiceLocator.Current.GetInstance<IRegionBehaviorFactory>()));
         }
 
@@ -107,6 +114,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
 
         protected override void InitializeShell(Window shell)
         {
+            if (shell == null)
+            {
+                throw new ArgumentNullException(nameof(shell));
+            }
+
             var modulesNavigationViewModel = Container.Resolve<ModulesNavigationViewModel>();
             ((Shell)shell).ModulesNavigationViewModel = modulesNavigationViewModel;
 

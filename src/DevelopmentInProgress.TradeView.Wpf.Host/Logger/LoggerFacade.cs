@@ -7,6 +7,7 @@
 
 using Prism.Logging;
 using Serilog;
+using System;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.Logger
 {
@@ -25,6 +26,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Logger
         /// </summary>
         public LoggerFacade(ILogger logger)
         {
+            if (logger == null)
+            {
+                throw new ArgumentNullException(nameof(logger));
+            }
+
             this.logger = logger;
 
             logger.Information("*********************************************");
