@@ -38,7 +38,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
         /// <param name="e">Message box settings.</param>
         protected void ShowMessageBox(object sender, MessageBoxSettings e)
         {
-            ViewContext.ModalNavigator.ShowMessageBox(e);
+            ModalNavigator.ShowMessageBox(e);
         }
 
         /// <summary>

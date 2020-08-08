@@ -189,14 +189,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.RegionAdapters
 
             var anchorablesShow = layoutAnchorablesShow.ToList();
 
-            for (int i = 0; i < anchorablesHide.Count(); i++)
+            for (int i = 0; i < anchorablesHide.Count; i++)
             {
                 anchorablesHide[i].Hide();
                 var documentViewHost = anchorablesHide[i].Content as DocumentViewHost;
                 documentViewHost.View.OnActiveChanged(false);
             }
 
-            for (int i = 0; i < anchorablesShow.Count(); i++)
+            for (int i = 0; i < anchorablesShow.Count; i++)
             {
                 anchorablesShow[i].Show();
             }
