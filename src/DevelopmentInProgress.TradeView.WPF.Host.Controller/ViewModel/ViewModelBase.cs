@@ -39,6 +39,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         /// <param name="viewModelContext">The <see cref="ViewModelContext"/>.</param>
         protected ViewModelBase(IViewModelContext viewModelContext)
         {
+            if(viewModelContext == null)
+            {
+                throw new ArgumentNullException(nameof(viewModelContext));
+            }
+
             ViewModelContext = viewModelContext;
             Logger = ViewModelContext.Logger;
             Save = new ViewModelCommand(OnSave);
@@ -400,6 +405,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         /// <param name="action">The action to run.</param>
         protected void ProcessAction(Action action)
         {
+            if(action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+
             action.Invoke();
         }
 
