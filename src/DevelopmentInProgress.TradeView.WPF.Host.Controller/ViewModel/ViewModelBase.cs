@@ -403,7 +403,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         /// Process an action implemented in the specialised classes the derive from <see cref="ViewModelBase"/>.
         /// </summary>
         /// <param name="action">The action to run.</param>
-        protected void ProcessAction(Action action)
+        protected static void ProcessAction(Action action)
         {
             if(action == null)
             {
@@ -422,7 +422,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
             ClearMessages();
         }
 
-        private Category ConvertMessageTypeToLogCategory(MessageType type)
+        private static Category ConvertMessageTypeToLogCategory(MessageType type)
         {
             switch (type)
             {
