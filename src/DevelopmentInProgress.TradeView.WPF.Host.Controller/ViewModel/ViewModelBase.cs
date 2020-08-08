@@ -284,8 +284,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         /// appened to existing messages or existing messages are first cleared.</param>
         protected void ShowMessage(Message message, bool appendMessage = false)
         {
-            var messagesToShow = new List<Message>();
-            messagesToShow.Add(message);
+            var messagesToShow = new List<Message>
+            {
+                message
+            };
+
             ShowMessages(messagesToShow, appendMessage);
         }
 
