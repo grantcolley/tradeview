@@ -24,7 +24,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
     /// </summary>
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
-        protected readonly ILoggerFacade Logger;
         private string title;
         private bool isBusy;
         private bool isDirty;
@@ -73,6 +72,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         /// Gets the view model context.
         /// </summary>
         public IViewModelContext ViewModelContext { get; private set; }
+
+        protected ILoggerFacade Logger { get; }
 
         #region CanNavigateAway - Not yet implemented
 
