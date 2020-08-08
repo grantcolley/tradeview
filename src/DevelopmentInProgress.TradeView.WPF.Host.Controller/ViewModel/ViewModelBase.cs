@@ -39,12 +39,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         /// <param name="viewModelContext">The <see cref="ViewModelContext"/>.</param>
         protected ViewModelBase(IViewModelContext viewModelContext)
         {
-            if(viewModelContext == null)
-            {
-                throw new ArgumentNullException(nameof(viewModelContext));
-            }
-
-            ViewModelContext = viewModelContext;
+            ViewModelContext = viewModelContext ?? throw new ArgumentNullException(nameof(viewModelContext));
             Logger = ViewModelContext.Logger;
             Save = new ViewModelCommand(OnSave);
             Refresh = new ViewModelCommand(OnRefresh);
@@ -266,10 +261,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         protected MessageBoxResult ShowMessageBox(MessageBoxSettings messageBoxSettings)
         {
             var showMessageWindow = ShowMessageWindow;
-            if (showMessageWindow != null)
-            {
-                showMessageWindow(this, messageBoxSettings);
-            }
+            showMessageWindow?.Invoke(this, messageBoxSettings);
 
             return messageBoxSettings.MessageBoxResult;
         }
@@ -281,10 +273,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         protected void ShowModal(ModalSettings modalSettings)
         {
             var showModalWindow = ShowModalWindow;
-            if (showModalWindow != null)
-            {
-                showModalWindow(this, modalSettings);
-            }
+            showModalWindow?.Invoke(this, modalSettings);
         }
 
         /// <summary>
@@ -352,10 +341,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
             }
 
             var propertyChangedHandler = PropertyChanged;
-            if (propertyChangedHandler != null)
-            {
-                propertyChangedHandler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            propertyChangedHandler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>
@@ -366,10 +352,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         protected void OnGetViewModels(FindDocumentViewModel e)
         {
             var getViewModels = GetViewModels;
-            if (getViewModels != null)
-            {
-                getViewModels(this, e);
-            }
+            getViewModels?.Invoke(this, e);
         }
 
         /// <summary>
