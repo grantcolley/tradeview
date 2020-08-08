@@ -10,6 +10,7 @@ using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
@@ -103,7 +104,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
             }
 
             maxKey++;
-            return maxKey.ToString();
+            return maxKey.ToString(CultureInfo.InvariantCulture);
         }
 
         /// <summary>
