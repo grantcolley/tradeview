@@ -32,7 +32,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
                 if(navigationPanelItems != value)
                 {
                     navigationPanelItems = value;
-                    OnPropertyChanged("NavigationPanelItems");
+                    OnPropertyChanged(nameof(NavigationPanelItems));
                 }
             }
         }

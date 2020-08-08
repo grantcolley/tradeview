@@ -47,7 +47,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.RegionAdapters
         {
             if (region == null)
             {
-                throw new System.ArgumentNullException("region");
+                throw new System.ArgumentNullException(nameof(region));
             }
 
             region.Behaviors.Add(DockingManagerBehavior.BehaviorKey,

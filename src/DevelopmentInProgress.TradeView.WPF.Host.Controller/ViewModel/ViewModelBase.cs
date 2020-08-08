@@ -152,7 +152,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
                 if (title != value)
                 {
                     title = value;
-                    OnPropertyChanged("Title");
+                    OnPropertyChanged(nameof(Title));
                 }
             }
         }
@@ -169,7 +169,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
                 if (isBusy != value)
                 {
                     isBusy = value;
-                    OnPropertyChanged("IsBusy");
+                    OnPropertyChanged(nameof(IsBusy));
                 }
             }
         }
@@ -187,7 +187,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
                 if (isDirty != value)
                 {
                     isDirty = value;
-                    OnPropertyChanged("IsDirty");
+                    OnPropertyChanged(nameof(IsDirty));
                 }
             }
         }
@@ -227,7 +227,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
             set
             {
                 isMessagesExpanded = value;
-                OnPropertyChanged("IsMessagesExpanded");
+                OnPropertyChanged(nameof(IsMessagesExpanded));
             }
         }
 
@@ -237,8 +237,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         public void ClearMessages()
         {
             messages = null;
-            OnPropertyChanged("Messages");
-            OnPropertyChanged("IsMessagesVisible");
+            OnPropertyChanged(nameof(Messages));
+            OnPropertyChanged(nameof(IsMessagesVisible));
         }
 
         /// <summary>
@@ -248,8 +248,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         {
             IsBusy = false;
             IsDirty = false;
-            OnPropertyChanged("IsBusy");
-            OnPropertyChanged("IsDirty");
+            OnPropertyChanged(nameof(IsBusy));
+            OnPropertyChanged(nameof(IsDirty));
         }
 
         /// <summary>
@@ -323,8 +323,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
                 }
 
                 IsMessagesExpanded = true;
-                OnPropertyChanged("Messages");
-                OnPropertyChanged("IsMessagesVisible");
+                OnPropertyChanged(nameof(Messages));
+                OnPropertyChanged(nameof(IsMessagesVisible));
             };
             
             ViewModelContext.UiDispatcher.Invoke(action, new object[] { messagesToShow, appendMessage });
