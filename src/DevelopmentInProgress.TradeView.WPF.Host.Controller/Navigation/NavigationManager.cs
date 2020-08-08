@@ -46,9 +46,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
         /// </param>
         public void NavigateDocumentRegion(NavigationSettings navigationSettings)
         {
+            if(navigationSettings == null)
+            {
+                throw new ArgumentNullException(nameof(navigationSettings));
+            }
+
             if (String.IsNullOrEmpty(navigationSettings.View))
             {
-                throw new Exception("Navigation Manager Exception : Target view not specified.");
+                throw new ArgumentNullException($"{nameof(navigationSettings)}.View");
             }
 
             var query = new NavigationParameters
