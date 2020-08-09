@@ -171,7 +171,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
 
         private bool disposedValue = false; // To detect redundant calls
 
-        private void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
             {
