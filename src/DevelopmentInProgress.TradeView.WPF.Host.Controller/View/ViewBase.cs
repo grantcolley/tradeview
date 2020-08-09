@@ -9,6 +9,7 @@ using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
 using Prism.Logging;
+using System;
 using System.Windows.Controls;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
@@ -29,7 +30,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
         /// <param name="viewContext">The view context.</param>
         protected ViewBase(IViewContext viewContext)
         {
-            ViewContext = viewContext;
+            ViewContext = viewContext ?? throw new ArgumentNullException(nameof(viewContext));
             Logger = ViewContext.Logger;
         }
 
@@ -73,6 +74,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
         /// <param name="e">Navigation target.</param>
         protected void NavigateTarget(object sender, NavigationTarget e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             ViewContext.NavigationManager.NavigateDocumentRegion(e.NavigationId);
         }
     }

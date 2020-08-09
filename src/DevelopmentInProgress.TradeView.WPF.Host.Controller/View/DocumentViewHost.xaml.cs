@@ -6,6 +6,7 @@
 //-----------------------------------------------------------------------
 
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.RegionAdapters;
+using System;
 using System.Windows.Controls;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
@@ -22,7 +23,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
         {
             InitializeComponent();
 
-            MainContent.Content = documentViewBase;
+            MainContent.Content = documentViewBase ?? throw new ArgumentNullException(nameof(documentViewBase));
             DataContext = documentViewBase.DataContext;
             ModuleName = documentViewBase.ModuleName;
         }

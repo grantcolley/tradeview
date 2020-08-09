@@ -7,6 +7,7 @@
 
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
+using System;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
 {
@@ -30,6 +31,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
         /// <param name="modalViewModel">The modal view model raising the events.</param>
         public void RegisterDialogEventsHandlers(ModalViewModel modalViewModel)
         {
+            if (modalViewModel == null)
+            {
+                throw new ArgumentNullException(nameof(modalViewModel));
+            }
+
             modalViewModel.ShowMessageWindow += ShowMessageBox;
             modalViewModel.ShowModalWindow += ShowModalWindow;
         }

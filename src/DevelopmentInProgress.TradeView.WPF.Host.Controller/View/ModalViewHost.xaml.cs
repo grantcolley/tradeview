@@ -5,6 +5,7 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
+using System;
 using System.Windows;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
@@ -18,7 +19,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
         {
             InitializeComponent();
 
-            MainContent.Content = modalViewBase;
+            MainContent.Content = modalViewBase ?? throw new ArgumentNullException(nameof(modalViewBase));
             DataContext = modalViewBase.DataContext;
         }
     }

@@ -22,6 +22,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
         /// <param name="target">The target view.</param>
         public NavigationTarget(string target)
         {
+            if(target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
+
             string[] targetSplit = target.Split('^');
             if (targetSplit.Length == 2)
             {

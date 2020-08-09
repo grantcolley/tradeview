@@ -134,6 +134,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         /// <param name="navigationSettings">Navigation settings for the new document.</param>
         protected void PublishDocument(NavigationSettings navigationSettings)
         {
+            if(navigationSettings == null)
+            {
+                throw new ArgumentNullException(nameof(navigationSettings));
+            }
+
             var publish = Publish;
             if (publish != null)
             {
@@ -217,6 +222,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         /// <returns>True if it is the target, else returns false.</returns>
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
+            if (navigationContext == null)
+            {
+                throw new ArgumentNullException(nameof(navigationContext));
+            }
+
             if (!String.IsNullOrEmpty(uriQueryString)
                 && uriQueryString.Equals(navigationContext.Uri.OriginalString))
             {
@@ -252,6 +262,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         /// <param name="navigationContext">The navigation context.</param>
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            if (navigationContext == null)
+            {
+                throw new ArgumentNullException(nameof(navigationContext));
+            }
+
             if (!String.IsNullOrEmpty(uriQueryString)
                 && uriQueryString.Equals(navigationContext.Uri.OriginalString))
             {

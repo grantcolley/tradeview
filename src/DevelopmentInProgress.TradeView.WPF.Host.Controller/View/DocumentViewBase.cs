@@ -28,6 +28,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
         protected DocumentViewBase(IViewContext viewContext, DocumentViewModel documentViewModel, string moduleName)
             : base(viewContext)
         {
+            if (documentViewModel == null)
+            {
+                throw new ArgumentNullException(nameof(documentViewModel));
+            }
+
             ModuleName = moduleName;
             documentViewModel.ViewModelContext.UiDispatcher = Dispatcher;
             documentViewModel.Activate += ViewModelActivate;

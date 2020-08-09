@@ -49,6 +49,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         /// <param name="moduleSettings">Module settings.</param>
         public void AddModule(ModuleSettings moduleSettings)
         {
+            if (moduleSettings == null)
+            {
+                throw new ArgumentNullException(nameof(moduleSettings));
+            }
+
             var navigationPanelItem = new NavigationPanelItem
             {
                 NavigationPanelItemName = moduleSettings.ModuleName,
@@ -101,6 +106,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         /// <param name="moduleGroupItem"></param>
         public void AddNavigationListItem(string navigationPanelItemName, string navigationListName, ModuleGroupItem moduleGroupItem)
         {
+            if (moduleGroupItem == null)
+            {
+                throw new ArgumentNullException(nameof(moduleGroupItem));
+            }
+
             var navigationPanelItem = NavigationPanelItems.FirstOrDefault(
                 npi => npi.NavigationPanelItemName.Equals(navigationPanelItemName));
 
