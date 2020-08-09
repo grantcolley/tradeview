@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
 {
-    public class ModulesNavigationViewModel : INotifyPropertyChanged
+    public class ModulesNavigationViewModel
     {
         public ModulesNavigationViewModel()
         {
@@ -18,7 +18,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
 
         public event EventHandler<NavigationEventArgs> RegisterNavigation;
         public event EventHandler<NavigationEventArgs> UnregisterNavigation;
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public Dictionary<string, NavigationSettings> NavigationSettingsList { get; }
         public ObservableCollection<NavigationPanelItem> NavigationPanelItems { get; }
