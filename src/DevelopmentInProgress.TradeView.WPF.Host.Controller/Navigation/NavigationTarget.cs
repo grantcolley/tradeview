@@ -46,7 +46,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
         {
             NavigationId = navigationId;
             Title = title;
-            Target = String.Format("{0}^{1}", navigationId, title);
+            Target = $"{navigationId}^{title}";
             NavigationHistory = Target;
         }
 
@@ -95,7 +95,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
         /// <param name="navigationHistory">The navigation history.</param>
         public void AppendNavigationHistory(string[] navigationHistory)
         {
-            this.navigationHistory = String.Format("{0}|{1}", String.Join("|", navigationHistory), Target);
+            this.navigationHistory = $"{String.Join(" | ", navigationHistory)}|{Target}";
         }
     }
 }

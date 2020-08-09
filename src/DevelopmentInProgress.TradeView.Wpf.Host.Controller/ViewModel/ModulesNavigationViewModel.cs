@@ -82,10 +82,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
                         View = moduleGroupItem.TargetView
                     };
 
-                    string navigationKey = string.Format("{0}.{1}.{2}",
-                        navigationPanelItem.NavigationPanelItemName,
-                        navigationList.NavigationListName,
-                        navigationListItem.ItemName);
+                    string navigationKey = $"{navigationPanelItem.NavigationPanelItemName}.{navigationList.NavigationListName}.{navigationListItem.ItemName}";
 
                     navigationListItem.Tag = navigationKey;
                     NavigationSettingsList.Add(navigationKey, navigationSettings);
@@ -133,10 +130,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
                 View = moduleGroupItem.TargetView
             };
 
-            string navigationKey = string.Format("{0}.{1}.{2}",
-                navigationPanelItem.NavigationPanelItemName,
-                navigationList.NavigationListName,
-                navigationListItem.ItemName);
+            string navigationKey = $"{navigationPanelItem.NavigationPanelItemName}.{navigationList.NavigationListName}.{navigationListItem.ItemName}";
 
             navigationListItem.Tag = navigationKey;
             NavigationSettingsList.Add(navigationKey, navigationSettings);
@@ -163,10 +157,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
 
             navigationList.NavigationListItems.Remove(navigationListItem);
 
-            string navigationKey = string.Format("{0}.{1}.{2}",
-                navigationPanelItem.NavigationPanelItemName,
-                navigationList.NavigationListName,
-                navigationListItem.ItemName);
+            string navigationKey = $"{navigationPanelItem.NavigationPanelItemName}.{navigationList.NavigationListName}.{navigationListItem.ItemName}";
 
             NavigationSettingsList.Remove(navigationKey);
         }
