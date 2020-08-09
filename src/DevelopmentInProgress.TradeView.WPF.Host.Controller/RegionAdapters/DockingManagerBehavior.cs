@@ -177,13 +177,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.RegionAdapters
         {
             var layoutAnchorablesHide = dockingManager.Layout.Descendents()
                 .OfType<LayoutAnchorable>()
-                .Where(la => !((DocumentViewHost)la.Content).ModuleName.ToUpper().Equals(e.ModuleName.ToUpper()));
+                .Where(la => !((DocumentViewHost)la.Content).ModuleName.Equals(e.ModuleName, StringComparison.OrdinalIgnoreCase));
 
             var anchorablesHide = layoutAnchorablesHide.ToList();
 
             var layoutAnchorablesShow = dockingManager.Layout.Descendents()
                 .OfType<LayoutAnchorable>()
-                .Where(la => ((DocumentViewHost)la.Content).ModuleName.ToUpper().Equals(e.ModuleName.ToUpper()));
+                .Where(la => ((DocumentViewHost)la.Content).ModuleName.Equals(e.ModuleName, StringComparison.OrdinalIgnoreCase));
 
             var anchorablesShow = layoutAnchorablesShow.ToList();
 

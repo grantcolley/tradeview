@@ -228,7 +228,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
             }
 
             if (!String.IsNullOrEmpty(uriQueryString)
-                && uriQueryString.Equals(navigationContext.Uri.OriginalString))
+                && uriQueryString.Equals(navigationContext.Uri.OriginalString, StringComparison.OrdinalIgnoreCase))
             {
                 RaiseActivation();
                 return true;
@@ -268,7 +268,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
             }
 
             if (!String.IsNullOrEmpty(uriQueryString)
-                && uriQueryString.Equals(navigationContext.Uri.OriginalString))
+                && uriQueryString.Equals(navigationContext.Uri.OriginalString, StringComparison.OrdinalIgnoreCase))
             {
                 return;
             }
@@ -277,19 +277,19 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
 
             foreach (KeyValuePair<string, object> parameter in navigationContext.Parameters)
             {
-                if (parameter.Key.Equals("Title"))
+                if (parameter.Key.Equals("Title", StringComparison.Ordinal))
                 {
                     Title = parameter.Value?.ToString();
                     continue;
                 }
 
-                if (parameter.Key.Equals("NavigationId"))
+                if (parameter.Key.Equals("NavigationId", StringComparison.Ordinal))
                 {
                     NavigationId = parameter.Value?.ToString();
                     continue;
                 }
 
-                if (parameter.Key.Equals("Navigation"))
+                if (parameter.Key.Equals("Navigation", StringComparison.Ordinal))
                 {
                     string[] history = NavigationTarget.GetNavigationHistory(parameter.Value?.ToString());
                     foreach (string target in history)

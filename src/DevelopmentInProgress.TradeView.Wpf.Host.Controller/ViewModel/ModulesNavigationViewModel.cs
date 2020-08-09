@@ -112,10 +112,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
             }
 
             var navigationPanelItem = NavigationPanelItems.FirstOrDefault(
-                npi => npi.NavigationPanelItemName.Equals(navigationPanelItemName));
+                npi => npi.NavigationPanelItemName.Equals(navigationPanelItemName, StringComparison.Ordinal));
 
             var navigationList = navigationPanelItem.NavigationList.FirstOrDefault(
-                nl => nl.NavigationListName.Equals(navigationListName));
+                nl => nl.NavigationListName.Equals(navigationListName, StringComparison.Ordinal));
 
             var navigationListItem = new NavigationListItem
             {
@@ -152,12 +152,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         public void RemoveNavigationListItem(string navigationPanelItemName, string navigationListName, string moduleGroupItemName)
         {
             var navigationPanelItem = NavigationPanelItems.Single(
-                npi => npi.NavigationPanelItemName.Equals(navigationPanelItemName));
+                npi => npi.NavigationPanelItemName.Equals(navigationPanelItemName, StringComparison.Ordinal));
 
             var navigationList = navigationPanelItem.NavigationList.Single(
-                nl => nl.NavigationListName.Equals(navigationListName));
+                nl => nl.NavigationListName.Equals(navigationListName, StringComparison.Ordinal));
 
-            var navigationListItem = navigationList.NavigationListItems.Single(nli => nli.ItemName.Equals(moduleGroupItemName));
+            var navigationListItem = navigationList.NavigationListItems.Single(nli => nli.ItemName.Equals(moduleGroupItemName, StringComparison.Ordinal));
 
             OnUnregisterNavigation(navigationListItem);
 
