@@ -119,7 +119,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
                 && String.IsNullOrEmpty(e.Module))
             {
                 var documentViewModels = ViewContext.NavigationManager.GetAllViewModels();
-                e.ViewModels = documentViewModels;
+                e.ViewModels.Clear();
+                e.ViewModels.AddRange(documentViewModels);
                 return;
             }
 
@@ -132,7 +133,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
             if (!String.IsNullOrEmpty(e.Module))
             {
                 var documentViewModels = ViewContext.NavigationManager.GetViewModels(e.Module);
-                e.ViewModels = documentViewModels;
+                e.ViewModels.Clear();
+                e.ViewModels.AddRange(documentViewModels);
             }
         }
 

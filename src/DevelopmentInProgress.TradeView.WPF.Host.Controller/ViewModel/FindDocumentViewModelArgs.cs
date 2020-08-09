@@ -18,6 +18,21 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
     public class FindDocumentViewModel
     {
         /// <summary>
+        /// Initialises a new instance of the <see cref="FindDocumentViewModel" class./> 
+        /// </summary>
+        public FindDocumentViewModel()
+        {
+            ViewModels = new List<DocumentViewModel>();
+        }
+
+        /// <summary>
+        /// Gets a list of view models. This is populated 
+        /// when multiple view models are returned by module name 
+        /// or when all view models across all modules are selected.
+        /// </summary>
+        public List<DocumentViewModel> ViewModels { get; }
+
+        /// <summary>
         /// Gets or sets the navigation id to identify a view model to fetch.
         /// </summary>
         public string NavigationId { get; set; }
@@ -32,12 +47,5 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         /// when one view model is returned using the navigation id.
         /// </summary>
         public DocumentViewModel ViewModel { get; set; }
-
-        /// <summary>
-        /// Gets or sets a list of view models. This is populated 
-        /// when multiple view models are returned by module name 
-        /// or when all view models across all modules are selected.
-        /// </summary>
-        public List<DocumentViewModel> ViewModels { get; set; }
     }
 }
