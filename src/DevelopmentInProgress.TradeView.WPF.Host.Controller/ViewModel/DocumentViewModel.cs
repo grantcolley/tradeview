@@ -235,10 +235,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         private void RaiseActivation()
         {
             var activateHandler = Activate;
-            if (activateHandler != null)
-            {
-                activateHandler(this, EventArgs.Empty);
-            }
+            activateHandler?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
