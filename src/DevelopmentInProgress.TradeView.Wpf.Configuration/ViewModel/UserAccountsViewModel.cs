@@ -35,6 +35,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             DeleteAccountCommand = new ViewModelCommand(DeleteAccount);
             CloseCommand = new ViewModelCommand(Close);
 
+            Accounts = new ObservableCollection<UserAccount>();
             SelectedUserAccountViewModels = new ObservableCollection<UserAccountViewModel>();
 
             observables = new Dictionary<string, IDisposable>();
