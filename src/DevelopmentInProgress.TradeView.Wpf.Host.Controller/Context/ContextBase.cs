@@ -16,7 +16,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context
     /// classes and provides access to the unity container 
     /// and logger facade for the given context.
     /// </summary>
-    public abstract class Context : IContext
+    public abstract class ContextBase : IContext
     {
         private readonly IUnityContainer unityContainer;
         private readonly ILoggerFacade logger;
@@ -26,7 +26,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context
         /// </summary>
         /// <param name="unityContainer">An instance of <see cref="IUnityContainer"/>.</param>
         /// <param name="logger">An instance of <see cref="ILoggerFacade"/>.</param>
-        protected Context(IUnityContainer unityContainer, ILoggerFacade logger)
+        protected ContextBase(IUnityContainer unityContainer, ILoggerFacade logger)
         {
             this.unityContainer = unityContainer;
             this.logger = logger;

@@ -11,7 +11,7 @@ using Unity;
 namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context
 {
     /// <summary>
-    /// Interface for the absrtact <see cref="Context"/> class inherited
+    /// Interface for the absrtact <see cref="ContextBase"/> class inherited
     /// by <see cref="ViewContext"/> and <see cref="ViewModelContext"/>.
     /// </summary>
     public interface IContext

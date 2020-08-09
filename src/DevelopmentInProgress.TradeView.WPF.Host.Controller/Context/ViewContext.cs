@@ -15,9 +15,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context
     /// <summary>
     /// This class provides context for views, giving access to the <see cref="ModalNavigator"/> 
     /// and <see cref="NavigationManager"/> which enable it to manage model windows and documents 
-    /// via prism navigation. It inherits from base abstract class <see cref="Context"/>.
+    /// via prism navigation. It inherits from base abstract class <see cref="ContextBase"/>.
     /// </summary>
-    public class ViewContext : Context, IViewContext
+    public class ViewContext : ContextBase, IViewContext
     {
         private readonly ModalNavigator modalManager;
         private readonly NavigationManager navigationManager;

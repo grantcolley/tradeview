@@ -11,7 +11,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context
 {
     /// <summary>
     /// Interface for the <see cref="ViewModelContext"/> class
-    /// which inherits abstract class <see cref="Context"/>.
+    /// which inherits abstract class <see cref="ContextBase"/>.
     /// </summary>
     public interface IViewModelContext : IContext
     {
