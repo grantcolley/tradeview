@@ -10,12 +10,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
 {
     public class ModulesNavigationViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<NavigationPanelItem> navigationPanelItems;
-
         public ModulesNavigationViewModel()
         {
             NavigationSettingsList = new Dictionary<string, NavigationSettings>();
-            navigationPanelItems = new ObservableCollection<NavigationPanelItem>();
+            NavigationPanelItems = new ObservableCollection<NavigationPanelItem>();
         }
 
         public event EventHandler<NavigationEventArgs> RegisterNavigation;
@@ -23,25 +21,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Dictionary<string, NavigationSettings> NavigationSettingsList { get; }
-
-        public ObservableCollection<NavigationPanelItem> NavigationPanelItems
-        {
-            get { return navigationPanelItems; }
-            set 
-            {
-                if(navigationPanelItems != value)
-                {
-                    navigationPanelItems = value;
-                    OnPropertyChanged(nameof(NavigationPanelItems));
-                }
-            }
-        }
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            var propertyChanged = PropertyChanged;
-            propertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public ObservableCollection<NavigationPanelItem> NavigationPanelItems { get; }
 
         /// <summary>
         /// Adds a new module to the navigation view. Called by the <see cref="ModuleNavigator"/>.
