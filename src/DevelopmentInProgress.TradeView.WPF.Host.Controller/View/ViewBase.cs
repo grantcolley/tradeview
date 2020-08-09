@@ -40,7 +40,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
         /// </summary>
         /// <param name="sender">The view model.</param>
         /// <param name="e">Message box settings.</param>
-        protected void ShowMessageBox(object sender, MessageBoxSettings e)
+        protected static void ShowMessageBox(object sender, MessageBoxSettings e)
         {
             ModalNavigator.ShowMessageBox(e);
         }
