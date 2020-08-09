@@ -16,6 +16,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
     /// <summary>
     /// Base abstract class to be inherited by views.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "IDE0060:Remove unused parameters")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA1801:Review unused parameters")]
     public abstract class ViewBase : UserControl
     {
         protected readonly IViewContext ViewContext;
@@ -31,6 +33,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
             Logger = ViewContext.Logger;
         }
 
+
         /// <summary>
         /// Handles the ShowMessageBox event raised by the view model.
         /// </summary>
@@ -40,6 +43,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
         {
             ModalNavigator.ShowMessageBox(e);
         }
+
+
 
         /// <summary>
         /// Handles the ShowModalWindow event raised by the view model.
