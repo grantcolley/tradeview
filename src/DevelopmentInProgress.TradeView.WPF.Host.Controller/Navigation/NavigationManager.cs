@@ -63,13 +63,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
             };
 
             string partialUri = navigationSettings.View + query.ToString();
-            navigationSettings.PartialUri = partialUri;
+            navigationSettings.PartialQuery = partialUri;
             var navigationSettingsClone = (NavigationSettings)navigationSettings.Clone();
             string navigationId = String.Empty;
             lock (lockNavigationList)
             {
                 var existingNavigationSetting = navigationSettingsList.Values.FirstOrDefault(
-                    ns => ns.PartialUri.Equals(partialUri, StringComparison.Ordinal) 
+                    ns => ns.PartialQuery.Equals(partialUri, StringComparison.Ordinal) 
                         && (ns.Data == null || ns.Data.Equals(navigationSettings.Data)));
                 if (existingNavigationSetting != null)
                 {
@@ -81,7 +81,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
                     query.Add("NavigationId", navigationId);
                     var viewUri = navigationSettings.View + query.ToString();
                     navigationSettingsClone.NavigationId = navigationId;
-                    navigationSettingsClone.ViewUri = viewUri;
+                    navigationSettingsClone.ViewQuery = viewUri;
                     navigationSettingsList.Add(navigationId, navigationSettingsClone);
                 }
             }
@@ -121,7 +121,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
         {
             if (navigationSettingsList.TryGetValue(navigationId, out NavigationSettings navigationSettings))
             {
-                NavigateRegion(navigationSettings.ViewUri, "DocumentRegion");
+                NavigateRegion(navigationSettings.ViewQuery, "DocumentRegion");
                 return;
             }
 

@@ -33,12 +33,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
         /// to assist identify the object. Note, this is not 
         /// intended to be a unique identifier.
         /// </summary>
-        public string PartialUri { get; set; }
+        public string PartialQuery { get; set; }
 
         /// <summary>
         /// Gets or sets the uri of the view to navigate to.
         /// </summary>
-        public string ViewUri { get; set; }
+        public string ViewQuery { get; set; }
 
         /// <summary>
         /// Gets or sets the <see cref="DocumentViewBase"/>.
