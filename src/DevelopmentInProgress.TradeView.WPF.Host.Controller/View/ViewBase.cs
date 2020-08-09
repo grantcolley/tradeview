@@ -21,8 +21,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA1801:Review unused parameters")]
     public abstract class ViewBase : UserControl
     {
-        protected readonly IViewContext ViewContext;
-        protected readonly ILoggerFacade Logger;
+        protected IViewContext ViewContext { get; }
+        protected ILoggerFacade Logger { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewBase"/> class.

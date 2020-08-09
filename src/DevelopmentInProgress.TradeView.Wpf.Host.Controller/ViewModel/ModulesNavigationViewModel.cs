@@ -22,7 +22,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         public event EventHandler<NavigationEventArgs> UnregisterNavigation;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public readonly Dictionary<string, NavigationSettings> NavigationSettingsList;
+        public Dictionary<string, NavigationSettings> NavigationSettingsList { get; }
 
         public ObservableCollection<NavigationPanelItem> NavigationPanelItems
         {
