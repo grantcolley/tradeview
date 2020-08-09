@@ -84,8 +84,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.RegionAdapters
             {
                 foreach (object newItem in e.NewItems)
                 {
-                    var documentViewBase = newItem as DocumentViewBase;
-                    if (documentViewBase != null)
+                    if (newItem is DocumentViewBase documentViewBase)
                     {
                         // Get the LayoutDocumentPane from the 
                         // LayoutDocumentPaneControl and add the 
@@ -130,8 +129,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.RegionAdapters
         /// <param name="e">LayoutAnchorable closed event arguments.</param>
         private void LayoutAnchorableClosed(object sender, EventArgs e)
         {
-            var layoutAnchorable = sender as LayoutAnchorable;
-            if (layoutAnchorable == null)
+            if (!(sender is LayoutAnchorable layoutAnchorable))
             {
                 return;
             }

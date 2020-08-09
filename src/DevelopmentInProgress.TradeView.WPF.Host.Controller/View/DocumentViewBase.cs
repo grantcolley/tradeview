@@ -86,8 +86,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
         /// </summary>
         public void CloseDocument()
         {
-            var documentViewModel = DataContext as DocumentViewModel;
-            if (documentViewModel != null)
+            if (DataContext is DocumentViewModel documentViewModel)
             {
                 string navigationId = documentViewModel.NavigationId;
                 documentViewModel.Dispose();
@@ -143,8 +142,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
         {
             if (hostControl != null)
             {
-                var model = DataContext as DocumentViewModel;
-                if (model != null)
+                if (DataContext is DocumentViewModel model)
                 {
                     hostControl.Title = model.Title ?? String.Empty;
                     hostControl.ToolTip = model.Title ?? String.Empty;
