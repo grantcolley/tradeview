@@ -185,7 +185,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                     throw new Exception($"Attempting to replace {Symbol.ExchangeSymbol} with {symbol.ExchangeSymbol}");
                 }
                
-                await Task.WhenAll(SubscribeOrderBook(), SubscribeTrades());
+                await Task.WhenAll(SubscribeOrderBook(), SubscribeTrades()).ConfigureAwait(true);
 
                 IsActive = true;
             }
@@ -226,7 +226,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
             try
             {
-                await ExchangeService.SubscribeOrderBook(exchange, Symbol.ExchangeSymbol, OrderBookLimit, e => UpdateOrderBook(e.OrderBook), SubscribeOrderBookException, symbolCancellationTokenSource.Token);
+                await ExchangeService.SubscribeOrderBook(exchange, Symbol.ExchangeSymbol, OrderBookLimit, e => UpdateOrderBook(e.OrderBook), SubscribeOrderBookException, symbolCancellationTokenSource.Token).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -242,11 +242,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             {
                 if (ShowAggregateTrades)
                 {
-                    await ExchangeService.SubscribeAggregateTrades(exchange, Symbol.ExchangeSymbol, TradeLimit, e => UpdateTrades(e.Trades), SubscribeTradesException, symbolCancellationTokenSource.Token);
+                    await ExchangeService.SubscribeAggregateTrades(exchange, Symbol.ExchangeSymbol, TradeLimit, e => UpdateTrades(e.Trades), SubscribeTradesException, symbolCancellationTokenSource.Token).ConfigureAwait(false);
                 }
                 else
                 {
-                    await ExchangeService.SubscribeTrades(exchange, Symbol.ExchangeSymbol, TradeLimit, e => UpdateTrades(e.Trades), SubscribeTradesException, symbolCancellationTokenSource.Token);
+                    await ExchangeService.SubscribeTrades(exchange, Symbol.ExchangeSymbol, TradeLimit, e => UpdateTrades(e.Trades), SubscribeTradesException, symbolCancellationTokenSource.Token).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -262,13 +262,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 return;
             }
 
-            await orderBookSemaphoreSlim.WaitAsync(symbolCancellationTokenSource.Token);
+            await orderBookSemaphoreSlim.WaitAsync(symbolCancellationTokenSource.Token).ConfigureAwait(true);
 
             try
             {
                 if (OrderBook == null)
                 {
-                    OrderBook = await orderBookHelper.CreateLocalOrderBook(Symbol, exchangeOrderBook, OrderBookDisplayCount, OrderBookChartDisplayCount);
+                    OrderBook = await orderBookHelper.CreateLocalOrderBook(Symbol, exchangeOrderBook, OrderBookDisplayCount, OrderBookChartDisplayCount).ConfigureAwait(true);
 
                     if (IsLoadingOrderBook)
                     {
@@ -300,13 +300,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 return;
             }
 
-            await tradesSemaphoreSlim.WaitAsync(symbolCancellationTokenSource.Token);
+            await tradesSemaphoreSlim.WaitAsync(symbolCancellationTokenSource.Token).ConfigureAwait(true);
 
             try
             {
                 if (Trades == null)
                 {
-                    var result = await tradeHelper.CreateLocalTradeList<Trade>(Symbol, tradesUpdate, TradesDisplayCount, TradesChartDisplayCount, TradeLimit);
+                    var result = await tradeHelper.CreateLocalTradeList<Trade>(Symbol, tradesUpdate, TradesDisplayCount, TradesChartDisplayCount, TradeLimit).ConfigureAwait(true);
 
                     Trades = result.Trades;
                     TradesChart = result.TradesChart;

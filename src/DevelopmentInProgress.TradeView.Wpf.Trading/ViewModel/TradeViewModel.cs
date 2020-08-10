@@ -377,12 +377,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
         private async void Buy(object param)
         {
-            await SendClientOrder(Core.Model.OrderSide.Buy);
+            await SendClientOrder(Core.Model.OrderSide.Buy).ConfigureAwait(false);
         }
 
         private async void Sell(object param)
         {
-            await SendClientOrder(Core.Model.OrderSide.Sell);
+            await SendClientOrder(Core.Model.OrderSide.Sell).ConfigureAwait(false);
         }
 
         private async Task SendClientOrder(Core.Model.OrderSide orderSide)

@@ -112,7 +112,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
                 AccountPreferences = userAccount;
 
-                await GetSymbols();
+                await GetSymbols().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -130,7 +130,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                     symbolsCache.OnSymbolsCacheException += SymbolsCacheException;
                 }
 
-                var results = await symbolsCache.GetSymbols(AccountPreferences.Preferences.FavouriteSymbols);
+                var results = await symbolsCache.GetSymbols(AccountPreferences.Preferences.FavouriteSymbols).ConfigureAwait(true);
 
                 Symbols = new List<Symbol>(results);
 

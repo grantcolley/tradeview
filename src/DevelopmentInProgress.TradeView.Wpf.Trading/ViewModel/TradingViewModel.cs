@@ -171,7 +171,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
             try
             {
-                userAccount = await accountsService.GetAccountAsync(Title);
+                userAccount = await accountsService.GetAccountAsync(Title).ConfigureAwait(true);
                 var json = JsonConvert.SerializeObject(userAccount, Formatting.Indented);
                 Logger.Log(json, Category.Info, Priority.Medium);
             }
@@ -193,7 +193,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 }
             }
 
-            await Task.WhenAll(SymbolsViewModel.SetAccount(userAccount), AccountViewModel.Login(Account));
+            await Task.WhenAll(SymbolsViewModel.SetAccount(userAccount), AccountViewModel.Login(Account)).ConfigureAwait(true);
 
             isOpen = true;
             IsBusy = false;
@@ -239,7 +239,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                         tradingViewModel.DisposeSymbolViewModel();
                     }
 
-                    await LoadSymbolViewModel();
+                    await LoadSymbolViewModel().ConfigureAwait(false);
                 }
                 else
                 {
@@ -287,7 +287,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
             try
             {
-                await SymbolViewModel.SetSymbol(symbol);
+                await SymbolViewModel.SetSymbol(symbol).ConfigureAwait(true);
 
                 SymbolViewModel.IsActive = true;
             }
@@ -313,7 +313,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 else if (args.Value != null)
                 {
                     symbol = args.Value;
-                    await LoadSymbolViewModel();
+                    await LoadSymbolViewModel().ConfigureAwait(false);
                 }
                 else if (args.Symbols != null)
                 {
@@ -338,12 +338,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 else if (args.AccountEventType.Equals(AccountEventType.LoggedIn))
                 {
                     TradeViewModel.SetAccount(args.Value);
-                    await OrdersViewModel.SetAccount(args.Value);
+                    await OrdersViewModel.SetAccount(args.Value).ConfigureAwait(false);
                 }
                 else if (args.AccountEventType.Equals(AccountEventType.UpdateOrders))
                 {
                     TradeViewModel.Touch();
-                    await OrdersViewModel.UpdateOrders(args.Value);
+                    await OrdersViewModel.UpdateOrders(args.Value).ConfigureAwait(false);
                 }
                 else if (args.AccountEventType.Equals(AccountEventType.SelectedAsset))
                 {
