@@ -86,7 +86,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 if (isLoadingOrderBook != value)
                 {
                     isLoadingOrderBook = value;
-                    OnPropertyChanged("IsLoadingOrderBook");
+                    OnPropertyChanged(nameof(IsLoadingOrderBook));
                 }
             }
         }
@@ -99,7 +99,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 if (isLoadingTrades != value)
                 {
                     isLoadingTrades = value;
-                    OnPropertyChanged("IsLoadingTrades");
+                    OnPropertyChanged(nameof(IsLoadingTrades));
                 }
             }
         }
@@ -112,8 +112,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 if (symbol != value)
                 {
                     symbol = value;
-                    OnPropertyChanged("Symbol");
-                    OnPropertyChanged("HasSymbol");
+                    OnPropertyChanged(nameof(Symbol));
+                    OnPropertyChanged(nameof(HasSymbol));
                 }
             }
         }
@@ -126,7 +126,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 if (trades != value)
                 {
                     trades = value;
-                    OnPropertyChanged("Trades");
+                    OnPropertyChanged(nameof(Trades));
                 }
             }
         }
@@ -139,7 +139,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 if (tradesChart != value)
                 {
                     tradesChart = value;
-                    OnPropertyChanged("TradesChart");
+                    OnPropertyChanged(nameof(TradesChart));
                 }
             }
         }
@@ -152,7 +152,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 if (orderBook != value)
                 {
                     orderBook = value;
-                    OnPropertyChanged("OrderBook");
+                    OnPropertyChanged(nameof(OrderBook));
                 }
             }
         }

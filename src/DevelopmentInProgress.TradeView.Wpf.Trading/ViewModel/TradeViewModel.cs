@@ -66,8 +66,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 if (baseAccountBalance != value)
                 {
                     baseAccountBalance = value;
-                    OnPropertyChanged("HasBaseBalance");
-                    OnPropertyChanged("BaseAccountBalance");
+                    OnPropertyChanged(nameof(HasBaseBalance));
+                    OnPropertyChanged(nameof(BaseAccountBalance));
                 }
             }
         }
@@ -80,8 +80,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 if (quoteAccountBalance != value)
                 {
                     quoteAccountBalance = value;
-                    OnPropertyChanged("HasQuoteBalance");
-                    OnPropertyChanged("QuoteAccountBalance");
+                    OnPropertyChanged(nameof(HasQuoteBalance));
+                    OnPropertyChanged(nameof(QuoteAccountBalance));
                 }
             }
         }
@@ -94,7 +94,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 if (isLoading != value)
                 {
                     isLoading = value;
-                    OnPropertyChanged("IsLoading");
+                    OnPropertyChanged(nameof(IsLoading));
                 }
             }
         }
@@ -107,7 +107,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 if (symbols != value)
                 {
                     symbols = value;
-                    OnPropertyChanged("Symbols");
+                    OnPropertyChanged(nameof(Symbols));
                 }
             }
         }
@@ -136,7 +136,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                     QuoteAccountBalance = null;
                 }
 
-                OnPropertyChanged("SelectedSymbol");
+                OnPropertyChanged(nameof(SelectedSymbol));
             }
         }
 
@@ -157,7 +157,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                         quantity = value;
                     }
 
-                    OnPropertyChanged("Quantity");
+                    OnPropertyChanged(nameof(Quantity));
                 }
             }
         }
@@ -179,7 +179,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                         price = value;
                     }
 
-                    OnPropertyChanged("Price");
+                    OnPropertyChanged(nameof(Price));
                 }
             }
         }
@@ -201,7 +201,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                         stopPrice = value;
                     }
 
-                    OnPropertyChanged("StopPrice");
+                    OnPropertyChanged(nameof(StopPrice));
                 }
             }
         }
@@ -221,10 +221,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                         StopPrice = SelectedSymbol.SymbolStatistics.LastPrice;
                     }
 
-                    OnPropertyChanged("IsPriceEditable");
-                    OnPropertyChanged("IsMarketPrice");
-                    OnPropertyChanged("IsStopLoss");
-                    OnPropertyChanged("SelectedOrderType");
+                    OnPropertyChanged(nameof(IsPriceEditable));
+                    OnPropertyChanged(nameof(IsMarketPrice));
+                    OnPropertyChanged(nameof(IsStopLoss));
+                    OnPropertyChanged(nameof(SelectedOrderType));
                 }
             }
         }

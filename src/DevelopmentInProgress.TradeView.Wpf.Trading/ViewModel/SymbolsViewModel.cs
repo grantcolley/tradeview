@@ -42,7 +42,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                         OnLoadedSymbols(symbols);
                     }
 
-                    OnPropertyChanged("Symbols");
+                    OnPropertyChanged(nameof(Symbols));
                 }
             }
         }
@@ -56,7 +56,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 {
                     selectedSymbol = value;
                     OnSelectedSymbol(selectedSymbol);
-                    OnPropertyChanged("SelectedSymbol");
+                    OnPropertyChanged(nameof(SelectedSymbol));
                 }
             }
         }
@@ -81,7 +81,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 if (isLoadingSymbols != value)
                 {
                     isLoadingSymbols = value;
-                    OnPropertyChanged("IsLoadingSymbols");
+                    OnPropertyChanged(nameof(IsLoadingSymbols));
                 }
             }
         }

@@ -3,6 +3,7 @@ using DevelopmentInProgress.TradeView.Wpf.Common.Events;
 using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
+using DevelopmentInProgress.TradeView.Wpf.Common.View;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context;
@@ -76,7 +77,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 if (accountViewModel != value)
                 {
                     accountViewModel = value;
-                    OnPropertyChanged("AccountViewModel");
+                    OnPropertyChanged(nameof(AccountViewModel));
                 }
             }
         }
@@ -89,7 +90,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 if (symbolsViewModel != value)
                 {
                     symbolsViewModel = value;
-                    OnPropertyChanged("SymbolsViewModel");
+                    OnPropertyChanged(nameof(SymbolsViewModel));
                 }
             }
         }
@@ -102,7 +103,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 if (tradeViewModel != value)
                 {
                     tradeViewModel = value;
-                    OnPropertyChanged("TradeViewModel");
+                    OnPropertyChanged(nameof(TradeViewModel));
                 }
             }
         }
@@ -115,7 +116,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 if (ordersViewModel != value)
                 {
                     ordersViewModel = value;
-                    OnPropertyChanged("OrdersViewModel");
+                    OnPropertyChanged(nameof(OrdersViewModel));
                 }
             }
         }
@@ -128,7 +129,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 if (symbolViewModel != value)
                 {
                     symbolViewModel = value;
-                    OnPropertyChanged("SymbolViewModel");
+                    OnPropertyChanged(nameof(SymbolViewModel));
                 }
             }
         }
@@ -141,7 +142,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 if (account != value)
                 {
                     account = value;
-                    OnPropertyChanged("Account");
+                    OnPropertyChanged(nameof(Account));
                 }
             }
         }
