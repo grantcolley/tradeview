@@ -191,7 +191,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
             catch (Exception ex)
             {
-                OnException("SymbolViewModel.SetSymbol", ex);
+                OnException($"{nameof(SymbolViewModel)} - {ex.Message}", ex);
             }
         }
 
@@ -230,7 +230,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
             catch (Exception ex)
             {
-                OnException("SymbolViewModel.GetOrderBook", ex);
+                OnException($"{nameof(SymbolViewModel)} - {ex.Message}", ex);
             }
         }
 
@@ -251,7 +251,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
             catch (Exception ex)
             {
-                OnException("SymbolViewModel.GetTrades", ex);
+                OnException($"{nameof(SymbolViewModel)} - {ex}", ex);
             }
         }
 
@@ -331,12 +331,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
         private void SubscribeTradesException(Exception exception)
         {
-            OnException("SymbolViewModel.GetTrades - ExchangeService.SubscribeTrades", exception);
+            OnException($"{nameof(SymbolViewModel)} - {exception.Message}", exception);
         }
 
         private void SubscribeOrderBookException(Exception exception)
         {
-            OnException("SymbolViewModel.GetOrderBook - ExchangeService.SubscribeOrderBook", exception);
+            OnException($"{nameof(SymbolViewModel)} - {exception.Message}", exception);
         }
 
         private void OnException(string message, Exception exception)

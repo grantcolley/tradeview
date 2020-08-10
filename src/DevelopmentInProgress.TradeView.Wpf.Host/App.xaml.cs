@@ -26,7 +26,6 @@ using Serilog;
 using System.IO;
 using System.Windows;
 using Xceed.Wpf.AvalonDock;
-using CryptoExchange.Net.Objects;
 using System;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host

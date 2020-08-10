@@ -47,7 +47,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard
             moduleSettings.ModuleGroups.Add(moduleGroup);
             ModuleNavigator.AddModuleNavigation(moduleSettings);
 
-            Logger.Log("Initialized DevelopmentInProgress.TradeView.Wpf.Dashboard", Category.Info, Priority.None);
+            Logger.Log($"Initialized {this.GetType().FullName}", Category.Info, Priority.None);
         }
     }
 }

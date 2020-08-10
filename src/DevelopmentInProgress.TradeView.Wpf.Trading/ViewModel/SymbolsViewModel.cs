@@ -106,18 +106,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
         public async Task SetAccount(UserAccount userAccount)
         {
-            try
-            {
-                IsLoadingSymbols = true;
+            IsLoadingSymbols = true;
 
-                AccountPreferences = userAccount;
+            AccountPreferences = userAccount;
 
-                await GetSymbols().ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                OnException("SymbolsViewModel.SetUser", ex);
-            }
+            await GetSymbols().ConfigureAwait(false);
         }
 
         private async Task GetSymbols()
@@ -136,9 +129,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
                 SetPreferences();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                OnException("SymbolsViewModel.GetSymbols", ex);
+                OnException($"{nameof(SymbolsViewModel)} - {ex.Message}", ex);
             }
             finally
             {
@@ -148,7 +141,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
         private void SymbolsCacheException(object sender, Exception exception)
         {
-            OnException("SymbolsViewModel.GetSymbols - ExchangeService.GetSymbolsSubscription", exception);
+            OnException($"{nameof(SymbolsViewModel)} - {exception.Message}", exception);
         }
 
         private void OnException(string message, Exception exception)

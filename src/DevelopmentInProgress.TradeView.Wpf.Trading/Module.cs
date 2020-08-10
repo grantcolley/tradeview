@@ -12,7 +12,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading
     public class Module : ModuleBase
     {
         public const string ModuleName = "Trading";
-        private static string AccountUser = $"Accounts";
+        private readonly static string AccountUser = $"Accounts";
 
         public Module(ModuleNavigator moduleNavigator, ILoggerFacade logger)
             : base(moduleNavigator, logger)
@@ -53,11 +53,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading
                 moduleSettings.ModuleGroups.Add(moduleGroup);
                 ModuleNavigator.AddModuleNavigation(moduleSettings);
 
-                Logger.Log("Initialized DevelopmentInProgress.TradeView.Wpf.Trading", Category.Info, Priority.None);
+                Logger.Log($"Initialized {this.GetType().FullName}", Category.Info, Priority.None);
             }
             catch (Exception ex)
             {
-                Logger.Log($"Initialize DevelopmentInProgress.TradeView.Wpf.Trading failed to load: {ex.ToString()}", Category.Exception, Priority.None);
+                Logger.Log($"Initialize {this.GetType().FullName} failed to load: {ex}", Category.Exception, Priority.None);
             }
         }
 

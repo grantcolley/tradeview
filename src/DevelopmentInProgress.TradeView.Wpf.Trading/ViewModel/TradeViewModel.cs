@@ -315,9 +315,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             {
                 Symbols = symbols;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                OnException("TradeViewModel.SetSymbols", e);
+                OnException($"{nameof(TradeViewModel)} - {ex.Message}", ex);
             }
         }
 
@@ -331,9 +331,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                     Account = account;
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                OnException("TradeViewModel.SetAccount", e);
+                OnException($"{nameof(TradeViewModel)} - {ex.Message}", ex);
             }
         }
 
@@ -355,9 +355,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                     SelectedSymbol = Symbols.FirstOrDefault(s => s.BaseAsset.Symbol.Equals(selectedAsset.Asset));
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                OnException("TradeViewModel.SetAccount", e);
+                OnException($"{nameof(TradeViewModel)} - {ex.Message}", ex);
             }
         }
 
@@ -389,11 +389,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(selectedOrderType))
-                {
-                    throw new Exception("Order not valid: No order type.");
-                }
-
                 var clientOrder = new Core.Model.ClientOrder
                 {
                     Symbol = SelectedSymbol?.ExchangeSymbol,
@@ -410,9 +405,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
                 await ExchangeService.PlaceOrder(Account.AccountInfo.User.Exchange, Account.AccountInfo.User, clientOrder).ConfigureAwait(false);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                OnException("TradeViewModel.SendClientOrder", e);
+                OnException($"{nameof(TradeViewModel)} - {ex.Message}", ex);
             }
         }
 
@@ -442,6 +437,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         {
             var onTradeNotification = OnTradeNotification;
             onTradeNotification?.Invoke(this, new TradeEventArgs { Message = message, Exception = exception });
+        }
+
+        private void OnNotification(string message)
+        {
+            var onTradeNotification = OnTradeNotification;
+            onTradeNotification?.Invoke(this, new TradeEventArgs { Message = message });
         }
     }
 }
