@@ -432,8 +432,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
         private void SetQuantity(string percentage, decimal total)
         {
-            decimal percent;
-            if (Decimal.TryParse(percentage, out percent))
+            if (Decimal.TryParse(percentage, out decimal percent))
             {
                 Quantity = (percent / 100) * total;
             }
