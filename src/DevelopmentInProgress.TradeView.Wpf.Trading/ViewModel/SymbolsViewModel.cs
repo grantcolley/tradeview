@@ -13,7 +13,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 {
     public class SymbolsViewModel : ExchangeViewModel
     {
-        private ISymbolsCacheFactory symbolsCacheFactory;
+        private readonly ISymbolsCacheFactory symbolsCacheFactory;
         private ISymbolsCache symbolsCache;
         private List<Symbol> symbols;
         private Symbol selectedSymbol;

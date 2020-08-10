@@ -20,11 +20,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 {
     public class TradingViewModel : DocumentViewModel
     {
-        private IOrderBookHelperFactory orderBookHelperFactory;
-        private ITradeHelperFactory tradeHelperFactory;
-        private IWpfExchangeService exchangeService;
-        private IAccountsService accountsService;
-        private IChartHelper chartHelper;
+        private readonly IOrderBookHelperFactory orderBookHelperFactory;
+        private readonly ITradeHelperFactory tradeHelperFactory;
+        private readonly IWpfExchangeService exchangeService;
+        private readonly IAccountsService accountsService;
+        private readonly IChartHelper chartHelper;
         private SymbolViewModel symbolViewModel;
         private AccountViewModel accountViewModel;
         private TradeViewModel tradeViewModel;
