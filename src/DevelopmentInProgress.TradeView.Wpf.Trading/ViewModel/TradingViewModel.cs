@@ -416,9 +416,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             Logger.Log(message, Category.Exception, Priority.High);
 
             var exceptions = new List<Message>();
-            if (ex is AggregateException)
+            if (ex is AggregateException aex)
             {
-                foreach(Exception e in ((AggregateException)ex).InnerExceptions)
+                foreach(Exception e in aex.InnerExceptions)
                 {
                     Logger.Log(e.ToString(), Category.Exception, Priority.High);
                     exceptions.Add(new Message { MessageType = MessageType.Error, Text = e.Message, TextVerbose = e.StackTrace });
