@@ -124,8 +124,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                     Quantity = 0;
                     Price = SelectedSymbol.SymbolStatistics.LastPrice;
                     StopPrice = SelectedSymbol.SymbolStatistics.LastPrice;
-                    BaseAccountBalance = Account?.Balances.SingleOrDefault(ab => ab.Asset.Equals(selectedSymbol.BaseAsset.Symbol));
-                    QuoteAccountBalance = Account?.Balances.SingleOrDefault(ab => ab.Asset.Equals(selectedSymbol.QuoteAsset.Symbol));
+                    BaseAccountBalance = Account?.Balances.SingleOrDefault(ab => ab.Asset.Equals(selectedSymbol.BaseAsset.Symbol, StringComparison.OrdinalIgnoreCase));
+                    QuoteAccountBalance = Account?.Balances.SingleOrDefault(ab => ab.Asset.Equals(selectedSymbol.QuoteAsset.Symbol, StringComparison.Ordinal));
                 }
                 else
                 {
@@ -328,7 +328,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             try
             {
                 if (Account == null
-                    || !Account.ApiKey.Equals(account.ApiKey))
+                    || !Account.ApiKey.Equals(account.ApiKey, StringComparison.Ordinal))
                 {
                     Account = account;
                 }
@@ -355,7 +355,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 }
                 else
                 {
-                    SelectedSymbol = Symbols.FirstOrDefault(s => s.BaseAsset.Symbol.Equals(selectedAsset.Asset));
+                    SelectedSymbol = Symbols.FirstOrDefault(s => s.BaseAsset.Symbol.Equals(selectedAsset.Asset, StringComparison.OrdinalIgnoreCase));
                 }
             }
             catch (Exception ex)
