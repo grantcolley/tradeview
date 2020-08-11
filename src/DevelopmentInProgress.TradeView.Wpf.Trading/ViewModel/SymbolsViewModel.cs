@@ -113,6 +113,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             await GetSymbols().ConfigureAwait(false);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Feed all exceptions back to subscribers")]
         private async Task GetSymbols()
         {
             try

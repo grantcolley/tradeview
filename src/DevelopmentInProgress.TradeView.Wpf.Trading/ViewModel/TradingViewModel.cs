@@ -169,16 +169,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
             Account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() });
 
-            try
-            {
-                userAccount = await accountsService.GetAccountAsync(Title).ConfigureAwait(true);
-                var json = JsonConvert.SerializeObject(userAccount, Formatting.Indented);
-                Logger.Log(json, Category.Info, Priority.Medium);
-            }
-            catch (Exception ex)
-            {
-                TradingViewModelException(ex.ToString(), ex);
-            }
+            userAccount = await accountsService.GetAccountAsync(Title).ConfigureAwait(true);
+            var json = JsonConvert.SerializeObject(userAccount, Formatting.Indented);
+            Logger.Log(json, Category.Info, Priority.Medium);
 
             if (userAccount != null
                 && userAccount.Preferences != null)
@@ -221,6 +214,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             disposed = true;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Feed all exceptions back to subscribers")]
         public async override void OnActiveChanged(bool isActive)
         {
             try
@@ -285,16 +279,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
             ObserveSymbol(SymbolViewModel);
 
-            try
-            {
-                await SymbolViewModel.SetSymbol(symbol).ConfigureAwait(true);
+            await SymbolViewModel.SetSymbol(symbol).ConfigureAwait(true);
 
-                SymbolViewModel.IsActive = true;
-            }
-            catch (Exception ex)
-            {
-                TradingViewModelException(ex.ToString(), ex);
-            }
+            SymbolViewModel.IsActive = true;
         }
 
         private void ObserveSymbols()

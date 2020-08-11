@@ -172,6 +172,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             disposed = true;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Feed all exceptions back to subscribers")]
         public async Task SetSymbol(Symbol symbol)
         {
             try
@@ -220,6 +221,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             IsActive = false;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Feed all exceptions back to subscribers")]
         private async Task SubscribeOrderBook()
         {
             IsLoadingOrderBook = true;
@@ -234,6 +236,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Feed all exceptions back to subscribers")]
         private async Task SubscribeTrades()
         {
             IsLoadingTrades = true;

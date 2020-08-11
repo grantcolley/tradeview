@@ -34,19 +34,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Converters
                 return null;
             }
 
-            try
+            if ((bool)value == true)
             {
-                if ((bool)value == true)
-                {
-                    return ResourceDictionary["loggedin"];
-                }
+                return ResourceDictionary["loggedin"];
+            }
 
-                return ResourceDictionary["login"];
-            }
-            catch
-            {
-                return null;
-            }
+            return ResourceDictionary["login"];
         }
 
         /// <summary>

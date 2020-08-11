@@ -40,25 +40,18 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading
 
             var accountsService = containerProvider.Resolve<IAccountsService>();
 
-            try
+            var userAccounts = await accountsService.GetAccountsAsync().ConfigureAwait(true);
+
+            foreach (var userAccount in userAccounts.Accounts)
             {
-                var userAccounts = await accountsService.GetAccountsAsync().ConfigureAwait(true);
-
-                foreach (var userAccount in userAccounts.Accounts)
-                {
-                    var accountDocument = CreateAccountModuleGroupItem(userAccount.AccountName, userAccount.AccountName);
-                    moduleGroup.ModuleGroupItems.Add(accountDocument);
-                }
-
-                moduleSettings.ModuleGroups.Add(moduleGroup);
-                ModuleNavigator.AddModuleNavigation(moduleSettings);
-
-                Logger.Log($"Initialized {this.GetType().FullName}", Category.Info, Priority.None);
+                var accountDocument = CreateAccountModuleGroupItem(userAccount.AccountName, userAccount.AccountName);
+                moduleGroup.ModuleGroupItems.Add(accountDocument);
             }
-            catch (Exception ex)
-            {
-                Logger.Log($"Initialize {this.GetType().FullName} failed to load: {ex}", Category.Exception, Priority.None);
-            }
+
+            moduleSettings.ModuleGroups.Add(moduleGroup);
+            ModuleNavigator.AddModuleNavigation(moduleSettings);
+
+            Logger.Log($"Initialized {this.GetType().FullName}", Category.Info, Priority.None);
         }
 
         private static ModuleGroupItem CreateAccountModuleGroupItem(string name, string title)

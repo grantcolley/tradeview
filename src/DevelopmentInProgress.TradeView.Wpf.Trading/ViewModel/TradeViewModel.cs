@@ -309,6 +309,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Feed all exceptions back to subscribers")]
         public void SetSymbols(List<Symbol> symbols)
         {
             try
@@ -321,6 +322,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Feed all exceptions back to subscribers")]
         public void SetAccount(Account account)
         {
             try
@@ -342,6 +344,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             SelectedSymbol = SelectedSymbol;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Feed all exceptions back to subscribers")]
         public void SetSymbol(AccountBalance selectedAsset)
         {
             try
@@ -385,6 +388,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             await SendClientOrder(Core.Model.OrderSide.Sell).ConfigureAwait(false);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Feed all exceptions back to subscribers")]
         private async Task SendClientOrder(Core.Model.OrderSide orderSide)
         {
             try
