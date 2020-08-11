@@ -6,6 +6,7 @@ using DevelopmentInProgress.TradeView.Wpf.Trading.Events;
 using Prism.Logging;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,7 +16,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
     {
         private readonly ISymbolsCacheFactory symbolsCacheFactory;
         private ISymbolsCache symbolsCache;
-        private List<Symbol> symbols;
         private Symbol selectedSymbol;
         private UserAccount accountPreferences;
         private bool isLoadingSymbols;
@@ -25,27 +25,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             : base(exchangeService, logger)
         {
             this.symbolsCacheFactory = symbolsCacheFactory;
+
+            Symbols = new ObservableCollection<Symbol>();
         }
 
         public event EventHandler<SymbolsEventArgs> OnSymbolsNotification;
 
-        public List<Symbol> Symbols
-        {
-            get { return symbols; }
-            set
-            {
-                if (symbols != value)
-                {
-                    symbols = value;
-                    if(symbols != null)
-                    {
-                        OnLoadedSymbols(symbols);
-                    }
-
-                    OnPropertyChanged(nameof(Symbols));
-                }
-            }
-        }
+        public ObservableCollection<Symbol> Symbols { get; }
 
         public Symbol SelectedSymbol
         {
@@ -126,7 +112,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
                 var results = await symbolsCache.GetSymbols(AccountPreferences.Preferences.FavouriteSymbols).ConfigureAwait(true);
 
-                Symbols = new List<Symbol>(results);
+                results.ForEach(Symbols.Add);
+
+                OnLoadedSymbols(Symbols.ToList());
 
                 SetPreferences();
             }
@@ -148,7 +136,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private void OnException(string message, Exception exception)
         {
             var onSymbolsNotification = OnSymbolsNotification;
-            onSymbolsNotification?.Invoke(this, new SymbolsEventArgs { Message = message, Exception = exception });
+            onSymbolsNotification?.Invoke(this, new SymbolsEventArgs() { Message = message, Exception = exception });
         }
 
         private void OnSelectedSymbol(Symbol symbol)
@@ -160,14 +148,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private void OnLoadedSymbols(List<Symbol> symbols)
         {
             var onSymbolsNotification = OnSymbolsNotification;
-            onSymbolsNotification?.Invoke(this, new SymbolsEventArgs { Symbols = symbols });
+            var symbolsEventArgs = new SymbolsEventArgs(symbols);
+            onSymbolsNotification?.Invoke(this, symbolsEventArgs);
         }
 
         private void SetPreferences()
         {
             if (AccountPreferences != null 
                 && AccountPreferences.Preferences != null 
-                && Symbols != null 
                 && Symbols.Any())
             {
                 if (AccountPreferences.Preferences.FavouriteSymbols != null

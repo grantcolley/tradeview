@@ -302,7 +302,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                     symbol = args.Value;
                     await LoadSymbolViewModel().ConfigureAwait(false);
                 }
-                else if (args.Symbols != null)
+                else if (args.Symbols.Any())
                 {
                     TradeViewModel.SetSymbols(args.Symbols);
                 }

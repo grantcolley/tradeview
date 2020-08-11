@@ -121,7 +121,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         public List<Trade> Trades
         {
             get { return trades; }
-            set
+            private set
             {
                 if (trades != value)
                 {
@@ -134,7 +134,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         public ChartValues<Trade> TradesChart
         {
             get { return tradesChart; }
-            set
+            private set
             {
                 if (tradesChart != value)
                 {

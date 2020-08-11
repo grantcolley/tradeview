@@ -8,6 +8,7 @@ using DevelopmentInProgress.TradeView.Wpf.Trading.Events;
 using Prism.Logging;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -17,7 +18,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 {
     public class TradeViewModel : ExchangeViewModel
     {
-        private List<Symbol> symbols;
         private Symbol selectedSymbol;
         private Account account;
         private AccountBalance baseAccountBalance;
@@ -36,7 +36,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             SellCommand = new ViewModelCommand(Sell);
             BuyQuantityCommand = new ViewModelCommand(BuyQuantity);
             SellQuantityCommand = new ViewModelCommand(SellQuantity);
-            OnPropertyChanged("");
+            Symbols = new ObservableCollection<Symbol>();
         }
 
         public event EventHandler<TradeEventArgs> OnTradeNotification;
@@ -45,6 +45,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         public ICommand SellCommand { get; set; }
         public ICommand BuyQuantityCommand { get; set; }
         public ICommand SellQuantityCommand { get; set; }
+
+        public ObservableCollection<Symbol> Symbols { get; }
 
         public Account Account
         {
@@ -95,19 +97,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 {
                     isLoading = value;
                     OnPropertyChanged(nameof(IsLoading));
-                }
-            }
-        }
-
-        public List<Symbol> Symbols
-        {
-            get { return symbols; }
-            set
-            {
-                if (symbols != value)
-                {
-                    symbols = value;
-                    OnPropertyChanged(nameof(Symbols));
                 }
             }
         }
@@ -314,7 +303,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         {
             try
             {
-                Symbols = symbols;
+                if (symbols == null)
+                {
+                    throw new ArgumentNullException(nameof(symbols));
+                }
+
+                Symbols.Clear();
+                symbols.ForEach(Symbols.Add);
             }
             catch (Exception ex)
             {

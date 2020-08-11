@@ -37,7 +37,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 
             symbolsObservable.Subscribe((args) =>
             {
-                if (args.Symbols != null // OnLoadedSymbols
+                if (args.Symbols.Any() // OnLoadedSymbols
                     || args.Value.Name.Equals("BNBBTC")) // OnSelectedSymbol
                 {
                     // expected
@@ -90,7 +90,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
                 {
                     selectedSymbol = args.Value;
                 }
-                else if (args.Symbols != null)
+                else if (args.Symbols.Any())
                 {
                     // expected
                 }

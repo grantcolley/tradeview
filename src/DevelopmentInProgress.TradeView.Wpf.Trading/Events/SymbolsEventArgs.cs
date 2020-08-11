@@ -6,6 +6,15 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Events
 {
     public class SymbolsEventArgs : BaseEventArgs<Symbol>
     {
-        public List<Symbol> Symbols { get; set; }
+        public SymbolsEventArgs() : this(new List<Symbol>())
+        {             
+        }
+
+        public SymbolsEventArgs(List<Symbol> symbols)
+        {
+            Symbols = symbols;
+        }
+
+        public List<Symbol> Symbols { get; }
     }
 }
