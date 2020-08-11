@@ -727,7 +727,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 
             // Assert
             Assert.IsNotNull(ex);
-            Assert.IsTrue(ex.Message.Contains("order type"));
+            Assert.IsTrue(ex.Message.Contains("orderType"));
         }
 
         [TestMethod]

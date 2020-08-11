@@ -95,7 +95,10 @@ namespace DevelopmentInProgress.TradeView.Core.Extensions
 
         public static OrderType GetOrderType(this string orderType)
         {
-            orderType.NullCheck();
+            if(orderType == null)
+            {
+                throw new ArgumentNullException(nameof(orderType));
+            }
 
             return (OrderType)Enum.Parse(typeof(OrderType), orderType.Replace(" ", "", StringComparison.Ordinal));
         }
