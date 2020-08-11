@@ -20,7 +20,10 @@ namespace DevelopmentInProgress.TradeView.Core.Extensions
 
         public static Exchange GetExchange(this string exchange)
         {
-            exchange.NullCheck();
+            if(exchange == null)
+            {
+                throw new ArgumentNullException(nameof(exchange));
+            }
 
             return (Exchange)Enum.Parse(typeof(Exchange), exchange.Replace(" ", "", StringComparison.Ordinal));
         }
