@@ -39,7 +39,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
                 if(isLoadingServers != value)
                 {
                     isLoadingServers = value;
-                    OnPropertyChanged("IsLoadingServers");
+                    OnPropertyChanged(nameof(IsLoadingServers));
                 }
             }
         }
@@ -58,7 +58,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
                         SelectedServer = servers.First();
                     }
 
-                    OnPropertyChanged("Servers");
+                    OnPropertyChanged(nameof(Servers));
                 }
             }
         }
@@ -77,7 +77,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
                         SelectedServerStrategy = selectedServer.Strategies.First();
                     }
 
-                    OnPropertyChanged("SelectedServer");
+                    OnPropertyChanged(nameof(SelectedServer));
                 }
             }
         }
@@ -90,7 +90,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
                 if(selectedServerStrategy != value)
                 {
                     selectedServerStrategy = value;
-                    OnPropertyChanged("SelectedServerStrategy");
+                    OnPropertyChanged(nameof(SelectedServerStrategy));
                 }
             }
         }
