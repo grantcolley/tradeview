@@ -44,6 +44,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Setter required as it points to the server monitor cache.")]
         public ObservableCollection<ServerMonitor> Servers
         {
             get { return servers; }
