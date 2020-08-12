@@ -1061,20 +1061,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
         private void NotificationsAdd(Message message)
         {
-            Prism.Logging.Category category;
-
-            switch(message.MessageType)
+            var category = message.MessageType switch
             {
-                case MessageType.Error:
-                    category = Prism.Logging.Category.Exception;
-                    break;
-                case MessageType.Warn:
-                    category = Prism.Logging.Category.Warn;
-                    break;
-                default:
-                    category = Prism.Logging.Category.Info;
-                    break;
-            }
+                MessageType.Error => Prism.Logging.Category.Exception,
+                MessageType.Warn => Prism.Logging.Category.Warn,
+                _ => Prism.Logging.Category.Info,
+            };
 
             Logger.Log(message.Text, category, Prism.Logging.Priority.Low);
 
