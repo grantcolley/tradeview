@@ -491,8 +491,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             tradeViewModel.SetSymbols(symbols.ToList());
 
             // Act
-            var orderTypes = tradeViewModel.OrderTypes;
-
+            
             // Assert
             Assert.IsNull(tradeViewModel.SelectedSymbol);
 
