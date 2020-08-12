@@ -100,7 +100,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
         {
             try
             {
-                Servers = await serverMonitorCache.GetServerMonitorsAsync();
+                Servers = await serverMonitorCache.GetServerMonitorsAsync().ConfigureAwait(true);
             }
             catch(Exception ex)
             {
