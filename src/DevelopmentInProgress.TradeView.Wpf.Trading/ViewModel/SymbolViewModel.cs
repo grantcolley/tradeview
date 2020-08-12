@@ -216,7 +216,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             if (!symbolCancellationTokenSource.IsCancellationRequested)
             {
                 symbolCancellationTokenSource.Cancel();
+                symbolCancellationTokenSource.Dispose();
             }
+
+            orderBookSemaphoreSlim.Dispose();
+            tradesSemaphoreSlim.Dispose();
 
             if (OrderBook != null)
             {
