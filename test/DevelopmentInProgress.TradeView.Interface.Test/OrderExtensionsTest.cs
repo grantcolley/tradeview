@@ -55,13 +55,13 @@ namespace DevelopmentInProgress.TradeView.Core.Test
             var ethOrderTypes = eth.OrderTypes.GetOrderTypeNames();
 
             // Assert
-            Assert.AreEqual(trxOrderTypes.Length, trx.OrderTypes.Count());
+            Assert.AreEqual(trxOrderTypes.Count, trx.OrderTypes.Count());
             foreach(var orderType in trx.OrderTypes)
             {
                 Assert.IsTrue(trxOrderTypes.Contains(orderType.GetOrderTypeName()));
             }
 
-            Assert.AreEqual(ethOrderTypes.Length, eth.OrderTypes.Count());
+            Assert.AreEqual(ethOrderTypes.Count, eth.OrderTypes.Count());
             foreach (var orderType in eth.OrderTypes)
             {
                 Assert.IsTrue(ethOrderTypes.Contains(orderType.GetOrderTypeName()));

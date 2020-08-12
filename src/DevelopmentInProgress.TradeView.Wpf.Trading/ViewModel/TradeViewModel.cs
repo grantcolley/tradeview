@@ -270,7 +270,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
         }
 
-        public string[] OrderTypes
+        public List<string> OrderTypes
         {
             get
             {

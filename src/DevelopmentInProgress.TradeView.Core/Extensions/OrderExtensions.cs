@@ -8,7 +8,7 @@ namespace DevelopmentInProgress.TradeView.Core.Extensions
 {
     public static class OrderExtensions
     {
-        public static string[] OrderTypes()
+        public static List<string> OrderTypes()
         {
             var source = Enum.GetNames(typeof(OrderType));
             var list = new string[source.Length];
@@ -17,17 +17,13 @@ namespace DevelopmentInProgress.TradeView.Core.Extensions
                 list[i] = Regex.Replace(source[i], "[A-Z]", " $0").Trim();
             }
 
-            return list;
+            return list.ToList();
         }
 
-        public static string[] GetOrderTypeNames(this IEnumerable<OrderType> orderTypes)
+        public static List<string> GetOrderTypeNames(this IEnumerable<OrderType> orderTypes)
         {
-            var list = new string[orderTypes.Count()];
-            for (int i = 0; i < orderTypes.Count(); i++)
-            {
-                list[i] = orderTypes.ElementAt(i).GetOrderTypeName();
-            }
-
+            var range = orderTypes.Select(ot => ot.GetOrderTypeName());
+            var list = new List<string>(range);
             return list;
         }
 
