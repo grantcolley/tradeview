@@ -38,6 +38,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             Preferences preferences, ILoggerFacade logger)
             : base(exchangeService, logger)
         {
+            if(chartHelper == null)
+            {
+                throw new ArgumentNullException(nameof(chartHelper));
+            }
+
+            if (preferences == null)
+            {
+                throw new ArgumentNullException(nameof(preferences));
+            }
+
             this.exchange = exchange;
             this.orderBookHelper = orderBookHelper;
             this.tradeHelper = tradeHelper;
@@ -177,6 +187,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         {
             try
             {
+                if (symbol == null)
+                {
+                    throw new ArgumentNullException(nameof(symbol));
+                }
+
                 if (Symbol == null)
                 {
                     Symbol = symbol;

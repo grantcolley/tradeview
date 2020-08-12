@@ -322,6 +322,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         {
             try
             {
+                if (account == null)
+                {
+                    throw new ArgumentNullException(nameof(account));
+                }
+
                 if (Account == null
                     || !Account.ApiKey.Equals(account.ApiKey, StringComparison.Ordinal))
                 {
