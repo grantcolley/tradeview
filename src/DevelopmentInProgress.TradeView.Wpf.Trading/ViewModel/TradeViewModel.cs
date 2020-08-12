@@ -108,22 +108,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             {
                 selectedSymbol = value;
 
-                if (selectedSymbol != null)
-                {
-                    Quantity = 0;
-                    Price = SelectedSymbol.SymbolStatistics.LastPrice;
-                    StopPrice = SelectedSymbol.SymbolStatistics.LastPrice;
-                    BaseAccountBalance = Account?.Balances.SingleOrDefault(ab => ab.Asset.Equals(selectedSymbol.BaseAsset.Symbol, StringComparison.OrdinalIgnoreCase));
-                    QuoteAccountBalance = Account?.Balances.SingleOrDefault(ab => ab.Asset.Equals(selectedSymbol.QuoteAsset.Symbol, StringComparison.Ordinal));
-                }
-                else
-                {
-                    Price = 0;
-                    StopPrice = 0;
-                    Quantity = 0;
-                    BaseAccountBalance = null;
-                    QuoteAccountBalance = null;
-                }
+                SetSelectedSymbolPrice();
 
                 OnPropertyChanged(nameof(SelectedSymbol));
             }
@@ -341,7 +326,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
         public void Touch()
         {
-            SelectedSymbol = SelectedSymbol;
+            SetSelectedSymbolPrice();
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Feed all exceptions back to subscribers")]
@@ -376,6 +361,26 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
 
             disposed = true;
+        }
+
+        private void SetSelectedSymbolPrice()
+        {
+            if (SelectedSymbol != null)
+            {
+                Quantity = 0;
+                Price = SelectedSymbol.SymbolStatistics.LastPrice;
+                StopPrice = SelectedSymbol.SymbolStatistics.LastPrice;
+                BaseAccountBalance = Account?.Balances.SingleOrDefault(ab => ab.Asset.Equals(selectedSymbol.BaseAsset.Symbol, StringComparison.OrdinalIgnoreCase));
+                QuoteAccountBalance = Account?.Balances.SingleOrDefault(ab => ab.Asset.Equals(selectedSymbol.QuoteAsset.Symbol, StringComparison.Ordinal));
+            }
+            else
+            {
+                Price = 0;
+                StopPrice = 0;
+                Quantity = 0;
+                BaseAccountBalance = null;
+                QuoteAccountBalance = null;
+            }
         }
 
         private async void Buy(object param)
