@@ -96,6 +96,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Exceptions are routed back to subscribers.")]
         protected async override void OnPublished(object data)
         {
             try
@@ -104,7 +105,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
             }
             catch(Exception ex)
             {
-                Logger.Log(ex.ToString(), Category.Exception, Priority.High);
                 ShowMessage(new Message { MessageType = MessageType.Error, Text = ex.Message, TextVerbose = ex.StackTrace });
             }
             finally
