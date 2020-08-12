@@ -9,12 +9,12 @@ using System;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading
 {
-    public class Module : ModuleBase
+    public class TradingModule : ModuleBase
     {
         public const string ModuleName = "Trading";
         private readonly static string AccountUser = $"Accounts";
 
-        public Module(ModuleNavigator moduleNavigator, ILoggerFacade logger)
+        public TradingModule(ModuleNavigator moduleNavigator, ILoggerFacade logger)
             : base(moduleNavigator, logger)
         {
         }

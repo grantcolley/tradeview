@@ -27,7 +27,7 @@
     
     <prism:ModuleInfo Ref="Trading"
                       ModuleName="Trading"
-                      ModuleType="DevelopmentInProgress.TradeView.Wpf.Trading.Module,DevelopmentInProgress.TradeView.Wpf.Trading">
+                      ModuleType="DevelopmentInProgress.TradeView.Wpf.Trading.TradingModule,DevelopmentInProgress.TradeView.Wpf.Trading">
         <prism:ModuleInfo.DependsOn>
             <sys:String>Strategies</sys:String>
         </prism:ModuleInfo.DependsOn>
