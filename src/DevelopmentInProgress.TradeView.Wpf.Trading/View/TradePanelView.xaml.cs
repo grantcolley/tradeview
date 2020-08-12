@@ -3,11 +3,11 @@
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.View
 {
     /// <summary>
-    /// Interaction logic for TradeView.xaml
+    /// Interaction logic for TradePanelView.xaml
     /// </summary>
-    public partial class TradeView : UserControl
+    public partial class TradePanelView : UserControl
     {
-        public TradeView()
+        public TradePanelView()
         {
             InitializeComponent();
         }

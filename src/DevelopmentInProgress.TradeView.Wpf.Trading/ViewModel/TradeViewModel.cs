@@ -16,7 +16,7 @@ using CoreExtensions = DevelopmentInProgress.TradeView.Core.Extensions;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 {
-    public class TradeViewModel : ExchangeViewModel
+    public class TradePanelViewModel : ExchangeViewModel
     {
         private Symbol selectedSymbol;
         private Account account;
@@ -29,7 +29,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private bool disposed;
         private bool isLoading;
 
-        public TradeViewModel(IWpfExchangeService exchangeService, ILoggerFacade logger)
+        public TradePanelViewModel(IWpfExchangeService exchangeService, ILoggerFacade logger)
             : base(exchangeService, logger)
         {
             BuyCommand = new ViewModelCommand(Buy);
@@ -298,7 +298,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
             catch (Exception ex)
             {
-                OnException($"{nameof(TradeViewModel)} - {ex.Message}", ex);
+                OnException($"{nameof(TradePanelViewModel)} - {ex.Message}", ex);
             }
         }
 
@@ -320,7 +320,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
             catch (Exception ex)
             {
-                OnException($"{nameof(TradeViewModel)} - {ex.Message}", ex);
+                OnException($"{nameof(TradePanelViewModel)} - {ex.Message}", ex);
             }
         }
 
@@ -345,7 +345,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
             catch (Exception ex)
             {
-                OnException($"{nameof(TradeViewModel)} - {ex.Message}", ex);
+                OnException($"{nameof(TradePanelViewModel)} - {ex.Message}", ex);
             }
         }
 
@@ -416,7 +416,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
             catch (Exception ex)
             {
-                OnException($"{nameof(TradeViewModel)} - {ex.Message}", ex);
+                OnException($"{nameof(TradePanelViewModel)} - {ex.Message}", ex);
             }
         }
 

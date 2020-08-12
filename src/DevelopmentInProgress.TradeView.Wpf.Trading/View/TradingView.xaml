@@ -16,8 +16,8 @@
             <localView:SymbolsView/>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type localViewModel:TradeViewModel}">
-            <localView:TradeView></localView:TradeView>
+        <DataTemplate DataType="{x:Type localViewModel:TradePanelViewModel}">
+            <localView:TradePanelView></localView:TradePanelView>
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type localViewModel:SymbolViewModel}" x:Shared="False">

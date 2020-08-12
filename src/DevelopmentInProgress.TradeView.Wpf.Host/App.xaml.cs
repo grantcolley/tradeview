@@ -83,7 +83,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
             containerRegistry.Register<AccountViewModel>();
 
             containerRegistry.Register<SymbolsViewModel>();
-            containerRegistry.Register<TradeViewModel>();
+            containerRegistry.Register<TradePanelViewModel>();
 
             containerRegistry.Register<IStrategyFileManager, StrategyFileManager>();
             containerRegistry.Register<ISymbolsLoader, SymbolsLoader>();

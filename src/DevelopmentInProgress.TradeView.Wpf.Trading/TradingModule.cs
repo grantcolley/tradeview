@@ -22,7 +22,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading
         public override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.Register<object, TradingView>(typeof(TradingView).Name);
-            containerRegistry.Register<TradingViewModel>(typeof(TradingViewModel).Name);
+            containerRegistry.Register<TradingPanelViewModel>(typeof(TradingPanelViewModel).Name);
         }
 
         public async override void OnInitialized(IContainerProvider containerProvider)

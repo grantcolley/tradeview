@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 {
-    public class TradingViewModel : DocumentViewModel
+    public class TradingPanelViewModel : DocumentViewModel
     {
         private readonly IOrderBookHelperFactory orderBookHelperFactory;
         private readonly ITradeHelperFactory tradeHelperFactory;
@@ -28,7 +28,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private readonly IChartHelper chartHelper;
         private SymbolViewModel symbolViewModel;
         private AccountViewModel accountViewModel;
-        private TradeViewModel tradeViewModel;
+        private TradePanelViewModel tradePanelViewModel;
         private SymbolsViewModel symbolsViewModel;
         private OrdersViewModel ordersViewModel;
         private UserAccount userAccount;
@@ -43,9 +43,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private IDisposable tradeObservableSubscription;
         private IDisposable ordersObservableSubscription;
 
-        public TradingViewModel(ViewModelContext viewModelContext, 
+        public TradingPanelViewModel(ViewModelContext viewModelContext, 
             AccountViewModel accountViewModel, SymbolsViewModel symbolsViewModel,
-            TradeViewModel tradeViewModel, OrdersViewModel ordersViewModel,
+            TradePanelViewModel tradePanelViewModel, OrdersViewModel ordersViewModel,
             IWpfExchangeService exchangeService, IAccountsService accountsService,
             IOrderBookHelperFactory orderBookHelperFactory,
             ITradeHelperFactory tradeHelperFactory,
@@ -54,7 +54,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         {
             AccountViewModel = accountViewModel;
             SymbolsViewModel = symbolsViewModel;
-            TradeViewModel = tradeViewModel;
+            TradeViewModel = tradePanelViewModel;
             OrdersViewModel = ordersViewModel;
 
             this.exchangeService = exchangeService;
@@ -95,14 +95,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
         }
 
-        public TradeViewModel TradeViewModel
+        public TradePanelViewModel TradeViewModel
         {
-            get { return tradeViewModel; }
+            get { return tradePanelViewModel; }
             private set
             {
-                if (tradeViewModel != value)
+                if (tradePanelViewModel != value)
                 {
-                    tradeViewModel = value;
+                    tradePanelViewModel = value;
                     OnPropertyChanged(nameof(TradeViewModel));
                 }
             }
@@ -164,7 +164,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
             accountViewModel.Dispatcher = ViewModelContext.UiDispatcher;
             symbolsViewModel.Dispatcher = ViewModelContext.UiDispatcher;
-            tradeViewModel.Dispatcher = ViewModelContext.UiDispatcher;
+            tradePanelViewModel.Dispatcher = ViewModelContext.UiDispatcher;
             ordersViewModel.Dispatcher = ViewModelContext.UiDispatcher;
 
             Account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() });
@@ -225,7 +225,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
                     OnGetViewModels(openDocuments);
 
-                    var tradingViewModels = openDocuments.ViewModels.OfType<TradingViewModel>()
+                    var tradingViewModels = openDocuments.ViewModels.OfType<TradingPanelViewModel>()
                         .Where(d => d.SymbolViewModel != null && d.SymbolViewModel.IsActive).ToList();
 
                     foreach (var tradingViewModel in tradingViewModels)

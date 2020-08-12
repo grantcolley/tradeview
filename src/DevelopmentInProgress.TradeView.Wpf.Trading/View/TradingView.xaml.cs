@@ -9,7 +9,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.View
     /// </summary>
     public partial class TradingView : DocumentViewBase
     {
-        public TradingView(IViewContext viewContext, TradingViewModel tradingViewModel)
+        public TradingView(IViewContext viewContext, TradingPanelViewModel tradingViewModel)
             : base(viewContext, tradingViewModel, TradingModule.ModuleName)
         {
             InitializeComponent();

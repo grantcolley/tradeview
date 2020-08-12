@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="DevelopmentInProgress.TradeView.Wpf.Trading.View.TradeView"
+﻿<UserControl x:Class="DevelopmentInProgress.TradeView.Wpf.Trading.View.TradePanelView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
