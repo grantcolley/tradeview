@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 {
-    public class TradingPanelViewModel : DocumentViewModel
+    public class TradingViewModel : DocumentViewModel
     {
         private readonly IOrderBookHelperFactory orderBookHelperFactory;
         private readonly ITradeHelperFactory tradeHelperFactory;
@@ -43,7 +43,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private IDisposable tradeObservableSubscription;
         private IDisposable ordersObservableSubscription;
 
-        public TradingPanelViewModel(ViewModelContext viewModelContext, 
+        public TradingViewModel(ViewModelContext viewModelContext, 
             AccountViewModel accountViewModel, SymbolsViewModel symbolsViewModel,
             TradePanelViewModel tradePanelViewModel, OrdersViewModel ordersViewModel,
             IWpfExchangeService exchangeService, IAccountsService accountsService,
@@ -225,7 +225,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
                     OnGetViewModels(openDocuments);
 
-                    var tradingViewModels = openDocuments.ViewModels.OfType<TradingPanelViewModel>()
+                    var tradingViewModels = openDocuments.ViewModels.OfType<TradingViewModel>()
                         .Where(d => d.SymbolViewModel != null && d.SymbolViewModel.IsActive).ToList();
 
                     foreach (var tradingViewModel in tradingViewModels)
