@@ -59,7 +59,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Utility
             GC.SuppressFinalize(this);
         }
 
-        private void Dispose(bool isDisposing)
+        protected virtual void Dispose(bool isDisposing)
         {
             if (disposed)
             {
