@@ -70,8 +70,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Utility
             {
                 if (StrategyDisplayViewModel != null)
                 {
-                    var disposeableViewModel = StrategyDisplayViewModel as IDisposable;
-                    if (disposeableViewModel != null)
+                    if (StrategyDisplayViewModel is IDisposable disposeableViewModel)
                     {
                         disposeableViewModel.Dispose();
                     }
@@ -79,8 +78,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Utility
 
                 if (StrategyDisplayView != null)
                 {
-                    var disposeableView = StrategyDisplayView as IDisposable;
-                    if (disposeableView != null)
+                    if (StrategyDisplayView is IDisposable disposeableView)
                     {
                         disposeableView.Dispose();
                     }
