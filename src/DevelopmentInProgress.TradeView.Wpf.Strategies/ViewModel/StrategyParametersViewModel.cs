@@ -71,12 +71,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             StrategyParameterNotification();
         }
 
-        private void OnException(string message, Exception exception)
-        {
-            var onStrategyParametersNotification = OnStrategyParametersNotification;
-            onStrategyParametersNotification?.Invoke(this, new StrategyEventArgs { Message = message, Exception = exception });
-        }
-
         private void StrategyParameterNotification()
         {
             var onStrategyParametersNotification = OnStrategyParametersNotification;
