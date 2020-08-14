@@ -113,7 +113,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 if (servers != value)
                 {
                     servers = value;
-                    OnPropertyChanged("Servers");
+                    OnPropertyChanged(nameof(Servers));
                 }
             }
         }
@@ -127,7 +127,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 {
                     selectedServer = value;
                     ResetCommandVisibility();
-                    OnPropertyChanged("SelectedServer");
+                    OnPropertyChanged(nameof(SelectedServer));
                 }
             }
         }
@@ -140,7 +140,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 if (accountViewModel != value)
                 {
                     accountViewModel = value;
-                    OnPropertyChanged("AccountViewModel");
+                    OnPropertyChanged(nameof(AccountViewModel));
                 }
             }
         }
@@ -153,7 +153,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 if (symbolsViewModel != value)
                 {
                     symbolsViewModel = value;
-                    OnPropertyChanged("SymbolsViewModel");
+                    OnPropertyChanged(nameof(SymbolsViewModel));
                 }
             }
         }
@@ -166,7 +166,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 if (ordersViewModel != value)
                 {
                     ordersViewModel = value;
-                    OnPropertyChanged("OrdersViewModel");
+                    OnPropertyChanged(nameof(OrdersViewModel));
                 }
             }
         }
@@ -179,7 +179,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 if (strategyParametersViewModel != value)
                 {
                     strategyParametersViewModel = value;
-                    OnPropertyChanged("StrategyParametersViewModel");
+                    OnPropertyChanged(nameof(StrategyParametersViewModel));
                 }
             }
         }
@@ -192,7 +192,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 if (notifications != value)
                 {
                     notifications = value;
-                    OnPropertyChanged("Notifications");
+                    OnPropertyChanged(nameof(Notifications));
                 }
             }
         }
@@ -205,8 +205,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 if (canRun != value)
                 {
                     canRun = value;
-                    OnPropertyChanged("CanRun");
-                    OnPropertyChanged("CanSelectServer");
+                    OnPropertyChanged(nameof(CanRun));
                 }
             }
         }
@@ -219,8 +218,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 if (canMonitor != value)
                 {
                     canMonitor = value;
-                    OnPropertyChanged("CanMonitor");
-                    OnPropertyChanged("CanSelectServer");
+                    OnPropertyChanged(nameof(CanMonitor));
                 }
             }
         }
@@ -239,8 +237,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                         StrategyParametersViewModel.CanPushParameters = isConnected;
                     }
 
-                    OnPropertyChanged("IsConnected");
-                    OnPropertyChanged("CanSelectServer");
+                    OnPropertyChanged(nameof(IsConnected));
                 }
             }
         }
@@ -253,8 +250,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 if (isConnecting != value)
                 {
                     isConnecting = value;
-                    OnPropertyChanged("IsConnecting");
-                    OnPropertyChanged("CanSelectServer");
+                    OnPropertyChanged(nameof(IsConnecting));
                 }
             }
         }
@@ -267,7 +263,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 if (strategy != value)
                 {
                     strategy = value;
-                    OnPropertyChanged("Strategy");
+                    OnPropertyChanged(nameof(Strategy));
                 }
             }
         }
