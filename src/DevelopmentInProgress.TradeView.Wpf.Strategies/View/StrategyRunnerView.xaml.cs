@@ -2,6 +2,7 @@
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.View;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.Events;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel;
+using System;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Strategies.View
 {
@@ -14,6 +15,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.View
             : base(viewContext, strategyRunnerViewModel, Module.ModuleName)
         {
             InitializeComponent();
+
+            if(strategyRunnerViewModel == null)
+            {
+                throw new ArgumentNullException(nameof(strategyRunnerViewModel));
+            }
 
             strategyRunnerViewModel.OnStrategyDisplay += OnStrategyDisplay;
 
