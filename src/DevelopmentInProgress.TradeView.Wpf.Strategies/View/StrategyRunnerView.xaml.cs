@@ -12,7 +12,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.View
     public partial class StrategyRunnerView : DocumentViewBase
     {
         public StrategyRunnerView(IViewContext viewContext, StrategyRunnerViewModel strategyRunnerViewModel)
-            : base(viewContext, strategyRunnerViewModel, Module.ModuleName)
+            : base(viewContext, strategyRunnerViewModel, StrategiesModule.ModuleName)
         {
             InitializeComponent();
 

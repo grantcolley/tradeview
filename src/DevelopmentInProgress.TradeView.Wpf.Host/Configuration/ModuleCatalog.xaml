@@ -19,7 +19,7 @@
 
     <prism:ModuleInfo Ref="Strategies"
                       ModuleName="Strategies"
-                      ModuleType="DevelopmentInProgress.TradeView.Wpf.Strategies.Module,DevelopmentInProgress.TradeView.Wpf.Strategies">
+                      ModuleType="DevelopmentInProgress.TradeView.Wpf.Strategies.StrategiesModule,DevelopmentInProgress.TradeView.Wpf.Strategies">
         <prism:ModuleInfo.DependsOn>
             <sys:String>Dashboard</sys:String>
         </prism:ModuleInfo.DependsOn>

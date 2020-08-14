@@ -9,13 +9,13 @@ using System;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Strategies
 {
-    public class Module : ModuleBase
+    public class StrategiesModule : ModuleBase
     {
         public const string ModuleName = "Strategies";
 
         private static readonly string StrategyUser = $"Strategies";
 
-        public Module(ModuleNavigator moduleNavigator, ILoggerFacade logger)
+        public StrategiesModule(ModuleNavigator moduleNavigator, ILoggerFacade logger)
             : base(moduleNavigator, logger)
         {
         }
