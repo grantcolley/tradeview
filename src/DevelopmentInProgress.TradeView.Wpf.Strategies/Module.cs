@@ -41,25 +41,18 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies
 
             var strategyService = containerProvider.Resolve<IStrategyService>();
 
-            try
+            var userStrategies = await strategyService.GetStrategies().ConfigureAwait(true);
+
+            foreach (var strategy in userStrategies)
             {
-                var userStrategies = await strategyService.GetStrategies().ConfigureAwait(true);
-
-                foreach (var strategy in userStrategies)
-                {
-                    var strategyDocument = CreateStrategyModuleGroupItem(strategy.Name, strategy.Name);
-                    moduleGroup.ModuleGroupItems.Add(strategyDocument);
-                }
-
-                moduleSettings.ModuleGroups.Add(moduleGroup);
-                ModuleNavigator.AddModuleNavigation(moduleSettings);
-
-                Logger.Log("Initialized DevelopmentInProgress.Wpf.Strategies", Category.Info, Priority.None);
+                var strategyDocument = CreateStrategyModuleGroupItem(strategy.Name, strategy.Name);
+                moduleGroup.ModuleGroupItems.Add(strategyDocument);
             }
-            catch (Exception ex)
-            {
-                Logger.Log($"Initialize DevelopmentInProgress.Wpf.Strategies failed to load: {ex}", Category.Info, Priority.None);
-            }
+
+            moduleSettings.ModuleGroups.Add(moduleGroup);
+            ModuleNavigator.AddModuleNavigation(moduleSettings);
+
+            Logger.Log("Initialized DevelopmentInProgress.Wpf.Strategies", Category.Info, Priority.None);
         }
 
         private static ModuleGroupItem CreateStrategyModuleGroupItem(string name, string title)
