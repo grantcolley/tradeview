@@ -29,6 +29,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
         public event EventHandler<StrategySymbolsEventArgs> OnSymbolsNotification;
 
+        public ObservableCollection<Symbol> Symbols { get; }
+
         public Strategy Strategy
         {
             get { return strategy; }
@@ -40,8 +42,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 }
             }
         }
-
-        public ObservableCollection<Symbol> Symbols { get; }
 
         public bool IsLoadingSymbols
         {
@@ -75,7 +75,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Notify subscribers of exception.")]
-        public async Task GetSymbols(Strategy arg)
+        public async Task GetStrategySymbols(Strategy arg)
         {
             IsLoadingSymbols = true;
 

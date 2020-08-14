@@ -305,7 +305,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                     account.Exchange = strategySubscription.Exchange;
                 }
 
-                await Task.WhenAll(SymbolsViewModel.GetSymbols(Strategy), AccountViewModel.Login(account), GetServerMonitors());
+                await Task.WhenAll(SymbolsViewModel.GetStrategySymbols(Strategy), AccountViewModel.Login(account), GetServerMonitors());
             }
             catch (Exception ex)
             {
