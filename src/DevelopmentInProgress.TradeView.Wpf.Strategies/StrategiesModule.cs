@@ -5,7 +5,6 @@ using DevelopmentInProgress.TradeView.Wpf.Strategies.View;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel;
 using Prism.Ioc;
 using Prism.Logging;
-using System;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Strategies
 {
