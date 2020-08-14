@@ -84,11 +84,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Utility
                     }
                 }
 
-                foreach (var file in Files)
-                {
-                    //File.Delete(file);
-                }
-
                 disposed = true;
             }
         }
