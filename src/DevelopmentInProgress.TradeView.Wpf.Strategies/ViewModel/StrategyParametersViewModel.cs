@@ -33,7 +33,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 if(canPushParameters != value)
                 {
                     canPushParameters = value;
-                    OnPropertyChanged("CanPushParameters");
+                    OnPropertyChanged(nameof(CanPushParameters));
                 }
             }
         }
@@ -46,7 +46,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 if (strategy != value)
                 {
                     strategy = value;
-                    OnPropertyChanged("Strategy");
+                    OnPropertyChanged(nameof(Strategy));
                 }
             }
         }
