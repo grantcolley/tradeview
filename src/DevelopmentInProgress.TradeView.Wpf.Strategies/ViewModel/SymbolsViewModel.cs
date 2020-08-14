@@ -12,9 +12,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 {
     public class SymbolsViewModel : BaseViewModel
     {
-        private Strategy strategy;
-        private ISymbolsCacheFactory symbolsCacheFactory;
+        private readonly ISymbolsCacheFactory symbolsCacheFactory;
         private ISymbolsCache symbolsCache;
+        private Strategy strategy;
         private List<Symbol> symbols;
         private bool isLoadingSymbols;
         private bool disposed;
