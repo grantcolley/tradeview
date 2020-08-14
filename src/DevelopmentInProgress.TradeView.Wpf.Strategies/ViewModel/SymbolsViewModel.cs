@@ -92,7 +92,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                 var strategySymbols = Strategy.StrategySubscriptions.Select(s => s.Symbol);
 
-                var results = await symbolsCache.GetSymbols(strategySymbols);
+                var results = await symbolsCache.GetSymbols(strategySymbols).ConfigureAwait(true);
 
                 var symbols = results.Where(r => strategySymbols.Contains($"{r.ExchangeSymbol}")).ToList();
 
