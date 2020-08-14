@@ -471,7 +471,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    return content.Equals("YES");
+                    return content == "YES";
                 }
                 else
                 {
@@ -1051,7 +1051,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 else if (!string.IsNullOrWhiteSpace(args.Message))
                 {
                     if(SelectedServer != null
-                        && SelectedServer.Name.Equals(args.Message))
+                        && SelectedServer.Name.Equals(args.Message, StringComparison.Ordinal))
                     {
                         ResetCommandVisibility();
                     }
