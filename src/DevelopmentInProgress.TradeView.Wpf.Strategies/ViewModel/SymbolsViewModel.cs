@@ -83,6 +83,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             disposed = true;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Notify subscribers of exception.")]
         public async Task GetSymbols(Strategy arg)
         {
             IsLoadingSymbols = true;
