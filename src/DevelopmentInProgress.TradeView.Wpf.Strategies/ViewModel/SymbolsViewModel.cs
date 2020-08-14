@@ -5,6 +5,7 @@ using DevelopmentInProgress.TradeView.Wpf.Strategies.Events;
 using Prism.Logging;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,7 +16,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         private readonly ISymbolsCacheFactory symbolsCacheFactory;
         private ISymbolsCache symbolsCache;
         private Strategy strategy;
-        private List<Symbol> symbols;
         private bool isLoadingSymbols;
         private bool disposed;
 
@@ -23,6 +23,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             : base(logger)
         {
             this.symbolsCacheFactory = symbolsCacheFactory;
+
+            Symbols = new ObservableCollection<Symbol>();
         }
 
         public event EventHandler<StrategySymbolsEventArgs> OnSymbolsNotification;
@@ -39,18 +41,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
         }
 
-        public List<Symbol> Symbols
-        {
-            get { return symbols; }
-            set
-            {
-                if (symbols != value)
-                {
-                    symbols = value;
-                    OnPropertyChanged(nameof(Symbols));
-                }
-            }
-        }
+        public ObservableCollection<Symbol> Symbols { get; }
 
         public bool IsLoadingSymbols
         {
@@ -103,7 +94,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                 var results = await symbolsCache.GetSymbols(strategySymbols);
 
-                Symbols = new List<Symbol>(results.Where(r => strategySymbols.Contains($"{r.ExchangeSymbol}")));
+                var symbols = results.Where(r => strategySymbols.Contains($"{r.ExchangeSymbol}")).ToList();
+
+                Symbols.Clear();
+
+                symbols.ForEach(Symbols.Add);
 
                 SymbolsNotification();
             }
@@ -129,7 +124,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         private void SymbolsNotification()
         {
             var onSymbolsNotification = OnSymbolsNotification;
-            onSymbolsNotification?.Invoke(this, new StrategySymbolsEventArgs { Value = Symbols });
+            onSymbolsNotification?.Invoke(this, new StrategySymbolsEventArgs { Value = Symbols.ToList() });
         }
     }
 }
