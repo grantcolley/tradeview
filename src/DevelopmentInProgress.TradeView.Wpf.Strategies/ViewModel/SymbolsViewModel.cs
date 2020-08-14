@@ -47,7 +47,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 if (symbols != value)
                 {
                     symbols = value;
-                    OnPropertyChanged("Symbols");
+                    OnPropertyChanged(nameof(Symbols));
                 }
             }
         }
@@ -60,7 +60,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 if (isLoadingSymbols != value)
                 {
                     isLoadingSymbols = value;
-                    OnPropertyChanged("IsLoadingSymbols");
+                    OnPropertyChanged(nameof(IsLoadingSymbols));
                 }
             }
         }
