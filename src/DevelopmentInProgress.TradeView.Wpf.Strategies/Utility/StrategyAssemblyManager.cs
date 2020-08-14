@@ -30,6 +30,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Utility
 
         public void Activate(Strategy strategy, Dispatcher UiDispatcher, ILoggerFacade Logger)
         {
+            if(strategy == null)
+            {
+                throw new ArgumentNullException(nameof(strategy));
+            }
+
             Id = Environment.UserName;
 
             var displayAssemblies = strategy.DisplayDependencies.Select(a => a.File).ToList();
