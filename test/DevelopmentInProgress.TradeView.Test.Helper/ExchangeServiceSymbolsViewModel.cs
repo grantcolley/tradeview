@@ -130,11 +130,11 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
             var symbols = await GetSymbolsAsync(exchange, cancellationToken).ConfigureAwait(false);
             var symbolStatistics = await Get24HourStatisticsAsync(exchange, cancellationToken).ConfigureAwait(false);
 
-            Func<Symbol, SymbolStats, Symbol> f = (s, ss) =>
+            static Symbol f(Symbol s, SymbolStats ss)
             {
                 s.SymbolStatistics = ss;
                 return s;
-            };
+            }
 
             var updatedSymbols = (from s in symbols
                                   join ss in symbolStatistics on $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}" equals ss.Symbol

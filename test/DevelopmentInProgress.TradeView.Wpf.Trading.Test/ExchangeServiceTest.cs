@@ -38,7 +38,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
 
             var symbols = await exchangeService.GetSymbols24HourStatisticsAsync(Exchange.Test, cxlToken).ConfigureAwait(false);
 
-            Action<Exception> exception = e => { };
+            static void exception(Exception e) { }
 
             // Act
             await exchangeService.SubscribeStatistics(Exchange.Test, symbols, exception, cxlToken);
