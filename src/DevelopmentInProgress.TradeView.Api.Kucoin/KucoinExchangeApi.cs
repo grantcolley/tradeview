@@ -185,7 +185,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
 
             var currencies = await kucoinClient.GetCurrenciesAsync().ConfigureAwait(false);
 
-            Asset f(Asset a, KucoinCurrency c)
+            static Asset f(Asset a, KucoinCurrency c)
             {
                 a.Precision = c.Precision;
                 return a;
