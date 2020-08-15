@@ -23,8 +23,10 @@ namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
             try
             {
                 using var client = new HttpClient();
-                using var multipartFormDataContent = new MultipartFormDataContent();
-                multipartFormDataContent.Add(stringContent, "strategy");
+                using var multipartFormDataContent = new MultipartFormDataContent
+                {
+                    { stringContent, "strategy" }
+                };
 
                 foreach (var file in libraries)
                 {
@@ -56,8 +58,11 @@ namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
             try
             {
                 using var client = new HttpClient();
-                using var multipartFormDataContent = new MultipartFormDataContent();
-                multipartFormDataContent.Add(stringContent, "strategyparameters");
+                using var multipartFormDataContent = new MultipartFormDataContent
+                {
+                    { stringContent, "strategyparameters" }
+                };
+
                 return await client.PostAsync(uri, multipartFormDataContent).ConfigureAwait(false);
             }
             finally

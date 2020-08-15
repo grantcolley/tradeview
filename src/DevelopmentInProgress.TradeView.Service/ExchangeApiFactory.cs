@@ -24,9 +24,12 @@ namespace DevelopmentInProgress.TradeView.Service
 
         public Dictionary<Exchange, IExchangeApi> GetExchanges()
         {
-            var exchanges = new Dictionary<Exchange, IExchangeApi>();
-            exchanges.Add(Exchange.Binance, GetExchangeApi(Exchange.Binance));
-            exchanges.Add(Exchange.Kucoin, GetExchangeApi(Exchange.Kucoin));
+            var exchanges = new Dictionary<Exchange, IExchangeApi>
+            {
+                { Exchange.Binance, GetExchangeApi(Exchange.Binance) },
+                { Exchange.Kucoin, GetExchangeApi(Exchange.Kucoin) }
+            };
+
             return exchanges;
         }
     }
