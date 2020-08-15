@@ -26,6 +26,7 @@ using CoreStrategy = DevelopmentInProgress.TradeView.Core.TradeStrategy;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types")]
     public class StrategyRunnerViewModel : DocumentViewModel
     {
         private readonly IStrategyService strategyService;
