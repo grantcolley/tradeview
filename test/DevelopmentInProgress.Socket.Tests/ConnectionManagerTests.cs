@@ -29,7 +29,7 @@ namespace DevelopmentInProgress.Socket.Tests
             // Arrange
             var connectionManager = new ConnectionManager();
             var webSocket = new ClientWebSocket();
-            var result = connectionManager.TryAddWebSocketConnection(webSocket, out Connection connection);
+            connectionManager.TryAddWebSocketConnection(webSocket, out Connection connection);
 
             // Act
             var connectionId = connectionManager.GetConnectionId(webSocket);
@@ -45,7 +45,7 @@ namespace DevelopmentInProgress.Socket.Tests
             var connectionManager = new ConnectionManager();
             var webSocket1 = new ClientWebSocket();
             var webSocket2 = new ClientWebSocket();
-            var result = connectionManager.TryAddWebSocketConnection(webSocket1, out Connection connection);
+            connectionManager.TryAddWebSocketConnection(webSocket1, out _);
 
             // Act
             var connectionId = connectionManager.GetConnectionId(webSocket2);
@@ -60,7 +60,7 @@ namespace DevelopmentInProgress.Socket.Tests
             // Arrange
             var connectionManager = new ConnectionManager();
             var webSocket = new ClientWebSocket();
-            var result = connectionManager.TryAddWebSocketConnection(webSocket, out Connection connection);
+            connectionManager.TryAddWebSocketConnection(webSocket, out Connection connection);
 
             // Act
             var conn = connectionManager.GetConnection(webSocket);
@@ -76,7 +76,7 @@ namespace DevelopmentInProgress.Socket.Tests
             var connectionManager = new ConnectionManager();
             var webSocket1 = new ClientWebSocket();
             var webSocket2 = new ClientWebSocket();
-            var result = connectionManager.TryAddWebSocketConnection(webSocket1, out Connection connection);
+            connectionManager.TryAddWebSocketConnection(webSocket1, out _);
 
             // Act
             var conn = connectionManager.GetConnection(webSocket2);
@@ -91,7 +91,7 @@ namespace DevelopmentInProgress.Socket.Tests
             // Arrange
             var connectionManager = new ConnectionManager();
             var webSocket = new ClientWebSocket();
-            var result = connectionManager.TryAddWebSocketConnection(webSocket, out Connection connection);
+            connectionManager.TryAddWebSocketConnection(webSocket, out Connection connection);
 
             // Act
             var conn = connectionManager.GetConnection(connection.ConnectionId);
@@ -106,7 +106,7 @@ namespace DevelopmentInProgress.Socket.Tests
             // Arrange
             var connectionManager = new ConnectionManager();
             var webSocket = new ClientWebSocket();
-            var result = connectionManager.TryAddWebSocketConnection(webSocket, out Connection connection);
+            connectionManager.TryAddWebSocketConnection(webSocket, out _);
 
             // Act
             var conn = connectionManager.GetConnection("123");
@@ -122,8 +122,8 @@ namespace DevelopmentInProgress.Socket.Tests
             var connectionManager = new ConnectionManager();
             var webSocket1 = new ClientWebSocket();
             var webSocket2 = new ClientWebSocket();
-            var result1 = connectionManager.TryAddWebSocketConnection(webSocket1, out Connection connection1);
-            var result2 = connectionManager.TryAddWebSocketConnection(webSocket2, out Connection connection2);
+            connectionManager.TryAddWebSocketConnection(webSocket1, out Connection connection1);
+            connectionManager.TryAddWebSocketConnection(webSocket2, out Connection connection2);
 
             // Act
             var connections = connectionManager.GetConnections();
@@ -160,11 +160,11 @@ namespace DevelopmentInProgress.Socket.Tests
             var connectionManager = new ConnectionManager();
             var webSocket1 = new ClientWebSocket();
             var webSocket2 = new ClientWebSocket();
-            var result1 = connectionManager.TryAddWebSocketConnection(webSocket1, out Connection connection1);
-            var result2 = connectionManager.TryAddWebSocketConnection(webSocket2, out Connection connection2);
+            connectionManager.TryAddWebSocketConnection(webSocket1, out Connection connection1);
+            connectionManager.TryAddWebSocketConnection(webSocket2, out Connection connection2);
 
             // Act
-            var result = connectionManager.TryRemoveWebSocketConnection(webSocket1, out Connection connection);
+            connectionManager.TryRemoveWebSocketConnection(webSocket1, out Connection connection);
 
             // Assert
             var connections = connectionManager.GetConnections();

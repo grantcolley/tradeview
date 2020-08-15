@@ -45,7 +45,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var statistics = TestHelper.EthStats.GetViewSymbolStatistics();
 
             // Act
-            var symbols = symbol.JoinStatistics(statistics);
+            symbol.JoinStatistics(statistics);
 
             // Assert
             Assert.AreEqual(symbol.SymbolStatistics, statistics);
@@ -62,7 +62,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var updatedStatistics = TestHelper.EthStats_UpdatedLastPrice_Upwards;
 
             // Act
-            var symbols = symbol.UpdateStatistics(updatedStatistics);
+            symbol.UpdateStatistics(updatedStatistics);
 
             // Assert
             Assert.AreEqual(symbol.SymbolStatistics.PriceChangePercent, updatedStatistics.PriceChangePercent);
@@ -80,7 +80,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var updatedStatistics = TestHelper.EthStats_UpdatedLastPrice_Downwards;
 
             // Act
-            var symbols = symbol.UpdateStatistics(updatedStatistics);
+            symbol.UpdateStatistics(updatedStatistics);
 
             // Assert
             Assert.AreEqual(symbol.SymbolStatistics.PriceChangePercent, updatedStatistics.PriceChangePercent);

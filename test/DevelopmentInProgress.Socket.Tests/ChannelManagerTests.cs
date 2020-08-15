@@ -50,7 +50,7 @@ namespace DevelopmentInProgress.Socket.Tests
             // Arrange
             var channelManager = new ChannelManager();
             var connection = new Connection(new ClientWebSocket()) { ConnectionId = "123", Name = "conn" };
-            var channel = channelManager.SubscribeToChannel("channel", connection);
+            channelManager.SubscribeToChannel("channel", connection);
 
             // Act
             var result = channelManager.GetChannel("ABC");
@@ -103,7 +103,7 @@ namespace DevelopmentInProgress.Socket.Tests
             // Arrange
             var channelManager = new ChannelManager();
             var connection = new Connection(new ClientWebSocket()) { ConnectionId = "123", Name = "conn" };
-            var channel = channelManager.SubscribeToChannel("channel", connection);
+            channelManager.SubscribeToChannel("channel", connection);
 
             // Act
             var result = channelManager.TryRemoveChannel("ABC", out Channel notFound);
@@ -120,8 +120,8 @@ namespace DevelopmentInProgress.Socket.Tests
             var channelManager = new ChannelManager();
             var connection1 = new Connection(new ClientWebSocket()) { ConnectionId = "123", Name = "conn1" };
             var connection2 = new Connection(new ClientWebSocket()) { ConnectionId = "456", Name = "conn2" };
-            var channelResult1 = channelManager.SubscribeToChannel("channel1", connection1);
-            var channelResult2 = channelManager.SubscribeToChannel("channel1", connection2);
+            channelManager.SubscribeToChannel("channel1", connection1);
+            channelManager.SubscribeToChannel("channel1", connection2);
 
             // Act
             var result = channelManager.TryRemoveChannel("channel1", out Channel channel);
@@ -142,7 +142,7 @@ namespace DevelopmentInProgress.Socket.Tests
             var connection1 = new Connection(new ClientWebSocket()) { ConnectionId = "123", Name = "conn1" };
             var connection2 = new Connection(new ClientWebSocket()) { ConnectionId = "456", Name = "conn2" };
             var channelResult1 = channelManager.SubscribeToChannel("channel1", connection1);
-            var channelResult2 = channelManager.SubscribeToChannel("channel1", connection2);
+            channelManager.SubscribeToChannel("channel1", connection2);
 
             // Act
             var result = channelManager.UnsubscribeFromChannel("ABC", connection1);
@@ -163,7 +163,7 @@ namespace DevelopmentInProgress.Socket.Tests
             var connection1 = new Connection(new ClientWebSocket()) { ConnectionId = "123", Name = "conn1" };
             var connection2 = new Connection(new ClientWebSocket()) { ConnectionId = "456", Name = "conn2" };
             var channelResult1 = channelManager.SubscribeToChannel("channel1", connection1);
-            var channelResult2 = channelManager.SubscribeToChannel("channel1", connection2);
+            channelManager.SubscribeToChannel("channel1", connection2);
 
             // Act
             var result = channelManager.UnsubscribeFromChannel("channel1", connection1);
@@ -184,7 +184,7 @@ namespace DevelopmentInProgress.Socket.Tests
             var connection1 = new Connection(new ClientWebSocket()) { ConnectionId = "123", Name = "conn1" };
             var connection2 = new Connection(new ClientWebSocket()) { ConnectionId = "456", Name = "conn2" };
             var channelResult1 = channelManager.SubscribeToChannel("channel1", connection1);
-            var channelResult2 = channelManager.SubscribeToChannel("channel1", connection2);
+            channelManager.SubscribeToChannel("channel1", connection2);
 
             // Act
             var result1 = channelManager.UnsubscribeFromChannel("channel1", connection1);

@@ -109,18 +109,18 @@ namespace DevelopmentInProgress.Strategy.Common.Test
             };
 
             movingAverageTradeCreator.Reset(movingAverageTradeParameters);
-            var trade1 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 1 });
-            var trade2 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 2 });
-            var trade3 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 3 });
+            movingAverageTradeCreator.CreateTrade(new Trade { Price = 1 });
+            movingAverageTradeCreator.CreateTrade(new Trade { Price = 2 });
+            movingAverageTradeCreator.CreateTrade(new Trade { Price = 3 });
 
             // Act
             movingAverageTradeParameters.MovingAvarageRange = 10;
             movingAverageTradeCreator.Reset(movingAverageTradeParameters);
-            var trade4 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 4 });
-            var trade5 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 5 });
-            var trade6 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 6 });
-            var trade7 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 7 });
-            var trade8 = movingAverageTradeCreator.CreateTrade(new Trade { Price = 8 });
+            movingAverageTradeCreator.CreateTrade(new Trade { Price = 4 });
+            movingAverageTradeCreator.CreateTrade(new Trade { Price = 5 });
+            movingAverageTradeCreator.CreateTrade(new Trade { Price = 6 });
+            movingAverageTradeCreator.CreateTrade(new Trade { Price = 7 });
+            movingAverageTradeCreator.CreateTrade(new Trade { Price = 8 });
 
             // Assert
             Assert.AreEqual(movingAverageTradeCreator.GetCurrentPosition(), 7);
