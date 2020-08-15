@@ -6,7 +6,7 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
 {
     public class SymbolsCacheFactoryTest : ISymbolsCacheFactory
     {
-        private IWpfExchangeService exchangeService;
+        private readonly IWpfExchangeService exchangeService;
 
         public SymbolsCacheFactoryTest(IWpfExchangeService exchangeService)
         {

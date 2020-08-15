@@ -9,13 +9,13 @@ namespace DevelopmentInProgress.Strategy.Common.TradeCreator
 {
     public class MovingAverageTradeCreator : ITradeCreator<MovingAverageTrade, MovingAverageTradeParameters>
     {
+        private readonly object tradeLock = new object();
+
         private decimal[] range;
         private int position;
         private int movingAvarageRange;
         private decimal buyIndicator;
         private decimal sellIndicator;
-
-        private object tradeLock = new object();
 
         public MovingAverageTradeCreator()
         {
