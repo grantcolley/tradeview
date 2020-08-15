@@ -15,6 +15,7 @@ namespace DevelopmentInProgress.TradeView.Core.Test
         private static SymbolStats ethStats;
 
         [ClassInitialize()]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter")]
         public static void SymbolsExtensionsTest_Initialize(TestContext testContext)
         {
             eth = TestHelper.Eth;
