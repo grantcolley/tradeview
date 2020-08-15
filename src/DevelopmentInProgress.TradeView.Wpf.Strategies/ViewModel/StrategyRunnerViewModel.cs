@@ -105,6 +105,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         public ICommand StopCommand { get; set; }
         public ICommand ClearNotificationsCommand { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Servers must point to cached collection.")]
         public ObservableCollection<ServerMonitor> Servers
         {
             get { return servers; }
