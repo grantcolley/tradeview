@@ -41,7 +41,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         private bool isConnecting;
         private bool disposed;
         private SocketClient socketClient;
-        private ObservableCollection<Message> notifications;
         private ObservableCollection<ServerMonitor> servers;
 
         private AccountViewModel accountViewModel;
@@ -104,6 +103,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         public ICommand DisconnectCommand { get; set; }
         public ICommand StopCommand { get; set; }
         public ICommand ClearNotificationsCommand { get; set; }
+
+        public ObservableCollection<Message> Notifications { get; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Servers must point to cached collection.")]
         public ObservableCollection<ServerMonitor> Servers
@@ -181,19 +182,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 {
                     strategyParametersViewModel = value;
                     OnPropertyChanged(nameof(StrategyParametersViewModel));
-                }
-            }
-        }
-
-        public ObservableCollection<Message> Notifications
-        {
-            get { return notifications; }
-            set
-            {
-                if (notifications != value)
-                {
-                    notifications = value;
-                    OnPropertyChanged(nameof(Notifications));
                 }
             }
         }
