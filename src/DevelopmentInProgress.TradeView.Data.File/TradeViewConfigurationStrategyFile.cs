@@ -24,12 +24,10 @@ namespace DevelopmentInProgress.TradeView.Data.File
         {
             if (System.IO.File.Exists(userStrategiesFile))
             {
-                using (var reader = System.IO.File.OpenText(userStrategiesFile))
-                {
-                    var json = await reader.ReadToEndAsync().ConfigureAwait(true);
-                    var strategies = JsonConvert.DeserializeObject<List<StrategyConfig>>(json);
-                    return strategies;
-                }
+                using var reader = System.IO.File.OpenText(userStrategiesFile);
+                var json = await reader.ReadToEndAsync().ConfigureAwait(true);
+                var strategies = JsonConvert.DeserializeObject<List<StrategyConfig>>(json);
+                return strategies;
             }
 
             return new List<StrategyConfig> 
@@ -44,13 +42,11 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
             if (System.IO.File.Exists(userStrategiesFile))
             {
-                using (var reader = System.IO.File.OpenText(userStrategiesFile))
-                {
-                    var json = await reader.ReadToEndAsync().ConfigureAwait(false);
-                    var strategies = JsonConvert.DeserializeObject<List<StrategyConfig>>(json);
-                    strategy = strategies.FirstOrDefault(s => s.Name.Equals(strategyName, StringComparison.Ordinal));
-                    return strategy;
-                }
+                using var reader = System.IO.File.OpenText(userStrategiesFile);
+                var json = await reader.ReadToEndAsync().ConfigureAwait(false);
+                var strategies = JsonConvert.DeserializeObject<List<StrategyConfig>>(json);
+                strategy = strategies.FirstOrDefault(s => s.Name.Equals(strategyName, StringComparison.Ordinal));
+                return strategy;
             }
 
             return GetDemoStrategyConfig();
@@ -67,11 +63,9 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
             if (System.IO.File.Exists(userStrategiesFile))
             {
-                using (var reader = System.IO.File.OpenText(userStrategiesFile))
-                {
-                    var rjson = await reader.ReadToEndAsync().ConfigureAwait(false);
-                    strategies = JsonConvert.DeserializeObject<List<StrategyConfig>>(rjson);
-                }
+                using var reader = System.IO.File.OpenText(userStrategiesFile);
+                var rjson = await reader.ReadToEndAsync().ConfigureAwait(false);
+                strategies = JsonConvert.DeserializeObject<List<StrategyConfig>>(rjson);
             }
             else
             {
@@ -90,10 +84,8 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
             UnicodeEncoding encoding = new UnicodeEncoding();
             char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
-            using (StreamWriter writer = System.IO.File.CreateText(userStrategiesFile))
-            {
-                await writer.WriteAsync(chars, 0, chars.Length).ConfigureAwait(false);
-            }
+            using StreamWriter writer = System.IO.File.CreateText(userStrategiesFile);
+            await writer.WriteAsync(chars, 0, chars.Length).ConfigureAwait(false);
         }
 
         public async Task DeleteStrategyAsync(StrategyConfig strategyConfig)
@@ -116,10 +108,8 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
                     UnicodeEncoding encoding = new UnicodeEncoding();
                     char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
-                    using (StreamWriter writer = System.IO.File.CreateText(userStrategiesFile))
-                    {
-                        await writer.WriteAsync(chars, 0, chars.Length).ConfigureAwait(false);
-                    }
+                    using StreamWriter writer = System.IO.File.CreateText(userStrategiesFile);
+                    await writer.WriteAsync(chars, 0, chars.Length).ConfigureAwait(false);
                 }
             }
         }

@@ -38,10 +38,8 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
                     UnicodeEncoding encoding = new UnicodeEncoding();
                     char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
-                    using (StreamWriter writer = System.IO.File.CreateText(userAccountsFile))
-                    {
-                        await writer.WriteAsync(chars, 0, chars.Length).ConfigureAwait(false);
-                    }
+                    using StreamWriter writer = System.IO.File.CreateText(userAccountsFile);
+                    await writer.WriteAsync(chars, 0, chars.Length).ConfigureAwait(false);
                 }
             }
         }
@@ -68,12 +66,10 @@ namespace DevelopmentInProgress.TradeView.Data.File
         {
             if (System.IO.File.Exists(userAccountsFile))
             {
-                using (var reader = System.IO.File.OpenText(userAccountsFile))
-                {
-                    var json = await reader.ReadToEndAsync().ConfigureAwait(true);
-                    var userAccounts = JsonConvert.DeserializeObject<UserAccounts>(json);
-                    return userAccounts;
-                }
+                using var reader = System.IO.File.OpenText(userAccountsFile);
+                var json = await reader.ReadToEndAsync().ConfigureAwait(true);
+                var userAccounts = JsonConvert.DeserializeObject<UserAccounts>(json);
+                return userAccounts;
             }
 
             var demoUserAccounts = new UserAccounts();
@@ -87,11 +83,9 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
             if (System.IO.File.Exists(userAccountsFile))
             {
-                using (var reader = System.IO.File.OpenText(userAccountsFile))
-                {
-                    var rjson = await reader.ReadToEndAsync().ConfigureAwait(false);
-                    userAccounts = JsonConvert.DeserializeObject<UserAccounts>(rjson);
-                }
+                using var reader = System.IO.File.OpenText(userAccountsFile);
+                var rjson = await reader.ReadToEndAsync().ConfigureAwait(false);
+                userAccounts = JsonConvert.DeserializeObject<UserAccounts>(rjson);
             }
             else
             {
@@ -110,10 +104,8 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
             UnicodeEncoding encoding = new UnicodeEncoding();
             char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
-            using (StreamWriter writer = System.IO.File.CreateText(userAccountsFile))
-            {
-                await writer.WriteAsync(chars, 0, chars.Length).ConfigureAwait(false);
-            }
+            using StreamWriter writer = System.IO.File.CreateText(userAccountsFile);
+            await writer.WriteAsync(chars, 0, chars.Length).ConfigureAwait(false);
         }
 
         private static UserAccount GetDemoAccount()

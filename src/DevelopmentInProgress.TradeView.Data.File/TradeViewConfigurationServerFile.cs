@@ -27,12 +27,10 @@ namespace DevelopmentInProgress.TradeView.Data.File
         {
             if (System.IO.File.Exists(userServersFile))
             {
-                using (var reader = System.IO.File.OpenText(userServersFile))
-                {
-                    var json = await reader.ReadToEndAsync().ConfigureAwait(false);
-                    var Servers = JsonConvert.DeserializeObject<List<TradeServer>>(json);
-                    return Servers;
-                }
+                using var reader = System.IO.File.OpenText(userServersFile);
+                var json = await reader.ReadToEndAsync().ConfigureAwait(false);
+                var Servers = JsonConvert.DeserializeObject<List<TradeServer>>(json);
+                return Servers;
             }
 
             return new List<TradeServer>
@@ -47,13 +45,11 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
             if (System.IO.File.Exists(userServersFile))
             {
-                using (var reader = System.IO.File.OpenText(userServersFile))
-                {
-                    var json = await reader.ReadToEndAsync().ConfigureAwait(false);
-                    var servers = JsonConvert.DeserializeObject<List<TradeServer>>(json);
-                    server = servers.FirstOrDefault(s => s.Name.Equals(serverName, StringComparison.Ordinal));
-                    return server;
-                }
+                using var reader = System.IO.File.OpenText(userServersFile);
+                var json = await reader.ReadToEndAsync().ConfigureAwait(false);
+                var servers = JsonConvert.DeserializeObject<List<TradeServer>>(json);
+                server = servers.FirstOrDefault(s => s.Name.Equals(serverName, StringComparison.Ordinal));
+                return server;
             }
 
             return GetDemoTradeServer();
@@ -70,11 +66,9 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
             if (System.IO.File.Exists(userServersFile))
             {
-                using (var reader = System.IO.File.OpenText(userServersFile))
-                {
-                    var rjson = await reader.ReadToEndAsync().ConfigureAwait(false);
-                    servers = JsonConvert.DeserializeObject<List<TradeServer>>(rjson);
-                }
+                using var reader = System.IO.File.OpenText(userServersFile);
+                var rjson = await reader.ReadToEndAsync().ConfigureAwait(false);
+                servers = JsonConvert.DeserializeObject<List<TradeServer>>(rjson);
             }
             else
             {
@@ -93,10 +87,8 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
             UnicodeEncoding encoding = new UnicodeEncoding();
             char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
-            using (StreamWriter writer = System.IO.File.CreateText(userServersFile))
-            {
-                await writer.WriteAsync(chars, 0, chars.Length).ConfigureAwait(false);
-            }
+            using StreamWriter writer = System.IO.File.CreateText(userServersFile);
+            await writer.WriteAsync(chars, 0, chars.Length).ConfigureAwait(false);
         }
 
         public async Task DeleteTradeServerAsync(TradeServer server)
@@ -119,10 +111,8 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
                     UnicodeEncoding encoding = new UnicodeEncoding();
                     char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
-                    using (StreamWriter writer = System.IO.File.CreateText(userServersFile))
-                    {
-                        await writer.WriteAsync(chars, 0, chars.Length).ConfigureAwait(false);
-                    }
+                    using StreamWriter writer = System.IO.File.CreateText(userServersFile);
+                    await writer.WriteAsync(chars, 0, chars.Length).ConfigureAwait(false);
                 }
             }
         }

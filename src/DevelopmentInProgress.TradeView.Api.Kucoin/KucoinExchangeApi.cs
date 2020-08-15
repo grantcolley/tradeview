@@ -28,11 +28,9 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                 ApiCredentials = new KucoinApiCredentials(user.ApiKey, user.ApiSecret, user.ApiPassPhrase)
             };
 
-            using (var kucoinClient = new KucoinClient(options))
-            {
-                var result = await kucoinClient.CancelOrderAsync(orderId).ConfigureAwait(false);
-                return result.Data.CancelledOrderIds.First();
-            }
+            using var kucoinClient = new KucoinClient(options);
+            var result = await kucoinClient.CancelOrderAsync(orderId).ConfigureAwait(false);
+            return result.Data.CancelledOrderIds.First();
         }
 
         public async Task<AccountInfo> GetAccountInfoAsync(User user, CancellationToken cancellationToken)
@@ -79,30 +77,28 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
         {
             var candlestickInterval = interval.ToKucoinCandlestickInterval();
 
-            using (var kucoinClient = new KucoinClient())
+            using var kucoinClient = new KucoinClient();
+            var result = await kucoinClient.GetKlinesAsync(symbol, candlestickInterval, startTime, endTime).ConfigureAwait(false);
+
+            Candlestick f(KucoinKline k)
             {
-                var result = await kucoinClient.GetKlinesAsync(symbol, candlestickInterval, startTime, endTime).ConfigureAwait(false);
-
-                Candlestick f(KucoinKline k)
+                return new Candlestick
                 {
-                    return new Candlestick
-                    {
-                        Symbol = symbol,
-                        Exchange = Exchange.Kucoin,
-                        Interval = interval,
-                        OpenTime = k.StartTime,
-                        Open = k.Open,
-                        High = k.High,
-                        Low = k.Low,
-                        Close = k.Close,
-                        Volume = k.Volume
-                    };
+                    Symbol = symbol,
+                    Exchange = Exchange.Kucoin,
+                    Interval = interval,
+                    OpenTime = k.StartTime,
+                    Open = k.Open,
+                    High = k.High,
+                    Low = k.Low,
+                    Close = k.Close,
+                    Volume = k.Volume
                 };
+            };
 
-                var candlesticks = (from k in result.Data select f(k)).ToList();
+            var candlesticks = (from k in result.Data select f(k)).ToList();
 
-                return candlesticks;
-            }
+            return candlesticks;
         }
 
         public async Task<IEnumerable<Order>> GetOpenOrdersAsync(User user, string symbol = null, long recWindow = 0, Action<Exception> exception = null, CancellationToken cancellationToken = default)
@@ -117,99 +113,93 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                 ApiCredentials = new KucoinApiCredentials(user.ApiKey, user.ApiSecret, user.ApiPassPhrase)
             };
 
-            using (var kucoinClient = new KucoinClient(options))
-            {
-                var results = await kucoinClient.GetOrdersAsync(null, null, null, null, null, KucoinOrderStatus.Active).ConfigureAwait(false);
+            using var kucoinClient = new KucoinClient(options);
+            var results = await kucoinClient.GetOrdersAsync(null, null, null, null, null, KucoinOrderStatus.Active).ConfigureAwait(false);
 
-                var orders = (from o in results.Data.Items
-                              select new Order
-                              {
-                                  User = user,
-                                  Symbol = o.Symbol,
-                                  Exchange = Exchange.Kucoin,
-                                  Id = o.Id,
-                                  ClientOrderId = o.ClientOrderId,
-                                  Price = o.Price,
-                                  OriginalQuantity = o.Quantity,
-                                  TimeInForce = o.TimeInForce.ToTradeViewTimeInForce(),
-                                  Type = o.Type.ToTradeViewOrderType(),
-                                  Side = o.Side.ToTradeViewOrderSide(),
-                                  StopPrice = o.StopPrice,
-                                  IcebergQuantity = o.VisibleIcebergSize,
-                                  Time = o.CreatedAt,
-                                  //Fills = o.Fills?.Select(f => new Interface.Model.Fill
-                                  //{
-                                  //    Price = f.Price,
-                                  //    Quantity = f.Quantity,
-                                  //    Commission = f.Commission,
-                                  //    CommissionAsset = f.CommissionAsset,
-                                  //    TradeId = f.TradeId
-                                  //})
-                              }).ToList();
+            var orders = (from o in results.Data.Items
+                          select new Order
+                          {
+                              User = user,
+                              Symbol = o.Symbol,
+                              Exchange = Exchange.Kucoin,
+                              Id = o.Id,
+                              ClientOrderId = o.ClientOrderId,
+                              Price = o.Price,
+                              OriginalQuantity = o.Quantity,
+                              TimeInForce = o.TimeInForce.ToTradeViewTimeInForce(),
+                              Type = o.Type.ToTradeViewOrderType(),
+                              Side = o.Side.ToTradeViewOrderSide(),
+                              StopPrice = o.StopPrice,
+                              IcebergQuantity = o.VisibleIcebergSize,
+                              Time = o.CreatedAt,
+                              //Fills = o.Fills?.Select(f => new Interface.Model.Fill
+                              //{
+                              //    Price = f.Price,
+                              //    Quantity = f.Quantity,
+                              //    Commission = f.Commission,
+                              //    CommissionAsset = f.CommissionAsset,
+                              //    TradeId = f.TradeId
+                              //})
+                          }).ToList();
 
-                return orders;
-            }
+            return orders;
         }
 
         public async Task<OrderBook> GetOrderBookAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
-            using (var kucoinClient = new KucoinClient())
+            using var kucoinClient = new KucoinClient();
+            var result = await kucoinClient.GetAggregatedPartialOrderBookAsync(symbol, limit).ConfigureAwait(false);
+
+            var orderBook = new OrderBook
             {
-                var result = await kucoinClient.GetAggregatedPartialOrderBookAsync(symbol, limit).ConfigureAwait(false);
+                Symbol = symbol,
+                Exchange = Exchange.Kucoin,
+                FirstUpdateId = result.Data.Sequence,
+                LastUpdateId = result.Data.Sequence
+            };
 
-                var orderBook = new OrderBook
-                {
-                    Symbol = symbol,
-                    Exchange = Exchange.Kucoin,
-                    FirstUpdateId = result.Data.Sequence,
-                    LastUpdateId = result.Data.Sequence
-                };
+            orderBook.Asks = (from ask in result.Data.Asks select new OrderBookPriceLevel { Price = ask.Price, Quantity = ask.Quantity }).ToList();
+            orderBook.Bids = (from bid in result.Data.Bids select new OrderBookPriceLevel { Price = bid.Price, Quantity = bid.Quantity }).ToList();
 
-                orderBook.Asks = (from ask in result.Data.Asks select new OrderBookPriceLevel { Price = ask.Price, Quantity = ask.Quantity }).ToList();
-                orderBook.Bids = (from bid in result.Data.Bids select new OrderBookPriceLevel { Price = bid.Price, Quantity = bid.Quantity }).ToList();
-
-                return orderBook;
-            }
+            return orderBook;
         }
 
         public async Task<IEnumerable<Symbol>> GetSymbolsAsync(CancellationToken cancellationToken)
         {
-            using (var kucoinClient = new KucoinClient())
+            using var kucoinClient = new KucoinClient();
+            var result = await kucoinClient.GetSymbolsAsync().ConfigureAwait(false);
+            var symbols = result.Data.Select(s => new Symbol
             {
-                var result = await kucoinClient.GetSymbolsAsync().ConfigureAwait(false);
-                var symbols = result.Data.Select(s => new Symbol
-                {
-                    Name = $"{s.BaseCurrency}{s.QuoteCurrency}",
-                    Exchange = Exchange.Kucoin,
-                    NameDelimiter = "-",
-                    ExchangeSymbol = s.Symbol,
-                    NotionalMinimumValue = s.QuoteMinSize,
-                    BaseAsset = new Asset { Symbol = s.BaseCurrency },
-                    QuoteAsset = new Asset { Symbol = s.QuoteCurrency },
-                    Price = new InclusiveRange { Increment = s.PriceIncrement, Maximum = s.QuoteMaxSize, Minimum = s.PriceIncrement },
-                    Quantity = new InclusiveRange { Increment = s.BaseIncrement, Maximum = s.BaseMaxSize, Minimum = s.BaseIncrement },
-                    SymbolStatistics = new SymbolStats { Symbol = s.Symbol },
-                    OrderTypes = new[] { OrderType.Limit, OrderType.Market, OrderType.StopLoss, OrderType.StopLossLimit, OrderType.TakeProfit, OrderType.TakeProfitLimit }
-                }).ToList();
+                Name = $"{s.BaseCurrency}{s.QuoteCurrency}",
+                Exchange = Exchange.Kucoin,
+                NameDelimiter = "-",
+                ExchangeSymbol = s.Symbol,
+                NotionalMinimumValue = s.QuoteMinSize,
+                BaseAsset = new Asset { Symbol = s.BaseCurrency },
+                QuoteAsset = new Asset { Symbol = s.QuoteCurrency },
+                Price = new InclusiveRange { Increment = s.PriceIncrement, Maximum = s.QuoteMaxSize, Minimum = s.PriceIncrement },
+                Quantity = new InclusiveRange { Increment = s.BaseIncrement, Maximum = s.BaseMaxSize, Minimum = s.BaseIncrement },
+                SymbolStatistics = new SymbolStats { Symbol = s.Symbol },
+                OrderTypes = new[] { OrderType.Limit, OrderType.Market, OrderType.StopLoss, OrderType.StopLossLimit, OrderType.TakeProfit, OrderType.TakeProfitLimit }
+            }).ToList();
 
-                var currencies = await kucoinClient.GetCurrenciesAsync().ConfigureAwait(false);
+            var currencies = await kucoinClient.GetCurrenciesAsync().ConfigureAwait(false);
 
-                Asset f(Asset a, KucoinCurrency c)
-                {
-                    a.Precision = c.Precision;
-                    return a;
-                };
+            Asset f(Asset a, KucoinCurrency c)
+            {
+                a.Precision = c.Precision;
+                return a;
+            };
 
-                (from s in symbols
-                 join c in currencies.Data on s.BaseAsset.Symbol equals c.Currency
-                 select f(s.BaseAsset, c)).ToList();
+            (from s in symbols
+             join c in currencies.Data on s.BaseAsset.Symbol equals c.Currency
+             select f(s.BaseAsset, c)).ToList();
 
-                (from s in symbols
-                 join c in currencies.Data on s.QuoteAsset.Symbol equals c.Currency
-                 select f(s.QuoteAsset, c)).ToList();
+            (from s in symbols
+             join c in currencies.Data on s.QuoteAsset.Symbol equals c.Currency
+             select f(s.QuoteAsset, c)).ToList();
 
-                return symbols;
-            }
+            return symbols;
         }
 
         public async Task<IEnumerable<Symbol>> GetSymbols24HourStatisticsAsync(CancellationToken cancellationToken)
@@ -224,22 +214,20 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
 
         public async Task<IEnumerable<Trade>> GetTradesAsync(string symbol, int limit, CancellationToken cancellationToken)
         {
-            using (var kucoinClint = new KucoinClient())
+            using var kucoinClint = new KucoinClient();
+            var result = await kucoinClint.GetSymbolTradesAsync(symbol).ConfigureAwait(false);
+            var trades = result.Data.Select(t => new Trade
             {
-                var result = await kucoinClint.GetSymbolTradesAsync(symbol).ConfigureAwait(false);
-                var trades = result.Data.Select(t => new Trade
-                {
-                    Symbol = symbol,
-                    Exchange = Exchange.Kucoin,
-                    Id = t.Sequence,
-                    Price = t.Price,
-                    Quantity = t.Quantity,
-                    Time = t.Timestamp,
-                    IsBuyerMaker = t.Side == KucoinOrderSide.Sell
-                }).ToList();
+                Symbol = symbol,
+                Exchange = Exchange.Kucoin,
+                Id = t.Sequence,
+                Price = t.Price,
+                Quantity = t.Quantity,
+                Time = t.Timestamp,
+                IsBuyerMaker = t.Side == KucoinOrderSide.Sell
+            }).ToList();
 
-                return trades;
-            }
+            return trades;
         }
 
         public async Task<Order> PlaceOrder(User user, ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default)
@@ -259,60 +247,58 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
                 ApiCredentials = new KucoinApiCredentials(user.ApiKey, user.ApiSecret, user.ApiPassPhrase)
             };
 
-            using (var kucoinClient = new KucoinClient(options))
+            using var kucoinClient = new KucoinClient(options);
+            var placeOrderResult = await kucoinClient.PlaceOrderAsync(
+                clientOrder.Symbol,
+                clientOrder.Side.ToKucoinOrderSide(),
+                clientOrder.Type.ToKucoinNewOrderType(),
+                clientOrder.Price,
+                clientOrder.Quantity,
+                null,
+                clientOrder.TimeInForce.ToKucoinTimeInForce(),
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                clientOrder.StopPrice,
+                null,
+                null
+                ).ConfigureAwait(false);
+
+            if (!placeOrderResult.Success)
             {
-                var placeOrderResult = await kucoinClient.PlaceOrderAsync(
-                    clientOrder.Symbol,
-                    clientOrder.Side.ToKucoinOrderSide(),
-                    clientOrder.Type.ToKucoinNewOrderType(),
-                    clientOrder.Price,
-                    clientOrder.Quantity,
-                    null,
-                    clientOrder.TimeInForce.ToKucoinTimeInForce(),
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    clientOrder.StopPrice,
-                    null,
-                    null
-                    ).ConfigureAwait(false);
+                throw new Exception($"Error Code : {placeOrderResult.Error.Code} Message : {placeOrderResult.Error.Message}");
+            }
 
-                if (!placeOrderResult.Success)
+            var orderResult = await kucoinClient.GetOrderAsync(placeOrderResult.Data.OrderId).ConfigureAwait(false);
+
+            if (orderResult.Success)
+            {
+                var order = new Order
                 {
-                    throw new Exception($"Error Code : {placeOrderResult.Error.Code} Message : {placeOrderResult.Error.Message}");
-                }
+                    User = user,
+                    Exchange = Exchange.Kucoin,
+                    Symbol = orderResult.Data.Symbol,
+                    //Id = orderResult.Data.Id,
+                    ClientOrderId = orderResult.Data.ClientOrderId,
+                    Price = orderResult.Data.Price,
+                    OriginalQuantity = orderResult.Data.Quantity,
+                    TimeInForce = orderResult.Data.TimeInForce.ToTradeViewTimeInForce(),
+                    Type = orderResult.Data.Type.ToTradeViewOrderType(),
+                    Side = orderResult.Data.Side.ToTradeViewOrderSide(),
+                    StopPrice = orderResult.Data.StopPrice,
+                    IcebergQuantity = orderResult.Data.VisibleIcebergSize,
+                    Time = orderResult.Data.CreatedAt
+                };
 
-                var orderResult = await kucoinClient.GetOrderAsync(placeOrderResult.Data.OrderId).ConfigureAwait(false);
-
-                if (orderResult.Success)
-                {
-                    var order = new Order
-                    {
-                        User = user,
-                        Exchange = Exchange.Kucoin,
-                        Symbol = orderResult.Data.Symbol,
-                        //Id = orderResult.Data.Id,
-                        ClientOrderId = orderResult.Data.ClientOrderId,
-                        Price = orderResult.Data.Price,
-                        OriginalQuantity = orderResult.Data.Quantity,
-                        TimeInForce = orderResult.Data.TimeInForce.ToTradeViewTimeInForce(),
-                        Type = orderResult.Data.Type.ToTradeViewOrderType(),
-                        Side = orderResult.Data.Side.ToTradeViewOrderSide(),
-                        StopPrice = orderResult.Data.StopPrice,
-                        IcebergQuantity = orderResult.Data.VisibleIcebergSize,
-                        Time = orderResult.Data.CreatedAt
-                    };
-
-                    return order;
-                }
-                else
-                {
-                    throw new Exception($"Error Code : {orderResult.Error.Code} Message : {orderResult.Error.Message}");
-                }
+                return order;
+            }
+            else
+            {
+                throw new Exception($"Error Code : {orderResult.Error.Code} Message : {orderResult.Error.Message}");
             }
         }
 
