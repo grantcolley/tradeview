@@ -262,7 +262,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
-                Strategy = await strategyService.GetStrategy(Title);
+                Strategy = await strategyService.GetStrategy(Title).ConfigureAwait(true);
 
                 strategyAssemblyManager.Activate(Strategy, ViewModelContext.UiDispatcher, Logger);
                 StrategyDisplayViewModel = (StrategyDisplayViewModelBase)strategyAssemblyManager.StrategyDisplayViewModel;
@@ -291,7 +291,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                     account.Exchange = strategySubscription.Exchange;
                 }
 
-                await Task.WhenAll(SymbolsViewModel.GetStrategySymbols(Strategy), AccountViewModel.Login(account), GetServerMonitors());
+                await Task.WhenAll(SymbolsViewModel.GetStrategySymbols(Strategy), AccountViewModel.Login(account), GetServerMonitors()).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -305,7 +305,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
-                Servers = await serverMonitorCache.GetServerMonitorsAsync();
+                Servers = await serverMonitorCache.GetServerMonitorsAsync().ConfigureAwait(true);
             }
             catch (Exception ex)
             {
@@ -316,33 +316,33 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
         private async void RunStrategy(object param)
         {
-            await RunAsync();
+            await RunAsync().ConfigureAwait(false);
         }
 
         private async void MonitorStrategy(object param)
         {
-            await MonitorAsync();
+            await MonitorAsync().ConfigureAwait(false);
         }
 
         private async void Disconnect(object param)
         {
-            await SetCommandVisibility(StrategyRunnerCommandVisibility.Connecting);
+            await SetCommandVisibility(StrategyRunnerCommandVisibility.Connecting).ConfigureAwait(false);
 
-            await DisconnectSocketAsync();
+            await DisconnectSocketAsync().ConfigureAwait(false);
 
-            await SetCommandVisibility(StrategyRunnerCommandVisibility.CanConnect);
+            await SetCommandVisibility(StrategyRunnerCommandVisibility.CanConnect).ConfigureAwait(false);
         }
 
         private async void StopStrategy(object param)
         {
-            await SetCommandVisibility(StrategyRunnerCommandVisibility.Connecting);
+            await SetCommandVisibility(StrategyRunnerCommandVisibility.Connecting).ConfigureAwait(false);
 
             var strategyParameters = new CoreStrategy.StrategyParameters { StrategyName = Strategy.Name };
             var strategyParametersJson = JsonConvert.SerializeObject(strategyParameters);
 
-            await StopAsync(strategyParametersJson);
+            await StopAsync(strategyParametersJson).ConfigureAwait(false);
             
-            await SetCommandVisibility(StrategyRunnerCommandVisibility.CanConnect);
+            await SetCommandVisibility(StrategyRunnerCommandVisibility.CanConnect).ConfigureAwait(false);
         }
 
         private void ClearNotifications(object param)
@@ -357,7 +357,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 return;
             }
 
-            await DisconnectSocketAsync(false);
+            await DisconnectSocketAsync(false).ConfigureAwait(true);
 
             symbolsSubscription.Dispose();
             accountSubscription.Dispose();
@@ -396,10 +396,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                             MessageType = Socket.Messages.MessageType.UnsubscribeFromChannel
                         };
 
-                        await socketClient.SendMessageAsync(clientMessage);
+                        await socketClient.SendMessageAsync(clientMessage).ConfigureAwait(true);
                     }
 
-                    await DisposeSocketAsync(writeNotification);
+                    await DisposeSocketAsync(writeNotification).ConfigureAwait(true);
                 }
                 catch (Exception ex)
                 {
@@ -451,9 +451,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 var strategyParameters = new CoreStrategy.StrategyParameters { StrategyName = Strategy.Name };
                 var strategyParametersJson = JsonConvert.SerializeObject(strategyParameters);
 
-                var response = await CoreStrategy.StrategyRunnerClient.PostAsync(new Uri($"{SelectedServer.Uri}isstrategyrunning"), strategyParametersJson);
+                var response = await CoreStrategy.StrategyRunnerClient.PostAsync(new Uri($"{SelectedServer.Uri}isstrategyrunning"), strategyParametersJson).ConfigureAwait(false);
 
-                var content = await response.Content.ReadAsStringAsync();
+                var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
@@ -489,7 +489,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             {
                 if (socketClient != null)
                 {
-                    await socketClient.DisposeAsync();
+                    await socketClient.DisposeAsync().ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -520,7 +520,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                     return;
                 }
 
-                var result = await MonitorAsync(true);
+                var result = await MonitorAsync(true).ConfigureAwait(false);
 
                 if (result)
                 {
@@ -529,22 +529,20 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                     var dependencies = strategy.Dependencies.Select(d => d.File);
 
-                    var response = await CoreStrategy.StrategyRunnerClient.PostAsync(new Uri($"{SelectedServer.Uri}runstrategy"), jsonContent, dependencies);
+                    var response = await CoreStrategy.StrategyRunnerClient.PostAsync(new Uri($"{SelectedServer.Uri}runstrategy"), jsonContent, dependencies).ConfigureAwait(false);
 
                     if(response.StatusCode != System.Net.HttpStatusCode.OK)
                     {
-                        await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect);
+                        await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect).ConfigureAwait(false);
 
-                        await DisconnectSocketAsync();
+                        await DisconnectSocketAsync().ConfigureAwait(false);
                     }
                     else
                     {
-                        var accountBalances = AccountViewModel.Account.AccountInfo.Balances.ToList();
-
-                        await SetCommandVisibility(StrategyRunnerCommandVisibility.Connected);
+                        await SetCommandVisibility(StrategyRunnerCommandVisibility.Connected).ConfigureAwait(false);
                     }
 
-                    var content = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
+                    var content = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
 
                     ViewModelContext.UiDispatcher.Invoke(() =>
                     {
@@ -563,8 +561,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 Logger.Log($"RunAsync {ex.Message}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Run - {ex.Message}", TextVerbose = ex.ToString() });
-                await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect);
-                await DisconnectSocketAsync();
+                await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect).ConfigureAwait(false);
+                await DisconnectSocketAsync().ConfigureAwait(false);
             }
         }
 
@@ -583,18 +581,18 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                     return;
                 }
 
-                var response = await CoreStrategy.StrategyRunnerClient.PostAsync(new Uri($"{SelectedServer.Uri}updatestrategy"), strategyParameters);
+                var response = await CoreStrategy.StrategyRunnerClient.PostAsync(new Uri($"{SelectedServer.Uri}updatestrategy"), strategyParameters).ConfigureAwait(false);
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect);
+                    await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect).ConfigureAwait(false);
 
-                    await DisconnectSocketAsync();
+                    await DisconnectSocketAsync().ConfigureAwait(false);
                 }
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    var content = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
+                    var content = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
 
                     ViewModelContext.UiDispatcher.Invoke(() =>
                     {
@@ -613,8 +611,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 Logger.Log($"RunAsync {ex.Message}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Update - {ex.Message}", TextVerbose = ex.ToString() });
-                await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect);
-                await DisconnectSocketAsync();
+                await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect).ConfigureAwait(false);
+                await DisconnectSocketAsync().ConfigureAwait(false);
             }
         }
 
@@ -627,11 +625,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                     return;
                 }
 
-                var response = await CoreStrategy.StrategyRunnerClient.PostAsync(new Uri($"{SelectedServer.Uri}stopstrategy"), strategyParameters);
+                var response = await CoreStrategy.StrategyRunnerClient.PostAsync(new Uri($"{SelectedServer.Uri}stopstrategy"), strategyParameters).ConfigureAwait(false);
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    var content = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
+                    var content = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
 
                     ViewModelContext.UiDispatcher.Invoke(() =>
                     {
@@ -644,11 +642,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                             });
                     });
 
-                    await DisconnectSocketAsync();
+                    await DisconnectSocketAsync().ConfigureAwait(false);
                 }
                 else
                 {
-                    await Task.Delay(500);
+                    await Task.Delay(500).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -656,8 +654,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 Logger.Log($"StopAsync {ex.Message}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Stop - {ex.Message}", TextVerbose = ex.ToString() });
-                await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect);
-                await DisconnectSocketAsync();
+                await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect).ConfigureAwait(false);
+                await DisconnectSocketAsync().ConfigureAwait(false);
             }
         }
 
@@ -674,7 +672,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 return false;
             }
 
-            await SetCommandVisibility(StrategyRunnerCommandVisibility.Connecting);
+            await SetCommandVisibility(StrategyRunnerCommandVisibility.Connecting).ConfigureAwait(true);
 
             Notifications.Clear();
 
@@ -697,15 +695,15 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             {
                 await ViewModelContext.UiDispatcher.Invoke(async () =>
                 {
-                    await OnStrategyNotificationAsync(message);
-                });
+                    await OnStrategyNotificationAsync(message).ConfigureAwait(false);
+                }).ConfigureAwait(false);
             });
 
             socketClient.On("Trade", (message) =>
             {
                 ViewModelContext.UiDispatcher.Invoke(async () =>
                 {
-                    await OnTradeNotificationAsync(message);
+                    await OnTradeNotificationAsync(message).ConfigureAwait(false);
                 });
             });
 
@@ -713,7 +711,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             {
                 ViewModelContext.UiDispatcher.Invoke(async () =>
                 {
-                    await OnOrderBookNotificationAsync(message);
+                    await OnOrderBookNotificationAsync(message).ConfigureAwait(false);
                 });
             });
 
@@ -729,7 +727,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             {
                 ViewModelContext.UiDispatcher.Invoke(async () =>
                 {
-                    await OnCandlesticksNotificationAsync(message);
+                    await OnCandlesticksNotificationAsync(message).ConfigureAwait(false);
                 });
             });
 
@@ -737,7 +735,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             {
                 ViewModelContext.UiDispatcher.Invoke(async () =>
                 {
-                    await OnParameterUpdateNotificationAsync(message);
+                    await OnParameterUpdateNotificationAsync(message).ConfigureAwait(false);
                 });
             });
 
@@ -747,8 +745,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 {
                     NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"socketClient.Closed", TextVerbose = args.ToString(), Timestamp = DateTime.Now });
 
-                    await DisposeSocketAsync(false);
-                });
+                    await DisposeSocketAsync(false).ConfigureAwait(false);
+                }).ConfigureAwait(false);
             };
 
             socketClient.Error += async (sender, args) => 
@@ -763,19 +761,19 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 {
                     NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"{args.Message}", TextVerbose = args.ToString(), Timestamp = DateTime.Now });
 
-                    await DisposeSocketAsync(false);
-                });
+                    await DisposeSocketAsync(false).ConfigureAwait(false);
+                }).ConfigureAwait(false);
             };
 
             try
             {
-                await socketClient.StartAsync(strategy.Name);
+                await socketClient.StartAsync(strategy.Name).ConfigureAwait(true);
 
                 StrategyDisplayViewModel.IsActive = true;
 
                 if (!isForRun)
                 {
-                    await SetCommandVisibility(StrategyRunnerCommandVisibility.Connected);
+                    await SetCommandVisibility(StrategyRunnerCommandVisibility.Connected).ConfigureAwait(false);
                 }
 
                 return true;
@@ -785,8 +783,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 Logger.Log($"MonitorAsync {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Monitor - {ex.Message}", TextVerbose=ex.ToString(), Timestamp = DateTime.Now });
-                await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect);
-                await DisconnectSocketAsync();
+                await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect).ConfigureAwait(false);
+                await DisconnectSocketAsync().ConfigureAwait(false);
                 return false;
             }
         }
@@ -803,7 +801,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                     if(notification.NotificationLevel.Equals(TradeView.Core.TradeStrategy.NotificationLevel.DisconnectClient))
                     {
-                        await DisconnectSocketAsync();
+                        await DisconnectSocketAsync().ConfigureAwait(false);
                     }
                 }
             }
@@ -823,7 +821,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                 var orderedStrategyNotifications = strategyNotifications.OrderBy(n => n.Timestamp).ToList();
 
-                await StrategyDisplayViewModel.TradeNotificationsAsync(orderedStrategyNotifications);
+                await StrategyDisplayViewModel.TradeNotificationsAsync(orderedStrategyNotifications).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -841,7 +839,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                 var orderedStrategyNotifications = strategyNotifications.OrderBy(n => n.Timestamp).ToList();
 
-                await StrategyDisplayViewModel.CandlestickNotificationsAsync(orderedStrategyNotifications);
+                await StrategyDisplayViewModel.CandlestickNotificationsAsync(orderedStrategyNotifications).ConfigureAwait(false);
             }
             catch(Exception ex)
             {
@@ -868,7 +866,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"OnParameterUpdateNotificationAsync - {ex.Message}", TextVerbose = ex.ToString() });
             }
 
-            await Task.FromResult<object>(null);
+            await Task.FromResult<object>(null).ConfigureAwait(false);
         }
 
         private async Task OnOrderBookNotificationAsync(Socket.Messages.Message message)
@@ -879,7 +877,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                 var orderedStrategyNotifications = strategyNotifications.OrderBy(n => n.Timestamp).ToList();
 
-                await StrategyDisplayViewModel.OrderNotificationsAsync(orderedStrategyNotifications);
+                await StrategyDisplayViewModel.OrderNotificationsAsync(orderedStrategyNotifications).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -943,11 +941,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 }
                 else if(args.AccountEventType.Equals(AccountEventType.LoggedIn))
                 {
-                    await OrdersViewModel.SetAccount(args.Value);
+                    await OrdersViewModel.SetAccount(args.Value).ConfigureAwait(false);
                 }
                 else if (args.AccountEventType.Equals(AccountEventType.UpdateOrders))
                 {
-                    await OrdersViewModel.UpdateOrders(args.Value);
+                    await OrdersViewModel.UpdateOrders(args.Value).ConfigureAwait(false);
                 }
                 else if (!string.IsNullOrWhiteSpace(args.Message))
                 {
@@ -996,7 +994,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                         NotificationsAdd(new Message { MessageType = MessageType.Info, Text = args.Message });
                     }
 
-                    await Update(args.Value.Parameters);
+                    await Update(args.Value.Parameters).ConfigureAwait(false);
                 }
             });
         }
@@ -1088,7 +1086,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                     if (IsValidSelectServer())
                     {
-                        var isRunning = await IsStrategyRunningAsync();
+                        var isRunning = await IsStrategyRunningAsync().ConfigureAwait(true);
 
                         CanRun = !isRunning;
                         CanMonitor = isRunning;
@@ -1117,7 +1115,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"SetCommandVisibility - {ex.Message}", TextVerbose = ex.ToString() });
             }
 
-            await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect);
+            await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect).ConfigureAwait(false);
         }
 
         private void RaiseStrategyDisplayEvent()
