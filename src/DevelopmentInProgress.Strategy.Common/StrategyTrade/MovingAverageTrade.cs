@@ -10,13 +10,14 @@ namespace DevelopmentInProgress.Strategy.Common.StrategyTrade
 
         public override bool Equals(object obj)
         {
-            if (obj == null || !(obj is MovingAverageTrade))
+            if (obj == null 
+                || !(obj is MovingAverageTrade trade))
             {
                 return false;
             }
             else
             {
-                return (Id == ((MovingAverageTrade)obj).Id);
+                return (Id == trade.Id);
             }
         }
 

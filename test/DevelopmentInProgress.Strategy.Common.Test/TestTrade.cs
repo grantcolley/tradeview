@@ -19,13 +19,13 @@ namespace DevelopmentInProgress.Strategy.Common.Test
 
         public override bool Equals(Object obj)
         {
-            if (obj == null || !(obj is TestTrade))
+            if (obj == null || !(obj is TestTrade trade))
             {
                 return false;
             }
             else
             {
-                return (Id == ((TestTrade)obj).Id);
+                return (Id == trade.Id);
             }
         }
 
