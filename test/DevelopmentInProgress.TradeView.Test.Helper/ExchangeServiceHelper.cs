@@ -11,23 +11,16 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
 
         public static IExchangeService GetExchangeService(ExchangeServiceType exchangeServiceType)
         {
-            switch(exchangeServiceType)
+            return exchangeServiceType switch
             {
-                case ExchangeServiceType.Standard:
-                    return new ExchangeService();
-                case ExchangeServiceType.SubscribeAccountInfo:
-                    return new ExchangeServiceSubscribeAccountInfoAccount();
-                case ExchangeServiceType.SymbolsViewModel:
-                    return new ExchangeServiceSymbolsViewModel();
-                case ExchangeServiceType.UpdateOrders:
-                    return new ExchangeServiceUpdateOrders();
-                case ExchangeServiceType.PlaceOrderException:
-                    return new ExchangeServicePlaceOrderException();
-                case ExchangeServiceType.SubscribeOrderBookAggregateTrades:
-                    return new ExchangeServiceSubscribeOrderBookAggregateTrades();
-                default:
-                    return new ExchangeService();
-            }
+                ExchangeServiceType.Standard => new ExchangeService(),
+                ExchangeServiceType.SubscribeAccountInfo => new ExchangeServiceSubscribeAccountInfoAccount(),
+                ExchangeServiceType.SymbolsViewModel => new ExchangeServiceSymbolsViewModel(),
+                ExchangeServiceType.UpdateOrders => new ExchangeServiceUpdateOrders(),
+                ExchangeServiceType.PlaceOrderException => new ExchangeServicePlaceOrderException(),
+                ExchangeServiceType.SubscribeOrderBookAggregateTrades => new ExchangeServiceSubscribeOrderBookAggregateTrades(),
+                _ => new ExchangeService(),
+            };
         }
     }
 }

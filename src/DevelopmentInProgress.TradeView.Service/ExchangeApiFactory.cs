@@ -11,15 +11,12 @@ namespace DevelopmentInProgress.TradeView.Service
     {
         public IExchangeApi GetExchangeApi(Exchange exchange)
         {
-            switch(exchange)
+            return exchange switch
             {
-                case Exchange.Binance:
-                    return new BinanceExchangeApi();
-                case Exchange.Kucoin:
-                    return new KucoinExchangeApi();
-                default:
-                    throw new NotImplementedException();
-            }
+                Exchange.Binance => new BinanceExchangeApi(),
+                Exchange.Kucoin => new KucoinExchangeApi(),
+                _ => throw new NotImplementedException(),
+            };
         }
 
         public Dictionary<Exchange, IExchangeApi> GetExchanges()
