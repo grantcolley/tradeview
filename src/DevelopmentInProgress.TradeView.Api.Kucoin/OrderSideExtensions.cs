@@ -8,28 +8,22 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
     {
         public static KucoinOrderSide ToKucoinOrderSide(this OrderSide order)
         {
-            switch (order)
+            return order switch
             {
-                case OrderSide.Buy:
-                    return KucoinOrderSide.Buy;
-                case OrderSide.Sell:
-                    return KucoinOrderSide.Sell;
-                default:
-                    throw new NotImplementedException();
-            }
+                OrderSide.Buy => KucoinOrderSide.Buy,
+                OrderSide.Sell => KucoinOrderSide.Sell,
+                _ => throw new NotImplementedException(),
+            };
         }
 
         public static OrderSide ToTradeViewOrderSide(this KucoinOrderSide order)
         {
-            switch (order)
+            return order switch
             {
-                case KucoinOrderSide.Buy:
-                    return OrderSide.Buy;
-                case KucoinOrderSide.Sell:
-                    return OrderSide.Sell;
-                default:
-                    throw new NotImplementedException();
-            }
+                KucoinOrderSide.Buy => OrderSide.Buy,
+                KucoinOrderSide.Sell => OrderSide.Sell,
+                _ => throw new NotImplementedException(),
+            };
         }
     }
 }

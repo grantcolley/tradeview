@@ -8,32 +8,24 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
     {
         public static KucoinTimeInForce ToKucoinTimeInForce(this TimeInForce tif)
         {
-            switch (tif)
+            return tif switch
             {
-                case TimeInForce.FOK:
-                    return KucoinTimeInForce.FillOrKill;
-                case TimeInForce.GTC:
-                    return KucoinTimeInForce.GoodTillCancelled;
-                case TimeInForce.IOC:
-                    return KucoinTimeInForce.ImmediateOrCancel;
-                default:
-                    throw new NotImplementedException();
-            }
+                TimeInForce.FOK => KucoinTimeInForce.FillOrKill,
+                TimeInForce.GTC => KucoinTimeInForce.GoodTillCancelled,
+                TimeInForce.IOC => KucoinTimeInForce.ImmediateOrCancel,
+                _ => throw new NotImplementedException(),
+            };
         }
 
         public static TimeInForce ToTradeViewTimeInForce(this KucoinTimeInForce tif)
         {
-            switch (tif)
+            return tif switch
             {
-                case KucoinTimeInForce.FillOrKill:
-                    return TimeInForce.FOK;
-                case KucoinTimeInForce.GoodTillCancelled:
-                    return TimeInForce.GTC;
-                case KucoinTimeInForce.ImmediateOrCancel:
-                    return TimeInForce.IOC;
-                default:
-                    throw new NotImplementedException();
-            }
+                KucoinTimeInForce.FillOrKill => TimeInForce.FOK,
+                KucoinTimeInForce.GoodTillCancelled => TimeInForce.GTC,
+                KucoinTimeInForce.ImmediateOrCancel => TimeInForce.IOC,
+                _ => throw new NotImplementedException(),
+            };
         }
     }
 }
