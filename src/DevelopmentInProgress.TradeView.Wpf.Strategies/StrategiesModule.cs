@@ -1,5 +1,5 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Common.Services;
-using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Module;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Modular;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.View;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel;

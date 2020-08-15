@@ -1,11 +1,10 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Common.Services;
-using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Module;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Modular;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Trading.View;
 using DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel;
 using Prism.Ioc;
 using Prism.Logging;
-using System;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading
 {

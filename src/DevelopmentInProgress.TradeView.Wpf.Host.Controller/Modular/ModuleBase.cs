@@ -10,7 +10,7 @@ using Prism.Ioc;
 using Prism.Logging;
 using Prism.Modularity;
 
-namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Module
+namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Modular
 {
     /// <summary>
     /// Base class for Prism modules that implements Prism's IModule interface.
