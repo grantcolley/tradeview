@@ -13,6 +13,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Utility
     public class StrategyAssemblyManager : IStrategyAssemblyManager
     {
         private readonly IHelperFactoryContainer iHelperFactoryContainer;
+        private AssemblyLoader assemblyLoader;
         private bool disposed;
 
         public StrategyAssemblyManager(IHelperFactoryContainer iHelperFactoryContainer)
@@ -41,14 +42,19 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Utility
 
             Download(displayAssemblies);
 
-            var asm = Assembly.LoadFile(Path.Combine(StrategyDirectory, strategy.DisplayAssembly.DisplayName));
+            assemblyLoader = new AssemblyLoader(StrategyDirectory, Files);
+            var assembly = assemblyLoader.LoadFromMemoryStream(Path.Combine(StrategyDirectory, strategy.DisplayAssembly.DisplayName));
+            var viewModel = assembly.GetType(strategy.DisplayViewModelType);
+            StrategyDisplayViewModel = Activator.CreateInstance(viewModel, new object[] { strategy, iHelperFactoryContainer, UiDispatcher, Logger });
 
-            var viewModel = asm.GetType(strategy.DisplayViewModelType);
+            //var asm = Assembly.LoadFile(Path.Combine(StrategyDirectory, strategy.DisplayAssembly.DisplayName));
 
-            StrategyDisplayViewModel = Activator.CreateInstance(viewModel, 
-                new object[] { strategy, iHelperFactoryContainer, UiDispatcher, Logger });
+            //var viewModel = asm.GetType(strategy.DisplayViewModelType);
 
-            var view = asm.GetType(strategy.DisplayViewType);
+            //StrategyDisplayViewModel = Activator.CreateInstance(viewModel, 
+            //    new object[] { strategy, iHelperFactoryContainer, UiDispatcher, Logger });
+
+            var view = assembly.GetType(strategy.DisplayViewType);
             StrategyDisplayView = Activator.CreateInstance(view, new object[] { StrategyDisplayViewModel });
         }
 
@@ -102,7 +108,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Utility
                 var fileInfo = new FileInfo(file);
                 var assembly = Path.Combine(StrategyDirectory, fileInfo.Name);
                 File.Copy(file, assembly, true);
-                Files.Add(assembly);
+                var name = fileInfo.Name.Substring(0, fileInfo.Name.LastIndexOf('.'));
+                Files.Add(name);                
             }
         }
     }
