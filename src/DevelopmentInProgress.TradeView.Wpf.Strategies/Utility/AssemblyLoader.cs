@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyModel;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,8 +9,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Utility
 {
     internal class AssemblyLoader : AssemblyLoadContext
     {
-        private string folderPath;
-        private IList<string> dependencies;
+        private readonly string folderPath;
+        private readonly IList<string> dependencies;
 
         internal AssemblyLoader(string folderPath, IList<string> dependencies)
         {
