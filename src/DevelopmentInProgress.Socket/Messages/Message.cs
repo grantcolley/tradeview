@@ -1,6 +1,6 @@
-﻿using System;
-using DevelopmentInProgress.Socket.Client;
+﻿using DevelopmentInProgress.Socket.Client;
 using DevelopmentInProgress.Socket.Server;
+using System;
 
 namespace DevelopmentInProgress.Socket.Messages
 {

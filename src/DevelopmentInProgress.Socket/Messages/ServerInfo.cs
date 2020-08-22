@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using DevelopmentInProgress.Socket.Server;
+﻿using DevelopmentInProgress.Socket.Server;
+using System.Collections.Generic;
 
 namespace DevelopmentInProgress.Socket.Messages
 {

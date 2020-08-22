@@ -1,12 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using DevelopmentInProgress.Socket.Messages;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DevelopmentInProgress.Socket.Messages;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace DevelopmentInProgress.Socket.Server
 {

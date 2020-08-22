@@ -1,4 +1,5 @@
 ﻿using DevelopmentInProgress.Socket.Messages;
+using DevelopmentInProgress.Socket.Server;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -6,9 +7,7 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DevelopmentInProgress.Socket.Server;
 using System.Web;
-using System.Globalization;
 
 namespace DevelopmentInProgress.Socket.Client
 {
