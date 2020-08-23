@@ -13,20 +13,20 @@ using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.RegionAdapters;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.View;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Host.Logger;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.Utility;
 using DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel;
-using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
 using Prism.Ioc;
 using Prism.Logging;
 using Prism.Modularity;
 using Prism.Regions;
 using Prism.Unity;
 using Serilog;
+using System;
 using System.IO;
 using System.Windows;
 using Xceed.Wpf.AvalonDock;
-using System;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host
 {
