@@ -1063,13 +1063,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             if (SelectedServer != null
                 && SelectedServer.IsConnected)
             {
-                if (!IsConnected
-                    && !IsConnecting)
-                {
-                    SetCommandVisibility(StrategyRunnerCommandVisibility.CanConnect).FireAndForget();
-                    return;
-                }
-
+                SetCommandVisibility(StrategyRunnerCommandVisibility.CanConnect).FireAndForget();
                 return;
             }
 
@@ -1080,12 +1074,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
-                if (strategyRunnerCommandVisibility.Equals(StrategyRunnerCommandVisibility.CanConnect))
+                if (strategyRunnerCommandVisibility.Equals(StrategyRunnerCommandVisibility.CanConnect)
+                    && !IsConnected 
+                    && !IsConnecting)
                 {
-                    IsConnecting = true;
-
-                    if (IsValidSelectServer())
+                    if (IsValidSelectServer())                 
                     {
+                        IsConnecting = true;
+
                         var isRunning = await IsStrategyRunningAsync().ConfigureAwait(true);
 
                         CanRun = !isRunning;
