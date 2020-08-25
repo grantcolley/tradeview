@@ -126,7 +126,7 @@
                                            PointGeometry="{x:Null}"/>
                         </lc:CartesianChart.Series>
                         <lc:CartesianChart.AxisY>
-                            <lc:Axis Name="tradeY" LabelFormatter="{Binding PriceFormatter}">
+                            <lc:Axis Name="tradeY" Title="Price" LabelFormatter="{Binding PriceFormatter}">
                                 <lc:Axis.Separator>
                                     <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="True">
                                         <lc:Separator.Stroke>
@@ -137,7 +137,7 @@
                             </lc:Axis>
                         </lc:CartesianChart.AxisY>
                         <lc:CartesianChart.AxisX>
-                            <lc:Axis Name="tradeX" LabelFormatter="{Binding TimeFormatter}">
+                            <lc:Axis Name="tradeX" Title="Time" LabelFormatter="{Binding TimeFormatter}">
                                 <lc:Axis.Separator>
                                     <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="True">
                                         <lc:Separator.Stroke>
@@ -174,7 +174,7 @@
                                                 Title="Bids"/>
                         </lc:CartesianChart.Series>
                         <lc:CartesianChart.AxisY>
-                            <lc:Axis Name="orderBookY">
+                            <lc:Axis Name="orderBookY" Title="Qty">
                                 <lc:Axis.Separator>
                                     <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="True">
                                         <lc:Separator.Stroke>
@@ -185,7 +185,7 @@
                             </lc:Axis>
                         </lc:CartesianChart.AxisY>
                         <lc:CartesianChart.AxisX>
-                            <lc:Axis Name="orderBookX" LabelFormatter="{Binding PriceFormatter}">
+                            <lc:Axis Name="orderBookX" Title="Price" LabelFormatter="{Binding PriceFormatter}">
                                 <lc:Axis.Separator>
                                     <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="False">
                                         <lc:Separator.Stroke>
@@ -206,7 +206,7 @@
                             <lc:OhlcSeries Values="{Binding CandlesticksChart}"/>
                         </lc:CartesianChart.Series>
                         <lc:CartesianChart.AxisY>
-                            <lc:Axis Name="candlestickY" Title="Price">
+                            <lc:Axis Name="candlestickY" Title="Price" LabelFormatter="{Binding PriceFormatter}">
                                 <lc:Axis.Separator>
                                     <lc:Separator StrokeThickness="1" StrokeDashArray="2" IsEnabled="True">
                                         <lc:Separator.Stroke>
