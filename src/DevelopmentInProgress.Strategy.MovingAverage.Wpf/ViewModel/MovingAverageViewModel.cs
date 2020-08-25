@@ -32,6 +32,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
         private readonly ITradeHelperFactory tradeHelperFactory;
         private readonly IOrderBookHelperFactory orderBookHelperFactory;
 
+        private List<Trade> trades;
         private OrderBook orderBook;
         private bool isLoadingTrades;
         private bool isLoadingOrderBook;
@@ -70,13 +71,25 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
         public Func<double, string> TimeFormatter { get; set; }
         public Func<double, string> PriceFormatter { get; set; }
 
-        public List<Trade> Trades { get; }
         public ChartValues<Trade> TradesChart { get; }
         public ChartValues<Trade> SmaTradesChart { get; }
         public ChartValues<Trade> BuyIndicatorChart { get; }
         public ChartValues<Trade> SellIndicatorChart { get; }
         public ChartValues<Candlestick> CandlesticksChart { get; }
         public ObservableCollection<string> CandlestickLabels { get; }
+
+        public List<Trade> Trades
+        {
+            get { return trades; }
+            private set
+            {
+                if (trades != value)
+                {
+                    trades = value;
+                    OnPropertyChanged(nameof(Trades));
+                }
+            }
+        }
 
         public bool IsLoadingTrades
         {
@@ -211,7 +224,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                     {
                         var result = await tradeHelper.CreateLocalTradeList<Trade>(symbol, tradesUpdate, tradesDisplayCount, tradesChartDisplayCount, 0).ConfigureAwait(true);
 
-                        Trades.AddRange(result.Trades);
+                        Trades = result.Trades;
                         TradesChart.AddRange(result.TradesChart);
 
                         SmaTradesChart.AddRange(tradeHelper.CreateLocalChartTrades(tradesUpdate, createSmaTrade, tradesChartDisplayCount, pricePrecision, quantityPrecision));
@@ -230,8 +243,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
 
                         tradeHelper.UpdateTrades(symbol, tradesUpdate, Trades, tradesDisplayCount, tradesChartDisplayCount, TradesChart, out List<Trade> newTrades);
 
-                        Trades.Clear();
-                        Trades.AddRange(newTrades);
+                        Trades = newTrades;
 
                         tradeHelper.UpdateLocalChartTrades(tradesUpdate, createSmaTrade, seedTime, seedId, tradesChartDisplayCount, pricePrecision, quantityPrecision, SmaTradesChart);
 
