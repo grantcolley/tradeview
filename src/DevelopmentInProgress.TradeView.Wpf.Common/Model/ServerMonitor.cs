@@ -178,7 +178,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         public void Dispose()
         {
             Dispose(true);
-
             GC.SuppressFinalize(this);
         }
 
@@ -221,6 +220,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
             try
             {
                 if(socketClient != null)
+                {
+                    return;
+                }
+
+                if (IsConnected
+                    || IsConnecting
+                    || string.IsNullOrWhiteSpace(Uri.ToString())
+                    || Enabled)
                 {
                     return;
                 }

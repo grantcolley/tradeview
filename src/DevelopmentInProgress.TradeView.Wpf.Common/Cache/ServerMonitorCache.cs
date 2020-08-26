@@ -22,7 +22,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
         private readonly SemaphoreSlim serverMonitorSemaphoreSlim = new SemaphoreSlim(1, 1);
         private readonly Dictionary<string, IDisposable> serverMonitorSubscriptions;
         private readonly Dispatcher dispatcher;
-        private Core.Server.ServerConfiguration serverConfiguraion;
+        private Core.Server.ServerConfiguration serverConfiguration;
         private IDisposable observableInterval;
         private bool disposed;
 
@@ -46,18 +46,18 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions and notify observers.")]
         public async Task RefreshServerMonitorsAsync()
         {
-            await serverMonitorSemaphoreSlim.WaitAsync().ConfigureAwait(false);
+            await serverMonitorSemaphoreSlim.WaitAsync().ConfigureAwait(true);
 
             try
             {
-                var servers = await configurationServer.GetTradeServersAsync().ConfigureAwait(false);
+                var servers = await configurationServer.GetTradeServersAsync().ConfigureAwait(true);
 
                 await dispatcher.InvokeAsync(async () =>
                 {
                     var removeServers = serverMonitors.Where(sm => !servers.Any(s => s.Name == sm.Name)).ToList();
                     if (removeServers.Any())
                     {
-                        await Task.WhenAll(removeServers.Select(s => s.DisposeAsync()).ToList()).ConfigureAwait(false);
+                        await Task.WhenAll(removeServers.Select(s => s.DisposeAsync()).ToList()).ConfigureAwait(true);
 
                         foreach (var server in removeServers)
                         {
@@ -90,9 +90,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                     }
                 });
 
-                if (serverConfiguraion == null)
+                if (serverConfiguration == null)
                 {
-                    serverConfiguraion = await configurationServer.GetServerConfiguration().ConfigureAwait(false);
+                    serverConfiguration = await configurationServer.GetServerConfiguration().ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -104,7 +104,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                 serverMonitorSemaphoreSlim.Release();
             }
 
-            StartObserveringServers();
+            StartObservingServers();
         }
 
         public async void Dispose()
@@ -135,20 +135,18 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions and notify observers.")]
-        private void StartObserveringServers()
+        private void StartObservingServers()
         {
             if(observableInterval != null)
             {
                 return;
             }
 
-            observableInterval = Observable.Interval(TimeSpan.FromSeconds(serverConfiguraion.ObserveServerInterval))
+            observableInterval = Observable.Interval(TimeSpan.FromSeconds(serverConfiguration.ObserveServerInterval))
                 .Subscribe(async i =>
                 {
                     try
                     {
-                        Debug.Print($"{DateTime.Now} - should be {serverConfiguraion.ObserveServerInterval} seconds");
-
                         var connectServers = serverMonitors.Where(
                             s => !s.IsConnected
                             && !s.IsConnecting 
