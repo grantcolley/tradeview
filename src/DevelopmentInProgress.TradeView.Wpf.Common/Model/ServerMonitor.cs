@@ -227,7 +227,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 if (IsConnected
                     || IsConnecting
                     || string.IsNullOrWhiteSpace(Uri.ToString())
-                    || Enabled)
+                    || !Enabled)
                 {
                     return;
                 }

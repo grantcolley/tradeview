@@ -330,7 +330,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
             await DisconnectSocketAsync().ConfigureAwait(false);
 
-            await SetCommandVisibility(StrategyRunnerCommandVisibility.CanConnect).ConfigureAwait(false);
+            await SetCommandVisibility(StrategyRunnerCommandVisibility.ServerAvailable).ConfigureAwait(false);
         }
 
         private async void StopStrategy(object param)
@@ -342,7 +342,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
             await StopAsync(strategyParametersJson).ConfigureAwait(false);
             
-            await SetCommandVisibility(StrategyRunnerCommandVisibility.CanConnect).ConfigureAwait(false);
+            await SetCommandVisibility(StrategyRunnerCommandVisibility.ServerAvailable).ConfigureAwait(false);
         }
 
         private void ClearNotifications(object param)
@@ -416,38 +416,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
         }
 
-        private bool IsValidSelectServer()
-        {
-            if(SelectedServer != null)
-            {
-                if(string.IsNullOrWhiteSpace(SelectedServer.Uri.ToString()))
-                {
-                    var msg = "SelectedServer.Url is null";
-                    Logger.Log(msg, Prism.Logging.Category.Warn, Prism.Logging.Priority.High);
-                    NotificationsAdd(new Message { MessageType = MessageType.Warn, Text = msg });
-                    return false;
-                }
-            }
-            else
-            {
-                var msg = "SelectedServer is null";
-                Logger.Log(msg, Prism.Logging.Category.Warn, Prism.Logging.Priority.High);
-                NotificationsAdd(new Message { MessageType = MessageType.Warn, Text = msg });
-                return false;
-            }
-
-            return true;
-        }
-
         private async Task<bool> IsStrategyRunningAsync()
         {
             try
             {
-                if (!IsValidSelectServer())
-                {
-                    return false;
-                }
-
                 var strategyParameters = new CoreStrategy.StrategyParameters { StrategyName = Strategy.Name };
                 var strategyParametersJson = JsonConvert.SerializeObject(strategyParameters);
 
@@ -515,11 +487,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
-                if (!IsValidSelectServer())
-                {
-                    return;
-                }
-
                 var result = await MonitorAsync(true).ConfigureAwait(false);
 
                 if (result)
@@ -533,7 +500,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                     if(response.StatusCode != System.Net.HttpStatusCode.OK)
                     {
-                        await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect).ConfigureAwait(false);
+                        await SetCommandVisibility(StrategyRunnerCommandVisibility.ServerUnavailable).ConfigureAwait(false);
 
                         await DisconnectSocketAsync().ConfigureAwait(false);
                     }
@@ -561,7 +528,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 Logger.Log($"RunAsync {ex.Message}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Run - {ex.Message}", TextVerbose = ex.ToString() });
-                await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect).ConfigureAwait(false);
+                await SetCommandVisibility(StrategyRunnerCommandVisibility.ServerUnavailable).ConfigureAwait(false);
                 await DisconnectSocketAsync().ConfigureAwait(false);
             }
         }
@@ -570,11 +537,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
-                if (!IsValidSelectServer())
-                {
-                    return;
-                }
-
                 if (!IsConnected)
                 {
                     NotificationsAdd(new Message { MessageType = MessageType.Warn, Text = $"Not connected to running strategy"});
@@ -585,7 +547,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect).ConfigureAwait(false);
+                    await SetCommandVisibility(StrategyRunnerCommandVisibility.ServerUnavailable).ConfigureAwait(false);
 
                     await DisconnectSocketAsync().ConfigureAwait(false);
                 }
@@ -611,7 +573,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 Logger.Log($"RunAsync {ex.Message}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Update - {ex.Message}", TextVerbose = ex.ToString() });
-                await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect).ConfigureAwait(false);
+                await SetCommandVisibility(StrategyRunnerCommandVisibility.ServerUnavailable).ConfigureAwait(false);
                 await DisconnectSocketAsync().ConfigureAwait(false);
             }
         }
@@ -620,11 +582,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
-                if (!IsValidSelectServer())
-                {
-                    return;
-                }
-
                 var response = await CoreStrategy.StrategyRunnerClient.PostAsync(new Uri($"{SelectedServer.Uri}stopstrategy"), strategyParameters).ConfigureAwait(false);
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
@@ -654,7 +611,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 Logger.Log($"StopAsync {ex.Message}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Stop - {ex.Message}", TextVerbose = ex.ToString() });
-                await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect).ConfigureAwait(false);
+                await SetCommandVisibility(StrategyRunnerCommandVisibility.ServerUnavailable).ConfigureAwait(false);
                 await DisconnectSocketAsync().ConfigureAwait(false);
             }
         }
@@ -665,11 +622,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             {
                 NotificationsAdd(new Message { MessageType = MessageType.Info, Text = $"Already connected to strategy", Timestamp = DateTime.Now });
                 return IsConnected;
-            }
-
-            if (!IsValidSelectServer())
-            {
-                return false;
             }
 
             await SetCommandVisibility(StrategyRunnerCommandVisibility.Connecting).ConfigureAwait(true);
@@ -783,7 +735,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 Logger.Log($"MonitorAsync {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Monitor - {ex.Message}", TextVerbose=ex.ToString(), Timestamp = DateTime.Now });
-                await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect).ConfigureAwait(false);
+                await SetCommandVisibility(StrategyRunnerCommandVisibility.ServerUnavailable).ConfigureAwait(false);
                 await DisconnectSocketAsync().ConfigureAwait(false);
                 return false;
             }
@@ -1063,55 +1015,54 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             if (SelectedServer != null
                 && SelectedServer.IsConnected)
             {
-                SetCommandVisibility(StrategyRunnerCommandVisibility.CanConnect).FireAndForget();
+                SetCommandVisibility(StrategyRunnerCommandVisibility.ServerAvailable).FireAndForget();
                 return;
             }
 
-            SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect).FireAndForget();
+            SetCommandVisibility(StrategyRunnerCommandVisibility.ServerUnavailable).FireAndForget();
         }
 
         private async Task SetCommandVisibility(StrategyRunnerCommandVisibility strategyRunnerCommandVisibility)
         {
             try
             {
-                if (strategyRunnerCommandVisibility.Equals(StrategyRunnerCommandVisibility.CanConnect)
-                    && !IsConnected 
+                if (strategyRunnerCommandVisibility.Equals(StrategyRunnerCommandVisibility.ServerAvailable)
+                    && !IsConnected
                     && !IsConnecting)
                 {
-                    if (IsValidSelectServer())                 
-                    {
-                        IsConnecting = true;
+                    IsConnecting = true;
 
-                        var isRunning = await IsStrategyRunningAsync().ConfigureAwait(true);
+                    var isRunning = await IsStrategyRunningAsync().ConfigureAwait(true);
 
-                        CanRun = !isRunning;
-                        CanMonitor = isRunning;
-                    }
-                    else
-                    {
-                        CanRun = false;
-                        CanMonitor = false;
-                    }
+                    CanRun = !isRunning;
+                    CanMonitor = isRunning;
+
+                    IsConnecting = false;
                 }
-                else
+                else if (strategyRunnerCommandVisibility.Equals(StrategyRunnerCommandVisibility.Connected)
+                    || strategyRunnerCommandVisibility.Equals(StrategyRunnerCommandVisibility.Connecting))
                 {
                     CanRun = false;
                     CanMonitor = false;
+                    IsConnecting = strategyRunnerCommandVisibility.Equals(StrategyRunnerCommandVisibility.Connecting);
+                    IsConnected = strategyRunnerCommandVisibility.Equals(StrategyRunnerCommandVisibility.Connected);
                 }
-
-                IsConnecting = strategyRunnerCommandVisibility.Equals(StrategyRunnerCommandVisibility.Connecting);
-                IsConnected = strategyRunnerCommandVisibility.Equals(StrategyRunnerCommandVisibility.Connected);
-
-                return;
+                else if (strategyRunnerCommandVisibility.Equals(StrategyRunnerCommandVisibility.ServerUnavailable))
+                {
+                    CanRun = false;
+                    CanMonitor = false;
+                    IsConnecting = false;
+                    IsConnected = false;
+                }
             }
             catch (Exception ex)
             {
                 Logger.Log($"SetCommandVisibility {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"SetCommandVisibility - {ex.Message}", TextVerbose = ex.ToString() });
-            }
 
-            await SetCommandVisibility(StrategyRunnerCommandVisibility.Disconnect).ConfigureAwait(false);
+                await SetCommandVisibility(StrategyRunnerCommandVisibility.ServerUnavailable).ConfigureAwait(false);
+            }
         }
 
         private void RaiseStrategyDisplayEvent()

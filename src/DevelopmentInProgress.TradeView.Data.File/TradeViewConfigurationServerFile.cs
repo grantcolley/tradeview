@@ -30,7 +30,8 @@ namespace DevelopmentInProgress.TradeView.Data.File
                 using var reader = System.IO.File.OpenText(userServersFile);
                 var json = await reader.ReadToEndAsync().ConfigureAwait(false);
                 var Servers = JsonConvert.DeserializeObject<List<TradeServer>>(json);
-                return Servers;
+                return Servers.Where(s => !string.IsNullOrWhiteSpace(s.Name)
+                                        && !string.IsNullOrWhiteSpace(s.Uri.OriginalString)).ToList();
             }
 
             return new List<TradeServer>

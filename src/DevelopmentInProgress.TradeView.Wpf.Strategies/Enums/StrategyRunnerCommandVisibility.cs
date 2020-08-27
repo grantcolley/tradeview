@@ -2,9 +2,9 @@
 {
     public enum StrategyRunnerCommandVisibility
     {
-        CanConnect, 
         Connecting,
         Connected,
-        Disconnect
+        ServerAvailable,
+        ServerUnavailable
     }
 }
