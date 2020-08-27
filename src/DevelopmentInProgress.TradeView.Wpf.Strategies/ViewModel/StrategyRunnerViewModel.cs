@@ -19,6 +19,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.WebSockets;
 using System.Reactive.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CoreModel = DevelopmentInProgress.TradeView.Core.Model;
@@ -32,6 +33,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         private readonly IStrategyService strategyService;
         private readonly IServerMonitorCache serverMonitorCache;
         private readonly IStrategyAssemblyManager strategyAssemblyManager;
+        private readonly SemaphoreSlim commandVisibilitySemaphoreSlim = new SemaphoreSlim(1, 1);
 
         private Strategy strategy;
         private ServerMonitor selectedServer;
@@ -377,6 +379,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
 
             strategyAssemblyManager.Dispose();
+
+            commandVisibilitySemaphoreSlim.Dispose();
 
             disposed = true;
         }
@@ -1024,6 +1028,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
         private async Task SetCommandVisibility(StrategyRunnerCommandVisibility strategyRunnerCommandVisibility)
         {
+            await commandVisibilitySemaphoreSlim.WaitAsync().ConfigureAwait(false);
+
             try
             {
                 if (strategyRunnerCommandVisibility.Equals(StrategyRunnerCommandVisibility.ServerAvailable)
@@ -1032,7 +1038,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 {
                     IsConnecting = true;
 
-                    var isRunning = await IsStrategyRunningAsync().ConfigureAwait(true);
+                    var isRunning = await IsStrategyRunningAsync().ConfigureAwait(false);
 
                     CanRun = !isRunning;
                     CanMonitor = isRunning;
@@ -1062,6 +1068,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"SetCommandVisibility - {ex.Message}", TextVerbose = ex.ToString() });
 
                 await SetCommandVisibility(StrategyRunnerCommandVisibility.ServerUnavailable).ConfigureAwait(false);
+            }
+            finally
+            {
+                commandVisibilitySemaphoreSlim.Release();
             }
         }
 
