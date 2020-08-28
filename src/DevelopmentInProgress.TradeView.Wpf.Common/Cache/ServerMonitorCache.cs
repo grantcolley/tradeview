@@ -141,7 +141,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                 return;
             }
 
-            observableInterval = Observable.Interval(TimeSpan.FromSeconds(serverConfiguration.ObserveServerInterval))
+            var interval = 0d;
+
+            observableInterval = Observable.Interval(TimeSpan.FromSeconds(interval))
                 .Subscribe(async i =>
                 {
                     try
@@ -160,6 +162,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                     catch (Exception ex)
                     {
                         OnServerMonitorCacheNotification($"Observing Servers : {ex.Message}", ex);
+                    }
+                    finally
+                    {
+                        if(interval != serverConfiguration.ObserveServerInterval)
+                        {
+                            interval = serverConfiguration.ObserveServerInterval;
+                        }
                     }
                 });
         }
