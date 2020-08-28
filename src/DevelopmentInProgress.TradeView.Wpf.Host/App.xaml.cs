@@ -1,11 +1,11 @@
 ﻿using CommonServiceLocator;
-using DevelopmentInProgress.TradeView.Common.Extensions;
 using DevelopmentInProgress.TradeView.Core.Interfaces;
 using DevelopmentInProgress.TradeView.Data;
 using DevelopmentInProgress.TradeView.Data.File;
 using DevelopmentInProgress.TradeView.Service;
 using DevelopmentInProgress.TradeView.Wpf.Common.Cache;
 using DevelopmentInProgress.TradeView.Wpf.Common.Chart;
+using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;
 using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;

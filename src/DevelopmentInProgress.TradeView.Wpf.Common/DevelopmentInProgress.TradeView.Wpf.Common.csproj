@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DevelopmentInProgress.Socket\DevelopmentInProgress.Socket.csproj" />
-    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Common\DevelopmentInProgress.TradeView.Common.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Core\DevelopmentInProgress.TradeView.Core.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Data\DevelopmentInProgress.TradeView.Data.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Service\DevelopmentInProgress.TradeView.Service.csproj" />
