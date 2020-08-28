@@ -1,4 +1,5 @@
 ﻿using CommonServiceLocator;
+using DevelopmentInProgress.TradeView.Common.Extensions;
 using DevelopmentInProgress.TradeView.Core.Interfaces;
 using DevelopmentInProgress.TradeView.Data;
 using DevelopmentInProgress.TradeView.Data.File;
@@ -92,6 +93,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
 
             containerRegistry.Register<Strategies.ViewModel.SymbolsViewModel>();
             containerRegistry.Register<Strategies.ViewModel.StrategyParametersViewModel>();
+
+            var serverMonitorCache = Container.Resolve<IServerMonitorCache>();
+            serverMonitorCache.RefreshServerMonitorsAsync().FireAndForget();
         }
 
         protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings regionAdapterMappings)
