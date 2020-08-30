@@ -194,7 +194,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                 }
                 else
                 {
-                    OnServerMonitorCacheNotification($"{args.Value.Name}");
+                    OnServerMonitorCacheNotification($"{args.Message}");
                 }
             });
 
