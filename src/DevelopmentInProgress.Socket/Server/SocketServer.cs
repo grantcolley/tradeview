@@ -87,6 +87,24 @@ namespace DevelopmentInProgress.Socket.Server
         }
 
         /// <summary>
+        /// Close and dispose all websocket connections.
+        /// </summary>
+        /// <returns>Returns a list of tasks. Each task will close and dispose a websocket.</returns>
+        public virtual Task[] CloseAndDisposeWebSockets()
+        {
+            var connections = connectionManager.GetConnections();
+            var webSockets = connections.Select(c => c.WebSocket).ToList();
+
+            static async Task CloseAndDispose(WebSocket ws)
+            {
+                await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closed", new CancellationToken()).ConfigureAwait(false);
+                ws.Dispose();
+            };
+
+            return webSockets.Select(CloseAndDispose).ToArray();
+        }
+
+        /// <summary>
         /// Adds the <see cref="WebSocket"/> to the <see cref="ConnectionManager"/>'s web sockets dictionary.
         /// </summary>
         /// <param name="websocket">The <see cref="WebSocket"/> to add.</param>
