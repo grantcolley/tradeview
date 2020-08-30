@@ -12,9 +12,9 @@ namespace DevelopmentInProgress.TradeView.Core.Server
             Strategies = new List<ServerStrategy>();
         }
 
-        public string StartedBy { get; set; } = Environment.UserName;
+        public string StartedBy { get; set; }
         public string StoppedBy { get; set; }
-        public DateTime Started { get; set; } = DateTime.Now;
+        public DateTime Started { get; set; }
         public DateTime Stopped { get; set; }
         public List<ServerStrategy> Strategies { get; private set; }
 
