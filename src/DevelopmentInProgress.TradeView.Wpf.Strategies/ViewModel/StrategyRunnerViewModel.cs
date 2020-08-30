@@ -990,7 +990,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 else if (!string.IsNullOrWhiteSpace(args.Message))
                 {
                     if(SelectedServer != null
-                        && SelectedServer.Name.Equals(args.Message, StringComparison.Ordinal))
+                        && args.Message.StartsWith(SelectedServer.Name, StringComparison.Ordinal))
                     {
                         ResetCommandVisibility();
                     }

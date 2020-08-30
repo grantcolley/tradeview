@@ -197,8 +197,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 {
                     await socketClient.DisposeAsync().ConfigureAwait(false);
                 }
-
-                OnNotification();
             }
             catch (Exception ex)
             {
@@ -249,8 +247,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                     {
                         IsConnecting = false;
                         IsConnected = true;
-
-                        OnNotification();
+                        OnNotification($"{Name} connected.");
                     });
                 });
 
@@ -266,6 +263,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 {
                     await dispatcher.Invoke(async () =>
                     {
+                        ServerMonitorHelper.UpdateServerMonitor(this, new Core.Server.ServerMonitor());
+                        OnNotification($"{Name} disconnected.");
                         await DisposeSocketAsync().ConfigureAwait(false);
                     }).ConfigureAwait(false);
                 };
@@ -276,14 +275,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                     if (ex.InnerException is TaskCanceledException)
                     {
                         await DisposeSocketAsync().ConfigureAwait(false);
-
                     }
                     else
                     {
                         await dispatcher.Invoke(async () =>
                         {
                             OnException(args.Message, new Exception(args.Message));
-
                             await DisposeSocketAsync().ConfigureAwait(false);
                         }).ConfigureAwait(false);
                     }
@@ -365,8 +362,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                     var serverMonitor = JsonConvert.DeserializeObject<Core.Server.ServerMonitor>(serverMonitorNotification.Message);
 
                     ServerMonitorHelper.UpdateServerMonitor(this, serverMonitor);
-
-                    OnNotification();
                 }
             }
             catch (Exception ex)
