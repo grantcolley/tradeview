@@ -400,6 +400,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                         };
 
                         await socketClient.SendMessageAsync(clientMessage).ConfigureAwait(true);
+
+                        NotificationsAdd(new Message { MessageType = MessageType.Info, Text = $"{strategy.Name} disconnected" });
                     }
 
                     await DisposeSocketAsync(writeNotification).ConfigureAwait(true);
@@ -1032,8 +1034,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             try
             {
                 if (strategyRunnerCommandVisibility.Equals(StrategyRunnerCommandVisibility.ServerAvailable)
-                    && !IsConnected
-                    && !IsConnecting)
+                    && ((!IsConnected && !IsConnecting)
+                    || (!IsConnected && SelectedServer.IsConnected)))
                 {
                     IsConnecting = true;
 
