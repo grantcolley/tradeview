@@ -453,8 +453,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             catch (Exception ex)
             {
                 Logger.Log($"IsStrategyRunningAsync {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
-
-                NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Unable to connect to the remote server.", TextVerbose = ex.ToString() });
             }
 
             return false;
@@ -1037,6 +1035,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                     && ((!IsConnected && !IsConnecting)
                     || (!IsConnected && SelectedServer.IsConnected)))
                 {
+                    CanRun = false;
+                    CanMonitor = false;
+
                     IsConnecting = true;
 
                     var isRunning = await IsStrategyRunningAsync().ConfigureAwait(false);
