@@ -43,8 +43,15 @@ namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
 
         public virtual void SetStrategy(Strategy strategy)
         {
+            if(strategy == null)
+            {
+                throw new ArgumentNullException(nameof(strategy));
+            }
+
             var strategyXml = JsonConvert.SerializeObject(strategy);
             Strategy = JsonConvert.DeserializeObject<Strategy>(strategyXml);
+            Strategy.StartedBy = strategy.StartedBy;
+            Strategy.Started = DateTime.Now;
         }
 
         public async virtual Task<Strategy> RunAsync(CancellationToken cancellationToken)

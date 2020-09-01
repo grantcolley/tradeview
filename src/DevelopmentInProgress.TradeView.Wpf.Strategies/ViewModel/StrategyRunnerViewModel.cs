@@ -495,6 +495,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 if (result)
                 {
                     var interfaceStrategy = Strategy.ToCoreStrategy();
+                    interfaceStrategy.StartedBy = Environment.UserName;
                     var jsonContent = JsonConvert.SerializeObject(interfaceStrategy);
 
                     var dependencies = strategy.Dependencies.Select(d => d.File);

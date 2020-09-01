@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
 {
@@ -11,6 +12,8 @@ namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
 
         public int Id { get; set; }
         public string Name { get; set; }
+        public string StartedBy { get; set; }
+        public DateTime Started { get; set; }
         public StrategyStatus Status { get; set; }
         public List<StrategySubscription> StrategySubscriptions { get; private set; }
 
