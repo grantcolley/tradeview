@@ -95,6 +95,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
             {
                 string navigationId = documentViewModel.NavigationId;
                 documentViewModel.Dispose();
+                documentViewModel.Activate -= ViewModelActivate;
+                documentViewModel.ShowMessageWindow -= ShowMessageBox;
+                documentViewModel.ShowModalWindow -= ShowModalWindow;
+                documentViewModel.NavigateTarget -= NavigateTarget;
+                documentViewModel.GetViewModels -= GetViewModels;
+                documentViewModel.Publish -= Publish;
                 ViewContext.NavigationManager.CloseDocument(navigationId);
             }
         }

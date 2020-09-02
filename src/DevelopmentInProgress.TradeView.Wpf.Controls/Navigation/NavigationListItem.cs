@@ -113,7 +113,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Navigation
             OnItemClicked();
             e.Handled = true;
         }
-
+ 
         /// <summary>
         /// Raises the item clicked event.
         /// </summary>

@@ -36,7 +36,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.RegionAdapters
             {
                 return dockingManager;
             }
-
             set
             {
                 dockingManager = value as DockingManager;
@@ -133,6 +132,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.RegionAdapters
             {
                 return;
             }
+
+            layoutAnchorable.Closed -= LayoutAnchorableClosed;
 
             var view = ((DocumentViewHost)layoutAnchorable.Content).View;
             if (Region.Views.Contains(view))
