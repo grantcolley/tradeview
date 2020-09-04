@@ -146,6 +146,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
             observableInterval = Observable.Interval(TimeSpan.FromSeconds(interval))
                 .Subscribe(async i =>
                 {
+                    await serverMonitorSemaphoreSlim.WaitAsync().ConfigureAwait(true);
+
                     try
                     {
                         var connectServers = serverMonitors.Where(
@@ -169,6 +171,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                         {
                             interval = serverConfiguration.ObserveServerInterval;
                         }
+
+                        serverMonitorSemaphoreSlim.Release();
                     }
                 });
         }
