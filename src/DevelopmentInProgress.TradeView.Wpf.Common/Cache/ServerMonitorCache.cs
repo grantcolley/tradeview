@@ -1,6 +1,7 @@
 ﻿using DevelopmentInProgress.TradeView.Data;
 using DevelopmentInProgress.TradeView.Wpf.Common.Events;
 using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;
+using DevelopmentInProgress.TradeView.Wpf.Common.Manager;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 {
     public sealed class ServerMonitorCache : IServerMonitorCache
     {
+        private readonly IHttpClientManager httpClientManager;
         private readonly ITradeViewConfigurationServer configurationServer;
         private readonly ObservableCollection<ServerMonitor> serverMonitors;
         private readonly SemaphoreSlim serverMonitorSemaphoreSlim = new SemaphoreSlim(1, 1);
@@ -25,8 +27,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
         private IDisposable observableInterval;
         private bool disposed;
 
-        public ServerMonitorCache(ITradeViewConfigurationServer configurationServer)
+        public ServerMonitorCache(IHttpClientManager httpClientManager, ITradeViewConfigurationServer configurationServer)
         {
+            this.httpClientManager = httpClientManager;
             this.configurationServer = configurationServer;
             serverMonitors = new ObservableCollection<ServerMonitor>();
             serverMonitorSubscriptions = new Dictionary<string, IDisposable>();
@@ -80,7 +83,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 
                     var newServers = servers.Where(s => !serverMonitors.Any(sm => sm.Name == s.Name)).ToList();
 
-                    var newServerMonitors = newServers.Select(s => s.ToServerMonitor()).ToList();
+                    var newServerMonitors = newServers.Select(s => s.ToServerMonitor(httpClientManager.HttpClientInstance)).ToList();
 
                     foreach (var newServerMonitor in newServerMonitors)
                     {

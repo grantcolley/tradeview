@@ -1,6 +1,7 @@
 ﻿using DevelopmentInProgress.Socket.Client;
 using DevelopmentInProgress.TradeView.Wpf.Common.Events;
 using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
+using DevelopmentInProgress.TradeView.Wpf.Common.Manager;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
     public class ServerMonitor : EntityBase, IDisposable
     {
         private readonly SemaphoreSlim serverMonitorSemaphoreSlim = new SemaphoreSlim(1, 1);
+        private readonly HttpClient httpClient;
         private SocketClient socketClient;
         private bool isConnecting;
         private bool isConnected;
@@ -30,8 +32,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         private DateTime started;
         private DateTime stopped;
 
-        public ServerMonitor()
+        public ServerMonitor(HttpClient httpClient)
         {
+            this.httpClient = httpClient;
             Strategies = new ObservableCollection<ServerStrategy>();
         }
 
@@ -232,7 +235,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 
                 var serverIsRunning = await IsServerRunningAsync().ConfigureAwait(false);
 
-                if(!serverIsRunning)
+                if (!serverIsRunning)
                 {
                     return;
                 }
@@ -324,21 +327,31 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 
         private async Task<bool> IsServerRunningAsync()
         {
+            var cancellationTokenSource = new CancellationTokenSource();
+
             try
             {
-                using var client = new HttpClient();
-
-                using var response = await client.GetAsync(new Uri(Uri, "ping")).ConfigureAwait(false);
-                var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                using (var response = await httpClient.GetAsync(new Uri(Uri, "ping"), HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token).ConfigureAwait(false))
                 {
-                    return content.Contains("Alive", StringComparison.Ordinal);
+                    using (var content = response.Content)
+                    {
+                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+                            var contentString = await content.ReadAsStringAsync().ConfigureAwait(false);
+
+                            return contentString.Contains("Alive", StringComparison.Ordinal);
+                        }
+                    }
                 }
             }
             catch (HttpRequestException)
             {
                 // intentionally swallow
+            }
+            finally
+            {
+                cancellationTokenSource.Cancel();
+                cancellationTokenSource.Dispose();
             }
 
             return false;
