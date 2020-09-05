@@ -7,6 +7,7 @@ using DevelopmentInProgress.TradeView.Wpf.Common.Cache;
 using DevelopmentInProgress.TradeView.Wpf.Common.Chart;
 using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;
 using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
+using DevelopmentInProgress.TradeView.Wpf.Common.Manager;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Configuration.Utility;
@@ -18,6 +19,7 @@ using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Host.Logger;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.Utility;
 using DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel;
+using Microsoft.Extensions.DependencyInjection;
 using Prism.Ioc;
 using Prism.Logging;
 using Prism.Modularity;
@@ -93,6 +95,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
 
             containerRegistry.Register<Strategies.ViewModel.SymbolsViewModel>();
             containerRegistry.Register<Strategies.ViewModel.StrategyParametersViewModel>();
+
+            containerRegistry.RegisterSingleton<IHttpClientManager, HttpClientManager>();
 
             var serverMonitorCache = Container.Resolve<IServerMonitorCache>();
             serverMonitorCache.RefreshServerMonitorsAsync().FireAndForget();
