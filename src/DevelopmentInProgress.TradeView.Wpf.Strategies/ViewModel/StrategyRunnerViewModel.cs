@@ -2,6 +2,7 @@
 using DevelopmentInProgress.TradeView.Wpf.Common.Cache;
 using DevelopmentInProgress.TradeView.Wpf.Common.Events;
 using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;
+using DevelopmentInProgress.TradeView.Wpf.Common.Manager;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
@@ -16,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
 using System.Net.WebSockets;
 using System.Reactive.Linq;
 using System.Threading;
@@ -32,8 +34,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         private readonly IStrategyService strategyService;
         private readonly IServerMonitorCache serverMonitorCache;
         private readonly IStrategyAssemblyManager strategyAssemblyManager;
+        private readonly IHttpClientManager httpClientManager;
         private readonly SemaphoreSlim commandVisibilitySemaphoreSlim = new SemaphoreSlim(1, 1);
-
+        private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(new TimeSpan(0, 0, 1));
         private Strategy strategy;
         private ServerMonitor selectedServer;
         private List<Symbol> symbols;
@@ -66,12 +69,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             StrategyParametersViewModel strategyParametersViewModel,
             IStrategyService strategyService,
             IServerMonitorCache serverMonitorCache,
-            IStrategyAssemblyManager strategyAssemblyManager)
+            IStrategyAssemblyManager strategyAssemblyManager,
+            IHttpClientManager httpClientManager)
             : base(viewModelContext)
         {
             this.strategyService = strategyService;
             this.serverMonitorCache = serverMonitorCache;
             this.strategyAssemblyManager = strategyAssemblyManager;
+            this.httpClientManager = httpClientManager;
 
             AccountViewModel = accountViewModel;
             SymbolsViewModel = symbolsViewModel;
@@ -423,12 +428,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
         private async Task<bool> IsStrategyRunningAsync()
         {
+            HttpResponseMessage response = null;
+
             try
             {
                 var strategyParameters = new CoreStrategy.StrategyParameters { StrategyName = Strategy.Name };
                 var strategyParametersJson = JsonConvert.SerializeObject(strategyParameters);
 
-                var response = await CoreStrategy.StrategyRunnerClient.PostAsync(new Uri($"{SelectedServer.Uri}isstrategyrunning"), strategyParametersJson).ConfigureAwait(false);
+                response = await CoreStrategy.StrategyRunnerClient.PostAsync(httpClientManager.HttpClientInstance, new Uri($"{SelectedServer.Uri}isstrategyrunning"), strategyParametersJson, cancellationTokenSource.Token).ConfigureAwait(false);
 
                 var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
@@ -453,6 +460,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             catch (Exception ex)
             {
                 Logger.Log($"IsStrategyRunningAsync {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+            }
+            finally
+            {
+                response.Content.Dispose();
+                response.Dispose();
             }
 
             return false;
@@ -488,6 +500,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
         private async Task RunAsync()
         {
+            HttpResponseMessage response = null;
+
             try
             {
                 var result = await MonitorAsync(true).ConfigureAwait(false);
@@ -500,9 +514,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                     var dependencies = strategy.Dependencies.Select(d => d.File);
 
-                    var response = await CoreStrategy.StrategyRunnerClient.PostAsync(new Uri($"{SelectedServer.Uri}runstrategy"), jsonContent, dependencies).ConfigureAwait(false);
+                    response = await CoreStrategy.StrategyRunnerClient.PostAsync(httpClientManager.HttpClientInstance, new Uri($"{SelectedServer.Uri}runstrategy"), jsonContent, dependencies, cancellationTokenSource.Token).ConfigureAwait(false);
 
-                    if(response.StatusCode != System.Net.HttpStatusCode.OK)
+                    if (response.StatusCode != System.Net.HttpStatusCode.OK)
                     {
                         await SetCommandVisibility(StrategyRunnerCommandVisibility.ServerUnavailable).ConfigureAwait(false);
 
@@ -535,10 +549,17 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 await SetCommandVisibility(StrategyRunnerCommandVisibility.ServerUnavailable).ConfigureAwait(false);
                 await DisconnectSocketAsync().ConfigureAwait(false);
             }
+            finally
+            {
+                response.Content.Dispose();
+                response.Dispose();
+            }
         }
 
         private async Task Update(string strategyParameters)
         {
+            HttpResponseMessage response = null;
+
             try
             {
                 if (!IsConnected)
@@ -547,7 +568,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                     return;
                 }
 
-                var response = await CoreStrategy.StrategyRunnerClient.PostAsync(new Uri($"{SelectedServer.Uri}updatestrategy"), strategyParameters).ConfigureAwait(false);
+                response = await CoreStrategy.StrategyRunnerClient.PostAsync(httpClientManager.HttpClientInstance, new Uri($"{SelectedServer.Uri}updatestrategy"), strategyParameters, cancellationTokenSource.Token).ConfigureAwait(false);
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
@@ -580,13 +601,20 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 await SetCommandVisibility(StrategyRunnerCommandVisibility.ServerUnavailable).ConfigureAwait(false);
                 await DisconnectSocketAsync().ConfigureAwait(false);
             }
+            finally
+            {
+                response?.Content.Dispose();
+                response?.Dispose();
+            }
         }
 
         private async Task StopAsync(string strategyParameters)
         {
+            HttpResponseMessage response = null;
+
             try
             {
-                var response = await CoreStrategy.StrategyRunnerClient.PostAsync(new Uri($"{SelectedServer.Uri}stopstrategy"), strategyParameters).ConfigureAwait(false);
+                response = await CoreStrategy.StrategyRunnerClient.PostAsync(httpClientManager.HttpClientInstance, new Uri($"{SelectedServer.Uri}stopstrategy"), strategyParameters, cancellationTokenSource.Token).ConfigureAwait(false);
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
@@ -617,6 +645,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Stop - {ex.Message}", TextVerbose = ex.ToString() });
                 await SetCommandVisibility(StrategyRunnerCommandVisibility.ServerUnavailable).ConfigureAwait(false);
                 await DisconnectSocketAsync().ConfigureAwait(false);
+            }
+            finally
+            {
+                response?.Content.Dispose();
+                response?.Dispose();
             }
         }
 

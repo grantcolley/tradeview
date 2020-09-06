@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
 {
     public static class StrategyRunnerClient
     {
-        public static async Task<HttpResponseMessage> PostAsync(Uri uri, string jsonSerializedStrategy, IEnumerable<string> libraries)
+        public static async Task<HttpResponseMessage> PostAsync(HttpClient httpClient, Uri uri, string jsonSerializedStrategy, IEnumerable<string> libraries, CancellationToken cancellationToken)
         {
+            if (httpClient == null)
+            {
+                throw new ArgumentNullException(nameof(httpClient));
+            }
+
             if (libraries == null)
             {
                 throw new ArgumentNullException(nameof(libraries));
@@ -38,7 +44,7 @@ namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
                     byteArrayContents.Add(byteArrayContent);
                 }
 
-                return await client.PostAsync(uri, multipartFormDataContent).ConfigureAwait(false);
+                return await httpClient.PostAsync(uri, multipartFormDataContent, cancellationToken).ConfigureAwait(false);
             }
             finally
             {
@@ -51,19 +57,23 @@ namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
             }
         }
 
-        public static async Task<HttpResponseMessage> PostAsync(Uri uri, string jsonSerializedStrategyParameters)
+        public static async Task<HttpResponseMessage> PostAsync(HttpClient httpClient, Uri uri, string jsonSerializedStrategyParameters, CancellationToken cancellationToken)
         {
+            if (httpClient == null)
+            {
+                throw new ArgumentNullException(nameof(httpClient));
+            }
+
             var stringContent = new StringContent(jsonSerializedStrategyParameters, Encoding.UTF8, "application/json");
 
             try
             {
-                using var client = new HttpClient();
                 using var multipartFormDataContent = new MultipartFormDataContent
                 {
                     { stringContent, "strategyparameters" }
                 };
 
-                return await client.PostAsync(uri, multipartFormDataContent).ConfigureAwait(false);
+                return await httpClient.PostAsync(uri, multipartFormDataContent, cancellationToken).ConfigureAwait(false);
             }
             finally
             {
