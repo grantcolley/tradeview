@@ -331,17 +331,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
 
             try
             {
-                using (var response = await httpClient.GetAsync(new Uri(Uri, "ping"), HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token).ConfigureAwait(false))
-                {
-                    using (var content = response.Content)
-                    {
-                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                        {
-                            var contentString = await content.ReadAsStringAsync().ConfigureAwait(false);
+                using var response = await httpClient.GetAsync(new Uri(Uri, "ping"), HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token).ConfigureAwait(false);
+                using var content = response.Content;
 
-                            return contentString.Contains("Alive", StringComparison.Ordinal);
-                        }
-                    }
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var contentString = await content.ReadAsStringAsync().ConfigureAwait(false);
+
+                    return contentString.Contains("Alive", StringComparison.Ordinal);
                 }
             }
             catch (HttpRequestException)
