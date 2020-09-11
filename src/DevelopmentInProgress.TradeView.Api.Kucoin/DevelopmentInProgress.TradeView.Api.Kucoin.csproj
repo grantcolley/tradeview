@@ -4,6 +4,10 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <RootNamespace>DevelopmentInProgress.TradeView.Api.Kucoin</RootNamespace>
     <AssemblyName>DevelopmentInProgress.TradeView.Api.Kucoin</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
+    <Version>2.0.0</Version>
+    <Copyright>Copyright © 2020. All rights reserved</Copyright>
   </PropertyGroup>
 
   <PropertyGroup>

@@ -3,6 +3,10 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
+    <Version>2.0.0</Version>
+    <Copyright>Copyright © 2020. All rights reserved</Copyright>    
     <UseWPF>true</UseWPF>
     <NeutralLanguage>en-GB</NeutralLanguage>
   </PropertyGroup>
