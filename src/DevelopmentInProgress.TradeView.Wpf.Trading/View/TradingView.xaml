@@ -24,14 +24,10 @@
             <localView:SymbolView></localView:SymbolView>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type commonViewModel:AccountBalancesViewModel}">
-            <commonView:AccountBalancesView></commonView:AccountBalancesView>
+        <DataTemplate DataType="{x:Type commonViewModel:AccountViewModel}">
+            <commonView:AccountView></commonView:AccountView>
         </DataTemplate>
         
-        <DataTemplate DataType="{x:Type commonViewModel:OrdersViewModel}">
-            <commonView:OrdersView></commonView:OrdersView>
-        </DataTemplate>
-
         <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
             
     </view:DocumentViewBase.Resources>
@@ -66,15 +62,13 @@
 
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40*"/>
+                <ColumnDefinition Width="70*"/>
                 <ColumnDefinition Width="2"/>
                 <ColumnDefinition Width="30*"/>
-                <ColumnDefinition Width="2"/>
-                <ColumnDefinition Width="40*"/>
             </Grid.ColumnDefinitions>
 
             <DockPanel Grid.Column="0" LastChildFill="True">
-                <ContentControl Content="{Binding AccountBalancesViewModel}"/>
+                <ContentControl Content="{Binding AccountViewModel}"/>
             </DockPanel>
 
             <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
@@ -82,14 +76,6 @@
             <DockPanel Grid.Column="2" LastChildFill="True">
                 <ContentControl Content="{Binding TradeViewModel}"/>
             </DockPanel>
-
-            <GridSplitter Grid.Column="3" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
-            
-            <DockPanel Grid.Column="4" LastChildFill="True">
-                <ContentControl Content="{Binding OrdersViewModel}"/>
-            </DockPanel>
-
-            <GridSplitter Grid.Column="5" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
 
         </Grid>
 
