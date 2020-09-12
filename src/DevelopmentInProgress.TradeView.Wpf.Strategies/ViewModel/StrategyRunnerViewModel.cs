@@ -48,24 +48,21 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         private SocketClient socketClient;
         private ObservableCollection<ServerMonitor> servers;
 
-        private AccountBalancesViewModel accountBalancesViewModel;
+        private AccountViewModel accountViewModel;
         private SymbolsViewModel symbolsViewModel;
-        private OrdersViewModel ordersViewModel;
         private StrategyParametersViewModel strategyParametersViewModel;
         private StrategyDisplayViewModelBase StrategyDisplayViewModel;
 
         private IDisposable symbolsSubscription;
         private IDisposable accountSubscription;
-        private IDisposable ordersSubscription;
         private IDisposable parametersSubscription;
         private IDisposable strategySubscription;
         private IDisposable serverMonitorCacheSubscription;
 
         public StrategyRunnerViewModel(
             ViewModelContext viewModelContext, 
-            AccountBalancesViewModel accountBalancesViewModel, 
+            AccountViewModel accountViewModel, 
             SymbolsViewModel symbolsViewModel, 
-            OrdersViewModel ordersViewModel, 
             StrategyParametersViewModel strategyParametersViewModel,
             IStrategyService strategyService,
             IServerMonitorCache serverMonitorCache,
@@ -78,9 +75,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             this.strategyAssemblyManager = strategyAssemblyManager;
             this.httpClientManager = httpClientManager;
 
-            AccountBalancesViewModel = accountBalancesViewModel;
+            AccountViewModel = accountViewModel;
             SymbolsViewModel = symbolsViewModel;
-            OrdersViewModel = ordersViewModel;
             StrategyParametersViewModel = strategyParametersViewModel;
 
             CanRun = false;
@@ -96,7 +92,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             StopCommand = new ViewModelCommand(StopStrategy);
             ClearNotificationsCommand = new ViewModelCommand(ClearNotifications);
 
-            ObserveOrders();
             ObserveSymbols();
             ObserveAccount();
             ObserveParameters();
@@ -141,15 +136,15 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
         }
 
-        public AccountBalancesViewModel AccountBalancesViewModel
+        public AccountViewModel AccountViewModel
         {
-            get { return accountBalancesViewModel; }
+            get { return accountViewModel; }
             private set
             {
-                if (accountBalancesViewModel != value)
+                if (accountViewModel != value)
                 {
-                    accountBalancesViewModel = value;
-                    OnPropertyChanged(nameof(AccountBalancesViewModel));
+                    accountViewModel = value;
+                    OnPropertyChanged(nameof(AccountViewModel));
                 }
             }
         }
@@ -163,19 +158,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 {
                     symbolsViewModel = value;
                     OnPropertyChanged(nameof(SymbolsViewModel));
-                }
-            }
-        }
-
-        public OrdersViewModel OrdersViewModel
-        {
-            get { return ordersViewModel; }
-            private set
-            {
-                if (ordersViewModel != value)
-                {
-                    ordersViewModel = value;
-                    OnPropertyChanged(nameof(OrdersViewModel));
                 }
             }
         }
@@ -277,9 +259,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                 RaiseStrategyDisplayEvent();
 
-                AccountBalancesViewModel.Dispatcher = ViewModelContext.UiDispatcher;
+                AccountViewModel.Dispatcher = ViewModelContext.UiDispatcher;
                 SymbolsViewModel.Dispatcher = ViewModelContext.UiDispatcher;
-                OrdersViewModel.Dispatcher = ViewModelContext.UiDispatcher;
                 StrategyParametersViewModel.Dispatcher = ViewModelContext.UiDispatcher;
 
                 StrategyParametersViewModel.Strategy = Strategy;
@@ -297,7 +278,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                     account.Exchange = strategySubscription.Exchange;
                 }
 
-                await Task.WhenAll(SymbolsViewModel.GetStrategySymbols(Strategy), AccountBalancesViewModel.Login(account), GetServerMonitors()).ConfigureAwait(false);
+                await Task.WhenAll(SymbolsViewModel.GetStrategySymbols(Strategy), AccountViewModel.Login(account), GetServerMonitors()).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -367,12 +348,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
             symbolsSubscription.Dispose();
             accountSubscription.Dispose();
-            ordersSubscription.Dispose();
             parametersSubscription.Dispose();
 
-            AccountBalancesViewModel.Dispose();
+            AccountViewModel.Dispose();
             SymbolsViewModel.Dispose();
-            OrdersViewModel.Dispose();
             StrategyParametersViewModel.Dispose();
             serverMonitorCacheSubscription.Dispose();
 
@@ -880,7 +859,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
-                var accountBalances = AccountBalancesViewModel.Account.AccountInfo.Balances.ToList();
+                var accountBalances = AccountViewModel.AccountBalancesViewModel.Account.AccountInfo.Balances.ToList();
             }
             catch (Exception ex)
             {
@@ -918,39 +897,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         private void ObserveAccount()
         {
             var accountObservable = Observable.FromEventPattern<AccountEventArgs>(
-                eventHandler => AccountBalancesViewModel.OnAccountNotification += eventHandler,
-                eventHandler => AccountBalancesViewModel.OnAccountNotification -= eventHandler)
+                eventHandler => AccountViewModel.OnAccountNotification += eventHandler,
+                eventHandler => AccountViewModel.OnAccountNotification -= eventHandler)
                 .Select(eventPattern => eventPattern.EventArgs);
 
             accountSubscription = accountObservable.Subscribe(async args =>
-            {
-                if (args.HasException)
-                {
-                    NotificationsAdd(new Message { MessageType = MessageType.Error, Text = args.Message, TextVerbose = args.Exception.ToString() });
-                }
-                else if(args.AccountEventType.Equals(AccountEventType.LoggedIn))
-                {
-                    await OrdersViewModel.SetAccount(args.Value).ConfigureAwait(false);
-                }
-                else if (args.AccountEventType.Equals(AccountEventType.UpdateOrders))
-                {
-                    await OrdersViewModel.UpdateOrders(args.Value).ConfigureAwait(false);
-                }
-                else if (!string.IsNullOrWhiteSpace(args.Message))
-                {
-                    NotificationsAdd(new Message { MessageType = MessageType.Info, Text = args.Message });
-                }
-            });
-        }
-
-        private void ObserveOrders()
-        {
-            var ordersObservable = Observable.FromEventPattern<OrdersEventArgs>(
-                eventHandler => OrdersViewModel.OnOrdersNotification += eventHandler,
-                eventHandler => OrdersViewModel.OnOrdersNotification -= eventHandler)
-                .Select(eventPattern => eventPattern.EventArgs);
-
-            ordersSubscription = ordersObservable.Subscribe(args =>
             {
                 if (args.HasException)
                 {

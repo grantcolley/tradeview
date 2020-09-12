@@ -24,12 +24,8 @@
                 <localView:SymbolsView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type commonViewModel:AccountBalancesViewModel}">
-                <commonView:AccountBalancesView></commonView:AccountBalancesView>
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type commonViewModel:OrdersViewModel}">
-                <commonView:OrdersView></commonView:OrdersView>
+            <DataTemplate DataType="{x:Type commonViewModel:AccountViewModel}">
+                <commonView:AccountView></commonView:AccountView>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type localViewModel:StrategyParametersViewModel}">
@@ -163,26 +159,18 @@
 
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40*"/>
-                <ColumnDefinition Width="2"/>
-                <ColumnDefinition Width="40*"/>
+                <ColumnDefinition Width="70*"/>
                 <ColumnDefinition Width="2"/>
                 <ColumnDefinition Width="30*"/>
             </Grid.ColumnDefinitions>
 
             <DockPanel Grid.Column="0" LastChildFill="True">
-                <ContentControl Content="{Binding AccountBalancesViewModel}"/>
+                <ContentControl Content="{Binding AccountViewModel}"/>
             </DockPanel>
 
             <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
 
-            <DockPanel Grid.Column="2" LastChildFill="True">
-                <ContentControl Content="{Binding OrdersViewModel}"/>
-            </DockPanel>
-            
-            <GridSplitter Grid.Column="3" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
-
-            <GroupBox Grid.Column="4" Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
+            <GroupBox Grid.Column="2" Margin="2" Style="{StaticResource GroupBoxNoHeaderStyle}">
                 <messaging:MessagePanel HeaderBackground="Transparent"
                                     HeaderText="Notifications"
                                     Messages="{Binding Notifications}" 

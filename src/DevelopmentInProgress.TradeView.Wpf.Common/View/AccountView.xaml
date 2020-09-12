@@ -3,16 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:commonViewModel="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Common.ViewModel"
-             xmlns:commonView="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Common.View">
+             xmlns:ViewModel="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Common.ViewModel"
+             xmlns:View="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Common.View">
     <UserControl.Resources>
 
-        <DataTemplate DataType="{x:Type commonViewModel:AccountBalancesViewModel}">
-            <commonView:AccountBalancesView></commonView:AccountBalancesView>
+        <DataTemplate DataType="{x:Type ViewModel:AccountBalancesViewModel}">
+            <View:AccountBalancesView></View:AccountBalancesView>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type commonViewModel:OrdersViewModel}">
-            <commonView:OrdersView></commonView:OrdersView>
+        <DataTemplate DataType="{x:Type ViewModel:OrdersViewModel}">
+            <View:OrdersView></View:OrdersView>
         </DataTemplate>
 
     </UserControl.Resources>
