@@ -83,7 +83,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
             containerRegistry.RegisterSingleton<IChartHelper, ChartHelper>();
 
             containerRegistry.Register<OrdersViewModel>();
-            containerRegistry.Register<AccountViewModel>();
+            containerRegistry.Register<AccountBalancesViewModel>();
 
             containerRegistry.Register<SymbolsViewModel>();
             containerRegistry.Register<TradePanelViewModel>();

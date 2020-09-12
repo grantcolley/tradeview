@@ -5,9 +5,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.View
     /// <summary>
     /// Interaction logic for AccountView.xaml
     /// </summary>
-    public partial class AccountView : UserControl
+    public partial class AccountBalancesView : UserControl
     {
-        public AccountView()
+        public AccountBalancesView()
         {
             InitializeComponent();
         }

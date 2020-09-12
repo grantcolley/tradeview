@@ -24,7 +24,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
             var symbolsCacheFactory = SymbolsCacheFactoryHelper.GetSymbolsCachefactory(exchangeService);
-            var accountViewModel = new AccountViewModel(exchangeService, symbolsCacheFactory, new DebugLogger());
+            var accountViewModel = new AccountBalancesViewModel(exchangeService, symbolsCacheFactory, new DebugLogger());
 
             var account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
@@ -71,7 +71,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var exchangeApi = ExchangeServiceHelper.GetExchangeService(ExchangeServiceType.SubscribeAccountInfo);
             var exchangeService = new WpfExchangeService(exchangeApi);
             var symbolsCacheFactory = SymbolsCacheFactoryHelper.GetSymbolsCachefactory(exchangeService);
-            var accountViewModel = new AccountViewModel(exchangeService, symbolsCacheFactory, new DebugLogger());
+            var accountViewModel = new AccountBalancesViewModel(exchangeService, symbolsCacheFactory, new DebugLogger());
 
             var account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {
@@ -127,7 +127,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.Test
             var exchangeApi = ExchangeServiceHelper.GetExchangeService();
             var exchangeService = new WpfExchangeService(exchangeApi);
             var symbolsCacheFactory = SymbolsCacheFactoryHelper.GetSymbolsCachefactory(exchangeService);
-            var accountViewModel = new AccountViewModel(exchangeService, symbolsCacheFactory, new DebugLogger());
+            var accountViewModel = new AccountBalancesViewModel(exchangeService, symbolsCacheFactory, new DebugLogger());
 
             var account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() })
             {

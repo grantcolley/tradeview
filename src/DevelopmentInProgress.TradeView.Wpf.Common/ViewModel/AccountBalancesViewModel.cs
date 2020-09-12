@@ -11,7 +11,7 @@ using DevelopmentInProgress.TradeView.Wpf.Common.Events;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
 {
-    public class AccountViewModel : ExchangeViewModel
+    public class AccountBalancesViewModel : ExchangeViewModel
     {
         private readonly CancellationTokenSource accountCancellationTokenSource;
         private readonly ISymbolsCacheFactory symbolsCacheFactory;
@@ -23,7 +23,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
         private bool isLoggingIn;
         private bool disposed;
 
-        public AccountViewModel(IWpfExchangeService exchangeService, ISymbolsCacheFactory symbolsCacheFactory, ILoggerFacade logger)
+        public AccountBalancesViewModel(IWpfExchangeService exchangeService, ISymbolsCacheFactory symbolsCacheFactory, ILoggerFacade logger)
             : base(exchangeService, logger)
         {
             accountCancellationTokenSource = new CancellationTokenSource();

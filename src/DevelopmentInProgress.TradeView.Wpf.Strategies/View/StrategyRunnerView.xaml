@@ -24,8 +24,8 @@
                 <localView:SymbolsView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type commonViewModel:AccountViewModel}">
-                <commonView:AccountView></commonView:AccountView>
+            <DataTemplate DataType="{x:Type commonViewModel:AccountBalancesViewModel}">
+                <commonView:AccountBalancesView></commonView:AccountBalancesView>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type commonViewModel:OrdersViewModel}">
@@ -171,7 +171,7 @@
             </Grid.ColumnDefinitions>
 
             <DockPanel Grid.Column="0" LastChildFill="True">
-                <ContentControl Content="{Binding AccountViewModel}"/>
+                <ContentControl Content="{Binding AccountBalancesViewModel}"/>
             </DockPanel>
 
             <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
