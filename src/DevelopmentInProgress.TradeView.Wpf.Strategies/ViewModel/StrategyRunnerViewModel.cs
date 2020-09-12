@@ -901,7 +901,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 eventHandler => AccountViewModel.OnAccountNotification -= eventHandler)
                 .Select(eventPattern => eventPattern.EventArgs);
 
-            accountSubscription = accountObservable.Subscribe(async args =>
+            accountSubscription = accountObservable.Subscribe(args =>
             {
                 if (args.HasException)
                 {
