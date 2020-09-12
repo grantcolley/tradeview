@@ -226,7 +226,7 @@
             <GroupBox Style="{StaticResource GroupBoxNoHeaderStyle}">
                 <DockPanel LastChildFill="True">
                     <DockPanel DockPanel.Dock="Top" LastChildFill="True">
-                        <Label DockPanel.Dock="Left" Height="30" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left" Content="Strategies : "/>
+                        <Label DockPanel.Dock="Left" Height="30" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left" Content="Strategies"/>
                         <Label Height="30" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left" Content="{Binding SelectedServer.Name}"/>
                     </DockPanel>
                     <filterbox:XamlFilterBox DockPanel.Dock="Top" ItemsSource="{Binding SelectedServer.Strategies}" FilterFieldName="Name" Margin="2"/>
@@ -260,7 +260,7 @@
             <GroupBox Style="{StaticResource GroupBoxNoHeaderStyle}">
                 <DockPanel LastChildFill="True">
                     <DockPanel DockPanel.Dock="Top" LastChildFill="True">
-                        <Label DockPanel.Dock="Left" Height="30" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left" Content="Connections : "/>
+                        <Label DockPanel.Dock="Left" Height="30" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left" Content="Connections"/>
                         <Label Height="30" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left" Content="{Binding SelectedServerStrategy.Name}"/>
                     </DockPanel>
                     <filterbox:XamlFilterBox DockPanel.Dock="Top" ItemsSource="{Binding SelectedServerStrategy.Connections}" FilterFieldName="Name" Margin="2"/>
