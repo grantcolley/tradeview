@@ -3,6 +3,7 @@
     public enum AccountEventType
     {
         LoggedIn,
+        OrdersNotification,
         SelectedAsset,
         UpdateOrders
     }

@@ -16,7 +16,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
 
         public ILoggerFacade Logger { get; private set; }
 
-        public Dispatcher Dispatcher { get; set; }
+        public virtual Dispatcher Dispatcher { get; set; }
 
         protected abstract void Dispose(bool disposing);
 

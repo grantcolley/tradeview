@@ -34,6 +34,7 @@
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Data\DevelopmentInProgress.TradeView.Data.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Service\DevelopmentInProgress.TradeView.Service.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Controls\DevelopmentInProgress.TradeView.Wpf.Controls.csproj" />
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Wpf.Host.Controller\DevelopmentInProgress.TradeView.Wpf.Host.Controller.csproj" />
   </ItemGroup>
 
   <ItemGroup>
