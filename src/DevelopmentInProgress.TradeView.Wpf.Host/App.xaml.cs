@@ -84,6 +84,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
 
             containerRegistry.Register<OrdersViewModel>();
             containerRegistry.Register<AccountBalancesViewModel>();
+            containerRegistry.Register<AccountViewModel>();
 
             containerRegistry.Register<SymbolsViewModel>();
             containerRegistry.Register<TradePanelViewModel>();
