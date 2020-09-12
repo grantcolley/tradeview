@@ -3,7 +3,6 @@ using DevelopmentInProgress.TradeView.Wpf.Common.Events;
 using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
-using DevelopmentInProgress.TradeView.Wpf.Common.View;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context;
@@ -26,11 +25,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private readonly IWpfExchangeService exchangeService;
         private readonly IAccountsService accountsService;
         private readonly IChartHelper chartHelper;
+        private AccountViewModel accountViewModel;
         private SymbolViewModel symbolViewModel;
-        private AccountBalancesViewModel accountBalancesViewModel;
         private TradePanelViewModel tradePanelViewModel;
         private SymbolsViewModel symbolsViewModel;
-        private OrdersViewModel ordersViewModel;
         private UserAccount userAccount;
         private Account account;
         private Symbol symbol;
@@ -41,21 +39,21 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private IDisposable symbolObservableSubscription;
         private IDisposable accountObservableSubscription;
         private IDisposable tradeObservableSubscription;
-        private IDisposable ordersObservableSubscription;
 
         public TradingViewModel(ViewModelContext viewModelContext, 
-            AccountBalancesViewModel accountBalancesViewModel, SymbolsViewModel symbolsViewModel,
-            TradePanelViewModel tradePanelViewModel, OrdersViewModel ordersViewModel,
-            IWpfExchangeService exchangeService, IAccountsService accountsService,
+            AccountViewModel accountViewModel, 
+            SymbolsViewModel symbolsViewModel,
+            TradePanelViewModel tradePanelViewModel,
+            IWpfExchangeService exchangeService, 
+            IAccountsService accountsService,
             IOrderBookHelperFactory orderBookHelperFactory,
             ITradeHelperFactory tradeHelperFactory,
             IChartHelper chartHelper)
             : base(viewModelContext)
         {
-            AccountBalancesViewModel = accountBalancesViewModel;
+            AccountViewModel = accountViewModel;
             SymbolsViewModel = symbolsViewModel;
             TradeViewModel = tradePanelViewModel;
-            OrdersViewModel = ordersViewModel;
 
             this.exchangeService = exchangeService;
             this.accountsService = accountsService;
@@ -66,18 +64,17 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             ObserveSymbols();
             ObserveAccount();
             ObserveTrade();
-            ObserveOrders();
         }
 
-        public AccountBalancesViewModel AccountBalancesViewModel
+        public AccountViewModel AccountViewModel
         {
-            get { return accountBalancesViewModel; }
+            get { return accountViewModel; }
             private set
             {
-                if (accountBalancesViewModel != value)
+                if (accountViewModel != value)
                 {
-                    accountBalancesViewModel = value;
-                    OnPropertyChanged(nameof(AccountBalancesViewModel));
+                    accountViewModel = value;
+                    OnPropertyChanged(nameof(AccountViewModel));
                 }
             }
         }
@@ -104,19 +101,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 {
                     tradePanelViewModel = value;
                     OnPropertyChanged(nameof(TradeViewModel));
-                }
-            }
-        }
-
-        public OrdersViewModel OrdersViewModel
-        {
-            get { return ordersViewModel; }
-            private set
-            {
-                if (ordersViewModel != value)
-                {
-                    ordersViewModel = value;
-                    OnPropertyChanged(nameof(OrdersViewModel));
                 }
             }
         }
@@ -162,10 +146,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 ClearMessages();
             }
 
-            accountBalancesViewModel.Dispatcher = ViewModelContext.UiDispatcher;
+            accountViewModel.Dispatcher = ViewModelContext.UiDispatcher;
             symbolsViewModel.Dispatcher = ViewModelContext.UiDispatcher;
             tradePanelViewModel.Dispatcher = ViewModelContext.UiDispatcher;
-            ordersViewModel.Dispatcher = ViewModelContext.UiDispatcher;
 
             Account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() });
 
@@ -186,7 +169,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 }
             }
 
-            await Task.WhenAll(SymbolsViewModel.SetAccount(userAccount), AccountBalancesViewModel.Login(Account)).ConfigureAwait(true);
+            await Task.WhenAll(SymbolsViewModel.SetAccount(userAccount), AccountViewModel.Login(Account)).ConfigureAwait(true);
 
             isOpen = true;
             IsBusy = false;
@@ -201,14 +184,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
             symbolsObservableSubscription?.Dispose();
             tradeObservableSubscription?.Dispose();
-            ordersObservableSubscription?.Dispose();
             accountObservableSubscription.Dispose();
             symbolObservableSubscription?.Dispose();
 
-            AccountBalancesViewModel.Dispose();
+            AccountViewModel.Dispose();
             SymbolsViewModel?.Dispose();
             TradeViewModel?.Dispose();
-            OrdersViewModel?.Dispose();
             SymbolViewModel?.Dispose();
 
             disposed = true;
@@ -312,11 +293,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private void ObserveAccount()
         {
             var accountObservable = Observable.FromEventPattern<AccountEventArgs>(
-                eventHandler => AccountBalancesViewModel.OnAccountNotification += eventHandler,
-                eventHandler => AccountBalancesViewModel.OnAccountNotification -= eventHandler)
+                eventHandler => AccountViewModel.OnAccountNotification += eventHandler,
+                eventHandler => AccountViewModel.OnAccountNotification -= eventHandler)
                 .Select(eventPattern => eventPattern.EventArgs);
 
-            accountObservableSubscription = accountObservable.Subscribe(async args =>
+            accountObservableSubscription = accountObservable.Subscribe(args =>
             {
                 if (args.HasException)
                 {
@@ -325,12 +306,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 else if (args.AccountEventType.Equals(AccountEventType.LoggedIn))
                 {
                     TradeViewModel.SetAccount(args.Value);
-                    await OrdersViewModel.SetAccount(args.Value).ConfigureAwait(false);
                 }
                 else if (args.AccountEventType.Equals(AccountEventType.UpdateOrders))
                 {
                     TradeViewModel.Touch();
-                    await OrdersViewModel.UpdateOrders(args.Value).ConfigureAwait(false);
+                }
+                else if (args.AccountEventType.Equals(AccountEventType.OrdersNotification))
+                {
+                    TradingViewModelException(args);
                 }
                 else if (args.AccountEventType.Equals(AccountEventType.SelectedAsset))
                 {
@@ -363,22 +346,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
                 .Select(eventPattern => eventPattern.EventArgs);
 
             tradeObservableSubscription = tradeObservable.Subscribe(args =>
-            {
-                if (args.HasException)
-                {
-                    TradingViewModelException(args);
-                }
-            });
-        }
-
-        private void ObserveOrders()
-        {            
-            var ordersObservable = Observable.FromEventPattern<OrdersEventArgs>(
-                eventHandler => OrdersViewModel.OnOrdersNotification += eventHandler,
-                eventHandler => OrdersViewModel.OnOrdersNotification -= eventHandler)
-                .Select(eventPattern => eventPattern.EventArgs);
-
-            ordersObservableSubscription = ordersObservable.Subscribe(args =>
             {
                 if (args.HasException)
                 {
