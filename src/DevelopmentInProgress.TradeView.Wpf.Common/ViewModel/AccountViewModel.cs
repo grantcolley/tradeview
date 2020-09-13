@@ -12,13 +12,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
     {
         private AccountBalancesViewModel accountBalancesViewModel;
         private OrdersViewModel ordersViewModel;
+        private Account account;
         private bool disposed;
 
         private IDisposable accountObservableSubscription;
         private IDisposable ordersObservableSubscription;
 
-        public AccountViewModel(AccountBalancesViewModel accountBalancesViewModel,
-            OrdersViewModel ordersViewModel, ILoggerFacade logger)
+        public AccountViewModel(
+            AccountBalancesViewModel accountBalancesViewModel,
+            OrdersViewModel ordersViewModel, 
+            ILoggerFacade logger)
             : base(logger)
         {
             this.accountBalancesViewModel = accountBalancesViewModel;
@@ -67,8 +70,23 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
             }
         }
 
-        public Task Login(Account account)
+        public void SetAccount(Account account)
         {
+            this.account = account;
+        }
+
+        public Task Login(Account account = null)
+        {
+            if(account == null)
+            {
+                if(this.account == null)
+                {
+                    throw new ArgumentNullException(nameof(account));
+                }
+
+                account = this.account;
+            }
+
             return accountBalancesViewModel.Login(account);
         }
 

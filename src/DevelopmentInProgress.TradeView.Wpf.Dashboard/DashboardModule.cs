@@ -20,6 +20,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard
         {
             containerRegistry.Register<object, ServerMonitorView>(typeof(ServerMonitorView).Name);
             containerRegistry.Register<ServerMonitorViewModel>(typeof(ServerMonitorViewModel).Name);
+            containerRegistry.Register<object, AccountsView>(typeof(AccountsView).Name);
+            containerRegistry.Register<AccountsViewModel>(typeof(AccountsViewModel).Name);
         }
 
         public override void OnInitialized(IContainerProvider containerProvider)
@@ -35,15 +37,26 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard
                 ModuleGroupName = "Dashboard"
             };
 
-            var newDocument = new ModuleGroupItem
+            var serverMonitor = new ModuleGroupItem
             {
-                ModuleGroupItemName = "Server Monitor",
+                ModuleGroupItemName = "Servers",
                 TargetView = typeof(ServerMonitorView).Name,
-                TargetViewTitle = "Server Monitor",
+                TargetViewTitle = "Servers",
                 ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Dashboard;component/Images/ServerMonitor.png"
             };
 
-            moduleGroup.ModuleGroupItems.Add(newDocument);
+            moduleGroup.ModuleGroupItems.Add(serverMonitor);
+
+            var accountsMonitor = new ModuleGroupItem
+            {
+                ModuleGroupItemName = "Accounts",
+                TargetView = typeof(AccountsView).Name,
+                TargetViewTitle = "Accounts",
+                ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Dashboard;component/Images/ServerMonitor.png"
+            };
+
+            moduleGroup.ModuleGroupItems.Add(accountsMonitor);
+
             moduleSettings.ModuleGroups.Add(moduleGroup);
             ModuleNavigator.AddModuleNavigation(moduleSettings);
 

@@ -52,7 +52,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration
                 ModuleGroupName = ConfigurationUser
             };
 
-            var newDocument = new ModuleGroupItem
+            var manageStrategies = new ModuleGroupItem
             {
                 ModuleGroupItemName = "Manage Strategies",
                 TargetView = typeof(StrategyManagerView).Name,
@@ -60,7 +60,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration
                 ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Configuration;component/Images/manageStrategies.png"
             };
 
-            moduleGroup.ModuleGroupItems.Add(newDocument);
+            moduleGroup.ModuleGroupItems.Add(manageStrategies);
 
             var manageAccountsDocument = new ModuleGroupItem
             {
