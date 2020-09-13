@@ -100,7 +100,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
             containerRegistry.RegisterSingleton<IHttpClientManager, HttpClientManager>();
 
             var serverMonitorCache = Container.Resolve<IServerMonitorCache>();
-            serverMonitorCache.RefreshServerMonitorsAsync().FireAndForget();
+            serverMonitorCache.StartObservingServers();
         }
 
         protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings regionAdapterMappings)

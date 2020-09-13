@@ -39,17 +39,87 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 
         public event EventHandler<ServerMonitorCacheEventArgs> ServerMonitorCacheNotification;
 
-        public async Task<ObservableCollection<ServerMonitor>> GetServerMonitorsAsync()
+        public ObservableCollection<ServerMonitor> GetServerMonitors()
         {
-            await RefreshServerMonitorsAsync().ConfigureAwait(false);
             return serverMonitors;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions and notify observers.")]
-        public async Task RefreshServerMonitorsAsync()
+        public async void Dispose()
         {
-            await serverMonitorSemaphoreSlim.WaitAsync().ConfigureAwait(true);
+            if (disposed)
+            {
+                return;
+            }
 
+            if (observableInterval != null)
+            {
+                observableInterval.Dispose();
+            }
+
+            foreach(var serverMonitorSubscription in serverMonitorSubscriptions.Values)
+            {
+                serverMonitorSubscription.Dispose();
+            }
+
+            await Task.WhenAll(serverMonitors.Select(s => s.DisposeAsync()).ToList()).ConfigureAwait(false);
+
+            if(serverMonitorSemaphoreSlim != null)
+            {
+                serverMonitorSemaphoreSlim.Dispose();
+            }
+
+            disposed = true;
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions and notify observers.")]
+        public void StartObservingServers()
+        {
+            if(observableInterval != null)
+            {
+                return;
+            }
+
+            var interval = 0d;
+
+            observableInterval = Observable.Interval(TimeSpan.FromSeconds(interval))
+                .Subscribe(async i =>
+                {
+                    await serverMonitorSemaphoreSlim.WaitAsync().ConfigureAwait(true);
+
+                    try
+                    {
+                        await RefreshServerMonitorsAsync().ConfigureAwait(true);
+
+                        var connectServers = serverMonitors.Where(
+                            s => !s.IsConnected
+                            && !s.IsConnecting 
+                            && !string.IsNullOrWhiteSpace(s.Uri.ToString()) 
+                            && s.Enabled).ToList();
+
+                        if(connectServers.Any())
+                        {
+                            await Task.WhenAll(connectServers.Select(s => s.ConnectAsync(dispatcher)).ToList()).ConfigureAwait(false);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        OnServerMonitorCacheNotification($"Observing Servers : {ex.Message}", ex);
+                    }
+                    finally
+                    {
+                        if (interval != serverConfiguration.ObserveServerInterval)
+                        {
+                            interval = serverConfiguration.ObserveServerInterval;
+                        }
+
+                        serverMonitorSemaphoreSlim.Release();
+                    }
+                });
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions and notify observers.")]
+        private async Task RefreshServerMonitorsAsync()
+        {
             try
             {
                 var servers = await configurationServer.GetTradeServersAsync().ConfigureAwait(true);
@@ -101,83 +171,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
             {
                 OnServerMonitorCacheNotification($"Refreshing Servers : {ex.Message}", ex);
             }
-            finally
-            {
-                serverMonitorSemaphoreSlim.Release();
-            }
-
-            StartObservingServers();
-        }
-
-        public async void Dispose()
-        {
-            if (disposed)
-            {
-                return;
-            }
-
-            if (observableInterval != null)
-            {
-                observableInterval.Dispose();
-            }
-
-            foreach(var serverMonitorSubscription in serverMonitorSubscriptions.Values)
-            {
-                serverMonitorSubscription.Dispose();
-            }
-
-            await Task.WhenAll(serverMonitors.Select(s => s.DisposeAsync()).ToList()).ConfigureAwait(false);
-
-            if(serverMonitorSemaphoreSlim != null)
-            {
-                serverMonitorSemaphoreSlim.Dispose();
-            }
-
-            disposed = true;
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch all exceptions and notify observers.")]
-        private void StartObservingServers()
-        {
-            if(observableInterval != null)
-            {
-                return;
-            }
-
-            var interval = 0d;
-
-            observableInterval = Observable.Interval(TimeSpan.FromSeconds(interval))
-                .Subscribe(async i =>
-                {
-                    await serverMonitorSemaphoreSlim.WaitAsync().ConfigureAwait(true);
-
-                    try
-                    {
-                        var connectServers = serverMonitors.Where(
-                            s => !s.IsConnected
-                            && !s.IsConnecting 
-                            && !string.IsNullOrWhiteSpace(s.Uri.ToString()) 
-                            && s.Enabled).ToList();
-
-                        if(connectServers.Any())
-                        {
-                            await Task.WhenAll(connectServers.Select(s => s.ConnectAsync(dispatcher)).ToList()).ConfigureAwait(false);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        OnServerMonitorCacheNotification($"Observing Servers : {ex.Message}", ex);
-                    }
-                    finally
-                    {
-                        if(interval != serverConfiguration.ObserveServerInterval)
-                        {
-                            interval = serverConfiguration.ObserveServerInterval;
-                        }
-
-                        serverMonitorSemaphoreSlim.Release();
-                    }
-                });
         }
 
         private void OnServerMonitorCacheNotification(string message, Exception exception = null)

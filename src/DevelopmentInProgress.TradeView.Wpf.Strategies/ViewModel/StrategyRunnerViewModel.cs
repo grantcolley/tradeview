@@ -36,7 +36,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         private readonly IStrategyAssemblyManager strategyAssemblyManager;
         private readonly IHttpClientManager httpClientManager;
         private readonly SemaphoreSlim commandVisibilitySemaphoreSlim = new SemaphoreSlim(1, 1);
-        private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(new TimeSpan(0, 0, 1));
+        private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private Strategy strategy;
         private ServerMonitor selectedServer;
         private List<Symbol> symbols;
@@ -278,7 +278,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                     account.Exchange = strategySubscription.Exchange;
                 }
 
-                await Task.WhenAll(SymbolsViewModel.GetStrategySymbols(Strategy), AccountViewModel.Login(account), GetServerMonitors()).ConfigureAwait(false);
+                GetServerMonitors();
+
+                await Task.WhenAll(SymbolsViewModel.GetStrategySymbols(Strategy), AccountViewModel.Login(account)).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -288,11 +290,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
         }
 
-        private async Task GetServerMonitors()
+        private void GetServerMonitors()
         {
             try
             {
-                Servers = await serverMonitorCache.GetServerMonitorsAsync().ConfigureAwait(true);
+                Servers = serverMonitorCache.GetServerMonitors();
             }
             catch (Exception ex)
             {

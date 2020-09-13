@@ -97,11 +97,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Exceptions are routed back to subscribers.")]
-        protected async override void OnPublished(object data)
+        protected override void OnPublished(object data)
         {
             try
             {
-                Servers = await serverMonitorCache.GetServerMonitorsAsync().ConfigureAwait(true);
+                Servers = serverMonitorCache.GetServerMonitors();
             }
             catch(Exception ex)
             {

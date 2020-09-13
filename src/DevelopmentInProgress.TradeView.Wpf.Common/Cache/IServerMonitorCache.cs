@@ -2,14 +2,13 @@
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using System;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 {
     public interface IServerMonitorCache : IDisposable
     {
-        Task RefreshServerMonitorsAsync();
-        Task<ObservableCollection<ServerMonitor>> GetServerMonitorsAsync();
+        void StartObservingServers();
+        ObservableCollection<ServerMonitor> GetServerMonitors();
         event EventHandler<ServerMonitorCacheEventArgs> ServerMonitorCacheNotification;
     }
 }

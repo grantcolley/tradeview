@@ -11,12 +11,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
     public class TradeServerService : ITradeServerService
     {
         private readonly ITradeViewConfigurationServer configurationServer;
-        private readonly IServerMonitorCache serverMonitorCache;
 
-        public TradeServerService(ITradeViewConfigurationServer configurationServer, IServerMonitorCache serverMonitorCache)
+        public TradeServerService(ITradeViewConfigurationServer configurationServer)
         {
             this.configurationServer = configurationServer;
-            this.serverMonitorCache = serverMonitorCache;
         }
 
         public async Task<List<TradeServer>> GetTradeServers()
@@ -34,13 +32,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
         public async Task SaveTradeServer(TradeServer server)
         {
             await configurationServer.SaveTradeServerAsync(server.ToCoreTradeServer()).ConfigureAwait(false);
-            await serverMonitorCache.RefreshServerMonitorsAsync().ConfigureAwait(false);
         }
 
         public async Task DeleteTradeServer(TradeServer server)
         {
             await configurationServer.DeleteTradeServerAsync(server.ToCoreTradeServer()).ConfigureAwait(false);
-            await serverMonitorCache.RefreshServerMonitorsAsync().ConfigureAwait(false);
         }
     }
 }
