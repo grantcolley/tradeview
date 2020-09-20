@@ -52,7 +52,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard
                 ModuleGroupItemName = "Accounts",
                 TargetView = typeof(AccountsView).Name,
                 TargetViewTitle = "Accounts",
-                ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Dashboard;component/Images/ServerMonitor.png"
+                ModuleGroupItemImagePath = @"/DevelopmentInProgress.TradeView.Wpf.Dashboard;component/Images/Accounts.png"
             };
 
             moduleGroup.ModuleGroupItems.Add(accountsMonitor);

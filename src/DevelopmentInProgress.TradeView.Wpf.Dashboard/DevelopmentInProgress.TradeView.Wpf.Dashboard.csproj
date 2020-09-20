@@ -14,6 +14,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\accounts.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommonServiceLocator" Version="2.0.5" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -35,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\Accounts.png" />
     <Resource Include="Images\Connection.png" />
     <Resource Include="Images\Dashboard.png" />
     <Resource Include="Images\NotRunning.png" />
