@@ -81,9 +81,18 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 
             var interval = 0d;
 
+            var onlyOnStartupUntilHttpClientMemoryLeakIsFixed = false;
+ 
             observableInterval = Observable.Interval(TimeSpan.FromSeconds(interval))
                 .Subscribe(async i =>
                 {
+                    if(onlyOnStartupUntilHttpClientMemoryLeakIsFixed)
+                    {
+                        return;
+                    }
+
+                    onlyOnStartupUntilHttpClientMemoryLeakIsFixed = true;
+
                     await serverMonitorSemaphoreSlim.WaitAsync().ConfigureAwait(true);
 
                     try
