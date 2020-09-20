@@ -22,16 +22,17 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Content="Account" FontWeight="Bold" FontSize="14"/>
                     <Label Grid.Row="0" Grid.Column="1" Content="{Binding Account.AccountName, Mode=TwoWay}" FontSize="14"/>
-                    <Label Grid.Row="1" Grid.Column="0" Content="Assets Value" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left"/>
-                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                    <Label Grid.Row="0" Grid.Column="2" Content="Assets Value" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left"/>
+                    <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Horizontal">
                         <Label Content="{Binding Account.BTCDisplayValue}" FontSize="14" HorizontalAlignment="Left"/>
                         <Label Content="{Binding Account.EqualsDisplayValue}" FontSize="14" HorizontalAlignment="Left"/>
                         <Label Content="{Binding Account.USDTDisplayValue}" FontSize="13" HorizontalAlignment="Left"/>
