@@ -18,9 +18,9 @@
     </UserControl.Resources>
     <Grid Grid.Row="2">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="45*"/>
             <ColumnDefinition Width="2"/>
-            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="55*"/>
         </Grid.ColumnDefinitions>
 
         <DockPanel Grid.Column="0" LastChildFill="True">
