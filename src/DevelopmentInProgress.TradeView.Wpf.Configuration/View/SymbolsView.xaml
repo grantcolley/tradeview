@@ -41,7 +41,9 @@
                             <ColumnDefinition Width="120"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <CheckBox Grid.Column="0" VerticalAlignment="Center" IsChecked="{Binding ShowFavourites}"/>
+                        <CheckBox Grid.Column="0" VerticalAlignment="Center" 
+                                  Command="{Binding DataContext.ShowFavouritesCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" 
+                                  CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"/>
                         <Label Grid.Column="1" VerticalAlignment="Center" Content="Currency Pair" FontWeight="Bold"/>
                     </Grid>
                     <ListView x:Name="SymbolsList" ItemsSource="{Binding Symbols}" 
