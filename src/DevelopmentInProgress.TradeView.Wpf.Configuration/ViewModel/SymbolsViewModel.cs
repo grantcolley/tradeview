@@ -28,6 +28,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
             UpdatePreferencesCommand = new ViewModelCommand(UpdatePreferences);
 
+            Symbols = new List<Symbol>();
+
             // necessary to get symbols on fire and forget 
             // so it doesn't block the dialog from showing.
             GetSymbols().FireAndForget();
