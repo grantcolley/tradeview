@@ -107,6 +107,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
         protected async override void OnPublished(object data)
         {
+            IsBusy = true;
+
             base.OnPublished(data);
 
             try
@@ -125,6 +127,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             finally
             {
                 IsLoading = false;
+                IsBusy = false;
             }
         }
 

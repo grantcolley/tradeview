@@ -248,6 +248,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
         protected async override void OnPublished(object data)
         {
+            IsBusy = true;
+
             try
             {
                 Strategy = await strategyService.GetStrategy(Title).ConfigureAwait(true);
@@ -287,6 +289,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 Logger.Log($"OnPublished {ex.Message}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
 
                 ShowMessage(new Message { MessageType = MessageType.Error, Text = $"Strategy load error. Check configuration. {ex.Message}" });
+            }
+            finally
+            {
+                IsBusy = false;
             }
         }
 

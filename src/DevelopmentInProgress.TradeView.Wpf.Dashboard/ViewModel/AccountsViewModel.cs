@@ -37,33 +37,18 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
             this.logger = logger;
 
             Accounts = new ObservableCollection<AccountViewModel>();
-
-            IsLoading = true;
         }
 
         public ObservableCollection<AccountViewModel> Accounts { get; }
-
-        public bool IsLoading
-        {
-            get { return isLoading; }
-            set
-            {
-                if (isLoading != value)
-                {
-                    isLoading = value;
-                    OnPropertyChanged(nameof(IsLoading));
-                }
-            }
-        }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Exceptions are routed back to subscribers.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "Objects get disposed in the Dispose method.")]
         protected async override void OnPublished(object data)
         {
+            IsBusy = true;
+
             try
             {
-                IsLoading = true;
-
                 ClearAccounts();
 
                 var accounts = await accountsService.GetAccountsAsync().ConfigureAwait(true);
@@ -103,7 +88,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
             }
             finally
             {
-                IsLoading = false;
+                IsBusy = false;
             }
         }
 
@@ -123,8 +108,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
         {
             if (Accounts.Any())
             {
-                foreach (var accountViewModel in Accounts)
+                var items = Accounts.Count;
+
+                for (int i = items - 1; i >= 0; i--)
                 {
+                    var accountViewModel = Accounts[i];
                     accountViewModel.Dispose();
                     Accounts.Remove(accountViewModel);
                 }

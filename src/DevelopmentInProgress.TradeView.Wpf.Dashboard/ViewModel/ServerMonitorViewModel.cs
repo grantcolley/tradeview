@@ -99,6 +99,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Exceptions are routed back to subscribers.")]
         protected override void OnPublished(object data)
         {
+            IsBusy = true;
+
             try
             {
                 Servers = serverMonitorCache.GetServerMonitors();
@@ -110,6 +112,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
             finally
             {
                 IsLoadingServers = false;
+                IsBusy = false;
             }
         }
 
