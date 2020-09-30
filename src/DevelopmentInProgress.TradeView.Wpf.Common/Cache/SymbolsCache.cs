@@ -168,6 +168,5 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 
             disposed = false;
         }
-
     }
 }
