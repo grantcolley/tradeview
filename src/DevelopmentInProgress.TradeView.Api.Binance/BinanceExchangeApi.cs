@@ -15,6 +15,8 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
 {
     public class BinanceExchangeApi : IExchangeApi
     {
+        public string NameDelimiter { get; }
+
         public async Task<Core.Model.Order> PlaceOrder(Core.Model.User user, Core.Model.ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default)
         {
             if (user == null)

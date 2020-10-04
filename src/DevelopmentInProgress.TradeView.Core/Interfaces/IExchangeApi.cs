@@ -9,6 +9,7 @@ namespace DevelopmentInProgress.TradeView.Core.Interfaces
 {
     public interface IExchangeApi
     {
+        string NameDelimiter { get; }
         Task<Order> PlaceOrder(User user, ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default);
         Task<string> CancelOrderAsync(User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default);
         Task<AccountInfo> GetAccountInfoAsync(User user, CancellationToken cancellationToken);

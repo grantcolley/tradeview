@@ -16,6 +16,8 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
 {
     public class KucoinExchangeApi : IExchangeApi
     {
+        public string NameDelimiter { get; } = "-";
+
         public async Task<string> CancelOrderAsync(User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default)
         {
             if (user == null)
@@ -172,7 +174,7 @@ namespace DevelopmentInProgress.TradeView.Api.Kucoin
             {
                 Name = $"{s.BaseCurrency}{s.QuoteCurrency}",
                 Exchange = Exchange.Kucoin,
-                NameDelimiter = "-",
+                NameDelimiter = NameDelimiter,
                 ExchangeSymbol = s.Symbol,
                 NotionalMinimumValue = s.QuoteMinSize,
                 BaseAsset = new Asset { Symbol = s.BaseCurrency },

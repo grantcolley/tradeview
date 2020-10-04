@@ -12,6 +12,8 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
     {
         private readonly KucoinExchangeTestApiEnum kucoinExchangeTestApiEnum;
 
+        public string NameDelimiter { get; }
+
         public KucoinExchangeTestApi(KucoinExchangeTestApiEnum kucoinExchangeTestApiEnum)
         {
             this.kucoinExchangeTestApiEnum = kucoinExchangeTestApiEnum;
