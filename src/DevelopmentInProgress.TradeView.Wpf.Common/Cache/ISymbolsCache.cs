@@ -10,5 +10,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
         event EventHandler<Exception> OnSymbolsCacheException;
         Task<List<Symbol>> GetSymbols(IEnumerable<string> subscriptions);
         void ValueAccount(Account account);
+        void SubscribeAssets(IEnumerable<string> assets);
     }
 }

@@ -13,6 +13,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
     public class SymbolsCache : ISymbolsCache, IDisposable
     {
         private const string BTCUSDT = "BTCUSDT";
+        private const string QUOTEASSET = "BTC";
 
         private readonly Exchange exchange;
         private readonly IWpfExchangeService wpfExchangeService;
@@ -33,6 +34,17 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
         }
 
         public event EventHandler<Exception> OnSymbolsCacheException;
+
+        public void SubscribeAssets(IEnumerable<string> assets)
+        {
+            // 1. get assets for all accounts
+
+            // 2. convert assets to symbols
+
+            // 3. subscribe symbols
+
+            // 4. TODO: when an asset is purchased, subscribe to it if not already already subscribed
+        }
 
         public async Task<List<Symbol>> GetSymbols(IEnumerable<string> subscriptions)
         {
