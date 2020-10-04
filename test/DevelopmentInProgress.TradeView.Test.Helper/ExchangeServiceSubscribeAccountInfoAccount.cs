@@ -12,6 +12,11 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
 {
     public class ExchangeServiceSubscribeAccountInfoAccount : IExchangeService
     {
+        public string GetNameDelimiter(Exchange exchange)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<string> CancelOrderAsync(Exchange exchange, User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();

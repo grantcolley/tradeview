@@ -14,6 +14,11 @@ namespace DevelopmentInProgress.TradeView.Service
         private readonly IExchangeApiFactory exchangeApiFactory;
         private readonly Dictionary<Exchange, IExchangeApi> exchanges;
 
+        public string GetNameDelimiter(Exchange exchange)
+        {
+            return GetExchangeApi(exchange).NameDelimiter;
+        }
+
         public ExchangeService(IExchangeApiFactory exchangeApiFactory)
         {
             this.exchangeApiFactory = exchangeApiFactory ?? throw new ArgumentNullException(nameof(exchangeApiFactory));
