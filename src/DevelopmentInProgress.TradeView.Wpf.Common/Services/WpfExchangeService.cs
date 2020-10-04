@@ -19,7 +19,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
         {
             this.exchangeService = exchangeService;
         }
-       
+
+        public string GetNameDelimiter(Exchange exchange)
+        {
+            return exchangeService.GetNameDelimiter(exchange);
+        }
+
         public async Task<IEnumerable<Order>> GetOpenOrdersAsync(Exchange exchange, Core.Model.User user, string symbol = null, long recWindow = 0, Action<Exception> exception = default, CancellationToken cancellationToken = default)
         {
             var result = await exchangeService.GetOpenOrdersAsync(exchange, user, symbol, recWindow, exception, cancellationToken).ConfigureAwait(false);

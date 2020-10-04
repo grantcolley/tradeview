@@ -10,6 +10,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Services
 {
     public interface IWpfExchangeService
     {
+        string GetNameDelimiter(Exchange exchange);
         Task<Core.Model.Order> PlaceOrder(Exchange exchange, Core.Model.User user, Core.Model.ClientOrder clientOrder, long recWindow = 0, CancellationToken cancellationToken = default);
         Task<string> CancelOrderAsync(Exchange exchange, Core.Model.User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default);
         Task<Account> GetAccountInfoAsync(Exchange exchange, Core.Model.User user, CancellationToken cancellationToken);
