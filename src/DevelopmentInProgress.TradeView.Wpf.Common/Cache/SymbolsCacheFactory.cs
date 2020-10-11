@@ -3,6 +3,8 @@ using DevelopmentInProgress.TradeView.Core.Interfaces;
 using DevelopmentInProgress.TradeView.Service;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 {
@@ -10,11 +12,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
     {
         private readonly IExchangeApiFactory exchangeApiFactory;
         private readonly Dictionary<Exchange, ISymbolsCache> exchangeSymbolsCache;
+        private readonly IAccountsService accountsService;
         private readonly object exchangeSymbolsCacheLock = new object();
 
-        public SymbolsCacheFactory(IExchangeApiFactory exchangeApiFactory)
+        public SymbolsCacheFactory(IExchangeApiFactory exchangeApiFactory, IAccountsService accountsService)
         {
             this.exchangeApiFactory = exchangeApiFactory;
+            this.accountsService = accountsService;
             exchangeSymbolsCache = new Dictionary<Exchange, ISymbolsCache>();
         }
 
@@ -41,6 +45,15 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                     }
                 }
             }
+        }
+
+        public async Task SubscribeAccountsAssets()
+        {
+            var userAccounts = await accountsService.GetAccountsAsync().ConfigureAwait(false);
+
+            var exchangeAccounts = userAccounts.Accounts.GroupBy(a => a.Exchange, a => a);
+
+
         }
     }
 }

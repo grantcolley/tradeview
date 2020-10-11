@@ -1,12 +1,13 @@
-﻿using System;
+﻿using DevelopmentInProgress.TradeView.Core.Enums;
+using DevelopmentInProgress.TradeView.Core.Extensions;
+using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;
+using DevelopmentInProgress.TradeView.Wpf.Common.Model;
+using DevelopmentInProgress.TradeView.Wpf.Common.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DevelopmentInProgress.TradeView.Wpf.Common.Model;
-using DevelopmentInProgress.TradeView.Wpf.Common.Services;
-using DevelopmentInProgress.TradeView.Core.Extensions;
-using DevelopmentInProgress.TradeView.Core.Enums;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 {
@@ -35,15 +36,17 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 
         public event EventHandler<Exception> OnSymbolsCacheException;
 
-        public void SubscribeAssets(IEnumerable<string> assets)
+        public void SubscribeAccountsAssets(IEnumerable<Core.Model.User> users)
         {
-            // 1. get assets for all accounts
+            if(users == null)
+            {
+                throw new ArgumentNullException(nameof(users));
+            }
 
-            // 2. convert assets to symbols
-
-            // 3. subscribe symbols
-
-            // 4. TODO: when an asset is purchased, subscribe to it if not already already subscribed
+            foreach(var user in users)
+            {
+                SubscribeAssets(user).FireAndForget();
+            }
         }
 
         public async Task<List<Symbol>> GetSymbols(IEnumerable<string> subscriptions)
@@ -145,6 +148,19 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 
             account.BTCValue = Math.Round(btc, 8);
             account.USDTValue = usdt.Trim(btcUsdt.PricePrecision);
+        }
+
+        private async Task SubscribeAssets(Core.Model.User user)
+        {
+            // 1. get assets for all accounts
+            var account = await wpfExchangeService.GetAccountInfoAsync(exchange, user, subscribeSymbolsCxlTokenSrc.Token).ConfigureAwait(false);
+
+            // 2. convert assets to symbols
+            var nameDelimiter = wpfExchangeService.GetNameDelimiter(exchange);
+            var assets = account.Balances.Select(a => $"{a.Asset}{ nameDelimiter ?? string.Empty}{QUOTEASSET}").ToList();
+
+            // 3. subscribe symbols
+            await GetSymbols(assets).ConfigureAwait(false);
         }
 
         private void SubscribeStatisticsException(Exception exception)
