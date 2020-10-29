@@ -1,6 +1,7 @@
 ﻿using DevelopmentInProgress.TradeView.Core.Enums;
 using DevelopmentInProgress.TradeView.Wpf.Common.Cache;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
+using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.TradeView.Test.Helper
 {
@@ -16,6 +17,11 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
         public ISymbolsCache GetSymbolsCache(Exchange exchange)
         {
             return new SymbolsCache(exchange, exchangeService);
+        }
+
+        public Task SubscribeAccountsAssets()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
