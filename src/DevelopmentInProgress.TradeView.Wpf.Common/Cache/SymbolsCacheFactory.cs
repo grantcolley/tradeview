@@ -53,7 +53,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 
             var exchangeAccounts = userAccounts.Accounts.GroupBy(a => a.Exchange, a => a);
 
-
+            foreach(var exchangeAccount in exchangeAccounts)
+            {
+                var symbolCache = GetSymbolsCache(exchangeAccount.Key);
+                symbolCache.SubscribeAccountsAssets(exchangeAccount.ToList());
+            }
         }
     }
 }

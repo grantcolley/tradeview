@@ -5,12 +5,12 @@ using DevelopmentInProgress.TradeView.Data.File;
 using DevelopmentInProgress.TradeView.Service;
 using DevelopmentInProgress.TradeView.Wpf.Common.Cache;
 using DevelopmentInProgress.TradeView.Wpf.Common.Chart;
-using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;
 using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
 using DevelopmentInProgress.TradeView.Wpf.Common.Manager;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Configuration.Utility;
+using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.RegionAdapters;
@@ -19,7 +19,6 @@ using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Host.Logger;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.Utility;
 using DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel;
-using Microsoft.Extensions.DependencyInjection;
 using Prism.Ioc;
 using Prism.Logging;
 using Prism.Modularity;
@@ -27,6 +26,7 @@ using Prism.Regions;
 using Prism.Unity;
 using Serilog;
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using Xceed.Wpf.AvalonDock;
@@ -38,6 +38,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
     /// </summary>
     public partial class App : PrismApplication
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            AppDomain currentDomain = AppDomain.CurrentDomain;
+            currentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledExceptionHandler);
+        }
+
         protected override IModuleCatalog CreateModuleCatalog()
         {
             using Stream xamlStream = File.OpenRead("Configuration/ModuleCatalog.xaml");
@@ -45,7 +53,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
             return moduleCatalog;
         }
 
-        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        protected override async void RegisterTypes(IContainerRegistry containerRegistry)
         {
             Serilog.Core.Logger logger = new LoggerConfiguration()
                 .ReadFrom.AppSettings()
@@ -101,6 +109,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
 
             var serverMonitorCache = Container.Resolve<IServerMonitorCache>();
             serverMonitorCache.StartObservingServers();
+
+            var symbolsCacheFactory = Container.Resolve<ISymbolsCacheFactory>();
+            await symbolsCacheFactory.SubscribeAccountsAssets().ConfigureAwait(false);
         }
 
         protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings regionAdapterMappings)
@@ -131,6 +142,13 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
             Current.MainWindow = shell;
             Current.MainWindow.WindowState = WindowState.Maximized;
             Current.MainWindow.Show();
+        }
+
+        private void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs args)
+        {
+            Exception e = (Exception)args.ExceptionObject;
+            var log = Container.Resolve<ILoggerFacade>();
+            log.Log(e.ToString(), Category.Exception, Priority.Low);
         }
     }
 }

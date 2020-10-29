@@ -36,16 +36,16 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 
         public event EventHandler<Exception> OnSymbolsCacheException;
 
-        public void SubscribeAccountsAssets(IEnumerable<Core.Model.User> users)
+        public void SubscribeAccountsAssets(IEnumerable<UserAccount> userAccounts)
         {
-            if(users == null)
+            if(userAccounts == null)
             {
-                throw new ArgumentNullException(nameof(users));
+                throw new ArgumentNullException(nameof(userAccounts));
             }
 
-            foreach(var user in users)
+            foreach(var userAccount in userAccounts)
             {
-                SubscribeAssets(user).FireAndForget();
+                SubscribeAssets(userAccount).FireAndForget(false);
             }
         }
 
@@ -150,9 +150,18 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
             account.USDTValue = usdt.Trim(btcUsdt.PricePrecision);
         }
 
-        private async Task SubscribeAssets(Core.Model.User user)
+        private async Task SubscribeAssets(UserAccount userAccount)
         {
             // 1. get assets for all accounts
+            var user = new Core.Model.User
+            {
+                AccountName = userAccount.AccountName,
+                ApiKey = userAccount.ApiKey,
+                ApiSecret = userAccount.ApiSecret,
+                ApiPassPhrase = userAccount.ApiPassPhrase,
+                Exchange = userAccount.Exchange
+            };
+
             var account = await wpfExchangeService.GetAccountInfoAsync(exchange, user, subscribeSymbolsCxlTokenSrc.Token).ConfigureAwait(false);
 
             // 2. convert assets to symbols
