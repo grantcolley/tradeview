@@ -13,6 +13,9 @@ Alt currency trading application built on the [Origin](https://github.com/grantc
 #### Table of Contents
 * [Overview](#overview)
   * [Configuration](#configuration)
+    * [Manage Accounts](#manage-accounts)
+    * [Manage Strategies](#manage-strategies)
+    * [Manage Servers](#manage-servers)
   * [Trading](#trading)    
   * [Strategies](#strategies)
   * [Dashboard](#dashboard)
@@ -31,11 +34,23 @@ Alt currency trading application built on the [Origin](https://github.com/grantc
 #### Configuration
 The Configuration module is where configuration for trading accounts, running strategies and strategy servers is managed.
 
-* **Manage Accounts** allows you to create and persist trading accounts including account name, exchange, api key and secret key. It also persists display preferences for the trading screen, such as favourite symbols, and default selected symbol.
-* **Manage Strategies** persists configuration for running a trading strategy and displaying a running strategy in realtime.
-* **Manage Servers** persists trade server details for servers that run trading strategies 
+* [Manage Accounts](#manage-accounts)
+* [Manage Strategies](#manage-strategies)
+* [Manage Servers](#manage-servers)
 
-![Alt text](/README-images/configuration_account.PNG?raw=true "Configuration")
+###### Manage Accounts
+Allows you to create and persist trading accounts including account name, exchange, api key and secret key. It also persists display preferences for the trading screen, such as favourite symbols, and default selected symbol.
+
+![Alt text](/README-images/configuration_account.PNG?raw=true "Configure Account")
+
+###### Manage Strategies
+Manage configuration for running a trading strategy and displaying a running strategy in realtime.
+![Alt text](/README-images/configuration_strategy.PNG?raw=true "Configure Strategy")
+
+###### Manage Servers
+Manage trade server details for servers that run trading strategies 
+
+![Alt text](/README-images/configuration_Server.PNG?raw=true "Configure Strategy")
 
 #### Trading
 The Trading module shows a list of trading accounts in the navigation panel. Selecting an account will open a trading document in the main window for that account. From the trading document you can:
