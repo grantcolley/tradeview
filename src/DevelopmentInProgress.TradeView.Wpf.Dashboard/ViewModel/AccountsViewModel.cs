@@ -72,6 +72,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
                             new OrdersViewModel(exchangeService, logger),
                             logger);
 
+                        accountViewModel.Dispatcher = ViewModelContext.UiDispatcher;
                         accountViewModel.SetAccount(account);
                         loginTasks[i] = accountViewModel.Login();
                         Accounts.Add(accountViewModel);
