@@ -50,7 +50,7 @@ Manage configuration for running a trading strategy and displaying a running str
 ###### Manage Servers
 Manage trade server details for servers that run trading strategies 
 
-![Alt text](/README-images/configuration_Server.PNG?raw=true "Configure Strategy")
+![Alt text](/README-images/configuration_server.PNG?raw=true "Configure Strategy")
 
 #### Trading
 The Trading module shows a list of trading accounts in the navigation panel. Selecting an account will open a trading document in the main window for that account. From the trading document you can:
