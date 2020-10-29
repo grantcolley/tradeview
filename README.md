@@ -8,6 +8,8 @@ Alt currency trading application built on the [Origin](https://github.com/grantc
 * ###### .NET Core WPF, Prism, Unity, WebSockets
 #####  
 
+![Alt text](/README-images/tradeview.PNG?raw=true "Trade View")
+
 #### Table of Contents
 * [Overview](#overview)
   * [Configuration](#configuration)
