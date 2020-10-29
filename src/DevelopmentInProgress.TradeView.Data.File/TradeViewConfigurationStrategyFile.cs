@@ -17,7 +17,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
         public TradeViewConfigurationStrategyFile()
         {
-            userStrategiesFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{Environment.MachineName}_Strategies.txt");
+            userStrategiesFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{Environment.UserName}_Strategies.txt");
         }
 
         public async Task<List<StrategyConfig>> GetStrategiesAsync()

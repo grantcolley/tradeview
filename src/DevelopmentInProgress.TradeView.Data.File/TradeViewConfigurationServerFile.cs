@@ -15,7 +15,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
         public TradeViewConfigurationServerFile()
         {
-            userServersFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{Environment.MachineName}_TradeServers.txt");
+            userServersFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{Environment.UserName}_TradeServers.txt");
         }
 
         public Task<ServerConfiguration> GetServerConfiguration()
