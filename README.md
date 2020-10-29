@@ -35,7 +35,7 @@ The Configuration module is where configuration for trading accounts, running st
 * **Manage Strategies** persists configuration for running a trading strategy and displaying a running strategy in realtime.
 * **Manage Servers** persists trade server details for servers that run trading strategies 
 
-![Alt text](/README-images/configuration.PNG?raw=true "Configuration")
+![Alt text](/README-images/configuration_account.PNG?raw=true "Configuration")
 
 #### Trading
 The Trading module shows a list of trading accounts in the navigation panel. Selecting an account will open a trading document in the main window for that account. From the trading document you can:
@@ -64,7 +64,7 @@ You can view all accounts and open orders in realtime.
 ###### Monitoring Trade Servers
 You can view all configured [tradeservers](https://github.com/grantcolley/tradeserver) and whether they are active. An active [tradeserver](https://github.com/grantcolley/tradeserver) will show the strategies currently running on it, including each strategy's parameters and its active connections i.e. which users are monitoring the strategy. See [Running a Strategy](#running-a-strategy).
 
-![Alt text](/README-images/dashboard.PNG?raw=true "Monitor Trade Servers in the Dashboard")
+![Alt text](/README-images/dashboard_servers.PNG?raw=true "Monitor Trade Servers in the Dashboard")
 
 ## Running a Strategy
 Strategies are run on an instance of [tradeserver](https://github.com/grantcolley/tradeserver), currently a private repository.
