@@ -10,7 +10,6 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Documents;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
 {
@@ -20,7 +19,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
         private readonly IWpfExchangeService exchangeService;
         private readonly ISymbolsCacheFactory symbolsCacheFactory;
         private readonly ILoggerFacade logger;
-        private bool isLoading;
         private bool disposed;
 
         public AccountsViewModel(
