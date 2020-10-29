@@ -41,16 +41,16 @@ The Configuration module is where configuration for trading accounts, running st
 ###### Manage Accounts
 Allows you to create and persist trading accounts including account name, exchange, api key and secret key. It also persists display preferences for the trading screen, such as favourite symbols, and default selected symbol.
 
-![Alt text](/README-images/configuration_account.PNG?raw=true "Configure Account")
+![Alt text](/README-images/configuration_account.PNG?raw=true "Configure an Account")
 
 ###### Manage Strategies
 Manage configuration for running a trading strategy and displaying a running strategy in realtime.
-![Alt text](/README-images/configuration_strategy.PNG?raw=true "Configure Strategy")
+![Alt text](/README-images/configuration_strategy.PNG?raw=true "Configure a Strategy")
 
 ###### Manage Servers
 Manage trade server details for servers that run trading strategies 
 
-![Alt text](/README-images/configuration_server.PNG?raw=true "Configure Strategy")
+![Alt text](/README-images/configuration_server.PNG?raw=true "Configure a Server")
 
 #### Trading
 The Trading module shows a list of trading accounts in the navigation panel. Selecting an account will open a trading document in the main window for that account. From the trading document you can:
