@@ -51,9 +51,18 @@ Strategies are run on an instance of [tradeserver](https://github.com/grantcolle
 ![Alt text](/README-images/strategies.PNG?raw=true "Strategies")
 
 #### Dashboard
-The dashboard shows all configured [tradeservers](https://github.com/grantcolley/tradeserver) and whether they are active. An active [tradeserver](https://github.com/grantcolley/tradeserver) will show the strategies currently running on it, including each strategy's parameters and its active connections i.e. which users are monitoring the strategy. See [Running a Strategy](#running-a-strategy).
+* [Monitoring Accounts](#monitoring-accounts)
+* [Monitoring Trade Servers](#monitoring-trade-servers)
 
-![Alt text](/README-images/dashboard.PNG?raw=true "Dashboard")
+###### Monitoring Accounts
+You can view all accounts and open orders in realtime.
+
+![Alt text](/README-images/dashboard_accounts.PNG?raw=true "Monitor Accounts in the Dashboard")
+
+###### Monitoring Trade Servers
+You can view all configured [tradeservers](https://github.com/grantcolley/tradeserver) and whether they are active. An active [tradeserver](https://github.com/grantcolley/tradeserver) will show the strategies currently running on it, including each strategy's parameters and its active connections i.e. which users are monitoring the strategy. See [Running a Strategy](#running-a-strategy).
+
+![Alt text](/README-images/dashboard.PNG?raw=true "Monitor Trade Servers in the Dashboard")
 
 ## Running a Strategy
 Strategies are run on an instance of [tradeserver](https://github.com/grantcolley/tradeserver), currently a private repository.
