@@ -16,6 +16,8 @@ Alt currency trading application built on the [Origin](https://github.com/grantc
   * [Trading](#trading)    
   * [Strategies](#strategies)
   * [Dashboard](#dashboard)
+    * [Monitoring Accounts](#monitoring-accounts)
+    * [Monitoring Trade Servers](#monitoring-trade-servers)
 * [Running a Strategy](#running-a-strategy)
 * [Extending tradeview](#extending-tradeview)
   * [Adding a new Exchange API](#adding-a-new-exchange-api)
