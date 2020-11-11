@@ -4,6 +4,8 @@
 
 Alt currency trading application built on the [Origin](https://github.com/grantcolley/origin) framework.
 
+Run strategies in conjunction with [tradeserver](https://github.com/grantcolley/tradeserver).
+
 ##### Technologies
 * ###### .NET Core WPF, Prism, Unity, WebSockets
 #####  
@@ -82,7 +84,7 @@ You can view all configured [tradeservers](https://github.com/grantcolley/trades
 ![Alt text](/README-images/dashboard_servers.PNG?raw=true "Monitor Trade Servers in the Dashboard")
 
 ## Running a Strategy
-Strategies are run on an instance of [tradeserver](https://github.com/grantcolley/tradeserver), currently a private repository.
+Strategies are run on an instance of [tradeserver](https://github.com/grantcolley/tradeserver).
 
 ## Extending tradeview
 
