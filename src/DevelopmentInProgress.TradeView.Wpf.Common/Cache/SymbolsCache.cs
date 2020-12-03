@@ -45,7 +45,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 
             foreach(var userAccount in userAccounts)
             {
-                SubscribeAssets(userAccount).FireAndForget(false);
+                SubscribeAssets(userAccount).FireAndForget(true);
             }
         }
 
