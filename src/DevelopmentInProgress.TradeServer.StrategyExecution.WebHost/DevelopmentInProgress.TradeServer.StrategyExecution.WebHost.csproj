@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>DevelopmentInProgress.TradeServer.StrategyExecution.WebHost</AssemblyName>
+    <RootNamespace>DevelopmentInProgress.TradeServer.StrategyExecution.WebHost</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.1.1" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.1" />
+    <PackageReference Include="System.IO" Version="4.3.0" />
+    <PackageReference Include="System.Reactive" Version="4.3.2" />
+    <PackageReference Include="System.Reactive.Linq" Version="4.3.2" />
+    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\tradeview\src\DevelopmentInProgress.Socket\DevelopmentInProgress.Socket.csproj" />
+    <ProjectReference Include="..\..\..\tradeview\src\DevelopmentInProgress.TradeView.Core\DevelopmentInProgress.TradeView.Core.csproj" />
+    <ProjectReference Include="..\..\..\tradeview\src\DevelopmentInProgress.TradeView.Service\DevelopmentInProgress.TradeView.Service.csproj" />
+    <ProjectReference Include="..\DevelopmentInProgress.Socket.Extensions\DevelopmentInProgress.Socket.Extensions.csproj" />
+  </ItemGroup>
+
+</Project>
