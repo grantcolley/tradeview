@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>Grant Colley</Authors>
+    <Company>Development In Progress Ltd</Company>
+    <Description>ASP .NET Core Extensions for DipSocket, a lightweight publisher / subscriber implementation using WebSockets.</Description>
+    <Copyright>Copyright © 2018. Development In Progress Ltd. All rights reserved.</Copyright>
+    <PackageLicenseUrl></PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/grantcolley/dipsocket</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/grantcolley/dipsocket</RepositoryUrl>
+    <PackageTags>WebSocket, ASP .NET Core, Publish, Publisher, Subscribe, Subscriber</PackageTags>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <Version>1.1.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.WebSockets" Version="2.1.1" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\tradeview\src\DevelopmentInProgress.Socket\DevelopmentInProgress.Socket.csproj" />
+  </ItemGroup>
+
+</Project>
