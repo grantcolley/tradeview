@@ -1,0 +1,58 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Helpers\Data\AccountInfo.txt" />
+    <None Remove="Helpers\Data\AggregateTrades.txt" />
+    <None Remove="Helpers\Data\AggregateTradesUpdated.txt" />
+    <None Remove="Helpers\Data\OrderBook.txt" />
+    <None Remove="Helpers\Data\OrderBookUpdated.txt" />
+    <None Remove="Helpers\Data\Orders.txt" />
+    <None Remove="Helpers\Data\Symbols.txt" />
+    <None Remove="Helpers\Data\SymbolsStatistics.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Helpers\Data\AccountInfo.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Helpers\Data\AggregateTrades.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Helpers\Data\AggregateTradesUpdated.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Helpers\Data\OrderBook.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Helpers\Data\OrderBookUpdated.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Helpers\Data\Orders.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Helpers\Data\Symbols.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Helpers\Data\SymbolsStatistics.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.2.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\tradeview\src\DevelopmentInProgress.TradeView.Core\DevelopmentInProgress.TradeView.Core.csproj" />
+    <ProjectReference Include="..\..\src\DevelopmentInProgress.TradeServer.StrategyExecution.WebHost\DevelopmentInProgress.TradeServer.StrategyExecution.WebHost.csproj" />
+  </ItemGroup>
+
+</Project>
