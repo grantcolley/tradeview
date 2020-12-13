@@ -146,16 +146,16 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
             strategyConfig.Dependencies.AddRange(new List<string>
                 {
-                    Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.Common.dll"),
-                    Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.TradeView.Core.dll"),
-                    Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.MovingAverage.dll"),
+                    Path.Combine(Environment.CurrentDirectory, @"..\netstandard2.1\DevelopmentInProgress.Strategy.Common.dll"),
+                    Path.Combine(Environment.CurrentDirectory, @"..\netstandard2.1\DevelopmentInProgress.TradeView.Core.dll"),
+                    Path.Combine(Environment.CurrentDirectory, @"..\netstandard2.1\DevelopmentInProgress.Strategy.MovingAverage.dll"),
                 });
 
             strategyConfig.DisplayDependencies.AddRange(new List<string>
                 {
                     Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.TradeView.Core.dll"),
-                    Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.MovingAverage.dll"),
-                    Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.MovingAverage.Wpf.dll")
+                    Path.Combine(Environment.CurrentDirectory, "DevelopmentInProgress.Strategy.MovingAverage.Wpf.dll"),
+                    Path.Combine(Environment.CurrentDirectory, @"..\netstandard2.1\DevelopmentInProgress.Strategy.MovingAverage.dll")
                 });
 
             return strategyConfig;
