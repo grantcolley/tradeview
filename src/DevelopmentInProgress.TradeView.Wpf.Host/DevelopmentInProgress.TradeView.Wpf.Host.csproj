@@ -41,6 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DevelopmentInProgress.Strategy.MovingAverage.Wpf\DevelopmentInProgress.Strategy.MovingAverage.Wpf.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Core\DevelopmentInProgress.TradeView.Core.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Data.File\DevelopmentInProgress.TradeView.Data.File.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Data\DevelopmentInProgress.TradeView.Data.csproj" />
