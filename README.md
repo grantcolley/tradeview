@@ -2,10 +2,10 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/lsf9kuf5p93wvr0p/branch/master?svg=true)](https://ci.appveyor.com/project/grantcolley/tradeview/branch/master)
 
-A platform for trading crypto currencies and running crypto currency strategies. A WPF UI built on the [Origin](https://github.com/grantcolley/origin) framework for crypto trading and managing crypto stratagies and a.Net Core web host for running crypto currency strategies.
+A platform for trading crypto currencies and running crypto currency strategies. Tradeview consists of a WPF UI built on the [Origin](https://github.com/grantcolley/origin) framework, for trading crypto's and managing crypto stratagies, and a.Net Core web host for running crypto strategies.
 
 ##### Technologies
-* ###### .NET Core WPF, Prism, Unity, WebSockets
+* ###### .NET Core 3.1, .Net Standard 2.1, WPF, AspNetCore WebHost, Prism, Unity, WebSockets
 #####  
 
 ![Alt text](/README-images/tradeview.PNG?raw=true "Trade View")
