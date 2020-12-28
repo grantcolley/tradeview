@@ -11,7 +11,7 @@ A platform for trading crypto currencies and running crypto currency strategies.
 ![Alt text](/README-images/tradeview.PNG?raw=true "Trade View")
 
 #### Table of Contents
-* TradeView WPF UI(#tradeview-wpf-ui)
+* [TradeView WPF UI](#tradeview-wpf-ui)
  * [Overview](#overview)
    * [Configuration](#configuration)
      * [Manage Accounts](#manage-accounts)
