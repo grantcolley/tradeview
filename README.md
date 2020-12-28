@@ -11,21 +11,23 @@ A platform for trading crypto currencies and running crypto currency strategies.
 ![Alt text](/README-images/tradeview.PNG?raw=true "Trade View")
 
 #### Table of Contents
-* [Overview](#overview)
-  * [Configuration](#configuration)
-    * [Manage Accounts](#manage-accounts)
-    * [Manage Strategies](#manage-strategies)
-    * [Manage Servers](#manage-servers)
-  * [Trading](#trading)    
-  * [Strategies](#strategies)
-  * [Dashboard](#dashboard)
-    * [Monitoring Accounts](#monitoring-accounts)
-    * [Monitoring Trade Servers](#monitoring-trade-servers)
-* [Running a Strategy](#running-a-strategy)
-* [Extending tradeview](#extending-tradeview)
-  * [Adding a new Exchange API](#adding-a-new-exchange-api)
-  * [Persisting Configuration Data](#persisting-configuration-data)
+* TradeView WPF UI(#tradeview-wpf-ui)
+ * [Overview](#overview)
+   * [Configuration](#configuration)
+     * [Manage Accounts](#manage-accounts)
+     * [Manage Strategies](#manage-strategies)
+     * [Manage Servers](#manage-servers)
+   * [Trading](#trading)    
+   * [Strategies](#strategies)
+   * [Dashboard](#dashboard)
+     * [Monitoring Accounts](#monitoring-accounts)
+     * [Monitoring Trade Servers](#monitoring-trade-servers)
+ * [Running a Strategy](#running-a-strategy)
+ * [Extending tradeview](#extending-tradeview)
+   * [Adding a new Exchange API](#adding-a-new-exchange-api)
+   * [Persisting Configuration Data](#persisting-configuration-data)
 
+# TradeView WPF UI
 ## Overview
 **tradeview** consists of modules, accessible from the navigation panel on the left, including [Configuration](#configuration), [Trading](#trading), [Strategies](#strategies) and the [Dashboard](#dashboard).
   
