@@ -2,9 +2,7 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/lsf9kuf5p93wvr0p/branch/master?svg=true)](https://ci.appveyor.com/project/grantcolley/tradeview/branch/master)
 
-Alt currency trading application built on the [Origin](https://github.com/grantcolley/origin) framework.
-
-Run strategies in conjunction with [tradeserver](https://github.com/grantcolley/tradeserver).
+A platform for trading crypto currencies and running crypto currency strategies. A WPF UI built on the [Origin](https://github.com/grantcolley/origin) framework for crypto trading and managing crypto stratagies and a.Net Core web host for running crypto currency strategies.
 
 ##### Technologies
 * ###### .NET Core WPF, Prism, Unity, WebSockets
