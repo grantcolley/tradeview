@@ -32,7 +32,7 @@ A platform for trading crypto currencies and running crypto currency strategies.
   * [Startup](#startup)
      - [Request pipelines and Middleware](#request-pipelines-and-middleware)
      - [StrategyRunnerBackgroundService](#strategyrunnerbackgroundservice)
-     - [NotificationHub](#notificationhub)
+     - [StrategyNotificationHub](#strategynotificationhub)
   * [Running a Strategy](#running-a-strategy)
      - [The Client Request](#the-client-request)
      - [The RunStrategyMiddleware](#the-runstrategymiddleware)
@@ -583,7 +583,7 @@ The [SocketClient's](https://github.com/grantcolley/tradeview/blob/master/src/De
 ```
 
 #### The SocketMiddleware
-The [SocketMiddleware](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.Socket.Extensions/SocketMiddleware.cs) processes the request on the server. The [StrategyNotificationHub](#notificationhub) manages client connections.
+The [SocketMiddleware](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.Socket.Extensions/SocketMiddleware.cs) processes the request on the server. The [StrategyNotificationHub](#strategynotificationhub) manages client connections.
 
 ```C#
             var webSocket = await context.WebSockets.AcceptWebSocketAsync();
