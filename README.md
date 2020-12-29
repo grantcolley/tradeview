@@ -307,7 +307,7 @@ The Startup class adds a long running hosted service [StrategyRunnerBackgroundSe
           }, new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = server.MaxDegreeOfParallelism });
 ```
 
-#### NotificationHub
+#### StrategyNotificationHub
 The application uses [Socket](https://github.com/grantcolley/tradeview/tree/master/src/DevelopmentInProgress.Socket), based on [DipSocket](https://github.com/grantcolley/dipsocket), a lightweight publisher / subscriber implementation using WebSockets, for sending and receiving notifications to and from clients and servers. The [StrategyNotificationHub](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Notification/Strategy/StrategyNotificationHub.cs) inherits the abstract class [SocketServer](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.Socket/Server/SocketServer.cs) to manage client connections and channels. A client e.g. a running instance of [TradeView](#tradeview-wpf-ui), establishes a connection to the server with the purpose of running or monitoring a strategy on it. The strategy registers a Socket channel to which multiple client connections can subscribe. The strategy broadcasts notifications (e.g. live trade feed, buy and sell orders etc.) to the client connections. The [StrategyNotificationHub](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Notification/Strategy/StrategyNotificationHub.cs) overrides the OnClientConnectAsync and ReceiveAsync methods.
 
 ```C#
