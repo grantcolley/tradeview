@@ -648,18 +648,18 @@ The [SocketMiddleware](https://github.com/grantcolley/tradeview/blob/master/src/
 
 ## Updating Strategy Parameters
 #### The Client Request to Update a Strategy
-The [StrategyRunnerClient](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Interface/Strategy/StrategyRunnerClient.cs) posts a message to the strategy server to update a running strategy's parameters.
+The [StrategyRunnerClient](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Core/TradeStrategy/StrategyRunnerClient.cs) posts a message to the strategy server to update a running strategy's parameters.
 
 ```C#
            var strategyParametersJson = JsonConvert.SerializeObject(strategyParameters, Formatting.Indented);
            
-           var strategyRunnerClient = new TradeView.Interface.Strategy.StrategyRunnerClient();
+           var strategyRunnerClient = new StrategyRunnerClient();
 
            var response = await strategyRunnerClient.PostAsync($"{Strategy.StrategyServerUrl}/updatestrategy", strategyParametersJson);
 ```
 
 #### The UpdateStrategyMiddleware
-The [UpdateStrategyMiddleware](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyRunner.WebHost/Web/Middleware/UpdateStrategyMiddleware.cs) processes the request on the server.
+The [UpdateStrategyMiddleware](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Web/Middleware/UpdateStrategyMiddleware.cs) processes the request on the server.
 
 ```C#
            var json = context.Request.Form["strategyparameters"];
@@ -674,18 +674,18 @@ The [UpdateStrategyMiddleware](https://github.com/grantcolley/tradeview/blob/mas
 
 ## Stopping a Running Strategy
 #### The Client Request to Stop a Strategy
-The [StrategyRunnerClient](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Interface/Strategy/StrategyRunnerClient.cs) posts a message to the strategy server to stop a running strategy.
+The [StrategyRunnerClient](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Core/TradeStrategy/StrategyRunnerClient.cs) posts a message to the strategy server to stop a running strategy.
 
 ```C#
            var strategyParametersJson = JsonConvert.SerializeObject(strategyParameters, Formatting.Indented);
            
-           var strategyRunnerClient = new TradeView.Interface.Strategy.StrategyRunnerClient();
+           var strategyRunnerClient = new Strategy.StrategyRunnerClient();
 
            var response = await strategyRunnerClient.PostAsync($"{Strategy.StrategyServerUrl}/stopstrategy", strategyParametersJson);
 ```
 
 #### The StopStrategyMiddleware
-The [StopStrategyMiddleware](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyRunner.WebHost/Web/Middleware/StopStrategyMiddleware.cs) processes the request on the server.
+The [StopStrategyMiddleware](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Web/Middleware/StopStrategyMiddleware.cs) processes the request on the server.
 
 ```C#
            var json = context.Request.Form["strategyparameters"];
@@ -699,7 +699,7 @@ The [StopStrategyMiddleware](https://github.com/grantcolley/tradeview/blob/maste
 ```
 
 ## Batch Notifications
-Batch notifiers inherit abstract class [BatchNotification<T>](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyRunner.WebHost/Notification/BatchNotification.cs) which uses a BlockingCollection<T> for adding notifications to a queue while sending them on on a background thread.
+Batch notifiers inherit abstract class [BatchNotification<T>](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Notification/BatchNotification.cs) which uses a BlockingCollection<T> for adding notifications to a queue while sending them on on a background thread.
 
 #### Batch Notification Types
 ```C#
