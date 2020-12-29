@@ -195,15 +195,11 @@ Data can be persisted to any data source by creating a library with classes that
 * [ITradeViewConfigurationServer](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Data/ITradeViewConfigurationServer.cs)
 * [ITradeViewConfigurationStrategy](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Data/ITradeViewConfigurationStrategy.cs)
 
-And map the classes in the [DevelopmentInProgress.TradeView.Wpf.Host.Unity.config](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Wpf.Host/Configuration/DevelopmentInProgress.TradeView.Wpf.Host.Unity.config) file.
+And register the classes in the [App.xaml.cs](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Wpf.Host/App.xaml.cs) RegisterTypes method.
 ```C#
-    <alias alias="TradeViewConfigurationAccountsFile" type="DevelopmentInProgress.TradeView.Data.File.TradeViewConfigurationAccountsFile, DevelopmentInProgress.TradeView.Data.File" />
-    <alias alias="TradeViewConfigurationStrategyFile" type="DevelopmentInProgress.TradeView.Data.File.TradeViewConfigurationStrategyFile, DevelopmentInProgress.TradeView.Data.File" />
-    <alias alias="TradeViewConfigurationServerFile" type="DevelopmentInProgress.TradeView.Data.File.TradeViewConfigurationServerFile, DevelopmentInProgress.TradeView.Data.File" />
-    
-    <register type="ITradeViewConfigurationAccounts" mapTo="TradeViewConfigurationAccountsFile"/>
-    <register type="ITradeViewConfigurationStrategy" mapTo="TradeViewConfigurationStrategyFile"/>
-    <register type="ITradeViewConfigurationServer" mapTo="TradeViewConfigurationServerFile"/>
+            containerRegistry.Register<ITradeViewConfigurationAccounts, TradeViewConfigurationAccountsFile>();
+            containerRegistry.Register<ITradeViewConfigurationStrategy, TradeViewConfigurationStrategyFile>();
+            containerRegistry.Register<ITradeViewConfigurationServer, TradeViewConfigurationServerFile>();
 ```
 
 # TradeServer AspNetCore WebHost
