@@ -503,10 +503,10 @@ The [IExchangeSubscriptionsCache](https://github.com/grantcolley/tradeview/blob/
 ``` 
 
 ## Monitoring a Running Strategy
-The application uses [DipSocket](https://github.com/grantcolley/dipsocket), a lightweight publisher / subscriber implementation using WebSockets, for sending and receiving notifications to and from clients and servers.
+The application uses [Socket](https://github.com/grantcolley/tradeview/tree/master/src/DevelopmentInProgress.Socket), based on [DipSocket](https://github.com/grantcolley/dipsocket), a lightweight publisher / subscriber implementation using WebSockets, for sending and receiving notifications to and from clients and servers.
 
 #### The Client Request to Monitor a Strategy
-The [DipSocketClient's](https://github.com/grantcolley/dipsocket/blob/master/src/DipSocket/Client/DipSocketClient.cs) `StartAsync` method opens WebSocket connection with the [DipSocketServer](https://github.com/grantcolley/dipsocket/blob/master/src/DipSocket/Server/DipSocketServer.cs). The `On` method registers an Action to be invoked when receiving a message from the server.
+The [SocketClient's](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.Socket/Client/SocketClient.cs) `StartAsync` method opens WebSocket connection with the [SocketServer](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.Socket/Server/SocketServer.cs). The `On` method registers an Action to be invoked when receiving a message from the server.
 
 ```C#
             socketClient = new DipSocketClient($"{Strategy.StrategyServerUrl}/notificationhub", strategyAssemblyManager.Id);
@@ -582,8 +582,8 @@ The [DipSocketClient's](https://github.com/grantcolley/dipsocket/blob/master/src
             await socketClient.StartAsync(strategy.Name);
 ```
 
-#### The DipSocketMiddleware
-The [DipSocketMiddleware](https://github.com/grantcolley/dipsocket/blob/master/src/DipSocket.NetCore.Extensions/DipSocketMiddleware.cs) processes the request on the server. The [NotificationHub](#notificationhub) manages client connections.
+#### The SocketMiddleware
+The [SocketMiddleware](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.Socket.Extensions/SocketMiddleware.cs) processes the request on the server. The [StrategyNotificationHub](#notificationhub) manages client connections.
 
 ```C#
             var webSocket = await context.WebSockets.AcceptWebSocketAsync();
