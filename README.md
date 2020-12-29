@@ -11,7 +11,7 @@ A platform for trading crypto currencies and running crypto currency strategies.
 ![Alt text](/README-images/tradeview.PNG?raw=true "Trade View")
 
 #### Table of Contents
-* [TradeView - WPF UI](#tradeview-wpf-ui)
+* [TradeView WPF UI](#tradeview-wpf-ui)
   * [Overview](#overview)
     * [Configuration](#configuration)
       * [Manage Accounts](#manage-accounts)
@@ -26,7 +26,7 @@ A platform for trading crypto currencies and running crypto currency strategies.
   * [Extending tradeview](#extending-tradeview)
     * [Adding a new Exchange API](#adding-a-new-exchange-api)
     * [Persisting Configuration Data](#persisting-configuration-data)
-* [TradeServer - AspNetCore WebHost](#tradeserver-aspnetcore-webhost)
+* [TradeServer AspNetCore WebHost](#tradeserver-aspnetcore-webhost)
   * [The Console](#the-console)
   * [WebHost](#webhost)
   * [Startup](#startup)
@@ -52,7 +52,7 @@ A platform for trading crypto currencies and running crypto currency strategies.
   * [Batch Notifications](#batch-notifications)
      - [Batch Notification Types](#batch-notification-types)
    
-# TradeView - WPF UI
+# TradeView WPF UI
 ## Overview
 **tradeview** consists of modules, accessible from the navigation panel on the left, including [Configuration](#configuration), [Trading](#trading), [Strategies](#strategies) and the [Dashboard](#dashboard).
   
@@ -114,7 +114,7 @@ Strategies are run on an instance of [tradeserver](#tradeserver-aspnetcore-webho
 ## Extending tradeview
 
 #### Adding a new Exchange API
-**tradeview** is intended to trade against multiple exchanges and the following api's are currently supported:
+**TradeView** is intended to trade against multiple exchanges and the following api's are currently supported:
 * [Binance](https://github.com/sonvister/Binance)
 * [Kucoin.Net](https://github.com/JKorf/Kucoin.Net)
 
@@ -206,7 +206,7 @@ And map the classes in the [DevelopmentInProgress.TradeView.Wpf.Host.Unity.confi
     <register type="ITradeViewConfigurationServer" mapTo="TradeViewConfigurationServerFile"/>
 ```
 
-# TradeServer - AspNetCore WebHost
+# TradeServer AspNetCore WebHost
 ## The Console
 The [console app](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.Console/Program.cs) takes three parameters:
 - **s** = server name
