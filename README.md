@@ -118,7 +118,7 @@ Strategies are run on an instance of [TradeServer](#tradeserver-aspnetcore-webho
 * [Binance](https://github.com/sonvister/Binance)
 * [Kucoin.Net](https://github.com/JKorf/Kucoin.Net)
 
-To add a new api create a new .NET Standard project for the API wrapper and create a class that implements [IExchangeApi](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Interface/Interfaces/IExchangeApi.cs).
+To add a new api create a new .NET Standard project for the API wrapper and create a class that implements [IExchangeApi](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Core/Interfaces/IExchangeApi.cs).
 For example see [BinanceExchangeApi](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Api.Binance/BinanceExchangeApi.cs). 
 
 ```C#
@@ -149,7 +149,7 @@ namespace DevelopmentInProgress.TradeView.Api.Binance
         }
 ```
 
-Next, add the exchange to the [Exchange](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Interface/Enums/Exchange.cs) enum.
+Next, add the exchange to the [Exchange](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Core/Enums/Exchange.cs) enum.
 
 ```C#
     public enum Exchange
