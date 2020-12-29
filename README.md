@@ -223,7 +223,7 @@ It creates and runs an instance of a WebHost, passing the parameters into it.
               .Build();
 ```
 
-The WebHost's [UseStrategyRunnerStartup](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyRunner.WebHost/Web/WebHostExtensions.cs) extension method passes in the command line args to the WebHost and specifies the Startup class to use.
+The WebHost's [UseStrategyRunnerStartup](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Web/WebHostExtensions.cs) extension method passes in the command line args to the WebHost and specifies the Startup class to use.
 
 ```C#
           public static class WebHostExtensions
@@ -239,7 +239,7 @@ The WebHost's [UseStrategyRunnerStartup](https://github.com/grantcolley/tradevie
 ```
 
 ## Startup
-The [Startup](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyRunner.WebHost/Web/Startup.cs) configures the request processing pipeline to branch the request path to the appropriate middleware and configures the services to be consumed via dependency injection. 
+The [Startup](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Web/Startup.cs) configures the request processing pipeline to branch the request path to the appropriate middleware and configures the services to be consumed via dependency injection. 
 
 ```C#
         public void Configure(IApplicationBuilder app)
@@ -287,11 +287,11 @@ The [Startup](https://github.com/grantcolley/tradeview/blob/master/src/Developme
 The following table shows the middleware each request path is mapped to. 
 |Request Path|Maps to Middleware|Description|
 |------------|------------------|-----------|
-|`http://localhost:5500/runstrategy`|[RunStrategyMiddleware](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyRunner.WebHost/Web/Middleware/RunStrategyMiddleware.cs)|Request to run a strategy|
-|`http://localhost:5500/stopstrategy`|[StopStrategyMiddleware](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyRunner.WebHost/Web/Middleware/StopStrategyMiddleware.cs)|Stop a running strategy|
-|`http://localhost:5500/updatestrategy`|[UpdateStrategyMiddleware](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyRunner.WebHost/Web/Middleware/UpdateStrategyMiddleware.cs)|Update a running strategy's parameters|
-|`http://localhost:5500/isstrategyrunning`|[IsStrategyRunningMiddleware](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyRunner.WebHost/Web/Middleware/IsStrategyRunningMiddleware.cs)|Check if a strategy is running|
-|`http://localhost:5500/ping`|[PingMiddleware](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyRunner.WebHost/Web/Middleware/PingMiddleware.cs)|Check if the trade server is running|
+|`http://localhost:5500/runstrategy`|[RunStrategyMiddleware](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Web/Middleware/RunStrategyMiddleware.cs)|Request to run a strategy|
+|`http://localhost:5500/stopstrategy`|[StopStrategyMiddleware](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Web/Middleware/StopStrategyMiddleware.cs)|Stop a running strategy|
+|`http://localhost:5500/updatestrategy`|[UpdateStrategyMiddleware](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Web/Middleware/UpdateStrategyMiddleware.cs)|Update a running strategy's parameters|
+|`http://localhost:5500/isstrategyrunning`|[IsStrategyRunningMiddleware](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Web/Middleware/IsStrategyRunningMiddleware.cs)|Check if a strategy is running|
+|`http://localhost:5500/ping`|[PingMiddleware](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Web/Middleware/PingMiddleware.cs)|Check if the trade server is running|
 |`http://localhost:5500/notificationhub`|[SocketMiddleware](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.Socket.Extensions/SocketMiddleware.cs)|A websocket connection request|
 
 #### StrategyRunnerBackgroundService
