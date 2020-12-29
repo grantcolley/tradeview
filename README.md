@@ -26,6 +26,7 @@ A platform for trading crypto currencies and running crypto currency strategies.
   * [Extending tradeview](#extending-tradeview)
     * [Adding a new Exchange API](#adding-a-new-exchange-api)
     * [Persisting Configuration Data](#persisting-configuration-data)
+* [TradeServer AspNetCore WebHost](#tradeserver-aspnetcore-webhost)
 
 # TradeView WPF UI
 ## Overview
@@ -180,3 +181,5 @@ And map the classes in the [DevelopmentInProgress.TradeView.Wpf.Host.Unity.confi
     <register type="ITradeViewConfigurationStrategy" mapTo="TradeViewConfigurationStrategyFile"/>
     <register type="ITradeViewConfigurationServer" mapTo="TradeViewConfigurationServerFile"/>
 ```
+
+# TradeServer AspNetCore WebHost
