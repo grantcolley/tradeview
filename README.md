@@ -471,10 +471,10 @@ The [StrategyRunner](https://github.com/grantcolley/tradeview/blob/master/src/De
 ```
 
 ## Caching Running Strategies
-The [TradeStrategyCacheManager](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyRunner.WebHost/Cache/TradeStrategyCacheManager.cs) caches running instances of strategies and is used to [check if a strategy is running](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyRunner.WebHost/Web/Middleware/IsStrategyRunningMiddleware.cs), [update a running strategy's parameters](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyRunner.WebHost/Web/Middleware/UpdateStrategyMiddleware.cs), and [stopping a strategy](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyRunner.WebHost/Web/Middleware/StopStrategyMiddleware.cs).
+The [TradeStrategyCacheManager](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Cache/TradeStrategy/TradeStrategyCacheManager.cs) caches running instances of strategies and is used to [check if a strategy is running](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Web/Middleware/IsStrategyRunningMiddleware.cs), [update a running strategy's parameters](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Web/Middleware/UpdateStrategyMiddleware.cs), and [stopping a strategy](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Web/Middleware/StopStrategyMiddleware.cs).
 
 ## Caching Running Strategies Subscriptions
-Strategies can [subscribe](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Interface/Strategy/Subscribe.cs) to feeds for one or more symbols across multiple exhanges. 
+Strategies can [subscribe](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Core/TradeStrategy/Subscribes.cs) to feeds for one or more symbols across multiple exhanges. 
 
 ```C#
     [Flags]
@@ -488,9 +488,9 @@ Strategies can [subscribe](https://github.com/grantcolley/tradeview/blob/master/
     }
 ```
 
-The [SubscriptionsCacheManager](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyRunner.WebHost/Cache/SubscriptionsCacheManager.cs) manages symbols subscriptions across all exchanges using the [ExchangeSubscriptionsCacheFactory](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyRunner.WebHost/Cache/ExchangeSubscriptionsCacheFactory.cs) which provides an instance of the [ExchangeSubscriptionsCache](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyRunner.WebHost/Cache/ExchangeSubscriptionsCache.cs) for each exchange.
+The [SubscriptionsCacheManager](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Cache/Subscriptions/SubscriptionsCacheManager.cs) manages symbols subscriptions across all exchanges using the [ExchangeSubscriptionsCacheFactory](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Cache/Subscriptions/ExchangeSubscriptionsCacheFactory.cs) which provides an instance of the [ExchangeSubscriptionsCache](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Cache/Subscriptions/ExchangeSubscriptionsCache.cs) for each exchange.
 
-The [IExchangeSubscriptionsCache](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyRunner.WebHost/Cache/IExchangeSubscriptionsCache.cs) uses a dictionary for caching symbol subscriptions for the exchange it was created.
+The [IExchangeSubscriptionsCache](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Cache/Subscriptions/IExchangeSubscriptionsCache.cs) uses a dictionary for caching symbol subscriptions for the exchange it was created.
 
 ```C#
     public interface IExchangeSubscriptionsCache : IDisposable
