@@ -1,8 +1,8 @@
 # tradeview
 
-[![Build status](https://ci.appveyor.com/api/projects/status/lsf9kuf5p93wvr0p/branch/master?svg=true)](https://ci.appveyor.com/project/grantcolley/tradeview/branch/master)
+[![Build Status](https://ci.appveyor.com/api/projects/status/lsf9kuf5p93wvr0p/branch/master?svg=true)](https://ci.appveyor.com/project/grantcolley/tradeview/branch/master)
 
-A platform for trading crypto currencies and running crypto currency strategies. The platform includes [tradeview](#tradeview-wpf-ui), which is a WPF UI built on the [Origin](https://github.com/grantcolley/origin) framework for trading crypto's and managing crypto stratagies, [tradeserver](#tradeserver-aspnetcore-webhost), which is a.Net Core web host for running crypto strategies.
+A platform for trading crypto currencies and running crypto currency strategies. The platform includes [TradeView](#tradeview-wpf-ui), which is a WPF UI built on the [Origin](https://github.com/grantcolley/origin) framework for trading crypto's and managing crypto stratagies, [TradeServer](#tradeserver-aspnetcore-webhost), which is a.Net Core web host for running crypto strategies.
 
 ##### Technologies
 * ###### .NET Core 3.1, .Net Standard 2.1, WPF, AspNetCore WebHost, Prism, Unity, WebSockets
@@ -11,7 +11,7 @@ A platform for trading crypto currencies and running crypto currency strategies.
 ![Alt text](/README-images/tradeview.PNG?raw=true "Trade View")
 
 #### Table of Contents
-* [TradeView WPF UI](#tradeview-wpf-ui)
+* [TradeView - WPF UI](#tradeview-wpf-ui)
   * [Overview](#overview)
     * [Configuration](#configuration)
       * [Manage Accounts](#manage-accounts)
@@ -26,7 +26,7 @@ A platform for trading crypto currencies and running crypto currency strategies.
   * [Extending tradeview](#extending-tradeview)
     * [Adding a new Exchange API](#adding-a-new-exchange-api)
     * [Persisting Configuration Data](#persisting-configuration-data)
-* [TradeServer AspNetCore WebHost](#tradeserver-aspnetcore-webhost)
+* [TradeServer - AspNetCore WebHost](#tradeserver-aspnetcore-webhost)
   * [The Console](#the-console)
   * [WebHost](#webhost)
   * [Startup](#startup)
