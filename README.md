@@ -42,7 +42,7 @@ A platform for trading crypto currencies and running crypto currency strategies.
   * [Caching Running Strategies Subscriptions](#caching-running-strategies-subscriptions)
   * [Monitoring a Running Strategy](#monitoring-a-running-strategy)
      - [The Client Request to Monitor a Strategy](#the-client-request-to-monitor-a-strategy)
-     - [The DipSocketMiddleware](#the-dipsocketmiddleware)
+     - [The SocketMiddleware](#the-socketmiddleware)
   * [Updating Strategy Parameters](#updating-strategy-parameters)
      - [The Client Request to Update a Strategy](#the-client-request-to-update-a-strategy)
      - [The UpdateStrategyMiddleware](#the-updatestrategymiddleware)
