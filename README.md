@@ -208,7 +208,7 @@ And map the classes in the [DevelopmentInProgress.TradeView.Wpf.Host.Unity.confi
 
 # TradeServer AspNetCore WebHost
 ## The Console
-The [console app](https://github.com/grantcolley/tradeserver/blob/master/src/DevelopmentInProgress.TradeServer.Console/Program.cs) takes three parameters:
+The [console app](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.Console/Program.cs) takes three parameters:
 - **s** = server name
 - **u** = url of the webhost
 - **p** = MaxDegreeOfParallelism for the dataflow StrategyRunnerActionBlock execution options
