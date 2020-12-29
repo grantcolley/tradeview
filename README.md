@@ -54,7 +54,7 @@ A platform for trading crypto currencies and running crypto currency strategies.
    
 # TradeView WPF UI
 ## Overview
-**tradeview** consists of modules, accessible from the navigation panel on the left, including [Configuration](#configuration), [Trading](#trading), [Strategies](#strategies) and the [Dashboard](#dashboard).
+**TradeView** consists of modules, accessible from the navigation panel on the left, including [Configuration](#configuration), [Trading](#trading), [Strategies](#strategies) and the [Dashboard](#dashboard).
   
 ![Alt text](/README-images/navigationpanel.PNG?raw=true "Navigation Panel")
 
@@ -90,7 +90,7 @@ The Trading module shows a list of trading accounts in the navigation panel. Sel
 ![Alt text](/README-images/tradeview.PNG?raw=true "Trade View")
 
 #### Strategies
-Strategies are run on an instance of [tradeserver](#tradeserver-aspnetcore-webhost) and can be monitored by one or more users. It is possible to update a running strategy's parameters in realtime e.g. buy and sell triggers or suspend trading. See [Running a Strategy](#running-a-strategy).
+Strategies are run on an instance of [TradeServer](#tradeserver-aspnetcore-webhost) and can be monitored by one or more users. It is possible to update a running strategy's parameters in realtime e.g. buy and sell triggers or suspend trading. See [Running a Strategy](#running-a-strategy).
 
 ![Alt text](/README-images/strategies.PNG?raw=true "Strategies")
 
@@ -104,12 +104,12 @@ You can view all accounts and open orders in realtime.
 ![Alt text](/README-images/dashboard_accounts.PNG?raw=true "Monitor Accounts in the Dashboard")
 
 ###### Monitoring Trade Servers
-You can view all configured [tradeservers](https://github.com/grantcolley/tradeserver) and whether they are active. An active [tradeserver](https://github.com/grantcolley/tradeserver) will show the strategies currently running on it, including each strategy's parameters and its active connections i.e. which users are monitoring the strategy. See [Running a Strategy](#running-a-strategy).
+You can view all configured [TradeServer's](#tradeserver-aspnetcore-webhost) and whether they are active. An active [TradeServer](#tradeserver-aspnetcore-webhost) will show the strategies currently running on it, including each strategy's parameters and its active connections i.e. which users are monitoring the strategy. See [Running a Strategy](#running-a-strategy).
 
 ![Alt text](/README-images/dashboard_servers.PNG?raw=true "Monitor Trade Servers in the Dashboard")
 
 ## Running a Strategy
-Strategies are run on an instance of [tradeserver](#tradeserver-aspnetcore-webhost).
+Strategies are run on an instance of [TradeServer](#tradeserver-aspnetcore-webhost).
 
 ## Extending tradeview
 
