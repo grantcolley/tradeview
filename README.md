@@ -52,7 +52,7 @@ A platform for trading crypto currencies and running crypto currency strategies.
   * [Batch Notifications](#batch-notifications)
      - [Batch Notification Types](#batch-notification-types)
    
-# TradeView WPF UI
+# TradeView - WPF UI
 ## Overview
 **tradeview** consists of modules, accessible from the navigation panel on the left, including [Configuration](#configuration), [Trading](#trading), [Strategies](#strategies) and the [Dashboard](#dashboard).
   
@@ -206,7 +206,7 @@ And map the classes in the [DevelopmentInProgress.TradeView.Wpf.Host.Unity.confi
     <register type="ITradeViewConfigurationServer" mapTo="TradeViewConfigurationServerFile"/>
 ```
 
-# TradeServer AspNetCore WebHost
+# TradeServer - AspNetCore WebHost
 ## The Console
 The [console app](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.Console/Program.cs) takes three parameters:
 - **s** = server name
