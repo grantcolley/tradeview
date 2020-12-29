@@ -23,7 +23,7 @@ A platform for trading crypto currencies and running crypto currency strategies.
       * [Monitoring Accounts](#monitoring-accounts)
       * [Monitoring Trade Servers](#monitoring-trade-servers)
   * [Running a Strategy](#running-a-strategy)
-  * [Extending tradeview](#extending-tradeview)
+  * [Extending TradeView](#extending-tradeview)
     * [Adding a new Exchange API](#adding-a-new-exchange-api)
     * [Persisting Configuration Data](#persisting-configuration-data)
 * [TradeServer AspNetCore WebHost](#tradeserver-aspnetcore-webhost)
@@ -111,7 +111,7 @@ You can view all configured [TradeServer's](#tradeserver-aspnetcore-webhost) and
 ## Running a Strategy
 Strategies are run on an instance of [TradeServer](#tradeserver-aspnetcore-webhost).
 
-## Extending tradeview
+## Extending TradeView
 
 #### Adding a new Exchange API
 **TradeView** is intended to trade against multiple exchanges and the following api's are currently supported:
