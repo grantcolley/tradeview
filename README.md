@@ -90,7 +90,7 @@ The Trading module shows a list of trading accounts in the navigation panel. Sel
 ![Alt text](/README-images/tradeview.PNG?raw=true "Trade View")
 
 #### Strategies
-Strategies are run on an instance of [tradeserver](https://github.com/grantcolley/tradeserver) and can be monitored by one or more users. It is possible to update a running strategy's parameters in realtime e.g. buy and sell triggers or suspend trading. See [Running a Strategy](#running-a-strategy).
+Strategies are run on an instance of [tradeserver](#tradeserver-aspnetcore-webhost) and can be monitored by one or more users. It is possible to update a running strategy's parameters in realtime e.g. buy and sell triggers or suspend trading. See [Running a Strategy](#running-a-strategy).
 
 ![Alt text](/README-images/strategies.PNG?raw=true "Strategies")
 
