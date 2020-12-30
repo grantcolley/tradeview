@@ -16,7 +16,8 @@ A platform for trading crypto currencies and running crypto currency strategies.
   * [Start Trading](#start-trading)
   * [Run a Strategy](#run-a-strategy)  
   * [Update a Running Strategy](#update-a-running-strategy)    
-  * [Create a Strategy](#create-a-strategy)      
+  * [Create a Strategy](#create-a-strategy)
+  * [Create a WPF Strategy Component](#create-a-wpf-strategy-component)
 * [TradeView WPF UI](#tradeview-wpf-ui)
   * [Overview](#overview)
     * [Configuration](#configuration)
@@ -85,6 +86,8 @@ You will also need to create a config entry for the strategy in the [Configurati
 
 The best way to understand how to create a strategy is to look at the demo strategy [MovingAverageStrategy](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.Strategy.MovingAverage/MovingAverageStrategy.cs) in the project [DevelopmentInProgress.Strategy.MovingAverage](https://github.com/grantcolley/tradeview/tree/master/src/DevelopmentInProgress.Strategy.MovingAverage).
 
+## Create a WPF Strategy Component
+Creating a WPF strategy component involves creating a class library with a class that inherits [StrategyDisplayViewModelBase](https://github.com/grantcolley/tradeview/tree/master/src/DevelopmentInProgress.TradeView.Wpf.Common/ViewModel).
 
 # TradeView WPF UI
 ## Overview
