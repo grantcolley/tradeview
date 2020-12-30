@@ -11,6 +11,10 @@ A platform for trading crypto currencies and running crypto currency strategies.
 ![Alt text](/README-images/tradeview.PNG?raw=true "Trade View")
 
 #### Table of Contents
+* [Getting Started](#getting-started)
+  * [Setting up your dev environment](#setting-up-your-dev-environment)
+  * [Demo Trading Account](#demo-trading-account)
+  * [Demo Strategy](#demo-strategy)  
 * [TradeView WPF UI](#tradeview-wpf-ui)
   * [Overview](#overview)
     * [Configuration](#configuration)
@@ -51,7 +55,12 @@ A platform for trading crypto currencies and running crypto currency strategies.
      - [The StopStrategyMiddleware](#the-stopstrategymiddleware)
   * [Batch Notifications](#batch-notifications)
      - [Batch Notification Types](#batch-notification-types)
-   
+
+# Getting Started
+## Setting up your dev environment
+## Demo Trading Account
+## Demo Strategy  
+  
 # TradeView WPF UI
 ## Overview
 **TradeView** consists of modules, accessible from the navigation panel on the left, including [Configuration](#configuration), [Trading](#trading), [Strategies](#strategies) and the [Dashboard](#dashboard).
