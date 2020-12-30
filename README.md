@@ -16,6 +16,7 @@ A platform for trading crypto currencies and running crypto currency strategies.
   * [Demo Trading Account](#demo-trading-account)
   * [Demo Strategy](#demo-strategy)  
   * [The Dashboard](#the-dashboard)    
+  * [Create a Strategy](#create-a-strategy)      
 * [TradeView WPF UI](#tradeview-wpf-ui)
   * [Overview](#overview)
     * [Configuration](#configuration)
@@ -62,7 +63,7 @@ A platform for trading crypto currencies and running crypto currency strategies.
 ## Demo Trading Account
 ## Demo Strategy  
 ## The Dashboard
-
+## Create a Strategy
 
 # TradeView WPF UI
 ## Overview
