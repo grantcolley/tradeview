@@ -122,9 +122,9 @@
 
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="23*"/>
+                <ColumnDefinition Width="29*"/>
                 <ColumnDefinition Width="2"/>
-                <ColumnDefinition Width="77*"/>
+                <ColumnDefinition Width="71*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
