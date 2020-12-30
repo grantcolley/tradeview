@@ -60,6 +60,12 @@ A platform for trading crypto currencies and running crypto currency strategies.
 
 # Getting Started
 ## Setting up your dev environment
+Download the source code. Open the solution file TradeView.sln, go to multiple start-up projects and select the following projects to start:
+* DevelopmentInProgress.TradeView.Wpf.Host
+* DevelopmentInProgress.TradeServer.Console
+
+Compile and run the solution. This will start both the TradeView UI and the TradeServer WebHost running as a console app.
+
 ## Demo Trading Account
 ## Demo Strategy  
 ## The Dashboard
