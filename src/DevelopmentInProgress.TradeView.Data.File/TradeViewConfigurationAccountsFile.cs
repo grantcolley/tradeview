@@ -119,7 +119,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
                     SelectedSymbol = "ETHBTC",
                     TradeLimit = 500,
                     TradesChartDisplayCount = 500,
-                    TradesDisplayCount = 18,
+                    TradesDisplayCount = 16,
                     OrderBookDisplayCount = 9,
                     OrderBookChartDisplayCount = 15
                 }

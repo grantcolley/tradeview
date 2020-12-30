@@ -41,9 +41,9 @@
 
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="23*"/>
+                <ColumnDefinition Width="25*"/>
                 <ColumnDefinition Width="2"/>
-                <ColumnDefinition Width="77*"/>
+                <ColumnDefinition Width="75*"/>
             </Grid.ColumnDefinitions>
 
             <DockPanel Grid.Column="0" LastChildFill="True">

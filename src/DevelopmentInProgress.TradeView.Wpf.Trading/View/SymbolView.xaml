@@ -26,11 +26,11 @@
         <DockPanel LastChildFill="True" Margin="2">
             <Grid Visibility="{Binding HasSymbol, Converter={StaticResource boolToVisibilityConverter}}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="13*"/>
+                    <ColumnDefinition Width="15*"/>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="17*"/>
+                    <ColumnDefinition Width="20*"/>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="70*"/>
+                    <ColumnDefinition Width="65*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50*"/>

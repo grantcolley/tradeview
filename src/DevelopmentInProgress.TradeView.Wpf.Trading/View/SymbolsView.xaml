@@ -30,9 +30,9 @@
                     <filterbox:XamlFilterBox DockPanel.Dock="Top" ItemsSource="{Binding Symbols}" FilterFieldName="Name" Margin="2"/>
                     <Grid DockPanel.Dock="Top">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="130"/>
-                            <ColumnDefinition Width="130"/>
-                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="90"/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" VerticalAlignment="Center" Content="Pair / Vol" FontWeight="Bold"/>
                         <Label Grid.Column="1" VerticalAlignment="Center" Content="Last Price" FontWeight="Bold"/>
@@ -54,8 +54,8 @@
                             <DataTemplate DataType="{x:Type model:Symbol}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="130"/>
-                                        <ColumnDefinition Width="130"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="100"/>
                                         <ColumnDefinition Width="90"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
