@@ -87,7 +87,11 @@ You will also need to create a config entry for the strategy in the [Configurati
 The best way to understand how to create a strategy is to look at the demo strategy [MovingAverageStrategy](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.Strategy.MovingAverage/MovingAverageStrategy.cs) in the project [DevelopmentInProgress.Strategy.MovingAverage](https://github.com/grantcolley/tradeview/tree/master/src/DevelopmentInProgress.Strategy.MovingAverage).
 
 ## Create a WPF Strategy Component
-Creating a WPF strategy component involves creating a class library with a class that inherits [StrategyDisplayViewModelBase](https://github.com/grantcolley/tradeview/tree/master/src/DevelopmentInProgress.TradeView.Wpf.Common/ViewModel).
+Creating a WPF strategy component involves creating a class library with a class that inherits [StrategyDisplayViewModelBase](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Wpf.Common/ViewModel/StrategyDisplayViewModelBase.cs).
+
+The best way to understand how to create a WPF strategy component is to look at the project [DevelopmentInProgress.Strategy.MovingAverage.Wpf](https://github.com/grantcolley/tradeview/tree/master/src/DevelopmentInProgress.Strategy.MovingAverage.Wpf) for an example of how the demo WPF strategy component has been created. 
+
+You will also need to update the config entry for the strategy in the [Configuration](#configuration) module by selecting [Manage Strategies](#manage-strategies).
 
 # TradeView WPF UI
 ## Overview
