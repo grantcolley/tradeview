@@ -79,6 +79,10 @@ Select the [Stratagies](#strategies) module in the navigation panel and click th
 You can update a running strategies parameters. For example, in the parameters window the strategy parameters are displayed in JSON format. Bump the sell indicator from **0.00015** to **0.00115** and click the **push** button to send the updated parameters to the server. Notice in the trade chart the sell indicator line is adjusted accordingly. 
 
 ## Create a Strategy
+Cteating a strategy involves creating a dll with a class that implements [TradeStrategyBase](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Core/TradeStrategy/TradeStrategyBase.cs).
+
+The best way to understand how to create a strategy is to look at the demo strategy [MovingAverageStrategy](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.Strategy.MovingAverage/MovingAverageStrategy.cs) in the project [DevelopmentInProgress.Strategy.MovingAverage](https://github.com/grantcolley/tradeview/tree/master/src/DevelopmentInProgress.Strategy.MovingAverage).
+
 
 # TradeView WPF UI
 ## Overview
