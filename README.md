@@ -15,7 +15,7 @@ A platform for trading crypto currencies and running crypto currency strategies.
   * [Setting up your dev environment](#setting-up-your-dev-environment)
   * [Demo Trading Account](#demo-trading-account)
   * [Demo Strategy](#demo-strategy)  
-  * [The Dashboard](#dthe-dashboard)    
+  * [The Dashboard](#the-dashboard)    
 * [TradeView WPF UI](#tradeview-wpf-ui)
   * [Overview](#overview)
     * [Configuration](#configuration)
