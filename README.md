@@ -14,7 +14,7 @@ A platform for trading crypto currencies and running crypto currency strategies.
 * [Getting Started](#getting-started)
   * [Setting up your dev environment](#setting-up-your-dev-environment)
   * [Start Trading](#start-trading)
-  * [Demo Strategy](#demo-strategy)  
+  * [Run a Strategy](#run-a-strategy)  
   * [The Dashboard](#the-dashboard)    
   * [Create a Strategy](#create-a-strategy)      
 * [TradeView WPF UI](#tradeview-wpf-ui)
@@ -70,7 +70,9 @@ Compile and run the solution. This will start both the TradeView UI and the Trad
 Select the [Trading](#trading) module in the navigational panel then click **Demo Account**. This will open the trading tab for the **Demo Account** and automatically connect to Binance, the **Demo Account**'s default exchange, subscribing to order book and trade feed for the default asset.
 To trade you must create an account providing an api key and api secret (and optionally a api pass phrase, for Kucoin accounts). You do this in the [Configuration](#configuration) module by selecting [Manage Accounts](#manage-accounts). Once you have created an account you can open it in the [Trading](#trading) module and see the account balances. You can start trading and receive real time order updates for the account.
 
-## Demo Strategy  
+## Run a Strategy  
+Select the [Stratagies](#strategies) module in the navigation panel and click the **Binance Moving Average - ETHBTC** strategy to open the strategy tab. 
+
 ## The Dashboard
 ## Create a Strategy
 
