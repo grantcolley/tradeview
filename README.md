@@ -15,6 +15,7 @@ A platform for trading crypto currencies and running crypto currency strategies.
   * [Setting up your dev environment](#setting-up-your-dev-environment)
   * [Demo Trading Account](#demo-trading-account)
   * [Demo Strategy](#demo-strategy)  
+  * [The Dashboard](#dthe-dashboard)    
 * [TradeView WPF UI](#tradeview-wpf-ui)
   * [Overview](#overview)
     * [Configuration](#configuration)
@@ -60,7 +61,9 @@ A platform for trading crypto currencies and running crypto currency strategies.
 ## Setting up your dev environment
 ## Demo Trading Account
 ## Demo Strategy  
-  
+## The Dashboard
+
+
 # TradeView WPF UI
 ## Overview
 **TradeView** consists of modules, accessible from the navigation panel on the left, including [Configuration](#configuration), [Trading](#trading), [Strategies](#strategies) and the [Dashboard](#dashboard).
