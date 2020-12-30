@@ -71,7 +71,8 @@ Select the [Trading](#trading) module in the navigational panel then click **Dem
 To trade you must create an account providing an api key and api secret (and optionally a api pass phrase, for Kucoin accounts). You do this in the [Configuration](#configuration) module by selecting [Manage Accounts](#manage-accounts). Once you have created an account you can open it in the [Trading](#trading) module and see the account balances. You can start trading and receive real time order updates for the account.
 
 ## Run a Strategy  
-Select the [Stratagies](#strategies) module in the navigation panel and click the **Binance Moving Average - ETHBTC** strategy to open the strategy tab. 
+Select the [Stratagies](#strategies) module in the navigation panel and click the **Binance Moving Average - ETHBTC** strategy to open the strategy tab. Select **TradeServer**, which is the default trade server (running as a console app), from the drop down list in the top left corned. Click on the **Run Strategy** button. This will upload the strategy to the **TradeServer** and start running it. Notice logged to the the console app window the **TradeServer** recieves the request to start running the strategy and then runs it. the trade server then publishes the trade feed and oder book feed back to the UI so the strategy can be monitored in real time.
+*Note: the default strategy will only shows the real time trades with moving average and buy / sell indicators above and below the moving average.*
 
 ## The Dashboard
 ## Create a Strategy
