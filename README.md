@@ -81,6 +81,8 @@ You can update a running strategies parameters. For example, in the parameters w
 ## Create a Strategy
 Creating a strategy involves creating a class library with a class that inherits [TradeStrategyBase](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Core/TradeStrategy/TradeStrategyBase.cs) which implements [ITradeStrategy](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Core/TradeStrategy/ITradeStrategy.cs).
 
+You will also need to create a config entry for the strategy in the [Configuration](#configuration) module by selecting [Manage Strategies](#manage-strategies).
+
 The best way to understand how to create a strategy is to look at the demo strategy [MovingAverageStrategy](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.Strategy.MovingAverage/MovingAverageStrategy.cs) in the project [DevelopmentInProgress.Strategy.MovingAverage](https://github.com/grantcolley/tradeview/tree/master/src/DevelopmentInProgress.Strategy.MovingAverage).
 
 
