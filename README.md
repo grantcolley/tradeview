@@ -15,7 +15,7 @@ A platform for trading crypto currencies and running crypto currency strategies.
   * [Setting up your dev environment](#setting-up-your-dev-environment)
   * [Start Trading](#start-trading)
   * [Run a Strategy](#run-a-strategy)  
-  * [The Dashboard](#the-dashboard)    
+  * [Update a Running Strategy](#update-a-running-strategy)    
   * [Create a Strategy](#create-a-strategy)      
 * [TradeView WPF UI](#tradeview-wpf-ui)
   * [Overview](#overview)
@@ -72,9 +72,12 @@ To trade you must create an account providing an api key and api secret (and opt
 
 ## Run a Strategy  
 Select the [Stratagies](#strategies) module in the navigation panel and click the **Binance Moving Average - ETHBTC** strategy to open the strategy tab. Select **TradeServer**, which is the default trade server (running as a console app), from the drop down list in the top left corned. Click on the **Run Strategy** button. This will upload the strategy to the **TradeServer** and start running it. Notice logged to the the console app window the **TradeServer** recieves the request to start running the strategy and then runs it. the trade server then publishes the trade feed and oder book feed back to the UI so the strategy can be monitored in real time.
-*Note: the default strategy will only shows the real time trades with moving average and buy / sell indicators above and below the moving average.*
 
-## The Dashboard
+*Note: the default strategy only shows the real time trades with moving average and buy / sell indicators above and below the moving average.*
+
+## Update a Running Strategy
+You can update a running strategies parameters. For example, in the parameters window the strategy parameters are displayed in JSON format. Bump the sell indicator from **0.00015** to **0.00115** and click the **push** button to send the updated parameters to the server. Notice in the trade chart the sell indicator line is adjusted accordingly. 
+
 ## Create a Strategy
 
 # TradeView WPF UI
