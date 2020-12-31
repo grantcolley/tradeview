@@ -73,7 +73,7 @@ Download the source code. Open the solution file TradeView.sln, go to multiple s
 * DevelopmentInProgress.TradeView.Wpf.Host
 * DevelopmentInProgress.TradeServer.Console
 
-Compile and run the solution. This will start both the TradeView UI and the TradeServer WebHost running as a console app.
+Compile and run the solution. This will start both the TradeView UI and the TradeServer WebHost, which runs as a console app.
 
 ## Start Trading
 Select the [Trading](#trading) module in the navigational panel then click **Demo Account**. This will open the trading tab for the **Demo Account** and automatically connect to Binance, the **Demo Account**'s default exchange, subscribing to order book and trade feed for the default asset.
