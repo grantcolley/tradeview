@@ -36,10 +36,6 @@ With the TradeView and TradeServer platform you can:
     * [Dashboard](#dashboard)
       * [Monitoring Accounts](#monitoring-accounts)
       * [Monitoring Trade Servers](#monitoring-trade-servers)
-  * [Running a Strategy](#running-a-strategy)
-  * [Extending TradeView](#extending-tradeview)
-    * [Adding a new Exchange API](#adding-a-new-exchange-api)
-    * [Persisting Configuration Data](#persisting-configuration-data)
 * [TradeServer AspNetCore WebHost](#tradeserver-aspnetcore-webhost)
   * [The Console](#the-console)
   * [WebHost](#webhost)
@@ -65,7 +61,10 @@ With the TradeView and TradeServer platform you can:
      - [The StopStrategyMiddleware](#the-stopstrategymiddleware)
   * [Batch Notifications](#batch-notifications)
      - [Batch Notification Types](#batch-notification-types)
-
+* [Extending TradeView](#extending-tradeview)
+  * [Adding a new Exchange API](#adding-a-new-exchange-api)
+  * [Persisting Configuration Data](#persisting-configuration-data)
+  
 # Getting Started
 ## Setting up your dev environment
 Download the source code. Open the solution file TradeView.sln, go to multiple start-up projects and select the following projects to start:
@@ -155,100 +154,6 @@ You can view all accounts and open orders in realtime.
 You can view all configured [TradeServer's](#tradeserver-aspnetcore-webhost) and whether they are active. An active [TradeServer](#tradeserver-aspnetcore-webhost) will show the strategies currently running on it, including each strategy's parameters and its active connections i.e. which users are monitoring the strategy. See [Running a Strategy](#running-a-strategy).
 
 ![Alt text](/README-images/dashboard_servers.PNG?raw=true "Monitor Trade Servers in the Dashboard")
-
-## Running a Strategy
-Strategies are run on an instance of [TradeServer](#tradeserver-aspnetcore-webhost).
-
-## Extending TradeView
-
-#### Adding a new Exchange API
-**TradeView** is intended to trade against multiple exchanges and the following api's are currently supported:
-* [Binance](https://github.com/sonvister/Binance)
-* [Kucoin.Net](https://github.com/JKorf/Kucoin.Net)
-
-To add a new api create a new .NET Standard project for the API wrapper and create a class that implements [IExchangeApi](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Core/Interfaces/IExchangeApi.cs).
-For example see [BinanceExchangeApi](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Api.Binance/BinanceExchangeApi.cs). 
-
-```C#
-namespace DevelopmentInProgress.TradeView.Api.Binance
-{
-    public class BinanceExchangeApi : IExchangeApi
-    {
-        public async Task<Order> PlaceOrder(User user, ClientOrder clientOrder)
-        {
-            var binanceApi = new BinanceApi();
-            using (var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret))
-            {
-                var order = OrderHelper.GetOrder(apiUser, clientOrder);
-                var result = await binanceApi.PlaceAsync(order).ConfigureAwait(false);
-                return NewOrder(user, result);
-            }
-        }
-
-        public async Task<string> CancelOrderAsync(User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var binanceApi = new BinanceApi();
-            var id = Convert.ToInt64(orderId);
-            using (var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret))
-            {
-                var result = await binanceApi.CancelOrderAsync(apiUser, symbol, id, newClientOrderId, recWindow, cancellationToken).ConfigureAwait(false);
-                return result;
-            }
-        }
-```
-
-Next, add the exchange to the [Exchange](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Core/Enums/Exchange.cs) enum.
-
-```C#
-    public enum Exchange
-    {
-        Unknown,
-        Binance,
-        Kucoin,
-        Test
-    }
-```
-
-Finally, return an instance of the new exchange from the [ExchangeApiFactory](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Service/ExchangeApiFactory.cs).
-
-```C#
-    public class ExchangeApiFactory : IExchangeApiFactory
-    {
-        public IExchangeApi GetExchangeApi(Exchange exchange)
-        {
-            switch(exchange)
-            {
-                case Exchange.Binance:
-                    return new BinanceExchangeApi();
-                case Exchange.Kucoin:
-                    return new KucoinExchangeApi();
-                default:
-                    throw new NotImplementedException();
-            }
-        }
-
-        public Dictionary<Exchange, IExchangeApi> GetExchanges()
-        {
-            var exchanges = new Dictionary<Exchange, IExchangeApi>();
-            exchanges.Add(Exchange.Binance, GetExchangeApi(Exchange.Binance));
-            exchanges.Add(Exchange.Kucoin, GetExchangeApi(Exchange.Kucoin));
-            return exchanges;
-        }
-    }
-```
-
-#### Persisting Configuration Data
-Data can be persisted to any data source by creating a library with classes that implement the interfaces in [DevelopmentInProgress.TradeView.Data](https://github.com/grantcolley/tradeview/tree/master/src/DevelopmentInProgress.TradeView.Data).
-* [ITradeViewConfigurationAccounts](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Data/ITradeViewConfigurationAccounts.cs)
-* [ITradeViewConfigurationServer](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Data/ITradeViewConfigurationServer.cs)
-* [ITradeViewConfigurationStrategy](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Data/ITradeViewConfigurationStrategy.cs)
-
-And register the classes in the TradeView's [App.xaml.cs](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Wpf.Host/App.xaml.cs) RegisterTypes method.
-```C#
-            containerRegistry.Register<ITradeViewConfigurationAccounts, TradeViewConfigurationAccountsFile>();
-            containerRegistry.Register<ITradeViewConfigurationStrategy, TradeViewConfigurationStrategyFile>();
-            containerRegistry.Register<ITradeViewConfigurationServer, TradeViewConfigurationServerFile>();
-```
 
 # TradeServer AspNetCore WebHost
 ## The Console
@@ -765,3 +670,93 @@ Batch notifiers inherit abstract class [BatchNotification<T>](https://github.com
 ```
 
 The [StrategyBatchNotificationFactory](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Notification/Strategy/StrategyBatchNotificationFactory.cs) creates instances of batch notifiers. Batch notifiers use the [StrategyNotificationPublisher](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Notification/Strategy/StrategyNotificationPublisher.cs) to publish notifications (trade, order book, account notifications etc) to client connections.
+
+# Extending TradeView
+## Adding a new Exchange API
+**TradeView** is intended to trade against multiple exchanges and the following api's are currently supported:
+* [Binance](https://github.com/sonvister/Binance)
+* [Kucoin.Net](https://github.com/JKorf/Kucoin.Net)
+
+To add a new api create a new .NET Standard project for the API wrapper and create a class that implements [IExchangeApi](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Core/Interfaces/IExchangeApi.cs).
+For example see [BinanceExchangeApi](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Api.Binance/BinanceExchangeApi.cs). 
+
+```C#
+namespace DevelopmentInProgress.TradeView.Api.Binance
+{
+    public class BinanceExchangeApi : IExchangeApi
+    {
+        public async Task<Order> PlaceOrder(User user, ClientOrder clientOrder)
+        {
+            var binanceApi = new BinanceApi();
+            using (var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret))
+            {
+                var order = OrderHelper.GetOrder(apiUser, clientOrder);
+                var result = await binanceApi.PlaceAsync(order).ConfigureAwait(false);
+                return NewOrder(user, result);
+            }
+        }
+
+        public async Task<string> CancelOrderAsync(User user, string symbol, string orderId, string newClientOrderId = null, long recWindow = 0, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var binanceApi = new BinanceApi();
+            var id = Convert.ToInt64(orderId);
+            using (var apiUser = new BinanceApiUser(user.ApiKey, user.ApiSecret))
+            {
+                var result = await binanceApi.CancelOrderAsync(apiUser, symbol, id, newClientOrderId, recWindow, cancellationToken).ConfigureAwait(false);
+                return result;
+            }
+        }
+```
+
+Next, add the exchange to the [Exchange](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Core/Enums/Exchange.cs) enum.
+
+```C#
+    public enum Exchange
+    {
+        Unknown,
+        Binance,
+        Kucoin,
+        Test
+    }
+```
+
+Finally, return an instance of the new exchange from the [ExchangeApiFactory](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Service/ExchangeApiFactory.cs).
+
+```C#
+    public class ExchangeApiFactory : IExchangeApiFactory
+    {
+        public IExchangeApi GetExchangeApi(Exchange exchange)
+        {
+            switch(exchange)
+            {
+                case Exchange.Binance:
+                    return new BinanceExchangeApi();
+                case Exchange.Kucoin:
+                    return new KucoinExchangeApi();
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        public Dictionary<Exchange, IExchangeApi> GetExchanges()
+        {
+            var exchanges = new Dictionary<Exchange, IExchangeApi>();
+            exchanges.Add(Exchange.Binance, GetExchangeApi(Exchange.Binance));
+            exchanges.Add(Exchange.Kucoin, GetExchangeApi(Exchange.Kucoin));
+            return exchanges;
+        }
+    }
+```
+
+## Persisting Configuration Data
+Data can be persisted to any data source by creating a library with classes that implement the interfaces in [DevelopmentInProgress.TradeView.Data](https://github.com/grantcolley/tradeview/tree/master/src/DevelopmentInProgress.TradeView.Data).
+* [ITradeViewConfigurationAccounts](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Data/ITradeViewConfigurationAccounts.cs)
+* [ITradeViewConfigurationServer](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Data/ITradeViewConfigurationServer.cs)
+* [ITradeViewConfigurationStrategy](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Data/ITradeViewConfigurationStrategy.cs)
+
+And register the classes in the TradeView's [App.xaml.cs](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Wpf.Host/App.xaml.cs) RegisterTypes method.
+```C#
+            containerRegistry.Register<ITradeViewConfigurationAccounts, TradeViewConfigurationAccountsFile>();
+            containerRegistry.Register<ITradeViewConfigurationStrategy, TradeViewConfigurationStrategyFile>();
+            containerRegistry.Register<ITradeViewConfigurationServer, TradeViewConfigurationServerFile>();
+```
