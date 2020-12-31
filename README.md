@@ -9,6 +9,7 @@ With the TradeView and TradeServer platform you can:
 * Subscribe to live trade feed and order book for assets
 * Create and run your custom trading strategies
 * Monitor running trading strategies and send real-time updates to strategy parameters
+* Easily extend the number of supported exchanges by creating wrappers for exchange api's that implement a common interface (*currently supports Binance and Kucoin*)
 
 ##### Technologies
 * ###### .NET Core 3.1, .Net Standard 2.1, WPF, AspNetCore WebHost, Prism, Unity, WebSockets
