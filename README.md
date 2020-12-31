@@ -12,7 +12,7 @@ With the TradeView and TradeServer platform you can:
 * Easily extend the number of supported exchanges by creating wrappers for exchange api's that implement a common interface (*currently supports Binance and Kucoin*)
 
 ##### Technologies
-* ###### .NET Core 3.1, .Net Standard 2.1, WPF, AspNetCore WebHost, Prism, Unity, WebSockets
+* ###### .NET Core 3.1, .Net Standard 2.1, WPF, AspNetCore WebHost, WebSockets, Prism, Unity
 #####  
 
 ![Alt text](/README-images/tradeview.PNG?raw=true "Trade View")
