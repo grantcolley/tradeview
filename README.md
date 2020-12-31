@@ -2,7 +2,13 @@
 
 [![Build Status](https://ci.appveyor.com/api/projects/status/lsf9kuf5p93wvr0p/branch/master?svg=true)](https://ci.appveyor.com/project/grantcolley/tradeview/branch/master)
 
-A platform for trading crypto currencies and running crypto currency strategies. The platform includes [TradeView](#tradeview-wpf-ui), which is a WPF UI built on the [Origin](https://github.com/grantcolley/origin) framework for trading crypto's and managing crypto stratagies, [TradeServer](#tradeserver-aspnetcore-webhost), which is a.Net Core web host for running crypto strategies.
+A platform for trading crypto currencies and running crypto currency strategies including [TradeView](#tradeview-wpf-ui), which is a WPF UI built on the [Origin](https://github.com/grantcolley/origin) framework, and [TradeServer](#tradeserver-aspnetcore-webhost), a ASP.NET Core web host.
+
+With the TradeView and TradeServer platform you can: 
+* Connect to your exchage accounts to trade currencies, receive live order updates and see balances of your assets
+* Subscribe to live trade feed and order book for assets
+* Create and run your custom trading strategies
+* Monitor running trading strategies and send real-time updates to strategy parameters
 
 ##### Technologies
 * ###### .NET Core 3.1, .Net Standard 2.1, WPF, AspNetCore WebHost, Prism, Unity, WebSockets
