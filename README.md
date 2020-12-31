@@ -2,6 +2,10 @@
 
 [![Build Status](https://ci.appveyor.com/api/projects/status/lsf9kuf5p93wvr0p/branch/master?svg=true)](https://ci.appveyor.com/project/grantcolley/tradeview/branch/master)
 
+##### Technologies
+* ###### .NET Core 3.1, .Net Standard 2.1, WPF, AspNetCore WebHost, WebSockets, Prism, Unity
+#####  
+
 A platform for trading crypto currencies and running crypto currency strategies including [TradeView](#tradeview-wpf-ui), which is a WPF UI built on the [Origin](https://github.com/grantcolley/origin) framework, and [TradeServer](#tradeserver-aspnetcore-webhost), a ASP.NET Core web host.
 
 **TradeView** and **TradeServer** enables you to: 
@@ -11,10 +15,6 @@ A platform for trading crypto currencies and running crypto currency strategies 
 * Monitor running trading strategies
 * Send real-time updates to strategy parameters for running strategies
 * Easily extend the number of supported exchanges by creating wrappers for exchange api's that implement a common interface (*currently supports Binance and Kucoin exchanges*)
-
-##### Technologies
-* ###### .NET Core 3.1, .Net Standard 2.1, WPF, AspNetCore WebHost, WebSockets, Prism, Unity
-#####  
 
 ![Alt text](/README-images/tradeview.PNG?raw=true "Trade View")
 
