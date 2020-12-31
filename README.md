@@ -76,18 +76,19 @@ Download the source code. Open the solution file **TradeView.sln**, go to multip
 Compile and run the solution. This will start both the TradeView UI and the TradeServer WebHost, which runs as a console app.
 
 ## Start Trading
-Select the [Trading module](#trading-module) in the navigational panel then click **Demo Account**. This will open the trading tab for the **Demo Account** and connect to its exchange, Binance, and subscribe to order book and trade feed for the default asset.
-To trade you must create a new account. You can do this in the [Configuration module](#configuration-module) by selecting [Manage Accounts](#manage-accounts). Specify the exchange and provide an api key and api secret (and optionally a api pass phrase e.g. for Kucoin accounts). Also sepcify the default asset. Once the account has been created you can access it in the [Trading module](#trading-module). You will see the account balances and real time trade feed and order book for the default asset. You can start trading and receive real time updates for your open orders.
+Select the [Trading](#trading-module) module in the navigational panel then click **Demo Account**. This will open the trading tab for the **Demo Account** and connect to its exchange, Binance, and subscribe to order book and trade feed for the default asset.
+
+To trade you must create a new account. You can do this in the [Configuration](#configuration-module) module by selecting [Manage Accounts](#manage-accounts). Specify the exchange and provide an api key and api secret (and optionally a api pass phrase e.g. for Kucoin accounts). Also sepcify the default asset. Once the account has been created you can access it in the [Trading](#trading-module) module. You will see the account balances and real-time trade feed and order book for the default asset. You can start trading and receive real-time updates for your open orders.
 
 ## Run a Strategy  
-Select the [Stratagies module](#strategies-module) in the navigation panel and click the **Binance Moving Average - ETHBTC** strategy to open the strategy tab. Select **TradeServer**, which is the default trade server (running as a console app), from the drop down list in the top left corned. Click on the **Run Strategy** button. This will upload the strategy to the **TradeServer** and start running it. Notice logged to the the console app window the **TradeServer** recieves the request to start running the strategy and then runs it. the trade server then publishes the trade feed and oder book feed back to the UI so the strategy can be monitored in real time.
+Select the [Stratagies](#strategies-module) module in the navigation panel and click the **Binance Moving Average - ETHBTC** demo strategy. This will open the strategy tab. From the drop down list in the top left corned select the server you want to run the strategy on. The default is *Trade Server*, which runs as a console app. Click on the **Run Strategy** button. This will upload the strategy to the *Trade Server* instance and start running it. In the **Trade Server** console window you will see logged in the console the request has been received to run the strategy. A webSocket connection is established between the **TradeView** and **TradeServer** and the **TradeServer** publishes notifications to the **TradeView** so the strategy can be monitored in real time.
 
-*Note: the default strategy only shows the real time trades with moving average and buy / sell indicators above and below the moving average.*
+*Note: the demo strategy only shows the real time trades with moving average and buy / sell indicators above and below the moving average.*
 
-See [Strategies](#strategies) for more details about how running strategies works.
+See [Strategies](#strategies) for more details of how running a strategy works.
 
 ## Update a Running Strategy
-You can update a running strategies parameters. For example, in the parameters window the strategy parameters are displayed in JSON format. Bump the sell indicator from **0.00015** to **0.00115** and click the **push** button to send the updated parameters to the server. Notice in the trade chart the sell indicator line is adjusted accordingly. 
+Strategy parameters contain information the startegy uses to determine when to buy and sell assets. You can update the parameters of a running strategy in real-time. For example, in the UI the strategy parameters is displayed in JSON format and can be edited. Bump the sell indicator of the demo strategy from **0.00015** to **0.00115** and then click the **push** button. The updated strategy parameters is pushed to the strategy running on the server. You will notice in the trade chart the sell indicator line is adjusted accordingly.
 
 See [Updating Strategy Parameters](#updating-strategy-parameters) for more details of how updating strategy parameters works.
 
