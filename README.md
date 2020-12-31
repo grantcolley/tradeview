@@ -84,6 +84,8 @@ Select the [Stratagies](#strategies) module in the navigation panel and click th
 
 *Note: the default strategy only shows the real time trades with moving average and buy / sell indicators above and below the moving average.*
 
+See [Strategies](#strategies) for more details about how running strategies works.
+
 ## Update a Running Strategy
 You can update a running strategies parameters. For example, in the parameters window the strategy parameters are displayed in JSON format. Bump the sell indicator from **0.00015** to **0.00115** and click the **push** button to send the updated parameters to the server. Notice in the trade chart the sell indicator line is adjusted accordingly. 
 
