@@ -76,11 +76,11 @@ Download the source code. Open the solution file **TradeView.sln**, go to multip
 Compile and run the solution. This will start both the TradeView UI and the TradeServer WebHost, which runs as a console app.
 
 ## Start Trading
-Select the [Trading](#trading) module in the navigational panel then click **Demo Account**. This will open the trading tab for the **Demo Account** and automatically connect to Binance, the **Demo Account**'s default exchange, subscribing to order book and trade feed for the default asset.
+Select the [Trading module](#trading-module) module in the navigational panel then click **Demo Account**. This will open the trading tab for the **Demo Account** and automatically connect to Binance, the **Demo Account**'s default exchange, subscribing to order book and trade feed for the default asset.
 To trade you must create an account providing an api key and api secret (and optionally a api pass phrase, for Kucoin accounts). You do this in the [Configuration](#configuration) module by selecting [Manage Accounts](#manage-accounts). Once you have created an account you can open it in the [Trading](#trading) module and see the account balances. You can start trading and receive real time order updates for the account.
 
 ## Run a Strategy  
-Select the [Stratagies](#strategies) module in the navigation panel and click the **Binance Moving Average - ETHBTC** strategy to open the strategy tab. Select **TradeServer**, which is the default trade server (running as a console app), from the drop down list in the top left corned. Click on the **Run Strategy** button. This will upload the strategy to the **TradeServer** and start running it. Notice logged to the the console app window the **TradeServer** recieves the request to start running the strategy and then runs it. the trade server then publishes the trade feed and oder book feed back to the UI so the strategy can be monitored in real time.
+Select the [Stratagies module](#strategies-module) module in the navigation panel and click the **Binance Moving Average - ETHBTC** strategy to open the strategy tab. Select **TradeServer**, which is the default trade server (running as a console app), from the drop down list in the top left corned. Click on the **Run Strategy** button. This will upload the strategy to the **TradeServer** and start running it. Notice logged to the the console app window the **TradeServer** recieves the request to start running the strategy and then runs it. the trade server then publishes the trade feed and oder book feed back to the UI so the strategy can be monitored in real time.
 
 *Note: the default strategy only shows the real time trades with moving average and buy / sell indicators above and below the moving average.*
 
