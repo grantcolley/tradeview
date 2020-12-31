@@ -27,13 +27,13 @@ With the TradeView and TradeServer platform you can:
   * [Create a WPF Strategy Component](#create-a-wpf-strategy-component)
 * [TradeView WPF UI](#tradeview-wpf-ui)
   * [Overview](#overview)
-    * [Configuration](#configuration)
+    * [Configuration Module](#configuration-module)
       * [Manage Accounts](#manage-accounts)
       * [Manage Strategies](#manage-strategies)
       * [Manage Servers](#manage-servers)
-    * [Trading](#trading)    
-    * [Strategies](#strategies)
-    * [Dashboard](#dashboard)
+    * [Trading Module](#trading-module)    
+    * [Strategies Module](#strategies-module)
+    * [Dashboard Module](#dashboard-module)
       * [Monitoring Accounts](#monitoring-accounts)
       * [Monitoring Trade Servers](#monitoring-trade-servers)
 * [TradeServer AspNetCore WebHost](#tradeserver-aspnetcore-webhost)
@@ -43,6 +43,9 @@ With the TradeView and TradeServer platform you can:
      - [Request pipelines and Middleware](#request-pipelines-and-middleware)
      - [StrategyRunnerBackgroundService](#strategyrunnerbackgroundservice)
      - [StrategyNotificationHub](#strategynotificationhub)
+  * [Batch Notifications](#batch-notifications)
+     - [Batch Notification Types](#batch-notification-types)
+* [Strategies](#strategies)
   * [Running a Strategy](#running-a-strategy)
      - [The Client Request](#the-client-request)
      - [The RunStrategyMiddleware](#the-runstrategymiddleware)
@@ -59,8 +62,6 @@ With the TradeView and TradeServer platform you can:
   * [Stopping a Running Strategy](#stopping-a-running-strategy)
      - [The Client Request to Stop a Strategy](#the-client-request-to-stop-a-strategy)
      - [The StopStrategyMiddleware](#the-stopstrategymiddleware)
-  * [Batch Notifications](#batch-notifications)
-     - [Batch Notification Types](#batch-notification-types)
 * [Extending TradeView](#extending-tradeview)
   * [Adding a new Exchange API](#adding-a-new-exchange-api)
   * [Persisting Configuration Data](#persisting-configuration-data)
@@ -105,7 +106,7 @@ You will also need to update the config entry for the strategy in the [Configura
   
 ![Alt text](/README-images/navigationpanel.PNG?raw=true "Navigation Panel")
 
-#### Configuration
+#### Configuration Module
 The Configuration module is where configuration for trading accounts, running strategies and strategy servers is managed.
 
 * [Manage Accounts](#manage-accounts)
@@ -126,7 +127,7 @@ Manage trade server details for servers that run trading strategies
 
 ![Alt text](/README-images/configuration_server.PNG?raw=true "Configure a Server")
 
-#### Trading
+#### Trading Module
 The Trading module shows a list of trading accounts in the navigation panel. Selecting an account will open a trading document in the main window for that account. From the trading document you can:
 * see the account's balances
 * view realtime pricing of favourite symbols
@@ -136,12 +137,12 @@ The Trading module shows a list of trading accounts in the navigation panel. Sel
 
 ![Alt text](/README-images/tradeview.PNG?raw=true "Trade View")
 
-#### Strategies
+#### Strategies Module
 Strategies are run on an instance of [TradeServer](#tradeserver-aspnetcore-webhost) and can be monitored by one or more users. It is possible to update a running strategy's parameters in realtime e.g. buy and sell triggers or suspend trading. See [Running a Strategy](#running-a-strategy).
 
 ![Alt text](/README-images/strategies.PNG?raw=true "Strategies")
 
-#### Dashboard
+#### Dashboard Module
 * [Monitoring Accounts](#monitoring-accounts)
 * [Monitoring Trade Servers](#monitoring-trade-servers)
 
@@ -290,6 +291,27 @@ The application uses [Socket](https://github.com/grantcolley/tradeview/tree/mast
           }
 ```
 
+## Batch Notifications
+Batch notifiers inherit abstract class [BatchNotification<T>](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Notification/BatchNotification.cs) which uses a BlockingCollection<T> for adding notifications to a queue while sending them on on a background thread.
+
+#### Batch Notification Types
+```C#
+    public enum BatchNotificationType
+    {
+        StrategyRunnerLogger,
+        StrategyAccountInfoPublisher,
+        StrategyCustomNotificationPublisher,
+        StrategyNotificationPublisher,
+        StrategyOrderBookPublisher,
+        StrategyTradePublisher,
+        StrategyStatisticsPublisher,
+        StrategyCandlesticksPublisher
+    }
+```
+
+The [StrategyBatchNotificationFactory](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Notification/Strategy/StrategyBatchNotificationFactory.cs) creates instances of batch notifiers. Batch notifiers use the [StrategyNotificationPublisher](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Notification/Strategy/StrategyNotificationPublisher.cs) to publish notifications (trade, order book, account notifications etc) to client connections.
+
+# Strategies
 ## Running a Strategy
 #### The Client Request
 The clients loads the serialised [Strategy](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Core/TradeStrategy/Strategy.cs) and strategy assemblies into a MultipartFormDataContent and post a request to the server.
@@ -650,26 +672,6 @@ The [StopStrategyMiddleware](https://github.com/grantcolley/tradeview/blob/maste
                await tradeStrategy.TryStopStrategy(json);
            }
 ```
-
-## Batch Notifications
-Batch notifiers inherit abstract class [BatchNotification<T>](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Notification/BatchNotification.cs) which uses a BlockingCollection<T> for adding notifications to a queue while sending them on on a background thread.
-
-#### Batch Notification Types
-```C#
-    public enum BatchNotificationType
-    {
-        StrategyRunnerLogger,
-        StrategyAccountInfoPublisher,
-        StrategyCustomNotificationPublisher,
-        StrategyNotificationPublisher,
-        StrategyOrderBookPublisher,
-        StrategyTradePublisher,
-        StrategyStatisticsPublisher,
-        StrategyCandlesticksPublisher
-    }
-```
-
-The [StrategyBatchNotificationFactory](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Notification/Strategy/StrategyBatchNotificationFactory.cs) creates instances of batch notifiers. Batch notifiers use the [StrategyNotificationPublisher](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeServer.StrategyExecution.WebHost/Notification/Strategy/StrategyNotificationPublisher.cs) to publish notifications (trade, order book, account notifications etc) to client connections.
 
 # Extending TradeView
 ## Adding a new Exchange API
