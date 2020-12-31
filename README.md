@@ -8,7 +8,8 @@ With the TradeView and TradeServer platform you can:
 * Connect to your exchage accounts to trade currencies, manage open orders and see balances of your assets
 * Subscribe to live trade feed and order book for assets
 * Create and run your own custom trading strategies
-* Monitor running trading strategies and send real-time updates to strategy parameters
+* Monitor running trading strategies
+* Send real-time updates to strategy parameters for running strategies
 * Easily extend the number of supported exchanges by creating wrappers for exchange api's that implement a common interface (*currently supports Binance and Kucoin*)
 
 ##### Technologies
@@ -85,6 +86,8 @@ Select the [Stratagies](#strategies) module in the navigation panel and click th
 
 ## Update a Running Strategy
 You can update a running strategies parameters. For example, in the parameters window the strategy parameters are displayed in JSON format. Bump the sell indicator from **0.00015** to **0.00115** and click the **push** button to send the updated parameters to the server. Notice in the trade chart the sell indicator line is adjusted accordingly. 
+
+See [Updating Strategy Parameters](#updating-strategy-parameters) for more details of how updating strategy parameters works.
 
 ## Create a Strategy
 Creating a strategy involves creating a class library with a class that inherits [TradeStrategyBase](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Core/TradeStrategy/TradeStrategyBase.cs) which implements [ITradeStrategy](https://github.com/grantcolley/tradeview/blob/master/src/DevelopmentInProgress.TradeView.Core/TradeStrategy/ITradeStrategy.cs).
