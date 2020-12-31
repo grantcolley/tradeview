@@ -108,7 +108,7 @@ You will also need to update the config entry for the strategy in the [Configura
 
 # TradeView WPF UI
 ## Overview
-**TradeView** consists of modules, accessible from the navigation panel on the left, including [Configuration](#configuration), [Trading](#trading), [Strategies](#strategies) and the [Dashboard](#dashboard).
+**TradeView** consists of modules, accessible from the navigation panel on the left, including [Configuration](#configuration-module), [Trading](#trading-module), [Strategies](#strategies-module) and the [Dashboard-module](#dashboard).
   
 ![Alt text](/README-images/navigationpanel.PNG?raw=true "Navigation Panel")
 
