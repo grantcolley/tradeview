@@ -5,7 +5,7 @@
 A platform for trading crypto currencies and running crypto currency strategies including [TradeView](#tradeview-wpf-ui), which is a WPF UI built on the [Origin](https://github.com/grantcolley/origin) framework, and [TradeServer](#tradeserver-aspnetcore-webhost), a ASP.NET Core web host.
 
 With the TradeView and TradeServer platform you can: 
-* Connect to your exchage accounts to trade currencies, manage open orders and see balances of your assets
+* Connect to your exchage accounts, trade currencies, manage open orders and your asset balances
 * Subscribe to live trade feed and order book for assets
 * Create and run your own custom trading strategies
 * Monitor running trading strategies
