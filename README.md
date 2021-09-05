@@ -85,6 +85,9 @@ Select the [Strategies](#strategies-module) module in the navigation panel and c
 
 *Note: the demo strategy only shows the real time trades with moving average and buy / sell indicators above and below the moving average.*
 
+> **_TIP:_**
+> See [thread #88](https://github.com/grantcolley/tradeview/issues/88) for some additional advice about getting the demo strategy to run. 
+
 See [Strategies](#strategies) for more details of how running a strategy works.
 
 ## Update a Running Strategy
