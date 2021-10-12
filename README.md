@@ -68,6 +68,10 @@ A platform for trading crypto currencies and running crypto currency strategies 
   * [Persisting Configuration Data](#persisting-configuration-data)
   
 # Getting Started
+
+> **_TIP:_**
+>> See [thread #88](https://github.com/grantcolley/tradeview/issues/88) for some additional advice about getting the demo strategy to run. 
+
 ## Setting up your dev environment
 Download the source code. Open the solution file **TradeView.sln**, go to multiple start-up projects and select the following projects to start:
 * DevelopmentInProgress.TradeView.Wpf.Host
@@ -86,7 +90,7 @@ Select the [Strategies](#strategies-module) module in the navigation panel and c
 *Note: the demo strategy only shows the real time trades with moving average and buy / sell indicators above and below the moving average.*
 
 > **_TIP:_**
-> See [thread #88](https://github.com/grantcolley/tradeview/issues/88) for some additional advice about getting the demo strategy to run. 
+>> See [thread #88](https://github.com/grantcolley/tradeview/issues/88) for some additional advice about getting the demo strategy to run. 
 
 See [Strategies](#strategies) for more details of how running a strategy works.
 
