@@ -1,8 +1,8 @@
 ﻿using DevelopmentInProgress.TradeView.Core.Model;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 
 namespace DevelopmentInProgress.TradeView.Test.Helper
 {
@@ -38,26 +38,26 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
             orderBookUpdated = File.ReadAllText("OrderBookUpdated.txt");
 
             var e = Symbols.Single(s => s.BaseAsset.Symbol.Equals("ETH") && s.QuoteAsset.Symbol.Equals("BTC"));
-            eth = JsonConvert.SerializeObject(e);
+            eth = JsonSerializer.Serialize(e);
 
             var es = SymbolsStatistics.Single(s => s.Symbol.Equals("ETHBTC"));
-            ethStats = JsonConvert.SerializeObject(es);
+            ethStats = JsonSerializer.Serialize(es);
 
             var t = Symbols.Single(s => s.BaseAsset.Symbol.Equals("TRX") && s.QuoteAsset.Symbol.Equals("BTC"));
-            trx = JsonConvert.SerializeObject(t);
+            trx = JsonSerializer.Serialize(t);
 
             var ts = SymbolsStatistics.Single(s => s.Symbol.Equals("TRXBTC"));
-            trxStats = JsonConvert.SerializeObject(ts);
+            trxStats = JsonSerializer.Serialize(ts);
 
             var b = Symbols.Single(s => s.BaseAsset.Symbol.Equals("BNB") && s.QuoteAsset.Symbol.Equals("BTC"));
-            bnb = JsonConvert.SerializeObject(b);
+            bnb = JsonSerializer.Serialize(b);
         }
         
         public static List<Symbol> Symbols
         {
             get
             {
-                var results = JsonConvert.DeserializeObject<List<Symbol>>(symbols);
+                var results = JsonSerializer.Deserialize<List<Symbol>>(symbols);
                 foreach(var s in results)
                 {
                     s.Name = $"{s.BaseAsset.Symbol}{s.QuoteAsset.Symbol}";
@@ -72,7 +72,7 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
         {
             get
             {
-                return JsonConvert.DeserializeObject<List<SymbolStats>>(symbolsStatistics);
+                return JsonSerializer.Deserialize<List<SymbolStats>>(symbolsStatistics);
             }
         }
 
@@ -80,7 +80,7 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
         {
             get
             {
-                return JsonConvert.DeserializeObject<List<Order>>(orders);
+                return JsonSerializer.Deserialize<List<Order>>(orders);
             }
         }
 
@@ -88,7 +88,7 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
         {
             get
             {
-                return JsonConvert.DeserializeObject<OrderBook>(orderBook);
+                return JsonSerializer.Deserialize<OrderBook>(orderBook);
             }
         }
 
@@ -297,7 +297,7 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
         {
             get
             {
-                return JsonConvert.DeserializeObject<OrderBook>(orderBookUpdated);
+                return JsonSerializer.Deserialize<OrderBook>(orderBookUpdated);
             }
         }
 
@@ -305,7 +305,7 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
         {
             get
             {
-                return JsonConvert.DeserializeObject<List<AggregateTrade>>(aggregateTrades);
+                return JsonSerializer.Deserialize<List<AggregateTrade>>(aggregateTrades);
             }
         }
 
@@ -313,7 +313,7 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
         {
             get
             {
-                return JsonConvert.DeserializeObject<List<AggregateTrade>>(aggregateTradesUpdated);
+                return JsonSerializer.Deserialize<List<AggregateTrade>>(aggregateTradesUpdated);
             }
         }
 
@@ -321,7 +321,7 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
         {
             get
             {
-                return JsonConvert.DeserializeObject<List<Trade>>(trades);
+                return JsonSerializer.Deserialize<List<Trade>>(trades);
             }
         }
 
@@ -329,7 +329,7 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
         {
             get
             {
-                return JsonConvert.DeserializeObject<List<Trade>>(tradesUpdated);
+                return JsonSerializer.Deserialize<List<Trade>>(tradesUpdated);
             }
         }
 
@@ -337,7 +337,7 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
         {
             get
             {
-                return JsonConvert.DeserializeObject<AccountInfo>(accountInfo);
+                return JsonSerializer.Deserialize<AccountInfo>(accountInfo);
             }
         }
 
@@ -345,8 +345,8 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
         {
             get
             {
-                var symbol = JsonConvert.DeserializeObject<Symbol>(trx);
-                symbol.SymbolStatistics = JsonConvert.DeserializeObject<SymbolStats>(trxStats);
+                var symbol = JsonSerializer.Deserialize<Symbol>(trx);
+                symbol.SymbolStatistics = JsonSerializer.Deserialize<SymbolStats>(trxStats);
                 return symbol;
             }
         }
@@ -355,7 +355,7 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
         {
             get
             {
-                var symbol = JsonConvert.DeserializeObject<Symbol>(bnb);
+                var symbol = JsonSerializer.Deserialize<Symbol>(bnb);
                 symbol.SymbolStatistics = new SymbolStats { Symbol = symbol.ExchangeSymbol };
                 return symbol;
             }
@@ -365,7 +365,7 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
         {
             get
             {
-                return JsonConvert.DeserializeObject<SymbolStats>(trxStats);
+                return JsonSerializer.Deserialize<SymbolStats>(trxStats);
             }
         }
 
@@ -373,8 +373,8 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
         {
             get
             {
-                var symbol = JsonConvert.DeserializeObject<Symbol>(eth);
-                symbol.SymbolStatistics = JsonConvert.DeserializeObject<SymbolStats>(ethStats);
+                var symbol = JsonSerializer.Deserialize<Symbol>(eth);
+                symbol.SymbolStatistics = JsonSerializer.Deserialize<SymbolStats>(ethStats);
                 return symbol;
             }
         }
@@ -383,7 +383,7 @@ namespace DevelopmentInProgress.TradeView.Test.Helper
         {
             get
             {
-                return JsonConvert.DeserializeObject<SymbolStats>(ethStats);
+                return JsonSerializer.Deserialize<SymbolStats>(ethStats);
             }
         }
 

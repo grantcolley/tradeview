@@ -1,6 +1,6 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
-using Prism.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 {
@@ -9,7 +9,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
         private TradeServer tradeServer;
         bool disposed = false;
 
-        public TradeServerViewModel(TradeServer tradeServer, ILoggerFacade logger)
+        public TradeServerViewModel(TradeServer tradeServer, ILogger logger)
             : base(logger)
         {
             this.tradeServer = tradeServer;

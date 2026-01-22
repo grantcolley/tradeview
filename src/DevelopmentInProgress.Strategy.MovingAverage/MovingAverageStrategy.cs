@@ -8,9 +8,9 @@ using DevelopmentInProgress.TradeView.Core.Extensions;
 using DevelopmentInProgress.TradeView.Core.Interfaces;
 using DevelopmentInProgress.TradeView.Core.Model;
 using DevelopmentInProgress.TradeView.Core.TradeStrategy;
-using Newtonsoft.Json;
 using System;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.Strategy.MovingAverage
@@ -24,7 +24,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
         {
             var tcs = new TaskCompletionSource<bool>();
 
-            var strategyParameters = JsonConvert.DeserializeObject<MovingAverageTradeParameters>(parameters);
+            var strategyParameters = JsonSerializer.Deserialize<MovingAverageTradeParameters>(parameters);
 
             if (tradeCache == null)
             {
@@ -91,7 +91,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage
             }
 
             var strategyNotification = new StrategyNotification { Name = Strategy.Name, NotificationLevel = NotificationLevel.Trade };
-            strategyNotification.Message = JsonConvert.SerializeObject(movingAverageTrades);
+            strategyNotification.Message = JsonSerializer.Serialize(movingAverageTrades);
             StrategyTradeNotification(new StrategyNotificationEventArgs { StrategyNotification = strategyNotification });
         }
 

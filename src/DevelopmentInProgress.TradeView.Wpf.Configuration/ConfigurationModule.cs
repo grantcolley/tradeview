@@ -4,8 +4,8 @@ using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Modular;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.View;
 using DevelopmentInProgress.TradeView.Wpf.Trading.View;
+using Microsoft.Extensions.Logging;
 using Prism.Ioc;
-using Prism.Logging;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Configuration
 {
@@ -22,7 +22,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration
         private const string TradingModuleName = "Trading";
         private readonly static string AccountUser = $"Accounts";
 
-        public ConfigurationModule(ModuleNavigator moduleNavigator, ILoggerFacade logger)
+        public ConfigurationModule(ModuleNavigator moduleNavigator, ILogger<ConfigurationModule> logger)
             : base(moduleNavigator, logger)
         {
         }
@@ -85,7 +85,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration
             moduleSettings.ModuleGroups.Add(moduleGroup);
             ModuleNavigator.AddModuleNavigation(moduleSettings);
 
-            Logger.Log($"Initialized {this.GetType().FullName}", Category.Info, Priority.None);
+            Logger.Log(LogLevel.Information, $"Initialized {this.GetType().FullName}");
         }
 
         public static void AddStrategy(string strategyName)

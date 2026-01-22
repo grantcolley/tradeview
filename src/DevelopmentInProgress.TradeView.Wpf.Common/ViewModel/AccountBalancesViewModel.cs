@@ -2,7 +2,7 @@
 using DevelopmentInProgress.TradeView.Wpf.Common.Events;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
-using Prism.Logging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading;
@@ -23,7 +23,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
         private bool isLoggingIn;
         private bool disposed;
 
-        public AccountBalancesViewModel(IWpfExchangeService exchangeService, ISymbolsCacheFactory symbolsCacheFactory, ILoggerFacade logger)
+        public AccountBalancesViewModel(IWpfExchangeService exchangeService, ISymbolsCacheFactory symbolsCacheFactory, ILogger logger)
             : base(exchangeService, logger)
         {
             accountCancellationTokenSource = new CancellationTokenSource();

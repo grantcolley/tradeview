@@ -2,16 +2,16 @@
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using DevelopmentInProgress.TradeView.Wpf.Configuration.View;
 using DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel;
-using Prism.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Configuration.Utility
 {
     public class SymbolsLoader : ISymbolsLoader
     {
         private readonly IWpfExchangeService exchangeService;
-        private readonly ILoggerFacade logger;
+        private readonly ILogger logger;
 
-        public SymbolsLoader(IWpfExchangeService exchangeService, ILoggerFacade logger)
+        public SymbolsLoader(IWpfExchangeService exchangeService, ILogger logger)
         {
             this.exchangeService = exchangeService;
             this.logger = logger;

@@ -4,7 +4,7 @@ using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
-using Prism.Logging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -150,14 +150,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
 
         private void NotificationsAdd(Message message)
         {
-            var category = message.MessageType switch
+            var logLevel = message.MessageType switch
             {
-                MessageType.Error => Category.Exception,
-                MessageType.Warn => Category.Warn,
-                _ => Category.Info,
+                MessageType.Error => LogLevel.Error,
+                MessageType.Warn => LogLevel.Warning,
+                _ => LogLevel.Information,
             };
 
-            Logger.Log(message.Text, category, Priority.Low);
+            Logger.Log(logLevel, message.Text);
 
             message.Text = $"{message.Timestamp:dd/MM/yyyy hh:mm:ss.fff tt} {message.Text}";
             ShowMessage(message);

@@ -12,7 +12,7 @@ using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.Enums;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.Events;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.Utility;
-using Newtonsoft.Json;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,6 +20,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.WebSockets;
 using System.Reactive.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -286,7 +287,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Log($"OnPublished {ex.Message}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log(LogLevel.Error, $"OnPublished {ex.Message}");
 
                 ShowMessage(new Message { MessageType = MessageType.Error, Text = $"Strategy load error. Check configuration. {ex.Message}" });
             }
@@ -304,7 +305,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Log($"GetServerMonitors {ex.Message}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log(LogLevel.Error, $"GetServerMonitors {ex.Message}");
                 ShowMessage(new Message { MessageType = MessageType.Error, Text = $"Server load error. {ex.Message}" });
             }
         }
@@ -333,7 +334,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             await SetCommandVisibility(StrategyRunnerCommandVisibility.Connecting).ConfigureAwait(false);
 
             var strategyParameters = new CoreStrategy.StrategyParameters { StrategyName = Strategy.Name };
-            var strategyParametersJson = JsonConvert.SerializeObject(strategyParameters);
+            var strategyParametersJson = JsonSerializer.Serialize(strategyParameters);
 
             await StopAsync(strategyParametersJson).ConfigureAwait(false);
             
@@ -400,7 +401,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    Logger.Log($"DisconnectSocketAsync {ex.Message}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                    Logger.Log(LogLevel.Error, $"DisconnectSocketAsync {ex.Message}");
 
                     if (writeNotification)
                     {
@@ -420,7 +421,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             try
             {
                 var strategyParameters = new CoreStrategy.StrategyParameters { StrategyName = Strategy.Name };
-                var strategyParametersJson = JsonConvert.SerializeObject(strategyParameters);
+                var strategyParametersJson = JsonSerializer.Serialize(strategyParameters);
 
                 response = await CoreStrategy.StrategyRunnerClient.PostAsync(httpClientManager.HttpClientInstance, new Uri($"{SelectedServer.Uri}isstrategyrunning"), strategyParametersJson, cancellationTokenSource.Token).ConfigureAwait(false);
 
@@ -439,14 +440,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                             {
                                 MessageType = response.StatusCode == System.Net.HttpStatusCode.OK ? MessageType.Info : MessageType.Error,
                                 Text = response.StatusCode.ToString(),
-                                TextVerbose = JsonConvert.SerializeObject(content, Formatting.Indented)
+                                TextVerbose = JsonSerializer.Serialize(content, new JsonSerializerOptions { WriteIndented = true })
                             });
                     });
                 }
             }
             catch (Exception ex)
             {
-                Logger.Log($"IsStrategyRunningAsync {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log(LogLevel.Error, $"IsStrategyRunningAsync {ex}");
             }
             finally
             {
@@ -468,7 +469,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Log($"DisposeSocketAsync {ex.Message}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log(LogLevel.Error, $"DisposeSocketAsync {ex.Message}");
 
                 if (writeNotification)
                 {
@@ -497,7 +498,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                 {
                     var interfaceStrategy = Strategy.ToCoreStrategy();
                     interfaceStrategy.StartedBy = Environment.UserName;
-                    var jsonContent = JsonConvert.SerializeObject(interfaceStrategy);
+                    var jsonContent = JsonSerializer.Serialize(interfaceStrategy);
 
                     var dependencies = strategy.Dependencies.Select(d => d.File);
 
@@ -514,7 +515,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                         await SetCommandVisibility(StrategyRunnerCommandVisibility.Connected).ConfigureAwait(false);
                     }
 
-                    var content = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
+                    await using var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+                    var content = await JsonSerializer.DeserializeAsync<string>(stream).ConfigureAwait(false);
 
                     ViewModelContext.UiDispatcher.Invoke(() =>
                     {
@@ -523,14 +525,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                             {
                                 MessageType = response.StatusCode == System.Net.HttpStatusCode.OK ? MessageType.Info : MessageType.Error,
                                 Text = response.StatusCode.ToString(),
-                                TextVerbose = JsonConvert.SerializeObject(content, Formatting.Indented)
+                                TextVerbose = JsonSerializer.Serialize(content, new JsonSerializerOptions { WriteIndented = true })
                             });
                     });
                 }
             }
             catch (Exception ex)
             {
-                Logger.Log($"RunAsync {ex.Message}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log(LogLevel.Error, $"RunAsync {ex.Message}");
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Run - {ex.Message}", TextVerbose = ex.ToString() });
                 await SetCommandVisibility(StrategyRunnerCommandVisibility.ServerUnavailable).ConfigureAwait(false);
@@ -566,7 +568,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    var content = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
+                    await using var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+                    var content = await JsonSerializer.DeserializeAsync<string>(stream).ConfigureAwait(false);
 
                     ViewModelContext.UiDispatcher.Invoke(() =>
                     {
@@ -575,14 +578,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                             {
                                 MessageType = response.StatusCode == System.Net.HttpStatusCode.OK ? MessageType.Info : MessageType.Error,
                                 Text = response.StatusCode.ToString(),
-                                TextVerbose = JsonConvert.SerializeObject(content, Formatting.Indented)
+                                TextVerbose = JsonSerializer.Serialize(content, new JsonSerializerOptions { WriteIndented = true })
                             });
                     });
                 }
             }
             catch (Exception ex)
             {
-                Logger.Log($"RunAsync {ex.Message}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log(LogLevel.Error, $"RunAsync {ex.Message}");
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Update - {ex.Message}", TextVerbose = ex.ToString() });
                 await SetCommandVisibility(StrategyRunnerCommandVisibility.ServerUnavailable).ConfigureAwait(false);
@@ -605,7 +608,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    var content = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
+                    await using var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+                    var content = await JsonSerializer.DeserializeAsync<string>(stream).ConfigureAwait(false);
 
                     ViewModelContext.UiDispatcher.Invoke(() =>
                     {
@@ -614,7 +618,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
                             {
                                 MessageType = response.StatusCode == System.Net.HttpStatusCode.OK ? MessageType.Info : MessageType.Error,
                                 Text = response.StatusCode.ToString(),
-                                TextVerbose = JsonConvert.SerializeObject(content, Formatting.Indented)
+                                TextVerbose = JsonSerializer.Serialize(content, new JsonSerializerOptions { WriteIndented = true })
                             });
                     });
 
@@ -627,7 +631,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Log($"StopAsync {ex.Message}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log(LogLevel.Error, $"StopAsync {ex.Message}");
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Stop - {ex.Message}", TextVerbose = ex.ToString() });
                 await SetCommandVisibility(StrategyRunnerCommandVisibility.ServerUnavailable).ConfigureAwait(false);
@@ -756,7 +760,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Log($"MonitorAsync {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log(LogLevel.Error, $"MonitorAsync {ex}");
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"Monitor - {ex.Message}", TextVerbose=ex.ToString(), Timestamp = DateTime.Now });
                 await SetCommandVisibility(StrategyRunnerCommandVisibility.ServerUnavailable).ConfigureAwait(false);
@@ -769,7 +773,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
-                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Core.TradeStrategy.StrategyNotification>>(message.Data);
+                var strategyNotifications = JsonSerializer.Deserialize<List<TradeView.Core.TradeStrategy.StrategyNotification>>(message.Data);
 
                 foreach (var notification in strategyNotifications)
                 {
@@ -783,7 +787,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Log($"OnStrategyNotification {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log(LogLevel.Error, $"OnStrategyNotification {ex}");
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"OnStrategyNotification - {ex.Message}", TextVerbose = ex.ToString() });
             }
@@ -793,7 +797,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
-                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Core.TradeStrategy.StrategyNotification>>(message.Data);
+                var strategyNotifications = JsonSerializer.Deserialize<List<TradeView.Core.TradeStrategy.StrategyNotification>>(message.Data);
 
                 var orderedStrategyNotifications = strategyNotifications.OrderBy(n => n.Timestamp).ToList();
 
@@ -801,7 +805,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Log($"OnTradeNotification {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log(LogLevel.Error, $"OnTradeNotification {ex}");
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"OnTradeNotification - {ex.Message}", TextVerbose = ex.ToString() });
             }
@@ -811,7 +815,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
-                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Core.TradeStrategy.StrategyNotification>>(message.Data);
+                var strategyNotifications = JsonSerializer.Deserialize<List<TradeView.Core.TradeStrategy.StrategyNotification>>(message.Data);
 
                 var orderedStrategyNotifications = strategyNotifications.OrderBy(n => n.Timestamp).ToList();
 
@@ -819,7 +823,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
             catch(Exception ex)
             {
-                Logger.Log($"OnCandlesticksNotification {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log(LogLevel.Error, $"OnCandlesticksNotification {ex}");
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"OnCandlesticksNotification - {ex.Message}", TextVerbose = ex.ToString() });
             }
@@ -829,7 +833,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
-                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Core.TradeStrategy.StrategyNotification>>(message.Data);
+                var strategyNotifications = JsonSerializer.Deserialize<List<TradeView.Core.TradeStrategy.StrategyNotification>>(message.Data);
 
                 var latestStrategyNotification = strategyNotifications.OrderBy(n => n.Timestamp).Last();
 
@@ -837,7 +841,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Log($"OnParameterUpdateNotificationAsync {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log(LogLevel.Error, $"OnParameterUpdateNotificationAsync {ex}");
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"OnParameterUpdateNotificationAsync - {ex.Message}", TextVerbose = ex.ToString() });
             }
@@ -849,7 +853,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             try
             {
-                var strategyNotifications = JsonConvert.DeserializeObject<List<TradeView.Core.TradeStrategy.StrategyNotification>>(message.Data);
+                var strategyNotifications = JsonSerializer.Deserialize<List<TradeView.Core.TradeStrategy.StrategyNotification>>(message.Data);
 
                 var orderedStrategyNotifications = strategyNotifications.OrderBy(n => n.Timestamp).ToList();
 
@@ -857,7 +861,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Log($"OnOrderBookNotification {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log(LogLevel.Error, $"OnOrderBookNotification {ex}");
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"OnOrderBookNotification - {ex.Message}", TextVerbose = ex.ToString() });
             }
@@ -871,7 +875,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Log($"{message.MethodName} {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log(LogLevel.Error, $"{message.MethodName} {ex}");
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"OnAccountNotification - {ex.Message}", TextVerbose = ex.ToString() });
             }
@@ -995,12 +999,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         {
             var category = message.MessageType switch
             {
-                MessageType.Error => Prism.Logging.Category.Exception,
-                MessageType.Warn => Prism.Logging.Category.Warn,
-                _ => Prism.Logging.Category.Info,
+                MessageType.Error => LogLevel.Error,
+                MessageType.Warn => LogLevel.Warning,
+                _ => LogLevel.Information,
             };
 
-            Logger.Log(message.Text, category, Prism.Logging.Priority.Low);
+            Logger.Log(category, message.Text);
 
             message.Text = $"{message.Timestamp:dd/MM/yyyy hh:mm:ss.fff tt} {message.Text}";
             Notifications.Insert(0, message);
@@ -1058,7 +1062,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Log($"SetCommandVisibility {ex}", Prism.Logging.Category.Exception, Prism.Logging.Priority.High);
+                Logger.Log(LogLevel.Error, $"SetCommandVisibility {ex}");
 
                 NotificationsAdd(new Message { MessageType = MessageType.Error, Text = $"SetCommandVisibility - {ex.Message}", TextVerbose = ex.ToString() });
 

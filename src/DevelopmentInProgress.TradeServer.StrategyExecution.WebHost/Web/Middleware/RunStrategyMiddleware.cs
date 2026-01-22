@@ -1,12 +1,12 @@
 ﻿using DevelopmentInProgress.TradeView.Core.TradeStrategy;
 using DevelopmentInProgress.TradeServer.StrategyExecution.WebHost.Web.HostedService;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace DevelopmentInProgress.TradeServer.StrategyExecution.WebHost.Web.Middleware
 {
@@ -41,7 +41,7 @@ namespace DevelopmentInProgress.TradeServer.StrategyExecution.WebHost.Web.Middle
             {
                 var json = context.Request.Form["strategy"];
 
-                var strategy = JsonConvert.DeserializeObject<Strategy>(json);
+                var strategy = JsonSerializer.Deserialize<Strategy>(json);
 
                 var downloadsPath = Path.Combine(Directory.GetCurrentDirectory(), "downloads", Guid.NewGuid().ToString());
 
@@ -77,7 +77,7 @@ namespace DevelopmentInProgress.TradeServer.StrategyExecution.WebHost.Web.Middle
                 var response = context.Response;
                 response.ContentType = "application/json";
                 response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                await response.WriteAsync(JsonConvert.SerializeObject(ex)).ConfigureAwait(false);
+                await response.WriteAsync(JsonSerializer.Serialize(ex)).ConfigureAwait(false);
             }
         }
 

@@ -5,7 +5,7 @@ using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Configuration.Utility;
-using Prism.Logging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +21,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
         private Strategy strategy;
         bool disposed = false;
 
-        public StrategyViewModel(Strategy strategy, IStrategyService strategyService, IStrategyFileManager strategyFileManager, ILoggerFacade logger)
+        public StrategyViewModel(Strategy strategy, IStrategyService strategyService, IStrategyFileManager strategyFileManager, ILogger logger)
             : base(logger)
         {
             this.strategy = strategy;

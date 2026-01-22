@@ -3,8 +3,8 @@ using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Modular;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.View;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel;
+using Microsoft.Extensions.Logging;
 using Prism.Ioc;
-using Prism.Logging;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Strategies
 {
@@ -14,7 +14,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies
 
         private static readonly string StrategyUser = $"Strategies";
 
-        public StrategiesModule(ModuleNavigator moduleNavigator, ILoggerFacade logger)
+        public StrategiesModule(ModuleNavigator moduleNavigator, ILogger<StrategiesModule> logger)
             : base(moduleNavigator, logger)
         {
         }
@@ -51,7 +51,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies
             moduleSettings.ModuleGroups.Add(moduleGroup);
             ModuleNavigator.AddModuleNavigation(moduleSettings);
 
-            Logger.Log("Initialized DevelopmentInProgress.Wpf.Strategies", Category.Info, Priority.None);
+            Logger.Log(LogLevel.Information, "Initialized DevelopmentInProgress.Wpf.Strategies");
         }
 
         private static ModuleGroupItem CreateStrategyModuleGroupItem(string name, string title)

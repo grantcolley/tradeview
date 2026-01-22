@@ -1,11 +1,11 @@
-﻿using System;
+﻿using DevelopmentInProgress.TradeView.Core.Enums;
+using DevelopmentInProgress.TradeView.Core.Model;
+using System;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
-using DevelopmentInProgress.TradeView.Core.Enums;
-using DevelopmentInProgress.TradeView.Core.Model;
-using Newtonsoft.Json;
 
 namespace DevelopmentInProgress.TradeView.Data.File
 {
@@ -27,14 +27,14 @@ namespace DevelopmentInProgress.TradeView.Data.File
                 using (var reader = System.IO.File.OpenText(userAccountsFile))
                 {
                     var rjson = await reader.ReadToEndAsync().ConfigureAwait(false);
-                    userAccounts = JsonConvert.DeserializeObject<UserAccounts>(rjson);
+                    userAccounts = JsonSerializer.Deserialize<UserAccounts>(rjson);
                 }
 
                 var remove = userAccounts.Accounts.FirstOrDefault(a => a.AccountName.Equals(userAccount.AccountName, StringComparison.Ordinal));
                 if (remove != null)
                 {
                     userAccounts.Accounts.Remove(remove);
-                    var wjson = JsonConvert.SerializeObject(userAccounts, Formatting.Indented);
+                    var wjson = JsonSerializer.Serialize(userAccounts, new JsonSerializerOptions { WriteIndented = true });
 
                     UnicodeEncoding encoding = new UnicodeEncoding();
                     char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
@@ -54,7 +54,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
                     json = await reader.ReadToEndAsync().ConfigureAwait(false);
                 }
 
-                var userAccountss = JsonConvert.DeserializeObject<UserAccounts>(json);
+                var userAccountss = JsonSerializer.Deserialize<UserAccounts>(json);
                 var userAccount = userAccountss.Accounts.Single(a => a.AccountName.Equals(accountName, StringComparison.Ordinal));
                 return userAccount;
             }
@@ -68,7 +68,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
             {
                 using var reader = System.IO.File.OpenText(userAccountsFile);
                 var json = await reader.ReadToEndAsync().ConfigureAwait(true);
-                var userAccounts = JsonConvert.DeserializeObject<UserAccounts>(json);
+                var userAccounts = JsonSerializer.Deserialize<UserAccounts>(json);
                 return userAccounts;
             }
 
@@ -85,7 +85,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
             {
                 using var reader = System.IO.File.OpenText(userAccountsFile);
                 var rjson = await reader.ReadToEndAsync().ConfigureAwait(false);
-                userAccounts = JsonConvert.DeserializeObject<UserAccounts>(rjson);
+                userAccounts = JsonSerializer.Deserialize<UserAccounts>(rjson);
             }
             else
             {
@@ -100,7 +100,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
             userAccounts.Accounts.Add(userAccount);
 
-            var wjson = JsonConvert.SerializeObject(userAccounts, Formatting.Indented);
+            var wjson = JsonSerializer.Serialize(userAccounts, new JsonSerializerOptions { WriteIndented = true });
 
             UnicodeEncoding encoding = new UnicodeEncoding();
             char[] chars = encoding.GetChars(encoding.GetBytes(wjson));

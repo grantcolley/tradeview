@@ -1,10 +1,10 @@
 ﻿using DevelopmentInProgress.Socket.Messages;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -154,7 +154,7 @@ namespace DevelopmentInProgress.Socket.Server
         /// <returns>A <see cref="Task"/>.</returns>
         public async Task SendMessageToAllAsync(Message message)
         {
-            var json = JsonConvert.SerializeObject(message);
+            var json = JsonSerializer.Serialize(message);
 
             var connections = connectionManager.GetConnections();
 
@@ -194,7 +194,7 @@ namespace DevelopmentInProgress.Socket.Server
                 return;
             }
 
-            var json = JsonConvert.SerializeObject(message);
+            var json = JsonSerializer.Serialize(message);
 
             var webSockets = from connection in channel.Connections.Values.ToArray() select SendMessageAsync(connection.WebSocket, json);
 
@@ -209,7 +209,7 @@ namespace DevelopmentInProgress.Socket.Server
         /// <returns>A <see cref="Task"/>.</returns>
         public static async Task SendMessageAsync(WebSocket webSocket, Message message)
         {
-            var json = JsonConvert.SerializeObject(message);
+            var json = JsonSerializer.Serialize(message);
 
             await SendMessageAsync(webSocket, json).ConfigureAwait(false);
         }

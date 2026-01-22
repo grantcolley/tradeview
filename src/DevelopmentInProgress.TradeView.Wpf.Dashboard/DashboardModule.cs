@@ -2,8 +2,8 @@
 using DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Modular;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
+using Microsoft.Extensions.Logging;
 using Prism.Ioc;
-using Prism.Logging;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Dashboard
 {
@@ -11,7 +11,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard
     {
         public const string ModuleName = "Dashboard";
 
-        public DashboardModule(ModuleNavigator moduleNavigator, ILoggerFacade logger)
+        public DashboardModule(ModuleNavigator moduleNavigator, ILogger<DashboardModule> logger)
             : base(moduleNavigator, logger)
         {
         }
@@ -60,7 +60,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard
             moduleSettings.ModuleGroups.Add(moduleGroup);
             ModuleNavigator.AddModuleNavigation(moduleSettings);
 
-            Logger.Log($"Initialized {this.GetType().FullName}", Category.Info, Priority.None);
+            Logger.Log(LogLevel.Information, $"Initialized {this.GetType().FullName}");
         }
     }
 }

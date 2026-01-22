@@ -5,7 +5,7 @@ using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Trading.Events;
-using Prism.Logging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,7 +29,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private bool disposed;
         private bool isLoading;
 
-        public TradePanelViewModel(IWpfExchangeService exchangeService, ILoggerFacade logger)
+        public TradePanelViewModel(IWpfExchangeService exchangeService, ILogger logger)
             : base(exchangeService, logger)
         {
             BuyCommand = new ViewModelCommand(Buy);

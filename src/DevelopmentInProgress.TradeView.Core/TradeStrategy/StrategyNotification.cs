@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using System.Text.Json;
 
 namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
 {
@@ -14,7 +14,7 @@ namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
 
         public override string ToString()
         {
-            return JsonConvert.SerializeObject(this, new JsonSerializerSettings { Formatting = Formatting.Indented });
+            return JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
         }
     }
 }

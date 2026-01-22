@@ -2,13 +2,13 @@
 using DevelopmentInProgress.TradeView.Wpf.Common.Events;
 using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
 using DevelopmentInProgress.TradeView.Wpf.Common.Manager;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.WebSockets;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
@@ -359,7 +359,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         {
             try
             {
-                var serverMonitorNotifications = JsonConvert.DeserializeObject<List<Core.Server.ServerNotification>>(message.Data);
+                var serverMonitorNotifications = JsonSerializer.Deserialize<List<Core.Server.ServerNotification>>(message.Data);
 
                 if (serverMonitorNotifications.Any(smn => smn.Equals(Core.Server.ServerNotificationLevel.DisconnectClient)))
                 {
@@ -369,7 +369,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
                 {
                     var serverMonitorNotification = serverMonitorNotifications.OrderByDescending(smn => smn.Timestamp).First();
 
-                    var serverMonitor = JsonConvert.DeserializeObject<Core.Server.ServerMonitor>(serverMonitorNotification.Message);
+                    var serverMonitor = JsonSerializer.Deserialize<Core.Server.ServerMonitor>(serverMonitorNotification.Message);
 
                     ServerMonitorHelper.UpdateServerMonitor(this, serverMonitor);
                 }

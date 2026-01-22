@@ -3,17 +3,19 @@ using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
 {
     public class ModulesNavigationViewModel
     {
-        public ModulesNavigationViewModel()
+        private readonly NavigationManager navigationManager;
+
+        public ModulesNavigationViewModel(NavigationManager navigationManager)
         {
             NavigationSettingsList = new Dictionary<string, NavigationSettings>();
             NavigationPanelItems = new ObservableCollection<NavigationPanelItem>();
+            this.navigationManager = navigationManager;
         }
 
         public event EventHandler<NavigationEventArgs> RegisterNavigation;
@@ -21,6 +23,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
 
         public Dictionary<string, NavigationSettings> NavigationSettingsList { get; }
         public ObservableCollection<NavigationPanelItem> NavigationPanelItems { get; }
+
+        public void Navigate(NavigationSettings settings) => navigationManager.NavigateDocumentRegion(settings);
 
         /// <summary>
         /// Adds a new module to the navigation view. Called by the <see cref="ModuleNavigator"/>.

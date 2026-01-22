@@ -9,13 +9,13 @@ namespace DevelopmentInProgress.TradeView.Core.Extensions
     {
         private static readonly Dictionary<OrderType, IValidateClientOrder> orderValidation = new Dictionary<OrderType, IValidateClientOrder>
         {
-            { OrderType.Limit, new ValidateLimit()},
-            { OrderType.LimitMaker, new ValidateLimit()},
-            {OrderType.StopLossLimit, new ValidateStopOrderLimit() },
-            {OrderType.TakeProfitLimit, new ValidateStopOrderLimit() },
-            { OrderType.Market, new ValidateMarket()},
-            { OrderType.StopLoss, new ValidateStopOrder()},
-            {OrderType.TakeProfit, new ValidateStopOrder() }
+            { OrderType.Limit, new ValidateLimit() },
+            { OrderType.LimitMaker, new ValidateLimit() },
+            { OrderType.StopLossLimit, new ValidateStopOrderLimit() },
+            { OrderType.TakeProfitLimit, new ValidateStopOrderLimit() },
+            { OrderType.Market, new ValidateMarket() },
+            { OrderType.StopLoss, new ValidateStopOrder() },
+            { OrderType.TakeProfit, new ValidateStopOrder() }
         };
 
         public static void  ValidateClientOrder(this Symbol symbol, ClientOrder clientOrder)

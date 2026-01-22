@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:navigation="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.Navigation;assembly=DevelopmentInProgress.TradeView.Wpf.Controls"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>

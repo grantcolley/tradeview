@@ -1,10 +1,10 @@
 ﻿using DevelopmentInProgress.Socket.Messages;
 using DevelopmentInProgress.Socket.Server;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.WebSockets;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -179,7 +179,7 @@ namespace DevelopmentInProgress.Socket.Client
         {
             if (clientWebSocket.State.Equals(WebSocketState.Open))
             {
-                var json = JsonConvert.SerializeObject(message);
+                var json = JsonSerializer.Serialize(message);
 
                 var bytes = Encoding.UTF8.GetBytes(json);
 
@@ -270,7 +270,7 @@ namespace DevelopmentInProgress.Socket.Client
                 {
                     var json = messageBuilder.ToString();
 
-                    var message = JsonConvert.DeserializeObject<Message>(json);
+                    var message = JsonSerializer.Deserialize<Message>(json);
 
                     if (registeredMethods.TryGetValue(message.MethodName, out Action<Message> method))
                     {

@@ -1,7 +1,7 @@
 ﻿using DevelopmentInProgress.TradeView.Core.Extensions;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace DevelopmentInProgress.TradeView.Core.Server
 {
@@ -25,7 +25,7 @@ namespace DevelopmentInProgress.TradeView.Core.Server
 
         public override string ToString()
         {
-            return JsonConvert.SerializeObject(this, new JsonSerializerSettings { Formatting = Formatting.Indented });
+            return JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
         }
     }
 }

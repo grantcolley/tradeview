@@ -7,7 +7,8 @@
 
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.View;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
-using Prism.Regions;
+using Prism.Navigation;
+using Prism.Navigation.Regions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -210,11 +211,15 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
         {
             if (navigationResult.Context.NavigationService.Region.Name.Equals("DocumentRegion", StringComparison.Ordinal))
             {
-                if (navigationResult.Result.HasValue
-                    && !navigationResult.Result.Value)
+                if (navigationResult.Cancelled)
                 {
                     // Navigation has been cancelled.
                     return;
+                }
+
+                if (!navigationResult.Success)
+                {
+                    throw new Exception("Navigation failed.", navigationResult.Exception);
                 }
 
                 var query = navigationResult.Context.Parameters;

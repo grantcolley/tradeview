@@ -1,16 +1,18 @@
 ﻿using DevelopmentInProgress.TradeServer.StrategyExecution.WebHost.Web;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.TradeServer.Console
 {
     class Program
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types")]
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             try
             {
@@ -58,14 +60,17 @@ namespace DevelopmentInProgress.TradeServer.Console
 
                 Log.Information("Launching DevelopmentInProgress.TradeServer.Console");
 
-                var webHost = WebHost.CreateDefaultBuilder()
-                    .UseUrls(url)
-                    .UseStrategyRunnerStartup(args)
+                var host = Host.CreateDefaultBuilder(args)
                     .UseSerilog()
+                    .ConfigureWebHostDefaults(webBuilder =>
+                    {
+                        webBuilder
+                            .UseUrls(url)
+                            .UseStrategyRunnerStartup(args);
+                    })
                     .Build();
 
-                var task = webHost.RunAsync();
-                task.GetAwaiter().GetResult();
+                await host.RunAsync();
             }
             catch (Exception ex)
             {

@@ -4,7 +4,7 @@ using DevelopmentInProgress.TradeView.Wpf.Common.Command;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Configuration.Events;
-using Prism.Logging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
         private UserAccount userAccount;
         private bool disposed = false;
 
-        public UserAccountViewModel(UserAccount userAccount, ILoggerFacade logger)
+        public UserAccountViewModel(UserAccount userAccount, ILogger logger)
             : base(logger)
         {
             UserAccount = userAccount;

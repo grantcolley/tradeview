@@ -1,11 +1,10 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
-using Prism.Logging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Windows.Threading;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Utility
@@ -29,7 +28,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Utility
         public object StrategyDisplayView { get; private set; }
         public object StrategyDisplayViewModel { get; private set; }
 
-        public void Activate(Strategy strategy, Dispatcher UiDispatcher, ILoggerFacade Logger)
+        public void Activate(Strategy strategy, Dispatcher UiDispatcher, ILogger Logger)
         {
             if(strategy == null)
             {

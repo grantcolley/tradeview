@@ -6,8 +6,8 @@
 
 using System;
 using System.Collections;
-using System.ComponentModel;
 using System.Linq;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Reflection;
@@ -15,6 +15,7 @@ using System.Reflection.Emit;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
 {
@@ -53,8 +54,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox
         {
             base.Unloaded += XamlFilterBoxUnloaded;
 
+            var uiContext = new DispatcherSynchronizationContext(Application.Current.Dispatcher);
+            var uiScheduler = new SynchronizationContextScheduler(uiContext);
+
             filterTextDescription = filterTextSubject.Throttle(TimeSpan.FromMilliseconds(500))
-                .ObserveOnDispatcher()
+                .ObserveOn(uiScheduler)
                 .Subscribe(HandleFilterThrottle);
         }
 

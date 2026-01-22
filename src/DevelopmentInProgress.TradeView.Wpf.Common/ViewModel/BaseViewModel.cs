@@ -1,4 +1,4 @@
-﻿using Prism.Logging;
+﻿using Microsoft.Extensions.Logging;
 using System;
 using System.ComponentModel;
 using System.Windows.Threading;
@@ -9,12 +9,12 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public BaseViewModel(ILoggerFacade logger)
+        public BaseViewModel(ILogger logger)
         {
             Logger = logger;
         }
 
-        public ILoggerFacade Logger { get; private set; }
+        public ILogger Logger { get; private set; }
 
         public virtual Dispatcher Dispatcher { get; set; }
 

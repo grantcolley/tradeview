@@ -8,12 +8,12 @@ using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Trading.Events;
-using Newtonsoft.Json;
-using Prism.Logging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
@@ -153,8 +153,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             Account = new Account(new Core.Model.AccountInfo { User = new Core.Model.User() });
 
             userAccount = await accountsService.GetAccountAsync(Title).ConfigureAwait(true);
-            var json = JsonConvert.SerializeObject(userAccount, Formatting.Indented);
-            Logger.Log(json, Category.Info, Priority.Medium);
+            var json = JsonSerializer.Serialize(userAccount, new JsonSerializerOptions { WriteIndented = true });
+            Logger.Log(LogLevel.Information, json);
 
             if (userAccount != null
                 && userAccount.Preferences != null)
@@ -362,26 +362,26 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
             }
             else
             {
-                Logger.Log(eventArgs.Message, Category.Exception, Priority.High);
+                Logger.Log(LogLevel.Error, eventArgs.Message);
             }
         }
 
         private void TradingViewModelException(string message, Exception ex)
         {
-            Logger.Log(message, Category.Exception, Priority.High);
+            Logger.Log(LogLevel.Error, message);
 
             var exceptions = new List<Message>();
             if (ex is AggregateException aex)
             {
                 foreach(Exception e in aex.InnerExceptions)
                 {
-                    Logger.Log(e.ToString(), Category.Exception, Priority.High);
+                    Logger.Log(LogLevel.Error, e.ToString());
                     exceptions.Add(new Message { MessageType = MessageType.Error, Text = e.Message, TextVerbose = e.StackTrace });
                 }
             }
             else
             {
-                Logger.Log(ex.ToString(), Category.Exception, Priority.High);
+                Logger.Log(LogLevel.Error, ex.ToString());
                 exceptions.Add(new Message { MessageType = MessageType.Error, Text = ex.Message, TextVerbose = ex.StackTrace });
             }
 

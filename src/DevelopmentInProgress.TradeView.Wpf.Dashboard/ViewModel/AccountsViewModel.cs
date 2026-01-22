@@ -5,7 +5,7 @@ using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
-using Prism.Logging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -18,7 +18,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
         private readonly IAccountsService accountsService;
         private readonly IWpfExchangeService exchangeService;
         private readonly ISymbolsCacheFactory symbolsCacheFactory;
-        private readonly ILoggerFacade logger;
+        private readonly ILogger logger;
         private bool disposed;
 
         public AccountsViewModel(
@@ -26,7 +26,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
             IAccountsService accountsService, 
             IWpfExchangeService exchangeService, 
             ISymbolsCacheFactory symbolsCacheFactory, 
-            ILoggerFacade logger)
+            ILogger logger)
             : base(viewModelContext)
         {
             this.accountsService = accountsService;

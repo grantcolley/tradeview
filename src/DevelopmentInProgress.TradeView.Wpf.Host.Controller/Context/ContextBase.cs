@@ -5,7 +5,7 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
-using Prism.Logging;
+using Microsoft.Extensions.Logging;
 using Unity;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context
@@ -19,23 +19,23 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context
     public abstract class ContextBase : IContext
     {
         private readonly IUnityContainer unityContainer;
-        private readonly ILoggerFacade logger;
+        private readonly ILogger logger;
 
         /// <summary>
         /// Initializes a new instance of the Context class.
         /// </summary>
         /// <param name="unityContainer">An instance of <see cref="IUnityContainer"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILoggerFacade"/>.</param>
-        protected ContextBase(IUnityContainer unityContainer, ILoggerFacade logger)
+        /// <param name="logger">An instance of <see cref="ILogger"/>.</param>
+        protected ContextBase(IUnityContainer unityContainer, ILogger logger)
         {
             this.unityContainer = unityContainer;
             this.logger = logger;
         }
 
         /// <summary>
-        /// An instance of <see cref="ILoggerFacade"/>.
+        /// An instance of <see cref="ILogger"/>.
         /// </summary>
-        public ILoggerFacade Logger { get { return logger; } }
+        public ILogger Logger { get { return logger; } }
 
         /// <summary>
         /// An instance of <see cref="IUnityContainer"/>.

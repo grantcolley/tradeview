@@ -1,12 +1,12 @@
 ﻿using DevelopmentInProgress.TradeView.Core.Enums;
 using DevelopmentInProgress.TradeView.Core.Model;
 using DevelopmentInProgress.TradeView.Core.TradeStrategy;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.TradeView.Data.File
@@ -26,7 +26,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
             {
                 using var reader = System.IO.File.OpenText(userStrategiesFile);
                 var json = await reader.ReadToEndAsync().ConfigureAwait(true);
-                var strategies = JsonConvert.DeserializeObject<List<StrategyConfig>>(json);
+                var strategies = JsonSerializer.Deserialize<List<StrategyConfig>>(json);
                 return strategies;
             }
 
@@ -44,7 +44,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
             {
                 using var reader = System.IO.File.OpenText(userStrategiesFile);
                 var json = await reader.ReadToEndAsync().ConfigureAwait(false);
-                var strategies = JsonConvert.DeserializeObject<List<StrategyConfig>>(json);
+                var strategies = JsonSerializer.Deserialize<List<StrategyConfig>>(json);
                 strategy = strategies.FirstOrDefault(s => s.Name.Equals(strategyName, StringComparison.Ordinal));
                 return strategy;
             }
@@ -65,7 +65,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
             {
                 using var reader = System.IO.File.OpenText(userStrategiesFile);
                 var rjson = await reader.ReadToEndAsync().ConfigureAwait(false);
-                strategies = JsonConvert.DeserializeObject<List<StrategyConfig>>(rjson);
+                strategies = JsonSerializer.Deserialize<List<StrategyConfig>>(rjson);
             }
             else
             {
@@ -80,7 +80,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
             strategies.Add(strategyConfig);
 
-            var wjson = JsonConvert.SerializeObject(strategies, Formatting.Indented);
+            var wjson = JsonSerializer.Serialize(strategies, new JsonSerializerOptions { WriteIndented = true });
 
             UnicodeEncoding encoding = new UnicodeEncoding();
             char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
@@ -97,14 +97,14 @@ namespace DevelopmentInProgress.TradeView.Data.File
                 using (var reader = System.IO.File.OpenText(userStrategiesFile))
                 {
                     var rjson = await reader.ReadToEndAsync().ConfigureAwait(false);
-                    strategies = JsonConvert.DeserializeObject<List<StrategyConfig>>(rjson);
+                    strategies = JsonSerializer.Deserialize<List<StrategyConfig>>(rjson);
                 }
 
                 var remove = strategies.FirstOrDefault(s => s.Name.Equals(strategyConfig.Name, StringComparison.Ordinal));
                 if (remove != null)
                 {
                     strategies.Remove(remove);
-                    var wjson = JsonConvert.SerializeObject(strategies);
+                    var wjson = JsonSerializer.Serialize(strategies);
 
                     UnicodeEncoding encoding = new UnicodeEncoding();
                     char[] chars = encoding.GetChars(encoding.GetBytes(wjson));

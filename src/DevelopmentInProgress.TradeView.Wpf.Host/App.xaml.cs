@@ -1,5 +1,4 @@
-﻿using CommonServiceLocator;
-using DevelopmentInProgress.TradeView.Core.Interfaces;
+﻿using DevelopmentInProgress.TradeView.Core.Interfaces;
 using DevelopmentInProgress.TradeView.Data;
 using DevelopmentInProgress.TradeView.Data.File;
 using DevelopmentInProgress.TradeView.Service;
@@ -10,24 +9,20 @@ using DevelopmentInProgress.TradeView.Wpf.Common.Manager;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Configuration.Utility;
-using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.RegionAdapters;
-using DevelopmentInProgress.TradeView.Wpf.Host.Controller.View;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
-using DevelopmentInProgress.TradeView.Wpf.Host.Logger;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.Utility;
 using DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel;
+using Microsoft.Extensions.Logging;
 using Prism.Ioc;
-using Prism.Logging;
 using Prism.Modularity;
-using Prism.Regions;
+using Prism.Navigation.Regions;
 using Prism.Unity;
 using Serilog;
+using Serilog.Extensions.Logging;
 using System;
-using System.ComponentModel;
-using System.IO;
 using System.Windows;
 using Xceed.Wpf.AvalonDock;
 
@@ -48,9 +43,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
 
         protected override IModuleCatalog CreateModuleCatalog()
         {
-            using Stream xamlStream = File.OpenRead("Configuration/ModuleCatalog.xaml");
-            var moduleCatalog = ModuleCatalog.CreateFromXaml(xamlStream);
-            return moduleCatalog;
+            var catalog = new ModuleCatalog();
+
+            catalog.AddModule<DevelopmentInProgress.TradeView.Wpf.Configuration.ConfigurationModule>();
+            catalog.AddModule<DevelopmentInProgress.TradeView.Wpf.Dashboard.DashboardModule>();
+            catalog.AddModule<DevelopmentInProgress.TradeView.Wpf.Strategies.StrategiesModule>();
+            catalog.AddModule<DevelopmentInProgress.TradeView.Wpf.Trading.TradingModule>();
+
+            return catalog;
         }
 
         protected override async void RegisterTypes(IContainerRegistry containerRegistry)
@@ -59,15 +59,18 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
                 .ReadFrom.AppSettings()
                 .CreateLogger();
 
-            containerRegistry.RegisterInstance<ILogger>(logger);
-            containerRegistry.RegisterSingleton<ILoggerFacade, LoggerFacade>();
+            var loggerFactory = new SerilogLoggerFactory(Log.Logger, dispose: false);
+
+            containerRegistry.RegisterInstance<ILoggerFactory>(loggerFactory);
+            containerRegistry.Register(typeof(ILogger<>), typeof(Logger<>));
 
             containerRegistry.RegisterSingleton<NavigationManager>();
-            containerRegistry.RegisterSingleton<ModulesNavigationView>();
-            containerRegistry.RegisterSingleton<ModulesNavigationViewModel>();
+            containerRegistry.Register<ModulesNavigationViewModel>();
 
             containerRegistry.RegisterSingleton<ModuleNavigator>();
             containerRegistry.Register<IViewContext, ViewContext>();
+
+            containerRegistry.Register<IChartHelper, ChartHelper>();
 
             containerRegistry.RegisterSingleton<IExchangeApiFactory, ExchangeApiFactory>();
             containerRegistry.Register<IExchangeService, ExchangeService>();
@@ -121,7 +124,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
                 throw new ArgumentNullException(nameof(regionAdapterMappings));
             }
 
-            regionAdapterMappings.RegisterMapping(typeof(DockingManager), new DockingManagerRegionAdapter(ServiceLocator.Current.GetInstance<IRegionBehaviorFactory>()));
+            var regionBehaviorFactory = Container.Resolve<IRegionBehaviorFactory>();
+
+            regionAdapterMappings.RegisterMapping(typeof(DockingManager), new DockingManagerRegionAdapter(regionBehaviorFactory));
         }
 
         protected override Window CreateShell()
@@ -142,13 +147,20 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
             Current.MainWindow = shell;
             Current.MainWindow.WindowState = WindowState.Maximized;
             Current.MainWindow.Show();
+
+            var logger = Container.Resolve<ILogger<App>>();
+            logger.LogInformation("*********************************************");
+            logger.LogInformation("*********************************************");
+            logger.LogInformation("Development In Progress - Wpf Market View Host");
+            logger.LogInformation("Copyright © Grant Colley 2026");
+            logger.LogInformation("Start Trade View");
         }
 
         private void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs args)
         {
             Exception e = (Exception)args.ExceptionObject;
-            var log = Container.Resolve<ILoggerFacade>();
-            log.Log(e.ToString(), Category.Exception, Priority.Low);
+            var logger = Container.Resolve<ILogger<App>>();
+            logger.LogError(e.ToString());
         }
     }
 }

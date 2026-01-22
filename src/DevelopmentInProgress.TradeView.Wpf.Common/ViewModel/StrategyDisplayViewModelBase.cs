@@ -1,7 +1,7 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Common.Events;
 using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
-using Prism.Logging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,7 +15,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
 
         public StrategyDisplayViewModelBase(Strategy strategy,
             IHelperFactoryContainer iHelperFactoryContainer, 
-            Dispatcher UiDispatcher, ILoggerFacade logger)
+            Dispatcher UiDispatcher, ILogger logger)
             : base(logger)
         {
             HelperFactoryContainer = iHelperFactoryContainer;

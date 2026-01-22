@@ -7,7 +7,7 @@ using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Trading.Events;
 using LiveCharts;
-using Prism.Logging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -35,7 +35,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
         public SymbolViewModel(Exchange exchange, IWpfExchangeService exchangeService, IChartHelper chartHelper,
             IOrderBookHelper orderBookHelper, ITradeHelper tradeHelper, 
-            Preferences preferences, ILoggerFacade logger)
+            Preferences preferences, ILogger logger)
             : base(exchangeService, logger)
         {
             if(chartHelper == null)
