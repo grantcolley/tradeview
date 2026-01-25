@@ -200,5 +200,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
                 }
             }
         }
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            var propertyChanged = PropertyChanged;
+            propertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
