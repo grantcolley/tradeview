@@ -15,6 +15,7 @@ using DevelopmentInProgress.TradeView.Wpf.Host.Controller.RegionAdapters;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.Utility;
 using DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -23,7 +24,9 @@ using Prism.Unity;
 using Serilog;
 using Serilog.Extensions.Logging;
 using System;
+using System.Threading.Tasks;
 using System.Windows;
+using Unity;
 using Xceed.Wpf.AvalonDock;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host
@@ -33,6 +36,18 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
     /// </summary>
     public partial class App : PrismApplication
     {
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            Log.Information("All Prism modules initialized");
+
+            var serverMonitorCache = Container.Resolve<IServerMonitorCache>();
+            serverMonitorCache.StartObservingServers();
+
+            _ = SubscribeAssetsAsync();
+        }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -53,16 +68,23 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
             return catalog;
         }
 
-        protected override async void RegisterTypes(IContainerRegistry containerRegistry)
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            Serilog.Core.Logger logger = new LoggerConfiguration()
-                .ReadFrom.AppSettings()
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
                 .CreateLogger();
 
-            var loggerFactory = new SerilogLoggerFactory(Log.Logger, dispose: false);
+            var serilogLoggerFactory = new SerilogLoggerFactory(Log.Logger, dispose: false);
 
-            containerRegistry.RegisterInstance<ILoggerFactory>(loggerFactory);
-            containerRegistry.Register(typeof(ILogger<>), typeof(Logger<>));
+            containerRegistry.RegisterInstance<Serilog.ILogger>(Log.Logger);
+            containerRegistry.RegisterInstance<ILoggerFactory>(serilogLoggerFactory);
+
+            containerRegistry.RegisterInstance<IConfiguration>(configuration);
 
             containerRegistry.RegisterSingleton<NavigationManager>();
             containerRegistry.Register<ModulesNavigationViewModel>();
@@ -109,12 +131,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
             containerRegistry.Register<Strategies.ViewModel.StrategyParametersViewModel>();
 
             containerRegistry.RegisterSingleton<IHttpClientManager, HttpClientManager>();
-
-            var serverMonitorCache = Container.Resolve<IServerMonitorCache>();
-            serverMonitorCache.StartObservingServers();
-
-            var symbolsCacheFactory = Container.Resolve<ISymbolsCacheFactory>();
-            await symbolsCacheFactory.SubscribeAccountsAssets().ConfigureAwait(false);
         }
 
         protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings regionAdapterMappings)
@@ -142,25 +158,39 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
             }
 
             var modulesNavigationViewModel = Container.Resolve<ModulesNavigationViewModel>();
-            ((ShellWindow)shell).ModulesNavigationViewModel = modulesNavigationViewModel;
+            ((ShellWindow)shell).DataContext = modulesNavigationViewModel;
 
             Current.MainWindow = shell;
             Current.MainWindow.WindowState = WindowState.Maximized;
             Current.MainWindow.Show();
 
-            var logger = Container.Resolve<ILogger<App>>();
-            logger.LogInformation("*********************************************");
-            logger.LogInformation("*********************************************");
-            logger.LogInformation("Development In Progress - Wpf Market View Host");
-            logger.LogInformation("Copyright © Grant Colley 2026");
-            logger.LogInformation("Start Trade View");
+            Log.Information("*********************************************");
+            Log.Information("*********************************************");
+            Log.Information("Development In Progress - Wpf Market View Host");
+            Log.Information("Copyright © Grant Colley 2026");
+            Log.Information("Start Trade View");
+
+            Log.Information("Shell VM modules count: {Count}", modulesNavigationViewModel.NavigationPanelItems?.Count);
+        }
+
+        private async Task SubscribeAssetsAsync()
+        {
+            try
+            {
+                var symbolsCacheFactory = Container.Resolve<ISymbolsCacheFactory>();
+                await symbolsCacheFactory.SubscribeAccountsAssets().ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "SubscribeAccountsAssets failed");
+            }
         }
 
         private void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs args)
         {
-            Exception e = (Exception)args.ExceptionObject;
-            var logger = Container.Resolve<ILogger<App>>();
-            logger.LogError(e.ToString());
+            Exception ex = (Exception)args.ExceptionObject;
+            Log.Error(ex, "Unhandled exception");
+            Log.CloseAndFlush();
         }
     }
 }

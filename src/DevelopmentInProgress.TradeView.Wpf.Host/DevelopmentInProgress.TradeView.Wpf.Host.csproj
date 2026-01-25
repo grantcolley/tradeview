@@ -14,13 +14,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="10.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.2" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.2" />	  
     <PackageReference Include="Prism.Core" Version="9.0.537" />
 	<PackageReference Include="Prism.Unity" Version="9.0.537" />
 	<PackageReference Include="Prism.Wpf" Version="9.0.537" />
     <PackageReference Include="Serilog" Version="4.3.0" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
-    <PackageReference Include="Serilog.Settings.AppSettings" Version="3.0.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="10.0.0" />
 	<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
     <PackageReference Include="TradeView.ThirdParty.Docking" Version="1.0.0" />
     <PackageReference Include="TradeView.ThirdParty.Docking.Themes.Aero" Version="1.0.0" />
@@ -50,6 +52,12 @@
     <Resource Include="Images\Refresh.png" />
     <Resource Include="Images\Save.png" />
     <Resource Include="Images\SaveAll.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

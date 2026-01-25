@@ -3,7 +3,6 @@ using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Modular;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Trading.View;
 using DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel;
-using Microsoft.Extensions.Logging;
 using Prism.Ioc;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Trading
@@ -13,8 +12,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading
         public const string ModuleName = "Trading";
         private readonly static string AccountUser = $"Accounts";
 
-        public TradingModule(ModuleNavigator moduleNavigator, ILogger<TradingModule> logger)
-            : base(moduleNavigator, logger)
+        public TradingModule(ModuleNavigator moduleNavigator) : base(moduleNavigator)
         {
         }
 
@@ -49,8 +47,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading
 
             moduleSettings.ModuleGroups.Add(moduleGroup);
             ModuleNavigator.AddModuleNavigation(moduleSettings);
-
-            Logger.Log(LogLevel.Information, $"Initialized {this.GetType().FullName}");
         }
 
         private static ModuleGroupItem CreateAccountModuleGroupItem(string name, string title)

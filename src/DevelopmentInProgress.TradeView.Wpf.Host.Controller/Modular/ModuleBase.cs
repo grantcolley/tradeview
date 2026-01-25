@@ -6,7 +6,6 @@
 //-----------------------------------------------------------------------
 
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
-using Microsoft.Extensions.Logging;
 using Prism.Ioc;
 using Prism.Modularity;
 
@@ -21,11 +20,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Modular
         /// Initializes a new instance of the ModuleBase class.
         /// </summary>
         /// <param name="moduleNavigator">An instance of the module navigator.</param>
-        /// <param name="logger">An instance of the logger.</param>
-        protected ModuleBase(ModuleNavigator moduleNavigator, ILogger logger)
+        protected ModuleBase(ModuleNavigator moduleNavigator)
         {
             ModuleNavigator = moduleNavigator;
-            Logger = logger;
         }
 
         /// <summary>
@@ -44,10 +41,5 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Modular
         /// Gets an instance of the module manager.
         /// </summary>
         public ModuleNavigator ModuleNavigator { get; private set; }
-
-        /// <summary>
-        /// Gets an instance of the logger.
-        /// </summary>
-        public ILogger Logger { get; private set; }
     }
 }
