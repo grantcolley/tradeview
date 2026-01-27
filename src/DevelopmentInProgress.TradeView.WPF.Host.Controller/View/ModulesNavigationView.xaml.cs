@@ -19,7 +19,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
     /// </summary>
     public partial class ModulesNavigationView : UserControl
     {
-        private ModulesNavigationViewModel viewModel => (ModulesNavigationViewModel)DataContext;
+        private ModulesNavigationViewModel modulesNavigationViewModel => (ModulesNavigationViewModel)DataContext;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModulesNavigationView"/> class. 
@@ -78,9 +78,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
             string navigationKey = navigationListItem.Tag.ToString();
 
             if (!string.IsNullOrEmpty(navigationKey)
-                && viewModel.NavigationSettingsList.TryGetValue(navigationKey, out var navigationSettings))
+                && modulesNavigationViewModel.NavigationSettingsList.TryGetValue(navigationKey, out var navigationSettings))
             {
-                viewModel.Navigate(navigationSettings);
+                modulesNavigationViewModel.Navigate(navigationSettings);
             }
 
             e.Handled = true;

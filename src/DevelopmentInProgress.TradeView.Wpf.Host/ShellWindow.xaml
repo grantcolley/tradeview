@@ -58,7 +58,7 @@
             </Button>
             <ContentControl/>
         </DockPanel>
-        <ContentControl Grid.Row="2" Grid.Column="0" Content="{Binding}"/>
+        <ContentControl Grid.Row="2" Grid.Column="0" Content="{Binding Path=ModulesNavigationViewModel, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
         <GridSplitter Grid.Row="2" Grid.Column="1" Width="2" VerticalAlignment="Stretch" HorizontalAlignment="Center" Style="{StaticResource GridSplitterStyle}"/>
         <xcad:DockingManager x:Name="dockingManager" Grid.Row="2" Grid.Column="2" prism:RegionManager.RegionName="DocumentRegion" Background="{StaticResource TextBoxBackgroundBrush}" BorderBrush="{StaticResource TextBoxBackgroundBrush}">
             <xcad:DockingManager.Theme>

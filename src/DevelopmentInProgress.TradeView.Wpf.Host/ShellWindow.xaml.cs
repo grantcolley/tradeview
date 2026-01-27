@@ -69,6 +69,19 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public ModulesNavigationViewModel ModulesNavigationViewModel
+        {
+            get { return modulesNavigationViewModel; }
+            set
+            {
+                if (modulesNavigationViewModel != value)
+                {
+                    modulesNavigationViewModel = value;
+                    OnPropertyChanged(nameof(ModulesNavigationViewModel));
+                }
+            }
+        }
+
         /// <summary>
         /// Gets or sets a value that indicates whether the tool bar is vibile or not.
         /// </summary>

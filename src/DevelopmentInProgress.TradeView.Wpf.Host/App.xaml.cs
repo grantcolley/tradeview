@@ -9,16 +9,25 @@ using DevelopmentInProgress.TradeView.Wpf.Common.Manager;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Configuration.Utility;
+using DevelopmentInProgress.TradeView.Wpf.Configuration.View;
+using DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel;
+using DevelopmentInProgress.TradeView.Wpf.Dashboard.View;
+using DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.RegionAdapters;
+using DevelopmentInProgress.TradeView.Wpf.Host.Controller.View;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.Utility;
+using DevelopmentInProgress.TradeView.Wpf.Strategies.View;
+using DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel;
+using DevelopmentInProgress.TradeView.Wpf.Trading.View;
 using DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Prism.Ioc;
 using Prism.Modularity;
+using Prism.Mvvm;
 using Prism.Navigation.Regions;
 using Prism.Unity;
 using Serilog;
@@ -87,7 +96,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
             containerRegistry.RegisterInstance<IConfiguration>(configuration);
 
             containerRegistry.RegisterSingleton<NavigationManager>();
-            containerRegistry.Register<ModulesNavigationViewModel>();
+            containerRegistry.RegisterSingleton<ModulesNavigationViewModel>();
 
             containerRegistry.RegisterSingleton<ModuleNavigator>();
             containerRegistry.Register<IViewContext, ViewContext>();
@@ -119,8 +128,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
             containerRegistry.Register<AccountBalancesViewModel>();
             containerRegistry.Register<AccountViewModel>();
 
-            containerRegistry.Register<SymbolsViewModel>();
-            containerRegistry.Register<TradePanelViewModel>();
+            containerRegistry.Register<DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel.SymbolsViewModel>();
+            containerRegistry.Register<DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel.TradePanelViewModel>();
 
             containerRegistry.Register<IStrategyFileManager, StrategyFileManager>();
             containerRegistry.Register<ISymbolsLoader, SymbolsLoader>();
@@ -131,6 +140,20 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
             containerRegistry.Register<Strategies.ViewModel.StrategyParametersViewModel>();
 
             containerRegistry.RegisterSingleton<IHttpClientManager, HttpClientManager>();
+        }
+
+        protected override void ConfigureViewModelLocator()
+        {
+            base.ConfigureViewModelLocator();
+
+            ViewModelLocationProvider.Register<ModulesNavigationView, ModulesNavigationViewModel>();
+            ViewModelLocationProvider.Register<StrategyManagerView, StrategyManagerViewModel>();
+            ViewModelLocationProvider.Register<UserAccountsView, UserAccountsViewModel>();
+            ViewModelLocationProvider.Register<TradeServerManagerView, TradeServerManagerViewModel>();
+            ViewModelLocationProvider.Register<ServerMonitorView, ServerMonitorViewModel>();
+            ViewModelLocationProvider.Register<AccountsView, AccountsViewModel>();
+            ViewModelLocationProvider.Register<StrategyRunnerView, StrategyRunnerViewModel>();
+            ViewModelLocationProvider.Register<TradingView, TradingViewModel>();
         }
 
         protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings regionAdapterMappings)
@@ -158,7 +181,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
             }
 
             var modulesNavigationViewModel = Container.Resolve<ModulesNavigationViewModel>();
-            ((ShellWindow)shell).DataContext = modulesNavigationViewModel;
+            ((ShellWindow)shell).ModulesNavigationViewModel = modulesNavigationViewModel;
 
             Current.MainWindow = shell;
             Current.MainWindow.WindowState = WindowState.Maximized;
@@ -169,8 +192,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
             Log.Information("Development In Progress - Wpf Market View Host");
             Log.Information("Copyright © Grant Colley 2026");
             Log.Information("Start Trade View");
-
-            Log.Information("Shell VM modules count: {Count}", modulesNavigationViewModel.NavigationPanelItems?.Count);
         }
 
         private async Task SubscribeAssetsAsync()
