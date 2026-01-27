@@ -3,7 +3,7 @@
 namespace DevelopmentInProgress.TradeView.Wpf.Configuration.View
 {
     /// <summary>
-    /// Interaction logic for ServerView.xaml
+    /// Interaction logic for TradeServerView.xaml
     /// </summary>
     public partial class TradeServerView : UserControl
     {
