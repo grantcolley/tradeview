@@ -22,6 +22,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context
         ILogger Logger { get; }
 
         /// <summary>
+        /// An instance of <see cref="ILoggerFactory"/>.
+        /// </summary>
+        ILoggerFactory LoggerFactory { get; }
+
+        /// <summary>
         /// An instance of <see cref="IUnityContainer"/>.
         /// </summary>
         IUnityContainer UnityContainer { get; }

@@ -6,6 +6,7 @@
 //-----------------------------------------------------------------------
 
 using Microsoft.Extensions.Logging;
+using System;
 using Unity;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context
@@ -19,27 +20,34 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context
     public abstract class ContextBase : IContext
     {
         private readonly IUnityContainer unityContainer;
-        private readonly ILogger logger;
+        private readonly ILoggerFactory loggerFactory;
 
         /// <summary>
         /// Initializes a new instance of the Context class.
         /// </summary>
         /// <param name="unityContainer">An instance of <see cref="IUnityContainer"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger"/>.</param>
-        protected ContextBase(IUnityContainer unityContainer, ILogger logger)
+        /// <param name="logger">An instance of <see cref="ILoggerFactory"/>.</param>
+        protected ContextBase(IUnityContainer unityContainer, ILoggerFactory loggerFactory)
         {
             this.unityContainer = unityContainer;
-            this.logger = logger;
+            this.loggerFactory = loggerFactory;
         }
 
         /// <summary>
         /// An instance of <see cref="ILogger"/>.
         /// </summary>
-        public ILogger Logger { get { return logger; } }
+        public ILoggerFactory LoggerFactory { get { return loggerFactory; } }
 
         /// <summary>
         /// An instance of <see cref="IUnityContainer"/>.
         /// </summary>
         public IUnityContainer UnityContainer { get { return unityContainer; } }
+
+        /// <summary>
+        /// An instance of <see cref="ILogger"/> for the given context type."/>
+        /// </summary>
+        public ILogger Logger => CreateLogger(GetType());
+
+        protected ILogger CreateLogger(Type categoryType) => loggerFactory.CreateLogger(categoryType.FullName ?? categoryType.Name);
     }
 }

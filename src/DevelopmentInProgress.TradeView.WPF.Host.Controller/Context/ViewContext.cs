@@ -30,9 +30,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context
         /// <param name="modalManager">An instance of <see cref="ModalNavigator"/>.</param>
         /// <param name="navigationManager">An instance of <see cref="NavigationManager"/>.</param>
         /// <param name="regionManager">An instance of Prism <see cref="RegionManager"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILogger"/>.</param>
-        public ViewContext(IUnityContainer unityContainer, ModalNavigator modalManager, NavigationManager navigationManager, IRegionManager regionManager, ILogger logger)
-            : base(unityContainer, logger)
+        /// <param name="logger">An instance of <see cref="ILoggerFactory"/>.</param>
+        public ViewContext(IUnityContainer unityContainer, ModalNavigator modalManager, NavigationManager navigationManager, IRegionManager regionManager, ILoggerFactory loggerFactory)
+            : base(unityContainer, loggerFactory)
         {
             this.modalManager = modalManager;
             this.navigationManager = navigationManager;
