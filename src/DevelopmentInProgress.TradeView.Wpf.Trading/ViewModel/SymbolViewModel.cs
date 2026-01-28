@@ -35,8 +35,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
 
         public SymbolViewModel(Exchange exchange, IWpfExchangeService exchangeService, IChartHelper chartHelper,
             IOrderBookHelper orderBookHelper, ITradeHelper tradeHelper, 
-            Preferences preferences, ILogger logger)
-            : base(exchangeService, logger)
+            Preferences preferences, ILoggerFactory loggerFactory)
+            : base(exchangeService, loggerFactory)
         {
             if(chartHelper == null)
             {

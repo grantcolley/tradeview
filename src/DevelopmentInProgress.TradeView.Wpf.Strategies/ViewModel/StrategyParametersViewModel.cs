@@ -14,8 +14,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         private Strategy strategy;
         private bool canPushParameters;
 
-        public StrategyParametersViewModel(ILogger logger)
-            : base(logger)
+        public StrategyParametersViewModel(ILoggerFactory loggerFactory)
+            : base(loggerFactory)
         {
             canPushParameters = false;
             PushStrategyParametersCommand = new ViewModelCommand(PushStrategyParameters);

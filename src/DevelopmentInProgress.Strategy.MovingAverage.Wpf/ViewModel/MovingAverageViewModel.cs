@@ -39,8 +39,8 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
         private bool showCandlesticks;
 
         public MovingAverageViewModel(WpfStrategy strategy, IHelperFactoryContainer iHelperFactoryContainer,
-            Dispatcher UiDispatcher, IChartHelper chartHelper, ILogger logger)
-            : base(strategy, iHelperFactoryContainer, UiDispatcher, logger)
+            Dispatcher UiDispatcher, IChartHelper chartHelper, ILoggerFactory loggerFactory)
+            : base(strategy, iHelperFactoryContainer, UiDispatcher, loggerFactory)
         {
             TimeFormatter = chartHelper.TimeFormatter;
             PriceFormatter = chartHelper.PriceFormatter;

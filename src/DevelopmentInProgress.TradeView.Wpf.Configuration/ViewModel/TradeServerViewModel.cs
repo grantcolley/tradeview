@@ -9,8 +9,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
         private TradeServer tradeServer;
         bool disposed = false;
 
-        public TradeServerViewModel(TradeServer tradeServer, ILogger logger)
-            : base(logger)
+        public TradeServerViewModel(TradeServer tradeServer, ILoggerFactory loggerFactory)
+            : base(loggerFactory)
         {
             this.tradeServer = tradeServer;
         }

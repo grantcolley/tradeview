@@ -29,8 +29,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private bool disposed;
         private bool isLoading;
 
-        public TradePanelViewModel(IWpfExchangeService exchangeService, ILogger logger)
-            : base(exchangeService, logger)
+        public TradePanelViewModel(IWpfExchangeService exchangeService, ILoggerFactory loggerFactory)
+            : base(exchangeService, loggerFactory)
         {
             BuyCommand = new ViewModelCommand(Buy);
             SellCommand = new ViewModelCommand(Sell);

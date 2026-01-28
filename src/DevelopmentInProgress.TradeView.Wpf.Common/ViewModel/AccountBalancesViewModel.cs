@@ -23,8 +23,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
         private bool isLoggingIn;
         private bool disposed;
 
-        public AccountBalancesViewModel(IWpfExchangeService exchangeService, ISymbolsCacheFactory symbolsCacheFactory, ILogger logger)
-            : base(exchangeService, logger)
+        public AccountBalancesViewModel(IWpfExchangeService exchangeService, ISymbolsCacheFactory symbolsCacheFactory, ILoggerFactory loggerFactory)
+            : base(exchangeService, loggerFactory)
         {
             accountCancellationTokenSource = new CancellationTokenSource();
 

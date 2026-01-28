@@ -20,8 +20,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
         private bool isLoadingSymbols;
         private bool disposed;
 
-        public SymbolsViewModel(IWpfExchangeService exchangeService, UserAccount userAccount, ILogger logger)
-            : base(exchangeService, logger)
+        public SymbolsViewModel(IWpfExchangeService exchangeService, UserAccount userAccount, ILoggerFactory loggerFactory)
+            : base(exchangeService, loggerFactory)
         {
             this.userAccount = userAccount;
 

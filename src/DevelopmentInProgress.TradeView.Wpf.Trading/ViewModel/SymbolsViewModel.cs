@@ -21,8 +21,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Trading.ViewModel
         private bool isLoadingSymbols;
         private bool disposed;
 
-        public SymbolsViewModel(IWpfExchangeService exchangeService, ISymbolsCacheFactory symbolsCacheFactory, ILogger logger)
-            : base(exchangeService, logger)
+        public SymbolsViewModel(IWpfExchangeService exchangeService, ISymbolsCacheFactory symbolsCacheFactory, ILoggerFactory loggerFactory)
+            : base(exchangeService, loggerFactory)
         {
             this.symbolsCacheFactory = symbolsCacheFactory;
 

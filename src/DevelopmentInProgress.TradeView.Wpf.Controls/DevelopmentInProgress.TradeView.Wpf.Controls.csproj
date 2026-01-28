@@ -15,6 +15,7 @@
     <PackageReference Include="Infragistics.Themes.MetroDark.Wpf" Version="1.0.0">
           <NoWarn>NU1701</NoWarn>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.2" />
     <PackageReference Include="System.Reactive" Version="6.1.0" />
     <PackageReference Include="System.Reactive.Core" Version="6.1.0" />
     <PackageReference Include="System.Reactive.Interfaces" Version="6.1.0" />

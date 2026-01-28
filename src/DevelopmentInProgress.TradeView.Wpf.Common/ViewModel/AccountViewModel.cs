@@ -20,9 +20,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
 
         public AccountViewModel(
             AccountBalancesViewModel accountBalancesViewModel,
-            OrdersViewModel ordersViewModel, 
-            ILogger logger)
-            : base(logger)
+            OrdersViewModel ordersViewModel,
+            ILoggerFactory loggerFactory)
+            : base(loggerFactory)
         {
             this.accountBalancesViewModel = accountBalancesViewModel;
             this.ordersViewModel = ordersViewModel;

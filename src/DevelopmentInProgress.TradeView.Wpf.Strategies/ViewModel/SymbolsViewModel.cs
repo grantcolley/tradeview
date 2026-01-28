@@ -18,8 +18,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         private bool isLoadingSymbols;
         private bool disposed;
 
-        public SymbolsViewModel(ISymbolsCacheFactory symbolsCacheFactory, ILogger logger)
-            : base(logger)
+        public SymbolsViewModel(ISymbolsCacheFactory symbolsCacheFactory, ILoggerFactory loggerFactory)
+            : base(loggerFactory)
         {
             this.symbolsCacheFactory = symbolsCacheFactory;
 

@@ -15,8 +15,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
 
         public StrategyDisplayViewModelBase(Strategy strategy,
             IHelperFactoryContainer iHelperFactoryContainer, 
-            Dispatcher UiDispatcher, ILogger logger)
-            : base(logger)
+            Dispatcher UiDispatcher, ILoggerFactory loggerFactory)
+            : base(loggerFactory)
         {
             HelperFactoryContainer = iHelperFactoryContainer;
             Dispatcher = UiDispatcher;

@@ -26,8 +26,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
 
         private readonly object lockOrders = new object();
 
-        public OrdersViewModel(IWpfExchangeService exchangeService, ILogger logger)
-            : base(exchangeService, logger)
+        public OrdersViewModel(IWpfExchangeService exchangeService, ILoggerFactory loggerFactory)
+            : base(exchangeService, loggerFactory)
         {
             CancelOrderCommand = new ViewModelCommand(Cancel);
             CancelAllOrdersCommand = new ViewModelCommand(CancelAll);

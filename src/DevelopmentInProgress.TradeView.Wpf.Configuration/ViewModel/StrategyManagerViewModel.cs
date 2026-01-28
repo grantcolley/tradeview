@@ -77,7 +77,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
                         if (strategyViewModel == null)
                         {
-                            strategyViewModel = new StrategyViewModel(selectedStrategy, strategyService, strategyFileManager, Logger);
+                            strategyViewModel = new StrategyViewModel(selectedStrategy, strategyService, strategyFileManager, LoggerFactory);
                             ObserveStrategy(strategyViewModel);
                             SelectedStrategyViewModels.Add(strategyViewModel);
                             SelectedStrategyViewModel = strategyViewModel;

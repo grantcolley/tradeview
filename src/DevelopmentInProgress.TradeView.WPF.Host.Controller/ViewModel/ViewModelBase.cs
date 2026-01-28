@@ -5,6 +5,7 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
+using DevelopmentInProgress.TradeView.Wpf.Controls.Logging;
 using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
@@ -22,7 +23,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
     /// Base abstract class to be inherited by ViewModel's providing 
     /// implementation for common features across view models.
     /// </summary>
-    public abstract class ViewModelBase : INotifyPropertyChanged
+    public abstract class ViewModelBase : LoggingBase, INotifyPropertyChanged
     {
         private string title;
         private bool isBusy;
@@ -37,10 +38,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         /// Initializes a new instance of the ViewModelBase class.
         /// </summary>
         /// <param name="viewModelContext">The <see cref="ViewModelContext"/>.</param>
-        protected ViewModelBase(IViewModelContext viewModelContext)
+        protected ViewModelBase(IViewModelContext viewModelContext) : base(viewModelContext.LoggerFactory)
         {
             ViewModelContext = viewModelContext ?? throw new ArgumentNullException(nameof(viewModelContext));
-            Logger = ViewModelContext.Logger;
             Save = new ViewModelCommand(OnSave);
             Refresh = new ViewModelCommand(OnRefresh);
             ClearMessageBox = new ViewModelCommand(OnClearMessages);
@@ -72,8 +72,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel
         /// Gets the view model context.
         /// </summary>
         public IViewModelContext ViewModelContext { get; private set; }
-
-        protected ILogger Logger { get; }
 
         #region CanNavigateAway - Not yet implemented
 

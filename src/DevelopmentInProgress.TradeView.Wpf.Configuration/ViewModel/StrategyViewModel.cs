@@ -21,8 +21,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
         private Strategy strategy;
         bool disposed = false;
 
-        public StrategyViewModel(Strategy strategy, IStrategyService strategyService, IStrategyFileManager strategyFileManager, ILogger logger)
-            : base(logger)
+        public StrategyViewModel(Strategy strategy,
+            IStrategyService strategyService, 
+            IStrategyFileManager strategyFileManager, 
+            ILoggerFactory loggerFactory)
+            : base(loggerFactory)
         {
             this.strategy = strategy;
             this.strategyService = strategyService;

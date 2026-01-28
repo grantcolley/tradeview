@@ -17,8 +17,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
         private UserAccount userAccount;
         private bool disposed = false;
 
-        public UserAccountViewModel(UserAccount userAccount, ILogger logger)
-            : base(logger)
+        public UserAccountViewModel(UserAccount userAccount, ILoggerFactory loggerFactory)
+            : base(loggerFactory)
         {
             UserAccount = userAccount;
 
