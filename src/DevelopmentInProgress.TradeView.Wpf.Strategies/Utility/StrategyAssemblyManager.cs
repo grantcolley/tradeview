@@ -1,4 +1,5 @@
-﻿using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
+﻿using DevelopmentInProgress.TradeView.Wpf.Common.Chart;
+using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,12 +13,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Utility
     public class StrategyAssemblyManager : IStrategyAssemblyManager
     {
         private readonly IHelperFactoryContainer iHelperFactoryContainer;
+        private readonly IChartHelper chartHelper;
         private AssemblyLoader assemblyLoader;
         private bool disposed;
 
-        public StrategyAssemblyManager(IHelperFactoryContainer iHelperFactoryContainer)
+        public StrategyAssemblyManager(IHelperFactoryContainer iHelperFactoryContainer, IChartHelper chartHelper)
         {
             this.iHelperFactoryContainer = iHelperFactoryContainer;
+            this.chartHelper = chartHelper;
 
             Files = new List<string>();
         }
@@ -28,7 +31,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Utility
         public object StrategyDisplayView { get; private set; }
         public object StrategyDisplayViewModel { get; private set; }
 
-        public void Activate(Strategy strategy, Dispatcher UiDispatcher, ILogger Logger)
+        public void Activate(Strategy strategy, Dispatcher UiDispatcher, ILoggerFactory LoggerFactory)
         {
             if(strategy == null)
             {
@@ -44,14 +47,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Utility
             assemblyLoader = new AssemblyLoader(StrategyDirectory, Files);
             var assembly = assemblyLoader.LoadFromMemoryStream(Path.Combine(StrategyDirectory, strategy.DisplayAssembly.DisplayName));
             var viewModel = assembly.GetType(strategy.DisplayViewModelType);
-            StrategyDisplayViewModel = Activator.CreateInstance(viewModel, new object[] { strategy, iHelperFactoryContainer, UiDispatcher, Logger });
-
-            //var asm = Assembly.LoadFile(Path.Combine(StrategyDirectory, strategy.DisplayAssembly.DisplayName));
-
-            //var viewModel = asm.GetType(strategy.DisplayViewModelType);
-
-            //StrategyDisplayViewModel = Activator.CreateInstance(viewModel, 
-            //    new object[] { strategy, iHelperFactoryContainer, UiDispatcher, Logger });
+            StrategyDisplayViewModel = Activator.CreateInstance(viewModel, new object[] { strategy, iHelperFactoryContainer, UiDispatcher, chartHelper, LoggerFactory });
 
             var view = assembly.GetType(strategy.DisplayViewType);
             StrategyDisplayView = Activator.CreateInstance(view, new object[] { StrategyDisplayViewModel });

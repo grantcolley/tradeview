@@ -255,7 +255,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
             {
                 Strategy = await strategyService.GetStrategy(Title).ConfigureAwait(true);
 
-                strategyAssemblyManager.Activate(Strategy, ViewModelContext.UiDispatcher, Logger);
+                strategyAssemblyManager.Activate(Strategy, ViewModelContext.UiDispatcher, LoggerFactory);
                 StrategyDisplayViewModel = (StrategyDisplayViewModelBase)strategyAssemblyManager.StrategyDisplayViewModel;
 
                 ObserveStrategy();

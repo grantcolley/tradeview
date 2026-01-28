@@ -13,6 +13,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Utility
         List<string> Files { get; }
         object StrategyDisplayView { get; }
         object StrategyDisplayViewModel { get; }
-        void Activate(Strategy strategy, Dispatcher UiDispatcher, ILogger Logger);
+        void Activate(Strategy strategy, Dispatcher UiDispatcher, ILoggerFactory LoggerFactory);
     }
 }
