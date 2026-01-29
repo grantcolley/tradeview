@@ -26,6 +26,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Logging
         /// </summary>
         public ILogger Logger => CreateLogger(GetType());
 
-        protected ILogger CreateLogger(Type categoryType) => LoggerFactory.CreateLogger(categoryType.FullName ?? categoryType.Name);
+        protected ILogger CreateLogger(Type type) => LoggerFactory.CreateLogger(type.FullName ?? type.Name);
     }
 }
