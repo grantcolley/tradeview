@@ -7,7 +7,7 @@
                        xmlns:model="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Common.Model;assembly=DevelopmentInProgress.TradeView.Wpf.Common"
                        xmlns:view="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controller.View;assembly=DevelopmentInProgress.TradeView.Wpf.Host.Controller"
                        xmlns:converters="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.Converters;assembly=DevelopmentInProgress.TradeView.Wpf.Controls"
-                       xmlns:progress="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controller.Controls.Progress;assembly=DevelopmentInProgress.TradeView.Wpf.Host.Controller"
+                       xmlns:progress="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.Progress;assembly=DevelopmentInProgress.TradeView.Wpf.Controls"
                        xmlns:messaging="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;assembly=DevelopmentInProgress.TradeView.Wpf.Controls"
                        xmlns:localViewModel="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel"
                        xmlns:localView="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Strategies.View"

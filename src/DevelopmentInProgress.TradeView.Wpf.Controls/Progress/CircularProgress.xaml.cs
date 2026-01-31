@@ -28,7 +28,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Progress
 
         #region Dependency Properties
         private readonly static DependencyProperty ColourProperty = 
-            DependencyProperty.Register("Colour", typeof(SolidColorBrush), typeof(CircularProgress));
+            DependencyProperty.Register("Colour", typeof(SolidColorBrush), typeof(CircularProgress), new PropertyMetadata(Brushes.White));
         #endregion
 
         #region Constructors
