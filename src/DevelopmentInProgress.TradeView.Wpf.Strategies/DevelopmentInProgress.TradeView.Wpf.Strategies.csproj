@@ -12,6 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\strategyManager.png" />
+  </ItemGroup>
+
+  <ItemGroup>
 	  <PackageReference Include="LiveCharts.Wpf.NetCore3" Version="0.9.8" />
 	  <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="10.0.2" />
 	  <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.2" />

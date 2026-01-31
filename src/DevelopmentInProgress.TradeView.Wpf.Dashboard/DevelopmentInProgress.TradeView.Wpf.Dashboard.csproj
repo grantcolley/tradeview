@@ -13,6 +13,8 @@
 
   <ItemGroup>
     <None Remove="Images\accounts.png" />
+    <None Remove="Images\Server.png" />
+    <None Remove="Images\ServerMonitor.png" />
   </ItemGroup>
 
   <ItemGroup>

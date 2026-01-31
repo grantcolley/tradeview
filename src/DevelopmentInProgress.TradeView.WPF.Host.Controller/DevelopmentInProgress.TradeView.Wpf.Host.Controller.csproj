@@ -27,7 +27,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Resource Include="Images\Origin.png" />
+    <Resource Include="Images\TradeView.png" />
   </ItemGroup>
 
 </Project>

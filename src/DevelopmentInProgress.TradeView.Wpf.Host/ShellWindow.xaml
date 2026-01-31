@@ -8,7 +8,7 @@
         xmlns:viewModel="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;assembly=DevelopmentInProgress.TradeView.Wpf.Host.Controller"
         xmlns:view=     "clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controller.View;assembly=DevelopmentInProgress.TradeView.Wpf.Host.Controller"
         Title="Origin" Height="600" Width="1000" 
-        Icon="Images/Origin.png"
+        Icon="Images/TradeView.png"
         ResizeMode="CanResizeWithGrip"
         Background="{StaticResource ButtonBackgroundBrush}">
     <Window.Resources>

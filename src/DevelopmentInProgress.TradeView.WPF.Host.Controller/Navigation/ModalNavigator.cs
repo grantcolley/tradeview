@@ -62,7 +62,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation
             view.DataContext = viewModel;
             var window = new ModalViewHost(view)
             {
-                Icon = new BitmapImage(new Uri(@"pack://application:,,/Images/Origin.png", UriKind.RelativeOrAbsolute)),
+                Icon = new BitmapImage(new Uri(@"pack://application:,,/Images/TradeView.png", UriKind.RelativeOrAbsolute)),
                 Title = modalSettings.Title ?? string.Empty,
                 Height = modalSettings.Height,
                 Width = modalSettings.Width

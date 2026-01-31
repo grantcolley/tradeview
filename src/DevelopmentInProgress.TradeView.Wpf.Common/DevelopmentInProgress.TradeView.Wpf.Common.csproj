@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\close.png" />
+    <Resource Include="Images\Close.png" />
   </ItemGroup>
 
 </Project>

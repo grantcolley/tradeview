@@ -30,7 +30,7 @@
     <Resource Include="Images\clipboard.png" />
     <Resource Include="Images\Close.png" />
     <Resource Include="Images\Filter.png" />
-    <Resource Include="Images\Origin.png" />
+    <Resource Include="Images\TradeView.png" />
     <Resource Include="Images\RemoveItem.png" />
   </ItemGroup>
 
