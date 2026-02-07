@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.TradeView.Api.Binance;
+﻿using DevelopmentInProgress.TradeView.Api.BinanceNet;
 using DevelopmentInProgress.TradeView.Api.Kucoin;
 using DevelopmentInProgress.TradeView.Core.Enums;
 using DevelopmentInProgress.TradeView.Core.Interfaces;

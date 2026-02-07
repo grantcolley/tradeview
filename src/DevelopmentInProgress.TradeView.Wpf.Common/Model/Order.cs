@@ -17,8 +17,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Model
         public string TimeInForce { get; set; }
         public string Type { get; set; }
         public string Side { get; set; }
-        public decimal StopPrice { get; set; }
-        public decimal IcebergQuantity { get; set; }
+        public decimal? StopPrice { get; set; }
+        public decimal? IcebergQuantity { get; set; }
         public DateTime Time { get; set; }
         public bool IsWorking { get; set; }
 

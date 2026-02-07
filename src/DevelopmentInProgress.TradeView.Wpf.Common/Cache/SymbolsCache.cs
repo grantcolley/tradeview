@@ -87,10 +87,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                             newSubSymbols.Add(btcUsdt);
                         }
 
-                        await wpfExchangeService.SubscribeStatistics(exchange, newSubSymbols, SubscribeStatisticsException, subscribeSymbolsCxlTokenSrc.Token).ConfigureAwait(false);
-
                         // Add new subscriptions to the cache
                         subscribedSymbols.AddRange(newSubSymbols);
+
+                        await wpfExchangeService.SubscribeStatistics(exchange, newSubSymbols, SubscribeStatisticsException, subscribeSymbolsCxlTokenSrc.Token).ConfigureAwait(false);
                     }
                 }
 

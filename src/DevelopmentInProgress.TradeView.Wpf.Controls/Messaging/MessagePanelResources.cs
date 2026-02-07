@@ -36,7 +36,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Controls.Messaging
             var messageBoxSettings = new MessageBoxSettings
             {
                 Text = string.IsNullOrWhiteSpace(message.TextVerbose) ? message.Text : message.TextVerbose,
-                Title = message.Title,
+                Title = string.IsNullOrWhiteSpace(message.Title) ? message.Text : message.Title,
                 MessageType = message.MessageType,
                 MessageBoxButtons = MessageBoxButtons.Ok,
                 CopyToClipboardEnabled = true,

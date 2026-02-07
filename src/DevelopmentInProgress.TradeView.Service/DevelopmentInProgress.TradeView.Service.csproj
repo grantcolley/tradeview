@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Api.Binance\DevelopmentInProgress.TradeView.Api.Binance.csproj" />
+    <ProjectReference Include="..\DevelopmentInProgress.TradeView.Api.BinanceNet\DevelopmentInProgress.TradeView.Api.BinanceNet.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Api.Kucoin\DevelopmentInProgress.TradeView.Api.Kucoin.csproj" />
     <ProjectReference Include="..\DevelopmentInProgress.TradeView.Core\DevelopmentInProgress.TradeView.Core.csproj" />
   </ItemGroup>
