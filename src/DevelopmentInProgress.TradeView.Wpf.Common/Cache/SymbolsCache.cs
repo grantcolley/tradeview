@@ -1,6 +1,5 @@
 ﻿using DevelopmentInProgress.TradeView.Core.Enums;
 using DevelopmentInProgress.TradeView.Core.Extensions;
-using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using System;
@@ -45,7 +44,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 
             foreach(var userAccount in userAccounts)
             {
-                SubscribeAssets(userAccount).FireAndForget(true);
+                SubscribeAssets(userAccount).FireAndForget();
             }
         }
 

@@ -1,4 +1,4 @@
-﻿using DevelopmentInProgress.TradeServer.StrategyExecution.WebHost.Extensions;
+﻿using DevelopmentInProgress.TradeView.Core.Extensions;
 using DevelopmentInProgress.TradeView.Core.TradeStrategy;
 using System;
 using System.Collections.Generic;

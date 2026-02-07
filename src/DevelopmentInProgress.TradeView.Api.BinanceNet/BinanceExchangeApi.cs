@@ -1,8 +1,6 @@
 ﻿using Binance.Net.Clients;
 using Binance.Net.Interfaces;
-using Binance.Net.Interfaces.Clients;
 using Binance.Net.Objects.Models.Spot;
-using Binance.Net.Objects.Options;
 using Binance.Net.SymbolOrderBooks;
 using CryptoExchange.Net.Authentication;
 using CryptoExchange.Net.Objects;
