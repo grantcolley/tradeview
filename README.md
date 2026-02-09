@@ -1,10 +1,10 @@
 # TradeView
 
-[![Build Status](https://ci.appveyor.com/api/projects/status/lsf9kuf5p93wvr0p/branch/master?svg=true)](https://ci.appveyor.com/project/grantcolley/tradeview/branch/master)
-
 > [!WARNING]
 >
 > Upgraded to .NET 10 - untested with possible breaking changes.
+
+[![Build Status](https://ci.appveyor.com/api/projects/status/lsf9kuf5p93wvr0p/branch/master?svg=true)](https://ci.appveyor.com/project/grantcolley/tradeview/branch/master)
 
 ##### Technologies
 * ###### .NET 10, WPF, ASP.NET Core WebHost, WebSockets, Prism, Unity
