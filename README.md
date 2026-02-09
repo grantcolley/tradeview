@@ -10,7 +10,7 @@
 * ###### .NET 10, WPF, ASP.NET Core WebHost, WebSockets, Prism, Unity
 #####  
 
-A platform for trading crypto currencies and running crypto currency strategies including [TradeView](#tradeview-wpf-ui), which is a WPF UI built on the [Origin](https://github.com/grantcolley/origin) framework, and [TradeServer](#tradeserver-aspnetcore-webhost), a ASP.NET Core web host.
+A platform for trading crypto currencies and running crypto currency strategies. Built with [TradeView](#tradeview-wpf-ui), which is a WPF UI using the [Origin](https://github.com/grantcolley/origin) framework, and [TradeServer](#tradeserver-aspnetcore-webhost), a ASP.NET Core web host.
 
 **TradeView** and **TradeServer** enables you to: 
 * Connect to your exchage accounts, trade currencies, manage open orders and your asset balances
