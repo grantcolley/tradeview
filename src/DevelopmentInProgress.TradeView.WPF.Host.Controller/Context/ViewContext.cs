@@ -6,8 +6,8 @@
 //-----------------------------------------------------------------------
 
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
-using Prism.Logging;
-using Prism.Regions;
+using Microsoft.Extensions.Logging;
+using Prism.Navigation.Regions;
 using Unity;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context
@@ -30,9 +30,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context
         /// <param name="modalManager">An instance of <see cref="ModalNavigator"/>.</param>
         /// <param name="navigationManager">An instance of <see cref="NavigationManager"/>.</param>
         /// <param name="regionManager">An instance of Prism <see cref="RegionManager"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILoggerFacade"/>.</param>
-        public ViewContext(IUnityContainer unityContainer, ModalNavigator modalManager, NavigationManager navigationManager, IRegionManager regionManager, ILoggerFacade logger)
-            : base(unityContainer, logger)
+        /// <param name="logger">An instance of <see cref="ILoggerFactory"/>.</param>
+        public ViewContext(IUnityContainer unityContainer, ModalNavigator modalManager, NavigationManager navigationManager, IRegionManager regionManager, ILoggerFactory loggerFactory)
+            : base(unityContainer, loggerFactory)
         {
             this.modalManager = modalManager;
             this.navigationManager = navigationManager;

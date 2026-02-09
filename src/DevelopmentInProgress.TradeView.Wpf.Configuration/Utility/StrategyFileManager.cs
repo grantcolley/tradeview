@@ -2,10 +2,10 @@
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Configuration.View;
 using Microsoft.Win32;
-using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Configuration.Utility
 {
@@ -50,7 +50,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.Utility
                     var selectedType = parameterDialogView.SelectedType;
 
                     var strategyParameters = Activator.CreateInstance(selectedType);
-                    return JsonConvert.SerializeObject(strategyParameters, Formatting.Indented);
+                    return JsonSerializer.Serialize(strategyParameters, new JsonSerializerOptions { WriteIndented = true });
                 }
             }
 

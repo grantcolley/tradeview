@@ -1,6 +1,5 @@
 ﻿using DevelopmentInProgress.TradeView.Core.Enums;
 using DevelopmentInProgress.TradeView.Core.Extensions;
-using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using System;
@@ -45,7 +44,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
 
             foreach(var userAccount in userAccounts)
             {
-                SubscribeAssets(userAccount).FireAndForget(true);
+                SubscribeAssets(userAccount).FireAndForget();
             }
         }
 
@@ -87,10 +86,10 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.Cache
                             newSubSymbols.Add(btcUsdt);
                         }
 
-                        await wpfExchangeService.SubscribeStatistics(exchange, newSubSymbols, SubscribeStatisticsException, subscribeSymbolsCxlTokenSrc.Token).ConfigureAwait(false);
-
                         // Add new subscriptions to the cache
                         subscribedSymbols.AddRange(newSubSymbols);
+
+                        await wpfExchangeService.SubscribeStatistics(exchange, newSubSymbols, SubscribeStatisticsException, subscribeSymbolsCxlTokenSrc.Token).ConfigureAwait(false);
                     }
                 }
 

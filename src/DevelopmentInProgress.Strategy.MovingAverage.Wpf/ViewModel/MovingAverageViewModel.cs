@@ -1,5 +1,4 @@
-﻿using CommonServiceLocator;
-using DevelopmentInProgress.Strategy.Common.StrategyTrade;
+﻿using DevelopmentInProgress.Strategy.Common.StrategyTrade;
 using DevelopmentInProgress.TradeView.Core.Extensions;
 using DevelopmentInProgress.TradeView.Core.Interfaces;
 using DevelopmentInProgress.TradeView.Core.TradeStrategy;
@@ -9,13 +8,13 @@ using DevelopmentInProgress.TradeView.Wpf.Common.Helpers;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using LiveCharts;
-using Newtonsoft.Json;
-using Prism.Logging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
@@ -40,10 +39,9 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
         private bool showCandlesticks;
 
         public MovingAverageViewModel(WpfStrategy strategy, IHelperFactoryContainer iHelperFactoryContainer,
-            Dispatcher UiDispatcher, ILoggerFacade logger)
-            : base(strategy, iHelperFactoryContainer, UiDispatcher, logger)
+            Dispatcher UiDispatcher, IChartHelper chartHelper, ILoggerFactory loggerFactory)
+            : base(strategy, iHelperFactoryContainer, UiDispatcher, loggerFactory)
         {
-            var chartHelper = ServiceLocator.Current.GetInstance<IChartHelper>();
             TimeFormatter = chartHelper.TimeFormatter;
             PriceFormatter = chartHelper.PriceFormatter;
 
@@ -195,11 +193,11 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                     {
                         if (tradesUpdate == null)
                         {
-                            tradesUpdate = JsonConvert.DeserializeObject<List<MovingAverageTrade>>(notification.Message);
+                            tradesUpdate = JsonSerializer.Deserialize<List<MovingAverageTrade>>(notification.Message);
                             continue;
                         }
 
-                        var updateTrades = JsonConvert.DeserializeObject<List<MovingAverageTrade>>(notification.Message);
+                        var updateTrades = JsonSerializer.Deserialize<List<MovingAverageTrade>>(notification.Message);
                         var newTrades = updateTrades.Except(tradesUpdate).ToList();
                         tradesUpdate.AddRange(newTrades.OrderBy(t => t.Time));
                     }
@@ -282,7 +280,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
 
                 var candlestickNotification = candlestickNotifications.Last();
 
-                var cs = JsonConvert.DeserializeObject<List<TradeView.Core.Model.Candlestick>>(candlestickNotification.Message);
+                var cs = JsonSerializer.Deserialize<List<TradeView.Core.Model.Candlestick>>(candlestickNotification.Message);
 
                 Candlestick last = null;
 
@@ -378,7 +376,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
                     {
                         var orderBookNotification = orderNotifications.Last();
                         
-                        var ob = JsonConvert.DeserializeObject<TradeView.Core.Model.OrderBook>(orderBookNotification.Message);
+                        var ob = JsonSerializer.Deserialize<TradeView.Core.Model.OrderBook>(orderBookNotification.Message);
 
                         var orderBookHelper = orderBookHelperFactory.GetOrderBookHelper(ob.Exchange);
 
@@ -400,7 +398,7 @@ namespace DevelopmentInProgress.Strategy.MovingAverage.Wpf.ViewModel
 
                         foreach (var notification in orderNotifications)
                         {
-                            var ob = JsonConvert.DeserializeObject<TradeView.Core.Model.OrderBook>(notification.Message);
+                            var ob = JsonSerializer.Deserialize<TradeView.Core.Model.OrderBook>(notification.Message);
 
                             if (first)
                             {

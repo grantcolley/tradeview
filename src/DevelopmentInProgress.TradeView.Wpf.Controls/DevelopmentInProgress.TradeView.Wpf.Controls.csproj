@@ -1,10 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
-    <FileVersion>2.0.0.0</FileVersion>
-    <Version>2.0.0</Version>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Authors>Grant Colley</Authors>
     <Copyright>Copyright © 2020, Grant Colley. All rights reserved</Copyright>    
     <UseWPF>true</UseWPF>
   </PropertyGroup>
@@ -17,15 +15,12 @@
     <PackageReference Include="Infragistics.Themes.MetroDark.Wpf" Version="1.0.0">
           <NoWarn>NU1701</NoWarn>
     </PackageReference>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="System.Reactive" Version="4.4.1" />
-    <PackageReference Include="System.Reactive.Core" Version="4.4.1" />
-    <PackageReference Include="System.Reactive.Interfaces" Version="4.4.1" />
-    <PackageReference Include="System.Reactive.Linq" Version="4.4.1" />
-    <PackageReference Include="System.Reactive.PlatformServices" Version="4.4.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.2" />
+    <PackageReference Include="System.Reactive" Version="6.1.0" />
+    <PackageReference Include="System.Reactive.Core" Version="6.1.0" />
+    <PackageReference Include="System.Reactive.Interfaces" Version="6.1.0" />
+    <PackageReference Include="System.Reactive.Linq" Version="6.1.0" />
+    <PackageReference Include="System.Reactive.PlatformServices" Version="6.1.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,7 +30,7 @@
     <Resource Include="Images\clipboard.png" />
     <Resource Include="Images\Close.png" />
     <Resource Include="Images\Filter.png" />
-    <Resource Include="Images\Origin.png" />
+    <Resource Include="Images\TradeView.png" />
     <Resource Include="Images\RemoveItem.png" />
   </ItemGroup>
 

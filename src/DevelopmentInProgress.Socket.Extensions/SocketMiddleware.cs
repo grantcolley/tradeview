@@ -1,11 +1,11 @@
 ﻿using DevelopmentInProgress.Socket.Messages;
 using DevelopmentInProgress.Socket.Server;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 using System;
 using System.Net;
 using System.Net.WebSockets;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -70,10 +70,9 @@ namespace DevelopmentInProgress.Socket.Extensions
             catch (Exception ex)
             {
                 var response = context.Response;
-                response.Clear();
                 response.ContentType = "application/json";
                 response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                await response.WriteAsync(JsonConvert.SerializeObject(ex)).ConfigureAwait(false);
+                await response.WriteAsync(JsonSerializer.Serialize(ex)).ConfigureAwait(false);
             }
         }
 
@@ -112,7 +111,7 @@ namespace DevelopmentInProgress.Socket.Extensions
                     {
                         var json = messageBuilder.ToString();
 
-                        var message = JsonConvert.DeserializeObject<Message>(json);
+                        var message = JsonSerializer.Deserialize<Message>(json);
 
                         await socketServer.ReceiveAsync(webSocket, message).ConfigureAwait(false);
                     }

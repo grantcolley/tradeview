@@ -3,10 +3,10 @@ using DevelopmentInProgress.TradeView.Core.Events;
 using DevelopmentInProgress.TradeView.Core.Extensions;
 using DevelopmentInProgress.TradeView.Core.Interfaces;
 using DevelopmentInProgress.TradeView.Core.Model;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -48,8 +48,8 @@ namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
                 throw new ArgumentNullException(nameof(strategy));
             }
 
-            var strategyXml = JsonConvert.SerializeObject(strategy);
-            Strategy = JsonConvert.DeserializeObject<Strategy>(strategyXml);
+            var strategyXml = JsonSerializer.Serialize(strategy);
+            Strategy = JsonSerializer.Deserialize<Strategy>(strategyXml);
             Strategy.StartedBy = strategy.StartedBy;
             Strategy.Started = DateTime.Now;
         }
@@ -124,7 +124,7 @@ namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
 
             try
             {
-                var parameters = JsonConvert.DeserializeObject<StrategyParameters>(strategyParameters);
+                var parameters = JsonSerializer.Deserialize<StrategyParameters>(strategyParameters);
 
                 Suspend = parameters.Suspend;
 
@@ -166,7 +166,7 @@ namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
 
         public virtual void SubscribeAccountInfoException(Exception exception)
         {
-            var message = JsonConvert.SerializeObject(exception);
+            var message = JsonSerializer.Serialize(exception);
 
             var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.AccountError };
 
@@ -180,7 +180,7 @@ namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
                 throw new ArgumentNullException(nameof(tradeEventArgs));
             }
 
-            var message = JsonConvert.SerializeObject(tradeEventArgs.Trades);
+            var message = JsonSerializer.Serialize(tradeEventArgs.Trades);
 
             var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.Trade };
 
@@ -189,7 +189,7 @@ namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
 
         public virtual void SubscribeTradesException(Exception exception)
         {
-            var message = JsonConvert.SerializeObject(exception);
+            var message = JsonSerializer.Serialize(exception);
 
             var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.TradeError };
 
@@ -203,7 +203,7 @@ namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
                 throw new ArgumentNullException(nameof(orderBookEventArgs));
             }
 
-            var message = JsonConvert.SerializeObject(orderBookEventArgs.OrderBook);
+            var message = JsonSerializer.Serialize(orderBookEventArgs.OrderBook);
 
             var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.OrderBook };
 
@@ -212,7 +212,7 @@ namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
 
         public void SubscribeOrderBookException(Exception exception)
         {
-            var message = JsonConvert.SerializeObject(exception);
+            var message = JsonSerializer.Serialize(exception);
 
             var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.OrderBookError };
 
@@ -226,7 +226,7 @@ namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
                 throw new ArgumentNullException(nameof(candlestickEventArgs));
             }
 
-            var message = JsonConvert.SerializeObject(candlestickEventArgs.Candlesticks);
+            var message = JsonSerializer.Serialize(candlestickEventArgs.Candlesticks);
 
             var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.Candlesticks };
 
@@ -235,7 +235,7 @@ namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
 
         public virtual void SubscribeCandlesticksException(Exception exception)
         {
-            var message = JsonConvert.SerializeObject(exception);
+            var message = JsonSerializer.Serialize(exception);
 
             var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.CandlesticksError };
 
@@ -249,7 +249,7 @@ namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
                 throw new ArgumentNullException(nameof(statisticsEventArgs));
             }
 
-            var message = JsonConvert.SerializeObject(statisticsEventArgs.Statistics);
+            var message = JsonSerializer.Serialize(statisticsEventArgs.Statistics);
 
             var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.Statistics };
 
@@ -258,7 +258,7 @@ namespace DevelopmentInProgress.TradeView.Core.TradeStrategy
 
         public virtual void SubscribeStatisticsException(Exception exception)
         {
-            var message = JsonConvert.SerializeObject(exception);
+            var message = JsonSerializer.Serialize(exception);
 
             var strategyNotification = new StrategyNotification { Name = Strategy.Name, Message = message, NotificationLevel = NotificationLevel.StatisticsError };
 

@@ -5,7 +5,9 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
-using Prism.Logging;
+using DevelopmentInProgress.TradeView.Wpf.Controls.Logging;
+using Microsoft.Extensions.Logging;
+using System;
 using Unity;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context
@@ -16,26 +18,20 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context
     /// classes and provides access to the unity container 
     /// and logger facade for the given context.
     /// </summary>
-    public abstract class ContextBase : IContext
+    public abstract class ContextBase : LoggingBase, IContext
     {
         private readonly IUnityContainer unityContainer;
-        private readonly ILoggerFacade logger;
 
         /// <summary>
         /// Initializes a new instance of the Context class.
         /// </summary>
         /// <param name="unityContainer">An instance of <see cref="IUnityContainer"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILoggerFacade"/>.</param>
-        protected ContextBase(IUnityContainer unityContainer, ILoggerFacade logger)
+        /// <param name="logger">An instance of <see cref="ILoggerFactory"/>.</param>
+        protected ContextBase(IUnityContainer unityContainer, ILoggerFactory loggerFactory)
+            : base(loggerFactory)
         {
             this.unityContainer = unityContainer;
-            this.logger = logger;
         }
-
-        /// <summary>
-        /// An instance of <see cref="ILoggerFacade"/>.
-        /// </summary>
-        public ILoggerFacade Logger { get { return logger; } }
 
         /// <summary>
         /// An instance of <see cref="IUnityContainer"/>.

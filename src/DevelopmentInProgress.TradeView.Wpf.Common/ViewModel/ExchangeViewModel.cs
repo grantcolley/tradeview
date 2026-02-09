@@ -1,12 +1,12 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Common.Services;
-using Prism.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
 {
     public abstract class ExchangeViewModel : BaseViewModel
     {
-        public ExchangeViewModel(IWpfExchangeService exchangeService, ILoggerFacade logger)
-            : base(logger)
+        public ExchangeViewModel(IWpfExchangeService exchangeService, ILoggerFactory loggerFactory)
+            : base(loggerFactory)
         {
             ExchangeService = exchangeService;
         }

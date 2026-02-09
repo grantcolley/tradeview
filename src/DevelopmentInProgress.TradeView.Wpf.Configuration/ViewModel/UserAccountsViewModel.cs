@@ -5,6 +5,7 @@ using DevelopmentInProgress.TradeView.Wpf.Configuration.Utility;
 using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -77,7 +78,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
 
                         if (SelectedUserAccountViewModel == null)
                         {
-                            var userAccountViewModel = new UserAccountViewModel(selectedUserAccount, Logger);
+                            var userAccountViewModel = new UserAccountViewModel(selectedUserAccount, LoggerFactory);
                             SelectedUserAccountViewModels.Add(userAccountViewModel);
                             SelectedUserAccountViewModel = userAccountViewModel;
                             ObserveSymbols(userAccountViewModel);

@@ -5,7 +5,7 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
-using Prism.Logging;
+using Microsoft.Extensions.Logging;
 using Unity;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context
@@ -17,9 +17,14 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context
     public interface IContext
     {
         /// <summary>
-        /// An instance of <see cref="ILoggerFacade"/>.
+        /// An instance of <see cref="ILogger"/>.
         /// </summary>
-        ILoggerFacade Logger { get; }
+        ILogger Logger { get; }
+
+        /// <summary>
+        /// An instance of <see cref="ILoggerFactory"/>.
+        /// </summary>
+        ILoggerFactory LoggerFactory { get; }
 
         /// <summary>
         /// An instance of <see cref="IUnityContainer"/>.

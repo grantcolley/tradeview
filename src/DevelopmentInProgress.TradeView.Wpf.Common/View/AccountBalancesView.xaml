@@ -84,7 +84,7 @@
                     </ListView>
                     <Viewbox Height="50" Width="50" Margin="2" HorizontalAlignment="Center"
                              Visibility="{Binding IsLoggingIn, Converter={StaticResource boolToVisibilityConverter}}">
-                        <progress:CircularProgress Colour="#69A1BF"/>
+                        <progress:CircularProgress Colour="#FFFFFF"/>
                     </Viewbox>
                 </Grid>
             </DockPanel>

@@ -1,8 +1,6 @@
-﻿using Microsoft.Extensions.DependencyModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 
@@ -11,51 +9,43 @@ namespace DevelopmentInProgress.TradeServer.StrategyExecution.WebHost.Utilities
     internal class AssemblyLoader : AssemblyLoadContext
     {
         private readonly string folderPath;
-        private readonly IList<string> dependencies;
+        private readonly ISet<string> dependencies;
 
-        internal AssemblyLoader(string folderPath, IList<string> dependencies)
+        internal AssemblyLoader(string folderPath, IEnumerable<string> dependencies)
         {
             this.folderPath = folderPath;
-            this.dependencies = dependencies;
+            this.dependencies = new HashSet<string>(dependencies ?? [], StringComparer.OrdinalIgnoreCase);
         }
 
-        internal Assembly LoadFromMemoryStream(string fileName)
+        internal Assembly LoadFromMemoryStream(string assemblyPath)
         {
-            var apiApplicationFileInfo = new FileInfo(fileName);
-            var asl = new AssemblyLoader(apiApplicationFileInfo.DirectoryName, dependencies);
+            using var fileStream = File.OpenRead(assemblyPath);
+            using var ms = new MemoryStream();
+            fileStream.CopyTo(ms);
+            ms.Position = 0;
 
-            using var targetStream = new MemoryStream();
-            using var fileStream = new FileStream(apiApplicationFileInfo.FullName, FileMode.Open, FileAccess.Read);
-            fileStream.CopyTo(targetStream);
-            fileStream.Flush();
-            targetStream.Position = 0;
-            return asl.LoadFromStream(targetStream);
+            return LoadFromStream(ms);
         }
 
-        protected override Assembly Load(AssemblyName assemblyName)
+        protected override Assembly? Load(AssemblyName assemblyName)
         {
-            if ((dependencies?.Contains(assemblyName.Name) ?? false) == false)
-            {
-                return Assembly.Load(new AssemblyName(assemblyName.Name));
+            var name = assemblyName.Name;
+
+            if (string.IsNullOrWhiteSpace(name)) return null;
+
+            if (dependencies.Count > 0 
+                && !dependencies.Contains(name))
+            { 
+                return null;
             }
 
-            var deps = DependencyContext.Default;
-            var res = deps.CompileLibraries.Where(d => d.Name.Contains(assemblyName.Name, StringComparison.OrdinalIgnoreCase)).ToList();
-            if (res.Count > 0)
+            var candidate = Path.Combine(folderPath, $"{name}.dll");
+            if (File.Exists(candidate))
             {
-                return Assembly.Load(new AssemblyName(res.First().Name));
-            }
-            else
-            {
-                var apiApplicationFileInfo = new FileInfo($"{folderPath}{Path.DirectorySeparatorChar}{assemblyName.Name}.dll");
-                if (File.Exists(apiApplicationFileInfo.FullName))
-                {
-                    var asl = new AssemblyLoader(apiApplicationFileInfo.DirectoryName, dependencies);
-                    return asl.LoadFromMemoryStream(apiApplicationFileInfo.FullName);
-                }
+                return LoadFromMemoryStream(candidate);
             }
 
-            return Assembly.Load(assemblyName);
+            return null;
         }
     }
 }

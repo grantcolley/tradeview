@@ -1,9 +1,9 @@
 ﻿using DevelopmentInProgress.Socket.Messages;
 using DevelopmentInProgress.Socket.Server;
 using DevelopmentInProgress.TradeServer.StrategyExecution.WebHost.Notification.Server;
-using Newtonsoft.Json;
 using System;
 using System.Net.WebSockets;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.TradeServer.StrategyExecution.WebHost.Notification.Strategy
@@ -37,7 +37,7 @@ namespace DevelopmentInProgress.TradeServer.StrategyExecution.WebHost.Notificati
 
             var connectionInfo = connection.GetConnectionInfo();
 
-            var json = JsonConvert.SerializeObject(connectionInfo);
+            var json = JsonSerializer.Serialize(connectionInfo);
 
             var message = new Message { MethodName = "OnConnected", SenderConnectionId = "StrategyRunner", Data = json };
 

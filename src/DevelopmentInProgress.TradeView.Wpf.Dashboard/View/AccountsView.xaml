@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:view="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controller.View;assembly=DevelopmentInProgress.TradeView.Wpf.Host.Controller"
-             xmlns:progress="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controller.Controls.Progress;assembly=DevelopmentInProgress.TradeView.Wpf.Host.Controller"
+             xmlns:progress="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.Progress;assembly=DevelopmentInProgress.TradeView.Wpf.Controls"
              xmlns:converters="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controller.Converters;assembly=DevelopmentInProgress.TradeView.Wpf.Host.Controller"
              xmlns:filterbox="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.FilterBox;assembly=DevelopmentInProgress.TradeView.Wpf.Controls"             
              xmlns:commonViewModel="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;assembly=DevelopmentInProgress.TradeView.Wpf.Common"

@@ -5,7 +5,7 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
-using Prism.Regions;
+using Prism.Navigation.Regions;
 using Xceed.Wpf.AvalonDock;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.RegionAdapters

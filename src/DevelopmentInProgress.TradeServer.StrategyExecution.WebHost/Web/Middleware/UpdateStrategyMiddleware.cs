@@ -1,9 +1,9 @@
 ﻿using DevelopmentInProgress.TradeServer.StrategyExecution.WebHost.Cache.TradeStrategy;
 using DevelopmentInProgress.TradeView.Core.TradeStrategy;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 using System;
 using System.Net;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.TradeServer.StrategyExecution.WebHost.Web.Middleware
@@ -35,7 +35,7 @@ namespace DevelopmentInProgress.TradeServer.StrategyExecution.WebHost.Web.Middle
                 var json = context.Request.Form["strategyparameters"];
 
                 // check the json can convert to type StrategyParameters
-                var strategyParameters = JsonConvert.DeserializeObject<StrategyParameters>(json);
+                var strategyParameters = JsonSerializer.Deserialize<StrategyParameters>(json);
 
                 await tradeStrategyCacheManager.UpdateStrategy(strategyParameters.StrategyName, json).ConfigureAwait(false);
             }
@@ -44,7 +44,7 @@ namespace DevelopmentInProgress.TradeServer.StrategyExecution.WebHost.Web.Middle
                 var response = context.Response;
                 response.ContentType = "application/json";
                 response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                await response.WriteAsync(JsonConvert.SerializeObject(ex)).ConfigureAwait(false);
+                await response.WriteAsync(JsonSerializer.Serialize(ex)).ConfigureAwait(false);
             }
         }
     }

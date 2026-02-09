@@ -3,12 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://prismlibrary.com/"
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
-        xmlns:progress="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controller.Controls.Progress;assembly=DevelopmentInProgress.TradeView.Wpf.Host.Controller"
+        xmlns:progress="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Controls.Progress;assembly=DevelopmentInProgress.TradeView.Wpf.Controls"
         xmlns:converters="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controller.Converters;assembly=DevelopmentInProgress.TradeView.Wpf.Host.Controller" 
         xmlns:viewModel="clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;assembly=DevelopmentInProgress.TradeView.Wpf.Host.Controller"
         xmlns:view=     "clr-namespace:DevelopmentInProgress.TradeView.Wpf.Host.Controller.View;assembly=DevelopmentInProgress.TradeView.Wpf.Host.Controller"
         Title="Origin" Height="600" Width="1000" 
-        Icon="Images/Origin.png"
+        Icon="Images/TradeView.png"
         ResizeMode="CanResizeWithGrip"
         Background="{StaticResource ButtonBackgroundBrush}">
     <Window.Resources>

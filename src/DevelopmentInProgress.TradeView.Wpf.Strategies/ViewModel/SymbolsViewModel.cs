@@ -2,9 +2,8 @@
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Strategies.Events;
-using Prism.Logging;
+using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,8 +18,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         private bool isLoadingSymbols;
         private bool disposed;
 
-        public SymbolsViewModel(ISymbolsCacheFactory symbolsCacheFactory, ILoggerFacade logger)
-            : base(logger)
+        public SymbolsViewModel(ISymbolsCacheFactory symbolsCacheFactory, ILoggerFactory loggerFactory)
+            : base(loggerFactory)
         {
             this.symbolsCacheFactory = symbolsCacheFactory;
 

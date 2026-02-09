@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace DevelopmentInProgress.TradeServer.StrategyExecution.WebHost.Extensions
+namespace DevelopmentInProgress.TradeView.Core.Extensions
 {
     public static class TaskExtensions
     {

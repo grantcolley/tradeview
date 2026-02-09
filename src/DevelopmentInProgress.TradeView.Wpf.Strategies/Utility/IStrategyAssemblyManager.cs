@@ -1,5 +1,5 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Common.Model;
-using Prism.Logging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Windows.Threading;
@@ -13,6 +13,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.Utility
         List<string> Files { get; }
         object StrategyDisplayView { get; }
         object StrategyDisplayViewModel { get; }
-        void Activate(Strategy strategy, Dispatcher UiDispatcher, ILoggerFacade Logger);
+        void Activate(Strategy strategy, Dispatcher UiDispatcher, ILoggerFactory LoggerFactory);
     }
 }

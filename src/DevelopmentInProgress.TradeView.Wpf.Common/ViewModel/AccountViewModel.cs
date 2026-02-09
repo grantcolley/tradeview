@@ -1,6 +1,6 @@
 ﻿using DevelopmentInProgress.TradeView.Wpf.Common.Events;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
-using Prism.Logging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -20,9 +20,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
 
         public AccountViewModel(
             AccountBalancesViewModel accountBalancesViewModel,
-            OrdersViewModel ordersViewModel, 
-            ILoggerFacade logger)
-            : base(logger)
+            OrdersViewModel ordersViewModel,
+            ILoggerFactory loggerFactory)
+            : base(loggerFactory)
         {
             this.accountBalancesViewModel = accountBalancesViewModel;
             this.ordersViewModel = ordersViewModel;

@@ -8,7 +8,7 @@
 using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
-using Prism.Logging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Windows.Controls;
 
@@ -22,7 +22,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
     public abstract class ViewBase : UserControl
     {
         protected IViewContext ViewContext { get; }
-        protected ILoggerFacade Logger { get; }
+        protected ILogger Logger { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewBase"/> class.

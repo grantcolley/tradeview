@@ -5,7 +5,6 @@ using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
-using Prism.Logging;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -18,21 +17,18 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
         private readonly IAccountsService accountsService;
         private readonly IWpfExchangeService exchangeService;
         private readonly ISymbolsCacheFactory symbolsCacheFactory;
-        private readonly ILoggerFacade logger;
         private bool disposed;
 
         public AccountsViewModel(
             ViewModelContext viewModelContext, 
             IAccountsService accountsService, 
             IWpfExchangeService exchangeService, 
-            ISymbolsCacheFactory symbolsCacheFactory, 
-            ILoggerFacade logger)
+            ISymbolsCacheFactory symbolsCacheFactory)
             : base(viewModelContext)
         {
             this.accountsService = accountsService;
             this.exchangeService = exchangeService;
             this.symbolsCacheFactory = symbolsCacheFactory;
-            this.logger = logger;
 
             Accounts = new ObservableCollection<AccountViewModel>();
         }
@@ -68,9 +64,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
                         };
 
                         var accountViewModel = new AccountViewModel(
-                            new AccountBalancesViewModel(exchangeService, symbolsCacheFactory, logger),
-                            new OrdersViewModel(exchangeService, logger),
-                            logger);
+                            new AccountBalancesViewModel(exchangeService, symbolsCacheFactory, LoggerFactory),
+                            new OrdersViewModel(exchangeService, LoggerFactory),
+                            LoggerFactory);
 
                         accountViewModel.Dispatcher = ViewModelContext.UiDispatcher;
                         accountViewModel.SetAccount(account);
@@ -79,7 +75,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel
                     }
                 }
 
-                await Task.WhenAll(loginTasks).ConfigureAwait(true);
+                await Task.WhenAll(loginTasks.Where(t => t != null)).ConfigureAwait(true);
             }
             catch (Exception ex)
             {

@@ -5,7 +5,7 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
-using Prism.Logging;
+using Microsoft.Extensions.Logging;
 using System.Windows.Threading;
 using Unity;
 
@@ -21,9 +21,9 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.Context
         /// Initializes a new instance of the <see cref="ViewModelContext"/> class.
         /// </summary>
         /// <param name="unityContainer">An instance of <see cref="IUnityContainer"/>.</param>
-        /// <param name="logger">An instance of <see cref="ILoggerFacade"/>.</param>
-        public ViewModelContext(IUnityContainer unityContainer, ILoggerFacade logger)
-            : base(unityContainer, logger)
+        /// <param name="logger">An instance of <see cref="ILoggerFactory"/>.</param>
+        public ViewModelContext(IUnityContainer unityContainer, ILoggerFactory loggerFactory)
+            : base(unityContainer, loggerFactory)
         {
         }
 

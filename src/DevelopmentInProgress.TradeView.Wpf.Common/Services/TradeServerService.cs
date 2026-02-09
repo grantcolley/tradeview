@@ -1,5 +1,4 @@
 ﻿using DevelopmentInProgress.TradeView.Data;
-using DevelopmentInProgress.TradeView.Wpf.Common.Cache;
 using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using System.Collections.Generic;

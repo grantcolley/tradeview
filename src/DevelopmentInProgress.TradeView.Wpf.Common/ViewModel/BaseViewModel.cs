@@ -1,20 +1,18 @@
-﻿using Prism.Logging;
+﻿using DevelopmentInProgress.TradeView.Wpf.Controls.Logging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.ComponentModel;
 using System.Windows.Threading;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Common.ViewModel
 {
-    public abstract class BaseViewModel : IDisposable, INotifyPropertyChanged
+    public abstract class BaseViewModel : LoggingBase, IDisposable, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public BaseViewModel(ILoggerFacade logger)
+        public BaseViewModel(ILoggerFactory loggerFactory) : base(loggerFactory)
         {
-            Logger = logger;
         }
-
-        public ILoggerFacade Logger { get; private set; }
 
         public virtual Dispatcher Dispatcher { get; set; }
 

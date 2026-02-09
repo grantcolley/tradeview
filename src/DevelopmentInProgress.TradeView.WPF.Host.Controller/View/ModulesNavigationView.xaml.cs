@@ -5,7 +5,6 @@
 // <author>Grant Colley</author>
 //-----------------------------------------------------------------------
 
-using CommonServiceLocator;
 using DevelopmentInProgress.TradeView.Wpf.Controls.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
@@ -20,8 +19,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
     /// </summary>
     public partial class ModulesNavigationView : UserControl
     {
-        private readonly NavigationManager navigationManager;
-        private readonly ModulesNavigationViewModel modulesNavigationViewModel;
+        private ModulesNavigationViewModel modulesNavigationViewModel => (ModulesNavigationViewModel)DataContext;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModulesNavigationView"/> class. 
@@ -29,14 +27,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
         public ModulesNavigationView()
         {
             InitializeComponent();
-
-            modulesNavigationViewModel = ServiceLocator.Current.GetInstance<ModulesNavigationViewModel>();
-            navigationManager = ServiceLocator.Current.GetInstance<NavigationManager>();
-
-            modulesNavigationViewModel.RegisterNavigation += ModulesNavigationViewModelRegisterNavigation;
-            modulesNavigationViewModel.UnregisterNavigation += ModulesNavigationViewModelUnregisterNavigation;
-
-            DataContext = this.modulesNavigationViewModel;
 
             navigationPanel.ItemSelected += SelectedModuleListItem;
         }
@@ -46,6 +36,26 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
         /// which module has been selected. 
         /// </summary>
         public static event EventHandler<ModuleEventArgs> ModuleSelected;
+
+        private void DataContextChangedHandler(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (DataContext is ModulesNavigationViewModel vm)
+            {
+                vm.RegisterNavigation += ModulesNavigationViewModelRegisterNavigation;
+                vm.UnregisterNavigation += ModulesNavigationViewModelUnregisterNavigation;
+            }
+        }
+
+        private void UnloadedHandler(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is ModulesNavigationViewModel vm)
+            {
+                vm.RegisterNavigation -= ModulesNavigationViewModelRegisterNavigation;
+                vm.UnregisterNavigation -= ModulesNavigationViewModelUnregisterNavigation;
+            }
+
+            navigationPanel.ItemSelected -= SelectedModuleListItem;
+        }
 
         private void ModulesNavigationViewModelUnregisterNavigation(object sender, NavigationEventArgs e)
         {
@@ -66,9 +76,11 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host.Controller.View
         {
             var navigationListItem = (NavigationListItem)e.Source;
             string navigationKey = navigationListItem.Tag.ToString();
-            if (((ModulesNavigationViewModel)DataContext).NavigationSettingsList.TryGetValue(navigationKey, out NavigationSettings navigationSettings))
+
+            if (!string.IsNullOrEmpty(navigationKey)
+                && modulesNavigationViewModel.NavigationSettingsList.TryGetValue(navigationKey, out var navigationSettings))
             {
-                navigationManager.NavigateDocumentRegion(navigationSettings);
+                modulesNavigationViewModel.Navigate(navigationSettings);
             }
 
             e.Handled = true;

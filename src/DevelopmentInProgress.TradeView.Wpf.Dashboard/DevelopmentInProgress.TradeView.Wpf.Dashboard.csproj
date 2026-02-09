@@ -1,12 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
-    <FileVersion>2.0.0.0</FileVersion>
-    <Version>2.0.0</Version>
-    <Copyright>Copyright © 2020, Grant Colley. All rights reserved</Copyright>
-    <UseWPF>true</UseWPF>
+    <TargetFramework>net10.0-windows</TargetFramework>
+	<Authors>Grant Colley</Authors>
+	<Copyright>Copyright © 2020, Grant Colley. All rights reserved</Copyright>
+	<UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -15,21 +13,18 @@
 
   <ItemGroup>
     <None Remove="Images\accounts.png" />
+    <None Remove="Images\Server.png" />
+    <None Remove="Images\ServerMonitor.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommonServiceLocator" Version="2.0.5" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Prism.Core" Version="7.2.0.1422" />
-    <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
-    <PackageReference Include="System.Reactive" Version="4.4.1" />
-    <PackageReference Include="System.Reactive.Core" Version="4.4.1" />
-    <PackageReference Include="System.Reactive.Linq" Version="4.4.1" />
-    <PackageReference Include="System.Reactive.PlatformServices" Version="4.4.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.2" />
+    <PackageReference Include="Prism.Core" Version="9.0.537" />
+    <PackageReference Include="Prism.Wpf" Version="9.0.537" />
+	<PackageReference Include="System.Reactive" Version="6.1.0" />
+	<PackageReference Include="System.Reactive.Core" Version="6.1.0" />
+	<PackageReference Include="System.Reactive.Linq" Version="6.1.0" />
+	<PackageReference Include="System.Reactive.PlatformServices" Version="6.1.0" />
   </ItemGroup>
 
   <ItemGroup>

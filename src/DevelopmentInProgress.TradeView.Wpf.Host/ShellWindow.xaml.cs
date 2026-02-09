@@ -7,9 +7,9 @@
 
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.View;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.ViewModel;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.ComponentModel;
-using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -48,15 +48,18 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
 
         private ModulesNavigationViewModel modulesNavigationViewModel;
 
+        private readonly IConfiguration configuration;
+
         /// <summary>
         /// Initializes a new instance of the Shell class.
         /// </summary>
-        public ShellWindow()
+        public ShellWindow(IConfiguration configuration)
         {
             InitializeComponent();
 
-            var appSettings = ConfigurationManager.AppSettings;
-            var isShellToolBarVisible = appSettings["IsShellToolBarVisible"];
+            this.configuration = configuration;
+
+            var isShellToolBarVisible = configuration["IsShellToolBarVisible"];
             ShellToolBar.Visibility = isShellToolBarVisible.Equals("TRUE", StringComparison.OrdinalIgnoreCase)
                 ? Visibility.Visible
                 : Visibility.Collapsed;
@@ -71,7 +74,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
             get { return modulesNavigationViewModel; }
             set
             {
-                if(modulesNavigationViewModel != value)
+                if (modulesNavigationViewModel != value)
                 {
                     modulesNavigationViewModel = value;
                     OnPropertyChanged(nameof(ModulesNavigationViewModel));
@@ -135,14 +138,20 @@ namespace DevelopmentInProgress.TradeView.Wpf.Host
         /// <param name="e">Event arguments.</param>
         private void OpenLogClick(object sender, RoutedEventArgs e)
         {
-            string filePath = ConfigurationManager.AppSettings["serilog:write-to:File.path"].ToString();
+            var writeTo = configuration.GetSection("Serilog:WriteTo");
+
+            string? filePath = writeTo
+                .GetChildren()
+                .FirstOrDefault(x => x["Name"] == "File")
+                ?.GetSection("Args")["path"];
+
             var dirPath = filePath.Substring(0, filePath.LastIndexOf('\\'));
             var directory = new DirectoryInfo(dirPath);
             var logFile = directory.GetFiles()
                 .Where(f => f.Name.Contains("DevelopmentInProgress.TradeView.Wpf.Trading", StringComparison.OrdinalIgnoreCase))
                 .OrderByDescending(f => f.LastWriteTime).First();
 
-            string logFileReader = ConfigurationManager.AppSettings["LogFileReader"].ToString();
+            string logFileReader = configuration["LogFileReader"].ToString();
             Process.Start(logFileReader, logFile.FullName);
         }
         

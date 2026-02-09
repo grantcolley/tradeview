@@ -1,10 +1,10 @@
-﻿using DevelopmentInProgress.TradeView.Wpf.Common.Command;
-using DevelopmentInProgress.TradeView.Wpf.Common.Extensions;
+﻿using DevelopmentInProgress.TradeView.Core.Extensions;
+using DevelopmentInProgress.TradeView.Wpf.Common.Command;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.Services;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Controls.Messaging;
-using Prism.Logging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +20,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
         private bool isLoadingSymbols;
         private bool disposed;
 
-        public SymbolsViewModel(IWpfExchangeService exchangeService, UserAccount userAccount, ILoggerFacade logger)
-            : base(exchangeService, logger)
+        public SymbolsViewModel(IWpfExchangeService exchangeService, UserAccount userAccount, ILoggerFactory loggerFactory)
+            : base(exchangeService, loggerFactory)
         {
             this.userAccount = userAccount;
 
@@ -95,7 +95,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
             }
             catch (Exception ex)
             {
-                Logger.Log(ex.ToString(), Category.Exception, Priority.Low);
+                Logger.Log(LogLevel.Error, ex.ToString());
                 Dialog.ShowException(ex);
             }
             finally
@@ -138,7 +138,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Configuration.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    Logger.Log(ex.ToString(), Category.Exception, Priority.Low);
+                    Logger.Log(LogLevel.Error, ex.ToString());
                     Dialog.ShowException(ex);
                 }
                 finally

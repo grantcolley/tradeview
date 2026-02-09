@@ -2,7 +2,7 @@
 using DevelopmentInProgress.TradeView.Wpf.Common.Events;
 using DevelopmentInProgress.TradeView.Wpf.Common.Model;
 using DevelopmentInProgress.TradeView.Wpf.Common.ViewModel;
-using Prism.Logging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Windows.Input;
 
@@ -14,8 +14,8 @@ namespace DevelopmentInProgress.TradeView.Wpf.Strategies.ViewModel
         private Strategy strategy;
         private bool canPushParameters;
 
-        public StrategyParametersViewModel(ILoggerFacade logger)
-            : base(logger)
+        public StrategyParametersViewModel(ILoggerFactory loggerFactory)
+            : base(loggerFactory)
         {
             canPushParameters = false;
             PushStrategyParametersCommand = new ViewModelCommand(PushStrategyParameters);

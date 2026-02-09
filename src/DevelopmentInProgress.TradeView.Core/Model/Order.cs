@@ -18,8 +18,8 @@ namespace DevelopmentInProgress.TradeView.Core.Model
         public TimeInForce TimeInForce { get; set; }
         public OrderType Type { get; set; }
         public OrderSide Side { get; set; }
-        public decimal StopPrice { get; set; }
-        public decimal IcebergQuantity { get; set; }
+        public decimal? StopPrice { get; set; }
+        public decimal? IcebergQuantity { get; set; }
         public DateTime Time { get; set; }
         public bool IsWorking { get; set; }
         public IEnumerable<Fill> Fills { get; set; }

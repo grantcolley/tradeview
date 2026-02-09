@@ -1,10 +1,10 @@
 ﻿using DevelopmentInProgress.TradeView.Core.Server;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace DevelopmentInProgress.TradeView.Data.File
@@ -29,7 +29,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
             {
                 using var reader = System.IO.File.OpenText(userServersFile);
                 var json = await reader.ReadToEndAsync().ConfigureAwait(false);
-                var Servers = JsonConvert.DeserializeObject<List<TradeServer>>(json);
+                var Servers = JsonSerializer.Deserialize<List<TradeServer>>(json);
                 return Servers.Where(s => !string.IsNullOrWhiteSpace(s.Name)
                                         && !string.IsNullOrWhiteSpace(s.Uri.OriginalString)).ToList();
             }
@@ -48,7 +48,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
             {
                 using var reader = System.IO.File.OpenText(userServersFile);
                 var json = await reader.ReadToEndAsync().ConfigureAwait(false);
-                var servers = JsonConvert.DeserializeObject<List<TradeServer>>(json);
+                var servers = JsonSerializer.Deserialize<List<TradeServer>>(json);
                 server = servers.FirstOrDefault(s => s.Name.Equals(serverName, StringComparison.Ordinal));
                 return server;
             }
@@ -69,7 +69,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
             {
                 using var reader = System.IO.File.OpenText(userServersFile);
                 var rjson = await reader.ReadToEndAsync().ConfigureAwait(false);
-                servers = JsonConvert.DeserializeObject<List<TradeServer>>(rjson);
+                servers = JsonSerializer.Deserialize<List<TradeServer>>(rjson);
             }
             else
             {
@@ -84,7 +84,7 @@ namespace DevelopmentInProgress.TradeView.Data.File
 
             servers.Add(server);
 
-            var wjson = JsonConvert.SerializeObject(servers, Formatting.Indented);
+            var wjson = JsonSerializer.Serialize(servers, new JsonSerializerOptions { WriteIndented = true });
 
             UnicodeEncoding encoding = new UnicodeEncoding();
             char[] chars = encoding.GetChars(encoding.GetBytes(wjson));
@@ -101,14 +101,14 @@ namespace DevelopmentInProgress.TradeView.Data.File
                 using (var reader = System.IO.File.OpenText(userServersFile))
                 {
                     var rjson = await reader.ReadToEndAsync().ConfigureAwait(false);
-                    servers = JsonConvert.DeserializeObject<List<TradeServer>>(rjson);
+                    servers = JsonSerializer.Deserialize<List<TradeServer>>(rjson);
                 }
 
                 var remove = servers.FirstOrDefault(s => s.Name.Equals(server.Name, StringComparison.Ordinal));
                 if (remove != null)
                 {
                     servers.Remove(remove);
-                    var wjson = JsonConvert.SerializeObject(servers);
+                    var wjson = JsonSerializer.Serialize(servers);
 
                     UnicodeEncoding encoding = new UnicodeEncoding();
                     char[] chars = encoding.GetChars(encoding.GetBytes(wjson));

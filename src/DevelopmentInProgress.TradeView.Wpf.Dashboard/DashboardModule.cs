@@ -3,7 +3,6 @@ using DevelopmentInProgress.TradeView.Wpf.Dashboard.ViewModel;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Modular;
 using DevelopmentInProgress.TradeView.Wpf.Host.Controller.Navigation;
 using Prism.Ioc;
-using Prism.Logging;
 
 namespace DevelopmentInProgress.TradeView.Wpf.Dashboard
 {
@@ -11,8 +10,7 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard
     {
         public const string ModuleName = "Dashboard";
 
-        public DashboardModule(ModuleNavigator moduleNavigator, ILoggerFacade logger)
-            : base(moduleNavigator, logger)
+        public DashboardModule(ModuleNavigator moduleNavigator) : base(moduleNavigator)
         {
         }
 
@@ -59,8 +57,6 @@ namespace DevelopmentInProgress.TradeView.Wpf.Dashboard
 
             moduleSettings.ModuleGroups.Add(moduleGroup);
             ModuleNavigator.AddModuleNavigation(moduleSettings);
-
-            Logger.Log($"Initialized {this.GetType().FullName}", Category.Info, Priority.None);
         }
     }
 }
