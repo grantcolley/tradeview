@@ -2,7 +2,7 @@
 
 > [!WARNING]
 >
-> Upgraded to .NET 10 - untested with possible breaking changes from referencing discontinued third-party libraries.
+> Upgraded to .NET 10 - untested with possible breaking changes resulting from discontinued third-party libraries.
 
 [![Build Status](https://ci.appveyor.com/api/projects/status/lsf9kuf5p93wvr0p/branch/master?svg=true)](https://ci.appveyor.com/project/grantcolley/tradeview/branch/master)
 
